@@ -1970,15 +1970,15 @@ magnitude and phase images. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown.jpg -fft \
+  convert clown_orig.jpg -fft \
           \( +clone  -write clown_phase.png +delete \) +delete \
           -write clown_magnitude.png  -colorspace gray \
           -auto-level -evaluate log 100000  clown_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0>
 <TR><TD ALIGN=center>
-  <A HREF="clown.jpg"
-     ><IMG SRC="clown.jpg"   WIDTH=128 HEIGHT=128
+  <A HREF="clown_orig.jpg"
+     ><IMG SRC="clown_orig.jpg"   WIDTH=128 HEIGHT=128
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
   <BR>Original
 </TD><TD>
@@ -2044,8 +2044,8 @@ original image next to it for comparison </P>
           -compose multiply -composite \
           clown_phase.png -ift clown_filtered.png
 </CODE></PRE></TD></TR></TABLE>
-  <A HREF="clown.jpg"
-     ><IMG SRC="clown.jpg"   WIDTH=128 HEIGHT=128
+  <A HREF="clown_orig.jpg"
+     ><IMG SRC="clown_orig.jpg"   WIDTH=128 HEIGHT=128
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
   <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
   <A HREF="clown_filtered.png"
@@ -2078,7 +2078,7 @@ And filter the clown, this time re-generating the FFT images in memory.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown.jpg -fft \
+  convert clown_orig.jpg -fft \
           \( -clone 0 clown_mask_blurred.png -compose multiply -composite \) \
           -swap 0 +delete -ift clown_filtered_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2098,7 +2098,7 @@ an image of the areas where noise was removed.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown.jpg clown_filtered_2.png -compose difference \
+  convert clown_orig.jpg clown_filtered_2.png -compose difference \
           -composite -normalize clown_noise.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="clown_noise.png"
