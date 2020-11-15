@@ -1,0 +1,2068 @@
+<HTML><HEAD>
+<TITLE>Animation Basics -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/anim_basics/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Animation Basics</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#gif_anim"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > GIF Animations and Animation Meta-data</A>
+<DD><A HREF="#dispose"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Frame Disposal Methods</A>
+    <UL>
+    <LI><A HREF="#none"
+        >Dispose None</A> - overlay each frame in sequence
+    <LI><A HREF="#previous"
+        >Dispose Previous</A> - preserve background canvas
+    <LI><A HREF="#background"
+        >Dispose Background</A> - clear to background
+    </UL>
+<DD><A HREF="#study"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Studying Animations</A>
+    <UL>
+    <LI><A HREF="#identify"
+        >Identify</A>              - information about an animation
+    <LI><A HREF="#adjoin"
+        >Adjoin</A>                - splitting into individual frame images
+    <LI><A HREF="#coalesce"
+        >Coalesce</A>              - fill out frames completely
+    <LI><A HREF="#montage"
+        >Frame Montage</A>         - the "gif_anim_montage" script
+    <LI><A HREF="#list_info"
+        >List Information</A>      - rebuild an existing animation
+    <LI><A HREF="#dispose_images"
+        >Disposal Images</A>       - the GIF dispose form of the frames
+    <LI><A HREF="#deconstruct"
+        >Deconstruct</A>           - report areas of frame differences
+    <LI><A HREF="#compare"
+        >Frame Comparisons</A>     - more detailed frame differences
+        <DL><DD>
+        <A HREF="#compareany"     >Compare_Any</A>,&nbsp;
+        <A HREF="#compareclear"   >Compare_Clear</A>,&nbsp;
+        <A HREF="#compareoverlay" >Compare_Overlay</A>
+        </DL>
+    </UL>
+<DD><A HREF="#types"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Types of Animations</A>
+    <UL>
+    <LI><A HREF="#coalesced"
+        >Coalesced Animations</A>
+    <LI><A HREF="#overlay"
+        >Overlay Animations</A>
+    <LI><A HREF="#cleared"
+        >Cleared Frame Animations</A>
+    <LI><A HREF="#mixed"
+        >Mixed Disposal Animations</A>
+    </UL>
+<DD><A HREF="#loop"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > The End of the Loop</A>      - when an animation stops running
+<DD><A HREF="#zero"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Zero Delay Intermediate Frames</A>
+</DL>
+
+These examples continue the previous example page on <A HREF="../layers/"
+>Layers of Multiple Images</A> but instead of layering multiple images on top
+of each other to produce a single image, here we display each image for a
+short period of time so as to  produce an animation of images. </P>
+
+The following section provides a basic understanding of the complexities of
+animations and specifically GIF animations. It looks at the basic methods used
+to generate animations, and how you can study existing animations to get an
+understanding of how they work. </P>
+
+This is recommended reading before going further in any of the later animation
+sections. </P>
+
+<HR><!-- ------------------------------------------------------------------ -->
+
+<A NAME="gif_anim"></A>
+<H2>GIF Animations and Animation Meta-data</H2>
+
+The default way ImageMagick handles the output of an image list is to generate
+a multi-page image.  For the GIF image format, however, this takes the special
+form of a 'GIF animation'.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -delay 100  -size 100x100 xc:SkyBlue \
+          -page +5+10  balloon.gif   -page +35+30 medical.gif  \
+          -page +62+50 present.gif   -page +10+55 shading.gif  \
+          -loop 0  animation.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="animation.gif"
+     ><IMG SRC="animation.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Here is a more advanced 'sparkle' example that uses a shell script
+"<B><CODE><A HREF="../scripts/star_field" >star_field</A></CODE></B>".  This
+script was developed from my experiments in generating <A
+HREF="../advanced/#stars" >random star fields</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE RANDOM SCRIPT IMAGE=rose_sparkle.gif>
+  star_field 70x46  stars1.gif
+  star_field 70x46  stars2.gif
+  star_field 70x46  stars3.gif
+  convert rose:   -compose Screen \
+          \( -clone 0 stars1.gif -composite \) \
+          \( -clone 0 stars2.gif -composite \) \
+          \( -clone 0 stars3.gif -composite \) \
+          -delete 0 -set delay 25 -layers Optimize rose_sparkle.gif
+  rm stars[123].gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_sparkle.gif"
+     ><IMG SRC="rose_sparkle.gif"          WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Basically three random star fields are generated, at the right size, then
+overlaid onto our image, the IM built-in "<CODE>rose:</CODE>", using a
+'<CODE><A HREF="../compose/#screen" >Screen</A></CODE>' alpha composition to
+brighten the image with the given star patterns. The whole thing is then run
+though the IM general GIF animation optimizer. </P>
+
+The above may seem complex as it is using some advanced IM features I have yet
+to introduce, but the result is a relatively simple, but well optimized three
+frame animation. </P>
+
+You can also look at some of the more complex animations that were created
+using simple shell scripts for <A HREF="../warping/#animations" >Distortion
+Animations</A>. </P>
+
+There are a few extra IM settings which were created specifically for use in
+GIF animations, and knowing about these is the first step into the world of GIF
+animations... </P>
+
+<TABLE BORDER=0  WIDTH=90% ALIGN=center>
+<TR VALIGN=top><TD COLSPAN=2><CODE><A HREF="../option_link.cgi?dispose"
+    ><B>-dispose</B></A> {method}</CODE></TD></TR><TR><TD></TD>
+<TD ALIGN=justify>
+    What the following images should do with the previous results of the GIF
+    animation. Valid options are '<CODE>Undefined</CODE>', '<CODE><A
+    HREF="#none" >None</A></CODE>', '<CODE><A HREF="#previous"
+    >Previous</A></CODE>', and '<CODE><A HREF="#background"
+    >Background</A></CODE>.  (See below for explanation of the settings)
+    </P>
+
+</TD></TR>
+<TR VALIGN=top><TD><NOBR><CODE><A HREF="../option_link.cgi?loop"
+    ><B>-loop</B></A> {number}</CODE></NOBR></TD>
+<TD ALIGN=justify>
+    Number of times the GIF animation is to cycle though the image sequence
+    before stopping.  It is an output 'image write' setting, so can be set
+    anywhere on the command line, though only the last such setting will be
+    used. </P>
+
+    Usually this set by default, to zero (infinite loop), however if any image
+    read in has a different value, then this setting will be set to that
+    images value.  As such I recommend that you always set "<CODE><A
+    HREF="../option_link.cgi?loop" >-loop</A></CODE>" when creating a GIF
+    animation, after all the images has been read in. </P>
+
+    For more information see <A HREF="#loop" >The End of the Loop</A> below.
+    </P>
+
+</TD></TR>
+<TR VALIGN=top><TD><CODE><A HREF="../option_link.cgi?delay"
+    ><B>-delay</B></A> {time} &nbsp;</CODE></TD>
+<TD ALIGN=justify>
+    Set the time delay (in 1/100th of a second) to pause after drawing the
+    images that are read in or created after this setting has been defined.
+    </P>
+
+    You can specify a different scale for the time delay by specifying a
+    '<CODE>x</CODE>' scaling (giving in ticks per second).   For example
+    '<CODE>10x1</CODE>' is 10, 1 second ticks,  while '<CODE>10x100</CODE>' is
+    10, one hundredth of a second ticks. </P>
+
+    Basically the '<CODE>x</CODE>' is equivalent to a fraction
+    '<CODE>/</CODE>' sign.  For example if you specify '<CODE>1x160</CODE>'
+    will set a delay that is appropriate for 160 frames per second. </P>
+
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+    <TR VALIGN=top>
+    <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+        ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+      GIF animation delays must be specified in hundredths of a second for
+      correct working, which is why that is the default time unit.  The
+      '<CODE>x</CODE>' factor is used more for generating other more movie
+      like formats, such a MNG's, and AVI's.
+    </I></FONT></TD></TR></TABLE></P>
+
+</TD></TR>
+<TR VALIGN=top><TD COLSPAN=2><CODE><A HREF="../option_link.cgi?set"
+    ><B>-set</B></A> dispose {method}
+<BR><A HREF="../option_link.cgi?set"
+    ><B>-set</B></A> delay {time}</CODE></TD></TR><TR><TD></TD>
+<TD ALIGN=justify>
+    While the previous option settings will set image attributes on newly
+    created, or image that are read in, <I>after</I> that option is given, the
+    "<CODE><A HREF="../option_link.cgi?set" >-set</A></CODE>" option is an
+    operator, that will allow you set image attributes on all images that have
+    <I>already</I> in the current image sequence.  This allows you to change
+    the setting over a whole animation, or just a single frame, after the
+    images have been loaded or modified.  </P>
+
+</TD></TR>
+<TR VALIGN=top><TD COLSPAN=2><CODE><A HREF="../option_link.cgi?page"
+    ><B>-page</B></A> {w}x{h}+{x}+{y}</CODE></TD></TR><TR><TD></TD>
+<TD ALIGN=justify>
+    This lets you set the offset position of the image about to be read in. As
+    this is a setting option, it only applies the geometry you give to images
+    that follow the setting.  It does not effect images already read into
+    memory.  <P>
+
+    If not given, or turned off using "<CODE><A HREF="../option_link.cgi?page"
+    >+page</A></CODE>" the offset for the image read will be preserved.  If
+    the image does not have an offset it will be positioned at
+    '<CODE>+0+0</CODE>' or the top left corner of the working canvas or
+    'page'. </P>
+
+    It can also be used to define a larger working canvas, by specifying a
+    width '<CODE>x</CODE>' height.  Only the width and height page setting of
+    the first image in the sequence will be used to set the overall GIF
+    animation canvas size, all other page size settings will be ignored when
+    the animation is finally written.  When a GIF animation is read in the
+    canvas size is set on all the frames in the animation. </P>
+
+    MNG animations can save frame offsets, but does not save canvas sizes.
+    The size of the first image defines the canvas size of the whole
+    animation. </P>
+
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+    <TR VALIGN=top>
+    <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+        ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+      The GIF image format can not specify a negative offset for images on a
+      canvas.  If you try to use a negative offset IM will reset it to zero
+      when that image (or animation frame) is written to a GIF file. </P>
+
+      Positive offsets larger than the image canvas are quite acceptable but
+      may result in the image not appearing in the canvas drawing area when
+      displayed.  How a GIF animation display program handles this is
+      undefined.   Caution is advised.
+    </I></FONT></TD></TR></TABLE></P>
+
+</TD></TR>
+<TR VALIGN=top><TD COLSPAN=2><CODE><A HREF="../option_link.cgi?repage"
+    ><B>-repage</B></A> {w}x{h}+{x}+{y}</CODE></TD></TR><TR><TD></TD>
+<TD ALIGN=justify>
+    This is exactly like "<CODE><A HREF="../option_link.cgi?page"
+    >-page</A></CODE>" except that it is an image operator instead of a
+    setting.  That means you can use this to change or reset the 'page
+    geometry' of an image or animation frame that has already being read into
+    memory. </P>
+
+    The simpler "<CODE><A HREF="../option_link.cgi?repage" >+repage</A></CODE>"
+    form, just resets the 'page geometry' of all images to the actual image in
+    each frame in the current image sequence to a zero offset, and the images
+    actual size.  This operation is vital when you are extracting the
+    individual frames from an animation, (See the <A HREF="#adjoin" >Adjoin
+    Examples</A> below). </P>
+
+    However "<CODE><A HREF="../option_link.cgi?repage" >+repage</A></CODE>" will
+    destroy a lot of positioning information stored in each image, as such you
+    should also probably extract this information into a separate file for
+    later re-use.  See <A HREF="#list_info" >Animation List Information</A>
+    below.  </P>
+
+</TD></TR></TABLE></P>
+
+
+<H3>Important Point</H3>
+
+DO NOT save the intermediate, animations which you are not finished
+processing, directly to GIF.  You can use the IM internal format MIFF, as a
+temporary file format, if you want to work on an animation in series of
+separate processing steps. </P>
+
+I repeat...<DIV ALIGN=center><B>
+     Do not use GIF as an intermediate file format, use MIFF instead
+</B></DIV></P>
+
+If you made the big mistake of saving to GIF you would have just made the
+resulting animation worse, as IM would have now performed an automatic <A
+HREF="../quantize/#colors" >Color Quantization</A>, to reduce the number of
+colors present.  Not only that but it did so on each frame completely
+independently to every other frame, making any further processing,
+particularly any GIF optimizations just that much harder. </P>
+
+Solving this is a complex, multi-level problem, which is looked at in the next
+section <A HREF="../anim_opt/" >Animation Optimization</A>. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="dispose"></A>
+<H2>Frame Disposal Methods</H2>
+
+The first thing people creating GIF animation have trouble with is the
+"<CODE><A HREF="../option_link.cgi?dispose" >-dispose</A></CODE>" setting.  This
+is not surprising as it is a complex setting.  Worse still a lot of animation
+programs, including many web browsers, don't always handle the GIF disposal
+meta-data setting correctly.  However using the right disposal can make a big
+difference to how well your animation works and optimizes. </P>
+
+The first thing to remember in ImageMagick is that almost all the special
+animation options, are settings for image reading.  That is they are applied
+to images that are read in, after, the setting has been given.  The "<CODE><A
+HREF="../option_link.cgi?loop" >-loop</A></CODE>" setting is the only one
+typically used after the animation has been completed, just before the the
+animation is saved. </P>
+
+The basic task of  the "<CODE><A HREF="../option_link.cgi?dispose"
+>-dispose</A></CODE>" defines how an image is to be removed, <I>after</I> it
+has been displayed for its "<CODE><A HREF="../option_link.cgi?delay"
+>-delay</A></CODE>" time period.  That is, you need to give an image's "<CODE><A
+HREF="../option_link.cgi?dispose" >-dispose</A></CODE>" and "<CODE><A
+HREF="../option_link.cgi?delay" >-delay</A></CODE>" settings <I>before</I>
+reading the image for that frame.  But the action is applied after that image
+is displayed.  This is a little counter intuitive but does make sense in the
+way IM operates on images.  </P>
+
+If you remember this, you should have no problems. </P>
+
+The 'plus' forms of these options, like most other settings in IM stops the
+setting being applied to any images being read in.  That means if you don't
+specify a setting, the frame image will continue to use the setting that was
+read in with the image (if any). </P>
+
+This can be important later when you want to read in a GIF animation for
+further processing. Or when merging one GIF animation into another (the most
+difficult animation technique). </P>
+
+
+<A NAME="none"></A>
+<H3>Dispose None <FONT SIZE=-1>- each frame overlaid in sequence</FONT></H3>
+
+The default "<CODE><A HREF="../option_link.cgi?dispose" >-dispose</A></CODE>"
+setting for GIF animations is '<CODE><B>Undefined</B></CODE>' which most
+animation programs treats the same as a '<CODE><B>None</B></CODE>' disposal
+setting.  Basically this tells the computer to just leave whatever is overlaid
+by this specific frame.  Or more precisely, 'do nothing'. </P>
+
+However please note that the whole canvas is always cleared at the end of the
+animation sequence, before it loops and repeats. </P>
+
+Here for example is a standard 'None dispose' animation...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -delay 100 -dispose None \
+              -page 100x100+5+10  balloon.gif  \
+              -page +35+30 medical.gif  \
+              -page +62+50 present.gif  \
+              -page +10+55 shading.gif  \
+          -loop 0  anim_none.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anim_none.gif"
+     ><IMG SRC="anim_none.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This disposal technique is ideal for animations which involve no form of
+transparency, such as animations drawn on a solid, or patterned background.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -dispose none  -delay 100 \
+                -size 100x100 xc:SkyBlue +antialias \
+                -fill DodgerBlue -draw 'circle 50,50 15,25' \
+                -page +5+10  balloon.gif  \
+                -page +35+30 medical.gif  \
+                -page +62+50 present.gif  \
+                -page +10+55 shading.gif  \
+          -loop 0  canvas_none.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="canvas_none.gif"
+     ><IMG SRC="canvas_none.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that this technique can only add visible colors to an animation. It can
+never actually make any part of an animation transparent again. (See <A
+HREF="#overlay" >Overlay Animations</A> below). </P>
+
+To also handle transparency need to use one of the other sorts of disposal
+methods.  </P>
+
+
+<A NAME="previous"></A>
+<H3>Dispose Previous <FONT SIZE=-1>- preserve background canvas</FONT></H3>
+
+The '<CODE><B>Previous</B></CODE>' disposal method is relatively simple.  When
+the current image is finished, return the canvas to what it looked like before
+the image was overlaid.  If the previous frame image also used a
+'<CODE>Previous</CODE>' disposal method, then the result will be that same as
+what it was before that frame.. etc.. etc.. etc... </P>
+
+For example in this animation each of the later frames will return to the very
+first frame of the image, which has a '<CODE><A HREF="#none">None</A></CODE>
+disposal setting, before overlaying the image associated with that frame. </P>
+
+The result is a background canvas that has just each frame image overlaid
+for just the duration of that image...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -dispose none  -delay 0 \
+                -size 100x100 xc:SkyBlue +antialias \
+                -fill DodgerBlue -draw 'circle 50,50 15,25' \
+          -dispose previous -delay 100 \
+                -page +5+10  balloon.gif  \
+                -page +35+30 medical.gif  \
+                -page +62+50 present.gif  \
+                -page +10+55 shading.gif  \
+          -loop 0  canvas_prev.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="canvas_prev.gif"
+     ><IMG SRC="canvas_prev.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note the "<CODE><A HREF="../option_link.cgi?dispose" >-dispose</A></CODE>" method
+'<CODE><A HREF="#none">None</A></CODE>' used for the first image. This is
+important, otherwise the 'previous' frame will go all the way back to the
+original empty canvas that was present before the first frame.  </P>
+
+Also note that I used a  "<CODE><A HREF="../option_link.cgi?delay"
+>-delay</A></CODE>" of '<CODE>0</CODE>' in the above animation.  This says not
+to wait before overlaying the first frame onto this 'background canvas'.
+Without it you will see a short delay, showing just the canvas image with
+nothing on top of it. </P>
+
+Of course I need to still set a longer "<CODE><A HREF="../option_link.cgi?delay"
+>-delay</A></CODE>" for the later images, or they will appear and disappear in
+the wink of an eye, and incidentally use up a lot of the viewers CPU cycles.
+</P>
+
+The use of the '<CODE>Previous</CODE>' disposal method can be prone to a
+slight flickering, or pause in some web browsers, especially on slower
+machines.  Though that is quite rarely seen these days, the flicker itself is
+still present, and something I consider to be a bug.  See <A HREF="#zero"
+>Zero Delay Frames</A> below for more specifics. </P>
+
+Few animations make use of a dispose previous style of animation, the reason
+is that it is very difficult for computers to optimise.  The problem is just
+what frame should the computer pick to become the background image?  Simple
+for us humans to figure out the best image to use, but difficult for a
+computer decide.  The best background image to use in an animation may not
+even be meant to be displayed, such as in the current example, and as such
+may not exist in an un-optimized version of that animation. </P>
+
+
+<A NAME="background"></A>
+<H3>Dispose Background <FONT SIZE=-1>- clear to background</FONT></H3>
+
+While the first two "<CODE><A HREF="../option_link.cgi?dispose"
+>-dispose</A></CODE>" methods are relatively simple, the
+'<CODE><B>Background</B></CODE>' is probably the hardest to understand. </P>
+
+When the time delay is finished for a particular frame, the area that was
+overlaid by that frame is cleared.  Not the whole canvas, just the area that
+was overlaid.  Once that is done then the resulting canvas is what is passed
+to the next frame of the animation, to be overlaid by that frames image. </P>
+
+Here for example we just replace each frame with the next frame.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -delay 100 -dispose Background \
+              -page 100x100+5+10  balloon.gif  \
+              -page +35+30 medical.gif  \
+              -page +62+50 present.gif  \
+              -page +10+55 shading.gif  \
+          -loop 0  anim_bgnd.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anim_bgnd.gif"
+     ><IMG SRC="anim_bgnd.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+So you can see exactly what is going on, lets add an initial canvas image to
+the animation, so you can see how a '<CODE>Background</CODE>' actually
+'disposes' that frame from the animation display.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -delay 100 -dispose none \
+                -size 100x100 xc:SkyBlue +antialias \
+                -fill DodgerBlue -draw 'circle 50,50 15,25' \
+          -dispose background \
+                -page +5+10  balloon.gif  \
+                -page +35+30 medical.gif  \
+                -page +62+50 present.gif  \
+                -page +10+55 shading.gif  \
+          -loop 0  canvas_bgnd.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="canvas_bgnd.gif"
+     ><IMG SRC="canvas_bgnd.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see as each overlaid frame is disposed of, that frames area is
+cleared to transparency, before the next image is overlaid.  This is the
+importance of this GIF disposal method as it is the only way GIF animations
+can clear any pixel regardless of an animations frame history. </P>
+
+The only other way to clear pixels is to use '<CODE><A
+HREF="#previous">Previous</A></CODE>' to go back to a frame in which those
+pixels were clear. But that relies on knowing the history of the animation
+sequence which makes it much more difficult for computers to optimize.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  There is some thinking that rather than clearing the overlaid area to the
+  transparent color, this disposal should clear it to the 'background' color
+  meta-data setting stored in the GIF animation.  In fact the old
+  "<CODE>Netscape</CODE>" browser (version 2 and 3), did exactly that. But
+  then it also failed to implement the '<CODE>Previous</CODE>' dispose
+  method correctly. </P>
+
+  On the other hand the initial canvas should also be set from the formats
+  'background' color too, and that is also not done.  However all modern web
+  browsers clear just the area that was last overlaid to transparency, as
+  such this is now accepted practice, and what IM now follows.
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM version 6.2.6-1, the IM "<CODE><A
+  HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" and "<CODE><A
+  HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" operations
+  did not handle animations that used '<CODE>Background</CODE>' disposal to
+  make pixels transparent, as per all the major web browsers. See <A
+  HREF="../bugs/animation_bgnd/" >Animation Bugs</A> for examples and
+  details. </P>
+
+  These functions however did work fine when no pixel clearing was applied
+  or intended.  This has now been fixed for "<CODE><A
+  HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" and the "<CODE><A
+  HREF="../option_link.cgi?layers" >-layers</A>&nbsp;<A
+  HREF="../anim_opt/#optframe" >OptimizeFrame</A></CODE>' method was created
+  to replace the use of "<CODE><A HREF="../option_link.cgi?deconstruct"
+  >-deconstruct</A></CODE>" as a GIF animation frame optimizing function.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="study"></A>
+<H2>Studying Animations</H2>
+
+Before we can continue with the basics of GIF animation, their types,
+optimizations, and handling techniques, we need some techniques for studying
+existing animations. </P>
+
+
+<A NAME="identify"></A>
+<H3>Identify
+<FONT SIZE=-1>- information about and animation</FONT></H3>
+
+Now an animation consists of a lot of information packed into each individual
+frame.  You can see some of this information using the default IM
+"<CODE><A HREF="../basics/#identify" >identify</A></CODE>" command.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOWARN OUT=identify_prev.txt>
+  identify canvas_prev.gif
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="identify_prev.txt"
+     ><IMG SRC="identify_prev.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  If you did not see output like the above your IM is a little old, and you
+  really should upgrade your installed version of ImageMagick, to the latest
+  version.  If you don't you will be missing out on a lot of the new
+  advances in IM's handling and control of GIF animations.
+</I></FONT></TD></TR></TABLE></P>
+
+As you can see the actual image saved for the second and later frames is only
+32x32 pixels, but all the frames sits on a 100x100 pixel 'virtual canvas' with
+a 'virtual offset' on that larger canvas.  </P>
+
+To see more of the various bits of meta-data that is present you need to use
+some of the more specialzed <A HREF="http://imagemagick.org/script/escape.php"
+>percent Escape Formats</A> to get IM to output it.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOWARN OUT=identify_prev_more.txt>
+  identify -format "%f canvas=%Wx%H size=%wx%h offset=%X%Y %D %Tcs\n" \
+           canvas_prev.gif
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="identify_prev_more.txt"
+     ><IMG SRC="identify_prev_more.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Which clearly shows not only the canvas size, image size and offset, but also
+the disposal and time delays used for each individual frame.  Note how the
+first frame has the different disposal and time delay that was needed for
+proper use of the later '<A HREF="#previous" >Previous</A>' disposal method.
+</P>
+
+
+<A NAME="adjoin"></A>
+<H3>Adjoin
+<FONT SIZE=-1>- splitting an animation into frames</FONT></H3>
+
+Now as you saw above, ImageMagick will by default try to save multiple images
+into one file if that file format allows it.  However as discussed in <A
+HREF="../files/#write_list" >Writing a Multi-Image List</A> IM will let you
+use the "<CODE><A HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>" setting
+to tell it to save each image to disk as a separate individual image. </P>
+
+For example, here we read in one of the GIF animations and output the individual
+frame images in the animation sequence.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert canvas_prev.gif -scene 1 +adjoin  frame_%03d.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="frame_001.gif"
+     ><IMG SRC="frame_001.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="frame_002.gif"
+     ><IMG SRC="frame_002.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="frame_003.gif"
+     ><IMG SRC="frame_003.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="frame_004.gif"
+     ><IMG SRC="frame_004.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="frame_005.gif"
+     ><IMG SRC="frame_005.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+If you were to examine the actual images above you will find that although
+most web browsers show a larger 100x100 area, on which each sub-frame appears.
+In fact most of the actual images show are really only just 32x32 pixels, just
+as show in the previous 'identify' commands above. </P>
+
+That is most of the area is just a canvas on which nothing is drawn, known as
+the images 'page geometry' or 'virtual canvas'. The first
+image of the animation defines that larger 'canvas' and every other frame
+defines an 'offset' position on this larger canvas.  </P>
+
+This extra information is preserved in the frames that was saved by the
+"<CODE><A HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>" setting.  As
+as such you can easilly re-build the GIF animation.  Not only is the page
+information preserved in each separate frame image, but also any delay,
+looping and GIF dispose settings, is also preserved. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+This means that to rebuild the animation you only need to read all the images
+in.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert frame_???.gif  anim_rebuilt.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anim_rebuilt.gif"
+     ><IMG SRC="anim_rebuilt.gif"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Sometimes however you don't want to preserve this page geometry information.
+For example if you want to use the individual frames for other projects.  You
+can reset the page size and offset using the "<CODE><A
+HREF="../option_link.cgi?repage" >+repage</A></CODE>" option, to remove the
+'virtual canvas' information, leaving just the actual image. </P>
+
+<BR>
+
+Normally when extracting animation sub-images you also generally reset the
+images delay and dispose settings too to ensure they don't interfer with the
+editing and display. </P>
+
+For example  here I remove the unwanted virtual canvas and offset and reset
+the timing delays and disposals.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert canvas_prev.gif  +repage  -set delay 0   -set dispose None \
+          +adjoin  repage_%03d.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="repage_000.gif"
+     ><IMG SRC="repage_000.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="repage_001.gif"
+     ><IMG SRC="repage_001.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="repage_002.gif"
+     ><IMG SRC="repage_002.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="repage_003.gif"
+     ><IMG SRC="repage_003.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="repage_004.gif"
+     ><IMG SRC="repage_004.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Of course if you junk that meta-data, you need some way of recording and
+editing that data.  See <A HREF="#list_info" >Animation List Information</A>
+(below) for a script that extracts both the sub-images and saves the animation
+meta-data, in a form that can be used to re-build the animation. </P>
+
+<A NAME="coalesce"></A>
+<H3>Coalesce
+<FONT SIZE=-1>- fill out frames completely</FONT></H3>
+
+Viewing an animation in the form of the sub-frames, however is usually not very
+useful, in a typical animation.  </P>
+
+For one thing, a highly optimized animation can consist of lots of very small
+parts, without any visual indication of how they fit together.  It can also
+have a lot of other 'noise' that was added for <A
+HREF="../anim_opt/#compress_opt" >Compression Optimization</A> to reduce the
+overall file size of the animation. </P>
+
+For example, it is very difficult to figure out what this animation actually
+did, just by looking at the individual sub-frames of the animation.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert script_k.gif  +repage  +adjoin  script_k_%02d.gif
+</CODE></PRE></TD></TR></TABLE>
+<NOBR>
+  <A HREF="script_k_00.gif"
+     ><IMG SRC="script_k_00.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_01.gif"
+     ><IMG SRC="script_k_01.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_02.gif"
+     ><IMG SRC="script_k_02.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_03.gif"
+     ><IMG SRC="script_k_03.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_04.gif"
+     ><IMG SRC="script_k_04.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_05.gif"
+     ><IMG SRC="script_k_05.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_06.gif"
+     ><IMG SRC="script_k_06.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_07.gif"
+     ><IMG SRC="script_k_07.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_08.gif"
+     ><IMG SRC="script_k_08.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_09.gif"
+     ><IMG SRC="script_k_09.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="script_k_10.gif"
+     ><IMG SRC="script_k_10.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</NOBR>
+</DIV></P>
+
+The "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>"
+operation basically converts an image into exactly what the animation should
+look like after the previous frame has been correctly <A HREF="#dispose"
+>disposed</A>, and the next sub-frame overlaid. </P>
+
+That is instead of an animation sequence where each frame only represents the
+overlaid changes to the previous 'disposed' frame. This operator creates a
+complete view of the animation at each point, a bit like a true film strip,
+rather than an animation sequence. Such a sequence, known as a <A
+HREF="#coalesced" >Coalesced Animation</A> is much easier to study, edit,
+modify and re-optimize. </P>
+
+Here for example will generate a montage of the same 'confusing' animation
+sequence I showed above, but this time we'll "<CODE><A
+HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" the sequences, so
+you can see what is really happening.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  montage script_k.gif -coalesce \
+          -tile x1 -frame 4 -geometry '+2+2' \
+          -background none -bordercolor none coalesce_k_montage.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="script_k.gif"
+     ><IMG SRC="script_k.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE><DIV ALIGN=center>
+  <A HREF="coalesce_k_montage.gif"
+     ><IMG SRC="coalesce_k_montage.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see the result is like a film strip of the animation, allowing you
+to clearly see how the previous pieces fit together to form a hand drawn
+letter 'K'. </P>
+
+As of  IM version 6.2.6, the "<CODE>montage</CODE>" command understood the
+use of "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>",
+allowing you to create 'film strip' like image of the animation frames,
+exactly as shown above. This version also contained fixes for coalesce, and
+any GIF animation work should be at least this version (or better still the
+latest version). </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  An even better montage technique for examining animations is given in the
+  next example section.
+</I></FONT></TD></TR></TABLE></P>
+
+The "<CODE><A HREF="../option_link.cgi?dispose" >-dispose</A></CODE>" setting of
+a <I>coalesced image sequence</I> is actually irrelevant, in a <A
+HREF="#coalesced" >Coalesced Animation</A>.  However for users piece of mind
+the "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" operator
+will set the "<CODE><A HREF="../option_link.cgi?dispose" >-dispose</A></CODE>"
+setting of each frame to either '<CODE><A HREF="#none" >None</A></CODE>' or
+'<CODE><A HREF="#background" >Background</A></CODE>' as appropriate, so that
+the coalesced image sequence will continue to animate correctly (as shown
+above).  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  A frame with a '<CODE><A HREF="#background" >Background</A></CODE>'
+  disposal means the next frame needed to clear at least one or more pixels,
+  to be displayed correctly.  </P>
+
+  As such animations in which "<CODE><A HREF="../option_link.cgi?coalesce"
+  >-coalesce</A></CODE>" added a '<CODE><A HREF="#background"
+  >Background</A></CODE>' dispose, means that the animation can not be
+  saved as a simple <A HREF="#overlay" >Overlay Animation</A> (see below).
+  </P>
+
+  Technically, you can set all dispose settings of a coalesced image
+  sequence to either '<CODE><A HREF="#background" >Background</A></CODE>' or
+  '<CODE><A HREF="#previous" >Previous</A></CODE>' to generate a <A
+  HREF="#cleared" >Cleared Frame Animation</A> (see below). Though not all
+  animations will optimize well in that form.
+
+</I></FONT></TD></TR></TABLE></P>
+
+Their are also some non-animation uses of the "<CODE><A
+HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" operator. See <A
+HREF="../layers/#coalesce" >Coalesce, and Progressive Flattening</A>
+examples of these uses.  </P>
+
+<BR>
+
+<A NAME="montage"></A>
+<H3>Animation Frame Montage
+<FONT SIZE=-1>- the "gif_anim_montage" script</FONT></H3>
+
+While "<CODE><A HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>" operator
+will let you extract the actual images from an animation and "<CODE><A
+HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" will let you see the
+resulting frames of the animation, both methods leave out a lot of information
+about the animation. </P>
+
+By using some very careful manipulation of the animation images, you can
+display the frames so as to show not only the actual frames, but also the
+placement of those frames on the larger canvas.  Here is one such method of
+displaying an animation.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -dispose Background   script_k.gif  -matte \
+          -compose Copy -bordercolor black -border 1x1 -compose Over \
+          -coalesce  -bordercolor none   -frame 4x4+2+2 \
+          -bordercolor none -border 2x2 +append  script_k_parts.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="script_k_parts.gif"
+     ><IMG SRC="script_k_parts.gif"
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Here you can clearly see how the animation works. Each sub-frame image is
+positioned so as to add to all the previous overlays. The result is a slowly
+growing picture.  Each frame is also a lot smaller than the 'virtual canvas'
+on which it is positioned. </P>
+
+I use this display technique a lot during the development and debugging of GIF
+animations, as such I converted it into a shell script "<B><CODE><A
+HREF="../scripts/gif_anim_montage" >gif_anim_montage</A></CODE></B>", and
+expanded it to also list some of the details above each frame in the
+animation.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  gif_anim_montage   script_k.gif   script_k_frames.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="script_k_frames.gif"
+     ><IMG SRC="script_k_frames.gif"
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note the variations in the timings used in various frames, to pause as if the
+pen is being lifted from the page and repositioned. Animations with variable
+timing can be some of the most interesting, but also more difficult to handle,
+as you will see in later IM Example pages. </P>
+
+The "<CODE><A HREF="../scripts/gif_anim_montage" >gif_anim_montage</A></CODE>"
+script also the special option '<CODE>-u</CODE>' which will also underlay a
+semi-transparent copy of the coalesced animation.  This lets you see how the
+new sub-frames modifies the displayed animation.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  gif_anim_montage  -u  script_k.gif  script_k_frames.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="script_k_frames.png"
+     ><IMG SRC="script_k_frames.png"
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Of course this has semi-transparent pixels so a 'PNG' image format was needed,
+OR you could use one of the many 'background' options that script also
+provides, allowing you to use GIF or even JPEG formats for the resulting
+summery image of the animation.  </P>
+
+Other options, lets you define the number of rows or columns to use, as well
+as set various non-transparent backgrounds, or use a red box rather than
+the default black. </P>
+
+This script will be used a lot during the next few pages of IM Examples.
+Suggestions and comments are welcome. </P>
+
+<BR>
+
+<A NAME="list_info"></A>
+<A NAME="sequence"></A> <!-- depreciate -->
+<H3>Animation List Information
+<FONT SIZE=-1>- options used to build an animation</FONT></H3>
+
+As I noted,  using "<CODE><A HREF="../option_link.cgi?adjoin"
+>+adjoin</A></CODE>" and "<CODE><A HREF="../option_link.cgi?coalesce"
+>-coalesce</A></CODE>", as well as "<CODE><A HREF="../option_link.cgi?repage"
+>+repage</A></CODE>", are all useful methods of extracting and looking at GIF
+animations. However they all destroy information about the original animation
+in the process. </P>
+
+You can see this extra information on framing, time delays, frame dispose,
+etc., using the  IM "<CODE>identify</CODE>" command with a "<CODE><A
+HREF="../option_link.cgi?verbose" >-verbose</A></CODE>" option.  However I, and
+probably most other users, find the output from this command, overwhelming
+and not really directly usable. </P>
+
+This is where another special shell script I wrote comes in. The "<B><CODE><A
+HREF="../scripts/gif2anim" >gif2anim</A></CODE></B>" script will separate the
+individual frames of the animation, but will also figure out exactly what IM
+"<CODE>convert</CODE>" options you would need in order to re-build the
+animation from those images. </P>
+
+You can think of "<CODE><A HREF="../scripts/gif2anim" >gif2anim</A></CODE>" as
+an animation disassembler, producing a summary of the animation in terms of IM
+options. </P>
+
+For example, lets decode the animation example we have been using to recover
+the original "<CODE>convert</CODE>" settings used to create it, as well as
+individual images used...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  gif2anim canvas_prev.gif
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="canvas_prev.anim"
+     ><IMG SRC="canvas_prev.anim.gif"
+           ALIGN=middle VSPACE=5 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE></TD><TD ALIGN=center>
+    <A HREF="canvas_prev_001.gif"
+       ><IMG SRC="canvas_prev_001.gif"   WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR><A HREF="canvas_prev_002.gif"
+       ><IMG SRC="canvas_prev_002.gif"   WIDTH=32 HEIGHT=32
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR><A HREF="canvas_prev_003.gif"
+       ><IMG SRC="canvas_prev_003.gif"   WIDTH=32 HEIGHT=32
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR><A HREF="canvas_prev_004.gif"
+       ><IMG SRC="canvas_prev_004.gif"   WIDTH=32 HEIGHT=32
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR><A HREF="canvas_prev_005.gif"
+       ><IMG SRC="canvas_prev_005.gif"   WIDTH=32 HEIGHT=32
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR></TD></TR></TABLE></P>
+
+By default the "<CODE><A HREF="../scripts/gif2anim" >gif2anim</A></CODE>"
+script uses the same base file name for the individual images and
+"<CODE>.anim</CODE>" options file. As such the animation sequence file
+generated by the above command is named "<CODE><A HREF="canvas_prev.anim"
+>canvas_prev.anim</A></CODE>", with the individual frame images
+"<CODE><A HREF="canvas_prev_001.gif" >canvas_prev_001.gif</A></CODE>" to
+"<CODE><A HREF="canvas_prev_005.gif" >canvas_prev_005.gif</A></CODE>". </P>
+
+If you examine the results more closely you will see that it actually did
+manage to re-create the original options I used when I first created this GIF
+animation (See <A HREF="#previous" >Dispose Previous Animation</A>).  Also
+while it is not important to actually generating an animation, the size, and
+timings of the overlaid frames is also listed as a comment, to make it easier
+to study. </P>
+
+Rather than save the results to a file you can just list the animation
+sequence options to the screen using a "<CODE>-l</CODE>" flag.  That is just
+output the animation sequence file, rather than save it, or the individual
+frame images of the animation.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  gif2anim -l canvas_prev.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+
+Given a "<CODE>.anim</CODE>" file and the individual framing images,
+a complementary script "<B><CODE><A HREF="../scripts/anim2gif"
+>anim2gif</A></CODE></B>" can be used to re-build the animation.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR VALIGN=top><TD><PRE><CODE EXECUTE>
+  anim2gif canvas_prev.anim
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="canvas_prev_anim.gif"
+     ><IMG SRC="canvas_prev_anim.gif"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The  "<CODE><A HREF="../scripts/anim2gif" >anim2gif</A></CODE>" by default
+will re-create the GIF animation with a "<CODE>_anim.gif</CODE>" suffix.  You
+can see that the resulting "<CODE><A HREF="canvas_prev_anim.gif"
+>canvas_prev_anim.gif</A></CODE>" animation generated, looks and works exactly
+like the original animation.  </P>
+
+This script simply replaces the special string "<CODE>BASENAME</CODE>" used in
+the "animation sequence file", strips all comments, then just pass the convert
+options that is left into the "<CODE>convert</CODE>" command.  In other words
+it treats the above file as a type of 'convert' script with comments. </P>
+
+The reason a special string was used, is because this then allows you to
+specify a different base filename than the name of the "<CODE>.anim</CODE>"
+file itself.  That way you can use a completely different set of frame images,
+such as modified versions of the original, to recreate a different animation
+from the old one.  This is very useful feature, which will used in more
+complex animation processing. (See <A HREF="../anim_mods/#append" >Appending
+Animations Side-By-Side</A> for an example).  </P>
+
+Like "<CODE><A HREF="../scripts/gif2anim" >gif2anim</A></CODE>", the "<CODE><A
+HREF="../scripts/anim2gif" >anim2gif</A></CODE>" script has quite a number of
+useful options, to help you process and modify animations.  Some of these
+options will be used later. For example see <A HREF="../anim_mods/#append"
+>Appending Animations</A>. </P>
+
+Also as the "<CODE>.anim</CODE>" file is plain text you can use it take the
+decoded images of an animation to adjust the GIF's meta-data, such as the
+timings, positions, repeating sections of an animation, or adding new frames
+and images to an animation. This was after all why I originally wrote the
+scripts, long before I got involved with IM examples. </P>
+
+For now the "<CODE><A HREF="../scripts/gif2anim" >gif2anim</A></CODE>" will be
+most useful for examining an animation sequence to see just what is happening,
+and the timings that is being applied between frames.  </P>
+
+
+<A NAME="dispose_images"></A>
+<H3>Dispose Images
+<FONT SIZE=-1>- the GIF dispose form of the frames</FONT></H3>
+
+This special "<CODE><A HREF="../option_link.cgi?layers" >-layers</A></CODE>"
+method, '<CODE><B>Dispose</B></CODE>' shows what the frame should look like
+<I>after</I> the time delay is finished, and the GIF dispose method has been
+applied, but <I>before</I> the next frames image is overlaid. </P>
+
+In other words this show exactly what the GIF "<CODE><A
+HREF="../option_link.cgi?dispose" >-dispose</A></CODE>" method setting actually
+does to the frame, allowing you figure out exactly what is going wrong with
+your animation. </P>
+
+For example here is how each of our three <A HREF="#dispose" >Dispose Method
+Example Animations</A> look like after the individual frame dispose method was
+applied.   Remember each of these animations consist of a 'canvas image' that
+was set with a '<CODE><A HREF="#none" >None</A></CODE>' "<CODE><A
+HREF="../option_link.cgi?dispose" >-dispose</A></CODE>"  setting, then followed
+by four smaller images overlaid then disposed of by the various GIF dispose
+methods. </P>
+
+'<CODE><A HREF="#none" >None</A></CODE>' dispose animation...
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  canvas_none.gif -layers Dispose canvas_none_dispose.gif
+  gif_anim_montage canvas_none_dispose.gif canvas_none_dispose_frames.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="canvas_none_dispose_frames.gif"
+     ><IMG SRC="canvas_none_dispose_frames.gif"
+            ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+'<CODE><A HREF="#previous" >Previous</A></CODE>' dispose animation...
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  canvas_prev.gif -layers Dispose canvas_prev_dispose.gif
+  gif_anim_montage canvas_prev_dispose.gif canvas_prev_dispose_frames.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="canvas_prev_dispose_frames.gif"
+     ><IMG SRC="canvas_prev_dispose_frames.gif"
+            ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+'<CODE><A HREF="#background" >Background</A></CODE>' dispose animation...
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  canvas_bgnd.gif -layers Dispose canvas_bgnd_dispose.gif
+  gif_anim_montage canvas_bgnd_dispose.gif canvas_bgnd_dispose_frames.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="canvas_bgnd_dispose_frames.gif"
+     ><IMG SRC="canvas_bgnd_dispose_frames.gif"
+            ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+If you study the above you can see exactly how each of the three GIF dispose
+methods clear the animation of that frames overlaid image.  Note that the
+first frame of these three animations is always set to a dispose of
+'<CODE>None</CODE>' so will remain unchanged. It is the effect of the dispose
+method in the later frames that is imporant. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    The "<CODE>-layers Dispose</CODE>" operation only generates the
+    'coalesced' sequence of the disposal frames. It does not reset the
+    disposal setting itself, and as such the result may not animate properly.
+    To make the above animate correctly set all disposal methods to
+    '<CODE>previous</CODE>' or '<CODE>background</CODE>' or you can optimize
+    the animation, before saving.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    The look of the final frame after the GIF dispose method is normally of no
+    consequence to a GIF animation, as the whole canvas is completely cleared
+    before the animation repeats (loops).  If it does not 'loop' but stops
+    at the end of the animation sequence, then the final frames disposal is
+    not applied. </P>
+
+    In other words the appearance of the last frame (after disposal) as shown
+    above, or even the actual dispose setting of the last frame, does have any
+    effect on a GIF animation.  IM generally sets this to same as the previous
+    frame when it trys to work out an appropriate disposal method, during a <A
+    HREF="../anim_opt/#optframe" >Frame Optimize</A> an animation.
+
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="deconstruct"></A>
+<H3>Deconstruct
+<FONT SIZE=-1>- report areas of frame differences</FONT></H3>
+
+The traditional way in ImageMagick to optimize an animation, making the result
+smaller and faster to download and animate, is to "<CODE><A
+HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" its "<CODE><A
+HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" form. <I>This is no
+longer recommended</I>. Instead you use should use the <A
+HREF="../anim_opt/#optimize" >General GIF Optimizer</A>. </P>
+
+This operator will take a coalesced sequence of images (the animation frames
+as they actually appear when displayed), and compare the second and later
+images with that of the previous image. It then replaces that image with the
+smallest rectangular area of the pixels that had changed.  Any pixel change,
+will count, regardless of if it is a color change (overlay) or cleared
+(erased). </P>
+
+This is quite simple, and for a typical <A HREF="#overlay" >Overlay
+Animations</A> will generate an optimal <A HREF="../anim_opt/#frame_opt"
+>Frame Optimization</A> for that animation. An <A HREF="#overlay" >Overlay
+Animations</A> animation however only use a '<CODE><A HREF="#none"
+>None</A></CODE>' dispose method only. </P>
+
+For example lets take the <A HREF="#coalesce" >coalesce previous animation</A>
+we generated above, which happens to form a  <A HREF="#overlay" >Overlay
+Animation</A>, and run it though the "<CODE><A
+HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" operator.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top>
+<TD WIDTH=80% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  canvas_prev.gif   -coalesce     coalesce.gif
+  convert  coalesce.gif     -deconstruct   deconstruct.gif
+  gif_anim_montage  coalesce.gif     coalesce_frames.gif
+  gif_anim_montage  deconstruct.gif  deconstruct_frames.gif
+</CODE></PRE></TD></TR></TABLE></TD>
+<TD ALIGN=center ROWSPAN=2>
+  <A HREF="deconstruct.gif"
+     ><IMG SRC="deconstruct.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR><TR><TD ALIGN=center><NOBR>
+  <A HREF="coalesce_frames.gif"
+     ><IMG SRC="coalesce_frames.gif"
+           ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/space.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+<BR><IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="deconstruct_frames.gif"
+     ><IMG SRC="deconstruct_frames.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</NOBR></TD></TR></TABLE></P>
+
+A 'previous dispose animation' if you remember clears each frame to the last
+non-previous disposed frame, in this case the initial background canvas.
+
+As you can see "<CODE><A HREF="../option_link.cgi?deconstruct"
+>-deconstruct</A></CODE>" returned the area that changed from one coalesced
+frame to the next.  Resulting in an optimized <A HREF="#overlay" >Overlay
+Animation</A>, that requires no special dispose setting. </P>
+
+This is nowhere near as optimal as the original hand generated animation I
+started with, but is useful in itself. </P>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD ALIGN=justify>
+Unfortunately "<CODE><A HREF="../option_link.cgi?deconstruct"
+>-deconstruct</A></CODE>" has absolutely no understanding of the GIF animation
+"<CODE><A HREF="../option_link.cgi?dispose" >-dispose</A></CODE>" settings.
+Consequently if you try this on an animation that clears pixels from one frame
+to the next, such as the '<A HREF="#background" >background disposed</A>'
+animation we created above (and shown left), it will fail badly.
+</TD><TD>
+  <A HREF="canvas_bgnd.gif"
+     ><IMG SRC="canvas_bgnd.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Here we take the just shown animation, and run it though a "<CODE><A
+HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" and "<CODE><A
+HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" cycle.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert canvas_bgnd.gif  -coalesce  -deconstruct  deconstruct_erase.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="deconstruct_erase.gif"
+     ><IMG SRC="deconstruct_erase.gif"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see "<CODE><A HREF="../option_link.cgi?deconstruct"
+>-deconstruct</A></CODE>", slowly destroys the animation. Basically "<CODE><A
+HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" is designed to
+simply find the differences between image layers.  It was never designed to
+correctly optimize animations, and will fail for animations that need to use
+various disposal techniques to clear (erase or make transparent) previously
+overlaid pixels. </P>
+
+
+<A NAME="compare"></A>
+<H3>Frame Comparisons
+<FONT SIZE=-1>- more detailed comparing of frames</FONT></H3>
+
+With IM v6.2.6-2, a number of extra GIF frame comparison methods were added.
+</P>
+
+These were needed internally for proper optimization of animations, but was
+deems useful enough to make them available to the command line and other API
+interfaces. </P>
+
+
+<A NAME="compareany"></A>
+<H4>Compare_Any</H4>
+
+The "<CODE><A HREF="../option_link.cgi?layers" >-layers</A></CODE>" method
+'<CODE><B>CompareAny</B></CODE>' is actually exactly the same as "<CODE><A
+HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>".  In fact the
+"<CODE><A HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>"
+operator is only a functional alias for the '<CODE>CompareAny</CODE>' method.
+</P>
+
+Again lets look at the actual image results of a 'deconstruct' or
+'<CODE>CompareAny</CODE>' of the '<A HREF="#background" >background
+disposed</A>' animation.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert canvas_bgnd.gif  -coalesce  canvas_bgnd_coal.gif
+  gif_anim_montage canvas_bgnd_coal.gif canvas_bgnd_coal_frames.gif
+
+  convert canvas_bgnd_coal.gif  -layers CompareAny   compare_any.gif
+  gif_anim_montage compare_any.gif compare_any_frames.gif
+</CODE></PRE></TD></TR></TABLE>
+<NOBR>
+  <A HREF="canvas_bgnd_coal_frames.gif"
+     ><IMG SRC="canvas_bgnd_coal_frames.gif"
+            ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/space.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+<BR><IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="compare_any_frames.gif"
+     ><IMG SRC="compare_any_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</NOBR></DIV></P>
+
+As you can see the second and later images, is the minimal rectangular area
+that contains all the pixels that have changed, whether it is an overlay of a
+new pixel color, or a clearing of an old pixel to transparency. </P>
+
+<A NAME="compareclear"></A>
+<H4>Compare_Clear</H4>
+
+The "<CODE><A HREF="../option_link.cgi?layers" >-layers</A></CODE>" method
+'<CODE><B>CompareClear</B></CODE>' will show the smallest rectangular area
+that contains all the pixels that needed to be cleared from one frame to the
+next.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE ERR=/dev/null>
+  convert canvas_bgnd_coal.gif -quiet -layers CompareClear compare_clear.gif
+  gif_anim_montage compare_clear.gif compare_clear_frames.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="compare_clear_frames.gif"
+     ><IMG SRC="compare_clear_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Notice that as no pixels were cleared between the first and second frame, a
+special <A HREF="../crop/#crop_missed" >Missed Image</A> was generated. The
+"<CODE><A HREF="../option_link.cgi?quiet" >-quiet</A></CODE>" setting was used
+to tell IM not to give any warning about this image. </P>
+
+If all the later frames all become 'missed' images, then the GIF animation
+never clears pixels, and the animation can be classed as a <A HREF="#overlay"
+>Overlay Animation</A>. </P>
+
+<A NAME="compareoverlay"></A>
+<H4>Compare_Overlay</H4>
+
+The last "<CODE><A HREF="../option_link.cgi?layers" >-layers</A></CODE>"
+comparison method, '<CODE><B>CompareOverlay</B></CODE>', returns the area of
+pixels that were overlaid (added or changed in color, but not cleared) since
+the previous frame.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert canvas_bgnd_coal.gif  -layers CompareOverlay  compare_overlay.gif
+  gif_anim_montage compare_overlay.gif compare_overlay_frames.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="compare_overlay_frames.gif"
+     ><IMG SRC="compare_overlay_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+This is similar to the special IM specific '<A HREF="../compose/#changemask"
+>ChangeMask</A>" Alpha Composition Method. However, that returns just the
+pixels that change the image, rather than the rectangular area that was
+changed.  See also <A HREF="../anim_opt/#opt_trans" >Transparency
+Optimization</A>. </P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    None of the "<CODE><A HREF="../option_link.cgi?layers" >-layers</A></CODE>"
+    comparison methods, nor the "<CODE><A HREF="../option_link.cgi?deconstruct"
+    >-deconstruct</A></CODE>" operator, look at or modify the image GIF
+    dispose method that is used.  The results is just a list of images, and
+    not expected to be used as animations themselves.
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    While the operators are designed to work with a coalesced image sequence,
+    they will accept a non-coalesced sequence of image layers, without
+    producing an error. </P>
+
+    In this case each frame is overlaid onto the previous overlaid frames
+    using a '<CODE><A HREF="../compose/#copy" >Copy</A></CODE>' alpha
+    composition method, before the frames are compared.  This alpha
+    composition method ensures that any transparency in a layer will also be
+    added to the destination image. Without this the above would not find
+    pixels that get cleared to transparency in a coalesced image sequence.
+    </P>
+
+    Note that this is different to the more normal '<CODE><A
+    HREF="../compose/#over" >Over</A></CODE>' composition method that the
+    "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" operator
+    would use for handling the 'dispose/overlay' cycle needed to display
+    a GIF animation. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="types"></A>
+<H2>Types of Animations</H2>
+
+Most GIF animations you find fall into some basic types of animation.  Knowing
+about these types allows you understand how that animation is being displayed
+from one frame to another, and can allow you to take shortcuts in how you
+handle and modify the animation. </P>
+
+<A NAME="coalesced"></A>
+<H3>Coalesced Animations</H3>
+
+A '<B>Coalesced Animation</B>' is basically an image sequence that shows what
+an animation should look like when displayed to an user after each
+'dispose/overlay' cycle.  The images are basically as you would see them if
+you were looking at an actual 'film strip' of the animation.  It is the
+simplified and completely un-optimized form of any animation. </P>
+
+This naming convention is from the name of the IM "<CODE><A
+HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" operator that is used
+to convert GIF disposal animations, into an un-optimized 'Coalesced Animation'.
+</P>
+
+Most video formats (MPEG, AVI etc) are actually also 'Coalesced Animations' by
+their very nature.  However these also tend not to have any transparent
+pixels, and generally have a constant time delay between the frames of the
+animation.  A coalesced GIF animation however can have transparent pixels, and
+widely varying time delays from immediate '0' delays, to very fast, or very
+very very slow. </P> </P>
+
+Any GIF disposal setting in a coalesced animation does not have any meaning,
+however the "<CODE><A HREF="../option_link.cgi?coalesce"
+>-coalesce</A></CODE>" operator will set the disposal appropriately so the
+resulting image sequence can still work as a valid GIF animation. </P>
+
+Video formats which always replaces every pixel from one frame to the next can
+generally just use a '<CODE><A HREF="#none" >None</A></CODE>' or '<CODE><A
+HREF="#none" >Undefined</A></CODE>'  GIF disposal setting. </P>
+
+Here is an example of an animation that is also by its nature a Coalesced
+Animation, plus a "<CODE><A HREF="../scripts/gif_anim_montage"
+>gif_anim_montage</A></CODE>" display of the animations individual frames.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=middle><TD WIDTH=10%>
+<TD WIDTH=80% ALIGN=center>
+  <A HREF="smoke_skull_frames.gif"
+     ><IMG SRC="smoke_skull_frames.gif" WIDTH=684 HEIGHT=296
+           ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+<TD ALIGN=center>
+  <A HREF="smoke_skull_anim.gif"
+     ><IMG SRC="smoke_skull_anim.gif"   WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Most animations that do not contain, or use, transparency, and which animate
+the entire canvas, are usually saved and distributed as Coalesced Animations.
+</P>
+
+
+<A NAME="overlay"></A>
+<H3>Overlay Animations</H3>
+
+An '<B>Overlay Animation</B>' is one in which each frame of an animation only
+overlays new pixels to the animation currently displayed.  In other words at
+no point in the animation does it need to clear a pixel to transparency. The
+individual frames can contain transparency, either as a background, or as part
+of its optimization, but it never clears a pixel back to transparency. </P>
+
+Of course if no transparency is used at all, then the animation is guaranteed
+to be able to be turned into a simple Overlay Animation. </P>
+
+This is probably the simplest type of <A HREF="#frame_opt" >Frame
+Optimized</A> animation, and one that requires no special handling by clients.
+Each frame that is shown to the user can be viewed as simply as 'flattened'
+image of all the previous frames. </P>
+
+Any animation that only uses a '<CODE><A HREF="#none" >None</A></CODE>' GIF
+disposal method is an 'Overlay Animation'. The last example for instance is
+not only a '<A HREF="#coalesced" >Fully Coalesced Animation</A>' but also a
+'Overlay Animation', though not all such 'Fully Coalesced Animations' are
+'Overlay Animations'. </P>
+
+You can test if an animation can become an overlay animation by using the
+'<CODE><A HREF="#compareclear" >CompareClear</A></CODE>' layers method on a <A
+HREF="#coalesce" >Coalesced</A> animation, and checking if all the second and
+later images are 'missed images'. That is no pixel needed to be cleared or
+erased from one frame to the next. </P>
+
+In fact if an animation can become an overlay animation, without modification,
+then the IM "<CODE><A HREF="#coalesce" >coalesce</A></CODE>" operator will
+only use '<CODE><A HREF="#none" >None</A></CODE>' disposal methods for all the
+frames.  If this is not the case then "<CODE><A HREF="#coalesce"
+>coalesce</A></CODE>" will have used '<CODE><A HREF="#background"
+>Background</A></CODE>' disposal for at least some of the frames.  This then
+gives you with another test for 'overlay only' capability. </P>
+
+Overlay animations can use transparency, but they do not have any moving parts
+on a transparent background.  For example, the animation of a hand drawn
+letter 'K', is an overlay animation, as each part only adds or changes
+existing parts on a transparent background.  It never adds new transparency to
+the resulting image (except as part of the first frame).
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=middle><TD WIDTH=10%>
+<TD WIDTH=80% ALIGN=center>
+  <A HREF="script_k_frames.gif"
+     ><IMG SRC="script_k_frames.gif"
+           ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+<TD ALIGN=center ROWSPAN=3>
+  <A HREF="script_k.gif"
+     ><IMG SRC="script_k.gif"          WIDTH=53 HEIGHT=54
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+  <A HREF="dl_world_anim.gif"
+     ><IMG SRC="dl_world_anim.gif"          WIDTH=110 HEIGHT=60
+           ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+That is not to say an moving object can't be handled by an overlay animation,
+it just means you need a non-transparent background so you can also 'erase'
+the old positions of the moving parts without needing transparency.  For
+example look at the frames of this "download the world into a folder"
+animation... <BR CLEAR=all>
+
+<DIV ALIGN=center>
+  <A HREF="dl_world_frames.gif"
+     ><IMG SRC="dl_world_frames.gif"
+           ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Of course by needing to 'erase' old parts by overlay the original background
+means that overlaid sub-images are generally bigger, and hence a generally
+larger GIF animation file size. </P>
+
+Unfortunately using the IM's <A HREF="../anim_opt/#optframe" >Optimize
+Frame</A> operator, can, and most probably will, turn a 'Coalesced Overlay
+Animation' into into something that is not a 'Overlay Animation', in its
+attempt to find smaller GIF file size. </P>
+
+However by using <A HREF="#deconstruct" >Deconstruct</A> on the animation
+instead of using <A HREF="../anim_opt/#optframe" >Optimize Frame</A>, you can
+ensure the animation remains a simple 'Overlay Animation', but only if the
+animation is really a 'Overlay Animation'.  If the animation isn't a 'Overlay
+Animation', then <A HREF="#deconstruct" >Deconstruct</A> operation can go
+badly wrong (See <A HREF="#deconstruct" >Deconstruct</A> above). </P>
+
+With some human skill you can still optimize an overlay animation better, for
+example using <A HREF="../anim_opt/#splitting" >Split Frame Updates</A>, and
+applying some form of <A HREF="../anim_opt/#compress_opt" >Compression
+Optimization</A> without destroying the 'Overlay Only' requirement of the
+animation.  </P>
+
+Typically 'Overlay Animations' display no transparency at all (they can use
+it as part of optimization, but they don't display it).  And if no
+transparency is displayed, then the animation is guaranteed to be a 'Overlay
+Animation'. </P>
+
+Why is 'Overlay Animations' so important? Because there is software out there
+that are limited to this type of animation.  It is much simplier to handle as
+only overlay is performed without need to handle transparency, or save the
+previous frame to handle GIF disposal methods.  Such software is rare but does
+exist.  </P>
+
+
+<A NAME="cleared"></A>
+<H3>Cleared Frame Animations</H3>
+
+When an animation only uses just '<A HREF="#previous" >Previous</A>' or '<A
+HREF="#background" >Background</A>' GIF disposal, you get a very special type
+of animation. </P>
+
+Note that if only '<A HREF="#background" >Background</A>' disposals is used,
+all the frames of an animation are displayed then cleared before the next
+frame is displayed.  Also when only '<CODE><A HREF="#previous"
+>Previous</A></CODE>' are used, the animation is always returned to the
+initial cleared canvas before the next frame is displayed, resulting in the
+same effect.  Same happens if you only use a mix of those two disposal
+settings. </P>
+
+That is, animations that only uses these disposal methods will have frames
+that are complete copies of what is to be displayed.  That is, the frame
+contains everything that will be displayed to the user at that point in time.
+</P>
+
+That is not to say that the animation is a '<A HREF="#coalesced" >Fully
+Coalesced Animation</A>'. As the sub-frame may be a lot smaller than the
+virtual canvas area of the animation, but everything outside that frame will
+be regarded as transparent (or background), containing nothing of importance.
+</P>
+
+For example take a look at this running bunny animation...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=middle><TD WIDTH=10%></TD>
+<TD WIDTH=80% ALIGN=center>
+  <A HREF="bunny_frames.gif"
+     ><IMG SRC="bunny_frames.gif"
+           ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+<TD ALIGN=center>
+  <A HREF="bunny_anim.gif"
+     ><IMG SRC="bunny_anim.gif"          WIDTH=110 HEIGHT=64
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that each and every sub-frame is the complete image that is displayed.
+No more, no less.  Also notice that none of the frames actually needs to use
+the whole virtual canvas of the animation.  And finally note how all the frame
+disposals are set to '<CODE><A HREF="#previous" >Previous</A></CODE>', which
+for reasons you will see below is the more logical disposal setting to use.
+All the disposal settings could however have been set to '<CODE><A
+HREF="#background" >Background</A></CODE>' disposal or any mix of the two
+without changing the final result.</P>
+
+For want of a better name I call such an animation a '<B>Cleared Frame
+Animation</B>', but I have also seen it called a 'Previous or Background
+Disposal Animation'. </P>
+
+The only time that an animation is not of this type is if at least one
+non-blank frame in the animation used a '<CODE><A HREF="#none"
+>None</A></CODE>' or '<CODE>Undefined</CODE>' (same thing) disposal method.
+</P>
+
+This animation is very special, as it can handle any amount of transparency
+clearing, anywhere within the animation sequence, unlike a <A HREF="#overlay"
+>Overlay Animation</A>.  But it can also be overlaid onto ANY static
+background image really quickly. </P>
+
+To do this we need to tighten the definition of a 'Cleared Frame Animation'
+slightly.  Specifically we need to make sure all the disposals are set to
+'<CODE><A HREF="#previous" >Previous</A></CODE>' (which is already the case in
+our example).  If that is done, then you can just pre-pend an image (with a
+zero delay) to underlay a background.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+For example lets place our bunny on some grass....
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert bunny_grass.gif bunny_anim.gif -loop 0  bunny_on_grass.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="bunny_on_grass.gif"
+     ><IMG SRC="bunny_on_grass.gif"   WIDTH=120 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see this is so simple that many applications use these types of GIF
+animations to add symbols or other indicators (file locks, smileys, stars,
+etc) to larger objects. </P>
+
+Animating such a GIF animation is also easy, as the application can just clear
+the area to some simple constant background image, and overlay the next frame
+in the sequence. No need to calculate disposals, or keep track of a 'previous'
+display, other than the static unchanging background display. </P>
+
+This is also the reason why a '<CODE><A HREF="#previous" >Previous</A></CODE>'
+disposal is the preferred disposal for a <A HREF="#cleared" >Cleared Frame
+Animation</A>. </P>
+
+Unlike a <A HREF="#overlay" >Overlay Animation</A> which are only a special
+sub-set of GIF animations, ALL animations can be saved as a <A HREF="#cleared"
+>Cleared Frame Animation</A>.  Just <A HREF="#coalesce" >coalesce</A> the
+animation, and optionally <A HREF="../crop/#trim" >trim</A> any surrounding
+transparent edges to frame optimize it, and reset the disposals.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert any_animation.gif -coalesce -trim \
+          -set dispose previous   cleared_frame_animation.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+You can even re-position the animation on that background...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert bunny_grass.gif \( bunny_anim.gif -repage 0x0+5+15\! \) \
+          -loop 0  bunny_on_grass2.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="bunny_on_grass2.gif"
+     ><IMG SRC="bunny_on_grass2.gif"   WIDTH=120 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As such a <A HREF="#cleared" >Cleared Frame Animation</A> typically consists
+of a small, constantly changing or moving object on a transparent
+background. These are directly usable on web pages, or as animated symbols, or
+can be merged with other animations to produce much more complex animations.
+</P>
+
+In summery this type of animation is a good style to use in a library of
+animated parts, for use in creating larger more complex animations. </P>
+
+<BR>
+
+There is however a problem with adding background like this for GIF
+animations.
+
+If you look at the previous examples, you would probably have notice a
+significant and disturbing pause in the fast moving animation. That is the
+bunny vanished for a moment, when the animation looped, and the background
+image is re-loaded. (See notes in <A HREF="#zero" >Zero Delay Frames</A> )</P>
+
+Though this is not a problem for applications that use this technique, for
+adding animated symbols to displayed objects, as they just don't display that
+'intermediate' frame, anyway. </P>
+
+As such if are adding a non-transparent background to the GIF animation, then
+it is generally a good idea to convert the simple <A HREF="#cleared" >Cleared
+Frame Animation</A> into a <A HREF="#overlay" >Overlay Animation</A>.  That is
+add that background to every frame of the animation, rather than give an
+initial canvas. </P>
+
+You can do that by either, <A HREF="#coalesce" >Coalescing</A> the above
+animation, then deleting the <A HREF="#zero" >Zero Delay</A> Background frame,
+OR <A HREF="../anim_mods/#composite" >Layer Composite</A> the original
+animation onto a <A HREF="../anim_mods/#background" >Static Background</A>.
+</P>
+
+For example...
+<DIV ALIGN=center>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert bunny_grass.gif \( bunny_anim.gif -repage 0x0+5+15\! \) \
+          -coalesce -delete 0 -deconstruct -loop 0  bunny_bgnd.gif
+  gif_anim_montage  bunny_bgnd.gif  bunny_bgnd_frames.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="bunny_bgnd.gif"
+     ><IMG SRC="bunny_bgnd.gif"   WIDTH=120 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+  <A HREF="bunny_bgnd_frames.gif"
+     ><IMG SRC="bunny_bgnd_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Now that all the frames are displayed equally well, no pause can be seen as
+the background is reset.  The animation however is now an <A HREF="#overlay"
+>Overlay Animation</A> with background being 're-drawn' due to the movement of
+the animation object, as such it is probably a bit larger in file size. </P>
+
+See <A HREF="../anim_opt/#opt_trans" >Transparency Optimization</A> for
+a continuation of the optimization of the above result. </P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    The IM forum member <A HREF="../forum_link.cgi?u=3499" >el_supremo</A>,
+    Pete, has contributed a MagickWand equivelent script, <A
+    HREF="http://members.shaw.ca/el.supremo/MagickWand/bunny.htm" >Cleared
+    Frame onto Background example</A>. </P>
+    
+    This example is also discussed in detail in the IM Forum <A
+    HREF="../forum_link.cgi?f=6&t=20472" >Creating a Cleared Frame GIF
+    Animation in the MagickWand</A>. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="mixed"></A>
+<H3>Mixed Disposal Animations
+<FONT SIZE=-1>- multi-background animations</FONT></H3>
+
+There is nothing preventing you from mixing the various disposal methods in a
+single GIF animation.  If fact adding a background to a <A HREF="#cleared"
+>Cleared Frame Animation</A>, does exactly that. </P>
+
+Using mixing disposal methods not so simple for us humans, but doing so can
+allow you to generate some very complex animated displays.  In general they
+are created as part of automatic <A HREF="../anim_opt/#frame_opt" >Frame
+Optimization</A> for a particular animation. </P>
+
+Just remember the result will not be directly usable as the previous animation
+types for specific purposes.  In fact do not be surprised if some GIF handling
+programs, just do not handle a 'Mixed Disposal Animation' properly.  That
+includes some of the GIF optimizers available. </P>
+
+A typical example of a 'Mixed Disposal Animation' is a small moving object
+that causes some semi-permanent but temporarilly static change in the
+animations background.  A ball hitting a lever would be one example.  </P>
+
+<PRE><I>Simple Example wanted</I></PRE>
+
+Similarly animations involving two very small moving objects on a larger
+transparent display can only be optimized well by mixing up the disposal
+techniques, so that each object is moved using separate animation frames. </P>
+
+<PRE>FUTURE,
+A more complex animation for study.
+ * Start with a semi-transparent canvas
+ * run a little 'previous' disposal
+ * leave one frame as a new 'canvas'
+ * more previous animations
+ * erase that 'addition' using a 'background' disposal set as new canvas
+ * continue back to start point.
+This animation should thoroughly test out not only IM disposal methods
+but also various browser disposal methods.
+</PRE>
+
+
+<I>If you like to contribute an IM example of such an animation you can get
+your name, and home page link here!</I> </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="loop"></A>
+<H2>The End of the Loop
+<FONT SIZE=-1>- when an animation stops</FONT></H2>
+
+It is often regarded as a good idea not to make animations loop forever, as
+client machines have to continually work while the animation is still
+animating.  As such it is a good idea to think about how many times your
+animation actually loops. </P>
+
+Basically..
+<DIV ALIGN=center><B>
+             Add a loop limit to your animations (if practical)
+</B></DIV></P>
+
+This is especially the case for large animations used as a logo at the top of
+a web page.  Depending on the overall time for which an animation runs, 10 to
+30 loops is usually enough for large logos.  And you should add a loop limit
+for all such animations, to be kind to your users. </P>
+
+A "<CODE><A HREF="../option_link.cgi?loop" >-loop</A></CODE>" save setting of 0,
+means to loop forever.  This is typically what is used, and that is okay, for
+small animations.  Some browsers however enforce a stop when an animation
+reaches some internal loop limit (often 256 loops). </P>
+
+For IM Examples I have generally used a '0' "<CODE><A
+HREF="../option_link.cgi?loop" >-loop</A></CODE>" save setting, meaning 'loop
+forever', because the animations can appear anywhere on a page.  That means it
+may be some time between when the user loaded a page to when they finally look
+at and read about a particular GIF animation.  If I did use a smaller number
+of 'loops', the animation would no longer be doing what it should be
+demonstrating, loosing its effectiveness. </P>
+
+For large animations on top level flash pages, a "<CODE><A
+HREF="../option_link.cgi?loop" >-loop</A></CODE>" of '1', the normal GIF
+animation default, can be used.   This means run though the animation once
+only and then stop. </P>
+
+Which brings us to an all important question..  <B>Stop where?</B> </P>
+
+Some browsers, like the old "<CODE>Netscape</CODE>" browser, re-displayed the
+first frame of the animation.  Most modern browsers however will just stop
+on the last frame, ignoring that frames useless <A HREF="#dispose" >dispose</A>
+setting. </P>
+
+What a specific application does however is up to the application as there is
+no true standard. Actually even the use of the 'loop' meta-data, is itself
+non-standard, just something that the old "<CODE>Netscape</CODE>" browser
+implemented, and all later browsers copied. </P>
+
+Because of this, if there is some specific frame that you want your animation
+to stop on, say the frame with your company name or logo on it, then it is a
+good idea to make that frame both the first and last frame of an animation One
+of those frames however should be given a 'zero delay', so as not to effect
+the overall loop time length of the animation. </P>
+
+So just to summarize...
+<DIV ALIGN=center><B>
+      If loop limited, add the 'stop' frame as BOTH first and last frames.
+</B></DIV></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="zero"></A>
+<H2>Zero Delay Intermediate Frames</H2>
+
+We have already seen use of a frame that has a 'zero delay', with regard to
+a <A HREF="#cleared" >Cleared Frame Animations</A>.  I also used them to
+explain <A HREF="#previous" >Previous and Background Disposals</A>. </P>
+
+These special frames are actually a lot more common then people would probably
+think. They represent not only methods to prepend a background 'canvas' to an
+animation (such as I have used them for above).  But they are also a must for
+some of the more complex <A HREF="../anim_opt/#opt_frame" >Frame
+Optimization</A> techniques, such as <A HREF="../anim_opt/#doubling" >Frame
+Doubling</A> and <A HREF="../anim_opt/#splitting" >Splitting Frame
+Updates</A>. </P>
+
+Another (very old pre-PNG format) usage was to allow you to create static GIF
+images that contained more than the 256 color limit!  That is each frame
+provides 256 colors, and the next frame the next set of 256 colors, all with
+zero delay and no looping at the end.  Thanks to <A
+HREF="../forum_link.cgi?u=23894" >TLUL</A> in the discussion <A
+HREF="../forum_link.cgi?f=1&t=22855">Creating unquantized GIFs</A> for
+pointing this out. </P>
+
+These '<I>zero delay intermediate frames</I>' are not meant to be displayed to
+an user. They are just used to create special effects in GIF images that are
+otherwise not posible or better optimized than you would get without them.
+</P>
+
+In summary...
+<DIV ALIGN=center><B>
+             Zero Delay Frames are Intermediate Frames,
+<BR>         They are not meant to be visible to users.
+</B></DIV></P>
+
+ImageMagick not only will create such frame in animations as part of its
+automatic '<A HREF="../anim_opt/#optimizeplus" >OptimizePlus</A>', but also
+provides a way to remove them using the '<A HREF="../anim_opt/#removezero"
+>RemoveZero</A>' layers method. </P>
+
+Watch out for them, as they will often complicate your handling of Animations.
+</P>
+
+Okay so they are important, what of it?
+
+Because many applications don't like them, or incorrectly handle them.  They
+consider 'Zero Delay Frames' as a bad thing, even when you purposely add them
+to animations, for some reason or another.  </P>
+
+Here is summary of applications that I know about or have been told,
+'do the wrong thing'... </P>
+
+<TABLE ALIGN=center>
+<TR VALIGN=top><TD><B>Gimp</B>
+<TD>Will not save a 'Zero Delay Frame', they always add a minimal time
+    delay to any frame that has a zero time delay. :-( <BR>&nbsp;
+
+<TR VALIGN=top><TD><B>FireFox</B>
+<TD>Will give a slight non-zero pause on such frames.  This presumably is so
+    that animations that have no time delays at all, do use up all the
+    computers CPU cycles.  But "<CODE>firefox</CODE>" still doesn't relax that
+    restriction if an animation has an overall non-zero display time.
+    </BR>&nbsp;
+
+<TR VALIGN=top><TD><B>Internet Explorer</B>
+<TD>Has a minimum time delay of 6 centi-seconds, and ignores any delay smaller
+    than this. </P>
+
+    Internet Explorer version 8 also fails (immediately restarts the loop) if
+    any image frame extends beyond the animation bounds set by the first
+    frame.  This I would class as a major bug. </P>
+
+</TABLE></P>
+
+On the other hand ImageMagick '<A HREF="../anim_opt/#removezero"
+>RemoveZero</A>' layers method does do the right thing and will NOT remove any
+frame if ALL the images have a 'zero time delay'.  In fact this layers method
+will give a warning if it sees an animation with no time delays at all. </P>
+
+This brings us to another rule-of-thumb...
+<DIV ALIGN=center><B>
+      Never save a GIF (looping) animation that has no 'delays' at all
+</B></DIV></P>
+
+Doing so is very bad practice, and the reason most of the above 'buggy'
+applications, do what they do, rather than what they should.  Complain to the
+owners if you see them. </P>
+
+Also complain to application developers, so that they handle Zero delay frames
+correctly.  Even if it means not displaying that frame at all, just using them
+as preparation for the next frame to display.  They are after all on screen
+for <I>ZERO</I> time! </P>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 24 July 2004 (sub-division of "animation") <BR>
+Updated: 27 February 2013 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/anim_basics/</CODE>
+</ADDRESS></BODY></HTML>

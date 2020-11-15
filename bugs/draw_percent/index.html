@@ -1,0 +1,106 @@
+<html lang="en"><HEAD>
+<TITLE>Draw Percent Bug -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/draw_percent/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Drawing a Percent Bug - FIXED</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+<B>Note:</B> Drawing Percent Characters is no longer a issue in IM, as percent
+'<CODE>%</CODE>' escapes were completely removed from all operators except
+"<CODE><A HREF="../../option_link.cgi?annotate" >-annotate</A></CODE>" for
+drawing text, and "<CODE><A HREF="../../option_link.cgi?label"
+>-label</A></CODE>" for "<CODE>monatge</CODE>" labels. </P>
+
+This page is for reference for older IM users who may still have to deal with
+this bug. The examples on this page have not been re-created when/if the bug
+was fixed.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="percent"></A>
+<H3>A Percent Problem</H3>
+
+The percent character '<CODE>%</CODE>' presents a different problem.  If you
+just use it, most likely it will draw onto the image just as you would expect.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 250x50 xc:none  -box white  -pointsize 20 -gravity center \
+             -draw 'text 0,0 "  97%  "' \
+            -trim +repage -bordercolor white -border 5x0  draw_percent_ok.gif
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+    <A HREF="draw_percent_ok.gif"
+      ><IMG SRC="draw_percent_ok.gif"
+            ALIGN=right VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+But if you follow the percent character by certain special characters like
+'<CODE>d</CODE>' the percent and that character disappears.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 250x50 xc:none  -box white  -pointsize 20 -gravity center \
+             -draw 'text 0,0 "  abc%def  "' \
+            -trim +repage -bordercolor white -border 5x0  draw_percent_bad.gif
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+    <A HREF="draw_percent_bad.gif"
+      ><IMG SRC="draw_percent_bad.gif"
+            ALIGN=right VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The problem is that in the 'C' programming language "<CODE>%d</CODE>" is used
+for special purposes. so replaces the character sequence with something else,
+in this case nothing.  This could probably be regarded as a <B>bug</B>. </P>
+
+The work-a-round was to replace all drawn text percent symbols with two such
+symbols, EG "<CODE>%%</CODE>'.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 250x50 xc:none  -box white  -pointsize 20 -gravity center \
+             -draw 'text 0,0 "  abc%%def  "' \
+            -trim +repage -bordercolor white -border 5x0  draw_percent_fixed.gif
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+    <A HREF="draw_percent_fixed.gif"
+      ><IMG SRC="draw_percent_fixed.gif"
+            ALIGN=right VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 1 August 2005 <BR>
+Updated: 9 August 2005 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/draw_percent/</CODE>
+</ADDRESS></BODY></HTML>
+

@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+. ../generate_options
+. ../generate_clear
+clear_backup tree_image
+clear_backup rose.xyzzy
+
+ln -s ../images/{eye,news,storm,tree}.gif .
+ln -s ../images/scroll.gif .
+ln -s ../images/noseguy.gif .
+ln -s ../img_photos/parrots_orig.jpg .
+
+../generate_examples
+
+# # handle extra gif images
+# for gif in  image*.gif  write_*.gif  cyclops_*.gif
+# do
+#   [ -f "$gif" ] || continue
+#   if [ "$gifsicle" ]; then
+#     echo "  Optimizing GIF format of \"$gif\"..."
+#     gifsicle -O -b $gif
+#   fi
+#   chmod -f 644 $gif
+# done
+
+# These images always change - don't worry about it.
+rm -f _write_identify.txt{,.gif}   # identify tmp file name
+
+../generate_compare
+echo "DONE"

@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Compare images that failed the compare check.
+#
+for old in _*; do
+  case "$old" in
+  *.gif|*.jpg|*.png)
+      new=`echo "$old" | sed 's/^_//'`
+      if [ -f "$new" ]; then
+        echo `compare -metric PAE "$old" "$new" null:` "$old $new"
+      else
+        echo >&2 "No new image found for \"$old\""
+      fi
+      ;;
+  *)  echo >&2 "Skipping non-image \"$old\""
+      ;;
+  esac
+done | image_user_check_all
+

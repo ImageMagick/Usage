@@ -1,0 +1,114 @@
+#
+# Transformation data to use for generating images and index file
+#
+# Note  * = do not apply final normalization
+#
+# vim:set filetype=text:
+#
+== Basic Transforms
+  noop        -noop
+* blur_raw    -blur 0x1
+  blur_1      -blur 0x1
+  blur_3      -blur 0x3
+  blur_5      -blur 0x5
+  blur_10     -blur 0x10
+  intensity   -blur 0x10  -colorspace Gray
+  channel     -blur 0x10  -fx G
+  hues \
+     -blur 0x10 -auto-level -separate -background white \
+     -compose ModulusAdd -flatten -channel R -combine +channel \
+     -set colorspace HSB -colorspace RGB
+
+== Shade Transforms
+* shade_raw      -shade 120x45
+  shade          -shade 120x45
+* shade_dimmed   -shade 120x45 -auto-level -fill grey -colorize 40%
+  shade_1        -blur 0x1 -shade 120x45
+  shade_2        -blur 0x2 -shade 120x45
+  shade_5        -blur 0x5 -shade 120x45
+  shade_10       -blur 0x10 -fx G -shade 120x45
+
+== Emboss Transforms
+  emboss_1    -blur 0x5  -emboss 1
+  emboss_1g   -blur 0x5  -emboss 1  -fx G
+  emboss_0s   -blur 0x3  -emboss .5 -shade 120x45
+  emboss_1s   -blur 0x5  -emboss 1  -shade 120x45
+  emboss_1gs  -blur 0x5  -emboss 1  -fx G  -shade 120x45
+  emboss_5gs  -blur 0x10 -emboss 5  -fx G  -shade 120x45
+
+== Edging Transforms
+  charcoal     -blur 0x2  -charcoal 10 -negate
+  charcoal_10s -blur 0x2  -charcoal 10 -negate -shade 120x45
+  charcoal_1s  -blur 0x2  -charcoal 1  -negate -shade 120x45
+  edges        -blur 0x2  -edge 10
+  edge_grey    -blur 0x2  -edge 10 -fx G
+  mesas        -blur 0x2  -edge 10 -fx G -shade 120x45
+
+== Line Generating Transforms
+  lines        -blur 0x10 -emboss 4 -edge 1
+  loops        -blur 0x10 -edge 15  -edge 1  -blur 0x1
+  engrave_loops \
+      -blur 0x10 -edge 15  -edge 1  -blur 0x1 -fx R+B+G -shade 280x45
+  engrave_loop \
+      -blur 0x10 -edge 15  -edge 1  -blur 0x1 -fx G -shade 280x45
+  color_contours \
+      -blur 0x10 -normalize -fx 'sin(u*4*pi)*100' -edge 1 -blur 0x1
+  contours \
+      -blur 0x10 -normalize -fx 'sin(g*4*pi)*100' \
+      -edge 1 -blur 0x1 -shade 280x45
+
+== Complex Textured Blob Transforms
+-- (using a strange '<CODE>-edge 1</CODE>' effect)
+  blobs       -blur 0x10 -edge 1
+  blobs_grey  -blur 0x10 -edge 1 -fx '(R+G+B)/3'
+  pits        -blur 0x10 -edge 1 -fx G -shade 280x45
+  ridges      -blur 0x10 \( +clone -negate \) -edge 1 -fx u.G+v.G -shade 280x45
+  mottled     -blur 0x10 -write mpr:save -negate -edge 1 -negate -fx G \
+                         \( mpr:save -edge 1 -fx G \) -shade 280x45 -average
+
+== Paint Transforms
+* paint_raw10   -paint 10
+  paint_areas   -paint 10  -blur 0x5  -paint 10
+  paint_raw10s  -paint 10  -shade 120x45
+  paint_8       -blur 0x5  -paint 8
+  paint_8s      -blur 0x5  -paint 8  -shade 120x45
+  paint_3       -blur 0x10 -paint 3
+  paint_3s      -blur 0x10 -paint 3  -shade 120x45
+  paint_3d      -blur 0x10 -paint 3 \( +clone -shade 120x45 \) \
+          +swap  -compose overlay -composite
+
+== Gradient Transforms
+* levels \
+      -blur 0x12 -fx intensity -normalize \
+      -size 1x9 gradient:navy-lavender \
+      -interpolate integer -fx 'v.p{0,G*(v.h-1)}'
+* levels_3d \
+      -blur 0x12 -fx intensity -normalize \
+      -size 1x9 gradient:navy-lavender \
+      -interpolate integer -fx 'v.p{0,G*(v.h-1)}' \
+      \( +clone -shade 120x45 -normalize \) \
+      -compose overlay -composite
+  zebra \
+      -blur 0x12 -normalize \
+      -size 1x19   pattern:gray50   -fx 'v.p{0,G*(v.h-1)}'
+  midlevel  \
+      -blur 0x12 -normalize \
+      \( -size 1x9 xc: -draw 'color 0,4 point' -negate \) \
+      -fx 'v.p{0,G*(v.h-1)}'
+* edged_level \
+      -blur 0x12 -normalize \
+      \( -size 1x9 xc: -draw 'color 0,4 point' \) \
+      -fx '(.6+.2*v.p{0,G*(v.h-1)})' \
+      \( +clone -normalize -edge 1 \)  -fx 'u+v'
+* layered_levels \
+      -blur 0x12 -normalize \
+      \( -size 1x9 xc: -draw 'color 0,4 point' \) \
+      -fx '(.5+.3*v.p{0,u*(v.h-1)})' \
+      \( +clone -normalize -edge .3 -fx 'R+G+B' \) \
+      -fx 'intensity+v'  -fill skyblue -tint 100
+
+== Miscellaneous
+  filaments \
+      -blur 0x5 -normalize -fx g \
+      -sigmoidal-contrast 15x50% -solarize 50%
+

@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Generate a montage array of the dissolve sequence
+#
+echo "Generating Dissolve Montage..."
+
+
+. ../generate_options
+#jpg_opt='-quality 100%'
+
+list=
+
+for b in 0 20 30 40 50 60 80 100 \
+          100 120 130 140 150 160 180 200 \
+          0x100 20x80 30x70 40x60 50x50 60x40 80x20 100x0; do
+  composite -label "dissolve ${b}" -dissolve ${b}  -gravity South \
+            star.gif dragon_sm.gif -matte   montage_dissolve_${b}.png
+  list="$list montage_dissolve_${b}.png"
+done
+
+montage -tile 8x -geometry +4+2  -pointsize 10 \
+        -background $page_bg_color -mattecolor $page_bg_color \
+        $list  $jpg_opt dissolve_montage.jpg
+
+rm -f montage_dissolve_[0-9]*.png
+chmod 644 dissolve_montage.jpg
+
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+. ../generate_options
+../generate_clear
+
+ln -s ../images/tree.gif .
+ln -s ../images/bg.gif .
+ln -s ../images/rose.png .
+ln -s ../images/shape_figure.gif shape.gif
+
+../generate_examples
+
+# Now generate the extra option tables
+# After the index generates its source image
+./generate_blur
+
+../generate_compare
+echo "DONE"

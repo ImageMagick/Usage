@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Generate a montage array of various cases of the wartermark
+#
+echo "Generating Watermark Montage..."
+
+trap "rm -rf wmark_*.png; exit 0" 0 1 2 3 15
+
+. ../generate_options
+#jpg_opt='-quality 100%'
+
+list=
+
+#for s in '' x10 x30 x50 x70 x90 x100; do
+  for b in 10 15 20 25 30 35 40 100; do
+    composite -label "wmark ${b}${s}" -watermark ${b}${s}  -gravity South \
+              sphinx.gif cyclops.gif  -matte  wmark_${b}${s}.png
+    list="$list wmark_${b}${s}.png"
+  done
+#done
+
+montage -tile x1 -geometry +4+2  -pointsize 10 \
+        -background $page_bg_color -mattecolor $page_bg_color \
+        $list  $jpg_opt wmark_montage.jpg
+chmod 644 wmark_montage.jpg
+
+

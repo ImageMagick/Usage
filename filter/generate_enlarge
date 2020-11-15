@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Generate a motage array using various resize filters
+# to enlarge a small image
+#
+echo "Generating Resize Filters Montage (enlarge)..."
+
+. ../generate_options
+
+for filter in Box Hermite Triangle \
+              Gaussian Quadratic Spline \
+              Lanczos Hamming Blackman \
+              Lagrange Catrom Mitchell \
+;do
+  if [ "$filter" = 'null:' ]; then
+    convert null: miff:-
+  else
+    convert -label $filter -size 10x6 xc:grey20 \
+            +antialias -draw 'fill white line 4,0 5,5' \
+            -filter $filter  -resize 100x  miff:-
+  fi
+done |
+  montage -  -tile 6x  -geometry +4+2  -pointsize 10 \
+          -background $page_bg_color -mattecolor $page_bg_color \
+          montage_enlarge.png
+
+chmod 644 montage_enlarge.png
+
+

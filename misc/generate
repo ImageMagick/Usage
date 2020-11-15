@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+. ../generate_options
+../generate_clear
+
+# the 'random' virtual pixel setting is really random!
+rm -f _*_random*.gif   # always remove these backups
+
+ln -s ../images/{eye,news,storm,tree,star}.gif .
+ln -s ../images/{balloon,medical,present,shading}.gif .
+ln -s ../images/koala.gif .
+ln -s ../images/list_test.gif .
+
+../generate_examples
+
+echo ""
+
+#Now generate the other montages
+./generate_annotate
+
+../generate_compare
+echo "DONE"
+

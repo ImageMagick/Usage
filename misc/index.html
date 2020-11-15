@@ -1,0 +1,2655 @@
+<HTML><HEAD>
+<TITLE>Miscellaneous -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/misc/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Miscellaneous</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#interpolate"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Interpolation</A>
+    <FONT SIZE=-1>(Inter-pixel Color Lookups)</FONT>
+    <UL>
+    <LI><A HREF="#interpolate_simple"
+        >Simple Interpolation Methods</A>
+    <LI><FONT SIZE=-1>
+        <A HREF="#bilinear" >Bilinear</A>,&nbsp;
+        <A HREF="#mesh"     >Mesh</A>,&nbsp;
+        <A HREF="#catrom"   >Catrom</A>,&nbsp;
+        <A HREF="#spline"   >Spline</A>
+        </FONT>
+    <LI><A HREF="#interpolate_bgnd"
+        >Interpolate on a Background</A>
+    <LI><A HREF="#interpolate_line"
+        >Interpolate of a Rotated Line</A>
+    <LI><A HREF="#interpolate_edge"
+        >Interpolate of a Rotate Edge</A>
+    </UL>
+<DD><A HREF="#virtual-pixel"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Virtual Pixels</A>
+    <FONT SIZE=-1>(Missed-Image Color Lookups)</FONT>
+    <UL>
+    <LI><FONT SIZE=-1>
+        <A HREF="#edge"         >Edge</A>,&nbsp;
+        <A HREF="#tile"         >Tile</A>,&nbsp;
+        <A HREF="#mirror"       >Mirror</A>,&nbsp;
+        <A HREF="#transparent"  >Transparent</A>,&nbsp;
+        <A HREF="#black"        >Black</A>,&nbsp;
+        <A HREF="#gray"         >Gray</A>,&nbsp;
+        <A HREF="#white"        >White</A>,&nbsp;
+        <A HREF="#background"   >Background</A>,&nbsp;<BR>
+        <A HREF="#horizontal_tile" >HoriziontalTile</A>,&nbsp;
+        <A HREF="#horizontal_edge" >HoriziontalTileEdge</A>,&nbsp;
+        <A HREF="#vertical_tile"   >VerticalTile</A>,&nbsp;
+        <A HREF="#vertical_edge"   >VerticalTileEdge</A>,&nbsp;<BR>
+        <A HREF="#checker_tile" >CheckerTile</A>,&nbsp;
+        <A HREF="#random"       >Random</A>,&nbsp;
+        <A HREF="#dither"       >Dither</A>
+        </FONT>
+    <LI><A HREF="#virtual_infinities"
+        >Virtual Pixel and Infinities</A>
+    <LI><A HREF="#virtual_colors"
+        >Virtual Pixel Colors</A>
+    <LI><A HREF="#virtual_examples"
+        >Virtual Pixel Examples</A>
+    <LI><A HREF="#virtual_implode"
+        >Implosion Effects on Virtual Pixels</A>
+    </UL>
+<DD><A HREF="#spots"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Random Spots of Solid Color</A>
+<DD><A HREF="#annotate"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Annotate Argument Usage</A>
+    <IMG SRC="../img_www/space.gif" WIDTH=20 HEIGHT=1>
+<DD><A HREF="#splice"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Splice: Creating a New Image Operator</A>
+<DD><A HREF="#border"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Border, Frame, and the use of BorderColor</A>
+<DD><A HREF="#list_test"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > List Operator Testing</A>
+</DL></P>
+
+This page consists of examples which test various aspects of ImageMagick.
+But which do not properly fit into the discussions on the other example pages
+(at least not formally). </P>
+
+Also included on this page are some tables demonstrating the results of
+versions argument with specific IM operators.  However other people have also
+done this, which unless I have something to add, I will not deal with further.
+</P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="interpolate"></A>
+<H2>Pixel Interpolation
+<FONT SIZE=-2> or Inter-pixel Color Lookup</FONT></H2>
+
+The "<CODE><A HREF="../option_link.cgi?interpolate" >-interpolate</A></CODE>"
+setting is used when looking up a color in a source image, but that 'lookup
+point' falls between the pixels of the source image. </P>
+
+This is done in various image operations, such as the "<CODE><A
+HREF="../option_link.cgi?fx" >-fx</A></CODE>" (<A HREF="../transform/#fx" >DIY
+Special Effects Operator</A>), and "<CODE><A HREF="../option_link.cgi?distort"
+>-distort</A></CODE>" (<A HREF="../distorts/#distort" >Generalized Image
+Distortion Operator</A>), as well as other related operators like the <A
+HREF="../warping/#circular" >Circular Distortions</A>. </P>
+
+Basically 'interpolation' tells IM how to interpret a <A
+HREF="../distorts/#lookup" >Direct Color Lookup</A> from an image, when the
+point does not exactly match an actual pixel in an image, but falls in the
+space between pixels. </P>
+
+For example if you look up the color at pixel location <CODE>3,4</CODE> you
+should get the exact pixel color.  But what should IM return if you looked up
+the color of an image at the point <CODE>3.23,4.75</CODE>?  Should you get
+the pixel color at <CODE>3,4</CODE> or <CODE>3,5</CODE>?  or perhaps some a
+mix of the surrounding pixels colors, and if so how should the colors be
+merged together? </P>
+
+<B><I>Pixel Interpolation</I> defines what ImageMagick should do when looking up
+a single color at a floating point position (in pixel coordinates). </B></P>
+
+Interpolation is in some ways similar to pixel resampling, such as provided by
+<A HREF="../filter/#filter" >Resampling Filters</A>.  The essentual difference
+is that resampling has a 'scale', 'area' or variable 'window' from which
+a color that represents all the pixels in the area is returned.  Interpolation
+does not have a 'scale' involved, only a single 'point' of lookup, and only
+a fixed sized 'area' around that point from which to determine the color to
+use at that point.  </P>
+
+Of course most area resampling algorithms tend to devolve to an interpolative
+method when the area of resampling reaches a minimim working 'window', and
+this naturally happens when images are being enlarged, or upsampled.  This is
+why <A HREF="../filter/#interpolated" >Interpolated Filters</A> and <A
+HREF="filter/#gaussian" >Gaussian Blurring Filters</A> tend to work better for
+enlarging images. </P>
+
+Interpolation is basically a lower form of sampling, and is basically used
+when you want a simple and fast answer to the 'what color' question. </P>
+
+<A NAME="integer"></A>
+<A NAME="nearest"></A>
+<A NAME="nearest-neighbor"></A>
+<A NAME="blend"></A>
+<A NAME="average"></A>
+<A NAME="average9"></A>
+<A NAME="average16"></A>
+
+<A NAME="interpolate_simple"></A>
+<H3>Simple Interpolation Methods</H3>
+
+These are straight forward, simple methods, that try to do as lettl as posible
+to return a color to use from a 'point interpolation' </P>
+
+The simplest is '<B><CODE>Nearest</CODE></B>' and
+'<B><CODE>Integer</CODE></B>', will just pick a single pixel color from the
+source image, as it without any mixing or other blending effects.  This
+preserves original color values of the image but at a cost of aliasing
+effects, and typically a less than smooth look to images. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  As of IM v6.7.6-2 you can use '<CODE>Nearest</CODE>' as a short hand for the
+  '<CODE>Nearest-Neighbour</CODE>' interpolation setting.
+</I></FONT></TD></TR></TABLE></P>
+
+The two are very similar, only differing in which pixel the lookup coordinate
+extracts from the source image. Specifically '<CODE>Integer</CODE>' will
+simply round down the lookup point to select the pixel, which results in
+a general translation half a pixel right and downward. It is typically only
+used in simplified 'scaling' of the source image. On the other hand
+'<CODE>Nearest</CODE>' will select the closest pixel to the floating point
+lookup coordinate, and as such produces a more correct result.</P>
+
+'<B><CODE>Blend</CODE></B>' Will blend together (average) the nearest 1, 2 or
+4 pixels, depending on their distance from the sampling point.  The result is
+that the original pixel color is still present, but halved in size, while
+a checkerboard of blended colors fills space between. (see example below) </P>
+
+'<B><CODE>Average</CODE></B>', will never actually produce an exact color
+match, but will always mix the 4 surrounding pixels to produce a local
+average. This can be useful for color lookup situations.
+'<CODE>Average4</CODE>' can also be used an an alias for this interpolation
+method. </P>
+
+'<B><CODE>Average9</CODE></B>' is similar but will average the nearest
+9 pixels around the sampling point, producing a blurry result. </P>
+
+'<B><CODE>Average16</CODE></B>' will average the nearest 16 pixels around the
+sampling point, producing an extrememly blurry result. </P>
+
+Here is a summery of the various simple interpolation methods, when enlarging
+a small group of colored pixels, or a single white pixel. The original image
+looks like the "Nearest" result, but much smaller.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  for method in  integer nearest blend average average9 average16 ; do
+    convert \( xc:red xc:blue +append \) \
+            \( xc:yellow xc:cyan +append \) -append \
+            -bordercolor black -border 1 \
+            -filter point -interpolate $method \
+            +distort SRT 20,0 ip_color_${method}.jpg
+    convert xc: -bordercolor black -border 2 \
+            -filter point -interpolate $method \
+            +distort SRT 16,0 ip_pixel_${method}.jpg
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE CELLSPACING=10>
+<TR>
+<TD><A HREF="ip_color_integer.jpg"
+       ><IMG SRC="ip_color_integer.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_color_nearest.jpg"
+       ><IMG SRC="ip_color_nearest.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_color_blend.jpg"
+       ><IMG SRC="ip_color_blend.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_color_average.jpg"
+       ><IMG SRC="ip_color_average.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_color_average9.jpg"
+       ><IMG SRC="ip_color_average9.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_color_average16.jpg"
+       ><IMG SRC="ip_color_average16.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR><TR>
+<TD><A HREF="ip_pixel_integer.jpg"
+       ><IMG SRC="ip_pixel_integer.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_pixel_nearest.jpg"
+       ><IMG SRC="ip_pixel_nearest.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_pixel_blend.jpg"
+       ><IMG SRC="ip_pixel_blend.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_pixel_average.jpg"
+       ><IMG SRC="ip_pixel_average.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_pixel_average9.jpg"
+       ><IMG SRC="ip_pixel_average9.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_pixel_average16.jpg"
+       ><IMG SRC="ip_pixel_average16.jpg"
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR><TR>
+<TH>Integer <TH>Nearest <TH>Blend <TH>Average <TH>Average9 <TH>Average16
+</TR></TABLE>
+</DIV></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM v6.7.7-6 '<CODE>Average</CODE>' was actually equivalent to
+  which is now '<CODE>Average16</CODE>'. The other two averging interpolators
+  as well as '<CODE>Blend</CODE>', and '<CODE>Background</CODE>' was added at
+  this time.
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="background_ic"></A>
+
+One other simple interpolation method is also provided,
+'<B><CODE>Background</CODE></B>' which simply returns the current background
+color for any 'sampling' of the source image.  In many ways this is rather
+usless, as typically you will just end up with a blank solid colored image.
+</P>
+
+Its primary use is as a check of more complex resampling functions, such as
+a <A HREF="../distorts/#distort_failure" >Resampling Failure</A>, where the EWA
+resampling filter (typically used from the <A HREF="../distorts/#distort"
+>General Distortion Operator</A>) will fall back to an interpolated lookup when
+resampling fails to find any pixels in its 'support' or resampling area. </P>
+
+By setting interpolation to '<CODE>Background</CODE>', and setting
+a background color to something that stands out (like '<CODE>red</CODE>') you
+can then look for pixels in the resulting image to see where resampling
+'failed' or 'missed all source image pixels' for some reason or another.
+Typically due to too small a support setting, or from playing with expert
+filter options. </P>
+
+<I>FUTURE: Posible future interpolation option of "random" selection
+over the interpolated area. Could be useful for fancy interpolated
+effects!</I> </P>
+
+
+<A NAME="bilinear"></A>
+<H3>Bilinear</H3>
+
+'<B><CODE>Bilinear</CODE></B>' (or linear interpolation) is the <B>default
+interpolation method</B>, and probably one of the simplest ways of getting
+a real interpolated result, from combining colors of the pixels around the
+lookup or sampling point. </P>
+
+Here is a diagram explaining how a bilinear interpolation works.
+<DIV ALIGN=center>
+  <IMG SRC="../img_diagrams/bilinear_interpolation.jpg" WIDTH=370 HEIGHT=211
+       ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[diagram]"></A>
+</DIV></P>
+
+That is to say, it simply connects striaght lines in the orthogonal directions
+to locate the color of the given sampling point. The result is also equivelent
+to a <A HREF="../filter/#triangle" >Triangle Resampling Filter</A>, when used
+with resize. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap  -fx 'v.p{i/(w-1),j/(h-1)}' \
+          interpolate_bilinear.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_bilinear.jpg"
+     ><IMG SRC="interpolate_bilinear.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<!--
+  #Distort equivelent -- two point affine of pixel centers
+  # This is a bit more complex and harder to explain!
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -filter point -interpolate bilinear \
+          -define distort:viewport=100x100 \
+          -distort Affine '.5,.5 .5,.5   1.5,1.5 99.5,99.5' \
+          interpolate_bilinear.jpg
+-->
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:white xc:black +append \) \
+          \( xc:black xc:white +append \) -append \
+          -size 100x100 xc: +swap -fx 'v.p{i/(w-1),j/(h-1)}' \
+          interpolate_saddle.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_saddle.jpg"
+     ><IMG SRC="interpolate_saddle.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+
+This last image shows how a linear gradient is formed along the edges between
+the four known points, and then a second linear gradient is formed between
+those edges. That is the colors between the surrounding pixels is generated
+using a horizontal and vertical linear gradients. </P>
+
+This inturn produces a curved 2 dimensional gradient that is typically known
+as a 'saddle', in that it is rasied on two oppisite corners and lowered on the
+other two corners.  </P>
+
+You can even use this method to more directly generate a 45 degree angled
+linear gradient, but requires you to specify the middle color for the
+diagonally opposite corners.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:blue xc:navy +append \) \
+          \( xc:navy xc:black +append \) -append \
+          -size 100x100 xc: +swap -fx 'v.p{i/(w-1),j/(h-1)}' \
+          interpolate_45linear.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_45linear.jpg"
+     ><IMG SRC="interpolate_45linear.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The most important aspect of this default interpolation method, is that the
+very center pixel of the image will always be an average of all four corner
+colors, with perfect linear gradients at the edges, and exact color matching
+at the corners. </P>
+
+
+<A NAME="mesh"></A>
+<H3>Mesh</H3>
+
+The "<CODE><A HREF="../option_link.cgi?interpolate" >-interpolate</A></CODE>"
+setting of '<CODE>Mesh</CODE>' is a variation of the '<CODE><A
+HREF="#bilinear">Bilinear</A></CODE>' interpolation.  Where as
+'<CODE>Bilinear</CODE>' will produce a 3 dimensional curved surface,
+'<CODE>Mesh</CODE>' was designed to split the inter-pixel area into two flat
+triangular surfaces. </P>
+
+The division of the area into two triangles is based on the diagonal with the
+two 'closest' corner colors. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  For details of the '<CODE>Mesh</CODE>' algorithm, see the paper <A
+  HREF="http://www.cs.bath.ac.uk/~pjw/Q3D/forum-ddt.pdf" >Image Interpolation
+  by Pixel-Level Data-Dependent Triangulation</A>.
+</I></FONT></TD></TR></TABLE></P>
+
+For example lets use the same set of corner colors we used above.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap   -interpolate Mesh \
+          -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_tri-mesh.jpg"
+     ><IMG SRC="interpolate_tri-mesh.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see the '<CODE>Mesh</CODE>' algorithm produced almost exactly the
+same set of color interpolations as '<CODE><A
+HREF="#bilinear">Bilinear</A></CODE>'. </P>
+
+However if we reverse the yellow and cyan colors..
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:red xc:blue +append \) \
+          \( xc:cyan xc:yellow +append \) -append \
+          -size 100x100 xc: +swap   -interpolate Mesh \
+          -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh2.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_tri-mesh2.jpg"
+     ><IMG SRC="interpolate_tri-mesh2.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This time the '<CODE>Mesh</CODE>' algorithm decided that the
+'<CODE>blue</CODE>' and '<CODE>cyan</CODE>' colors were the two closest
+corners, and created a linear gradient diagonally between these two corners.
+The rest of the colors then form a simple flat triangular gradient from this
+line to the other two corners. </P>
+
+This may seem like an unusual interpolation, but the method ensures that sharp
+borders, remain quite sharp, when color images are only slightly resized,
+rotated or sheared. In fact a <A HREF="../resize/#adaptive-resize" >Adaptive
+Resize</A> operation ("<CODE><A HREF="../option_link.cgi?adaptive-resize"
+>-adaptive-resize</A></CODE>") uses this fact for small image resizes to
+reduce excessive blurring of the result. </P>
+
+For example if we have a single 'white' corner, '<CODE>mesh</CODE>' assumes
+that an edge has been found and adjusts the interpolated colors to highlight
+this edge.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:black xc:black +append \) \
+          \( xc:white xc:black +append \) -append \
+          -size 100x100 xc: +swap    -interpolate Mesh \
+          -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh3.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_tri-mesh3.jpg"
+     ><IMG SRC="interpolate_tri-mesh3.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Of course if the colors produce reasonably consistent gradient the 'mesh'
+interpolation also produces a reasonably consistent gradient.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:blue xc:navy +append \) \
+          \( xc:black xc:black +append \) -append \
+          -size 100x100 xc: +swap    -interpolate Mesh \
+          -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh4.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_tri-mesh4.jpg"
+     ><IMG SRC="interpolate_tri-mesh4.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see the result quite a reasonable gradient, though if you look hard
+you can see the diagonal join of the two separate triangles.  The change isn't
+as smooth as bi-linear (which isn't exactly smooth either) but these do not
+try to preserve the sharp edges in resized or distorted images either. </P>
+
+
+<A NAME="bicubic"></A>
+<A NAME="catrom"></A>
+<H3>Catrom (Catmull-Rom)</H3>
+
+The "<CODE><A HREF="../option_link.cgi?interpolate" >-interpolate</A></CODE>"
+setting of '<CODE>Catrom</CODE>' (generally imprecisely known as
+'<CODE>BiCubic</CODE>' interpolation), is more complex, in the determination
+of the colors of a point lookup.   Basically it does not just look at the
+colors in the corners of the inter-pixel area, but goes further to look at the
+colors beyond those nearest-neighbour pixels. A total of 16 pixels in a 4x4 area
+around the sampling point. </P>
+
+Basically it fits a curve to the whole area involved, so as to determine the
+best overall color to use. </P>
+
+Here is a diagram which probably explains the process better...
+
+<DIV ALIGN=center>
+  <IMG SRC="../img_diagrams/bicubic_interpolation.jpg"  WIDTH=400 HEIGHT=211
+       ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[diagram]"></A>
+</DIV></P>
+
+And here is the interpolated colors for our standard four colors.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap   -interpolate Catrom \
+          -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_catrom.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_catrom.jpg"
+     ><IMG SRC="interpolate_catrom.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The above image may look very similar to a '<CODE><A
+HREF="#bilinear">Bilinear</A></CODE>' interpolation, however the result has
+a smoother blending curve rather than straight lines to produce the
+interpolated color.  </P>
+
+What this image does not show however is the effect of the other pixels
+surrounding our four near neighbours.  For that we need to look at a slightly
+larger area.  For this specific (very small) example the surrounding pixels
+are controled by the <A HREF="#virtual" >Virtual Pixel</A> setting.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap -interpolate Catrom -virtual-pixel edge \
+          -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_catrom_edge.jpg
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap -interpolate Catrom -virtual-pixel White \
+          -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_catrom_white.jpg
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap -interpolate Catrom -virtual-pixel Black \
+          -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_catrom_black.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="interpolate_catrom_edge.jpg"
+     ><IMG SRC="interpolate_catrom_edge.jpg"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="interpolate_catrom_white.jpg"
+     ><IMG SRC="interpolate_catrom_white.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="interpolate_catrom_black.jpg"
+     ><IMG SRC="interpolate_catrom_black.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  In a real image the effects of the <A HREF="#virtual" >Virtual Pixels</A>
+  usually only effects results near the very edges of the image. As this image
+  is only 2 pixels wide, the above example is strongly effected.  This is not
+  the case in larger more typical images.
+</I></FONT></TD></TR></TABLE></P>
+
+As you can see the curve is strongly influenced by the surrounding colors,
+resulting in either a very tight sharp color change, or a more blended color
+change as defined by the surrounding colors. </P>
+
+However you can also see that strong changes in the surrounding pixel colors,
+can produce a small areas of that colors inverse or negative. This is a <A
+HREF="../filter/#ringing" >Ringing Artefact</A> and is typically only seen on
+extremely sharp edges of complementary colors in a real image. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  This ringing effect on very very strong color edges can become clipped
+  resulting in a line of horrible pixels.  This problem can be prevented
+  by doing resizes and interpolation in a different colorspace than
+  '<CODE>RGB</CODE>', such as '<CODE>Lab</CODE>' or '<CODE>Luv</CODE>'
+  colorspaces. </P>
+
+  For more information and examples of this problem see <A
+  HREF="../resize/#resize_lab" >Resizing in LAB colorspace</A>. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Note that '<CODE>BiCubic</CODE>' (interpolated <A HREF="../filter/#cubics"
+  >Cubic Filter</A>), refers to a very large family of filters, and as such is
+  very inexact in its meaning.  It is however still available, but its use is
+  depreciated, in favor of more exact names. </P>
+
+  After IM v6.7.7-7 '<CODE>BiCubic</CODE>' is simply an alias to
+  '<CODE>Catrom</CODE>', which is typically regarded as a good 'cubic
+  interpolator' (b=0, c=1/2). You should use the name '<CODE>Catrom</CODE>'
+  rather than '<CODE>BiCubic</CODE>' so as to be clear what you are using for
+  interpolation. </P>
+
+  Before IM v6.7.7-7 '<CODE>BiCubic</CODE>' actually used an extreme 'Cardinal
+  Cubic' filter (b=0, c=1) which has an overly strong negative ringing effect.
+  This have been completely replaced by '<CODE>Catrom</CODE>', and is no
+  longer available as an interpolative function. </P>
+
+  Before IM v6.3.5-3 '<CODE>BiCubic</CODE>' was implemented as a very blurry
+  '<CODE>Spline</CODE>' cubic interpolator. That filter was renamed with this
+  version of ImageMagick. (see next) </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<A NAME="spline"></A>
+<H3>Spline</H3>
+
+The '<CODE>Spline</CODE>' interpolation method, like '<CODE><A
+HREF="#catrom">Catrom</A></CODE>' above, also uses the nearest 16 pixels.
+However this is a very blurry, Gaussian-like, interpolation.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap   -interpolate spline \
+          -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_spline.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="interpolate_spline.jpg"
+     ><IMG SRC="interpolate_spline.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see the colors in the very corners of the above
+'<CODE>Spline</CODE>' interpolation are muted, as the interpolated surface
+does not actually go through the original color of those pixels. Essentially
+it is overly 'blurred', and is more correctly known as a 'B-Spline' surface.
+</P>
+
+The surface is still a type of <A HREF="../filter/#cubics" >Cubic Filter</A>
+(b=1, c=0) as it generated using a technique of a piece-wise cubic curves.
+However this curve only approaches the original pixel colors, especially in
+areas of strong color changes. </P>
+
+That is an interpolated lookup of an exact integer pixel position, will not
+return that actual pixels color, but a blurring of the color with the
+surrounding pixels. This is often thought of as bad, but can be used as
+a general smoothing function. </P>
+
+Like '<CODE><A HREF="#catrom">Catrom</A></CODE>' it is also effected by the
+surrounding pixels.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap -interpolate Spline -virtual-pixel edge \
+          -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_spline_edge.jpg
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap -interpolate Spline -virtual-pixel White \
+          -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_spline_white.jpg
+  convert \( xc:red xc:blue +append \) \
+          \( xc:yellow xc:cyan +append \) -append \
+          -size 100x100 xc: +swap -interpolate Spline -virtual-pixel Black \
+          -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_spline_black.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="interpolate_spline_edge.jpg"
+     ><IMG SRC="interpolate_spline_edge.jpg"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="interpolate_spline_white.jpg"
+     ><IMG SRC="interpolate_spline_white.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="interpolate_spline_black.jpg"
+     ><IMG SRC="interpolate_spline_black.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  In a real image the effects of the <A HREF="#virtual" >Virtual Pixels</A> is
+  only at the edges of the image. With real pixels surrounding the inter-pixel
+  area from which the lookup is being made.
+</I></FONT></TD></TR></TABLE></P>
+
+Here you can see the effects of the color muting that results from the badly
+fitting 'spline' curves to the pixel colors. The results is generally fuzzier
+edges to colored areas, and thin lines.  However they also will never exhibit
+any negative 'ringing' effect that you may get with a '<CODE><A
+HREF="#catrom">Catrom</A></CODE>' interpolation. </P>
+
+
+<A NAME="interpolate_bgnd"></A>
+<H3>Interpolation Background</H3>
+
+As the effects of interpolation are often over larger areas, here is
+an enlargement of the four main interpolation methods with white or black
+surrounding pixels.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  for method in   bilinear mesh catrom spline  ; do
+    for vpixel in   white black  ; do
+      convert \( xc:red xc:blue +append \) \
+              \( xc:yellow xc:cyan +append \) -append \
+         -size 100x100 xc: +swap -interpolate $method -virtual-pixel $vpixel \
+         -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}' ip_area_${method}_$vpixel.jpg
+    done
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE CELLSPACING=10>
+<TR>
+<TD><A HREF="ip_area_bilinear_white.jpg"
+       ><IMG SRC="ip_area_bilinear_white.jpg"   WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_area_mesh_white.jpg"
+       ><IMG SRC="ip_area_mesh_white.jpg"       WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_area_catrom_white.jpg"
+       ><IMG SRC="ip_area_catrom_white.jpg"    WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_area_spline_white.jpg"
+       ><IMG SRC="ip_area_spline_white.jpg"     WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR><TR>
+<TD><A HREF="ip_area_bilinear_black.jpg"
+       ><IMG SRC="ip_area_bilinear_black.jpg"   WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_area_mesh_black.jpg"
+       ><IMG SRC="ip_area_mesh_black.jpg"       WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_area_catrom_black.jpg"
+       ><IMG SRC="ip_area_catrom_black.jpg"    WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="ip_area_spline_black.jpg"
+       ><IMG SRC="ip_area_spline_black.jpg"     WIDTH=100  HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR><TR>
+<TH>Bilinear <TH>Mesh <TH>Catrom <TH>Spline
+</TR></TABLE>
+</DIV></P>
+
+As you can see the surrounding background color has no real effect for
+'<CODE><A HREF="#bilinear">bilinear</A></CODE>' interpolated colors. It looks
+like it is just overlaid onto whatever background color is present.  </P>
+
+You can however see how '<CODE><A HREF="#mesh">mesh</A></CODE>' generates
+stronger sharper edges, but can decide to flip the diagonal depending on the
+surrounding color, when it is involved at the image edges.  Look at the join
+between red and blue, between the white and black backgrounds to see this
+'flip'. </P>
+
+The interpolated curve for '<CODE><A HREF="#catrom">catrom</A></CODE>' and
+'<CODE><A HREF="#spline">spline</A></CODE>' is effected by the surrounding
+pixels.  Particularly in the test cases involving absolute colors. </P>
+
+And finally '<CODE><A HREF="#spline">spline</A></CODE>' interpolation is
+really just gussian-like blurring of the image (using a sigma of 0.65).
+Enough blurring to eliminate any 'ringing' or aliasing effect, though
+typically it is too blurry for most uses.  See <A HREF="../filter/#gaussian"
+>Gaussian Filters</A>. </P>
+
+
+<A NAME="interpolate_line"></A>
+<H3>Interpolation of a Rotated Line</H3>
+
+Here I demonstrate the various interpolation methods by creating an image of a
+vertical line, and using an affine distortion to rotate the line by 17 degrees,
+then enlarging the view so you can see the anti-aliasing pixels generated.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  convert -size 10x20 xc: -draw 'line 4,0 4,20' \
+          -scale 50x100 ip_line_none.gif
+  for method in integer nearest bilinear mesh catrom spline;  do
+    convert -size 10x20 xc: -draw 'line 5,0 5,20' \
+            -interpolate $method -filter point -distort SRT 17 \
+            -scale 50x100 ip_line_${method}.gif
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE CELLSPACING=10><TR VALIGN=Top>
+<TH><A HREF="ip_line_none.gif"
+       ><IMG SRC="ip_line_none.gif"              WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Un-Rotated</TH>
+<TH><IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20
+             ALIGN=middle VSPACE=50 HSPACE=0 ALT="==>"></TH>
+<TH><A HREF="ip_line_integer.gif"
+       ><IMG SRC="ip_line_integer.gif"           WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Integer</TH>
+<TH><A HREF="ip_line_nearestneighbor.gif"
+       ><IMG SRC="ip_line_nearestneighbor.gif"   WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Nearest</TH>
+<TH><A HREF="ip_line_bilinear.gif"
+       ><IMG SRC="ip_line_bilinear.gif"          WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Bilinear</TH>
+<TH><A HREF="ip_line_mesh.gif"
+       ><IMG SRC="ip_line_mesh.gif"              WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Mesh</TH>
+<TH><A HREF="ip_line_catrom.gif"
+       ><IMG SRC="ip_line_catrom.gif"           WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Catrom</TH>
+<TH><A HREF="ip_line_spline.gif"
+       ><IMG SRC="ip_line_spline.gif"           WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Spline</TH>
+</TR></TABLE>
+</DIV></P>
+
+As you can see the direct color lookup methods '<CODE>Interger</CODE>' and
+'<CODE>NearestNeighbor</CODE>' produces a highly aliased result, but only use
+the original colors found in the image.  The main difference between the two
+is that '<CODE>Interger</CODE>' tends to push the resulting image down and
+left by half a pixel. </P>
+
+The '<CODE>Bilinear</CODE>', '<CODE>Mesh</CODE>' and '<CODE>Catrom</CODE>'
+generally produce very good and simular results (more on that later), with the
+latter producing a very sharp rotated line.  Any of these
+is generally regarded as a good solution. </P>
+
+The '<CODE>Spline</CODE>' interpolation methods, produces a distinct blurring
+of thin lines, so as to remove aliasing effects.  However
+'<CODE>Spline</CODE>' tends to over blur the results, and really more suited
+to smoothing gradients, rather than rotated lines. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The special setting "<CODE><A HREF="#filter">-filter</A> point</CODE>" is in
+  the above example is used to ensure that <A HREF="../distort/#distort"
+  >Distort Operator</A> only uses single 'point' interpolation in determining
+  the final pixel color.  Without it an <A HREF="../distorts/#area_resample"
+  >Area Resampling</A> be used instead of <A HREF="../distorts/#lookup"
+  >Interpolated Lookup</A>, though that also produces very good results.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Note that I did not use the "<CODE><A HREF="../option_link.cgi?rotate"
+  >-rotate</A></CODE>" operator for these examples, as that operator uses a
+  Pixel Shearing method to <A HREF="../warping/#rotate" >Rotate</A> Images.
+  As a result pixel interpolation is not used. </P>
+
+  See <A HREF="../warping/#rotate_line" >Rotating a Thin Line</A> for
+  an example of using the <CODE><A HREF="../option_link.cgi?rotate"
+  >-rotate</A></CODE>" operator in this way, and the resulting pixel level
+  effects. </P>
+
+  Update: As of IMv6.7.3-4 the rotate operator is now internally using <A
+  HREF="../distort/#distort" >Distort Operator</A>, so the above many no
+  longer be true. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="interpolate_edge"></A>
+<H3>Interpolation of a Rotated Edge</H3>
+
+The results have a slight difference when the edge of an area is being
+distorted, compared to that of a single line of pixels.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  convert -size 10x20 xc: -draw 'rectangle 0,0 4,19' \
+          -scale 50x100 ip_edge_none.gif
+  for method in  integer nearest bilinear mesh catrom spline; do
+    convert -size 10x20 xc: -draw 'rectangle 0,0 4,19' \
+            -interpolate $method -filter point  -distort SRT -17 \
+            -scale 50x100 ip_edge_${method}.gif
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE CELLSPACING=10><TR VALIGN=Top>
+<TH><A HREF="ip_edge_none.gif"
+       ><IMG SRC="ip_edge_none.gif"              WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Un-Rotated</TH>
+<TH><IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20
+             ALIGN=middle VSPACE=50 HSPACE=0 ALT="==>"></TH>
+<TH><A HREF="ip_edge_integer.gif"
+       ><IMG SRC="ip_edge_integer.gif"           WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Integer</TH>
+<TH><A HREF="ip_edge_nearestneighbor.gif"
+       ><IMG SRC="ip_edge_nearestneighbor.gif"   WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Nearest</TH>
+<TH><A HREF="ip_edge_bilinear.gif"
+       ><IMG SRC="ip_edge_bilinear.gif"          WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Bilinear</TH>
+<TH><A HREF="ip_edge_mesh.gif"
+       ><IMG SRC="ip_edge_mesh.gif"              WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Mesh</TH>
+<TH><A HREF="ip_edge_catrom.gif"
+       ><IMG SRC="ip_edge_catrom.gif"           WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Catrom</TH>
+<TH><A HREF="ip_edge_spline.gif"
+       ><IMG SRC="ip_edge_spline.gif"           WIDTH=50  HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+    <BR>Spline</TH>
+</TR></TABLE>
+</DIV></P>
+
+The above generally speaks for itself.  '<CODE>Bilinear</CODE>' and
+'<CODE>Mesh</CODE>' produce reasonably sharp edges for general rotates, while
+'<CODE>Catrom</CODE>' will produce a sharper edge in the distorted image.
+'<CODE>Spline</CODE>' however will produce fuzzier edges.  </P>
+
+The difference between '<CODE>Bilinear</CODE>' and '<CODE>Mesh</CODE>' is
+extremely minor in the above cases. The two methods only really generate
+visible differences in cases of extreme enlargement during the distortion
+operation.  Otherwise you will only see slight barely noticeable changes in
+pixel intensity.  </P>
+
+<BR>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="virtual-pixel"></A>
+<A NAME="virtual_pixel"></A>
+<A NAME="virtual"></A>
+<H2>Virtual Pixels
+<FONT SIZE=-2> Missed Image Color Lookup</FONT></H2>
+
+Many operators often need to look-up colors which fall outside the boundaries
+of the image proper.
+This includes the operators for  <A HREF="../blur/#blur" >Blurring Images</A>,
+<A HREF="../distorts/#distort" >General Image Distortion</A>, <A
+HREF="../morphology/" >Morphological and Convolution Operators</A>,
+the <A HREF="../distorts/#distort" >General Distortion Operator</A>,
+and even the very old <A HREF="../warping/#implode" >Implosion Operator</A>.
+</P>
+
+So what color should be returned if you ask for a pixel at
+<CODE>-22,-3</CODE>?  Such a pixel does not actually exist, but the color
+value returned can have far reaching effects on the overall effect on your
+image processing, especially the resulting colors of pixels close to the
+actual edge of the image.  </P>
+
+The  "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" setting defines what IM should return when
+accessing a pixel outside the normal bounds of the image. </P>
+
+  <A HREF="tree.gif"
+     ><IMG SRC="tree.gif"     WIDTH=32  HEIGHT=32
+           ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+For example, here we use the <A HREF="../transform/#fx" >FX DIY Operator</A>
+"<CODE><A HREF="../option_link.cgi?fx" >-fx</A></CODE>" to 'lookup' and
+display all the pixels in and surrounding the small image so we can see what
+the <B>default</B> "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" setting returned.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:  tree.gif \
+                  -fx 'v.p[-19,-19]'  virtual_default.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_default.gif"
+     ><IMG SRC="virtual_default.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<A NAME="edge"></A>
+
+'<B><CODE>Edge</CODE></B>' "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" setting return the color of the the closest real
+pixel to the 'virtual' location requested.  That is theneaered 'edge' color.
+</P>
+
+This time I'll use a faster <A HREF="../distorts/#distort_viewport" >Image
+Distortion with viewport</A> to show the surrounding virtual pixels, instead
+of the much slower <A HREF="../transform/#fx" >FX Operator</A>.  The distort
+method "SRT 0" does not actually distort the image result, it just looks at
+what pixels the image operator actual sees, especially the 'virtual' ones
+surrounding the source image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Edge -filter point   -distort SRT 0 \
+          +repage  virtual_edge.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_edge.gif"
+     ><IMG SRC="virtual_edge.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+<!-- <CODE EXECUTE ASSERT>
+  [ "`compare -metric PAE virtual_{default,edge}.gif null: 2>&1 |
+        sed 's/ .*//'`" != '0' ] && echo >&2 \
+    "ASSERTION FAILURE: Default Virtual Pixel setting is NOT 'edge'\!"
+</CODE> -->
+
+An '<CODE>Edge</CODE>' virtual pixel setting is the default setting, so the
+above should be the same as the previous example. </P>
+
+This setting generally has the most minimal impact (in terms of edge effects)
+when processing images. Which is also why it was chosen as the default
+setting.   This is especially important when using <A HREF="../blur/#blur"
+>Blur</A>, or other  <A HREF="../morphology/" >Morphological and
+Convolution</A> operators that use a 'neighbourhood' or pixels for processing.
+</P>
+
+It is important to note how the color of the corner pixel, will end up
+completely filling the diagonally adjacent areas surrounding the actual image.
+This can result in the single corner pixel having a large effect on various
+image transformations.  This 'corner' effect is especially noticeable when
+blurring images.  </P>
+
+<A NAME="tile"></A>
+
+'<B><CODE>Tile</CODE></B>' VP setting is very useful for generating and
+ensuring the image processing edge effects are wrapped around the boundaries
+of the image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Tile  -filter point  -distort SRT 0 \
+          +repage virtual_tile.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_tile.gif"
+     ><IMG SRC="virtual_tile.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This lets you ensure that images being worked on remain 'tileable', or become
+more 'tileable' as the image is modified.  For further examples see <A
+HREF="../canvas/#tile_mod" >Modifying Tile Images</A>.  </P>
+
+<A NAME="mirror"></A>
+
+'<B><CODE>Mirror</CODE></B>' is very similar to '<CODE><A HREF="#tile"
+>tile</A></CODE>' and may be better for some effects that the default
+'<CODE><A HREF="#edge" >edge</A></CODE>'.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Mirror -filter point   -distort SRT 0 \
+          +repage virtual_mirror.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_mirror.gif"
+     ><IMG SRC="virtual_mirror.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This is particularly useful to reduce the edge and corner effect of images
+that are being blurred.  However it can also generate other effects. </P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Up until IM v6.5.0-1 only the images directly attached to the original image
+  was mirrored. Other virtual copies, further away from the original remained
+  un-mirrored (normal tile pattern).   This was fixed so the whole virtual
+  canvas space is now correctly mirror tiled, not just the neighbouring
+  virtual copies. </P>
+
+  It only becomes important when using mirror tile with  <A
+  HREF="../distorts/#distort" >General Distortion Operator</A> to mirror tile
+  a very large area, such as when <A HREF="../distorts/#horizon" >Viewing
+  Distant Horizons</A>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<A NAME="transparent"></A>
+
+'<B><CODE>Transparent</CODE></B>' just returns the transparent color for
+pixels outside the real image bounds.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif -alpha set  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Transparent  -filter point  -distort SRT 0 \
+          +repage virtual_trans.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_trans.gif"
+     ><IMG SRC="virtual_trans.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The <A HREF="../basics/#alpha" >Alpha 'set' Operator</A> in the above is
+required to ensure the image has a matte or alpha channel for the transparent
+color to fill in correctly.  Without this setting the above could return
+a 'black' color instead of transparent, as the color '<CODE>none</CODE>' or
+'fully-transparent black' is the default transparent color. </P>
+
+For example here I mistakenly turn off transparency...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Transparent -filter point  -distort SRT 0 \
+          +repage virtual_trans2.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_trans2.gif"
+     ><IMG SRC="virtual_trans2.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The '<CODE>Transparent</CODE>' setting is particularly useful for image
+distortions, where the distorted image will later be 'layered' to build up
+larger images.  For example, <A HREF="../distorts/#cube3d" >3d Affine
+Cubes</A>, and <A HREF="../distorts/#cube3d" >3d Perspective Boxes</A>. </P>
+
+
+<A NAME="black"></A>
+<A NAME="white"></A>
+<A NAME="gray"></A>
+
+The '<B><CODE>white</CODE></B>', '<B><CODE>gray</CODE></B>', and
+'<B><CODE>black</CODE></B>', settings are similar to the previous
+'<CODE>Transparent</CODE>' setting above.  They just return that specific
+color for any pixel that falls out of bounds.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel White -filter point  -distort SRT 0 \
+          +repage virtual_white.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_white.gif"
+     ><IMG SRC="virtual_white.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Gray -filter point  -distort SRT 0 \
+          +repage virtual_gray.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_gray.gif"
+     ><IMG SRC="virtual_gray.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Black -filter point  -distort SRT 0 \
+          +repage virtual_black.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_black.gif"
+     ><IMG SRC="virtual_black.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<A NAME="background"></A>
+
+If you want any other simple color , then you must define that color in the
+"<CODE><A HREF="../option_link.cgi?background" >-background</A></CODE>"
+setting, and use a '<B><CODE>Background</CODE></B>' "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" setting.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Background -background coral \
+          -filter point -distort SRT 0     +repage virtual_bgnd.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_bgnd.gif"
+     ><IMG SRC="virtual_bgnd.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<BR>
+
+<A NAME="horizontal_tile"></A>
+
+'<B><CODE>HorizontalTile</CODE></B>' VP setting was added to IM v6.4.2-6 as a
+special form of tiling that is useful for full 360 degree "<CODE><A
+HREF="../distorts/#arc" >Arc</A></CODE>" and "<CODE><A
+HREF="../distorts/#polar" >Polar</A></CODE>" distortions.  The image is only
+tiled horizontally, while the virtual pixels above and below the tiles are set
+from the current "<CODE><A HREF="../option_link.cgi?background"
+>-background</A></CODE>" color.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel HorizontalTile  -background coral \
+          -filter point -distort SRT 0     +repage virtual_horizontal.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_horizontal.gif"
+     ><IMG SRC="virtual_horizontal.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This lets you ensure that images being transformed remain 'tileable'
+horizontally.  For further examples see <A HREF="../canvas/#tile_mod"
+>Modifying Tile Images</A>.  </P>
+
+<A NAME="horizontal_edge"></A>
+
+The '<B><CODE>HorizontalTileEdge</CODE></B>' (added in IM v6.5.0-1) also tiles
+the image horizontally across the virtual space, but replicates the side edge
+pixels across the other parts of the virtual canvas space.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel HorizontalTileEdge  -background coral \
+          -filter point -distort SRT 0     +repage virtual_horizontal_edge.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_horizontal_edge.gif"
+     ><IMG SRC="virtual_horizontal_edge.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+These two VP methods were added for better handling of full circle '<CODE><A
+HREF="../distorts#arc" >Arc</A></CODE>' and '<CODE><A
+HREF="../distorts#polar" >Polar</A></CODE>' distortions where the en-circled
+image 'wraps around' and joins together end to end. </P>
+
+<BR>
+
+<A NAME="vertical_tile"></A>
+
+Simularly the '<B><CODE>VerticalTile</CODE></B>' VP setting (also added IM
+v6.4.2-6, for completeness) as a tiles the image vertially only, with  the
+current "<CODE><A HREF="../option_link.cgi?background"
+>-background</A></CODE>" color used to fill in the sides of the image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel VerticalTile  -background coral \
+          -filter point -distort SRT 0     +repage virtual_vertical.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_vertical.gif"
+     ><IMG SRC="virtual_vertical.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<A NAME="vertical_edge"></A>
+
+The '<B><CODE>VerticalTileEdge</CODE></B>' was added in IM v6.5.0-1, and
+replicates the side edge pixels across the rest of the virtual canvas space.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel VerticalTileEdge  -background coral \
+          -filter point -distort SRT 0     +repage virtual_vertical_edge.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_vertical_edge.gif"
+     ><IMG SRC="virtual_vertical_edge.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<A NAME="checker_tile"></A>
+
+In IM v6.5.0-1 '<B><CODE>CheckerTile</CODE></B>' was added to tile an image as
+if filling in a checkerboard pattern.  The other squares are simply filled
+with the background color (which may be transparent).
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel CheckerTile  -background coral \
+          -filter point -distort SRT 0     +repage virtual_checker.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_checker.gif"
+     ><IMG SRC="virtual_checker.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+By making background transparent and overlaying that image over an another
+fully-tiled image same size you can layer the two tilings to produce an
+interleaved checkerboard pattern of the two images.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 96x96 tile:balloon.gif \
+          \( tree.gif -alpha set  -set option:distort:viewport 96x96 \
+             -virtual-pixel CheckerTile  -background none \
+             -filter point -distort SRT 0 \) \
+          -flatten  virtual_checker_2.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_checker_2.gif"
+     ><IMG SRC="virtual_checker_2.gif"     WIDTH=96  HEIGHT=96
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<BR>
+
+There also a couple of more unusual "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" settings.
+</P>
+
+<A NAME="random"></A>
+
+'<B><CODE>random</CODE></B>', just picks a random pixel from the image to use.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+          -virtual-pixel Random -filter point   -distort SRT 0 \
+          +repage virtual_random.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_random.gif"
+     ><IMG SRC="virtual_random.gif"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This is often used with "<CODE><A HREF="../option_link.cgi?blur"
+>-blur</A></CODE>" to generate rough mottled average image color in the
+resulting edge effects it produces. </P>
+
+Note that the pixel value is not consistant, and will produce a different
+effect for each lookup, and even each run of the operation, unless the random
+number generator is given an initial "<CODE><A HREF="../option_link.cgi?seed"
+>-seed</A></CODE>". </P>
+
+This is especially bad when used with <A HREF="../convolve" >Convolution</A>
+or <A HREF="../morphology" >Morphology</A> image processing, as the each
+lookup along the edge of the image will contribute a different value even
+though the same pixel lookup was used. </P>
+
+I have however found the random pattern to be very good when generating a <A
+HREF="../distorts/#horizon" >Perspective Horizion</A> as the pattern shows
+a more blurred result as you get closer to the horizon.  The bluring gives the
+the resulting random texture a depth that would otherwise not be visible if
+using a simple solid color. </P>
+
+<BR>
+
+<A NAME="dither"></A>
+
+'<B><CODE>dither</CODE></B>' however returns an ordered dithered pattern of
+colors basied on pixels within 32x32 pixels of the requested position.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+That means that once you have progressed beyond 32 pixels from the image, the
+result will be again just the corner pixel color of the image.  It is a bit
+like a merger of '<CODE><A HREF="#edge" >edge</A></CODE>' and '<CODE><A
+HREF="#random" >random</A></CODE>'. </P>
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif  -set option:distort:viewport 120x120-44-44 \
+          -virtual-pixel Dither -filter point  -distort SRT 0 \
+          +repage virtual_dither.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="virtual_dither.gif"
+     ><IMG SRC="virtual_dither.gif"     WIDTH=120  HEIGHT=120
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+In the above you can see that the yellow from the sun in one corner of this
+32x32 pixel image manages to be selected all the way up the far lower-right
+corner, but no further.  That is the limit of the 32 pixel 'neighbourhood' for
+the ordered dither color selection.  If this image was larger, the yellow
+sun color would not reach the other corners.  </P>
+
+This pattern is not 'random' and will always generate the same result for the
+same image.  You could think of it as a more ordered form of '<CODE><A
+HREF="#random" >random</A></CODE>' VP close into the image, but becomes more
+like '<CODE><A HREF="#edge" >edge</A></CODE>' like in effect once you process
+further than 32 pixels from the image proper. </p>
+
+<BR>
+
+<A NAME="virtual_infinities"></A>
+<H4>Virtual Pixel and Infinities</H4>
+
+You can see the effects of "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" much more clearly in the results the <A
+HREF="../distorts/#distort" >General Distortion Operator</A>, and
+especially with a <A HREF="../distorts/#perspective" >Perspective</A>
+distortion, allowing you to create a distorted view out toward an infinite
+distance. </P>
+
+For example here I show the results of a "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A> dither</CODE>"
+settings, on a perspective view of the tree.  This shows how this setting can
+effect the pixels returned all the way out to infinity.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif -mattecolor DodgerBlue   -virtual-pixel dither \
+          -set option:distort:viewport  150x100-50-50 \
+          -distort perspective '0,0 9,0  31,0 38,0  0,31 0,18  31,31, 40,18' \
+          perspective_dither.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="perspective_dither.gif"
+     ><IMG SRC="perspective_dither.gif"       WIDTH=150 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Try the above with other "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" settings to get a better idea of how they work.
+Some other examples can also be seen in <A HREF="../distorts/#horizon"
+>Viewing Distant Horizons</A>.  </P>
+
+Note that the 'sky' in the above view is actually generated from the "<CODE><A
+HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>" setting, which
+is used by distort to prepresent areas that are 'Invalid', in this case the
+'sky' of a perspective distortion.  It did not come from the "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" setting.
+</P>
+
+<A NAME="virtual_colors"></A>
+<H4>Virtual Pixel Colors</H4>
+
+None of the "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" methods actually return a different or composite
+color to what is already present within the image, unless that color was
+specifically requested via one of the solid color methods: '<CODE><A
+HREF="#background" >background</A></CODE>', '<CODE><A HREF="#transparent"
+>transparent</A></CODE>', '<CODE><A HREF="#background"
+>background</A></CODE>', '<CODE><A HREF="#black" >black</A></CODE>', '<CODE><A
+HREF="#white" >white</A></CODE>', '<CODE><A HREF="#gray" >gray</A></CODE>';
+That is no new colors are ever generated, though one specific color could be
+added (two for the <A HREF="../distorts/#distort" >General Distortion
+Operator</A>). </P>
+
+Of course if the requested pixels are being <A HREF="#interpolate" >Pixel
+Interpolated</A>, or <A HREF="../distorts/#area_resample" >Area
+Resampled</A>, such as in the perspective distorted view above, then those
+methods may merge the colors returned according ot the "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" setting
+chosen. </P> </P>
+
+
+<A NAME="virtual_examples"></A>
+<H4>Virtual Pixel Effects on Operators</H4>
+
+Here I explore the effects of the effects of "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" setting with
+various operators. </P>
+
+"<CODE><A HREF="../option_link.cgi?blur" >-blur</A></CODE>"...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+          -virtual-pixel edge   -blur 0x8     vp_blur.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="vp_blur.png"
+     ><IMG SRC="vp_blur.png"     WIDTH=70  HEIGHT=70
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+            -virtual-pixel mirror  -blur 0x8  vp_blur_2.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_blur_2.png"
+      ><IMG SRC="vp_blur_2.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note in the following how the image can be cross contaminated using "<CODE><A
+HREF="../option_link.cgi?blur" >-blur</A></CODE>" with the "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" setting of
+'<CODE>tile</CODE>'.  Of course if the image was tilable to start with this
+may be desired.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+          -virtual-pixel tile  -blur 0x8  vp_blur_3.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_blur_3.png"
+      ><IMG SRC="vp_blur_3.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Setting a specific color for the "<CODE><A
+HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" in the image
+has some very interesting effects and posibilities.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+          -virtual-pixel background  -background blue \
+          -blur 0x8     vp_blur_4.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_blur_4.png"
+      ><IMG SRC="vp_blur_4.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+          -virtual-pixel transparent  -channel RGBA  -blur 0x8 \
+          -background red  -flatten       vp_blur_5.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_blur_5.png"
+      ><IMG SRC="vp_blur_5.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note how the '<CODE>red</CODE>' background I placed behind the image is
+visible around the edges where the resulting blurred image has made use of
+the virtual pixels that surround the real pixels of the image. </P>
+
+"<CODE><A HREF="../option_link.cgi?gaussian" >-gaussian</A></CODE>" has the
+same basic results as  "<CODE><A HREF="../option_link.cgi?blur"
+>-blur</A></CODE>", which is understandable as they are mathematically
+identical.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+          -virtual-pixel background   -background blue \
+          -gaussian 0x8     vp_gaussian.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_gaussian.png"
+      ><IMG SRC="vp_gaussian.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+However "<CODE><A HREF="../option_link.cgi?radial-blur"
+>-radial-blur</A></CODE>" (really a rotational blur), produces more
+interesting border effects...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:lightblue \
+     -virtual-pixel background  -background blue \
+     -radial-blur 0x30    vp_radial.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_radial.png"
+      ><IMG SRC="vp_radial.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This last with the default 'transparent edge' will probably generate a smooth
+edge, when used with larger radial blur angles.  It may produce a cleaner
+'vignette' or soft edging overlay image, than other techniques.  See <A
+HREF="../thumbnails/#soft_edges" >Soft and Blurred Edges</A> for examples of
+using this effect. </P>
+
+Note that "<CODE><A HREF="../option_link.cgi?motion-blur"
+>-motion-blur</A></CODE>" can be very badly effected by edge effects.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  It is made worse by the fact that "<CODE><A
+  HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>" does not
+  current understand the use of "<CODE><A HREF="../option_link.cgi?channel"
+  >-channel</A></CODE>" for limited its effects to specific channels.
+</I></FONT></TD></TR></TABLE></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:none  -virtual-pixel edge \
+     -fill yellow  -stroke red  -strokewidth 3 -draw 'circle 45,55 35,45' \
+     -channel RGBA -motion-blur 0x12+65  vp_motion.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_motion.png"
+      ><IMG SRC="vp_motion.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:none  -virtual-pixel transparent  \
+     -fill yellow  -stroke red  -strokewidth 3  -draw 'circle 45,55 35,45' \
+     -channel RGBA -motion-blur 0x12+65  vp_motion_2.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_motion_2.png"
+      ><IMG SRC="vp_motion_2.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 70x70 xc:none  -virtual-pixel background -background blue \
+     -fill yellow  -stroke red  -strokewidth 3  -draw 'circle 45,55 35,45' \
+     -channel RGBA -motion-blur 0x12+65  vp_motion_3.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="vp_motion_3.png"
+      ><IMG SRC="vp_motion_3.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<A NAME="virtual_implode"></A>
+<H3>Implosion Effects of Virtual Pixels</H3>
+
+Here are some more interesting examples of various large value (&gt;1.0)
+implosions using various "<A HREF="../option_link.cgi?virtual-pixel"
+><CODE>-virtual-pixel</CODE></A>" settings.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  for v in edge tile mirror dither random gray; do
+    for i in 2 5 10 50 500; do \
+      convert koala.gif -virtual-pixel $v \
+              -implode $i  implode_${v}_${i}.gif
+    done
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE>
+<TR VALIGN=bottom><TH>Implode</TH>
+<TH>Edge</TH><TH>Tile</TH><TH>Mirror</TH>
+<TH>Dither</TH><TH>Random</TH><TH>Gray</TH></TR>
+<TR><TH>2</TH>
+<TD><A HREF="implode_edge_2.gif"
+       ><IMG SRC="implode_edge_2.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_tile_2.gif"
+       ><IMG SRC="implode_tile_2.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_mirror_2.gif"
+       ><IMG SRC="implode_mirror_2.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_dither_2.gif"
+       ><IMG SRC="implode_dither_2.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_random_2.gif"
+       ><IMG SRC="implode_random_2.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_gray_2.gif"
+       ><IMG SRC="implode_gray_2.gif"       WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR>
+<TR><TH>5</TH>
+<TD><A HREF="implode_edge_5.gif"
+       ><IMG SRC="implode_edge_5.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_tile_5.gif"
+       ><IMG SRC="implode_tile_5.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_mirror_5.gif"
+       ><IMG SRC="implode_mirror_5.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_dither_5.gif"
+       ><IMG SRC="implode_dither_5.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_random_5.gif"
+       ><IMG SRC="implode_random_5.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_gray_5.gif"
+       ><IMG SRC="implode_gray_5.gif"       WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR>
+<TR><TH>10</TH>
+<TD><A HREF="implode_edge_10.gif"
+       ><IMG SRC="implode_edge_10.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_tile_10.gif"
+       ><IMG SRC="implode_tile_10.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_mirror_10.gif"
+       ><IMG SRC="implode_mirror_10.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_dither_10.gif"
+       ><IMG SRC="implode_dither_10.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_random_10.gif"
+       ><IMG SRC="implode_random_10.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_gray_10.gif"
+       ><IMG SRC="implode_gray_10.gif"       WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR>
+<TR><TH>50</TH>
+<TD><A HREF="implode_edge_50.gif"
+       ><IMG SRC="implode_edge_50.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_tile_50.gif"
+       ><IMG SRC="implode_tile_50.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_mirror_50.gif"
+       ><IMG SRC="implode_mirror_50.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_dither_50.gif"
+       ><IMG SRC="implode_dither_50.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_random_50.gif"
+       ><IMG SRC="implode_random_50.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_gray_50.gif"
+       ><IMG SRC="implode_gray_50.gif"       WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR>
+<TR><TH>500</TH>
+<TD><A HREF="implode_edge_500.gif"
+       ><IMG SRC="implode_edge_500.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_tile_500.gif"
+       ><IMG SRC="implode_tile_500.gif"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_mirror_500.gif"
+       ><IMG SRC="implode_mirror_500.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_dither_500.gif"
+       ><IMG SRC="implode_dither_500.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_random_500.gif"
+       ><IMG SRC="implode_random_500.gif"           WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<TD><A HREF="implode_gray_500.gif"
+       ><IMG SRC="implode_gray_500.gif"       WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TR></TABLE>
+</DIV></P>
+
+The 'dotty' nature of the above results is a direct result of the direct
+'interpolated sampling' used by the "<A HREF="../option_link.cgi?implode"
+><CODE>-implode</CODE></A>" operator.  See <A HREF="../distorts/#lookup"
+>Direct Interpolated Lookup</A>.  This may change in a future version of IM,
+using <A HREF="../distorts/#area_resample" >Area Resampling</A>. For now you
+will need to use a <A HREF="../distorts/#super_sample" >Super Sampling</A>
+technique to improve results. </P>
+
+The '<CODE>edge</CODE>' setting is the more usual and default setting that is
+use, to avoid most of the weird effects. The others (exept for
+'<CODE>background</CODE>' essentually produce a replicated pattern from the
+existing pixels in the image, and effects are highly variable. </P>
+
+Also note how the argument requires an expotential increase in size for simular
+increases in effects. </P>
+
+Also for arguments larger than about 200 a black circle may appear in the
+center of the resulting image.  This is caused by the computers mathematical
+limit being reached.  Using such large values is an effect we do not
+recommend you use.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="spots"></A>
+<H2>Random Spots of Solid Color</H2>
+
+By blurring a "<CODE>plasma:fractal</CODE>" canvas, then reducing the colors
+to very low values you can produce simple images containing random areas of
+different colors.  However the results are highly variable depending on the
+final number of colors requested and the <A HREF="#virtual">Virtual
+Pixel</A> setting (see above). </P>
+
+I had two choices for the initial random image in this experiment. A <A
+HREF="../canvas/#plasma_fractal" >Fractal Plasma Image</A>, and a <A
+HREF="../canvas/#random" >Random Noise Image</A>. </P>
+
+The <A HREF="../canvas/#random" >Random Image</A> will by its nature produce a
+image which can (with a 'tile "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" setting) create a better tilable image. Where as
+the <A HREF="../canvas/#plasma_fractal" >Plasma Image</A> tends to create
+rectangular like edges to its spots of color. </P>
+
+On the other hand the <A HREF="../canvas/#plasma_fractal" >Plasma Image</A>
+produces fairly nice pastel colored spots, or blobs. While the <A
+HREF="../canvas/#random" >Random Image</A> tends to produce horrible shades of
+mid-tone gray.  because of this I chose to use the  <A
+HREF="../canvas/#plasma_fractal" >Plasma Image</A> for these experiments. </P>
+
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+<r>  convert -size 80x80 plasma:fractal -normalize   spot_start.gif
+  #convert -size 80x80 xc: +noise Random  \
+  #        -virtual-pixel tile  -blur 0x5  -normalize  spot_start.gif
+</CODE><!--
+--><CODE EXECUTE SCRIPT>
+  for n in 2 3 4 5; do
+    for v in  edge mirror tile white black; do
+      convert spot_start.gif -virtual-pixel $v -blur 0x10 \
+              +dither -colors $n  spot${n}_${v}.gif
+    done
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE>
+<TR VALIGN=bottom><TH>Num Colors</TH>
+<TH>Edge</TH><TH>Mirror</TH><TH>Tile</TH><TH>White</TH><TH>Black</TH></TR>
+<TR><TH>2</TH>
+<TH><A HREF="spot2_edge.gif"
+       ><IMG SRC="spot2_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot2_mirror.gif"
+       ><IMG SRC="spot2_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot2_tile.gif"
+       ><IMG SRC="spot2_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot2_white.gif"
+       ><IMG SRC="spot2_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot2_black.gif"
+       ><IMG SRC="spot2_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR>
+<TR><TH>3</TH>
+<TH><A HREF="spot3_edge.gif"
+       ><IMG SRC="spot3_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot3_mirror.gif"
+       ><IMG SRC="spot3_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot3_tile.gif"
+       ><IMG SRC="spot3_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot3_white.gif"
+       ><IMG SRC="spot3_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot3_black.gif"
+       ><IMG SRC="spot3_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR>
+<TR><TH>4</TH>
+<TH><A HREF="spot4_edge.gif"
+       ><IMG SRC="spot4_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot4_mirror.gif"
+       ><IMG SRC="spot4_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot4_tile.gif"
+       ><IMG SRC="spot4_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot4_white.gif"
+       ><IMG SRC="spot4_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot4_black.gif"
+       ><IMG SRC="spot4_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR>
+<TR><TH>5</TH>
+<TH><A HREF="spot5_edge.gif"
+       ><IMG SRC="spot5_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot5_mirror.gif"
+       ><IMG SRC="spot5_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot5_tile.gif"
+       ><IMG SRC="spot5_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot5_white.gif"
+       ><IMG SRC="spot5_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot5_black.gif"
+       ><IMG SRC="spot5_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR></TABLE>
+</DIV></P>
+
+The first three images has very specific effects on how the color 'spots'
+interact with the edges of the image.  '<CODE>Edge</CODE>' and
+'<CODE>Mirror</CODE>' tends to cause the colors to join the edges at 90 degree
+angles. </P>
+
+A '<CODE>Random</CODE>' or '<CODE>Dither</CODE>' setting has simular but
+stronger attachments of the color blobs to the edges of the image, though both
+also introduces some sharp edge effects close to the image edges.  A second
+blur-quantize cycle may be needed to clean up and smooth the edges of the
+spots. </P>
+
+The '<CODE>Tile</CODE>' setting tends to allow the spots to wrap around the
+image.  However as the source <A HREF="../canvas/#plasma_fractal" >Plasma</A>
+image is not itself tilable, the result is a general color change near the
+rectangular edge. If the tilable <A HREF="../canvas/#random" >Random</A> image
+was used as the source, then the spots of colors would completely disregard
+the borders of the image. </P>
+
+By using a '<CODE>White</CODE>' or '<CODE>Black</CODE>' background
+virtual-pixel setting, the spots of color tend to be centered in the image
+proper.  How well this 'centering' occurs depends on just how different
+original random image was relative to the 'background color' used. </P>
+
+The size of the "<CODE><A HREF="../option_link.cgi?blur" >-blur</A></CODE>"
+basically effects the size and smoothness of the blobs. A small blur producing
+lots of small spots, a large blur, such as we used in the above, producing a
+single more circular spot of color. </P>
+
+<BR>
+
+You can also produce a completely different set of colors and interactions by
+using a different color quantization color space.  For example here I repeat
+the last example (reducing to 5 colors) from above but use some more unusal
+"<CODE><A HREF="../option_link.cgi?quantize" >-quantize</A></CODE>" color
+spaces for color selection.  (See <A HREF="../quantize/#quantize" >Color
+Quantization and ColorSpace</A>)
+
+<DIV ALIGN=center>
+<!--
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  for s in   RGB YIQ HSL XYZ OHTA; do
+    for v in   edge mirror tile white black; do
+      convert spot_start.gif -virtual-pixel $v -blur 0x10 \
+              +dither -quantize $s -colors 5 spot_${s}_${v}.gif
+    done
+  done
+</CODE></PRE></TD></TR></TABLE>
+-->
+<TABLE>
+<TR VALIGN=bottom><TH>Color Space</TH>
+<TH>Edge</TH><TH>Mirror</TH><TH>Tile</TH><TH>White</TH><TH>Black</TH></TR>
+<TR><TH>RGB</TH>
+<TH><A HREF="spot_RGB_edge.gif"
+       ><IMG SRC="spot_RGB_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_RGB_mirror.gif"
+       ><IMG SRC="spot_RGB_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_RGB_tile.gif"
+       ><IMG SRC="spot_RGB_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_RGB_white.gif"
+       ><IMG SRC="spot_RGB_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_RGB_black.gif"
+       ><IMG SRC="spot_RGB_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR>
+<TR><TH>YIQ</TH>
+<TH><A HREF="spot_YIQ_edge.gif"
+       ><IMG SRC="spot_YIQ_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_YIQ_mirror.gif"
+       ><IMG SRC="spot_YIQ_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_YIQ_tile.gif"
+       ><IMG SRC="spot_YIQ_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_YIQ_white.gif"
+       ><IMG SRC="spot_YIQ_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_YIQ_black.gif"
+       ><IMG SRC="spot_YIQ_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR>
+<TR><TH>HSL</TH>
+<TH><A HREF="spot_HSL_edge.gif"
+       ><IMG SRC="spot_HSL_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_HSL_mirror.gif"
+       ><IMG SRC="spot_HSL_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_HSL_tile.gif"
+       ><IMG SRC="spot_HSL_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_HSL_white.gif"
+       ><IMG SRC="spot_HSL_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_HSL_black.gif"
+       ><IMG SRC="spot_HSL_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR>
+<TR><TH>XYZ</TH>
+<TH><A HREF="spot_XYZ_edge.gif"
+       ><IMG SRC="spot_XYZ_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_XYZ_mirror.gif"
+       ><IMG SRC="spot_XYZ_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_XYZ_tile.gif"
+       ><IMG SRC="spot_XYZ_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_XYZ_white.gif"
+       ><IMG SRC="spot_XYZ_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_XYZ_black.gif"
+       ><IMG SRC="spot_XYZ_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR>
+<TR><TH>OHTA</TH>
+<TH><A HREF="spot_OHTA_edge.gif"
+       ><IMG SRC="spot_OHTA_edge.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_OHTA_mirror.gif"
+       ><IMG SRC="spot_OHTA_mirror.gif"           WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_OHTA_tile.gif"
+       ><IMG SRC="spot_OHTA_tile.gif"             WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_OHTA_white.gif"
+       ><IMG SRC="spot_OHTA_white.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+<TH><A HREF="spot_OHTA_black.gif"
+       ><IMG SRC="spot_OHTA_black.gif"         WIDTH=80 HEIGHT=80
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></TH>
+</TR></TABLE>
+</DIV></P>
+
+Remember all the above images were all generated from the same randomized
+source image.  The different effects you see are the results of different ways
+reducing the number of colors in the image. </P>
+
+You can see how the "<CODE><A HREF="../option_link.cgi?virtual-pixel"
+>-virtual-pixel</A></CODE>" setting defining what pixel colors blur sees the
+areas beyond the image bounds has a strong influence on shapes of the color
+areas. </P>
+
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="annotate"></A>
+<H2>Annotate Argument Usage</H2>
+
+IM Version 6 provided a new command line option for text drawing "<CODE><A
+HREF="../option_link.cgi?annotate" >-annotate</A></CODE>" which bypasses the
+older "<CODE><A HREF="../option_link.cgi?draw" >-draw</A></CODE>" method to
+use the <CODE>Annotate()</CODE> API directly. This provides some new features
+to command line users. </P>
+
+For this example I choose Arial Black font, for its straight lettering
+so that the rotation should be quite clear.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -font ArialB -pointsize 24 -gravity center \
+            -size 55x55 xc:white -annotate 0x0+0+0 'Text' \
+            annotate_source.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="annotate_source.jpg"
+      ><IMG SRC="annotate_source.jpg"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The format of this option is...
+
+<PRE><B>  -annotate {<I>SlewX</I>}x{<I>SlewY</I>}+{<I>X</I>}+{<I>Y</I>}<!--
+--> 'Text String' </B></PRE>
+
+The <I>X</I> and <I>Y</I> offset of the above is the gravity effected position
+of the annotated text that is to be drawn. </P>
+
+However the <I>SlewX</I> and <I>SlewY</I> represents a form of rotation.  If
+both of these values are the same then a normal rotation is performed.  But if
+they differ, some very interesting effects can result.. </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0><TR><TD>
+   <A HREF="annotate_montage.jpg"
+      ><IMG SRC="annotate_montage.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+As you can see some of the arguments resulted in no text being drawn,
+basically when the text would have been drawn all in a single line.
+This is to be expected. </P>
+
+However you can see that we can draw the text flipped, flopped, rotated,
+italicized, in all manner of ways. A most useful image operator. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="splice"></A>
+<H2>Splice: Creating a New Image Operator</H2>
+
+Just after the first release of ImageMagick version 6, a discussion developed
+in response to a question.  The question involved adding extra space (rows and columns) into the
+middle of an image.  </P>
+
+The example below is the complex set of commands that resulted from this
+discussion, using the heavy magic of IM version 6, and detailed exactly what
+should be done. </P>
+
+From this example the "<CODE><A HREF="../option_link.cgi?splice"
+>-splice</A></CODE>" operator was created (for details see examples in <A
+HREF="../crop/#splice" >Splicing and Chopping Rows and Columns into
+Images</A>).  As such this command line is the defining operations of this new
+command, and both should work in exactly the same way. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose:  -size 20x10 xc:blue   -background blue \
+          \( -clone 0  -crop 40x0 +repage +clone -insert 1 +append \) \
+          -swap 0,-1 +delete +repage \
+          \( -clone 0  -crop 0x30 +repage +clone -insert 1 -append \) \
+          -delete 0 -delete 0 +repage  splice_rose_seq.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="splice_rose_seq.gif"
+      ><IMG SRC="splice_rose_seq.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+In the above we split up the rose into lots of vertical slices, then insert a
+spacing image into that sequence, before appending them all together again.
+Basically we added a vertical column of pixels into the rose image.  </P>
+
+Then replacing our original image with the modified one, we repeated the same
+operations, but horizontally.  A little clean up of working images and we are
+done. </P>
+
+This example also highlighted to the mailing list the usefulness of the new
+ordered command line handling and the image sequence operations of version 6
+ImageMagick.  In older releases of IM, this would have required a large number
+of separate commands and temporary images to achieve the same result. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="border"></A>
+<H2>Border, Frame, and the use of BorderColor</H2>
+
+There is a debate, that "<CODE><A HREF="../option_link.cgi?bordercolor"
+>-bordercolor</A></CODE>" should only be used to only add a border to images
+with the "<CODE><A HREF="../option_link.cgi?border" >-border</A></CODE>" or
+"<CODE><A HREF="../option_link.cgi?splice" >-frame</A></CODE>".  That is many
+users think it should <I>not</I> be used to set the background behind images
+with transparency. </P>
+
+For example, under IM this sets the transparent areas of the star image to the
+"<CODE><A HREF="../option_link.cgi?bordercolor" >-bordercolor</A></CODE>" and
+completely ignores the  "<CODE><A HREF="../option_link.cgi?background"
+>-background</A></CODE>" color setting.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert star.gif -bordercolor LimeGreen   -background Gold \
+                   -border 10       star_border.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="star_border.gif"
+      ><IMG SRC="star_border.gif"
+            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<!-- <CODE EXECUTE ASSERT>
+  identify -verbose star_border.gif | grep Alpha: >/dev/null && echo >&2 \
+    "ASSERTION FAILURE: Border did not flatten image transparency\!"
+</CODE> -->
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The main reason "<CODE><A HREF="../option_link.cgi?bordercolor"
+>-bordercolor</A></CODE>" is used to set the background of transparenent
+images is because this makes "<CODE>montage</CODE>" come out in a nice way
+when given a random set of images which could contain transparencies, with
+minimal settings from the user.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    montage star.gif  -frame 6  -geometry '64x64+5+5&gt;' star_montage.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="star_montage.gif"
+      ><IMG SRC="star_montage.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+If the transparency was preserved then the "<CODE>montage</CODE>" results
+above would not look nearly as good. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+That does not mean that you can't preserve the transparency of images when
+using "<CODE><A HREF="../option_link.cgi?border" >-border</A></CODE>" or
+"<CODE><A HREF="../option_link.cgi?splice" >-frame</A></CODE>" operators. It
+just means you need to supply an extra  "<CODE><A
+HREF="../option_link.cgi?compose" >-compose</A></CODE>" setting to tell IM to
+preserve the transparency.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert star.gif  -bordercolor LimeGreen \
+          -compose Copy  -border 10   star_border_copy.gif
+  montage star.gif  -bordercolor LimeGreen \
+          -compose Copy -background None    -frame 6 \
+          -geometry '64x64+0+0&gt;'   star_montage_copy.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="star_border_copy.gif"
+      ><IMG SRC="star_border_copy.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+   <A HREF="star_montage_copy.gif"
+      ><IMG SRC="star_montage_copy.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+For more information on preserving an images transparent background, while
+adding a "<CODE><A HREF="../option_link.cgi?border" >-border</A></CODE>" or
+"<CODE><A HREF="../option_link.cgi?splice" >-frame</A></CODE>", see <A
+HREF="../crop/#border" >adding borders</A>.  and for "<CODE>montage</CODE>",
+see <A HREF="../montage/#bg" >montage background and transparency handling
+examples</A>. </P>
+
+
+One alturnative that has been suggested was to set image area background in
+these operators to the "<CODE><A HREF="../option_link.cgi?background"
+>-background</A></CODE>" color, but this will interfer with its use in
+"<CODE>montage</CODE>". </P>
+
+You can of course always <A HREF="../masking/#remove" >Remove the
+Transparency</A> of the image yourself, before any extra frame or border is
+added.  In that case the use of "<CODE>-compose Copy</CODE>" becomes
+irrelevent.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  montage star.gif -background Gold -alpha remove \
+          -frame 6  -geometry '64x64+5+5&gt;' -size 16x16 \
+          -bordercolor LimeGreen  -background SeaGreen \
+          star_montage_texture.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="star_montage_texture.gif"
+      ><IMG SRC="star_montage_texture.gif"
+            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+It is just a lot easier to use a "<CODE><A HREF="../option_link.cgi?compose"
+>-compose</A></CODE>" setting, to preserve the transparency, rather that have
+border preserve it and cause other problems.  It may not be obvious to new
+users, but then that is what these example pages are all about. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="list_test"></A>
+<H2> List Operator Testing</H2>
+
+All the following commands should produce exactly the same image, but all
+images are produced in slightly different ways, demonstrating the new, IM
+version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif news.gif  storm.gif  +append  list_test_01.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_01.gif"
+      ><IMG SRC="list_test_01.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( \) eye.gif news.gif  storm.gif  +append  list_test_02.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_02.gif"
+      ><IMG SRC="list_test_02.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif news.gif  storm.gif \( \) +append  list_test_03.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_03.gif"
+      ><IMG SRC="list_test_03.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( eye.gif news.gif  storm.gif \) +append  list_test_04.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_04.gif"
+      ><IMG SRC="list_test_04.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( eye.gif news.gif  storm.gif  +append \) list_test_05.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_05.gif"
+      ><IMG SRC="list_test_05.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif \( news.gif storm.gif +append \) +append list_test_06.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_06.gif"
+      ><IMG SRC="list_test_06.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( eye.gif news.gif +append \) storm.gif +append  list_test_07.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_07.gif"
+      ><IMG SRC="list_test_07.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( storm.gif -flop \) \( news.gif -flop \) \( eye.gif -flop \) \
+          +append -flop  list_test_08.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_08.gif"
+      ><IMG SRC="list_test_08.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert \( eye.gif -rotate 90 \) \( news.gif  -rotate 90 \) \
+          \( storm.gif -rotate 90 \) -append  -rotate -90   list_test_09.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_09.gif"
+      ><IMG SRC="list_test_09.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif tree.gif news.gif storm.gif   -delete 1 \
+          +append list_test_10.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_10.gif"
+      ><IMG SRC="list_test_10.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif tree.gif news.gif storm.gif  -delete -3 \
+          +append list_test_11.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_11.gif"
+      ><IMG SRC="list_test_11.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif news.gif storm.gif tree.gif   +delete \
+          +append list_test_12.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_12.gif"
+      ><IMG SRC="list_test_12.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert news.gif storm.gif eye.gif  +insert  +append list_test_13.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_13.gif"
+      ><IMG SRC="list_test_13.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif storm.gif news.gif  -insert 1  +append list_test_14.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_14.gif"
+      ><IMG SRC="list_test_14.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert news.gif eye.gif storm.gif   -swap 0,1  +append list_test_15.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_15.gif"
+      ><IMG SRC="list_test_15.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert storm.gif news.gif eye.gif   -swap 0  +append list_test_16.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_16.gif"
+      ><IMG SRC="list_test_16.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif storm.gif news.gif   +swap  +append list_test_17.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_17.gif"
+      ><IMG SRC="list_test_17.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif storm.gif news.gif   \( -clone 1 \) \
+          -delete 1   +append list_test_18.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="list_test_18.gif"
+      ><IMG SRC="list_test_18.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif -negate \( +clone -negate \) news.gif  storm.gif \
+          -delete 0   +append list_test_19.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_19.gif"
+      ><IMG SRC="list_test_19.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert storm.gif news.gif eye.gif \( -clone 2,1,0 \) \
+          -delete 2,1,0   +append  list_test_20.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_20.gif"
+      ><IMG SRC="list_test_20.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert storm.gif news.gif eye.gif \( -clone 2-0 \) \
+          -delete 0-2   +append  list_test_21.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_21.gif"
+      ><IMG SRC="list_test_21.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert {balloon,medical,present,shading}.gif  -delete 0--1 \
+          {eye,news,storm}.gif   +append  list_test_22.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_22.gif"
+      ><IMG SRC="list_test_22.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert balloon.gif -delete 0,0,0,0,0,0,0,0,0 \
+          eye.gif news.gif  storm.gif  +append  list_test_23.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_23.gif"
+      ><IMG SRC="list_test_23.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif balloon.gif news.gif storm.gif \
+          -delete 1,1,1,1,1   +append  list_test_24.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_24.gif"
+      ><IMG SRC="list_test_24.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert {balloon,medical,present,shading}.gif {eye,news,storm}.gif \
+          -delete 0--4   +append   list_test_25.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_25.gif"
+      ><IMG SRC="list_test_25.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif news.gif storm.gif \
+          -delete 0--4   +append   list_test_26.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_26.gif"
+      ><IMG SRC="list_test_26.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert storm.gif news.gif eye.gif -reverse +append  list_test_27.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="list_test_27.gif"
+      ><IMG SRC="list_test_27.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+<!-- Do not forget to set number of tests below -->
+
+</TABLE></P></DL></P>
+
+<!-- <CODE EXECUTE ASSERT>
+  for i in `seq -f %02.f 2 27`; do
+    [ `compare -metric PAE list_test_$i.gif list_test_01.gif null: 2>&1 |
+           sed 's/ .*//'` != '0' ] && echo >&2 \
+      "ASSERTION FAILURE: Sequence Command Test $i failed\!"
+  done
+</CODE> -->
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 6 November 2004 <BR>
+Updated: 13 March 2008 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/misc/</CODE>
+</ADDRESS></BODY></HTML>

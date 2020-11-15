@@ -1,0 +1,217 @@
+<html lang="en"><HEAD>
+<TITLE>Displacement Bugs -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/displace/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Displacement Bugs -- Partially Fixed</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+This is a demonstration of numerous bugs that I found in the
+"<CODE>composite</CODE>" commands  "<CODE><A
+HREF="../../option_link.cgi?displace" >-displace</A></CODE>" method, in IM
+versions 6.2.8 and before. </P>
+
+Strictly speaking this method is not a composition method, but a multi-image
+transformation mapped, image warping operation.  It could easily be simulated
+using the new DIY "<CODE><A HREF="../../option_link.cgi?fx" >-fx</A></CODE>"
+operator. </P>
+
+This page is for reference for older IM users who may still have to deal with
+this bug. The examples on this page have not been re-created when/if the bug
+was fixed.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<H1>Displacement Map Bugs</H1>
+
+Before looking at these bugs you should look at the full description of the
+"<CODE><A HREF="../../option_link.cgi?displace" >-displace</A></CODE>"
+composition method, in <A HREF="../../displace/#displacement_maps" >Displacement
+Maps</A>. </P>
+
+This is important to the understanding of the problems, as the method is
+actually more of "a mapped offset color lookup", than a "mapped image
+displacement".
+
+
+<H2>Composite 'Masking' Interference -- Broken</H2>
+
+Have a look at this displacement result.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:grey50 -draw 'circle 50,50 25,50' dismap.png
+
+  composite dismap.png dismap.png dismap.png  -displace 20x20 displaced.jpg
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
+    <A HREF="dismap.png"
+       ><IMG SRC="dismap.png"            WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+    <A HREF="displaced.jpg"
+       ><IMG SRC="displaced.jpg"        WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+This is really caused by the way the "<CODE>composite</CODE>" command actually
+handles mask images. This is detailed on the page for <A
+HREF="../composite_mask/" >Composite Mask Bug</A>.  What is going on is that
+internally the Y displacement map (mask image) is merged with the X
+displacement map (overlay image) to replace that images matte (or alpha)
+channel.  </P>
+
+However in the above the Y displacement map has a fully-opaque, transparency
+channel already, as such the color components of the image was ignored and the
+images existing matte channel was used instead.  The result is thus equivelent
+to...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+   composite dismap.png dismap.png xc:white'[100x100]' \
+              -displace 20x20   displace_masked.jpg
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+    <A HREF="displace_masked.jpg"
+       ><IMG SRC="displace_masked.jpg"   WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+In other words, the <I>Y displacement</I> color was completely ignored and
+treated as if it was just a purely white mask.  IE displace everything
+downward by the Y amplitude, then only the parts of the original image within
+the circle to the left as well. </P>
+
+Not good. </P>
+
+To fix this, make sure neither of the single displacement map images contain a
+matte or alpha channel.  The background, or input image on the other hand can
+contain transparency information without problems.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite dismap.png  dismap.png  dismap.png \
+                             +matte  -displace 20x20 displaced_matte.jpg
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
+    <A HREF="dismap.png"
+       ><IMG SRC="dismap.png"            WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+    <A HREF="displaced_matte.jpg"
+       ><IMG SRC="displaced_matte.jpg"        WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see this time the image was displaced correctly.  The extra cresent
+of pixels in the above is caused by the anti-aliased edge of the drawn circle,
+and is correct. </P>
+
+Another side effect of this internal handling is that if a single source image
+is used, which has a transparency channel in it, and no mask image is
+provided, then the X offset will come from the color intensity, while the Y
+offset will be provided by the images transparency channel! </P>
+
+To fix this 'masking' bugs properly, "<CODE><A
+HREF="../../option_link.cgi?displace" >-displace</A></CODE>" should be separated
+from alpha composition, as it really is a image transformation, rather that
+alpha composition. </P>
+
+
+<H2>Inconsistent Displacement Direction -- Fixed 6.2.8-1</H2>
+
+Also if you look at the above, you will see that while black X displacement
+displaces color to the right (positive displacement, or negative offset),
+while Y displacement for black is upward (negative displacement, or positive
+offset). </P>
+
+One of these directions is obviously wrong, and according to the manual it is
+the X displacement that is incorrect, as black is suposed to be a negative
+displacement. </P>
+
+The bug was fixed in IM v6.2.8-1 by inverting the Y displacement direction
+(making black a negative offset to the color lookup, rather than a negative
+displacement).  This was done as it would have the more minimal impact on
+previous usage of this command. </P>
+
+
+<H2>Single Displacement Map Arguments -- Fixed 6.2.8-1</H2>
+
+When only one map is give, it is used for BOTH X and Y placements,
+regardless of the amplitude arguments given! </P>
+
+This appears to be a bug, and for for now should be avoided.
+As such none of the examples above use a single map style. </P>
+
+Results seen for -displacement arguments with one displacement map.
+(EG: no 'mask' image provided)
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite dismap.png +matte dismap.png -displace 15    displaced_1.jpg
+  composite dismap.png +matte dismap.png -displace 15x0  displaced_x.jpg
+  composite dismap.png +matte dismap.png -displace 0x30  displaced_y.jpg
+  composite dismap.png +matte dismap.png -displace 15x30 displaced_xy.jpg
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
+    <A HREF="dismap.png"
+       ><IMG SRC="dismap.png"             WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+    <A HREF="displaced_1.jpg"
+       ><IMG SRC="displaced_1.jpg"        WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+    <A HREF="displaced_x.jpg"
+       ><IMG SRC="displaced_x.jpg"        WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+    <A HREF="displaced_y.jpg"
+       ><IMG SRC="displaced_y.jpg"        WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+    <A HREF="displaced_xy.jpg"
+       ><IMG SRC="displaced_xy.jpg"       WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+From the above you can see that a single value argument to "<CODE><A
+HREF="../../option_link.cgi?displace" >-displace</A></CODE>" will displace
+the image within the black region in both the X and Y directions. </P>
+
+However the last three images show that only the first <I>X amplitude</I>
+value is used for both X and Y displacement amplitudes, regardless of
+if two values are provided or what those values are. </P>
+
+In other words only the first image in generating in the above is correct,
+as documented by the IM manual. And other three images are wrong!. </P>
+
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 9 June 2006 <BR>
+Updated: 10 June 2006 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/displace/</CODE>
+</ADDRESS></BODY></HTML>

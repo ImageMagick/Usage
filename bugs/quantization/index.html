@@ -1,0 +1,222 @@
+<html lang="en"><HEAD>
+<TITLE>Quantization -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/quantization">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>Quantization and Transparent Colors</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+Exploration of the distance algorithm used by <A
+HREF="../option_link.cgi?colors" >-colors</A></CODE> quantization (color
+reduction) with regards to transparent colors. </P>
+
+
+<HR><!-- ---------------------------------------------------------------- -->
+<H2> Quantization vs Dithering -- Where is the bug?</H2>
+
+The problem with debugging the color quantization process is separating color
+selection (quantization) from the actual replacement of colors (dither). </P>
+
+At this time thier is no perfect method of extracting the exact color table
+that quantization selected.  Viewing those colors to see how they are arranged
+in 3D Color Space is another problem. </P>
+
+Even if dithering is turned off you still need to replace colors, which
+requires a fast way of determining exactly what color should be used, and
+currently in Imagemagick this is NOT a straight forward. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+<H2>Quantization and Color Spacing</H2>
+
+Quantization of a gradient should space colors along the gradient equally,
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE RANDOM>
+  convert -size 20x640  gradient: -rotate 90    gradient_gray.png
+  convert gradient_gray.png  +dither  -colors 3   gray_3.png
+  convert gradient_gray.png  +dither  -colors 4   gray_4.png
+  convert gradient_gray.png  +dither  -colors 5   gray_5.png
+  convert gradient_gray.png  +dither  -colors 6   gray_6.png
+  convert gradient_gray.png  +dither  -colors 7   gray_7.png
+  convert gradient_gray.png  +dither  -colors 8   gray_8.png
+  convert gradient_gray.png  +dither  -colors 9   gray_9.png
+</CODE></PRE></TD></TR></TABLE><CODE><NOBR>
+-:<A HREF="gradient_gray.png"
+     ><IMG SRC="gradient_gray.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=10 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+3:<A HREF="gray_3.png"
+     ><IMG SRC="gray_3.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+4:<A HREF="gray_4.png"
+     ><IMG SRC="gray_4.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+5:<A HREF="gray_5.png"
+     ><IMG SRC="gray_5.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+6:<A HREF="gray_6.png"
+     ><IMG SRC="gray_6.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+7:<A HREF="gray_7.png"
+     ><IMG SRC="gray_7.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+8:<A HREF="gray_8.png"
+     ><IMG SRC="gray_8.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+9:<A HREF="gray_9.png"
+     ><IMG SRC="gray_9.png"    WIDTH=640   HEIGHT=20
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</NOBR><CODE></DIV></P>
+
+As you can see it is working, though some of the color ranges are not very
+equal.  Not only that but '9' colors did not generate 9 colors! </P>
+
+This seems to get worse for a linear but non-standard color gradient...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE RANDOM>
+  convert -size 20x640  gradient:wheat-tomato -rotate 90  gradient_color.png
+  convert gradient_color.png  +dither  -colors 3   color_3.png
+  convert gradient_color.png  +dither  -colors 4   color_4.png
+  convert gradient_color.png  +dither  -colors 5   color_5.png
+  convert gradient_color.png  +dither  -colors 6   color_6.png
+  convert gradient_color.png  +dither  -colors 7   color_7.png
+  convert gradient_color.png  +dither  -colors 8   color_8.png
+  convert gradient_color.png  +dither  -colors 9   color_9.png
+</CODE></PRE></TD></TR></TABLE><CODE><BR>
+-:<A HREF="gradient_color.png"
+   ><IMG SRC="gradient_color.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=10 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+3:<A HREF="color_3.png"
+   ><IMG SRC="color_3.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+4:<A HREF="color_4.png"
+   ><IMG SRC="color_4.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+5:<A HREF="color_5.png"
+   ><IMG SRC="color_5.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+6:<A HREF="color_6.png"
+   ><IMG SRC="color_6.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+7:<A HREF="color_7.png"
+   ><IMG SRC="color_7.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+8:<A HREF="color_8.png"
+   ><IMG SRC="color_8.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
+9:<A HREF="color_9.png"
+   ><IMG SRC="color_9.png"    WIDTH=640   HEIGHT=20
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</NOBR><CODE></DIV></P>
+
+The above clearly shows that the current (IM 6.6.9) is not acceptable for low
+numbers of colors, which is typically the case when quantization is being
+specifically used. </P>
+
+Of course IM does do a great job for the most common quantization case, that
+of 256 color quantization for GIF images. It only breaks down badly for
+low quantization as above. </P>
+
+A option here is the addition of new methods of quantization for low color
+cases. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+<H2>Quantization and Transparent Colors</H2>
+
+This is a continuation of the previous bug report on <A
+HREF="../fuzz_distance/" >Fuzz Color Distance Bug</A> now (IM 6.6.8) fixed.
+but this time looking at quantization issues with transparency. </P>
+
+In summery all fully-transparent colors should be classed as being equal, but
+also equi-distant from all fully-opaque colors. </P>
+
+As a result color quantizatation should concern itself more with opaque colors
+it should still generate equal amounts of semi-transparent colors accross
+a range. </P>
+
+In this example a linear greyscale and transparency gradient is generated, and
+then replaces 'similar colors' to full-transparency.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
+          -compose CopyOpacity -composite  gradient_trans.png
+  convert gradient_trans.png +dither -colors 4  trans_4.png
+  convert gradient_trans.png +dither -colors 8  trans_8.png
+  convert gradient_trans.png +dither -colors 16 trans_16.png
+</CODE><BR></PRE></TD></TR></TABLE>
+<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="gradient_trans.png"
+     ><IMG SRC="gradient_trans.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="trans_4.png"
+     ><IMG SRC="trans_4.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="trans_8.png"
+     ><IMG SRC="trans_8.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="trans_16.png"
+     ><IMG SRC="trans_16.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Note the "<CODE>-quantize transparent</CODE>" setting forces quantization to
+ignore transparency channel. </P>
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert gradient_trans.png -quantize transparent \
+          +dither -colors 16 trans_16_trans.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<TABLE BORDER=1 CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="trans_16_trans.png"
+     ><IMG SRC="trans_16_trans.png"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</TD></TR></TABLE></P>
+
+The major problem with dithering involving semi-transparency is that color
+selection needs to actually prefer fully-opaque, and at least one
+fully-transparent color.  Normal quantization however has a tendancy to
+generate almost-fully-transparent, and near-opaque colors, which is generally
+not acceptable in this type of image work. </P>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 3 May 2011 <BR>
+Updated: 3 May 2011 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/quantization/</CODE>
+</ADDRESS></BODY></HTML>
+

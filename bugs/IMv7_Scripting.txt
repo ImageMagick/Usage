@@ -1,0 +1,630 @@
+-------------------------------------------------------------------------------
+IMv7 Command Line Interface re-design...
+
+I have added a CLI interface of ImageMagick as part of version 7 development.
+Yes I am on the very small development team for this.  This will let the
+software become more script-like, and you will be able to use a script rather
+than VERY VERY LONG COMMAND LINES.   That is the current norm.
+
+See  ImageMagick Examples...
+   http://www.imagemagick.org/Usage/
+Specifically Basic Usage, Working Example
+   http://www.imagemagick.org/Usage/basics/#example
+And that is a 'small' command line.
+
+You will still be able to use commands as you always have, but you will also
+be able to script those commands, using files or pipelines.
+
+As part of this I am also going to ensure that you can run ImageMagick as
+a co-processor.  That is run Imagemagick in background with image processing
+options being sent to it from a wrapper program (shell or any other language).
+
+The background ImageMagick command, will read/process/write the images,
+holding the images in memory for as long as needed, report information about
+them, all according to the instructions it recieves.
+
+The wrapping program (shell, PHP, or other) can ask for images to be read in,
+request information about them, sent processing options based on that
+information (feedback loop).  The wrapper thus provides the if-then, looping,
+and function handling aspects, while letting ImageMagick do what it does best,
+handle images.
+
+The real point is to remove having to run multiple image processing commands,
+where it spends all its time simply reading and writing intermediate images,
+that are being passed between multiple commands (via pipelines or disk files).
+Instead the images are just kept in memory for as long as it is needed.
+Making shell script image processing very much faster.
+
+UPDATE: Cristy added the ability to use a remote 'image caching service'.
+
+It does not need to be shell, but could be PHP (using its proc_open()
+function), or any other language,  but it will be designed with shell
+scripting in mind!
+
+---
+
+"magick" -- The replacement "convert" command.
+
+Its usage will be either like IMv6 "convert"
+    magick [options|images]... [output]
+
+Or as a "scripting" command
+    magick [options] -script scriptname [script_arguments]
+
+or for basic information (and abort) options...
+    magick -version
+    magick -list listtype
+
+Note using -version or -list within a "script" will work as expected, but will
+not abort the image processing as the above does, which allows you to use
+these options in a co-processing (parent process controlled) technique, as
+part of the making decisions as to how to process images.
+
+Also "magick" will have a much more strict option processing order. As such if
+you don't have an image in memory when you try to process the image you will
+get an error.
+
+The big change is the "-script" option that will switch to reading options
+from given file, file descriptor, or pipeline (stdin).  It will also provide
+a simple 'CLI' interface, where you can type options in directly.
+
+---
+
+Scripting Details...
+
+Script Launching (command line only)
+
+   -script {script_file}   # argument for script files
+
+
+This means you can create "magick scripts" of the form...
+
+   #!/path/to/magick -script
+   #
+   # This is a Magick Script
+   #
+   -read granite: ( rose: -rotate 180 )
+   -gravity center -composite  -write show:
+
+If the "magick" command is named "magick-script" as a single word, then
+the "-script" option will be assumed. This will allow you to run a
+"magick script" using rather well known "env" program trick...
+
+   #!/usr/bin/env magick-script
+   #
+   -pointsize 48 label:'Magick with "env"'
+   -write show:
+
+In this form of she-bang ("#!"), only one argument can follow the "env"
+command, which is why more compact form of the command ("magick-script") is
+needed.  Actually this will work if "magick" is named (copied, symlinked, or
+hard linked) any command that ends with the string "script".
+
+The script file is parsed in a way that is very close to that of a bash
+script.  In fact you should be able to copy the CLI arguments into a script
+file, and prepend "-write" to the last argument, so as get exactly the same
+result.
+
+EG: This IMv6 command...
+
+   convert rose: -scale 200% big_rose.png
+
+can be converted directly to this IMv7 "magick" command...
+
+   magick rose: -scale 200% big_rose.png
+
+Or to a magick script... (no shell pasing of arguments IM does that parsing)
+
+   #!/path/to/magick -script
+   rose: -scale 200% -write big_rose.png
+
+You can even 'pipe' the otpions into the magick command...
+
+   echo "rose: -scale 200% -write big_rose.png" |
+      magick -script -
+
+Each argument (token) in the script consists of a white-space separated words.
+And you can escape characters using backslashes '\', single quotes ''' or
+double quotes '"' in exactly the same way as bash does.  Any '#' that is the
+start of a word (token) starts a comment to the end of the line and is
+ignored.
+
+This means if something 'works' for a bash "echo", then it should work the
+same way in a magick script.  For example
+
+    prompt> echo abc#123
+    abc#123
+
+Which shows the shell did not see '#' as the start of a comment, so neither
+will the "magick" command when it interprets a "magick script".
+
+For example each of the following produces a single character 'word'
+exactly as you would if you had used them in a shell "echo" command.
+
+    \# '#' "#"  -  \'  "'"  -  \"  '"'  "\""  -  \\  '\'  "\\"
+
+These are all the special meta-characters handled by "magick".
+
+The other bash meta-characters (namely:  $ ` ( ) { } [ ] ; ! > < * ? )
+are not handled in any special way by "magick".  They are just ordinary
+characters and as such thay do not need escaping.  However escaping them does
+not hurt!
+
+---
+
+Parsing Details  (extract from  "MagickWand/script-token.c" documentation)
+
+The input stream is dived into individual 'tokens' (representing 'words' or
+'options'), in a way that is as close to a UNIX shell, as is feasable.
+Only shell variable, and command substitutions will not be performed.
+Tokens can be any length.
+
+The main function call is GetScriptToken() (see below) which returns one
+and only one token at a time.  The other functions provide support to this
+function, opening scripts, and seting up the required structures.
+
+More specifically...
+
+Tokens are white space separated, and may be quoted, or even partially
+quoted by either single or double quotes, or the use of backslashes,
+or any mix of the three.
+
+For example:    This\ is' a 'single" token"
+
+A token is returned immediatally the end of token is found. That is as soon
+as a unquoted white-space or EOF condition has been found.  That is to say
+the file stream is parsed purely character-by-character, regardless any
+buffering constraints set by the system.  It is not parsed line-by-line.
+
+The function will return 'MagickTrue' if a valid token was found, while
+the token status will be set accordingally to 'OK' or 'EOF', according to
+the cause of the end of token.  The token may be an empty string if the
+input was a quoted empty string.  Other error conditions return a value of
+MagickFalse, indicating any token found but was incomplete due to some
+error condition.
+
+Single quotes will preserve all characters including backslashes. Double
+quotes will also preserve backslashes unless escaping a double quote,
+or another backslashes.  Other shell meta-characters are not treated as
+special by this tokenizer.
+
+For example Quoting the quote chars:
+            \'  "'"       \"  '"'  "\""      \\  '\'  "\\"
+
+Outside quotes, backslash characters will make spaces, tabs and quotes part
+of a token returned. However a backslash at the end of a line (and outside
+quotes) will cause the newline to be completely ignored (as per the shell
+line continuation).
+
+Comments start with a '#' character at the start of a new token, will be
+completely ignored upto the end of line, regardless of any backslash at the
+end of the line.  You can escape a comment '#', using quotes or backlsashes
+just as you can in a shell.
+
+The parser will accept both newlines, returns, or return-newlines to mark
+the EOL. Though this is technically breaking (or perhaps adding to) the
+'BASH' syntax that is being followed.
+
+
+UNIX script Launcher...
+
+The use of '#' comments allow normal UNIX 'scripting' to be used to call on
+the "magick" command to parse the tokens from a file
+
+  #!/path/to/command/magick -script
+
+
+UNIX 'env' command launcher...
+
+If "magick" is renamed "magick-script" you can use a 'env' UNIX launcher
+
+  #!/usr/bin/env magick-script
+
+
+Shell script launcher...
+
+As a special case a ':' at the start of a line is also treated as a comment
+This allows a magick script to ignore a line that can be parsed by the shell
+and not by the magick script (tokenizer).  This allows for an alternative
+script 'launcher' to be used for magick scripts.
+
+  #!/bin/sh
+  :; exec magick -script "$0" "$@"; exit 10
+  #
+  # The rest of the file is magick script
+  -read label:"This is a Magick Script!"
+  -write show: -exit
+
+r with some shell pre/post processing...
+
+  #!/bin/sh
+  :; echo "This part is run in the shell, but ignored by Magick"
+  :; magick -script "$0" "$@"
+  :; echo "This is run after the "magick" script is finished!"
+
+
+--------------
+Script option Handling
+
+We have alreay seen the Script Launching option...
+
+   -script {script_file}   # argument for script files
+
+But you can use -script as a sort of 'complex sub-routine' call
+For example...
+
+   magick  input_image.png \
+           -script make_fancy.mgk \
+           -script shadow.mgk \
+           output_image.png
+
+
+Other IMv7 specific scripting options...
+These are generally only useful within a "magick script"
+
+   -exit          # Exit the file or pipeline being processed (quit).
+                  # It is equivelent to reaching the end of the script.
+                  # After this option nothing more is read from the script
+                  # file or the command line.
+
+   -read "image_file"       # equivelent to just "image_file" on it own.
+
+WARNING: ---- the rest have yet to be implemented ----
+
+   -return        # Return execution back to the original option process.
+                  # If the return is to CLI, it will be at a point after
+                  # the "-script" option and last -args script processed.
+                  # Equivelent to -exit if the last CLI argument was used.
+                  # The last argument will again be regarded as the final
+                  # output filename.
+
+   -reset         # Delete all images and reset settings.
+                  # Basically prepare for completely new image process,
+                  # except for perhaps user-defined global defines,
+                  # and a reset of the image cache.
+
+   -debug ???     # trace each command as it is processed by the "magick"
+                  # script returning (some) signal when it is done.
+                  # This may be a 'trace' or other logging setting instead.
+
+   -define-setting {key}    # expand percent escapes found in this global
+                            # define (artifact) and save as a per-image
+                            # setting (properity) to each image in the current
+                            # image sequence.
+
+   -fatal-level {level}     # level is 'fatal' 'error' 'warning'  (def: 'error')
+                            # replaces -regard-warning IMv6 option
+                            # so as to provide more control over when "magick"
+                            # aborts its processing of a command, and allow
+                            # it to vary during processing.
+
+Argument Handling (script or pipeline only)
+
+Note that -args can NOT be used on the command line, as any other place
+really does not make much sense!
+
+   -args ReadNextImage      # read the next argument as a image filename
+   -args ReadAllImages      # read all arguments as images (except last)
+
+   -args ReadLastImage      # read the last argument as a input image
+   -args WriteLastImage     # write current images using last argument
+
+   -args DefineGlobal {key} # Read next argument string as a global define
+                            # for {key}.  that is  {key}={value_from_arg}
+                            # Basically freeform 'argument input'
+
+   -args Process            # process all later args, much like "montage" does.
+                            # Up to either a '--' or end or arguments.
+                            # Only last argument is ignored (for later write)
+
+Notes:
+  * -args will only work if -script is called from CLI.  They can not be used
+    within a script that was called by another script (if made posible)
+  * "-args Process" will permit normal "convert"-like argument processing
+    of the remaining arguments, up to a special '--' symbol.  After those
+    arguments are processed the script itself will continue where it left off.
+    It will not cause an error (just ignored) if used from -script called from
+    a script, in which case it is assumed images are already pre-processed.
+
+NOTE: No 'flow-control' operators are provided at this time.  If you want
+more control (such as if-then or looping) create a wrapper script around
+a "ImageMagick" co-processor, and feed it the operations you want it to
+perform (see below).
+
+----
+
+Example a 'montage'-like ImageMagick script...
+Setup, process user image processing options, finish up and write results
+
+    filename: "my_montage_script"
+    =======8<--------
+    #!/usr/env magick -script
+    #
+    # set defaults before processing user supplied images.
+    -density 300
+
+    # process all user supplied command line options (like-convert) now
+    # This also read in any images the user may have supplied.
+    -args Process
+
+    # finish processing, adding frames and appending the resulting images
+    -frame 6x6+2+2 -border 2x2 -append
+
+    # output the final post-processed results.
+    -args WriteLast
+    -exit
+
+    Nothing else in the script file will be read by the "imagemagick" command
+    as such this could be a documentation area.
+
+    =======8<--------
+
+Example usage for a  "my_montage_script"...
+
+   my_montage_script image1 image2 -append image3 output
+
+This would produce an actual 'scripting' command of...
+
+   /usr/bin/magick -script /path/to/montage_script \
+            input1 input2 -append image3 output
+
+And process the operations in this order (indent indicate processing depth)...
+first indent is read from the script, the second processing of arguments.
+
+   -script /path/to/montage_script
+      -density 300
+      -args Process
+         -read "image_1"
+         -read "image_2"
+         -append
+         -read "image_3"
+      -frame 6x6+2+2 -border 2x2 -append
+      -args WriteLast
+         -write "output"
+      -exit
+
+Notes on the above...
+
+I designed the argument handling so you can write scripts that can do things in
+a "montage"-like  way.  That is process arguments like "convert" and THEN
+finalise the processing of the images now in memory to produce the "montage"
+output that is saved to the final arguement.
+
+The script however may only only accept image filenames as arguments making any
+'operations' an error.  Or perhaps only '-set' or '-define' like options
+could be allowed (like "awk" command line variables).
+
+Even the last argument filename may be treated as a read image, final save
+image, or even as a single image read and write (like a simple "mogrify").
+
+Basically I am trying to make scripting as versatile as possible but without
+making it a full scripting language.
+
+-----------
+Use of '--' in scripts...
+
+This special option will allow user supplied options to be grouped into
+'stages' for processing at specific points in the script.  for example..
+
+   montage '*.png' -- -frame 10x10+3+3 result.png
+
+Anything before the '--' is processed to read-in the images, then at the '--'
+the "montage" script will take those images and tile, lable, frame, shadow,
+and finally position and merged the images together into a paged grid layout.
+
+After that the next set of user supplied options (if any) will be performed,
+so the montaged image is 'framed' before being saved into 'result.png'
+
+QUESTION: use of -script in the user supplied arguments?
+
+
+FUTURE DIRECTION...
+
+Handling 'per image' options ... that is one image in memory being processed
+as in "mogrify" ???
+
+   mogrify  {setup_options} -- {per-image processing} -- {images to process}
+
+Something to read one image from final group?
+per-image processing can be a user supplied script?
+
+-----------
+
+Demonic pipeline example (heavy shell scripting)...
+
+The IM command is run in background and the options feed to the script as
+needed and calculated, based on feed back.  This is probably a little
+simplistic, but should be posible.
+
+  =======8<--------
+
+  #!/bin/bash
+  # start co-process for image processing
+  coproc magick -script -
+  IM_pid=$COPROC_PID    # the Process ID of the imagemagick co-process
+  IM_out=${COPROC[0]}   # file descriptor IM writes to (and this script reads)
+  IM_in=${COPROC[1]}    # file descriptor IM reads (and this script write to)
+
+  # create an image and 'identify' it.
+  echo >$IM_in  "xc: -identify"
+
+  # read the single line of identify results from above
+  read -r <$IM_out identify_output
+
+  # kill co-process (no write so junk images in memory)
+  echo >$IM_in "-exit"
+  # wait for co-process to exit (not really needed).
+  wait $IM_pid
+
+  =======8<--------
+
+Basically you have a "magick" command running in background.  This
+'co-process' reads in the images, and performs any tasks requested of it by
+the parent shell script (or any other programming language).
+
+The parent shell can ask it for information about images being held, have it
+read in more images, or save out images to whereever you want, at any time.
+
+The tasks are not fixed and can be decided by the parent shell based in that
+shells input options, or information returned from the "imagemagick"
+co-process, or even from other sources.
+
+This is highly efficent as you only need to run "imagemagick" once and images
+only need to be read in once.  No need for pipelines or saving of intermediate
+images to disk.
+
+The parent shell process can do all conditional IF-THEN-ELSE constructs and
+even do looped processing of operations, simply and easilly.
+
+The calling structure can be simplified by using functional wrappers around
+the image processing requests.
+
+In PHP you would use the  proc_open()  function.
+
+  =======8<--------
+  <?php
+
+  // Launch imagemagick co-process
+  $IM_cmd = 'magick -script -';
+  $descriptorspec = array(
+     0 => array("pipe", "r"),     // stdin (feed image processing options)
+     1 => array("pipe", "w"),     // stdout (for results)
+     2 => array("file", "/tmp/im-errors.txt", "a") // stderr
+  );
+  $IM = proc_open($IM_cmd, $descriptorspec, $pipes, NULL, $_ENV);
+  if (!(is_resource($IM)) {
+    echo "ERROR: Failed to launch \"imagemagick\" command";
+    die();
+  }
+  stream_set_block($pipes[2], 0);   // set non-blocking
+
+  // Any error reports during launch (say from the shell?)
+  if ( $err = stream_get_contents($pipes[2])) {
+    echo $err;
+    die();
+  }
+
+  // Make image processing requests
+  fwrite($pipes[0], "-read image.gif\n"); // read in this image
+  fwrite($pipes[0], "-identify\n");       // identify it
+  fflush($pipes[0]);                      // ensure buffer is sent
+
+  $identify = fgets($pipes[1], 1024);     // get the -identify result
+
+  print "$identify";                      // print it to stdout
+
+  // Clean up and exit
+  fwrite($pipes[0], "-exit\n");           // ask co-processor to exit
+  fclose($pipes[0]);
+
+  // Get any error reports during launch (say from the shell?)
+  if ( $err = stream_get_contents($pipes[2])) {
+    echo $err;
+    die();
+  }
+
+  ?>
+  =======8<--------
+
+In this form of control the wrapping script (or compiled language) becomes
+a true 'wrapper' around that single image processor, simplifying things to
+a point where you simply feed it image processing commands, at any time in the
+shell script.  The shell or PHP wrapper in this case provides all the control
+and looping structures needed, allowing IM to concentrate on holding images in
+memory and processing them!
+
+The Imagemagick co-process itself does not even need to be on the same
+machine, allowing you to generating image processing farms!
+
+This is actually taking a old forum discussion topic to a new level
+See   http://www.imagemagick.org/Usage/forum_link.cgi?f=2&t=13100
+
+-------------------------------------------------------------------------------
+Scripting will need a major expansion in percent escape handling...
+
+See Proposal...
+  http://www.imagemagick.org/Usage/bugs/IMv7_FX_and_Percent.html
+
+THIS HAS BEEN DONE (except in %[fx..] and other planned special escapes)
+
+-------------------------------------------------------------------------------
+Scripting methods for multiple images...
+
+Adding text to video frames?
+    forum_link.cgi?f=1&t=18983&p=73784
+
+Of course looping through images, using one command per image is probably the
+easiest to implement.
+
+One method of looping over a large number of images, as a 'image stream',
+without saving intermeditae images, was demonstrated in another similar
+discussion.  However the images are streams using ASCII PPM file format.
+  forum_link.cgi?f=2&t=18320&p=71150
+and resulting in the script
+  http://www.imagemagick.org/Usage/scripts/process_ppm_pipeline
+
+But these methods require you to constantly start (fork) a separate process or
+command for each image.  That is you would be starting a new process and
+initializing (setup) the core library once for each image, which can be
+in-efficent.
+
+That is you can not relate the image processing with what has been already
+been done before.
+
+At this time you can only truely avoid forking a "convert" command multiple
+times by using some other non-shell API, so that the library only is configured
+once.  Then have it read, process, write and destory (remove from memory) each
+frame in turn.
+
+In shell scripts you can minimise startup time by processing images using
+mogrify which reads and processes one of the given image file at a time.
+Mogrify works by cycling though the non-image command line options once for
+each image.
+     http://www.imagemagick.org/Usage/basics/#mogrify
+
+That however is limited, it is hard to modify the arguments being used for each
+image (say for the credit string and its position).  You also can not easily
+compose or merge two or more images onto each frame.
+
+You can also read a small batch of images, say 10 to 50 frames (depending on
+memory) using convert, and a technique for using the input filename to set the
+output filename of each image.  See "Using Convert Instead of Morgify"
+  http://www.imagemagick.org/Usage/basics/#mogrify_convert
+Which may be useful for say a static credit on N frames, then a different
+credit for the next N frames and so on.
+
+You can also generate a very long convert command that reads, processes, and
+writes (deleting from memory) one image at a time.  This lets you use one
+command, but apply different operations for each image (say drawing scrolling
+credits, or adding a side animation that is common on modern movies).
+
+For example
+  convert \
+     ... \
+    "f_0053.png" -annotate +10+30 "Scroll" -write  "new_0053.png" +delete \
+    "f_0054.png" -annotate +10+27 "Scroll" -write  "new_0054.png" +delete \
+    "f_0055.png" -annotate +10+24 "Scroll" -write  "new_0055.png" +delete \
+    ... \
+    null:[/code]
+
+It is a most versatile and efficient technique, as you don't have to fork,
+setup, or re-read secondary images  over and over.
+
+At any one time, only one image is being processed in memory, but only one
+one command processing all the images.  The technqiue also allows you to be
+free to completely switch processing to completely different tasks.
+
+For example you can have a extra image in memory with each frame (in turn).
+Such as one very long static credit image that you can then overlay on your
+smaller video frame, at different offsets so as to generate a long sequence of
+scrolling text over the top of your video.
+
+The limitation with this is at the length of the command line!  Not all shells
+will having a command line longer than one to two thousand characters (bash
+seems to handle extremely long command lines though).
+
+The above scripting proposals will take this to a new level. That is...
+Image co-processing,  or image pipeline processing, with feedback.
+
+-------------------------------------------------------------------------------
+

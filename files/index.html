@@ -1,0 +1,3905 @@
+<HTML><HEAD>
+<TITLE>File Handling -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/files/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Image File Handling</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#summary"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Image Formats Summary</A>
+<DD><A HREF="#read"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Reading Images</A>
+    <UL>
+    <LI><A HREF="#read_mods"
+        > Read Modifiers </A>
+    <LI><A HREF="#read_meta"
+        > Input Filename Meta-character Handling </A>
+    <LI><A HREF="#read_compressed"
+        > Compressed Images</A>
+    </UL>
+<DD><A HREF="#save"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Saving Images</A>
+    <UL>
+    <LI><A HREF="#save_escapes"
+        > Filename Percent Escapes</A>
+    <LI><A HREF="#save_gzip"
+        > GZipped Compressed Images</A>
+    <LI><A HREF="#save_attributes"
+        > Saved Attributes</A>
+    <LI><A HREF="#save_encrypted"
+        > Encrypted Images</A>
+    <LI><A HREF="#adjoin"
+        > Writing a Multiple Images (adjoin)</A>
+    <LI><A HREF="#scene"
+        > Starting Sequence (Scene) Number </A>
+    <LI><A HREF="#write"
+        > Writing an Image, Multiple Times</A>
+    </UL>
+<DD><A HREF="#special_formats"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Special Output File Formats</A>
+    <FONT SIZE=-1>(Specific to IM)</FONT>
+    <DL><DD>
+        <A HREF="#miff"      ><CODE>miff:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#info"      ><CODE>info:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#null"      ><CODE>null:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#txt"       ><CODE>txt:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#sparse-color" ><CODE>sparse-color:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#histogram" ><CODE>histogram:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#mpr"       ><CODE>mpr:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#mpc"       ><CODE>mpc:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#fd"        ><CODE>fd:</CODE></A>&nbsp;&nbsp;
+        <A HREF="#inline"    ><CODE>inline:</CODE></A>&nbsp;&nbsp;
+    <DD><A HREF="#clipboard"
+        ><CODE>clipboard:</CODE></A> -- Read/Write to/from windows clipboard
+    <DD><A HREF="#ephemeral"
+        ><CODE>ephemeral:</CODE></A> -- Auto-delete after read
+    <DD><A HREF="#show"
+        ><CODE>show:</CODE>, <CODE>win:</CODE>, and <CODE>x:</CODE></A>
+        -- Display Images Directly
+    <DD><A HREF="#x"
+        ><CODE>x:</CODE> (as input)</A> -- Display Capture and Re-draw
+    </DL>
+<DD><A HREF="#delegates"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Delegates and Coders for Image Formats</A>
+    <UL>
+    <LI><A HREF="#delegate_input"
+        >Input Delegate Example</A>
+    <LI><A HREF="#delegate_output"
+        >Output Delegate Example</A>
+    <LI><A HREF="#delegate_list"
+        >Listing Delegates and Source Files</A>
+    <LI><A HREF="#delegate_print"
+        >Printing Delegate</A>
+    <LI><A HREF="#delegate_spawn"
+        >Spawning External Commands</A>
+    <LI><A HREF="#delegate_postscript"
+        >Postscript and PDF Delegates</A>
+    <LI><A HREF="#delegate_direct"
+        >Direct Delegate Format Conversion (taint)</A>
+    <LI><A HREF="#delegate_other"
+        >Other Delegate Examples</A>
+    </UL>
+<DD><A HREF="#massive"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Really Massive Image Handling</A>
+<DD><A HREF="#image_streams"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Long Streams of Lots of Images, Video sequences</A>
+</UL>
+</DL></P>
+
+To process an image, you not only need operators to work on the images, but
+you also need ways to read in and write out the image in as many different
+file formats as possible.   In this section we look at IM file formats in
+general.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="summary"></A>
+<H2>Image Formats Summary</H2>
+
+One of the most common uses of ImageMagick is not to modify images at all, but
+only to convert an image from one image format to another.  In fact this was
+the original reason for IM's creation was this sort of image format
+conversion. This is why the primary IM command is call "<CODE>convert</CODE>".
+</P>
+
+To this end, ImageMagick can handle a bewildering array of image and file
+formats.  Added to this array are a large number of special input and output
+formats for built-in test images, simple image creation, and image formats
+specific for programming shell scripts, and programs. For a complete list, see
+<A HREF="https://legacy.imagemagick.org/script/formats.php" >IM Image Formats
+Page</A> on the IM web site. </P>
+
+All this can be daunting for a new user of ImageMagick.  My best advise
+is to ignore most of the file formats, as you will probably never need them.
+Instead concentrate on what you want to do, and try to do it.  If you don't
+know how, try to look for an example in these pages and across the web. </P>
+
+For image formats demonstrated in IM Examples, see <A
+HREF="../reference.html#formats" >Reference Index, File Formats</A>. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="read"></A>
+<H2>Reading Images</H2>
+
+IM by default will attempt to determine the image format type by the 'magic'
+file identification codes within the file itself.  If this fails however you
+will need to specify the images file format using with the files suffix, or
+by adding a prefix format. </P>
+
+Some formats will not read any files and ignore any given filename.  These are
+some of the common built-in images...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  logo:      granite:     rose:
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Some of them will generate images based on arguments given as a filename
+and perhaps an extra "<CODE><A HREF="../option_link.cgi?size"
+>-size</A></CODE>" controlling the final image size...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  -size 30x30  canvas:red
+  -size 30x30  gradient:yellow-lime
+  -size 30x30  pattern:fishscales
+  import:
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In some cases you can even use multiple formats...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  -size 30x30  tile:pattern:gray95
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This is however overkill in this case as the '<CODE>pattern:</CODE>' format
+coder has the '<CODE>tile:</CODE>' coder built into it.  But it does make it
+clear what you were intending to do. </P>
+
+IM can also download an image that is published on the 'world wide web' by
+specifying that images URL. This basically provides a '<CODE>http:</CODE>'
+image coder, which is why it works.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert http://www.ict.griffith.edu.au/anthony/images/anthony_castle.gif \
+          -resize 100x100 castle_logo.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+ <A HREF="castle_logo.png"
+    ><IMG SRC="castle_logo.png"           WIDTH=100
+          ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see this command reads the image from the WWW and  resizes it
+before finally saving the result to disk. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  When a prefix file format is given, any suffix given as part of the filename
+  does not have any bearing on the way the file is read.  This is in fact
+  vital when reading some file formats such as the "<CODE><A
+  HREF="../text/#text" >text:</A></CODE>" verses the "<CODE><A HREF="#txt"
+  >txt:</A></CODE>" file format handling.  Of course if an image generator
+  actually reads in an image file to process it in a special way (for example
+  "<CODE><A HREF="../canvas/#tile" >tile:</A></CODE>") then the suffix (or
+  prefix) file formats will again become important, as it was in the last
+  example
+
+</I></FONT></TD></TR></TABLE></P>
+
+
+A special coder prefix "<CODE>implicit::</CODE>" can be used to 'turn-off' any
+use of coders, allowing use of ':' in the filename. </P>
+
+
+
+
+Filename can have the special 'file meta-characters', such as '<CODE>*</CODE>'
+and '<CODE>?</CODE>' embedded in them. IM will expand these characters to
+generate a list of filenames to be read in, avoiding the need for an external
+shell to do this, or problems with command line length limits.  For example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  montage  '*.jpg' -geometry 50x50+2+2  image_index.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV>
+
+This will produce a single montage index image of all the JPEG files in the
+current directory.  Note however that I needed to quote the argument to
+prevent my UNIX shell from expanding the file names rather than ImageMagick.
+See below for a more complete "<CODE>montage</CODE>" specification. </P>
+
+Of course the linux shells can also expand '<CODE>*</CODE>' and
+'<CODE>?</CODE>' characters passed to them unquoted.  However in some cases
+you may find yourself hitting 'command line limits' if the file list expands
+to a very large number of filenames. </P>
+
+Here are other examples of using a linux shell to expand the filename...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert image_[0-9].gif  image_[1-9][0-9].gif  animation.gif
+  convert image_?.gif  image_??.gif  image_???.gif  animation.gif
+  convert image_(?|??|???|????).gif  animation.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Also see the <A HREF="#read_frames" >Read Frames, Read Modifier</A> below, for
+an formated incrementing number in the filename. </P>
+
+If the filename is simply the single character string '<CODE>-</CODE>' IM
+reads the image from standard input.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NO_TXT2GIF>
+  cat tree.gif | convert - -frame 5x5+2+2 read_stdin.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="read_stdin.gif"
+     ><IMG SRC="read_stdin.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that some image file formats allow you to simple append multiple image
+files together in one long multi-image stream.  These formats include the
+simple <A HREF="../formats/#pbmplus" >PbmPlus/NetPBM</A> image formats, as
+well as IM's own special file format <A HREF="#miff" >MIFF:</A>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=read_multiple_stdin.gif>
+  for image in eye.gif news.gif storm.gif
+  do
+    convert $image  miff:-
+  done |
+    convert - -frame 5x5+2+2 +append read_multiple_stdin.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="read_multiple_stdin.gif"
+     ><IMG SRC="read_multiple_stdin.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The special character '<CODE>@</CODE>' at the start of a filename, means
+replace the filename, with contents of the given file.  That is you can read
+a file containing a list of files!
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NO_TXT2GIF>
+  echo "eye.gif news.gif storm.gif" > filelist.txt
+  convert @filelist.txt  -frame 5x5+2+2 +append filelist.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="filelist.gif"
+     ><IMG SRC="filelist.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+You can also use '<CODE>@</CODE>' with the special filename '<CODE>-</CODE>'
+to read the filenames from standard input.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  echo "eye.gif news.gif storm.gif" |\
+    convert @- -frame 5x5+2+2 +append filelist_stdin.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="filelist_stdin.gif"
+     ><IMG SRC="filelist_stdin.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Reading a list of filenames from a file using the '@' syntax was added
+  in IM v6.5.2-1.
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+   ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  As a security precaution this only works with actual image files. It does
+  not work with image generators such as  "<CODE>rose:</CODE>" or
+  "<CODE>label:string</CODE>".  It also can not be used to 'include' command
+  line options from a file.
+</I></FONT></TD></TR></TABLE></P>
+
+
+
+<A NAME="read_mods"></A>
+<A NAME="extract"></A>
+<H3>Read Modifiers or Extract Setting</H3>
+
+Image can be modified immediatally they have been read into memory, but before
+the image(s) are actually added to the current image sequence.
+
+You can specify a "<CODE><A HREF="../option_link.cgi?extract"
+>-extract</A></CODE>" setting.  For example, here I crop the rose image...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -extract 32x32+20+5 rose: +repage rose_extract.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_extract.gif"
+     ><IMG SRC="rose_extract.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Or you can append a read modifier to the end of the filename using square
+brackets '<CODE>[...]</CODE>'.  For example...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert 'rose:[32x32+20+5]' +repage  rose_read_modifier.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_read_modifier.gif"
+     ><IMG SRC="rose_read_modifier.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note however that '<CODE>[]</CODE>' characters are usually also special shell
+meta-characters, so if you use them it is a good idea to quote the additional
+modifier, to stop UNIX shells interpreting it. </P>
+
+Both the "<CODE><A HREF="../option_link.cgi?extract" >-extract</A></CODE>"
+setting and the read modifer does the same job, though the latter will
+override the former. </P>
+
+Also when you use a modifier, you must let IM handle any special file
+expansion meta-characters, such as '<CODE>*</CODE>' and '<CODE>?</CODE>', as
+an UNIX shell will not 'find' the requested files due to the modifier. What it
+actually does in that case is shell dependant.  As such the whole filename
+should be quoted when using read modifiers. </P>
+
+The real purpose of these read modifiers is to limit the amount of memory
+needed, by removing unwanted images or making images smaller, while images are
+still being read into memory.   For example when readin a whole directory of
+large JPEG images. </P>
+
+Here is the list of all the special read modifiers (and "<CODE><A
+HREF="../option_link.cgi?extract" >-extract</A></CODE>" settings ) and their
+effects.  A '<CODE>#</CODE>' represent some number.
+
+<DL><DD><DL>
+<DT><A NAME="read_frames"></A>
+    '<CODE>[#]</CODE>'  '<CODE>[#-#]</CODE>'  '<CODE>[#,#,#]</CODE>'
+    <CODE>[#,#-#,#]</CODE>'.    <B>Read Frames</B>
+<DD>Will select specific sub-frames from a multi-image file format
+    from the image that has been read in. The given number '<CODE>#</CODE>'
+    index specifies the frame number to read. Multiple indexes can be
+    specified in either comma order or as an index range. </P>
+
+    The image index start at zero for the first image, 1 for the second and so
+    on. If you specify a negative index then the count is from the end of the
+    image sequence, in reverse order, -1 for the last image, -2 for the second
+    last image. </P>
+
+    This is exactly the same convention as used for the <A
+    HREF="../basics/#list_ops" >Image Lists Operators</A>. </P>
+
+    For example
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert document.pdf'[0]'     first_page_of_pdf.gif
+  convert animation.gif'[1-3]'  second_to_fourth_frames.gif
+  convert animation.gif'[-1,2]' last_then_the_third_frame.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+    You can also get IM to read images based on a list of numbers. For
+    example..
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert 'image_%03d.png[5-7]' ...
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+    will read in the files  "<CODE>image_005.png</CODE>",
+    "<CODE>image_006.png</CODE>", and "<CODE>image_007.png</CODE>".  With this
+    method you can not use a negative index. </P>
+
+
+<DT><A NAME="read_resize"></A>
+    '<CODE>[#x#]</CODE>'    <B>Read Resize</B>
+<DD>From IM version 6.2.6-2 a new modifier was added to help IM users to
+    handle very very large images. </P>
+
+    This modifier will resize the image that was just read in, immediately
+    before that image is added to the other images already in memory. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+    This can both shrink images, or enlarge images.  For example...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert pattern:gray95'[60x60]' enlarged_dots.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="enlarged_dots.gif"
+     ><IMG SRC="enlarged_dots.gif"           WIDTH=60 HEIGHT=60
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    Warning, the read modifier does not currently use any of the resize flags,
+    such as <CODE>'!'</CODE> (no aspect preserve) or <CODE>'&gt;'</CODE> (only
+    shrink larger images. (perhaps if you put in a request?) </P>
+
+    You can also use it as an alternative way of specifying the size of
+    a solid color canvas. Actually what is happening is that it is resizing
+    the default single pixel image.  For example...
+
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+    <TR><TD WIDTH=100% ALIGN=justify>
+    <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+    <TR><TD><PRE><CODE EXECUTE>
+      convert 'canvas:DodgerBlue[50x50]'  canvas_size.gif
+    </CODE></PRE></TD></TR></TABLE></TD><TD>
+      <A HREF="canvas_size.gif"
+        ><IMG SRC="canvas_size.gif"
+              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+    </TD></TR></TABLE></P>
+
+    The modifier is most important when you are attempting to read in
+    lots of very very large images, as each image will be resized before the
+    next image is read, producing a substantial saving in total memory needed
+    to handle those images. </P>
+
+    For example instead of...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  montage '*.tiff'  -geometry 100x100+5+5 -frame 4  index.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV>
+
+    which reads all the tiff files in first, then resizes them.  You can
+    instead do...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  montage '*.tiff[100x100]'  -geometry 100x100+5+5 -frame 4  index.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+    This will read each image in, and resize them, before proceeding to the
+    next image.  Resulting in far less memory usage, and possibly prevent disk
+    swapping (<A HREF="http://en.wikipedia.org/wiki/Thrash_(computer_science)"
+    >thrashing</A>), when memory limits are reached.</P>
+
+    For JPEG images I also recommend you use the special  "<CODE><A
+    HREF="../option_link.cgi?define" >-define</A></CODE>" setting instead,
+    producing something like...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  montage -define jpeg:size=200x200 '*.jpg[100x100]' -strip \
+          -geometry 100x100+5+5 -frame 4  index.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+    The special setting is passed to the JPEG library and is used to limit the
+    size the JPEG image during the reading process. However it is not exact,
+    with the resulting image being somewhere between that size or double that
+    size with the aspect ratio preserved. See <A HREF="../formats/#jpg_read"
+    >Reading JPEG Images</A> for more details.  </P>
+
+    The result of the combination is a much faster reading and even lower
+    memory usage for JPEG images. Especially when generating lots of small
+    thumbnails. See <A HREF="../thumbnails/#creation" >General Thumbnail
+    Creation</A>. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<DT><A NAME="read_crop"></A>
+    '<CODE>[#x#+#+#]</CODE>'   <B>Read Crop</B>
+<DD>From IM v6.3.1 if you also add an offset the above becomes a crop of the
+    image being read in. </P>
+
+    For example, To get a smaller 600x400 pixel sub-section from a much larger
+    image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert 'image.png[600x400+1900+2900]' tileimage.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+    This however will read in the entire image into memory then crop it before
+    it is finally added to the current image sequence. </P>
+
+    If you want to handle really large images I suggest you look at the
+    "<CODE><A HREF="../basics/#stream" >stream</A></CODE>" command and pipe
+    you image into the "<CODE>convert</CODE>" command for further processing.
+    See <A HREF="#massive" >Massive Image Handling</A> below. </P>
+
+</DL></DL></P>
+
+
+If the image is "<CODE>gzip</CODE>"ed, IM will automatically uncompress it,
+into a temporary file before attempting to figure out the image format and
+decode the image file format. As such you can not only save images in gzip
+compressed format, but use them directly in later IM processing. For large
+text based images this can result in enormous disk space savings. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The PNG format includes "<CODE>gzip</CODE>" compression as part of its
+  format specification.  In this case the first digit of the two digit PNG
+  "<CODE><A HREF="../option_link.cgi?quality" >-quality</A></CODE>" setting
+  defines the level of compression.  For more detail see <A
+  HREF="../formats/#png" >PNG Image File Format</A> examples.
+</I></FONT></TD></TR></TABLE></P>
+
+The above is only a short summary of the special input options available when
+reading images into ImageMagick.  A full summary is given on the  <A
+HREF="https://legacy.imagemagick.org/script/command-line-processing.php" >The
+Anatomy of the Command Line</A> page on the  <A
+HREF="https://legacy.imagemagick.org/" >ImageMagick Website</A>. </P>
+
+<BR>
+
+As shown previously the image input can be modified by some IM settings such
+as "<CODE><A HREF="../option_link.cgi?size" >-size</A></CODE>" for image
+creation and "<CODE><A HREF="../option_link.cgi?define" >-define</A>
+jpeg:size=??</CODE>" for JPEG reading.  Other options also effect image input
+creation, including, "<CODE><A HREF="../option_link.cgi?page"
+>-page</A></CODE>", "<CODE><A HREF="../option_link.cgi?type"
+>-type</A></CODE>", "<CODE><A HREF="../option_link.cgi?dispose"
+>-dispose</A></CODE>", "<CODE><A HREF="../option_link.cgi?delay"
+>-delay</A></CODE>".   See <A HREF="../basics/#meta-data" >Setting/Changing
+Image Meta-Data</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+   ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Be very careful when passing an user provided argument to IM in a script,
+  insuring that the argument is what you expect.  You do not want to let a web
+  image processing script return an image of the system password file for
+  example.
+</I></FONT></TD></TR></TABLE></P>
+
+<BR>
+
+<A NAME="read_meta"></A>
+<H3> Input Filename Meta-Character Handling</H3>
+
+<DIV ALIGN=center><FONT SIZE=+2><B>
+<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
+Under Construction
+<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
+</B></FONT></DIV></P>
+
+<PRE>
+Not only does the shell handle meta-characters (unless that argument is
+quoted) but IM also does its own form of meta-character handling in filenames.
+
+For example
+  convert  *.jpg ....
+
+is expanded by the shell BEFORE passing the filenames to IM, while
+
+  convert  '*.jpg' ....
+
+will have the shell pass "*.jpg" to ImageMagick, which then expands into
+an internal list of filenames!  This was provided for Windows Dos support, and
+as a method to preventing command line limit overflows in command such as
+"mogrify" and "montage", which typically process long lists of images.
+
+As such to actually get IM to read a file names literially named on disk as
+'*.jpg'  you need to use any of the following forms...
+
+  convert  '\*.jpg' ....
+  convert "\*.jpg" ....
+  convert "\\*.jpg" ....
+  convert \\\*.jpg ....
+
+NOTE; the second line is NOT recommended as some shells (not bash) and some
+APIs (C programs, possibly PHP) may actually remove the single backslash, and
+pass '*.jpg' to IM which it will again expand!
+
+On top of '?' and '*',  IM also adds the meta-character handling of  ':', '%'
+and '[...]' for read modifier handling.  These however have a different
+meaning  (codec specification, scene number inclusion, and read modifiers) to
+normal shell syntax of those meta-characters.
+
+For example DOS uses will need to escape a 'drive-letter' in filename paths
+being passed to ImageMagick.  For example...
+
+  convert  C\:\path\to\image.jpg ....
+
+Another example is when loading an image containg a time code.  For example..
+
+  convert "time_10\:30.jpg" ....
+
+will read the filename "time_10:30.jpg" from disk.  Without the backslash, IM
+may think that the image should be read with a non-existant image file format
+(or delegate) "time_10:", and fail in an unexpected way.
+
+An alternative is to use a question mark...
+
+  convert "time_10?30.jpg" ...
+
+However that may also match another file such as "time_10_30.jpg" as well!
+</PRE>
+
+
+<A NAME="read_compressed"></A>
+<H3>Compressing Images</H3>
+
+<DIV ALIGN=center><FONT SIZE=+2><B>
+<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
+Under Construction
+<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
+</B></FONT></DIV></P>
+
+<PRE>
+IM will also read files that have been compressed, and given the appropriate
+suffix, or image format specification.
+
+That is an image saved as "image.gif.gz"  will first be uncomressed, before
+being decoded from its GIF image format.
+
+Gzipped XPixmap (xpm) and NetPbm/PbmPlus (ppm) images is also automatically
+handled, both by Imagemagick, and the formats normal delegate library.  As
+such you can use the compressed forms directly either in IM, or in other
+programs that understand these file formats.
+
+See  <A HREF="#save_gzip" >Saving Compressed Images</A> below.
+</PRE>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="save"></A>
+<H2>Saving Images</H2>
+
+Processing images is well and good but it can be just as important to save the
+results in the right way. </P>
+
+The last argument of the "<CODE>convert</CODE>", "<CODE>montage</CODE>" and
+"<CODE>composite</CODE>" defines a filename, and image format for a final
+write of the image (defailt image output).  Though you can also save an image
+in the middle of an image sequence using "<CODE><A
+HREF="../option_link.cgi?write" >-write</A></CODE>" (see below). </P>
+
+To specify what file format you want to save your image, or images, you can
+either use a filename suffix, such as I use in just about all these examples,
+or prefix the filename with the string "<CODE>{format}:</CODE>". For
+example...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif    GIF:tree_image
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="tree_image"
+     ><IMG SRC="tree_image"           WIDTH=32   HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+If you check the resulting image you will find that a GIF image file was
+actually created, even though the filename itself does not have
+a "<CODE>.gif</CODE>" filename suffix.  The case of the format is not
+sensitive, so you can use either lowercase or uppercase. </P>
+
+This image format specification becomes particularly important when you want
+to save the image to the standard output of the command (using
+a "<CODE>-</CODE>" filename). This special filename does not have a suffix, so
+you <I>must</I> tell ImageMagick what format to use.  If you don't, the image
+will default to the original image format that the image came from (if known).
+</P>
+
+For example, here we write an IM pixel enumeration to the screen using a
+"<CODE>-</CODE>" to output the result to the standard output.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=write_stdout.txt>
+  convert tree.gif  -resize 1x3\!  txt:-
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="write_stdout.txt"
+     ><IMG SRC="write_stdout.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+It is also used to pass the image, on to another command such as
+"<CODE>identify</CODE>" though a shell 'pipeline', without saving it to
+a temporary file.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=write_identify.txt>
+  convert tree.gif -resize 200% miff:- | identify -
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="write_identify.txt"
+     ><IMG SRC="write_identify.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+In this case you can also see that the special "<CODE>-</CODE>" filename is
+also used to denote reading an image from standard input by the
+"<CODE>identify</CODE>" command. </P>
+
+For more information see the offical guide at <A
+HREF="https://legacy.imagemagick.org/script/command-line-processing.php#output"
+>The Anatomy of the Command Line,  Output Filenames</A>. </P>
+
+
+<A NAME="save_escapes"></A>
+<H3>Filename Percent Escapes</H3>
+
+The save filename can contain a few special percent escape (<CODE>%</CODE>)
+sequences.  Specifically, '<CODE>%d</CODE>', '<CODE>%x</CODE>', and
+'<CODE>%o</CODE>'.  These inserts the images 'scene number' into the file
+name using the C '<CODE>printf()</CODE>' formats. For more information see
+<A HREF="#adjoin" >Writing a Multi-Image Sequence</A> below. </P>
+
+Of course this means that if you want to insert a percent character into the
+filename you will need to double it ('<CODE>%%</CODE>'). </P>
+
+As of IM v6.4.8-4 you can now also insert special pre-prepared setting (must
+start with '<CODE>filename:</CODE>' into the final filename.  For example...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE IMAGE=rose_70x46.png>
+  convert rose: -set filename:mysize "%wx%h" 'rose_%[filename:mysize].png'
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_70x46.png"
+     ><IMG SRC="rose_70x46.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+
+This saves the built-in rose image into a file containing that images size in
+pixels. Specifically, the filename "<CODE>rose_70x46.gif</CODE>".  This will
+let you (with a little indirection) use any <A
+HREF="http://imagemagick.org/script/escape.php" >Image Properity Percent
+Escape</A> as part of your output filename. </P>
+
+Note that only a '<CODE>%[filename:<I>label</I>]</CODE>' image <A
+HREF="../basics/#property" >Property</A> can be used within the output
+filename (along with the normal '<CODE>%d</CODE>' escape.  This restriction is
+for security reasons and the fact that legitimate image filenames could
+include '<CODE>%</CODE> and '<CODE>[]</CODE>'. </P>
+
+Warning, do not include the file suffix in the filename setting!  IM will not
+see it, and save the image using the original file format, rather than the one
+that was included in filename setting. That is the filename will have the
+suffix you specify, but the image format may different! </P>
+
+The '<CODE>filename:</CODE>' setting does not need to be the same for every
+image. You can generate or even calculate or set a different setting for each
+image being used.  Here is another example where I modify an image, and write
+it to a new filename, that was built using each individual images original
+filename.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE IMAGE=eye_magnify.gif>
+  convert eye.gif news.gif storm.gif    -scale 200% \
+          -set filename:f '%t_magnify.%e' +adjoin '%[filename:f]'
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="eye_magnify.gif"
+     ><IMG SRC="eye_magnify.gif"    WIDTH=64 HEIGHT=64
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="news_magnify.gif"
+     ><IMG SRC="news_magnify.gif"    WIDTH=64 HEIGHT=64
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="storm_magnify.gif"
+     ><IMG SRC="storm_magnify.gif"    WIDTH=64 HEIGHT=64
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+This magnifies each image such as "<CODE>eye.gif</CODE>" and saves it in the
+file "<CODE>eye_magnify.gif</CODE>" in the current directory. However all
+three images are read into memory, and then modified by the one command.  This
+is not a recommended solution for a number of large images, or very large
+numbers of images, due to the posibilty of reaching memory limits and thus
+going to disk swapping (thrashing). </P>
+
+Note that the "<CODE><A HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>"
+in this case is vital to prevent IM saving all the images into a mutli-image
+GIF animation, using just the filename of the first image. </P>
+
+I also ensured I preserved the original suffix of the filename using the
+"<CODE>%e</CODE>" escape sequence. Normally including the suffix in the
+filename setting is a bad idea, as IM does not see it when it comes from
+an escape sequence, for determining the output file format. In this case
+however the format is not changing so there is no problem. Caution is needed.
+</P>
+
+To get the exact original filename of the image use '<CODE>%d/%f</CODE>' or
+'<CODE>%d/%t.%e</CODE>'.  You can also use '<CODE>%m</CODE>' instead of
+'<CODE>%e</CODE>' which is the actual format (in capitals) that IM found in
+the original images file (which may not match the original images filename
+suffix). Note that for built-in images, many of these escape sequence strings
+are blank.  Also if there is no directory the '<CODE>%d</CODE> will be blank.
+This is a known problem for IMv6 </P>
+
+Another example of using 'Filename Escape Sequence' is in <A
+HREF="../crop/#crop_tile" >Tile Cropping Images</A>, where the technique it is
+used to generate a filename basied on a calculated tile position for each of
+the resulting images. Also see the example in <A
+HREF="../basics/#mogrify_convert" >Using Convert Instead of Morgify</A>.  </P>
+
+
+<A NAME="save_gzip"></A>
+<H3>Automatic GZip Suffix</H3>
+
+IM will also automatically "<CODE>gzip</CODE>" images if a "<CODE>.gz</CODE>"
+suffix is given. </P>
+
+For example here I save the built-in "<CODE>rose:</CODE>" image as a
+"<CODE>gzip</CODE>"ed, uncompressed GIF file.  I turn off the normal LZW
+compression of GIF, as it would prevent "<CODE>gzip</CODE>" compression from
+achieving its best compression.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -compress none  rose.gif.gz
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+ <A HREF="rose.gif.gz"
+    ><IMG SRC="../img_www/doc_art.png"
+          ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+
+How browsers handle a gzipped image depends on the file type returned by the
+web server and how your browser handled compressed images.  Because of this
+I did not directly display the above image.  Click on the 'art' icon to see
+what your browser does, with such an image from this web server. </P>
+
+Compare the size of this to a normal saved LZW compressed GIF image...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: rose.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+ <A HREF="rose.gif"
+    ><IMG SRC="rose.gif"
+          ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<!-- <CODE EXECUTE NOIMAGE OUT=rose_gz_size.txt>
+  ls -l rose.gif.gz | awk '{printf "%d", $5}'
+</CODE> -->
+<!-- <CODE EXECUTE NOIMAGE OUT=rose_size.txt>
+  ls -l rose.gif | awk '{printf "%d", $5}'
+</CODE> -->
+The "<CODE>gzip</CODE>"ed rose is
+  <A HREF="rose_gz_size.txt"
+     ><IMG SRC="rose_gz_size.txt.gif"
+           ALIGN=top VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+bytes in size, while a normal LZW compressed rose is
+  <A HREF="rose_size.txt"
+     ><IMG SRC="rose_size.txt.gif"
+           ALIGN=top VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+bytes. As you can see GZIP compression is actually slightly better than the
+LZW compression that the GIF format uses, so may be better for archiving
+purposes.  </P>
+
+GZipped image files are more commonly used for longer term storage of image
+file formats that do not have any compression by default.  This includes the
+IM File format "<A HREF="#miff" >MIFF:</A>" and the simpler <A
+HREF="../formats/#netpbm" >NetPBM</A> image file formats. </P>
+
+
+<A NAME="save_attributes"></A>
+<H3>Saved Attributes</H3>
+
+<DIV ALIGN=center><FONT SIZE=+2><B>
+<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
+Under Construction
+<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
+</B></FONT></DIV></P>
+
+<PRE>
+Other Settings specific to image writing....
+    -depth  -quality  -compress -type  -loop
+    -set label   -set comment
+Also see <A HREF="../basics/#depth" >Image Depth</A>,
+<A HREF="../basics/#type" >Image Type</A>,
+<A HREF="../formats/#jpg_write" >JPEG Quality</A>,
+<A HREF="../formats/#png_quality" >PNG Quality</A>.
+<A HREF="../anim_basics/#loop" >GIF loop</A>.
+
+Talk about file compressions, which are part of various image formats.
+
+Different compressions are used for different image formats.
+
+Especially the JPEG to TIFF compression change needed.
+
+Using or "<A HREF="../option_link.cgi?compress" >-compress</A>
+None</CODE>" and "<A HREF="../option_link.cgi?compress" >-compress</A></CODE
+>" NetPBM text/binary format selection.
+
+The GIF compression and the copyright patent.
+
+Other than using IM to reduce -quality or changing the format to something
+else the -compression option is rarely used.  Often it is only used internally
+by IM to save images using the same compression the image was read with.
+</PRE>
+
+<A NAME="save_encrypted"></A>
+<H3>Encrypted Images</H3>
+
+IM also allows you save sensitive images with encrypted with a pass phrase
+using the options "<CODE><A HREF="../option_link.cgi?encipher"
+>-encipher</A></CODE>" and "<CODE><A HREF="../option_link.cgi?decipher"
+>-decipher</A></CODE>".  See <A HREF="../transform/#encipher" >Encrypting
+Images</A> </P>
+
+<A NAME="write_list"></A>
+<A NAME="adjoin"></A>
+<H3>Writing a Multiple Images - Adjoin Techniques</H3>
+
+A major problem with saving images, is that ImageMagick works with an ordered
+sequence (list) of images, not just one image at a time.  Because of this IM
+will attempt to write ALL the images in the current image sequence into the
+filename given.  </P>
+
+If the file format allows multiple images IM will by default save all the
+images in the current image sequence into that image file.  For example if you
+look at the <A HREF="../anim_basics/" >GIF Animation Basics</A> examples page
+you will see that it will save multiple image frames into a single image file
+format to produce an animation. </P>
+
+If the output format does not allow you to save multiple images into the one
+file, IM will instead generate multiple files.   For example, when saving to
+image formats like <CODE>JPEG</CODE> and <CODE>PNG</CODE> and so on. </P>
+
+You can also force this behavior on image formats that do allow multiple
+images per file, such as <CODE>GIF</CODE> and <CODE>PS</CODE> by using the
+"<CODE><A HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>" output file
+handling setting.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE>
+  convert eye.gif news.gif storm.gif  +adjoin  image.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="image-0.gif"
+     ><IMG SRC="image-0.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image-1.gif"
+     ><IMG SRC="image-1.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image-2.gif"
+     ><IMG SRC="image-2.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+<!-- <CODE EXECUTE ASSERT>
+  [ -f image.gif ] && echo >&2 \
+    "ASSERTION FAILURE: +adjoin with no %d produces a single image"
+</CODE>-->
+
+
+If you look closely at the filenames of the three images generated above, you
+will see that IM generated images named "<CODE>image-0.gif</CODE>" to
+"<CODE>image-2.gif</CODE>". </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Previous to ImageMagick version 6.2.0 the output filename of the above
+  would have been  "<CODE>image.gif.0</CODE>" to "<CODE>image.gif.2</CODE>".
+  This resulted in many problems due to the loss of the filename suffix,
+  so was changed to add the image number, before the filename suffix.
+</I></FONT></TD></TR></TABLE></P>
+
+An alternative is to add a 'C language printf()' construct "<CODE>%d</CODE>"
+to the output filename.  This special string will be replaced by the current
+image number of each image in sequence.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif news.gif storm.gif  +adjoin  image_%d.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="image_0.gif"
+     ><IMG SRC="image_0.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_1.gif"
+     ><IMG SRC="image_1.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_2.gif"
+     ><IMG SRC="image_2.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Here we generated the images "<CODE>image_0.gif</CODE>" to
+"<CODE>image_2.gif</CODE>", using an underscore rather that the IM default of
+a dash. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+   ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Not only can you use '<CODE>%d</CODE>' for a decimal number, but you can
+  use '<CODE>%x</CODE>' for a hexadecimal number (lowercase),
+  '<CODE>%X</CODE>' for a hexadecimal number (uppercase), or
+  '<CODE>%o</CODE>' for an octal number. </P>
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+   ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  If you really want a percent character which is followed by one of these
+  letters, then you will need to double the percent character to escape its
+  meaning.  That is you will need to use '<CODE>%%</CODE>' to ensure you
+  actually generate a percent symbol. </P>
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The '<CODE>%d</CODE>' in the output filename actually enables the
+  "<CODE><A HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>" setting of
+  ImageMagick, automatically. <BR>
+
+  However while I don't actually need the "<CODE><A
+  HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>"  in the above, it is
+  probably a good idea to provide it anyway, just so it is clear that you
+  are generating separate images.
+</I></FONT></TD></TR></TABLE></P>
+
+This works well for a small number of images, but if you have more than ten
+images you will get a mix of image with one digit and two digit numbers.  And
+if you have more than a hundred, you get three digit numbers too. When that
+happens, directory listings will no longer list the saved images in sequence,
+since "<CODE>image_15.gif</CODE>" would alphabetically appear before
+"<CODE>image_5.gif</CODE>". </P>
+
+Of course there are ways to fix this.  For example using a command line shell
+expressions like..
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert image_[0-9].gif  image_[1-9][0-9].gif  animation.gif
+  convert image_?.gif  image_??.gif  image_???.gif  animation.gif
+  convert image_(?|??|???|????).gif  animation.gif
+  convert 'image_%d.gif[0-123]'  animation.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The last method is the proper IM way of handling a sequence of files, though
+you need to know the range of number you want to use.  The '<CODE>%d</CODE>'
+formats each number to match the filename (see next)</P>
+
+In any case, this is awkward and prone to mistakes, can produce errors if
+files are missing, and can be dependant on what type of computer system you
+are using.  Better to avoid this problem altogether. </P>
+
+If you are familiar with the 'C' language (look up the UNIX system man page
+for '<CODE>printf</CODE>') then you will probably know that if you use
+something like "<CODE>%03d</CODE>"  you will always get 3 digit numbers (with
+leading zeros) for the image sequence frame number.  The image names would in
+that case be "<CODE>images_000.gif</CODE>", "<CODE>images_001.gif</CODE>" and
+so on.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  eye.gif news.gif storm.gif  +adjoin  image_%03d.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="image_000.gif"
+     ><IMG SRC="image_000.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_001.gif"
+     ><IMG SRC="image_001.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_002.gif"
+     ><IMG SRC="image_002.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Using this method, the images will not only be numbered, but will also list
+alphabetically correctly, making image file handling a whole lot easier.  </P>
+
+I thus recommended you add a '<CODE>%03d</CODE>' or whatever is appropriate,
+to the output filename whenever you plan on writing multiple images, as
+separate image files. </P>
+
+
+<A NAME="scene"></A>
+<H3>Written Scene Numbers</H3>
+
+If you want the image sequence to start at '<CODE>1</CODE>', instead of
+'<CODE>0</CODE>', and don't want to rename all the resultant image files, the
+simplest solution is to prepend a 'junk' image on the front of the sequence
+to be written.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOWARN>
+  convert  null:  eye.gif news.gif storm.gif  +adjoin  image_%01d_of_3.gif
+  rm image_0_of_3.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="image_1_of_3.gif"
+     ><IMG SRC="image_1_of_3.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_2_of_3.gif"
+     ><IMG SRC="image_2_of_3.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_3_of_3.gif"
+     ><IMG SRC="image_3_of_3.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+You can, of course, use "<CODE><A HREF="../option_link.cgi?insert"
+>+insert</A></CODE>" to do this after your image processing.  This is not a
+particularly nice solution, but works, and is simple, and backward compatible
+with the older major versions of IM. </P>
+
+As of IM version 6.2 you can use the "<CODE><A HREF="../option_link.cgi?scene"
+>-scene</A></CODE>" setting to set the starting number for the current image
+sequence.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  eye.gif news.gif storm.gif  +adjoin -scene 101 image_%03d.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="image_101.gif"
+     ><IMG SRC="image_101.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_102.gif"
+     ><IMG SRC="image_102.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="image_103.gif"
+     ><IMG SRC="image_103.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Which produced the image files "<CODE>image_101.gif</CODE>" to
+"<CODE>image_103.gif</CODE>". </P>
+
+<!-- <CODE EXECUTE ASSERT>
+  [ -f image_101.gif -a -f image_103.gif ] || echo >&2 \
+    "ASSERTION FAILURE: scene numbered images were not generated"
+</CODE>-->
+
+<A NAME="write"></A>
+<H3>Writing an Image, Multiple Times</H3>
+
+While on the subject of writing images, it is possible to write an image
+from the middle of a sequence of image operations, using the special "<CODE><A
+HREF="../option_link.cgi?write" >-write</A></CODE>" image operator. </P>
+
+This is very useful when you like to output an image multiple times at various
+points during image processing. For example, see <A HREF="../basics/#complex"
+>Complex Image Processing with Debugging</A>. </P>
+
+Here is an example where I have a <A HREF="../img_photos/parrots_orig.png"
+>Photo of some Parrots</A>, curtisy of the <A
+HREF="http://r0k.us/graphics/kodak/" >Kodak Lossless True Color Image
+Suite</A> (image 23),  but I want to save them in a range of different sizes,
+using one command...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert parrots_orig.png \
+          \( +clone -resize x128  -write  parrots_lrg.jpg +delete \) \
+          \( +clone -resize x96   -write  parrots_big.jpg +delete \) \
+          \( +clone -resize x64   -write  parrots_med.jpg +delete \) \
+                    -resize x32           parrots_sml.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="parrots_lrg.jpg"
+     ><IMG SRC="parrots_lrg.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="parrots_big.jpg"
+     ><IMG SRC="parrots_big.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="parrots_med.jpg"
+     ><IMG SRC="parrots_med.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="parrots_sml.jpg"
+     ><IMG SRC="parrots_sml.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+<!-- <CODE EXECUTE ASSERT>
+  [ -f parrots_med.jpg ] || echo >&2 \
+    "ASSERTION FAILURE: write did not create an image"
+</CODE>-->
+
+As you can see we can use the <A HREF="../basics/#list_ops" >Image List
+Operators</A> to process a 'clone' of an image, write out the result, then
+delete and backtrack back to the original source image, repeating the process
+as many times as you need. </P>
+
+In this particular case it means I did not end up resizing the same image over
+and over, and thus accumulating resize errors.  It also meant I could have
+just as easily generate the smaller images first, then the larger images after
+that, without problems,  or modify the image in many different ways for each
+image file generated. </P>
+
+That is the order and modification of each image is irrelevent! </P>
+
+Note that "<CODE><A HREF="../option_link.cgi?clone" >+clone</A></CODE>" does
+not actually duplicate the image data!  IM uses a reference-counted cloning
+process which only copies the image pixels when they are updated. As such only
+enough memory to hold the original image and the new image that is generated
+is actually used, in the above process. It also makes "<CODE><A
+HREF="../option_link.cgi?clone" >+clone</A></CODE>" very fast, and memory
+efficient. </P>
+
+<BR>
+
+Here is another technique of doing the same thing, but saving the original
+image in a named image register using "<CODE><A HREF="#mpr" >MPR:</A></CODE>"
+(see below), instead of "<CODE><A HREF="../option_link.cgi?clone"
+>-clone</A></CODE>".
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert scroll.gif  -background lightsteelblue -flatten  -alpha off \
+          -write mpr:scroll  -resize x128  -write scroll_lrg.jpg +delete \
+                 mpr:scroll  -resize x96   -write scroll_big.jpg +delete \
+                 mpr:scroll  -resize x64   -write scroll_med.jpg +delete \
+                 mpr:scroll  -resize x32          scroll_sml.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="scroll_lrg.jpg"
+     ><IMG SRC="scroll_lrg.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="scroll_big.jpg"
+     ><IMG SRC="scroll_big.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="scroll_med.jpg"
+     ><IMG SRC="scroll_med.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="scroll_sml.jpg"
+     ><IMG SRC="scroll_sml.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+<!-- <CODE EXECUTE ASSERT>
+  [ -f scroll_med.jpg ] || echo >&2 \
+    "ASSERTION FAILURE: -write did not create an image"
+</CODE>-->
+
+Here we save one copy of the original image into the "<CODE>mpr:scroll</CODE>"
+image register, before modifying the image still in memory after the write.
+Note that a MPR register can actually hold a whole sequence of images.  </P>
+
+Once the results of that operation is written and deleted from memory, the
+original image (or image sequence) is recovered, and the process repeated as
+many times as needed.  </P>
+
+Of course as previously there is no need to use "<CODE><A
+HREF="../option_link.cgi?write" >-write</A></CODE>" on the final image, as we
+can just output it as normal.  If you did use a "<CODE><A
+HREF="../option_link.cgi?write" >-write</A></CODE>", you can instead just junk
+the final image using another special file format "<CODE><A HREF="#null"
+>NULL:</A></CODE>" (see below).</P>
+
+
+<B>A word of warning about "<CODE><A HREF="../option_link.cgi?write"
+>-write</A></CODE>"</B>: Because some file formats require images to be in
+a special format for writing, the "<CODE><A HREF="../option_link.cgi?write"
+>-write</A></CODE>" operator could modify images.   GIF images for example may
+be color reduced (see <A HREF="../quantize" >Quantization and Dithering</A>).
+However other formats will leave the source image as is (see <A HREF="#miff"
+>MIFF</A> and <A HREF="#mpc" >MPC</A> below). </P>
+
+If you need protect yourself from these changes (as you are not simply
+deleting the image afterward), you can use "<CODE><A
+HREF="../option_link.cgi?write" >+write</A></CODE>" which will make
+an internal clone of the image for writing, then delete it afterwards.
+However remember that this can result in a doubling of memory use to hold the
+write modified copy of the image. At least for a moment.  </P>
+
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="special_formats"></A>
+<H2>Special File Formats
+<FONT SIZE=-1>(specific to IM)</FONT></H2>
+
+As you saw above (and will explore in the next section <A HREF="../formats/"
+>Common Image File Formats</A>), ImageMagick understands a huge number of well
+known image file formats. It also includes a good number of special image
+generators (as exampled in <A HREF="../canvas/" >Canvas Creation</A>).  On top
+of these there are also some very special file formats, which allow some very
+special handling of images. </P>
+
+<DL>
+<DT><A NAME="miff" ></A>
+    <B><CODE>miff:</CODE></B>
+
+<DD>Is the ImageMagick File Format.  The whole image sequence and <I>all</I>
+    the attributes associated with the images are saved in this file format.
+    Of course only ImageMagick commands will read this format, so it is not
+    suitable for transferring between different image processing packages.
+    </P>
+
+    The "<CODE>miff:</CODE>" file formats primary purpose is as an intermediate
+    save format, when processing images in long an complex ways. It is also
+    suitable for 'pipelining' an image from one IM command to another, while
+    passing image meta-data and other attributes assocated with the image.
+    </P>
+
+    I recommend when writing "<CODE>miff:</CODE>" that you include a "<CODE><A
+    HREF="../option_link.cgi?depth" >+depth</A></CODE>" option. This will
+    reset the 'input depth' of the image to the IM memory quality so as to use
+    the best posible quality for the intermediate image save. Of course you
+    can 'clip' the save image depth using "<CODE>-depth 8</CODE>" so as to
+    reduce the image size on disk, however that will also force <A
+    HREF="../basics/#quantum_effects" >Quantum Rounding</A> effects as well
+    (unless <A HREF="../basics/#hdri_formats" >HDRI floating-point save</A> is
+    also enabled). </P>
+
+    For those interested in parsing this format, it starts with a plain
+    text header of all the image attributes. The header end in a line
+    containing a single formfeed character. </P>
+
+    This header is itself an useful way of extracting basic image information
+    in various image processing processing scripts.  For example here are
+    I use a GNU-sed command to list the "<CODE>miff:</CODE>" header up to the
+    formfeed separator, showing all the attributes of the built-in
+    "<CODE>rose:</CODE>" image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE IMAGE=write_miff_info.txt OUT=write_miff_info.txt>
+<r>  convert rose:   miff:-  | sed -n '/^\f$/q; p'
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="write_miff_info.txt"
+     ><IMG SRC="write_miff_info.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    This is actually quite useful as it reveals all the current settings flags
+    and meta data that IM knows about the image.  However there is also
+    statistics, as these are generated by either the "<CODE>identify</CODE>"
+    command, the "<CODE><A HREF="../option_link.cgi?identify"
+    >-identify</A></CODE>" operator or the special "<CODE>info:</CODE>"
+    format; if requested with a "<CODE><A HREF="../option_link.cgi?verbose"
+    >-verbose</A></CODE>" option. (see next) </P>
+
+    The image file format has very low parsing requirements, and while not
+    compressed, can handle ANY type image IM knows about.  It is almost the
+    most ideal format to use for temporary images, and pipelined image
+    commands you can use, though ImageMagick programs is the only one that can
+    read it. </P>
+
+    See also the "<CODE><A HREF="#mpr" >MPR</A></CODE>" image memory register,
+    and "<CODE><A HREF="#mpc" >MPC</A></CODE>" memory disk mapping formats
+    below. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    The raw image data (binary) is actually prefixed by the four character
+    sequence "\n\f\n:", (formfeed on a line by itself, and a colon).  How this
+    data should be read is encoded in the header data, but tyically consists
+    of binary integers in RGB turples.  But can have more channels, and could
+    even consist of floats or even double data values.</P>
+
+    In may ways it is practically identical to a binery <A
+    HREF="../formats/#pbmplus" >PbmPlus</A> Image file format,with a
+    greatly expanded header to hold image meta-data, and more variations in
+    number of channels and data types.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<DT><A NAME="miff_stream" ></A>
+    <B>MIFF Image Streaming</B>
+
+<DD>The "<CODE>miff:</CODE>" format is a 'streaming' image file format.  That
+    is to say multiple images are handled simply by appending or concatenating
+    the images together, one after the other. </P>
+
+    This means you can generate a 'stream' of multiple images, simply by
+    writing the images to the same destination, such as a pipeline.  Even if
+    the individual images were generated by different commands. </P>
+
+    For example you can have a loop of image processing commands, each command
+    simply outputs a 'streaming' MIFF image.  After the loop you can pipe the
+    'stream' of images into an into a single command to generate montages,
+    collages, animations, or something else. </P>
+
+    For example the following generates a list of colors starting with the
+    letter 'b', then uses a loop of "<CODE>convert</CODE>" commands to
+    generate a labeled color patch, one color at a time.  These are then
+    'piped' into a "<CODE>montage</CODE>" to generate a simple color table.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -list color | egrep '^b' | \
+    while read color junk; do \
+       convert -label $color -size 70x20 xc:$color +depth miff:-; \
+    done |\
+      montage - -frame 5 -tile 6x -geometry +2+2 \
+              -background none color_table.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="color_table.png"
+     ><IMG SRC="color_table.png"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Text]"></A>
+</DIV></P>
+
+    The above specific example was programmed into a script "<B><A
+    HREF="../scripts/show_colors" >show_colors</A></B>" which you can use to
+    search for, find and display colors, for use in your image processing.
+    </P>
+
+    The above is an example of a '<B>Pipeline of Streaming Images</B> that is
+    very useful for generating multi-image sequences. Other examples of this
+    technique include <A HREF="../layers/#layer_prog" >Programmed Positioning
+    of Layered Images</A>, <A HREF="../layers/#layer_pins" >Pins in a Map</A>,
+    the 'Named Colors Image' in <A HREF="../color_basics/#color_names" >Colors
+    by Name</A>, and the animations such as shown in <A
+    HREF="../canvas/#random_ripples" >Random Ripples</A>. </P>
+
+    This technique can also be used with operations like "<CODE>-write
+    miff:-</CODE>", so as  to output a miff format image from multiple places
+    in a single command. Each image will be automatically append together in
+    the final output stream.  This can be especially useful for debugging
+    complex image processing commands.</P>
+
+    The alternative method (commonly using in PHP scripts) is to use
+    a 'generated command' technique, that uses a shell script to generate
+    a long "<CODE>convert</CODE>" comamnd to be run. The scripts in <A
+    HREF="../warping/#animations" >Image Warping Animations</A> use this
+    technique. </P>
+
+
+<DT><A NAME="info"></A>
+    <B><CODE>info:</CODE></B>
+<DD>The "<CODE>info:</CODE>" file format (added in IM v6.2.4) does <I>NOT</I>
+    output an actual image!  This format basically outputs the same
+    information that the ImageMagick "<CODE>identify</CODE>" command will
+    output. </P>
+
+    Like "<CODE>identify</CODE>" this output format is controlled by the
+    "<CODE><A HREF="../option_link.cgi?format" >-format</A></CODE>" and
+    "<CODE><A HREF="../option_link.cgi?verbose" >-verbose</A></CODE>" options
+    allowing you to output just the specific information you are interested
+    in, as defined by the <A
+    HREF="https://legacy.imagemagick.org/script/escape.php" >Image Property
+    Escapes</A> page.</P>
+
+    For example instead of piping a MIFF image to "<CODE>identify</CODE>" as
+    we did above (see <A HREF="#saving_images" >Saving Images</A>), we could
+    have used the following, to retrieve the single line identification of the
+    resulting image format.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=info_image.txt >
+  convert  granite:  info:-
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="info_image.txt"
+    ><IMG SRC="info_image.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    Of course you can use a "<CODE><A HREF="../option_link.cgi?format"
+    >-format</A></CODE>" setting to output the desired information in a
+    specific and more parsable way. </P>
+
+    What is so useful about "<CODE>info:</CODE>" is that you can now produce
+    your image, while extracting extra information about it, at the same time.
+    This is done by using the "<CODE><A HREF="../option_link.cgi?write"
+    >-write</A></CODE>" operator to save this special image format to a file
+    (or the commands normal standard output).
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
+<TR><TD WIDTH=10% ALIGN=justify></TD>
+    <TD WIDTH=90% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE ERR=info_paged.txt>
+  convert rose: -shave 12x0 -repage 64x64+9+9 \
+          -format '%wx%h %g'  -write info:info_paged.txt    paged.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+  <A HREF="paged.gif"
+     ><IMG SRC="paged.gif"   WIDTH=64  HEIGHT=64
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR> <TR></TD><TD></TD><TD>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="info_paged.txt"
+    ><IMG SRC="info_paged.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</TD><TD></TD></TR></TABLE></P>
+
+    There is also a "<CODE><A HREF="../option_link.cgi?identify"
+    >-identify</A></CODE>" operator that is equivalent using <NOBR>"<CODE><A
+    HREF="../option_link.cgi?write" >-write</A> info:</CODE>"</NOBR> to output
+    image identification information to standard output.  This make it even
+    easier to monitor what is happening to your images when debugging your IM
+    commands. </P>
+
+    For example...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
+<TR><TD WIDTH=10% ALIGN=justify></TD>
+    <TD WIDTH=90% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=info_thumbnail.txt >
+  convert logo:           -identify \
+          -trim           -identify \
+          +repage         -identify \
+          -resize 80x80\! -identify \
+          logo_thumbnail.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+  <A HREF="logo_thumbnail.gif"
+     ><IMG SRC="logo_thumbnail.gif"  WIDTH=80   HEIGHT=80
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR> <TR></TD><TD></TD><TD>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="info_thumbnail.txt"
+    ><IMG SRC="info_thumbnail.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</TD><TD></TD></TR></TABLE></P>
+
+    Here you can see how "<CODE><A HREF="../option_link.cgi?trim"
+    >-trim</A></CODE>" reduced the size of the image but preserves the 'crop'
+    information of what part of the image was trimmed, then the "<CODE><A
+    HREF="../option_link.cgi?repage" >+repage</A></CODE>" removing that extra
+    'canvas' or 'page' information. And so on. </P>
+
+    Also like the "<CODE>identify</CODE>" command, both "<CODE><A HREF="#info"
+    >info:</A></CODE>" and "<CODE><A HREF="../option_link.cgi?identify"
+    >-identify</A></CODE>", will become much more verbose if the "<CODE><A
+    HREF="../option_link.cgi?verbose" >-verbose</A></CODE>" setting is turned
+    on.  Here I limit the long output to just the first few lines, just so you
+    can get a bit of an idea about it.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=info_verbose.txt >
+  convert  rose:  -verbose  info:  | head
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="info_verbose.txt"
+    ><IMG SRC="info_verbose.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+    <TR VALIGN=top>
+    <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+        ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+      The "<CODE><A HREF="../option_link.cgi?verbose" >-verbose</A></CODE>"
+      setting will also cause extra information about images being read in
+      or out, to be printed to the standard error (with the exception of the
+      "<CODE>info:</CODE>" format).  It also causes some operators like
+      "<CODE><A HREF="../option_link.cgi?colors" >-colors</A></CODE>" to
+      output additional information.  As such you may like to turn it off
+      again after using it with either "<CODE><A
+      HREF="../option_link.cgi?identify" >-identify</A></CODE>" or the
+      "<CODE>info:</CODE>" format. </P>
+
+      For example &nbsp;&nbsp; </I><NOBR> "<CODE>-verbose -write
+      info:image_info.txt +verbose</CODE>" </NOBR><I> &nbsp;&nbsp; or
+      &nbsp;&nbsp; </I><NOBR> "<CODE>-verbose -identify +verbose</CODE>"
+      </NOBR><I>.
+
+    </I></FONT></TD></TR></TABLE></P>
+
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR VALIGN=top>
+    <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+        ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+      Scripted reading of the output from any form of "<CODE><A
+      HREF="../basics/#identify" >identify</A></CODE>", should do so in a case
+      in-sensitive way. This insures better backward compatibility between
+      different versions of ImageMagick.
+
+    </I></FONT></TD></TR></TABLE></P>
+
+    NOTE: "<CODE>info:</CODE>" (and "<CODE><A
+    HREF="../option_link.cgi?identify" >-identify</A></CODE>") is only an
+    output format, producing the same output as the "<CODE><A
+    HREF="../basics/#identify" >identify</A></CODE>" command.   You can not
+    read, or create an image using the "<CODE>info:</CODE>" file format. </P>
+
+
+    You can also use "<CODE><A HREF="../option_link.cgi?print"
+    >-print</A></CODE>" to print information, but that is applied only once
+    against the whole image sequence.  That means you can use this operator
+    to calculate much more complex '<CODE>%[fx:...]</CODE>' expressions
+    involving multiple images.  But remember unlike the other methods
+    above, it is only applied once accross all images. </P>
+
+
+<DT><A NAME="null"></A>
+    <B><CODE>null:</CODE></B>
+<DD>As an output format, this will just 'junk' the image results.  As such if
+    used as the final argument in a "<CODE>convert</CODE>",
+    "<CODE>montage</CODE>", or "<CODE>composite</CODE>" command the final
+    result will not be saved! </P>
+
+    Why?  Well it may be that you are more interested in specific images,
+    generated during image processing rather than the overall result,
+    especially when debugging. </P>
+
+    For example, here we extract and save one image, from an image sequence,
+    then junk all the other images using "<CODE>null:</CODE>".
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGn=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  eye.gif news.gif storm.gif tree.gif rose: logo: \
+            \( -clone 2 -write write_storm.gif \)   null:
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="write_storm.gif"
+     ><IMG SRC="write_storm.gif"          WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    This is a lot simpler than attempting to delete all the other images
+    one at a time. </P>
+
+    As an input image format however, "<CODE>null:</CODE>" will generate a
+    special placeholder image of a single transparent pixel, with with a
+    special 'null source' flag, in the current image sequence. </P>
+
+    This special image is especially important to <A HREF="../montage/#null"
+    >Leave Gaps in a Montage</A>, and as a list separator for multi-image <A
+    HREF="../anim_mods/#composite" >Layer Composition</A>.
+
+    It is closely related to another special image format known as a '<A
+    HREF="../crop/#crop_missed" >missed image</A>', that can be
+    generated for operations like "<CODE><A HREF="../option_link.cgi?crop"
+    >-crop</A></CODE>". This image format is produced when an operation
+    produces an empty or non-sensible result.  Both images are a single
+    transparent pixel, and as such "<CODE>null:</CODE>" images will also be
+    treated as if it is a '<A HREF="../crop/#crop_missed" >missed image</A>'.
+    </P>
+
+    At this time there is no method to remove any "<CODE>null:</CODE>" or even
+    '<A HREF="../crop/#crop_missed" >missed image</A>', from the current image
+    sequence. However such a method has been proposed.  Mail me if you find
+    you need such a method. </P>
+
+
+<DT><A NAME="txt"></A> <B><CODE>txt:</CODE></B>
+<DD>This is a simple ASCII text file, which basically lists each pixel in the
+    image, one per line.  It is not a general text to image converter, for
+    that see <A HREF="../text/#text" >Multi-line Text Files Examples</A>. If
+    the 'pixel enumeration' is not reconised, the image will be passed to the
+    "<CODE><A HREF="../text/#text">text:</A></CODE>" format coder, for
+    rendering as a plain text file. </P>
+
+    For example here is a "<CODE>netscape:</CODE>" image scale to a 2x2 pixel
+    image, then listed using a "<CODE>txt:</CODE>" image format.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  netscape: -scale 2x2\! txt_netscape.txt
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="txt_netscape.txt"
+     ><IMG SRC="txt_netscape.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    The first line (header) of the image is packed with the basic information
+    about the image.  The information consists of... </P>
+
+    <I>File Magic:</I> The image header defines this file as a the
+    special IM text image format (EG a "ImageMagick pixel enumeration" file),
+    this is known in computing circles as the files 'magic' or the code string
+    which identifies this file as being this specific file format. </P>
+
+    <I>Image Size:</I> The next two numbers define the size of the image
+    contained in this file.  Multiplying these numbers together will also tell
+    you how many lines should follow the header to fully define the image. IM
+    will always output this many lines, though as you will see later when
+    reading you do NOT need to define ALL the pixels.  </P>
+
+    <I>MaxValue:</I> The last number in the header defines the 'maximum value'
+    of the image data that is possible.  In the above examples this was
+    '<CODE>255</CODE>' which is a result of using a 8 bit depth. </P>
+
+    The reason it output the built-in "<CODE>netscape:</CODE>" image at this
+    depth is because it was defined internally using 8-bit values, and as such
+    IM preserved this depth level for the image. See the section on the <A
+    HREF="../basics/#depth" >Depth Setting</A> for more information.  </P>
+
+    But you can override the depth setting (up to the limit of your IM's Q or
+    <A HREF="../basics/#quality" >Compile-time Quality</A> setting, by
+    changing the images "<CODE><A HREF="../option_link.cgi?depth"
+    >-depth</A></CODE>".  For example here I output the color values as 16 bit
+    values (from 0 to 65535)...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert netscape: -scale 2x2\! -depth 16 txt_netscape_16.txt
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="txt_netscape_16.txt"
+     ><IMG SRC="txt_netscape_16.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+    <TR VALIGN=top>
+    <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+        ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+      At this time you can not set a specific 'Maximum Value' to use in the
+      output file format. You can only define a different value in terms of
+      the current "<CODE><A HREF="../option_link.cgi?depth"
+      >-depth</A></CODE>" setting, making the maximum value equal to
+      <CODE>2^depth-1</CODE>.
+    </I></FONT></TD></TR></TABLE></P>
+
+    <I>Colorspace:</I> The last item in the header defines the <A
+    HREF="../color_basics/#colorspace" >colorspace</A> of the data that
+    follows. If the image contained any transparency, a final letter
+    '<CODE>a</CODE>' (for alpha) is also appended to the colorspace name, and
+    an extra column of numbers added between parenthesis.  Grayscale images
+    will output an image as '<CODE>grey</CODE>', but will define at least
+    three numbers, which will be the same value for each pixel.  </P>
+
+    For example here is the same image using a <A
+    HREF="../color_basics/#colorspace" >colorspace</A> of '<CODE>LAB</CODE>'
+    with an alpha channel added!
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  netscape: -scale 2x2\! -colorspace LAB -matte txt_cspace_lab.txt
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="txt_cspace_lab.txt"
+     ><IMG SRC="txt_cspace_lab.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+<!-- <CODE EXECUTE ASSERT>
+  convert rose: -depth 16 txt:- |\
+    head -1 | grep -i ,RGB\$ >/dev/null || echo >&2 \
+    "ASSERTION FAILURE: TXT output using RGB FAILED\!"
+  [ "`convert rose:  txt:- |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+            sed 's/ .*//'`" -gt 10 ] && echo >&2 \
+    "ASSERTION FAILURE: TXT read using RGB FAILED\!"
+
+  convert rose: -matte -depth 16 txt:- |\
+    head -1 | grep -i ,RGBA\$ >/dev/null || echo >&2 \
+    "ASSERTION FAILURE: TXT output RGB with alpha FAILED\!"
+  [ "`convert rose:  -matte txt:- |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+            sed 's/ .*//'`" -gt 10 ] && echo >&2 \
+    "ASSERTION FAILURE: TXT read using RGB with alpha FAILED\!"
+
+  convert rose: -colorspace CMYK -depth 16 txt:- |\
+    head -1 | grep -i ,CMYK\$ >/dev/null || echo >&2 \
+    "ASSERTION FAILURE: TXT output using CMYK FAILED\!"
+  [ "`convert rose:  -colorspace CMYK txt:- |\
+        convert - -colorspace RGB miff:- |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+            sed 's/ .*//'`" -gt 10 ] && echo >&2 \
+    "ASSERTION FAILURE: TXT read using CMYK FAILED\!"
+
+  convert rose: -colorspace CMYK -matte -depth 16 txt:- |\
+    head -1 | grep -i ,CMYKA\$ >/dev/null || echo >&2 \
+    "ASSERTION FAILURE: TXT output CMYK with alpha FAILED\!"
+  [ "`convert rose:  -colorspace CMYK -matte txt:- |\
+        convert - -colorspace RGB miff:- |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+            sed 's/ .*//'`" -gt 10 ] && echo >&2 \
+    "ASSERTION FAILURE: TXT read using CMYK with alpha FAILED\!"
+
+  convert rose: -colorspace LAB -depth 16 txt:- |\
+    head -1 | grep -i ,LAB\$ >/dev/null || echo >&2 \
+    "ASSERTION FAILURE: TXT output LAB FAILED\!"
+  [ "`convert rose:  -colorspace LAB txt:- |\
+        convert - -colorspace RGB miff:- |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+            sed 's/ .*//'`" -gt 10 ] && echo >&2 \
+    "ASSERTION FAILURE: TXT read using LAB FAILED\!"
+
+  convert rose: -colorspace LAB -matte -depth 16 txt:- |\
+    head -1 | grep -i ,LABA\$ >/dev/null || echo >&2 \
+    "ASSERTION FAILURE: TXT output LAB with alpha FAILED\!"
+  [ `convert rose:  -colorspace LAB -matte txt:- |\
+        convert - -colorspace RGB miff:- |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+            sed 's/ .*//'` -gt 10 ] && echo >&2 \
+    "ASSERTION FAILURE: TXT read using LAB with alpha FAILED\!"
+</CODE> -->
+
+    After the initial header are the <I>Pixel Data</I> lines, one per pixel in
+    the image. </P>
+
+    <I>Coordinates:</I> The first two numbers up to the colon '<CODE>:</CODE>'
+    is the pixel position, starting from 0. </P>
+
+    <I>Color Values:</I> After this the color values for the pixel (from 0 to
+    the <I>MaxValue</I> given in the header) is given in parenthesis, with
+    anywhere from 3 to 5 numbers depending on the current colorspace for the
+    image.  Spaces are optional so caution is advised when parsing the numbers
+    in parenthesis.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    The values are normally intergers.  However as of IM v6.9.2-1, if the
+    special define "<CODE><A HREF="../option_link.cgi?define" >-define</A>
+    txt:compliance=css</CODE>" is given with "<CODE><A
+    HREF="../option_link.cgi?depth" >-depth</A> 16</CODE>" the values will be
+    represented as percentage values with '<CODE>%</CODE>' signs. This is part
+    of SVG, CSS compliance.
+
+</I></FONT></TD></TR></TABLE></P>
+
+    <I>Color Comments:</I> Anything that follows the numbers in parenthesis, is
+    regarded as comment.  IM will fill in extra information on the pixel color
+    using formats that it can parse as a color argument (See "<CODE><A
+    HREF="../option_link.cgi?fill" >-fill</A></CODE>" manual entry for details
+    of these color specifications). </P>
+
+    The color comments are however variable, though typically it will start
+    with a hash ('<CODE>#</CODE>') hexidecimal color value, after which it may
+    output RGB() values, or color names depending of the pixel data given.
+    These colornames should be understood by ImageMagick, but are meant as
+    a referance only, as it is purely a comment.
+    Exactly what colors is provided is highly dependant on the IM version you
+    are using, especially in early IM v6 versions and before.  There is no
+    guarantee that this comment area will not change again in the future, so
+    it is best not to rely on it. IM doesn't when reading a Pixel Enumeration
+    Image. </P>
+
+    Here is an example of correctly reading a Pixel Enumeration in a shell
+    script. The exact format of the TXT image is defined by the convert
+    command, then '<CODE>tail</CODE>' is used to junk the header,
+    '<CODE>tr</CODE>' to character replace every non-number character with a
+    single space, so that the later '<CODE>while</CODE>' can read the numbers
+    easily, junking any later comment numbers that may have been left over.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT OUT=txt_shell_read.txt>
+  convert  rose: -resize 3x2\! -depth 8 -colorspace RGB +matte txt:- |
+    tail -n +2 | tr -cs '0-9.\n'  ' ' |
+      while read x y r g b junk; do
+        echo "$x,$y = rgb($r,$g,$b)"
+      done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="txt_shell_read.txt"
+     ><IMG SRC="txt_shell_read.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    <BR>
+
+    <B>Reading TXT images</B> is also valid.  You do not need to define ALL
+    the pixels in the image.  In fact you do not even need to have the pixels
+    in the correct order! ImageMagick will just read each pixel defining line
+    in turn, and 'draw' it onto a blank image canvas.  Only the numbers in the
+    parenthesis on each line is used for this, not the color names. </P>
+
+    The initial blank canvas, is cleared and set to the current background
+    color. As such any pixel not provided by a "<CODE>txt:</CODE>" image, will
+    be left as this color. </P>
+
+    For interesting use of "<CODE>txt:</CODE>" images, look at <A
+    HREF="../distorts/#forward_mapping" >Forward Pixel Mapping</A> where
+    I output an Enumerated Pixel Image, then change each of the pixel
+    locations so as to rotate (distort) the image, before reading the
+    Enumerated Pixel Image, back into IM again.  In the resulting image some
+    pixel locations were not defined, while other locations had multiple
+    pixels added. IM handled this without problems. </P>
+
+    <BR>
+
+    The "<CODE>txt:</CODE>" format is especially useful with the "<CODE><A
+    HREF="../option_link.cgi?unique-colors" >-unique-colors</A></CODE>"
+    operator, which replaces each image in the current image sequence with a
+    new image containing one pixel for each unique color found.  When this is
+    output to a "<CODE>txt:</CODE>" format file, you get a basic summary of
+    the colors contained in an image (though not their counts, or histogram).
+    </P>
+
+    For example here are the colors used by the tree image.  As GIF can only
+    use 8 bit numbers, the colors is also output at the same <A
+    HREF="../basics/#depth" >Depth</A>.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
+<TR VALIGN=top><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
+              <TD WIDTH=90% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tree_colors.txt>
+  convert tree.gif -unique-colors txt:-
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+  <A HREF="tree.gif"
+     ><IMG SRC="tree.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR><TR><TD>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="tree_colors.txt"
+     ><IMG SRC="tree_colors.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE></TD></TR></TABLE></P>
+
+    There is another alternative to using the IM "<CODE>txt:</CODE>" format
+    using the various <A HREF="../formats/#netpbm" >NetPBM image file
+    formats</A>. IM by default outputs this format as binary, but you can turn
+    off "<CODE><A HREF="../option_link.cgi?compress" >-compress</A></CODE>"
+    to output an ASCII text version of the NetPBM format.  For example.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE TXT2GIF>
+    convert tree.gif -unique-colors -compress None -depth 8 tree_netpbm.ppm
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="tree_netpbm.ppm"
+     ><IMG SRC="tree_netpbm.ppm.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    You may notice that the numbers in the above matches the number in the
+    IM's Enumerated Pixel ("<CODE>txt:</CODE>") format.  See <A
+    HREF="../canvas/#gradient_resize" >Resized Gradient</A> for some examples
+    of generating a NetPBM format image for IM to read. </P>
+
+    If you just want the color of a specific pixel you can crop the image down
+    to one pixel, and output it as a "<CODE>txt:</CODE>" image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=rose_one.txt>
+  convert rose: -crop 1x1+12+26 txt:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="rose_one.txt"
+     ><IMG SRC="rose_one.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    Or you can use a special <A HREF="../transform/#fx_escapes" >FX
+    Escape Format</A> to output the color in a form directly usable by IM.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=rose_pixel.txt>
+  convert rose: -format '%[pixel:u.p{12,26}]' info:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="rose_pixel.txt"
+     ><IMG SRC="rose_pixel.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    See also <A HREF="../quantize/#extract" >Extracting Image Colors</A>. </P>
+
+<DT><A NAME="sparse-color"></A>
+    <B><CODE>sparse-color:</CODE></B>
+<DD>This is a special output image format that will return a simple comma
+    separated list of coordinates and colors for each pixel that is not
+    transparent.  The output string is suitable for direct input into the <A
+    HREF="../canvas/#sparse-color" >Sparse Color Operator</A>. </P>
+
+    For example this finds the few pixels 'closest' to a pure red color
+    in the "<CODE>rose:</CODE>" image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=rose_sparse.txt>
+  convert rose: -alpha set -fuzz 13% +transparent red sparse-color:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="rose_sparse.txt"
+     ><IMG SRC="rose_sparse.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+    In many ways this is more useful that the "<CODE><A HREF="#txt"
+    >txt:</A></CODE>" format shown above, but only if a couple of pixels are
+    involved. </P>
+
+    Be warned however that at the time of writing, the output is all one line.
+    Shell scripts may like to convert the spaces in the output to newlines. </P>
+
+
+<DT><A NAME="histogram"></A>
+    <B><CODE>histogram:</CODE></B>
+<DD>This is actually the "<CODE><A HREF="#miff" >miff:</A></CODE>" image
+    format, but with a very large image comment that contains a complete count
+    of all the colors within the image.  That is in the "<CODE><A HREF="#miff"
+    >miff:</A></CODE>" text header '<CODE>Comment={...}</CODE>' attribute.
+    </P>
+
+    For example, here we again list the colors present in the "tree" image,
+    but this time including the pixel count for each color.  The text
+    histogram comment is extracted from the "<CODE>histogram:</CODE>" image
+    using a secondary "<CODE><A HREF="#info" >info:</A></CODE>" formatted
+    identify.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
+<TR VALIGN=top><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
+              <TD WIDTH=90% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tree_histogram.txt>
+  convert  tree.gif  -define histogram:unique-colors=true \
+           -format %c histogram:info:-
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+  <A HREF="tree.gif"
+     ><IMG SRC="tree.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR><TR><TD>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="tree_histogram.txt"
+     ><IMG SRC="tree_histogram.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The "<CODE>info:</CODE>" output format was added to IM v6.2.4.
+  For IM versions before this use..
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=95% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert  tree.gif histogram:- | identify -format %c -
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+</I></FONT></TD></TR></TABLE>
+
+    You will note that the format is almost exactly the same as that of the
+    previous TXT, or IM Pixel Enumeration Image format, including the comments
+    on the color values.  The only difference is that the X,Y location has
+    been replaced by a count of the number of pixels.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  This comment can take a very long time to create.  As of IM v6.6.1-5, you
+  can add the special setting "<CODE><A HREF="../option_link.cgi?define"
+  >-define</A> histogram:unique-colors=false</CODE>" which will turn off this
+  comment generation if you do not need it.
+</I></FONT></TD></TR></TABLE></P>
+
+    The image itself is a histogram graph, 256x200 pixels in size. The x-axis
+    is color value (0-255) and the y-axis is pixel count (normalized to the
+    number of pixels). The histogram for each channel is displayed in the
+    color it represents, and added together. Thus, red and blue overlap to
+    make magenta.  In other words with color channel has its own separate
+    histogram. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGn=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+    If you want the image converted to some other format, just save it into
+    that format. "<CODE>histogram:</CODE>" is a special image processing
+    format.  It will convert the image, then output in the format specified by
+    the filename suffix or further "<CODE><I>format</I>:</CODE>" codes.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: \
+          -define histogram:unique-colors=false \
+          histogram:histogram.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="histogram.gif"
+     ><IMG SRC="histogram.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    An image that is very dark will be heavily weighted to the left, while
+    a light image will be heavily weighted to the right. Mid-tones,
+    likewise, are represented in the middle. </P>
+
+    To see this better here I separate the histograms for each of the color
+    channels.  I also strip the histogram text comment (if still present), and
+    resize the image for display.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE>
+  convert histogram.gif -strip -resize 50% -separate  histogram-%d.gif
+</CODE></PRE></TD></TR></TABLE>
+<TABLE><TR>
+<TR><TD ALIGN=center>
+  <A HREF="histogram-0.gif"
+     ><IMG SRC="histogram-0.gif"          WIDTH=128 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Red
+</TD><TD ALIGN=center>
+  <A HREF="histogram-1.gif"
+     ><IMG SRC="histogram-1.gif"          WIDTH=128 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Green
+</TD><TD ALIGN=center>
+  <A HREF="histogram-2.gif"
+     ><IMG SRC="histogram-2.gif"          WIDTH=128 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Blue
+</TD></TR></TABLE>
+</DIV></P>
+
+    For the "<CODE>rose:</CODE>" image above you will see that red is spread
+    more showing its vital importance in the image.  On the other hand green
+    and blue spikes on the left, showing that is has very little influence on
+    the image at all. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGn=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+    If you are more interesting in the brightness of an image rather than its
+    colors, convert the image to a gray-scale before generating a
+    "<CODE>histogram:</CODE>" image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace Gray \
+          -define histogram:unique-colors=false \
+          histogram:histogram_gray.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="histogram_gray.gif"
+     ><IMG SRC="histogram_gray.gif"       WIDTH=256 HEIGHT=200
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    As you can see the histogram of a gray-scale image is a little different.
+    As the predominate red color become more of a mid-tone grey color,
+    producing a spike in the center of the histogram. Also the small area of
+    off-white in the image now produces a distinct spike at the extreme right
+    of the graph. </P>
+
+    The completely empty space at the extreme left also shows that there are
+    no dark patches in the image at all. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGn=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+    On the other hand a better 'global' histogram can be generated by
+    simply separating all the color channels in the original image and
+    appending.   The resulting histogram is a representation of all the color
+    values regardless of which channel that value is from.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -separate -append \
+          -define histogram:unique-colors=false \
+          histogram:histogram_values.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="histogram_values.gif"
+     ><IMG SRC="histogram_values.gif"       WIDTH=256 HEIGHT=200
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    Unfortunately as "<CODE>histogram:</CODE>" is an output format, you will
+    either need to 'pipe' the image into another command, save it to disk, or
+    use the special "<CODE><A HREF="#mpr" >mpr:</A></CODE>" save/read, if you
+    want to process the image further. See example in  "<CODE><A HREF="#mpr"
+    >mpr:</A></CODE>" below.  </P>
+
+    It would good if some method of generating histograms (and other graphs)
+    became available as operators rather than a special output format.  </P>
+
+
+<DT><A NAME="mpr"></A>
+    <B><CODE>mpr:<I>{label}</I></CODE></B>
+<DD>(Memory Program Register) will save the whole image sequence into a named
+    memory register, from which you can later read the image data.  As such if
+    you want to save an image for use latter, in a complex image operation you
+    can do so. </P>
+
+    Writing to a "<CODE>mpr:</CODE>" at the end of processing is useless, as
+    the program memory is returned back to the system when the program
+    finishes.  As such you will want to use a <A HREF="#write" >Write</A>
+    operation to save the images to a file in the middle of your processing
+    steps, if you need it in a different process.  </P>
+
+    The '<I>label</I>' given to "<CODE>mpr:</CODE>" can be anything you like,
+    it is only a label on where the image was saved in memory.  It can even be
+    just a simple number for people who do scripting and don't want to deal
+    with names, though names could make your script easier to follow. </P>
+
+    After you have saved an image see below), you can then read in the image
+    again, from the same 'labelled' memory location, as many times as you
+    like.  For example...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif -write mpr:tree  +delete \
+          \
+          mpr:tree  mpr:tree  mpr:tree   +append  mpr.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="mpr.gif"
+      ><IMG SRC="mpr.gif"   WIDTH=96  HEIGHT=32
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    Note the use of "<CODE><A HREF="../option_link.cgi?delete"
+    >+delete</A></CODE>" in the above image processing.  In the above it is
+    not necessary (just re-read the "<CODE>mpr:tree</CODE>" two times instead
+    of three), but it is very common to <A HREF="../basics/#delete"
+    >Delete</A> all images from the current image sequence after saving the
+    images in a "<CODE>mpr:</CODE>" register. </P>
+
+    Basically the two lines in the above can be thought of as two completely
+    separate "<CODE>convert</CODE>" commands, but using a named memory
+    register for the intermediate image rather than disk space.  </P>
+
+    In many ways using "<CODE>mpr:</CODE>" is like using <A
+    HREF="../basics/#clone" >Clone</A> or <A HREF="../basics/#duplicate"
+    >Duplicate</A> (which we could have used in the above example),  but using
+    "<CODE>mpr:</CODE>" allows use to completely remove all the images, to
+    clear the current image list for other work. </p>
+
+    The best feature of this method is that it also allows you to use settings
+    and operations that only work on image input.  For example, using it with
+    the input image "<CODE><A HREF="../canvas/#tile" >tile:</A></CODE>"
+    operator to tile an image over a larger area.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tree.gif -flip   -write mpr:tree  +delete \
+          -size 64x64 tile:mpr:tree   mpr_tile.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="mpr_tile.gif"
+      ><IMG SRC="mpr_tile.gif"   WIDTH=64  HEIGHT=64
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    You can also use "<CODE>mpr:</CODE>" to grab the output of some of the
+    special output image format filters for further processing.  For example
+    here we save the output image from "<CODE><A HREF="#histogram"
+    >histogram:</A></CODE>" and then read it back in continue to processing it
+    in the same command,
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -define histogram:unique-colors=false \
+          -write histogram:mpr:hgram  +delete \
+          mpr:hgram  -strip  -resize 50%  histogram_resized.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="histogram_resized.gif"
+      ><IMG SRC="histogram_resized.gif"   WIDTH=128  HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    The "<CODE>mpr:</CODE>" in-memory save is actually the only way you can
+    re-use images already in-memory through special I/O filters such as an
+    output file format like "<CODE><A HREF="#histogram"
+    >histogram:</A></CODE>" or an input file format like "<CODE><A
+    HREF="../canvas/#tile_memory" >tile:</A></CODE>". </P>
+
+    The same is true for the special options that take an actual input image,
+    such as "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>"  or
+    for "<CODE><A HREF="../option_link.cgi?map" >Color Mapping</A></CODE>"
+    images using another image as a source.  See <A
+    HREF="../quantize/#map_common" >Multi-image Color Maps</A>. NOTE that such
+    options are being replaced in IMv7 with versions that do not need the
+    image to be read from a file. </P>
+
+    It is also the only way to use the <A HREF="../draw/#image" >-draw
+    'image'</A> method to overlay images using a generated in-memory image,
+    though there are lots of other techniques to do this.  </P>
+
+    The "<CODE>mpr:</CODE>" image actually saves the <I>whole image
+    sequence</I> and not just one image.  It is a bit like taking a snapshot
+    of the current image sequence so you can reload it later on for further
+    processing.  This for example allow you to take copies of a whole
+    animation sequence, for duplicating or cloning, without needing to know
+    how many images are actually involved. See <A
+    HREF="../anim_mods/#composite" >Layers Composition</A> for an example of
+    doing this. </P>
+
+    When you do have multiple images in "<CODE>mpr:</CODE>" you can actually
+    still extract individual images from that sequence!  Using
+    "<CODE>mpr:image'[2]'</CODE>" will pull the third image from
+    a multi-image sequence saved using "<CODE>-write mpr:image</CODE>". </P>
+
+    For example here I extract the 'storm' image from a set of four images.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert eye.gif news.gif storm.gif tree.gif \
+          -write mpr:images  -delete 0--1 \
+          \
+          mpr:images'[2]'   mpr_extract.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="mpr_extract.gif"
+      ><IMG SRC="mpr_extract.gif"   WIDTH=32  HEIGHT=32
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+    The <A HREF="../basics/#clone" >Image Cloning</A> operator cannot
+    generally handle an unknown variable number of images, and in fact before
+    the <A HREF="../basics/#clone" >Clone</A> operator was added
+    "<CODE>mpr:</CODE>" was the only method available for duplicating
+    in-memory images, without using intermediate disk files. </P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+   ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    As of IM v6.8.2 you can also store images in a remote IM caching daemon
+    process.  This allows images (and there meta-data) to be passed between
+    separately running IM commands, without needed disk space. See <A
+    HREF="https://imagemagick.org/script/distribute-pixel-cache.php"
+    >Distributed Pixel Cache Daemon</A>
+</I></FONT></TD></TR></TABLE></P>
+
+
+
+<DT><A NAME="mpc"></A>
+    <B><CODE>mpc:</CODE></B>
+<DD>Is a special IM specific disk save format that was originally designed
+    with really large images in mind.  Basically is is a memory-mapped disk
+    file of program memory, saved to disk as <B>two</B> binary files,
+    a "<CODE>.mpc</CODE>" holding the meta-data of the image, and
+    a "<CODE>.cache</CODE>" holding the images pixel-cache. </P>
+
+    <DIV ALIGN=center><B>
+         The "<CODE>MPC:</CODE>" format creates two files to save one image
+    </B></DIV></P>
+
+    Such files will not work after IM is recompiled or upgraded, and only for
+    the IM compiled for a specific machine.  As such it is only good for
+    temporary 'quick read' files, such as in holding temporary images used by
+    scripted image processing, and not long term storage. </P>
+
+    For example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert very_big_image.tif  very_big_image.mpc
+</CODE></PRE></TD></TR></TABLE>
+</DIV>
+
+    will create two files on disk. A small "<CODE>very_big_image.mpc</CODE>"
+    file and a special memory dump file called
+    "<CODE>very_big_image.cache</CODE>".  The second file size will likely be
+    very much larger that any other image file format as it is just a raw,
+    uncompressed memory dump. </P>
+
+    However the file does not need to be 'read in' or 'decoded' but can be
+    directly 'paged' into computer memory, and used exactly as-is, without any
+    processing overhead. Only lots of disk space and disk IO.  In other words
+    it only needs disk access time to read, without any file format
+    processing.  That is no decoding of the data needed. </P>
+
+    Because the image is 'memory-ready' it is especially useful for temporary
+    images of all sizes as it will be usable immediately by the next IM
+    command you issue. But remember, two files are generated and they will be
+    larger than a normal image filesize, so be careful of your disk usage, and
+    script cleanup. </P>
+
+    My own IM scripts make good use of this feature. For example see the
+    scripts "<A HREF="../scripts/de-pixelate" >de-pixelate</A>", and "<A
+    HREF="../scripts/divide_vert" >divide_vert</A>", which make use of quite
+    a large number temporary image files for image processing operations. </P>
+
+    This can be extremely useful for scripts or <A
+    HREF="../basics/#mogrify_compose" >Mogrify Alpha Compositing</A> that
+    needs to be able to read the same image, over and over and over again, as
+    IM does not have to decode the image, or use up lots of memory just to store
+    it. </P>
+
+    This is also very useful for processing a very large image, where you must
+    extract or <A HREF="../crop/#crop" >Crop</A> a smaller section of the
+    image for the for actual processing.  However as most image operations
+    actually make clone copies of images during processing, a new in-memory
+    copy, could still be made.  As such some care is still needed.  A <A
+    HREF="../crop/#crop" >Crop</A> or <A HREF="../resize/#resize" >Resize</A>
+    to much smaller image sizes are the safest operations for MPC large image
+    handling. </P>
+
+    For more information see <A HREF="#massive" >Really Massive Image
+    Handling</A> below. </P>
+
+
+<DT><A NAME="fd"></A>
+<DT><B><CODE>fd:{file_descriptor}</CODE></B>
+<DD>
+  This special file name which allows you to specify a specific '<I>file
+  descriptor</I>' the image is to read from or written to. </P>
+
+  The name '<CODE>fd:0</CODE>' is the '<I>standard input</I>' and
+  '<CODE>fd:1</CODE>' is the '<I>standard output</I>' of the program. These
+  are equivalent to using a '<CODE>-</CODE>' as a file name.  </P>
+
+  However you can specify any  '<I>file descriptor</I>' to with to read/write
+  the image. Including '<CODE>fd:2</CODE>' for '<I>standard error</I>', or
+  whatever other previously opened file handle the parent program may have
+  arranged. </P>
+
+  The most common use for this is in very advanced shell scripting, where you
+  may have multiple file streams of images.  Or for network daemons that may
+  have multiple file streams open simultaneously.  </P>
+
+<DT><A NAME="inline"></A>
+<DT><B><CODE>inline:{base64_file|data:base64_data}</CODE></B>
+<DD>
+  Inline images let you read an image defined in a special base64 encoding. </P>
+
+  For example to read a base64 encoded image use...
+  <DIV ALIGN=center><CODE>inline:base64_image.txt</CODE></DIV></P>
+
+  This encoding could be from a file, but it is more typically given directly
+  as the read argument instead of as a file name from some external image
+  source.  This is more typically used an alternative to 'blobs' on the
+  command line, or in API image processing.  </P>
+
+  Or put the image data directly on the command line...
+  <DIV ALIGN=center>
+      <CODE>inline:data:mime-type;base64,/9j/4AAQSk...knrn//2Q==</CODE>
+  </DIV></P>
+
+  For example lets base64 encode a very small image (there are many programs
+  that will let you do this conversion)...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=b64_image.txt>
+  openssl enc -base64 -in noseguy.gif
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="b64_image.txt"
+     ><IMG SRC="b64_image.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+  Note base64 data can contain any amount of white space such as returns and
+  newlines. It is simply ignored by the format. It also only uses normal ASCII
+  characters, which is why it is used to encode binary data for email and web
+  pages.  It also allows binary data to be stored in programs and scripts
+  without problems. </P>
+
+  For example I could have the following command in a shell script so the
+  script itself has the image built into it, and thus does not need a separate
+  external image source.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=b64_noseguy.gif>
+  convert 'inline:data:image/gif;base64,
+      R0lGODlhIAAgAPIEAAAAAB6Q/76+vvXes////wAAAAAAAAAAACH5BAEAAAUALAAA
+      AAAgACAAAAOBWLrc/jDKCYG1NBcwegeaxHkeGD4j+Z1OWl4Yu6mAYAu1ebpwL/OE
+      YCDA0YWAQuJqRwsSeEyaRTUwTlxUqjUymmZpmeI3u62Mv+XWmUzBrpeit7YtB1/r
+      pTAefv942UcXVX9+MjNVfheGCl18i4ddjwwpPjEslFKDUWeRGj2fnw0JADs=
+    '  b64_noseguy.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="b64_noseguy.gif"
+      ><IMG SRC="b64_noseguy.gif"   WIDTH=32  HEIGHT=32
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+  Remember with this the image could be used in your script (shell or API).
+  You do not needing to have a separate external image file, making
+  installation of an otherwise simple script more complicated. </P>
+
+
+  <I>So why does "<CODE><A HREF="#inline" >inline:</A></CODE>" have this
+  rather complicated form?</I> </P>
+
+  Basically because this is the format used for inline images in HTML web
+  pages.  For example in the following the image on the right was included
+  directly inline on the web page, and not as a separate external file, using
+  HTML tag of the form...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  &lt;IMG SRC="data:image/gif;base64,
+        R0lGODlhIAAgAPIEAAAAAB6Q/76+vvXes////wAAAAAAAAAAACH5BAEAAAUALAAA
+        AAAgACAAAAOBWLrc/jDKCYG1NBcwegeaxHkeGD4j+Z1OWl4Yu6mAYAu1ebpwL/OE
+        YCDA0YWAQuJqRwsSeEyaRTUwTlxUqjUymmZpmeI3u62Mv+XWmUzBrpeit7YtB1/r
+        pTAefv942UcXVX9+MjNVfheGCl18i4ddjwwpPjEslFKDUWeRGj2fnw0JADs="
+      ALT="Nose Guy" WIDTH=32  HEIGHT=32  VSPACE=5 HSPACE=5 BORDER=0 &gt;
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <IMG SRC="data:image/gif;base64,
+        R0lGODlhIAAgAPIEAAAAAB6Q/76+vvXes////wAAAAAAAAAAACH5BAEAAAUALAAA
+        AAAgACAAAAOBWLrc/jDKCYG1NBcwegeaxHkeGD4j+Z1OWl4Yu6mAYAu1ebpwL/OE
+        YCDA0YWAQuJqRwsSeEyaRTUwTlxUqjUymmZpmeI3u62Mv+XWmUzBrpeit7YtB1/r
+        pTAefv942UcXVX9+MjNVfheGCl18i4ddjwwpPjEslFKDUWeRGj2fnw0JADs="
+      ALT="Nose Guy" WIDTH=32  HEIGHT=32  VSPACE=5 HSPACE=5 BORDER=0 >
+</TD></TR>
+<TR><TD ALIGN=CENTER>
+  <FONT SIZE=-1><I>This will not work with all web browsers, for example it will
+  not work with IE7 and earlier, but will work with IE8. Basically the most
+  modern web browsers understand it. </I></FONT>
+</TD></TR></TABLE></P>
+
+  The same type inline data format is also used for 'face' images in EMail
+  headers, and probably many other file types. </P>
+
+  ASIDE: Thanks to the 'magic' part of ImageMagick, most image file formats do
+  not need to have the mime-type (the '<CODE>image/gif</CODE>' part of the
+  long string) included. And in actual fact it is completely ignored by IM in
+  any case).  However the comma '<CODE>,</CODE>' is still required to mark the
+  end of that part of the inline image data string. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=b64_folder.gif>
+  convert 'inline:data:,R0lGODlhEAAOALMAAOazToeHh0tLS/7LZv/0jvb29t/f3//U
+       b//ge8WSLf/rhf/3kdbW1mxsbP//mf///yH5BAAAAAAALAAAAAAQAA4AAARe8L1Ek
+       yky67QZ1hLnjM5UUde0ECwLJoExKcppV0aCcGCmTIHEIUEqjgaORCMxIC6e0CcguW
+       w6aFjsVMkkIr7g77ZKPJjPZqIyd7sJAgVGoEGv2xsBxqNgYPj/gAwXEQA7
+    '  b64_folder.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="b64_folder.gif"
+      ><IMG SRC="b64_folder.gif"   WIDTH=16  HEIGHT=16
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+  WARNING: Command line option input is restricted to 5000 characters.  Also
+  many shells (and particularly PC-DOS input) has total command line length
+  limits.  As such this is not suitable for very large base64 images.  </P>
+
+
+<DT><A NAME="clipboard"></A>
+    <B><CODE>clipboard:</CODE></B>
+<DD>Read or Write the image to or from the Windows Clipboard. (Windows only).
+    </P>
+
+<DT><A NAME="ephemeral"></A>
+    <B><CODE>ephemeral:{image_file}</CODE></B>
+<DD>Read and then Delete this image file. </P>
+
+  This is a special image reading file format which will cause IM to
+  delete the given image file after that file has been read into memory.
+  </P>
+
+  Note that the image in memory will not have been processed or even
+  saved when the read file has been removed. </P>
+
+  This is very dangerous and should be used with extreme caution. </P>
+
+  It is mostly used in <A HREF="#delegate_spawn" >Delegate Spawning</A>.
+
+  Here the background delegate will read the input image, then deletes it when
+  it has the data.  This in turn notifies the foreground 'parent' process,
+  that the 'child' is ready to proceed on its own, as it has finished reading
+  the image provided.  The main program can then clean-up and continue its
+  image processing separately, or simply exit, as the case may be.  </P>
+
+  The "<CODE>show:</CODE>" image output delegate uses this with the
+  "<CODE>display</CODE>" command, to automatically background an image
+  display before the main command continues or exits. (see below)
+  </P>
+
+  For example I used this in a shell script that calls "<CODE><A
+  HREF="../scripts/flicker_cmp" >flicker_cmp</A></CODE>" to display some
+  intermediate results, but then automatically continues (or exit) when the
+  IM has signaled that the program has finished reading its input image by
+  deleting the second image given.
+
+  If you need that feedback but also need to preserve the image being read,
+  then make a copy, hard link, or symbolic link to the original image, and
+  pass that file as "<CODE>ephemeral:</CODE>". that way when it is deleted
+  the orignal image is preserved. </P>
+
+  NOTE: There is currently no way to get "animate" or "display" to signal
+  when it has finished an animation, or has actually put the image up for
+  display. :-( </P>
+
+  However you can have "convert" read a separate "ephemeral:" image, to notify
+  a controling script that it has reached a specific point in its image
+  processing. </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=b64_image.txt>
+  # Blur an image, and show an on screen comparision before
+  # auto-deleting and exiting.
+  convert rose:  input_image.png
+  convert input_image.png -blur 0x5  blurred.png
+  flicker_cmp input_image.png ephemeral:blurred.png &amp;
+
+  # wait for the second image to have been read and deleted!
+  while [ -f blurred.png ]; do usleep 100; done
+
+  # At this point we can continue (or exit) without problems.
+  # while the on screen display continues in background.
+  rm -f input_image.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  I have also used this in other background programs, as a signal that that
+  background program is ready to continue. </P>
+
+
+<DT><A NAME="show"></A>
+    <B><CODE>show:</CODE>, <CODE>win:</CODE> and <CODE>x:</CODE></B>
+    -- Display images directly on screen
+<DD>These are special output formats that will which will directly display
+  the image result to your screen.  Instead of saving the image into a file,
+  it just displays the result.  </P>
+
+  This is very useful for quick testing IM commands to see what the results
+  will be, and is highly recommended for this purpose.  However they are
+  only very simple versions of the "<CODE><A HREF="../basics/#display"
+  >display</A></CODE>" and "<CODE><A HREF="../basics/#animate"
+  >animate</A></CODE>" command. </P>
+
+  For example, get a fast summary of images in a directory...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  montage *.jpg show:
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  See the areas that are different between two images...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  compare image1.png image2.png show:
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  All the formats listed here, actually call on the "<CODE><A
+  HREF="../basics/#display" >display</A></CODE>" program to perform their
+  task. However they each handled the job in different ways. </P>
+
+  For example '<CODE>show:</CODE>' will use a <A
+  HREF="../files/#delegate_spawn" >Spawning Delegate</A> to run a separate
+  "<CODE><A HREF="../basics/#display" >display</A></CODE>" program.  This means
+  that once the image has been displayed, the original command will continue
+  its processing (typically exiting, unless you use "<CODE>-write show:</CODE>"
+  ). </P>
+
+  On the other hand, using '<CODE>x:</CODE>' or '<CODE>win:</CODE>' will wait
+  for you to quit the display window before allowing the original command to
+  continue (and exit). </P>
+
+  Unfortunately none of these methods will display animations very well. For
+  that you are better off piping the animation (in MIFF format) into the
+  "<CODE><A HREF="../basics/#animate" >animate</A></CODE>" command.  </P>
+
+
+<DT><A NAME="x"></A>
+    <B><CODE>x:</CODE> (as input)</B> - Reading an X Window Display
+<DD>
+  You can also read the current X window display using the "<CODE>x:</CODE>"
+  operator, in much the same way as you can with the "<A
+  HREF="../basics/#import" >import</A> command. In fact without options it
+  acts exactly like the "import" command.  Use the left button to select the
+  window to grab a copy of, or mark out an area using the middle button.
+  </P>
+
+  For example, to select a window using your mouse, then display the window
+  just grabbed in another window (exit when grabbed window is displayed)...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert x:  show:
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  WARNING. if you grab a window that is unmapped (iconized), or has another
+  window over it, the image contents will contain either a blank area, or
+  the contents of the overlapping window!!!  So make sure when grabbing
+  a window that window fully visible on screen. </P>
+
+  To grab the whole display use '<CODE>root</CODE>' for the window name.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert x:'root'  full_screen_dump.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  Or use the <A HREF="#read_mods" >Read Modifiers</A> to grab a specific
+  area of the display.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert x:'root[300x400+879+122]'  part_screen_dump.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  Providing a window name you can grab a specific window.  For example  this
+  will grab the window titled '<CODE>MailEd</CODE>'...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert x:'MailEd'  window.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  However that does really not work well, as often you have multiple windows
+  with the same name, or the name of the window just can't be determined. </P>
+
+  The better way is to tell IM the exact window wanted using a "X Window ID"
+  which is the number that the X display uses to uniquely identify a
+  specific window (or child window). </P>
+
+  The X Window ID is typicaly looked up using the "<CODE>xwininfo</CODE>"
+  command, but other programs such as "<CODE>xdotool</CODE>", and
+  "<CODE>xwit</CODE>" as well as other tools like "<CODE>xprop</CODE>" can
+  be used to find information about the windows.  For example things like,
+  window class, name, title, its size and placement, child windows, and
+  window manager decoration. </P>
+
+  For example, find all windows with "Mozilla Firefox" in the title or
+  name...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  xwininfo -root -all | grep "Mozilla Firefox"
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  I can then extract the X Window ID of the window I want from the output of
+  the above. </P>
+
+  Here is a little more complex bash script I have in my window manager.
+  When I press a button, it looks up the ID of the window with the current
+  'focus', captures it, then names the file as a PNG in my current directory
+  using the next capture number, according to any previous captures made.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  bash -c "
+    id=$(xprop -root _NET_ACTIVE_WINDOW | sed 's/.* //')
+    convert x:$id capture-tmp-$$.png
+    num=$( ls capture-[0-9]*.png 2>/dev/null | sed -n '$ s/[^0-9]//gp' )
+    num=$( printf %03d $(expr $num + 1) )
+    mv capture-tmp-$$.png capture-$num.png
+  "
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  Most terminal programs will tell you the X Window ID they are using to
+  display text in the environment variable "WINDOWID".  As such if you run
+  this from a command line of a XTerm, or Gnome Terminal, you will grab a
+  copy of the current terminal window.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert x:$WINDOWID  this_terminal.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  Now for some fun... Here I grab the contents of my current terminal, draw
+  some stuff into it, and then use the "<CODE><A HREF="../basics/#display"
+  >display</A></CODE>" to draw it back into the same terminal window!
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  window=`xwininfo -children -id $WINDOWID |\
+                  sed -n 's/^ *\(0x[^ ]*\).*/\1/p'`; \
+  window="${window:-$WINDOWID}"; \
+  convert x:$window -background black \
+          -draw 'fill black         rectangle 40,40 160,160' \
+          -draw 'stroke red         line 50,50 50,150 line 50,150 150,150' \
+          -draw 'fill lime          circle 110,100 80,100' \
+          -draw 'stroke dodgerblue  line 50,150 150,50' \
+          rose: -geometry +180+60 -composite \
+          png:- |\
+    display -window $window -
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  The first command in the above is designed for an "XTerm" window, which
+  requires that the window you "<CODE>display</CODE>" into, be the child
+  window of the provided "WINDOWID". The second line falls back to original
+  value of "WINDOWID" if no 'child' window is found, as is the case for
+  a "Gnome-Terminal" window. </P>
+
+  Once the window to use is worked out, it is grabbed, drawn on, and
+  restored into the terminal window!   And presto you have instant graphical
+  output directly into the current terminal window.  </P>
+
+  Here is a simpler example, this darkens the window contents each time you
+  run it.  Try running this a few times in an actual "xterm" window, and you
+  find the older the command in the terminal window the darker it gets!
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  window=`xwininfo -children -id $WINDOWID |\
+                  sed -n 's/^ *\(0x[^ ]*\).*/\1/p'`; \
+  window="${window:-$WINDOWID}"; \
+  convert x:$window -background black -colorize 20% png:- |\
+    display -window $window -
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+  And here is a 'screen capture' showing what happened as I repeated the above
+  in my own "xterm" window...
+
+<DIV ALIGN=center>
+  <A HREF="../img_diagrams/xterm_darken.png"
+      ><IMG SRC="../img_diagrams/xterm_darken.png"    WIDTH=329 HEIGHT=236
+               ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[snapshot]"></A>
+</DIV></P>
+
+  Be warned that while the contents of the terminal are modified, it is only
+  temporary.  If you iconify, obscure, or change desktop screens, then go
+  back to the terminal, the modifications will be lost as the terminal
+  program re-draws the window, and wipe out your own 'drawing'. </P>
+
+  The above does not work nearly as well for a "Gnome-Terminal" as for
+  "XTerm"s because the former likes to 're-draw' its window every time it
+  scrolls, where a "XTerm" does not.  </P>
+
+  Imagine IM scripts that display the results of graphs and other things
+  directly in various windows as part of a larger client program.  This is
+  in fact how many postscript viewers, and even many web browsers display
+  output from special sub-programs. That is they have that sub-program
+  take over and directly draw into a provided sub-window. </P>
+
+  Experiment, and please let me (and others) know what you come up with,
+  either via email or the <A HREF="../forum_link.cgi?f=1" >IM Users
+  Forum</A>. </P>
+
+</DL>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+
+<A NAME="delegates"></A>
+<H2>Coders and Delegates for Image Formats</H2>
+
+<B>Coders</B> are dynamic library modules (usually written in the C programming
+language) that handle the "format:" aspect of image input and output.  They
+can also be used by users to create special purpose filters.  They may require
+the installation of extra external libraries to be installed, which are often
+called 'delegate libraries'. </P>
+
+They are loaded as dynamic modules only as needed, which means the associated
+libraries used by a coder does not need to be installed, unless you want to
+actually make use of that coder. </P>
+
+These examples will not go into the C programing required for writing coders,
+but there is an example coder in the source that can be used to create your
+own coder modules. </P>
+
+<BR>
+
+A <B>Delegate</B> is simply a command that IM knows that will allow it
+to convert between different formats.  This allows IM to use that 'simpler'
+and pre-written command, rather than requiring a more complex binary coder to
+handle some image file format. </P>
+
+To get a list of what delegates are available use the special command...
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert -list delegate
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The most well known 'delegate' program Im makes use of is
+"<CODE>ghostscript</CODE>" which will allow IM to read, and convert the very
+complex Postscript and PDF format vector images into some other raster image
+file format that IM can read. </P>
+
+However '<B>Delegate Commands</B>' are very useful for users too, as it allows
+you to expand IM so that it can handle special types of images, or to provide
+alternative methods to read and write those images. </P>
+
+The 'commands' themselves are listed in a file named
+"<CODE>delegates.xml</CODE>", and which is located in IM's system
+configuration directory.   But it will also read
+a "<CODE>delegates.xml</CODE>" located in the users personal
+"<CODE>.magick</CODE>" sub-directory of there Linux/UNIX home directory.  And
+it is in this second file that users should place their 'command delegates'.
+</P>
+
+
+<A NAME="delegate_example"></A>
+<A NAME="delegate_input"></A>
+<H3>Input Delegate Command Example</H3>
+
+For example I can create a personal "<CODE>delegates.xml</CODE>" file in the
+"<CODE>.magick</CODE>" sub-directory of my Linux/UNIX home directory, of the
+form...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% ALIGN=center>
+<TR><TD><PRE><FONT SIZE=-1
+><IMG SRC="../img_www/text_top.gif" WIDTH=120 HEIGHT=10>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;delegatemap&gt;
+  &lt;delegate decode="flip" command="convert '%i' -flip 'miff:%o'"/&gt;
+&lt;/delegatemap&gt;
+<IMG SRC="../img_www/text_bot.gif" WIDTH=120 HEIGHT=10
+></PRE></TD></TR></TABLE></DIV>
+
+This is a complete 'delegate' configuration file, but only the middle line is
+an actual delegate. A very simple one that tells IM that if it sees an image
+with either a '<CODE>.flip</CODE>' suffix or a '<CODE>flip:</CODE>' format
+prefix, it should call the above command, to read the 'flip' format image. </P>
+
+For example..
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert flip:tree.gif   delegate_tree_flip.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="delegate_tree_flip.gif"
+     ><IMG SRC="delegate_tree_flip.gif"   WIDTH=32  HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+In this case all the delegate command does is use a separate IM
+"<CODE>convert</CODE>" command to 'flip' the image upside down, before the
+original IM command even reads and processes the image! </P>
+
+The delegate assumes the command will understand the image file format given
+and that it will return ANY image file format that IM itself can understand
+and process (a <A HREF="#miff" >MIFF</A> image file format in this case). </P>
+
+The '<CODE>%i</CODE>' and the '<CODE>%o</CODE>' parts of the delegate
+represent temporary filenames the command is the provided input and outptu
+filenames the delegate should use.  These filename are generated by IM, and
+will be located in a temporary directory.  These temporary filenames also do
+NOT have any image suffixes, so it is important that you prefix the image
+format type desired, if necessary.  </P>
+
+It is done this way for security reasons, and because IM itself may only be
+reading a stream of data, and not an actual file.  It also means the delegate
+command does not have to deal with things like clean up of those files when
+finished. </P>
+
+There are other '%' substitutions for things like a second temporary filename
+for intermediate temporary files, image density, size, and so on.  More detail
+about these escapes and other delegate options are provided in the comments at
+the top of the IM installed 'system' "<CODE>delegate.xml</CODE>" file. </P>
+
+Now this may seem like a rather silly and trivial example, but it basically
+means you can now use a secondary command to convert ANY data file into ANY
+image IM understands.  IM will then know how to handle that data type
+automatically given the image suffix, or a format prefix, without you needing
+to remember all the details. </P>
+
+Lots of delegates of this type has already been added to the system file, so
+it is worth a look. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+   ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  For security reasons delegates in a personal "<CODE>delegates.xml</CODE>"
+  file will not override the delegates defined in the system installed
+  "<CODE>delegates.xml</CODE>" file.  You can only add new unique delegate
+  formats in ".magick/delegates.xml" in your home directory, later duplicate
+  delegates will be ignored. </P>
+
+  Of course if the input format is already known internally then of course
+  system delegates are not looked at. </P>
+
+  Also as always, sanitise any user (especially web user) input, as you don't
+  want the user to make use of a delegate without you knowing about it.  </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+For example as of IM v6.4.2-6, a "<CODE>autotrace:</CODE>' delegate was added
+to the system delegates file, which will run the "<CODE><A
+HREF="http://autotrace.sourceforge.net/" >AutoTrace</A></CODE>" command while
+reading ANY input image.  IM converts the input image to the required PNG
+image format needed by the delegate program, filters it though the delegate,
+then reads the resulting SVG (typically via an external RSVG library), to
+generate a smooth edged version of the original input bitmap image. See  <A
+HREF="../transform/#edge_vector" >Raster to Vector Converter Example</A>. </P>
+
+If a converter generates multiple image files (such a PNG), you will need to
+merge all those separate images into a single multi-image format such as MIFF,
+so that IM can read the multiple images from the one output file. </P>
+
+Sometimes IM will string together multiple delegate programs to read in an
+image.  For example to read a 'HTML' page as an image, it first calls the
+delegate "<CODE>html2ps</CODE>" to convert it to postscript.  Then it converts
+the generated postscript file into a set of multiple images using the special
+"<CODE>ghostscript</CODE>" program delegate.  </P>
+
+Of course using two, or more delegates like this can produce other problems
+due to the complex interactions, miss-installations, and bugs that may be
+present in the delegate programs.  But in general it works, and is a key
+aspect of what make ImageMagick, magical.  </P>
+
+
+<A NAME="delegate_output"></A>
+<H3>Output Delegate Example</H3>
+
+Similar things are done when saving to specific image file formats that IM does
+not directly understand. </P>
+
+For example by adding this delegate to your personal
+"<CODE>.magick/delegates.xml</CODE>" file, you can tell IM how to create a
+'<CODE>.xyzzy</CODE>' image file.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% ALIGN=center>
+<TR><TD><PRE><FONT SIZE=-1
+><IMG SRC="../img_www/text_top.gif" WIDTH=120 HEIGHT=10>
+  &lt;delegate decode="gif" encode="xyzzy" command='mv "%i" "%o"'/&gt;
+<IMG SRC="../img_www/text_bot.gif" WIDTH=120 HEIGHT=10
+></PRE></TD></TR></TABLE></DIV>
+
+Of course this just quickly copies a GIF file format image as a TMP file
+format, but the command can be any type of image converter, script or shell
+command sequence you like. </P>
+
+With that personal delegate, IM can now create your '<CODE>.xyzzy</CODE>'
+images, having been provided at least one method of going so.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=delegate_rose_xyzzy.txt>
+  convert rose:  -negate   rose.xyzzy
+  identify rose.xyzzy
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="delegate_rose_xyzzy.txt"
+     ><IMG SRC="delegate_rose_xyzzy.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+<!-- <CODE EXECUTE>
+  rm -f rose.xyzzy
+</CODE>-->
+
+Note that the identify in the above does not understand the
+'<CODE>.xyzzy</CODE>' suffix (no input delegate has been provided).  However
+as no specific delegate is provided, the file 'magic' (an identification
+string inside the file itself) tells IM that it is in reality a GIF image
+format, so IM handles it correctly anyway, without needing a special input
+delegate or coder. </P>
+
+This is actually the the 'MAGIC' part of 'ImageMagick'. </P>
+
+<BR>
+
+<A NAME="delegate_list"></A>
+<H3>Delegate Listings</H3>
+
+A full list of external delegates that IM can use for converting image formats
+is read from a special system file called "<CODE>delegates.xml</CODE>" as well
+as a personal  "<CODE>delegates.xml</CODE>" file (see below).  If you can find
+this file it makes interesting reading. </P>
+
+The format of this file however is too complex to do into here, though it is
+explained in both the system file and the manuals provided both online and
+with your ImageMagick installation (docs area). </P>
+
+A simplified summary of the delegates and conversions that IM is reading from
+these files can be printed using the "<CODE><A HREF="../basics/#list"
+>-list delegate</A></CODE>" option...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert -list delegate
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+However please note that delegated declared with '<CODE>stealth="True"</CODE>'
+will not be listed, by the "<CODE><A HREF="../basics/#list" >-list
+delegate</A></CODE>" option. </P>
+
+All delegates are optional, and more than one can be created for a specific
+conversion.  If one delegate is not available (or it errors and image is not
+created), then IM will try the next delegate, until one is found that does
+work, or it runs out of delegates to try, at which point an error will be
+produced indicating it can not read that image. </P>
+
+
+<A NAME="delegate_print"></A>
+<H3>Printing Delegate</H3>
+
+One of the most useful delegates I have ever created was to let me easily
+print images to a postscript printer.  The printer was already set up
+using the linux "<CODE>lpr</CODE>" command and it could accept either a PNG
+format image, or a postscript file. </P>
+
+Here is the simple "<CODE>PRT:</CODE> delegate I decided to create.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% ALIGN=center>
+<TR><TD><PRE><FONT SIZE=-1
+><IMG SRC="../img_www/text_top.gif" WIDTH=120 HEIGHT=10>
+  &lt;delegate decode="ps" encode="prt" command='lpr "%i"'/&gt;
+<IMG SRC="../img_www/text_bot.gif" WIDTH=120 HEIGHT=10
+></PRE></TD></TR></TABLE></DIV></P>
+
+Notice I decided to use postscript format ("<CODE>decode="ps"</CODE>") for the
+image being passed to the "<CODE>lpr</CODE>" command on my system. I chose
+that as I can then use options such as "<CODE>-density</CODE>" to adjust the
+size of the output image. </P>
+
+For example I can create a command to grab a window form my screen, modify the
+image, so as to fit on printed page (as I want it) then print it.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert x:Loopy -shave 6 -chop 0x24 -modulate 220,0 \
+          -bordercolor white -border 50x150 -density 130   prt:
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+I could have also used "<CODE>decode="png"</CODE>", however my system would
+then enlarge or shrink the image to always completely fill the A4 page.  You
+however may like this. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% ALIGN=center>
+<TR><TD><PRE><FONT SIZE=-1
+><IMG SRC="../img_www/text_top.gif" WIDTH=120 HEIGHT=10>
+  &lt;delegate decode="png" encode="prt" command='lpr "%i"'/&gt;
+<IMG SRC="../img_www/text_bot.gif" WIDTH=120 HEIGHT=10
+></PRE></TD></TR></TABLE></DIV></P>
+
+
+<A NAME="delegate_spawn"></A>
+<H3>Spawning External Commands</H3>
+
+External command delegates does not have to just be for converting images
+to/from files, but can be used as a quick way to run (or 'spawn') complex
+commands in the background.  Such a delegate will have the attribute
+'<CODE>spawn="True"</CODE>' added to it, and will launch the command, wait for
+it to delete its input image, then IM will continue as normal, leaving the
+command running in the background. </P>
+
+For example two output delegates "<CODE>show</CODE>" and "<CODE>win</CODE>"
+both provide simple ways to display the result of a command in the IM
+"<CODE><A HREF="../basics/#display" >display</A></CODE>" program. </P>
+
+For example..
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert rose: label:rose -append   show:
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+</DIV></P>
+
+This will append a label to the built-in 'rose' image and just display it on
+the screen.  When the spawning delegate has read its input image and deleted
+it (typically using the special "<CODE><A HREF="#ephemeral"
+>ephemeral:</A></CODE>" input format, see above), the launching IM will
+continue (and exit), leaving the 'display' program running in the background
+to show the results.  </P>
+
+Here is the "<CODE>show</CODE>" spawning delegate, showing the use of
+"<CODE><A HREF="#ephemeral" >ephemeral:</A></CODE>" in the "<CODE><A
+HREF="../basics/#display_script"
+>display</A></CODE>" command.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE OUT=delegate_spawn.txt>
+  convert -list delegate | grep show
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="delegate_show.txt"
+     ><IMG SRC="delegate_show.txt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Unfortunatally the "<CODE><A HREF="../basics/#list"
+>list</A></CODE>" option does not show the '<CODE>spawn="True"</CODE>' flag of
+the delegate, but it is defined for this delegate. </P>
+
+This is a lot more convenient that trying to remember all the special options
+that a scripted "<CODE><A HREF="../basics/#display_script"
+>display</A></CODE>" command needs. </P>
+
+Perhaps you have some complex command that you run all the time. </P>
+
+
+<A NAME="delegate_postscript"></A>
+<H3>Postscript and PDF Delegate</H3>
+
+By using delegates ImageMagick can make use of external programs to do some of
+the more complex and specialised image format conversions.</P>
+
+For example, while Postscript (PS:), and Encapsulated Postscript (EPS:) can be
+written directly by ImageMagick.  These file formats can not be read by IM.
+Postscript is a full computer language and requires a very complex interpreter
+to create images from it.  As such it is far beyond the scope of IM to handle
+the reading of this file format. </P>
+
+To solve this IM looks for an external delegate program called
+"<CODE>ghostscript</CODE>" to do the work of converting an PS or EPS format
+file to some other image format that IM can read easily. </P>
+
+Of course that means that if you get an error like...
+<DIV ALIGN=center><B>
+   convert: no decode delegate for this image format `...'
+</B></DIV>
+Basically means that IM was unable to find the appropriate external program to
+convert your given image format into an image format that IM itself can
+handle.  For Postscript images, that usually means "<CODE>ghostscript</CODE>"
+is not installed, mis-configured, or in an unknown location on your system.
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The PDF/PS "<CODE>ghostscript</CODE>" delegates are in a special format
+  used internally.  IM internally examines postscript format images to
+  attempt to determine exactly how to rasterize the file via the given
+  delegates. </P>
+
+  In fact, multiple PS delegates are present and selected by IM depending on
+  the situation.  For example the ghostscript device used
+  ('<CODE>bmpsep8</CODE>' verses '<CODE>pngalpha</CODE>') is selected
+  depending on if "<CODE>-colorspace RGB</CODE>" had previously been set or
+  not. </P>
+
+  For PDF we use the '<CODE>ps:color</CODE>' delegate rather than
+  '<CODE>ps:alpha</CODE>' because the '<CODE>pngalpha</CODE>' ghostscript
+  device only supports an one-to-one page-to-image conversion and PDF's
+  generally are multi-page.
+
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="taint"></A>
+<A NAME="delegate_direct"></A>
+<H3>Direct Delegate Format Conversion (Taint)</H3>
+
+The delegate system also allows IM to call an external program to convert
+an image from one format to another format, without any processing of the image
+by ImageMagick itself.  But only if the destination image is readable by IM as
+an image and the final result of the "<CODE>convert</CODE>" was an 'untainted'
+copy of the image.  </P>
+
+For example if you try this comamnd to convert a 'Adobe Illustrator' file
+("<CODE>.ai</CODE>") (which is a type of Postscript), to EPS (encapsulated
+postscript)...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert -density 300   map.ai  map.eps
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Then IM will convert the "<CODE>map.ai</CODE>" to an EPS file (in
+"<CODE>/tmp</CODE>"), a format it understands.  Then after reading into memory
+(after using the 'eps' delegate), it will then find that it does not actually
+need to modify it (it remains 'untainted'). </P>
+
+Because no change was made to the image, and the image was already converted
+to a 'eps' file file format, IM will short-circuit itself and directly copy
+the 'eps' file it generated to "<CODE>map.eps</CODE>". </P>
+
+That is the EPS file will be just a copy of the original unchanged Adobe
+Illustrator file!  </P>
+
+In otherwords IM only used its internal delegates to convert the file
+(actually just rename it).  It never actually processes the image itself, and
+as such the image remains a pure vector image. </P>
+
+This is actually the original purpose of "<CODE>convert</CODE>" as a program
+back in version 1 of ImageMagick. All the other operations and settings were
+added later over a very long period of time. </P>
+
+<A NAME="taint"></A>
+
+You can however force IM to actually read-in and write-out the image, as a
+raster, by using the special "<CODE><A HREF="../option_link.cgi?taint"
+>-taint</A></CODE>" operator to mark it as being modified, without actually
+modifying it.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert -density 300 map.ai  -taint  map.eps
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Here the image IM reads does become 'modified' or 'tainted' so it will write
+out the version of the image in memory to the final EPS file, rather than
+simply copy the input file. </P>
+
+<BR>
+
+<A NAME="delegate_other"></A>
+<H3>Other Delegate Examples</H3>
+
+<H4>Modifying Postscript Delegate for CMYK postscript</H4>
+
+See <A
+HREF="http://blog.digitaljohn.co.uk/2007/06/19/imagemagick-cmyk-to-rgb/" >Blog
+of John</A>,
+
+<A NAME="delegate_dcraw"></A>
+<H4>DCRaw 8-bit processed camera image Delegate</H4>
+
+An alternative delegate for reading 8-bit fully processed 'raw' digital camera
+images (CRW, CR2, NEF, etc) is...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% ALIGN=center>
+<TR><TD><PRE><FONT SIZE=-1
+><IMG SRC="../img_www/text_top.gif" WIDTH=120 HEIGHT=10>
+  &lt;delegate decode="dcraw8" command='dcraw -v -w -O "%o" "%i"'/&gt;
+<IMG SRC="../img_www/text_bot.gif" WIDTH=120 HEIGHT=10
+></PRE></TD></TR></TABLE></DIV>
+
+This will read the 'raw' camera image, and convert it to a PNG file format
+(though you can also just as easily add a '<CODE>-T</CODE>' flag and use a
+TIFF image format).  That output image turn is readable by ImageMagick. </P>
+
+By adding this delegate can then use it simply, for any ImageMagick
+image read operation (any API, not just command line), and IM will handle all
+the file IO and cleanup.  For example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert dcraw8:image.crw  image.png
+</FONT></CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+If you do not define the filepath of the "<CODE>dcraw</CODE>" executable, IM
+will search the for the program along the users current PATH environment
+variable, however allowing this could represent a security problem.  System
+installed delegates generally define the command path fully. </P>
+
+See comments in this <A HREF="../forum_link.cgi?t=15605" >IM Users Forum
+Discussion</A>. </P>
+
+
+<H4>Video decoder delegate using 'ffmpeg'</H4>
+
+For example here is a delegate published by Mikko Koppanen, on his <A
+HREF="http://valokuva.org/" >Mikko’s blog</A> site.  Add this to your personal
+"<CODE>delegates.xml</CODE>" file in "<CODE>.magick</CODE>" directory of your
+home...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% ALIGN=center>
+<TR><TD><PRE><FONT SIZE=-1
+><IMG SRC="../img_www/text_top.gif" WIDTH=120 HEIGHT=10>
+  &lt;delegate decode="ffmpeg" command="'ffmpeg' -i '%i' -y -vcodec png -ss %s -vframes 1 -an -f rawvideo '%o'" /&gt;
+<IMG SRC="../img_www/text_bot.gif" WIDTH=120 HEIGHT=10
+></PRE></TD></TR></TABLE></DIV>
+
+IM can now use the "<CODE>ffmpeg</CODE>" program to decode the frames from
+an MPEG video image.  For example.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NO_EXECUTE>
+  convert  "ffmpeg:test1.mpg[40]"  frame_40.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<!--
+<H4>A HTML alternative</H4>
+
+The "html2ps" is not known for its image handling abilities.  It has
+been reported that it basically ignores image size tags, so that it just does
+not perform very well placing images and text together. </P>
+
+There is a technique of running a web browser in a virtual X server to
+get a more advanced image of the top of a web page, but this is not thoroughly
+tested (mail me for more info if interested). </P>
+-->
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="massive"></A>
+<H2>Really Massive Image Handling</H2>
+
+For handling any sort of large image it would probably be better for you to
+use a Q8 version of ImageMagick, which has half the memory requirements of the
+higher quality Q16 version.  Check your IM's compiled Q level using
+"<CODE>identify -version</CODE>". </P>
+
+For medium sized images you can attempt to  use "<CODE><A
+HREF="../option_link.cgi?limit" >-limit</A></CODE>" to increase the processing
+limits (for example  processing "<CODE>-limit area 8192 -limit memory
+8192</CODE>"), so as to try to avoid IM caching the image data to disk.
+However your system may reject large memory requests and still force IM to
+cache the image to disk (about 1000 times slower). </P>
+
+To see if IM is using disk cache for the image processing, you can use
+"<CODE><A HREF="../option_link.cgi?debug" >-debug</A> cache</CODE>" to monitor
+that action. </P>
+
+Also see <A HREF="../forum_link.cgi?f=3&t=19642" >IM Forum Discussion</A>.
+
+<H3>Memory/Disk Management</H3>
+
+If you are planing to process really large images you may want to make sure IM
+does not use up all the computers memory, and slowing down the processing of
+other programs (by spending all its to shuffling between memory and disk swap)
+simply by asking it to immediately use temporary swap disk files. </P>
+
+For example this is a <I>nice</I> way of processing a very large image over a
+long period of time without stopping you from using your computer for other
+things.  Basically it forces IM to cache everything to disk.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  env MAGICK_TMPDIR=/data nice -5 \
+    convert -limit memory 32 -limit map 32 \
+            huge_9Gb_file.psd  -scene 1 +adjoin layer_%d.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Of course this assumes that "<CODE>/data</CODE>" has enough file and disk
+space to handle the images memory requirements. </P>
+
+<H3>Memory Mapped Disk Files</H3>
+
+If you have many operations to perform on the same source image and you have
+plenty of disk space you can use the <A HREF="#mpc" >MPC image format</A>
+which is expensive to create but has near zero overhead when loading...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert mybigassimage.jpg mybigassimage.mpc
+  convert mybigassimage.mpc   -resize 50%  resized.jpg
+  convert mybigassimage.mpc   -rotate 90   rotated.jpg
+  ...etc...
+  rm -f mybigassimage.mpc mybigassimage.cache
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This will let you read a very large image multiple times with a minimal cost,
+and memory usage. </P>
+
+An example of a scripted for of tiling using this method was presented in an
+IM Forum Discussion <A HREF="../forum_link.gif?t=18315" >Cut large image on
+tiles</A> and revisited in <A HREF="../forum_link.gif?f=1&t=20982" >Cropping
+very very large images</A>. </P>
+
+Basically the MPC image format file consists of two actual files,
+an informational "<CODE>.mpc</CODE>" file, and a direct memory paged copy of
+the image in a "<CODE>.cache</CODE>". Of course you need to clean up both
+files when you are finished. </P>
+
+This method is designed so that IM does not have to re-parse the image format
+and cache it to disk, every time you run a new "<CODE>convert</CODE>" command.
+Also if you are accessing only sections of the input image, each command does
+not need to process the whole image, but can now read just that smaller
+section from the cahced disk file as needed.  </P>
+
+If you plan to process a very large MPC copy of the image, it is a good idea
+to extract or <A HREF="../crop/#crop" >crop</A> a smaller section of the image
+for actual processing.  This is because just about any operation performed on
+an image, will generally result in a new in-memory copy being made of the
+result, so an initial crop is a very good idea. </P>
+
+If you have the memory you can also try to use a 'memory disk' such as
+a 'TMPFS' or RamDisk type filesystem. Be warned however that filling that type
+of disk also directly fills your computers memory.  So really you are just
+swapping one use of memory for another. </P>
+
+<H3>Processing Images in small sections</H3>
+
+While you can use the MPC method above to crop out various sections from
+a source image for further processing, you still need to read in and write out
+the the whole image, and for a massive image that can still take a lot of
+time. </P>
+
+IM has also evolved a simpler pipeline processor for images called "<CODE><A
+HREF="../basics/#stream" >stream</A></CODE>".   This program has a limited set
+of image operations that are designed to only process images one scan line
+(row of pixels) at a time.  As such only enough memory to hold a single line
+of pixels is used when processing images in this way. </P>
+
+For example this allows you to extract a smaller area of a very large image
+for further processing, without needing to read in the whole image into memory
+first.
+
+However the output of "<CODE><A HREF="../basics/#stream" >stream</A></CODE>"
+is raw RGB image values, so some post-processing is recommended.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  stream -map rgb -storage-type char -extract 600x400+1900+2900 image.png - |\
+    convert -depth 8 -size 600x400 rgb:- tileimage.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+You don't have the save the output to a file but can continue processing
+the smaller image directly.  For example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  stream -map rgb -storage-type char -extract 600x400+1900+2900 image.png - |\
+    convert -depth 8 -size 600x400 rgb:-  ...more_processing_here...  tile.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This will only process the <CODE>600x400</CODE> pixel image extracted without
+reading in the whole larger image first. </P>
+
+
+<B>Speed concerns...</B></P>
+
+Peter V &lt;peter.v&#64;pv2c.com&gt; noted...  In my experience is the
+approach of using "<CODE><A HREF="../basics/#stream" >stream</A></CODE>" for
+cutting 800MB PNM files the fastest compared to use of MPC files, or using
+"<CODE>convert -crop</CODE>". </P>
+
+<B>What formats work...</B></P>
+
+Paul Heckbert (of image distortion fame) noted that the "stream" command works
+well for certain file  formats (in particular, JPEG), but does not work well
+for other types like PSB, which may be interleaved. </P>
+
+I believe it would depend on if the 'coder' for a particular file format
+provides support for line by line streams of pixels.  This may be because the
+programmer that generated the file format 'coder' just did not get round to,
+or need 'streaming'.  In this case some more work by a programmer familiar
+with that image file format maybe needed to complete the 'coder' module.  </P>
+
+Also a vector image file format like SVG or WMV, or an image that is
+pre-processed by some 'delegate', like digital camera image file formats,
+could not possibly be 'streamed' because, there are no actual rows of pixels
+in the image, only drawn objects (lines, polygons and gradient shades). </P>
+
+<B>JPEG images sections</B></P>
+
+As per the IM forum discussion <A HREF="../forum_link.cgi?t=18268" >Extract a
+region of an huge jpeg</A> you can use specialized JPEG programs such as the
+special "<CODE>jpegtran</CODE>" and "<CODE>jpegcrop</CODE>" developed by <A
+HREF="http://jpegclub.org/jpegtran/" >JPEG Club</A>, can extract a regions from
+a JPEG image without actually decoding the data. That is a lossless crop of a
+JPEG to another JPEG image. For example..
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  jpegtran -crop 100x100+0+0 -copy none huge.jpeg  crop.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+However there an few cavats.  The top-left starting point will be moved to
+the smaller 8 or 16 multiple, with an appropriate increase in the final image
+size.  That is because JPEG images uses 'frequency encoded blocks' which are
+typically either 8x8 pixel or 16x16 pixels in size (determined by the JPEG
+sampling factor, 1 = 8 pixels, 2 = 16 pixels).  These blocks need to be
+preserved if lossless copies are to be made. </P>
+
+For a '<CODE>+0+0</CODE>' offset, it is already at an appropriate boundary, so
+the above should produce an exact 100x100 pixel crop. But for other offsets you
+will need to so some final cleanup of the extracted region.  For example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  jpegtran -crop 100x100+123+425 -copy none huge.jpeg  crop.jpg
+  convert crop.jpg -gravity SouthEast -crop 100x100+0+0 +repage crop_fixed.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<A NAME="massive_pbmplus"></A>
+<H3>Processing Images in Tiles (PbmPlus)</H3>
+
+To process an massive image in tiles, without ever holding the whole image in
+memory is a much harder problem. </P>
+
+Basically while you are breaking up an image you will need to either hold
+a whole row of images, or have multiple streams (one for each column of
+images) open, while the massive image is being broken up, or later being put
+back together. </P>
+
+Most common technique is simply save the each image tile as separate image
+files on disk. In fact this is often the better way of storing ultra large
+images as programs can then just read the 'tiles' needed at any given moment
+for processing, producing a sort of 'disk based' random access image. </P>
+
+This type of massive image storage, combined with a pyramid type
+multiple-resolution structure is actually how "google image maps" work. </P>
+
+While IM does not have anything to break breakup (tile crop) massive images
+using a small amount of memory, the <A HREf="../formats/#pbmplus"
+>PbmPlus/NetPBM</A> can do this. </P>
+
+<B>Pbmpus processing of a small section</B>
+
+For example here I use PbmPlus tools to cut (crop) out a small section of the
+large image,  process it, then compose that piece back into the original
+image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  tifftopnm INPUT.tif input.pam
+
+  pamcut <left> <top> <width> <height> input.pam  part.pam
+  # process smaller "part.pam" image here
+  pamcomp -xoff=<left> -yoff=<top> - input.pam output.pam
+
+  pamtotiff output.pam OUTPUT.tif
+
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The "<CODE>tifftopnm</CODE>" does a conversion to an image data stream, and
+performs a similar job to ImageMagick "<CODE><A HREF="../basics/#stream"
+>stream</A></CODE>" command. </P>
+
+The "<CODE>pamcut</CODE>" is the equivalent of a <A HREF="../crop/#crop" >Crop
+Operation</A>, and will extract a smaller area from the input image. Instead
+of <I>width</I> or <I>height</I>.  You can also specify <I>right</I> or
+<I>bottom</I> bounds of the crop.  You could substitute
+a "<CODE>stream</CODE>" command with "<CODE>convert</CODE> </P>
+
+The central part, can be processed using normal ImageMagick, or if you like
+pain, a chain PbmPlus equivalent tools. </P>
+
+The "<CODE>pamcomp</CODE>" should overlay the modified part of the image back
+into the PbmPlus version of the original image. </P>
+
+Other possible alternative to "<CODE>pamcomp</CODE>", is
+"<CODE>pnmpaste</CODE>", but this has not transparency handling, for pixel
+bleading. </P>
+
+Note that by using composition with pieces it should be posible to distort
+small tiles and re-join them into a larger image afterwards. </P>
+
+
+<B>Pbmpus diced (tile crop) processing </B>
+
+We may be able to use "<CODE>pamdice</CODE>" and "<CODE>pamundice</CODE>", or
+other alternatives to generate and merge smaller image tiles that can be
+processed individually, however this must save files into separate disk files
+(or named pipes) due to the 'multiple images per row tile problem'. </P>
+
+An example script, "<CODE><A HREF="../scripts/pam_diced_flip.pl"
+>pam_diced_flip.pl</A></CODE>" of doing this has been provided by <A
+HREF=../forum_link.cgi?u=17875" >bugbear</A>, to 'flip' or 'rotate' (90 degree
+only) very large PbmPlus images using smaller tiles. Something that normally
+requires you to read the whole image into memory. </P>
+
+Note that it does use a lot of temporary files, but it has a very small memory
+footprint. </P>
+
+<H3>VIPS and NIP, a Massive Image TIFF handler</H3>
+
+Jenny Drake &lt; jennydrake &#64; lineone.net &gt; reports...  You may also
+like to look at the non-IM alternative of "<CODE><A
+HREF="http://www.vips.ecs.soton.ac.uk/index.php" >Vips</A></CODE>" and
+"<CODE>nip</CODE>", developed by the National Portrait Gallery in London,
+which is designed to work on very large image files (generally TIFF) with low
+specification computers.  "<CODE>Vips</CODE>" is the underlying engine and
+"<CODE>nip</CODE>" is the gui.  Works on Linux, Windows and sometimes on Mac.
+</P>
+
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="image_streams"></A>
+<H2>Long Streams of Lots of Images, Video sequences</H2>
+
+Streams of images is another problem area.  Here it isn't the size of the
+image that is of concern, but the shear number of images involved.  So many
+you generally do not want to load them all into memory, or even save them
+individually to disk, as normal images. </P>
+
+The biggest cultript of such images is of course, video handling, and
+animations </P>
+
+The key to handling such images are the streaming image file formats where
+images can be simply concatanated together, one after another, into the one
+file stream.  We touched on this briefly above in <A HREF="#miff_stream"
+>MIFF Image Streaming</A>.
+
+Like ImageMagick's own <A HREF="#miff" >MIFF</A> format, the <A
+HREF="../formats/#pbmplus" >PbmPlus/NetPBM</A> is also a streaming format
+(almost the same just simpler) but is much more well know and commonly used in
+video image stream processing. </P>
+
+In a forum discussion, <A HREF="../forum_link.cgi?f=2&t=18320" >Reading
+Multiple Images</A>, an user wanted to process a 'stream' of multiple PPM
+images, generated by a "<CODE>ffmpeg</CODE>" video processing program.  <A
+HREF="../formats/#pbmplus" >Pbmplus</A> images (like <A HREF="#miff" >MIFF</A>
+images, can be simply concatenated together to generate a multi-image stream.
+</P>
+
+At this time IM does not allow you to just read one image from such a stream,
+process it, and then read another single image. All IM commands will always
+read the whole stream, and then close it.  This is being fixed as part of IMv7
+scripted processing. </P>
+
+One solution is a small perl script, "<CODE><A
+HREF="../scripts/process_ppm_pipeline" >process_ppm_pipeline</A></CODE>", that
+will accept a stream of PPM images, and run a separate "<CODE>convert</CODE>"
+command on each image, as it arrives. The output is also a series of PPM
+images that produces a new stream of images. </P>
+
+For example read a video, and 'flip' every frame, one by one...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  ffmpeg input.mpg -f image2pipe -vcodec ppm | pnmtopnm -plain |
+    process_ppm_pipeline -flip |
+      ffmpeg -f image2pipe -vcodec jpeg output.mpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The  "<CODE>pnmtopnm -plain</CODE>" is vital, as the script currently only
+handles a stream of ascii-PPM images, though with some more smarts it could
+also be made to handle any binary (raw) <A HREF="../formats/#pbmplus"
+>Pbmplus</A> image stream, or even a <A HREF="#miff" >MIFF</A> image stream.
+</P>
+
+Such a tool might be even used for processing a multiple streams (columns) of
+massively large images too. Though this may require a lot more in-depth
+knownlege in internal processing of the commands incolved.
+
+if a way can be found to sub-divide such images
+into a stream of tiles, and then re-construct the large image again at the
+end. </P>
+
+Eventually I hope to include some mechanism by which you can ask a coder to
+read and return just one image from a multi-image file stream without closing
+that stream, so that another image can be read in again later. In this way Im
+can then process a stream of images, one image at a time. </P>
+
+<I>UPDATE:  IMv7 can read one image at a time from a stream.  With a loop, or
+using the pipelined commands, it should be posible to generate streaming image
+filters. More experimentation needed. </I></P>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 27 October 2005 (separated from 'basics' page) <BR>
+Updated: 10 May 2013 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/files/</CODE>
+</ADDRESS></BODY></HTML>

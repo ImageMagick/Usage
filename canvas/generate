@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+. ../generate_options
+../generate_clear
+
+ln -s ../images/test.png .
+ln -s ../images/rose.png .
+ln -s ../images/bg.gif .
+ln -s ../images/tree.gif .
+ln -s ../images/tile_* .
+ln -s ../images/shape_figure.gif shape.gif
+
+../generate_examples
+
+chmod 644 flux_*.png
+
+if [ "$FORCE" ]; then
+  echo "Animation Scripts..."
+  echo "  animate_granularity...";  ./animate_granularity
+else
+  echo "Animation Scripts... (Recovering)"
+  mved -q _animate_=.gif  animate_=.gif
+fi
+
+../generate_compare
+echo "DONE"

@@ -1,0 +1,133 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+[ -f ./generate_clear     ] && . ./generate_clear
+[ -f ../generate_clear    ] && . ../generate_clear
+[ -f ../../generate_clear ] && . ../../generate_clear
+
+[ -f ./generate_options     ] && . ./generate_options
+[ -f ../generate_options    ] && . ../generate_options
+[ -f ../../generate_options ] && . ../../generate_options
+
+[ -f ./generate_version     ] && . ./generate_version
+[ -f ../generate_version    ] && . ../generate_version
+[ -f ../../generate_version ] && . ../../generate_version
+
+
+if [ \! -f _fractal.png -o  "$FORCE" ]; then
+  echo "Generating Base Images..."
+  convert -size 120x120  plasma:fractal fractal.png
+  convert -size 80x80 xc: +noise Random noise.png
+  convert -size 50x80 xc: +noise Random -write mpr:rand -extent 100x80 \
+          -page +50-40 mpr:rand -page +50+40 mpr:rand -flatten  hextile.png
+else
+  echo "Restoring Base Images..."
+  mv -f _fractal.png fractal.png
+  mv -f _noise.png noise.png
+  mv -f _hextile.png hextile.png
+fi
+
+sed -n '1,/-- START --/p' index_tmpl.html > index.html
+
+perl -0777ne '
+  open( INDEX, ">>index.html" );
+  select(( select(STDOUT), $| = 1 )[0]);
+  select(( select(INDEX), $| = 1 )[0]);
+
+  $VERBOSE=1 if "'"$VERBOSE"'";
+
+  # spilt up the input file into non-continued lines.
+  for ( split /(?<!\\)\n/ ) {
+    s/\s+$//;
+    next if /^\s*?#/;  # ignore comments and black lines
+    next if /^$/;
+
+    ($norm, $name) = /(\*\s+)?(\S+)/; s///; # Name and normalization
+    $norm = $norm ? "" : "-auto-level";     # turn off post normalization
+
+    s/^\s*\\?\s*/  /;       # adjust spaces at the start of the transform
+    s/\\\n\s+/\\\n     /g;  # adjust line continuation spaces
+
+    if ( $name eq "==" ) {
+      s/^\s*//;
+      print "-------- $_ -------\n";
+      print INDEX "\n<TR><TH> $_ </TH></TR>\n\n";
+      next;
+    }
+    if ( $name eq "--" ) {
+      print INDEX "\n<TR><TD ALIGN=center><FONT SIZE=-1><I>\n", $_,
+                  "</I></FONT></TD></TR>\n\n";
+      next;
+    }
+
+    # -- DO IT --
+    print "Generating fractal_$name.png", $norm ? "\n":" (no post)\n";
+    $cmd = "convert fractal.png   $_ ".
+              "-shave 20x20 +repage   $norm    fractal_$name.png";
+    print "$cmd\n"  if $VERBOSE;
+    system $cmd;
+    exit if $?;
+
+    print "Generating noise_$name.png", $norm ? "\n":" (no post)\n";
+    $cmd = "convert noise.png -virtual-pixel tile   $_ ".
+              "$norm    noise_$name.png";
+    print "$cmd\n"  if $VERBOSE;
+    system $cmd;
+    exit if $?;
+
+    print "Generating hextile_$name.png", $norm ? "\n":" (no post)\n";
+    $cmd = "convert hextile.png -virtual-pixel tile   $_ ".
+            "$norm    hextile_$name.png";
+    print "$cmd\n"  if $VERBOSE;
+    system $cmd;
+    exit if $?;
+
+    next if $name eq "noop";
+
+    # -- Output HTML index code for this transform and results --
+    print INDEX "<TR><TD WIDTH=100% ALIGN=justify>\n";
+    print INDEX "<A NAME=\"$name\">$name</A>", $norm ? "\n" :
+                     " <FONT SIZE=-1><I>(no post normalize)</I></FONT>\n";
+
+    s/\s+$//;
+    print INDEX  html_doc( $name, $_, q*
+    | <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+    | ><TR><TD><PRE>TRANSFORM</PRE></TD></TR></TABLE>
+    | </TD><TD>
+    |    <A HREF="fractal_NAME.png"
+    |       ><IMG SRC="fractal_NAME.png"       WIDTH=80 HEIGHT=80
+    |             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+    | </TD><TD>
+    |    <A HREF="noise_NAME.png"
+    |       ><IMG SRC="noise_NAME.png"         WIDTH=80 HEIGHT=80
+    |             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+    | </TD><TD>
+    |    <A HREF="hextile_NAME.png"
+    |       ><IMG SRC="hextile_NAME.png"       WIDTH=100 HEIGHT=80
+    |             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+    | </TD></TR>
+    * );
+  }
+
+  sub html_doc {
+    my ($NAME, $TRANSFORM, $doc, ) = @_;
+    $doc =~ s/^\s+#.*\n//gm;  # completely remove full line comments
+    $doc =~ s/^\s+\| ?//gm;   # remove the indent part of the line
+    $doc =~ s/\s+$//g;        # remove any extra end-of-line spaces
+    $doc =~ s/NAME/$NAME/g;   # substitude some varables
+    $doc =~ s/TRANSFORM/$TRANSFORM/g;
+    return $doc;
+  }
+
+'  transforms.dat
+
+sed -n '/-- END --/,$p' index_tmpl.html >> index.html
+
+# restore examples that don't chnage from backup
+[ -f ./generate_compare     ] && . ./generate_compare
+[ -f ../generate_compare    ] && . ../generate_compare
+[ -f ../../generate_compare ] && . ../../generate_compare
+echo "DONE"
+

@@ -1,0 +1,145 @@
+#!/bin/sh
+#
+# generate_symbols {pattern}
+#
+# Extract various symbols from various fonts to generate the operation symbols
+# used in IM examples.  if {pattern} is given use it as a "expr" pattern for
+# the specific symbol to regenerate (for speed).
+#
+# Font Sources...
+#  show_fonts -3 Arial
+#  show_fonts -3 WingDings
+#  show_fonts -U math Mincho
+#  show_fonts -U math STIXGeneral
+#  graphics_utf math
+#
+# Locate Font
+#    perl -CO -e 'print "\x{AB}"' |\
+#       convert -font STIXGeneral -pointsize 32 label:@- show:
+#
+PROGNAME=`type $0 | awk '{print $3}'`  # search for executable on path
+PROGDIR=`dirname $PROGNAME`            # extract directory of program
+PROGNAME=`basename $PROGNAME`          # base name of program
+
+# Page Background Options
+. $PROGDIR/generate_options
+
+mkdir $HOME/symbol_tests 2>/dev/null
+cd $HOME/symbol_tests ||
+     { echo >2 "Failed to Enter test directory"; exit 10; }
+
+if [ $# -eq 1 ]
+then expr_match="$1";
+else
+  expr_match=".";
+  rm -f *.gif  2>/dev/null
+fi
+
+cp $HOME/im/img_www/fft.gif $HOME/im/img_www/mph.gif .
+
+while read name font char pointsize subscript
+do
+
+  [ -z "$name" ] && continue
+  [ "$name" = '#' ] && continue
+  expr match "$name" "$expr_match" >/dev/null || continue
+
+  if [ "$subscript" ]; then
+    filename=${subscript}_${name}.gif
+    append=$subscript.gif
+  else
+    filename=${name}.gif
+    append=''
+  fi
+
+  # stroke color - thicken some symbols
+  #stroke=none
+  #[ "$font" = 'mincho' ] && stroke=black
+  #[ "$name" = 'convolve' ] && stroke=none
+
+  #env LC_CTYPE=en_AU.utf8 printf "\u$char" |
+  perl -CO -e 'print "\x{'$char'}"' |
+    convert -font $font -pointsize $pointsize \
+            label:@- -trim +repage \
+            -print "$name $font $char $pointsize => %wx%h\n" \
+            -gravity center -extent 20x20 \
+            $append -append   +level-colors ,$page_bg_color \
+            $filename
+
+
+done <<EOF
+# ---  Miscelanious Symbols ---
+  comma         ArialB           002C   30
+
+# --- BASIC Symbols (compositions) ---
+  divide        ArialB           00F7   30
+# divide        Arial            00F7   31
+# divide        Mincho           00F7   21
+# divide        STIXGeneral      00F7   30
+  multiply      Arial            00D7   33
+# multiply      ArialB           00D7   31
+# multiply      Mincho           00D7   23
+# multiply      STIXGeneral      00D7   26
+  plus          ArialB           002B   31
+# plus          Arial            002B   33
+# plus          Mincho           002B   23
+# plus          STIXGeneral      002B   26
+  minus         STIXGeneral      002D   56
+# minus         Arial            002D   44
+  union         DejaVu-Sans-Book 222A   30
+# union         STIXGeneral      222A   26
+# union         Arial            222A   24
+  intersection  DejaVu-Sans-Book 2229   30
+# intersection  STIXGeneral      2229   26
+# intersection  Arial            2229   24
+  complement    STIXGeneral      29F9   26
+  xor           DejaVu-Sans-Book 2227   30
+# xor           STIXGeneral      2227   26
+# xor           Mincho           2227   26
+
+# --- FFT Symbols ---
+  multiply      STIXGeneral      2297   26   fft
+# multiply      DejaVu-Sans-Book 2297   30   fft
+# multiply      Mincho           2297   40   fft
+  divide        STIXGeneral      29BC   26   fft
+# divide        DejaVu-Sans-Book 2298   30   fft
+# divide        STIXGeneral      2298   26   fft
+# divide        Mincho           2298   40   fft
+  convolve      STIXGeneral      229B   26   fft
+# convolve      Mincho           229B   40   fft
+
+# --- Morphology Symbols ---     
+  erode         DejaVu-Sans-Book 2296   30   mph
+# erode         DejaVu-Sans-Book 229D   30   mph
+# erode         STIXGeneral      229D   26   mph
+# erode         Mincho           229D   40   mph
+# erode         STIXGeneral      2296   26   mph
+# erode         Mincho           2296   40   mph
+  dilate        DejaVu-Sans-Book 2295   30   mph
+# dilate        STIXGeneral      2295   26   mph
+# dilate        Mincho           2295   40   mph
+  open          STIXGeneral      2218   36   mph
+# open          DejaVu-Sans-Book 2218   36   mph
+# open          Mincho           2218   38   mph
+  close         STIXGeneral      2219   26   mph
+# close         DejaVu-Sans-Book 2219   30   mph
+# close         Mincho           2219   50   mph
+  hitmiss       STIXGeneral      2299   28   mph
+# hitmiss       DejaVu-Sans-Book 2299   30   mph
+# hitmiss       Mincho           2299   40   mph
+  thinning      DejaVu-Sans-Book 2297   30   mph
+# thinning      STIXGeneral      2297   26   mph
+# thinning      Mincho           2297   40   mph
+  convolve      Mincho           273D   22   mph
+# convolve      STIXGeneral      273D   22   mph
+# convolve      STIXGeneral      2217   36   mph
+# convolve      Mincho           2217   32   mph
+  correlate     Mincho           2605   19   mph
+# correlate     STIXGeneral      2605   22   mph
+# correlate     WingDings        00AB   24   mph
+# correlate     STIXGeneral      22C6   26   mph
+# correlate     Mincho           22C6   35   mph
+
+EOF
+
+rm fft.gif mph.gif

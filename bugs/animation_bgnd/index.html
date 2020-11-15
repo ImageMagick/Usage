@@ -1,0 +1,221 @@
+<html lang="en"><HEAD>
+<TITLE>Animation Bugs -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/animation_bgnd/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Animation Bugs involving Coalesce and Deconstruct -- FIXED</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+The GIF animation operators of IM has been problem area for users for a very
+long time. I know I have been wrestling with them since version 4.  The
+following details the long time problems that existed at the time I myself
+fixed the bugs, and expanded the GIF animation operators, available. </P>
+
+Sometimes you just have to fix things yourself. :-) </P>
+
+This page is for reference for older IM users who may still have to deal with
+this bug. The examples on this page have not been re-created when/if the bug
+was fixed.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<H2>Coalesce Bugs -- Fixed IM v6.2.6-1</H2>
+
+IM has in general always work fine for animations that only overlays images
+onto the results of the last image output. These animations are typically
+fully opaque (no transparent pixels) and are generated using either a
+"<CODE><A HREF="../../option_link.cgi?dispose" >-dispose</A></CODE>" setting of
+'<CODE>Undefined</CODE>' or '<CODE><A HREF="../../anim_basics/#none"
+>None</A></CODE>'. </P>
+
+However for the other two forms of animation "<CODE><A
+HREF="../../option_link.cgi?dispose" >-dispose</A></CODE>" methods, '<CODE><A
+HREF="../../anim_basics/#background" >Background</A></CODE>' and '<CODE><A
+HREF="../../anim_basics/#previous" >Previous</A></CODE>', the "<CODE><A
+HREF="../../option_link.cgi?coalesce" >-coalesce</A></CODE>" function did not work
+properly to generate the correct look of the animation at each frame.  </P>
+
+The major problem with these methods was that pixels in the next frame
+generated could be cleared back to a transparent color, something that just
+overlaying the next frame will not achieve. The reslt was that the colesced
+animation did not have the same look as the original animation. </P>
+
+For example here is a  '<CODE><A HREF="../../anim_basics/#background"
+>Background</A></CODE>' disposal animation, which had the worse results for
+"<CODE><A HREF="../../option_link.cgi?coalesce" >-coalesce</A></CODE>" bugs.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NEVER_EXECUTE_AGAIN>
+    convert -dispose none  -delay 0 \
+                  -size 100x100 xc:skyblue \
+                  -fill dodgerblue -draw 'circle 50,50 15,25' \
+            -dispose background -delay 100 \
+                  -page +5+10  balloon.gif  \
+                  -page +35+30 medical.gif  \
+                  -page +62+50 present.gif  \
+                  -page +10+55 shading.gif  \
+            -loop 0  canvas_bgnd.gif
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="canvas_bgnd.gif"
+      ><IMG SRC="canvas_bgnd.gif"          WIDTH=100 HEIGHT=100
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Which for IM version 6.2.2 produced the following "<CODE><A
+HREF="../../option_link.cgi?coalesce" >-coalesce</A></CODE>" result.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE NEVER_EXECUTE_AGAIN>
+    convert canvas_bgnd.gif -coalesce canvas_bgnd_coalesce_old.gif
+    montage canvas_bgnd_coalesce_old.gif -tile x1 -geometry '+2+2' \
+            -background none -bordercolor none canvas_bgnd_coal_old_frames.gif
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="canvas_bgnd_coalesce_old.gif"
+      ><IMG SRC="canvas_bgnd_coalesce_old.gif"          WIDTH=100 HEIGHT=100
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></TD></TR></TABLE><DIV ALIGN=center>
+   <A HREF="canvas_bgnd_coal_old_frames.gif"
+      ><IMG SRC="canvas_bgnd_coal_old_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see the results was incorrect, with the background being cleared
+to the background color.  In fact any animations involving transparency has
+problems such as this. </P>
+
+However from IM version 6.2.6-1, "<CODE><A HREF="../../option_link.cgi?coalesce"
+>-coalesce</A></CODE>" now produces the correct frames, and sets the disposal
+methods for the coalesced frames so that the animated form also works exactly
+like the original animation.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+    convert canvas_bgnd.gif -coalesce canvas_bgnd_coalesce.gif
+    montage canvas_bgnd_coalesce.gif -tile x1 -geometry '+2+2' \
+            -background none -bordercolor none canvas_bgnd_coal_frames.gif
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="canvas_bgnd_coalesce.gif"
+      ><IMG SRC="canvas_bgnd_coalesce.gif"          WIDTH=100 HEIGHT=100
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></TD></TR></TABLE><DIV ALIGN=center>
+   <A HREF="canvas_bgnd_coal_frames.gif"
+      ><IMG SRC="canvas_bgnd_coal_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+It has taken a very long incremental testing to reach this point. </P>
+
+Getting the appropriate '<CODE><A
+HREF="../../anim_basics/#background" >Background</A></CODE>' disposal effects,
+and setting the "<CODE><A HREF="../../option_link.cgi?dispose"
+>-dispose</A></CODE>" method for the new coalesced animation is not a simple
+matter. </P>
+
+All these "<CODE><A HREF="../../option_link.cgi?coalesce" >-coalesce</A></CODE>"
+problems were fixed in version 6.2.6-1. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<H2>Deconstruct Bug - Replacement operator IM v6.2.6-3</H2>
+
+Finding any "<CODE><A HREF="../../option_link.cgi?deconstruct"
+>-deconstruct</A></CODE>" problems is difficult unless "<CODE><A
+HREF="../../option_link.cgi?coalesce" >-coalesce</A></CODE>" doing the right job.
+</P>
+
+However "<CODE><A HREF="../../option_link.cgi?deconstruct" >-deconstruct</A></CODE>"
+original purpose was to find the differences from one frame to another, and
+this is can be done without any need to look at or understand GIF animation
+"<CODE><A HREF="../../option_link.cgi?dispose" >-dispose</A></CODE>" methods. </P>
+
+For example, given the above montage of a correctly coalesced '<CODE><A
+HREF="../../anim_basics/#background" >Background</A></CODE>' disposal
+animation...
+
+<DIV ALIGN=center>
+   <A HREF="canvas_bgnd_coal_frames.gif"
+      ><IMG SRC="canvas_bgnd_coal_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+The "<CODE><A HREF="../../option_link.cgi?deconstruct" >-deconstruct</A></CODE>"
+operator will generate the following frames...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+    convert canvas_bgnd_coalesce.gif -deconstruct canvas_bgnd_deconst.gif
+    convert canvas_bgnd_deconst.gif -bordercolor none -frame 4x4+2+2 miff:- |\
+      montage miff:- -tile x1 -geometry '+2+2' \
+              -background none -bordercolor none canvas_bgnd_dec_frames.gif
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
+   <A HREF="canvas_bgnd_dec_frames.gif"
+      ><IMG SRC="canvas_bgnd_dec_frames.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+The actual frame images generated by "<CODE><A
+HREF="../../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" is correct, as
+they do show the rectangular area that has changed in the animation. </P>
+
+And in fact using "<CODE><A HREF="../../option_link.cgi?deconstruct"
+>-deconstruct</A></CODE>" on animations which only overlay the changes from
+one frame to the next will work fine for a disposal method of '<CODE><A
+HREF="../../anim_basics/#none" >None</A></CODE>'. </P>
+
+   <A HREF="canvas_bgnd_deconst.gif"
+      ><IMG SRC="canvas_bgnd_deconst.gif"          WIDTH=100 HEIGHT=100
+            ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+However as you can see from the animation of 'Deconstructed' images that were
+generated (see right), they do <B>not</B> work correctly in a GIF animation.
+</P>
+
+<DIV ALIGN=center><B>
+             This problem will never be corrected!
+</B></DIV></P>
+
+This problem was fixed in IM v6.2.6-3, by providing a new "<CODE><A
+HREF="../../option_link.cgi?layers" >-layers</A> <A
+HREF="../../anim_basics/#optframe" >OptimizeFrame</A></CODE>" method, that not
+only deconstructs the image but trys to find the best "<CODE><A
+HREF="../../option_link.cgi?dispose" >-dispose</A></CODE>" method to frame
+optimize the animation correctly. </P>
+
+</DIV></P>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 24 January 2006 <BR>
+Updated: 10 March 2006 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/animation_bgnd/</CODE>
+</ADDRESS></BODY></HTML>
+

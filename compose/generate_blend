@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Generate a montage array of the dissolve sequence
+#
+echo "Generating Blend Montage..."
+
+. ../generate_options
+#jpg_opt='-quality 100%'
+
+list=
+
+for b in 0 20 30 40 50 60 80 100 \
+          0x100 20x100 30x100 40x100 50x100 60x100 80x100 100x100 \
+          100x100 100x80 100x70 100x60 100x50 100x40 100x20 100x0; do
+  composite -label "blend ${b}" -blend ${b}  -gravity South \
+            compose_R.png compose_plus_GB.png -matte montage_blend_${b}.png
+  list="$list montage_blend_${b}.png"
+done
+
+montage -tile 8x -geometry +4+2  -pointsize 10 \
+        -background $page_bg_color -mattecolor $page_bg_color \
+        $list    $jpg_opt blend_montage.jpg
+
+rm -f montage_blend_[0-9]*.png
+chmod 644 blend_montage.jpg
+
+

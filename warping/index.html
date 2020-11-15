@@ -1,0 +1,1383 @@
+<HTML><HEAD>
+<TITLE>Warping -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/warping/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Warping Images</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B><BR>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#simple"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Simple Image Warping</A>  (rearrange pixel order)
+    <UL>
+    <LI><A HREF="#flip"
+        >Flipping and Mirroring Images</A>
+    <LI><A HREF="#transpose"
+        >Transpose and Transverse, Diagonally</A>
+    <LI><A HREF="#rect_rotates"
+        >Rectangular Rotates</A>
+    <LI><A HREF="#roll"
+        >Rolling Images</A>
+        <NOBR><FONT SIZE=-1>(like a bad TV)</FONT></NOBR>
+    <LI><A HREF="#simple_summary"
+        >Simple Image Warping Summary</A>
+    </UL>
+<DD><A HREF="#rot_n_shear"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Rotate and Shearing</A>
+    <UL>
+    <LI><A HREF="#rotate"
+        >Rotating Images</A>
+        <NOBR><FONT SIZE=-1>(Simple Image Rotations)</FONT></NOBR>
+        <UL>
+        <LI><A HREF="#rotate_internals" >Rotate Operator Internals</A>
+        </UL>
+    <LI><A HREF="#shear"
+        >Shearing Images</A>
+        <NOBR><FONT SIZE=-1>(Linear Displacement)</FONT></NOBR>
+        <UL>
+        <LI><A HREF="#sheared_cube" >Isometric Cube using Shears</A>
+        </UL>
+    <LI><A HREF="#wave"
+        >Waving Images</A>
+        <NOBR><FONT SIZE=-1>(Sine Wave Displacement)</FONT></NOBR>
+    </UL>
+<DD><A HREF="#circular"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Circular Warping</A>
+    <UL>
+    <LI><A HREF="#implode"  >Imploding Images</A>
+    <LI><A HREF="#explode"  >Exploding Images</A>
+    <LI><A HREF="#swirl"    >Swirling Image Whirlpools</A>
+    </UL>
+<DD><A HREF="#animations"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Animations</A>
+    <NOBR><FONT SIZE=-1>(fun examples)</FONT></NOBR>
+</DL>
+
+In this section we will look at general and simplier image warping and
+distortion operators that are provided by ImageMagick.  This is as a way of
+wetting your appetite for the more advanced and complex distortions which we
+will look at in later sections. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="simple"></A>
+<H2>Simple Image Warping</H2>
+
+Simple Image Warping Operators just rearrange the pixels in the image.  The
+number of pixels and even the size of the image remains the same.  The key
+feature is that the image does not loose any information, it is just
+rearranged, and could very easilly be returned to normal without any loss of
+quality (excluding JPEG-like lossy-compression on save). </P>
+
+Basically it just rearranges the pixels, without destroying, overwriting,
+copying, or color merging or otherwise modifying the contents of the original
+image.  Just moving the pixel postions withing in the image.  </P>
+
+<A HREF="koala.gif"
+   ><IMG SRC="koala.gif"             WIDTH=75  HEIGHT=75
+         ALIGN=right VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+<A NAME="flip"></A>
+<H3>Flipping, and Mirroring</H3>
+
+For these examples lets use this cute looking koala image... </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The simplest image distortion is to rearrange the pixels in the
+image so as to "<A HREF="../option_link.cgi?flip" ><CODE>-flip</CODE></A>" it
+upside-down.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -flip  flip.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="flip.gif"
+     ><IMG SRC="flip.gif"              WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Or by using "<A HREF="../option_link.cgi?flop" ><CODE>-flop</CODE></A>" you
+can generate a mirror image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -flop  flop.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="flop.gif"
+     ><IMG SRC="flop.gif"              WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM v6.6.6-5 both the "<CODE><A HREF="../option_link.cgi?flip"
+  >-flip</A></CODE>" and the "<CODE><A HREF="../option_link.cgi?flop"
+  >-flop</A></CODE>" operators did not modify the virtual canvas offset of the
+  image, relative to a larger virtual canvas that may have been present
+</I></FONT></TD></TR></TABLE></P>
+
+<A NAME="transpose"></A>
+<A NAME="transverse"></A>
+<H3>Transpose and Transverse, Diagonally</H3>
+
+The "<A HREF="../option_link.cgi?transpose" ><CODE>-transpose</CODE></A>"
+and "<A HREF="../option_link.cgi?transverse" ><CODE>-transverse</CODE></A>"
+image operations produce diagonal mirrors of the image. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The "<A HREF="../option_link.cgi?transpose" ><CODE>-transpose</CODE></A>"
+mirrors the image along the image top-left to bottom-right diagonal.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -transpose  transpose.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="transpose.gif"
+     ><IMG SRC="transpose.gif"              WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+While "<A HREF="../option_link.cgi?transverse" ><CODE>-transverse</CODE></A>"
+mirrors the image along the image bottom-left to top-right diagonal.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -transverse  transverse.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="transverse.gif"
+     ><IMG SRC="transverse.gif"              WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM v6.6.6-5 both the "<CODE><A HREF="../option_link.cgi?transpose"
+  >-transpose</A></CODE>" and the "<CODE><A
+  HREF="../option_link.cgi?transverse" >-transverse</A></CODE>" operators did
+  not modify the virtual canvas offset of the image, relative to a larger
+  virtual canvas that may have been present
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="rect_rotates"></A>
+<H3>Rectangular Rotates</H3>
+
+All four types of operations shown above, will essentially produce a mirror
+image of the original.  The "<A HREF="../option_link.cgi?rotate"
+><CODE>-rotate</CODE></A>" operator provides the other non-mirrored versions
+of the image, including the original image itself.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -rotate   0  rotate_0.gif
+  convert koala.gif  -rotate  90  rotate_90.gif
+  convert koala.gif  -rotate 180  rotate_180.gif
+  convert koala.gif  -rotate -90  rotate-90.gif
+  convert koala.gif  -rotate 360  rotate_360.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="rotate_0.gif"
+     ><IMG SRC="rotate_0.gif"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="rotate_90.gif"
+     ><IMG SRC="rotate_90.gif"            WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="rotate_180.gif"
+     ><IMG SRC="rotate_180.gif"           WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="rotate-90.gif"
+     ><IMG SRC="rotate-90.gif"            WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="rotate_360.gif"
+     ><IMG SRC="rotate_360.gif"           WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note that "<A HREF="../option_link.cgi?rotate" ><CODE>-rotate</CODE></A>" is a
+simple distort only if you use a rotation angle of a multiple of 90 degrees.
+Any other angle will introduce other more complex pixel level distortions into
+the image.  See <A HREF="#rotate" >Rotate</A> below. </P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  You may notice that a positive angle of rotation is clock-wise, which seems
+  to be logically incorrect. Internally however, it is mathematically
+  correct and is caused by use an of negated Y-axis.  That is the Y-axis goes
+  from 0 at the top and positive downward. Because of this the coordinate
+  system in reversed, and thus the angle of rotation is also reversed
+  mathematically.
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Digital photos can also be rotated to match the recorded <A
+  HREF="../photos/#orient" >Camera Orientation</A> by using the "<A
+  HREF="../option_link.cgi?auto-orient" ><CODE>-auto-orient</CODE></A>"
+  operator.  This was added in IM v6.2.7-8.
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="roll"></A>
+<H3>Rolling Images like a bad TV</H3>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+You can also "<A HREF="../option_link.cgi?roll" ><CODE>-roll</CODE></A>" an
+image horizontally (like a TV that is out of sync).  The amount of the roll
+(displacement of the image) is given in pixels.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -roll +0+20  roll_horiz.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="roll_horiz.gif"
+     ><IMG SRC="roll_horiz.gif"                WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Of course you can also roll the image sideways...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -roll +30+0  roll_vert.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="roll_vert.gif"
+     ><IMG SRC="roll_vert.gif"         WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Or by using a negative number of pixels, you can roll it in the opposite
+direction.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -roll +0-20  roll-horiz.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="roll-horiz.gif"
+     ><IMG SRC="roll-horiz.gif"                WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Rolls are particularly important for <A HREF="../canvas/#tile" >Tiled
+Images</A> as it repositions the tile origin, without destroying the images
+'tilability'.  In fact that is exactly what the "<A
+HREF="../option_link.cgi?tile-offset" ><CODE>-tile-offset</CODE></A>" setting
+defines, how much roll to apply to a tiling image as it is read in by the "<A
+HREF="../option_link.cgi?tile" ><CODE>-tile</CODE></A>" option. </P>
+
+
+
+<A NAME="simple_summary"></A>
+<H3>Simple Image Warping Summary</H3>
+
+The most important aspect of all these operators is that you can add them all
+together in many different ways such that the result will be <I>exactly</I> as
+if no operation was performed at all.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -roll +25+0 -rotate 90  -flop \
+          -roll +0-25  -flip  -rotate 90    original.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="original.gif"
+     ><IMG SRC="original.gif"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<!-- <CODE EXECUTE ASSERT>
+  [ `compare -metric PAE koala.gif original.gif null: 2>&1 |\
+        sed 's/ .*//'` != '0' ] && echo >&2 \
+    "ASSERTION FAILURE: Simple Distorts distorted image when it shouldn't\!"
+</CODE> -->
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="rot_n_shear"></A>
+<H2>Rotating and Shearing</H2>
+
+
+While the <A HREF="#simple" >Simple Distortion Operators</A> (above) preserve
+the images size and color, the next set does not.  The results of these
+operators do not fit in the original size, or even the original raster
+grid of the image. </P>
+
+<A NAME="rotate"></A>
+<H3>Rotating Images -- <FONT SIZE=-1>Simple Image Rotation</FONT></H3>
+
+As you saw above the "<A HREF="../option_link.cgi?rotate"
+><CODE>-rotate</CODE></A>" operator can perform simple, image preserving
+distorts, when you rotate image in units of 90 degrees. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+With other angles however, the rotated image will not fit nicely into a
+rectangular image.  Consequently to ensure that no image data is lost, the
+size of the final image is enlarged just enough to accommodate the rotated
+image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -rotate 30 rotate.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate.jpg"
+     ><IMG SRC="rotate.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that the direction of rotate is clock-wise.  This may seem illogical
+mathematically, until you realise that the image coordinate system is relative
+to the top-left of the image instead of the mathematical norm of the
+bottom-left.  The result is the angle of rotation is the oppisite of what you
+may logically expect. This is important to keep in mind when dealing with any
+form of image rotation, compared to a mathematical rotation. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The extra space added by ImageMagick is colored with the current "<A
+HREF="../option_link.cgi?background" ><CODE>-background</CODE></A>" color
+setting.  Allowing you to specify the color to fill into the corners.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -background lightskyblue -rotate 30 rotate_color.png
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_color.png"
+     ><IMG SRC="rotate_color.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+
+Of course if you want to fill with the transparent color, you will need to
+ensure the image can handle transparency (by enabling adding an <A
+HREF="../basics/#alpha" >Alpha Channel</A>), and is saved to an image format
+that can handle transparency.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -alpha set -background none -rotate 30 rotate_trans.png
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_trans.png"
+     ><IMG SRC="rotate_trans.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+If the extra space comes out black, then your output image output format does
+not allow the use of an alpha channel, (most likely the JPEG format), so the
+transparency defaults to black. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before version 6.1.2, "<A HREF="../option_link.cgi?rotate"
+  ><CODE>-rotate</CODE></A>" did not handle transparency correctly,
+  producing stripes of black and transparent in the corners of the rotated
+  image.  The workaround for this problem was rather complex, involving
+  rotating the alpha channel separately to the colors.
+</I></FONT></TD></TR></TABLE></P>
+
+But what if you don't what that extra space, wanting to preserve the images
+original size?  Well you can use a centered "<A HREF="../option_link.cgi?crop"
+><CODE>-crop</CODE></A>" to return the image to its original size. </P>
+
+If you don't know what the original size was, you can use an alpha composition
+trick (see the '<CODE><A HREF="../compose/#src" >Src</A></CODE>' compose
+method) to restore the image back to its original size.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert koala.gif -alpha set \( +clone -background none -rotate 30 \) \
+            -gravity center  -compose Src -composite   rotate_resized.png
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+    <A HREF="rotate_resized.png"
+       ><IMG SRC="rotate_resized.png"             WIDTH=75  HEIGHT=75
+             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The "<A HREF="../option_link.cgi?rotate" ><CODE>-rotate</CODE></A>" operator
+also understands two extra flags.  If a '<CODE>&gt;</CODE>' symbol is added to
+the rotate argument (before or after the number), then the image will only be
+rotated if the image is wider than it is taller.  That is
+a '<CODE>90&gt;</CODE>' will only rotate 'landscape' (wide) style images into
+'portrait' (tall) style images, so that all th images are 'portrait' style.
+</P>
+
+The other flag '<CODE>&lt;</CODE>' does the opposite, only rotate images that
+are taller than it is wide.  For example '<CODE>90&lt;</CODE>' will make sure
+all images are 'landscape'. </P>
+
+Another use of this flag is to rotate 'portrait' and 'landscape' images by
+different amounts.  That is you can just give two different "<A
+HREF="../option_link.cgi?rotate" ><CODE>-rotate</CODE></A>" operations such
+that you angle 'portrait' one direction, and angle 'landscape' another
+direction. </P>
+
+Digital photos can also be rotated to match the  <A HREF="../photos/#orient"
+>Camera Orientation</A> (based on the images EXIF meta-data) by using the "<A
+HREF="../option_link.cgi?auto-orient" ><CODE>-auto-orient</CODE></A>"
+operator.   However remember saving back to JPEG format may not be a good
+idea.  </P>
+
+<A NAME="rotate_internals"></A>
+<H4>Rotate Operator Internals</H4>
+
+As of IMv6.7.3-4 the <A HREF="#rotate" >Rotate Operator</A> is now using <A
+HREF="../distort/#distort" >Distort Operator</A> and <A
+HREF="../distorts/#srt" >Scale-Rotate-Translate (SRT) Distortion</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Here is the more direct rotation using the underlying <A
+HREF="../distorts/#srt" >SRT Distortion</A>.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -virtual-pixel background -background lightskyblue \
+          -distort SRT 30 +repage rotate_srt.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_srt.jpg"
+     ><IMG SRC="rotate_srt.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Or using the '+' version of the distort operator to adjust the cavas size.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR VALIGN=top><TD><PRE><CODE EXECUTE>
+  convert koala.gif -virtual-pixel background -background lightskyblue \
+          +distort SRT 30 +repage rotate_srt2.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_srt2.jpg"
+     ><IMG SRC="rotate_srt2.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+There are many other controls provided by the <A HREF="../distorts/#distort"
+> General Distort Operator</A> for things like exact positioning of the center
+of rotation, scaling, filter control, output image size, and controls for <A
+HREF="../layers/" >Image Layering</A>, that the simplier <A HREF="#rotate"
+>Rotate Operator</A>, does not provide.  </P>
+
+Before IMv6.7.3-4 the <A HREF="#rotate" >Rotate Operator</A> was implemented
+using <A HREF="#simple" >Simple 90 rotation Distorts</A> followed by three <A
+HREF="#shear" >Image Shears</A>, a technique known as 'Rotate by Shear' (RBS).
+A technique first publish in research papers  by Alan Paeth. </P>
+
+Unfortuanteally because this requires 3 separate shearing operations, you get
+highly variable and sever bluring effects, especially when shearing thin
+lines, which is why rotate is now implemented using Distort. You can see the
+detremental effects of this in the rotation <A HREF="#animations"
+>Animations</A> below. </P>
+
+The library function that did rotates as 'shears' is still available in the
+API, but no longer available from the command line, unless you do the shears
+yourself. See <A HREF="#shear" >Shear Operator</A> below the full deatils of
+the technique.</P>
+
+For a more deeper understanding of the various image rotation algorithms, how
+they work, and the issues involved see <A
+HREF="http://www.leptonica.com/rotation.html" >Leptonica Rotation</A>. And the
+examples used in <A HREF="../distorts/#summary" >General Distortion
+Techniques</A>. </P>
+
+
+<A NAME="shear"></A>
+<H3>Shearing Images -- <FONT SIZE=-1>Linear displacement</FONT></H3>
+
+The "<A HREF="../option_link.cgi?shear" ><CODE>-shear</CODE></A>" operator
+takes each row (or column) of pixels and slides them along so that each row
+(or column) is displaced by the same amount relative to the neighbouring row
+(or column).  Its two arguments are given in terms of angles. </P>
+
+Just as with "<A HREF="../option_link.cgi?rotate" ><CODE>-rotate</CODE></A>"
+the operation increases the size of the resulting image so as not to loose any
+information.  </P>
+
+However shear is more complex in that it is really a double operation.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -background Blue  -shear 20      shear_rot.gif
+  convert koala.gif -background Blue  -shear 20x0    shear_x.gif
+  convert koala.gif -background Blue  -shear 0x50    shear_y.gif
+  convert koala.gif -background Blue  -shear 20x50   shear_xy.gif
+  convert koala.gif -background Blue  -shear 20x0  -shear 0x50   shear_xy2.gif
+  convert koala.gif -background Blue  -shear 0x50  -shear 20x0   shear_yx.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="shear_rot.gif"
+     ><IMG SRC="shear_rot.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="shear_x.gif"
+     ><IMG SRC="shear_x.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="shear_y.gif"
+     ><IMG SRC="shear_y.gif"
+          ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="shear_xy.gif"
+     ><IMG SRC="shear_xy.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="shear_xy2.gif"
+     ><IMG SRC="shear_xy2.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="shear_yx.gif"
+     ><IMG SRC="shear_yx.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+If you look at the results you will see that a full X-Y "<A
+HREF="../option_link.cgi?shear" ><CODE>-shear</CODE></A>" (fourth image) is
+actually equivelent to the doing the the X shear first, followed by the
+Y shear (with an appropriate image trimming), as showin in the fifth or second
+last image). </P>
+
+Note that the ordering of the shears produce different results. </P>
+
+If only one number is provided (without any '<CODE>x</CODE>' in the argument,
+as in the first image) then "<A HREF="../option_link.cgi?shear"
+><CODE>-shear</CODE></A>" will apply it in both the X and Y directions as
+a sort of poor mans rotate. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The "<A HREF="../option_link.cgi?background" ><CODE>-background</CODE></A>"
+color setting is of course used as the color for the extra space added.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -background none  -shear 30  shear_trans.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="shear_trans.png"
+     ><IMG SRC="shear_trans.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM version 6.1.2 "<A HREF="../option_link.cgi?shear"
+  ><CODE>-shear</CODE></A>" did not handle transparency.  The workaround for
+  for this problem was rather complex, involving shearing the alpha channel
+  separately to the colors.
+</I></FONT></TD></TR></TABLE></P>
+
+Note that using a "<A HREF="../option_link.cgi?shear" ><CODE>-shear</CODE></A>"
+in this way is not a correct method for rotating an image. </P>
+
+To actually use shear to rotate an image properly, you would need to perform
+multiple shearing operations in the form of <NOBR>"<CODE>-shear {X}x{Y} -shear
+{X}x0 -crop ... </CODE>"</NOBR>, however working out the proper values for the
+'<CODE>{X}</CODE>', '<CODE>{Y}</CODE>' and final trim requires some
+trigonometry.  The "<A HREF="#rotate" >Rotate Operator</A>" actually used to
+be implemented in this way, and the API function to do this is still
+available, but no longer from the command line. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Note that shearing in the X direction will not affect an images height,
+  while shearing the the Y direction will not effect the images width. The
+  result is that the area covered by some object within the image will not
+  change (only the surrounding container holding the image).
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The <A HREF="#shear" >Shear Operator</A> is implemented as a direct
+  'warping' (distorting pixels in individual rows and columns only) of the
+  source image. As a consequence it does not use the <A
+  HREF="../misc/#interpolate" >Interpolation Setting</A> or the the <A
+  HREF="../misc/#virtual-pixel" >Virtual Pixel Setting</A>. </P>
+
+  As a result the areas added to the image is only filled by the current "<A
+  HREF="../option_link.cgi?background" ><CODE>-background</CODE></A>" color,
+  and there is no method provided to preserve the original colors of the
+  image.
+
+</I></FONT></TD></TR></TABLE></P>
+
+For an alternative method that allows the use of image filters, interpolation,
+and virtual pixels see <A HREF="../distorts/#affine" >Affine Distortion</A>.
+For information on using Affine Matrices to implement shears, see <A
+HREF="../distorts/affine/#affine_shear" >Affine Shearing</A>. Neither method
+however allow you to specify the shears using angles arguments. </P>
+
+
+<A NAME="sheared_cube"></A>
+<H4>Isometric Cube using Shears</H4>
+
+While shears aren't the nicest or simplist of operators to use, that does not
+mean you can't do fancy things with them.   The following is an example of
+using "<A HREF="../option_link.cgi?shear" ><CODE>-shear</CODE></A>" to create a
+isometric cube.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  # Create some square images for the cube
+  convert logo: -resize 256x256^ -gravity center -extent 256x256 top.jpg
+  convert ../img_photos/pagoda_sm.jpg           -resize 256x256 left.jpg
+  convert ../img_photos/mandrill_orig.png       -resize 256x256 right.jpg
+
+  # top image shear.
+  convert top.jpg -resize  260x301! -alpha set -background none \
+          -shear 0x30 -rotate -60 -gravity center -crop 520x301+0+0 \
+          top_shear.png
+
+  # left image shear
+  convert left.jpg  -resize  260x301! -alpha set -background none \
+          -shear 0x30  left_shear.png
+
+  # right image shear
+  convert right.jpg  -resize  260x301! -alpha set -background none \
+          -shear 0x-30  right_shear.png
+
+  # combine them.
+  convert left_shear.png right_shear.png +append \
+          \( top_shear.png -repage +0-149 \) \
+          -background none -layers merge +repage \
+          -resize 30%  isometric_shears.png
+
+  # cleanup
+  rm -f top.jpg left.jpg right.jpg
+  rm -f top_shear.png left_shear.png right_shear.png
+
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="isometric_shears.png"
+     ><IMG SRC="isometric_shears.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The above was developed from a simular <A HREF="../windows/#cube" >Windows
+Batch Example</A> by  Wolfgang Hugemann &lt;ImageMagick&#64;Hugemann.de&gt; in
+his <A HREF="../windows/" >Using IM under Windows</A> contribution to IM
+Examples. </P>
+
+Note that the above images are NOT correctly joined together. They should use
+<A HREF="../compose/#plus" >Plus Alpha Composition</A>, but are using over
+instead.  For more information see <A HREF="../masking/#aligning" >Aligning
+Two Masked Images</A>.  As a result  you can have problems aligning the three
+images correctly, producing gaps or image overlaps. </P>
+
+As the positioning is restricted to integer positioning this problem can be
+especially bad. Using a much larger size with easier to manage coordinates,
+and a little fudging of the maths, can help in this case.  After the images
+have been merged together, resizing the result down to its final size will
+sharpen and clean up any slight mis-alignments along the joins. </P>
+
+Another simular example but using <A HREF="../distorts/#affine" >Affine
+Distorts</A>, and using correct alpha composition,  is <A
+HREF="../distorts/#cube3d" >3d Cubes, using Affine Layering</A>. A method that
+greatly simplifies the image processing needed to generate cubes like the
+above. </P>
+
+<A NAME="wave"></A>
+<H3>Waving Images - Sine Wave Displacement</H3>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The "<A HREF="../option_link.cgi?wave" ><CODE>-wave</CODE></A>" operator is
+like "<A HREF="../option_link.cgi?shear" ><CODE>-shear</CODE></A>" in that it
+adds a 'linear displacement' to images.  However this operator will only
+displace columns of pixels vertically according to a sine wave function. </P>
+
+There are two arguments to the "<A HREF="../option_link.cgi?wave"
+><CODE>-wave</CODE></A>" operator.  The first is the maximum height or
+<I>amplitude</I> the pixels will be displace either up or down, while the
+second is the <I>wavelength</I> of the sine function in pixels.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -background Blue  -wave 10x64  wave.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="wave.jpg"
+     ><IMG SRC="wave.jpg"                  WIDTH=75 HEIGHT=95
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Note that because pixels can be displaced up to the given <I>amplitude</I>,
+that much extra space will always be added to both the top and bottom of the
+image, even if that space is not actually needed. </P>
+
+For example by adjusting the arguments so that the <I>wavelength</I> is double
+the width of the image, you can make the image into an arc.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -background Blue  -wave 20x150  arched.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="arched.jpg"
+     ><IMG SRC="arched.jpg"                  WIDTH=75 HEIGHT=115
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+In this sort of case the unused space can be removed using either a "<A
+HREF="../option_link.cgi?chop" ><CODE>-chop</CODE></A>", "<A
+HREF="../option_link.cgi?shave" ><CODE>-shave</CODE></A>", or possibly even a
+"<A HREF="../option_link.cgi?trim" ><CODE>-trim</CODE></A>" operation. </P>
+
+Lets clean up the previous example by using a negative amplitude to flip the
+arc over, and use "<A HREF="../option_link.cgi?chop" ><CODE>-chop</CODE></A>"
+to remove the unused space the "<A HREF="../option_link.cgi?wave"
+><CODE>-wave</CODE></A>" operator added.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -background Blue  -wave -20x150  \
+          -gravity South -chop 0x20 arched_2.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="arched_2.jpg"
+     ><IMG SRC="arched_2.jpg"                  WIDTH=75 HEIGHT=95
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Of course the "<A HREF="../option_link.cgi?background"
+><CODE>-background</CODE></A>" color setting can be used to define the extra
+space added to the image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -alpha set -background none  -wave 10x75  wave_trans.png
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="wave_trans.png"
+     ><IMG SRC="wave_trans.png"          WIDTH=75 HEIGHT=95
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+As you can see from the above examples "<A HREF="../option_link.cgi?wave"
+><CODE>-wave</CODE></A>" only applies in the vertical or 'Y' direction.  If
+you want to add a wave in the X direction, you'll need to rotate the image
+before and after you apply the wave.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -rotate -90 -background Blue  -wave -10x75 \
+                     -rotate +90  wave_y.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="wave_y.jpg"
+     ><IMG SRC="wave_y.jpg"                  WIDTH=95 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The technique can be used to add a wave pattern or vibration to an image at
+any angle. Examples of this is given in the <A HREF="../fonts/#vibrato"
+>Vibrato Font</A> and in the <A HREF="../fonts/#smoking" >Smoking Font</A>. </P>
+
+One other limitation with "<A HREF="../option_link.cgi?wave"
+><CODE>-wave</CODE></A>", is that the wave only starts at zero.  That
+is the left most column is not displaced, while the next few rows are
+displaced downward (positive X direction), unless you give a negative
+<I>amplitude</I> for an initial vertical offset. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Basically the "<A HREF="../option_link.cgi?wave" ><CODE>-wave</CODE></A>"
+operator does not (at this time) allow you to specify an offset for the start
+of the sine function.  This can be rectified however by adding, then removing,
+an image offset using "<A HREF="../option_link.cgi?splice"
+><CODE>-splice</CODE></A>".
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  -splice 19x0+0+0 -background Blue  -wave 10x75 \
+                     -chop   19x0+0+0     wave_offset.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="wave_offset.jpg"
+     ><IMG SRC="wave_offset.jpg"          WIDTH=75 HEIGHT=95
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+While "<A HREF="../option_link.cgi?wave" ><CODE>-wave</CODE></A>" will not make
+use of the current <A HREF="../misc/#virtual-pixel" >Virtual Pixel Setting</A>
+to define the color of the added areas, it will look at the current <A
+HREF="..misc/#interpolation" >Interpolation Setting</A> to map the colors from
+the source to the image generated. This means wave will tend to blur pixels
+slightly in vertical bands across the image.
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="circular"></A>
+<H2>Circular Distortions</H2>
+
+So far the image distortions have been rather mild, with very little
+stretching, expanding or compressing of the image data.  That is the data
+remains pretty well unchanged. </P>
+
+These next few image operators can result in an image that is so distorted, the
+original image can not be determined. The colors are twisted into a blurry
+mess. </P>
+
+It also happens that they limit the distorting effects to a circular area with
+little to no distortion of the original image at the edge of the image
+rectangle.  That means, you can use these operators on a smaller area using
+the <A HREF="../masking/#region" >Region Operator</A>, and the result will
+still blend into the original image without it looking like it was: cut out,
+warped and pasted back into place. </P>
+
+That is they the operators are known as a 'local' distortion, as they could be
+used to warp smaller areas of an image. </P>
+
+<A NAME="implode"></A>
+<H3>Imploding Images</H3>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The  "<A HREF="../option_link.cgi?implode" ><CODE>-implode</CODE></A>"
+operator warps the image so as to pull all the pixels toward the center.  Its
+sort of like sticking a vacuum, or 'black hole' in the center of the image and
+sucking the pixels toward it. </P>
+
+Caution however is advised to only use very small values, to start with, and
+slowly increase those values until you get the desired result.  Most novice
+users tend to use too large a value and get disappointed by the result. </P>
+
+
+For example this is a typical image implosion...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -implode .6 implode.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="implode.gif"
+     ><IMG SRC="implode.gif"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Using increasingly larger values will essentially suck all the pixels in
+the circle, into oblivion.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -implode 5 implode_big.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="implode_big.gif"
+     ><IMG SRC="implode_big.gif"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+However be warned that using any "<A HREF="../option_link.cgi?implode"
+><CODE>-implode</CODE></A>" value larger than '<CODE>1.0</CODE>' is also
+effected by the <A HREF="../misc/#virtual-pixel" >Virtual Pixel Setting</A>,
+as the algorithm starts to make color references beyond the boundaries of
+actual image itself.  As the default the "<A
+HREF="../option_link.cgi?virtual-pixel" ><CODE>-virtual-pixel</CODE></A>"
+setting is 'edge', the edge color or surrounding frame on an image can have a
+major effect on the result. </P>
+
+For example these two images are the same except one had white border added to
+it. this basically shows the area which is using colors looked up from beyond
+the bounds of the image proper. The area normally defined by the "<A
+HREF="../option_link.cgi?virtual-pixel" ><CODE>-virtual-pixel</CODE></A>"
+setting.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -gravity center -crop 46x46+0+0 +repage \
+                                              -implode 3   implode_rose.gif
+  convert rose: -gravity center -crop 44x44+0+0 +repage \
+                -bordercolor white -border 1  -implode 3   implode_rose_2.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="implode_rose.gif"
+     ><IMG SRC="implode_rose.gif"             WIDTH=46  HEIGHT=46
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="implode_rose_2.gif"
+     ><IMG SRC="implode_rose_2.gif"             WIDTH=46  HEIGHT=46
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Using different <A HREF="../misc/#virtual-pixel" >Virtual Pixel</A> settings such as
+'<CODE><A HREF="../misc/#background" >Background</A></CODE>' will produce the
+same effect as adding "<A HREF="../option_link.cgi?border"
+><CODE>-border</CODE></A>", but without enlarging the image. </P>
+
+Other <A HREF="../misc/#virtual-pixel" >Virtual Pixel</A> settings
+can produce much more interesting effects in the central imploded region.
+For example using a '<CODE><A HREF="../misc/#tile"
+>Tile</A></CODE>' setting can add highly distorted copies of the image. </P>
+
+For example here I implode simple box image using this setting...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 94x94 xc:red -bordercolor white -border 3 \
+          -virtual-pixel tile     -implode 4   implode_tiled_box.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="implode_tiled_box.gif"
+     ><IMG SRC="implode_tiled_box.gif"        WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+More "<A HREF="../option_link.cgi?virtual-pixel"
+><CODE>-virtual-pixel</CODE></A>" effects are explored on <A
+HREF="../misc/#virtual_implode" >Implosion Effects of Virtual Pixels</A>. </P>
+
+As the number of pixels being imploded into a small area increases, and the
+size of the implosion parameter gets very large, the results start to get a
+'pixelated' look.  To get a better more consistent result, you can increase
+the number of pixels implode works with, using a technique called <A
+HREF="../distorts/#super_sample" >Super-Sampling</A>. </P>
+
+Basically by using a larger image (enlarging the source image if necessary),
+doing the distortion, then shrinking the result to its final size you will
+produce a much better result.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 94x94 xc:red -bordercolor white -border 3 \
+          -virtual-pixel tile  -resize 400%  -implode 4 -resize 25% \
+          implode_tiled_ss.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="implode_tiled_ss.gif"
+     ><IMG SRC="implode_tiled_ss.gif"        WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see you get a much smoother and more realistic result that shows
+the internal detail of the distortion much better.  However even
+super-sampling wil break down in extreme images like this, as it involved
+infinities.  If you look carefully you will see that a 'dotty' look returns,
+but only closer into the center. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+By using a larger "<A HREF="../option_link.cgi?border"
+><CODE>-border</CODE></A>" around the image being imploded, and later removing
+it again, you can also warp the edges of an image, inward toward the center.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -bordercolor blue -border 20x20 \
+          -implode .5   -shave 18x18  implode_border.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="implode_border.jpg"
+     ><IMG SRC="implode_border.jpg"             WIDTH=79  HEIGHT=79
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+As of IM version 6.2.1 you can also use a transparent border, or image with
+transparency...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -bordercolor none -border 20x20 \
+          -implode .5   -shave 18x18  implode_border_trans.png
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="implode_border_trans.png"
+     ><IMG SRC="implode_border_trans.png"             WIDTH=79  HEIGHT=79
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<A NAME="explode"></A>
+<H3>Exploding Images</H3>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+By using a negative value with the "<A HREF="../option_link.cgi?implode"
+><CODE>-implode</CODE></A>" operator, you can explode the image.  This is
+however more like magnifying the center of the image pushing all the
+mid-radius pixels out toward the edge, rather than a true explosion.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -implode -2 explode.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="explode.jpg"
+     ><IMG SRC="explode.jpg"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Using larger value will essentially enlarge the center most pixels of the
+image into a circle two-thirds the size of the smallest image dimension.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -implode -30 explode_big.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="explode_big.jpg"
+     ><IMG SRC="explode_big.jpg"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+And here is a '<A HREF="..distorts/#super_sample" >Super-Sampled</A>', version.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -resize 400% -implode -30 \
+          -resize 25% explode_big_ss.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="explode_big_ss.jpg"
+     ><IMG SRC="explode_big_ss.jpg"         WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The central color of the internal 'explosion' is set by the color of the
+center of the image (or region).  This means that by changing the colors
+around that point before exploding, you can control a 'flash' effect of the
+explosion.  See <A HREF="#animations" >Animations</A> below, for an animated
+example of this color control. </P>
+
+For another example of imploded images see user  <A
+HREF="http://www.flickr.com/photos/ericosur/2708859259/" >hh</A> contributions
+on Flickr</A>.  </P>
+
+
+<A NAME="swirl"></A>
+<H3>Swirling Image Whirlpools</H3>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+The "<A HREF="../option_link.cgi?swirl" ><CODE>-swirl</CODE></A>" operator
+acts like a cake mixer.  It will warp the image around in a circle the number
+of degrees you give it as an argument.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -swirl 180 swirl.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="swirl.jpg"
+     ><IMG SRC="swirl.jpg"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+By adding a border, and combining with  "<A
+HREF="../option_link.cgi?implode" ><CODE>-implode</CODE></A>" you can
+give the look of a whirlpool sucking the image up to oblivion.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -bordercolor white -border 20x20 \
+          -swirl 180 -implode .3  -shave 20x20   whirlpool.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="whirlpool.jpg"
+     ><IMG SRC="whirlpool.jpg"             WIDTH=75  HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The key nature o fthis distortion is that the image will become rotated in the
+center by the angle you specify, while the circlur edge (like the <A
+HREF="#implode" >Implode Operator</A> above) remains uneffected. </P>
+
+At this time there is no parameter to specifiy an 'inner radius' to limit the
+swirl to a ring, rather than to a full disk. </P>
+
+I have animated these swirling effects, which you can see below in <A
+HREF="#animations" >Animations</A>. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="animations"></A>
+<H2>Animations <FONT SIZE=-1>(fun examples)</FONT></H2>
+
+To finish off with lets generate some GIF animations of some of these
+distorts.  For these I generated some simple shells scripts to generate the
+animated image, which you can also download and play with, using your own
+test images. </P>
+
+This  brings me to an important point.  If generating a series of images using
+these distorts, it is better to always distort from the original starting
+image, rather than incrementally distort the image over-n-over. </P>
+
+This is especially true of rotated images where there is some blurring of the
+result, though minimal in any individual operation,  If you do it over an over
+however, this is the results. </P>
+
+All the scripts use a '<B>Generated "<CODE>convert</CODE>" Command</B>'
+technique, to create the animation.  That is a shell script creates a long
+single command, which is then executed. This avoids the need to generate
+temporary files, though can be difficult to debug. </P>
+
+Another alernative is to use a method known as a <A
+HREF="../files/#miff_stream" >MIFF Image Streaming</A>, which generates
+an individual images in a loop, and 'pipes' it into a final 'merging' command.
+This is demonstrated more clearly in the examples <A
+HREF="../layers/#layer_prog" >Programmed Positioning of Layered Images</A> and
+<A HREF="../layers/#layer_pins" >Pins in a Map</A>. </P>
+
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=top><TD>
+<A HREF="animated_mixer.gif"
+   ><IMG SRC="animated_mixer.gif"          WIDTH=75 HEIGHT=75
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+The shell script "<A HREF="animate_mixer" ><CODE>animate_mixer</CODE></A>"
+each frame is generated by using "<A HREF="../option_link.cgi?swirl"
+><CODE>-swirl</CODE></A>" on the original image. </P>
+
+The swirl is animated in one direction, then back again to form a continuous
+cycle.  This is actually a very typical example warping animation in IM. </P>
+
+A variation of this is to have the animation un-warp into a different
+but similar image.
+
+</TD><TR></TABLE></P>
+
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=top><TD>
+<A HREF="animated_whirlpool.gif"
+   ><IMG SRC="animated_whirlpool.gif"          WIDTH=75 HEIGHT=75
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+The shell script "<CODE><A HREF="animate_whirlpool"
+>animate_whirlpool</A></CODE>", not only uses "<CODE><A
+HREF="../option_link.cgi?swirl" >-swirl</A></CODE>" on each image frame,
+but also uses "<A HREF="../option_link.cgi?implode" ><CODE>-implode</CODE></A>"
+with an increasing argument size, as well. </P>
+
+I used a '<CODE>lightblue</CODE>' border color for the added space used to
+show that the whole image will be 'sucked down the drain', though I should
+have used the same white background color instead, for a better, more
+realistic effect. </P>
+
+</TD><TR></TABLE>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=middle><TD>
+<A HREF="animated_explode.gif"
+   ><IMG SRC="animated_explode.gif"          WIDTH=75 HEIGHT=75
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+An explosion in the middle of the image (see script "<A HREF="animate_explode"
+><CODE>animate_explode</CODE></A>". The image is again enlarged so the whole
+image is exploded, and a colored dot is drawn at the center to define the
+final color. </P>
+
+</TD><TR></TABLE>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=middle><TD>
+<A HREF="animated_flex.gif"
+   ><IMG SRC="animated_flex.gif"          WIDTH=75 HEIGHT=98
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+Using the shell script "<A HREF="animate_flex" ><CODE>animate_flex</CODE></A>"
+the center of the image is flexed up and down by changing the amplitude of the
+"<A HREF="../option_link.cgi?wave" ><CODE>-wave</CODE></A>" function both
+positive and negative. </P>
+
+</TD><TR></TABLE>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=top><TD>
+<A HREF="animated_flag.gif"
+   ><IMG SRC="animated_flag.gif"          WIDTH=85 HEIGHT=99
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+Using the shell script "<A HREF="animate_flag" ><CODE>animate_flag</CODE></A>"
+I create a 'offset wave' animation to make the image wave like a flag. </P>
+
+The animation can be improved by also vertically offsetting each frame of the
+image so the left hand edge remains constant, and maybe adding a flag pole.
+However that requires you to mathematically determine that offset, which can
+be tricky. </P>
+
+</TD><TR></TABLE></P>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=middle><TD>
+<A HREF="animated_rotate.gif"
+   ><IMG SRC="animated_rotate.gif"          WIDTH=75 HEIGHT=75
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+The script "<A HREF="animate_rotate" ><CODE>animate_rotate</CODE></A>"
+generated this rotating animation, but crops each frame with the original image
+as described above to preserve the original image size. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Update: As of IMv6.7.3-4 the <A HREF="#rotate" >Rotate Operator</A> is now
+  using <A HREF="../distort/#distort" >Distort Operator</A> and <A
+  HREF="../distorts/#srt" >SRT Distortion</A>. As such the previous example
+  will now produce the much less blury result of the next example.
+</I></FONT></TD></TR></TABLE></P>
+
+</TD><TR></TABLE></P>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=middle><TD>
+<A HREF="animated_distort_rot.gif"
+   ><IMG SRC="animated_distort_rot.gif"          WIDTH=75 HEIGHT=75
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+As a comparison here is a koala rotation generated using the default settings
+and the "<CODE>-distort SRT {angle}</CODE>" command.  The script use to
+generate it is "<A HREF="animate_distort_rot"
+><CODE>animate_distort_rot</CODE></A>". Note how much sharper the image is
+using this method of rotation, and the lack of rotational 'jitter' that is
+evident in the previous version. </P>
+
+</TD><TR></TABLE>
+
+<!--
+<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR VALIGN=middle><TD>
+<A HREF="animated_affine_rot.gif"
+   ><IMG SRC="animated_affine_rot.gif"          WIDTH=75 HEIGHT=75
+         ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD WIDTH=100% ALIGN=justify>
+
+An demonstration of rotations using affine matrix transformations.  (See
+script "<A HREF="animate_affine_rot" ><CODE>animate_affine_rot</CODE></A>")
+</P>
+-->
+
+</TD><TR></TABLE>
+
+<H4>Bonus Animations and Movies</H4>
+
+<A HREF="swirl_video.mpg"
+   ><IMG SRC="swirl_video.gif"          WIDTH=200 HEIGHT=140
+         ALIGN=right VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+As a bonus <I>Florent Monnier</I> from France created a neat video using the
+"<CODE><A HREF="../option_link.cgi?swirl" >-swirl</A></CODE>" distortion
+operator, made using an IM OCaml API script.  Select the GIF animation to the
+right to download the full version of the video.  You can also have a look at
+his <A HREF="swirl_video.txt" >notes</A> about the video. </P>
+
+<I>Can you make a good video demonstrating a distortion map technique? Do you
+know of one elsewhere on the net?  Mail me. </I> </P>
+
+
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 14 January 2009 (distorts sub-division) <BR>
+Updated: 11 October 2010 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/warping/</CODE>
+</ADDRESS></BODY></HTML>

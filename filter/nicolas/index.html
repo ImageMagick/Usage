@@ -1,0 +1,913 @@
+<html lang="en"><HEAD>
+<TITLE>Nicolas Robidoux Resampling -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/filter/nicolas/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Resampling by Nicolas Robidoux</H1>
+
+<DIV ALIGN=justify>
+
+<B>Index</B><BR>
+<TABLE CELLSPACING=0>
+<TR VALIGN=top><TD COLSPAN=2>
+<A HREF="../../"
+   ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+   > ImageMagick Examples Preface and Index</A>
+</TD></TR>
+<TR VALIGN=top><TD COLSPAN=2>
+<A HREF="../"
+   ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+   > Resampling Filters</A>
+</TD></TR>
+<TR VALIGN=top><TD><DL>
+
+<DD><A HREF="#short"
+    ><IMG SRC="../../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Methods Recommended by Nicolas Robidoux</A>
+    <UL>
+    <LI><A HREF="#short"
+        ><B>Short Answer</B></A>
+    <LI><A HREF="#quality"
+        >Quality Control</A>
+    <LI><A HREF="#detailed"
+        >Detailed Answer</A>
+    <LI><A HREF="#upsampling"
+        >Recommended Upsampling Methods (Enlarging)</A>
+    <LI><A HREF="#upsampling_examples"
+        >Upsampling Examples</A>
+    <LI><A HREF="#downsample"
+        >Recommended Methods for Downsampling (Shrinking)</A>
+    <LI><A HREF="#downsampling_examples"
+        >Downsampling Examples</A>
+    <LI><A HREF="#borderline"
+        >Borderline Cases</A>
+    <LI><A HREF="#feedback"
+        >Feedback</A>
+    <LI><A HREF="#thanks"
+        >Thanks</A>
+    </UL>
+</DL>
+</TD></TR></TABLE></P>
+
+The following has been provided by <A
+HREF="http://ca.linkedin.com/pub/nicolas-robidoux/40/3ab/b73" >Nicolas
+Robidoux</A>, now a Senior Research Scientist at <A
+HREF="http://www.phaseone.com" >Phase One A/S</A>.  He has been of great help
+in improving image processing in ImageMagick, especially the development of <A
+HREF="../#cylindrical" >Cylindrical Filters</A> as used by the EWA resampling
+of the <A HREF="../../distorts/#distort" >General Distortion Operator</A>.
+</P>
+
+The following are his views on image filters and the best techniques to
+either shrink (down sample) or enlarge (up sample) different types of
+images for different requirements.  Note that Nicolas is a very active
+researcher, and as such the following views do change over time. </P>
+
+WARNING: Some of the techniques may only work with recent versions of
+ImageMagick, and many of the filters do not (and may never) have
+'named' filters within ImageMagick "<CODE><A HREF="../#filter"
+>-filter</A></CODE>" setting, so require the use
+of <A HREF="../#options" >Expert Filter Controls</A>. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="short"></A>
+<H3>Short Answer</H3>
+
+When resizing, I (Nicolas Robidoux) generally stick to either a tensor
+(orthogonal, or 2-pass) <A HREF="../../resize/#resize" >Resize
+(<CODE>-resize</CODE>) Operator</A> filter, or an EWA (Elliptical
+Weighted Averaging) <A HREF="../../resize/#distort_resize" >Distort
+Resize (<CODE>-distort Resize</CODE>) operator</A>. Although the
+filter kernels used with tensor and EWA operations are built using the
+same families of mathematical functions, they give very different
+results when used with <CODE>-resize</CODE> and when used
+with <CODE>-distort Resize</CODE>. </P>
+
+<BR>
+
+If you want to use one single filter for everything and would rather
+avoid complications like color space manipulations and fancy
+parameters, use the <A HREF="../#lanczos_sharp" >LanczosSharp EWA
+(Elliptical Weighted Averaging) Filter</A>. It produces images that
+are slightly blurry, with no jaggies to speak of and reasonably mild
+halos.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -filter LanczosSharp -distort Resize 200% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The above command resizes by 200 percent, that is, it doubles the
+width and height of the original image. Change "<CODE>200%</CODE>" to
+the desired <A HREF="../../resize/#resize" >size specification</A>.
+In addition, "<CODE><I>{input}</I></CODE>" and
+"<CODE><I>{output}</I></CODE>" should be replaced by the full names of
+the original and resized images. </P>
+
+<BR>
+
+For much sharper results, use the <A HREF="../#lanczos" >tensor
+(orthogonal or 2-pass resize) Lanczos Filter</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -filter Lanczos -resize 200% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+For certain types of images and operations, tensor Lanczos is
+the <A HREF="../#default_filter" >default</A> <CODE>-resize</CODE>
+filter and you can omit "<CODE>-filter Lanczos</CODE>". </P>
+
+I do not recommend tensor (<CODE>-resize</CODE>) Lanczos filtering
+unless you use an <A HREF="../../basics/#hdri" >HDRI Version of
+ImageMagick</A>. This has nothing to do with any flaw of the tensor
+Lanczos filter. It has to do with the ImageMagick implementation of
+tensor filters, which saves memory by clamping intermediate results as
+a side effect of storing them into 8 or 16-bit unsigned integers (HDRI
+saved them as doubles, so are unaffected). In other words, the generally
+mild artefacts that arise when using tensor Lanczos without HDRI result
+from an "engineering decision" that allows <CODE>-resize</CODE> filters
+to run significantly faster than EWA ones. The present recommendations
+focus on quality, not speed. </P>
+
+(To find out whether you are running a Q8, Q16 or HDRI version of the
+convert command, run <CODE>convert -version</CODE>. If "HDRI" appears
+somewhere in the output text message, it's HDRI. If "Q8" appears, it's
+Q8. Otherwise, it's Q16, the most commonly installed version. If you
+don't know what version you have installed, chances are it's
+Q16.) </P>
+
+If you want something about as sharp as tensor Lanczos with a Q8
+(8-bit) or Q16 (16-bit) ImageMagick, use <A HREF="../#lanczos_radius"
+>EWA Lanczos Radius 3</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -filter LanczosRadius -distort Resize 200% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+EWA Lanczos Radius 3 (<CODE>-filter LanczosRadius</CODE>) is a recent
+addition to ImageMagick (version 6.8.0-2). See the
+<A HREF="#upsampling" >Recommended Upsampling Methods (Enlarging)</A>
+section below for code (with one "fancy parameter") that reproduces
+this filter with older ImageMagick releases. </P>
+
+<BR>
+
+<A HREF="../#lanczos_sharp" >EWA LanczosSharp</A>,
+<A HREF="../#lanczos" >tensor Lanczos</A>,
+and <A HREF="../#lanczos_radius" >EWA Lanczos Radius 3</A> add
+two <A HREF="../#ringing" >halo rings</A> to sharp interfaces and
+lines. </P>
+
+To make the second halo unnoticeable, use EWA Quadratic-windowed Jinc
+3-lobe, nicknamed "QuadraticJinc". (One "fancy parameter" is needed to
+generate this filter.)
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -define filter:window=Quadratic -distort Resize 200% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<BR>
+
+To eliminate the second halo completely, use the
+<A HREF="../#robidoux" >EWA Robidoux Filter</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -distort Resize 200% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Robidoux is the <A HREF="../#default_filter" >default</A>
+"<CODE>-distort Resize</CODE>" filter. This is why the above command
+does not contain "<CODE>-filter Robidoux</CODE>". </P>
+
+With HDRI ImageMagick, I recommend tensor <A HREF="../#mitchell"
+>Mitchell</A> (the Mitchell-Netravali filter) over EWA
+Robidoux. Tensor Mitchell and EWA Robidoux are very similar.  Although
+both have no second halo, EWA Robidoux has less of it, and its halo is
+"smoother".  However, tensor Mitchell manages to be slightly sharper
+without usually being more jaggy. </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -filter Mitchell -resize 200% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Mitchell is the <A HREF="../#default_filter"
+>default</A> <CODE>-resize</CODE> filter for some types of images and
+operations.  For this reason, "<CODE>-filter Mitchell</CODE>" can
+often be omitted. </P>
+
+<BR>
+
+If you do not want to introduce any halo, use the EWA
+<A HREF="../#gaussian_other" >Quadratic B-spline Filter</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -filter Quadratic -distort Resize 200% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The quadratic B-spline filter is quite blurry, although less so than
+the better known, and even smoother, <A HREF="../#gaussian_other"
+>tensor cubic B-spline smoothing filter</A>. </P>
+
+<BR>
+
+Here is a list of the above filters in decreasing order of sharpness
+(more is good) and halo (more is bad): tensor Lanczos (sharpest, with
+the most halo), EWA LanczosRadius, EWA LanczosSharp, EWA
+QuadraticJinc, tensor Mitchell, EWA Robidoux, and finally EWA
+Quadratic (very blurry, with no halo). Of course, halo and blur are
+not the whole story: Most importantly, there are also moir&eacute;,
+tonal drift and "jaggies" to worry about. </P>
+
+If you are willing to add just one bell and whistle to your toolchain,
+it should be to downsample (shrink, or reduce) images through linear
+light. When downsampling (for example, making a thumbnail), you really
+should filter through the linear RGB or XYZ color spaces, as discussed
+in <A HREF="../../resize/#resize_colorspace" >Colorspace
+Correction</A>.  Although this is less of an issue with blurry images
+and images without dense color patterns, not downsampling through
+linear light can cause great damage, as documented
+in <A HREF="http://www.4p8.com/eric.brasseur/gamma.html" >Eric
+Brasseur's Gamma Error in Picture Scaling</A> (which unfortunately
+presents outdated ImageMagick commands). </P>
+
+On the other hand, I do not recommend upsampling (enlarging) through
+linear light. That is: You generally should <EM>not</EM> use standard
+linear light <A HREF="../../resize/#resize_colorspace" >Colorspace
+Correction</A> when enlarging images, at least when using filters with
+significant negative lobes (any filter that introduces haloing, which
+means most of them). Compare the RGB and XYZ (linear light)
+enlargements to the sRGB (not color corrected) and sigmoidized (custom
+color corrected) enlargements shown in
+the <A HREF="../../forum_link.cgi?f=22&t=21804"
+>Enlarge with sRGB, RGB, LAB, LUV, XYZ, sigmoidal...? ImageMagick
+Forum thread</A>. The linear light enlargements (RGB and XYZ) are
+almost always significantly worse.
+The <A HREF="../../resize/#resize_sigmoidal" >sigmoidized</A>
+elargements generally look best,
+although <A HREF="../../resize/#resize_lab" >enlargements through
+Lab</A> are sometimes even better. Enlargements through linear light
+often look so bad that you are better off ignoring color space issues
+and filtering sRGB pixel values directly (using commands like the
+above). </P>
+
+
+<A NAME="quality"></A>
+<H3>Quality Control</H3>
+
+Use the <A HREF="../#options" >Expert Filter Option</A>
+"<CODE>-define filter:verbose=1</CODE>" to make ImageMagick give
+detailed information on the selected filter for a resize or distort
+operation. </P>
+
+Do not use an IM Q8 (8-bit) version of ImageMagick with
+<A HREF="../../resize/#resize_colorspace" >Colorspace Correction</A>
+(<CODE><A HREF="../../option_link.cgi?colorspace" >-colorspace</A></CODE>),
+or <A HREF="../../resize#resize_sigmoidal" >Sigmoidal Colorspace</A>
+(<CODE><A HREF="../../option_link.cgi?sigmoidal-contrast"
+>-sigmoidal-contrast</A></CODE>) resize techniques. </P>
+
+Do use a <A HREF="../../basics/#hdri" >HDRI Version of IM</A> when
+using a tensor (2-pass) <A HREF="../../resize/#resize" >Resize
+Operator</A> (<CODE><A HREF="../../option_link.cgi?resize"
+>-resize</A></CODE>) with a filter with one or more negative
+lobes. HDRI prevents internal clipping of "between resize passes"
+intermediate values. This clipping leaves small artefacts, especially
+when enlarging. HDRI is not necessary with the <A HREF="../#triangle"
+>Triangle</A>, <A HREF="../#quadratic" >Quadratic</A> and
+<A HREF="../#spline" >Spline</A> filters, because they don't have negative
+lobes. HDRI is also unnecessary with <CODE>-distort Resize</CODE>. </P>
+
+Almost always downsample (shrink) through linear light (provided you
+do not use a Q8 (8-bit) version of ImageMagick), and almost never
+upsample (enlarge) through linear light. Working with the wrong
+colorspace can have as much impact as a bad filter choice. (The real
+solution may be to choose filters that work well with linear light
+even when enlarging, but it is more expedient to change color
+space.) </P>
+
+The chosen conversions into and out of linear RGB assume sRGB input
+and output images. Other color spaces may require different
+conversions (into and out of the XYZ color space, for example). </P>
+
+You may want to navigate color spaces using color profiles instead of
+the built-in conversion utility (<CODE>-colorspace</CODE>). </P>
+
+These recommendations have not been carefully checked with an active
+transparency channel. </P>
+
+
+<A NAME="detailed"></A>
+<H3>Detailed Answer</H3>
+
+Downsampling (reducing the image's pixel count, for example, producing
+thumbnails) and upsampling (enlarging or, more generally, resampling
+without downsampling much) produce different artefact mixes. For this
+reason, different techniques are recommended for each type of geometrical
+operation. </P>
+
+
+<A NAME="upsampling"></A>
+<H3>Recommended Upsampling Methods (Enlarging)</H3>
+
+Results of resizing using the <A HREF="../#lanczos_sharp"
+>LanczosSharp EWA Filter</A> through
+a <A HREF="../../resize/#resize_sigmoidal" >Sigmoidized Colorspace</A>
+are fairly artefact free, if a bit blurry. The built-in LanczosSharp,
+discussed in the <A HREF="#short" >Short Answer</A>, works well, but I
+prefer a version with slightly less de-blur, obtained with the
+"<CODE>-filter Lanczos -define filter:blur=.9891028367558475</CODE>".
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+          -filter Lanczos -define filter:blur=.9891028367558475 \
+          -distort Resize 500% \
+          -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+You would get nearly identical results with the built-in LanczosSharp
+filter, which is obtained by replacing "<CODE>-filter Lanczos -define
+filter:blur=.9891028367558475</CODE>" by "<CODE>-filter
+LanczosSharp</CODE>". </P>
+
+"Sigmoidization" has to do with the pair
+of <A HREF="../../color_mods/#sigmoidal" >Sigmoidal Contrast</A>
+operators.  Basically, the
+"<CODE><A HREF="../../option_link.cgi?sigmoidal-contrast"
+>+sigmoidal-contrast</A></CODE>" operator (with a "<CODE>+</CODE>")
+converts the linear RGB version of the image created
+by <CODE><A HREF="../../option_link.cgi?colorspace" >-colorspace
+RGB</A></CODE> to a custom RGB color space that has a S-shaped
+"intensity curve" instead of a linear one.  This "intensity curve" is
+a bit like piecing together two sRGB gamma curves (one using negated
+images) to make a symmetrical S curve. The
+"<CODE><A HREF="../../option_link.cgi?sigmoidal-contrast"
+>-sigmoidal-contrast</A></CODE>" operator (with a "<CODE>-</CODE>")
+converts the result of filtering back to a normal linear RGB result,
+which is converted back to the sRGB colorspace for the final
+save. </P>
+
+You may decrease halos and increase perceptual sharpness by increasing
+the sigmoidal contrast (up to 11.5, say). Higher contrasts are
+especially recommended with greyscale images (even "false RGB
+greyscale" that have three proportional color channels).  The downside
+of sigmoidization is that it sometimes produces "color bleed"
+artefacts that look a bit like cheap flexographic ("gummidruck")
+printing or chromatic aberration. In addition, sigmoidization's
+"fattening" of extreme light and dark values may not work for your
+image content. If such artefacts are obvious, push the contrast value
+down from 7.5 (to 5, for example, or even lower). Setting the contrast
+to 0 is equivalent to enlarging through linear RGB. </P>
+
+WARNING: The two sigmoidal contrast values must match. That is: If you
+change the first "7.5" to "5", you must do the same with the second
+"7.5" as well.  Likewise, if you remove one of
+the <CODE>-colorspace</CODE> commands, also remove the other one
+unless, of course, you actually intend to convert to another color
+space. The commands shown in these recommendations assume that the
+input and output color spaces are both sRGB. </P>
+
+You may skip sigmoidization altogether, by omitting the two
+"<CODE><A HREF="../../option_link.cgi?sigmoidal-contrast"
+>+/-sigmoidal-contrast</A></CODE>" commands, in which case I recommend
+converting into and out of the Lab color space instead of linear RGB.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace Lab \
+          -filter Lanczos -define filter:blur=.9891028367558475 \
+          -distort Resize 500% -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+As discussed at the end of the <A HREF="#short" >Short Answer</A>,
+enlargements of sRGB images through linear RGB generally look worse
+than enlargements that are performed by filtering sRGB pixel values
+directly. In any case, you should omit the
+two <CODE>-colorspace</CODE> commands is you use a Q8 version of
+ImageMagick.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -filter Lanczos -define filter:blur=.9891028367558475 \
+          -distort Resize 500% <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The last three commands show how to use one single filter (my favorite
+EWA LanczosSharp variant, specified by "<CODE>-filter Lanczos -define
+filter:blur=.9891028367558475 -distort Resize</CODE>") three different
+ways, defined by the color space in which the "mixing of pixel values"
+is done: sigmoidal, Lab, and sRGB. Every filter can be used
+with every one of the recommended color spaces. In the remainder of
+this section, I only show the sigmoidized version. </P>
+
+<BR>
+
+If you want sharper results, use sigmoidized EWA with another modified
+"Cylindrical Lanczos 3" filter, namely <A HREF="../#lanczos_radius"
+>EWA Lanczos Radius 3</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+          -filter LanczosRadius -distort Resize 500% \
+          -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The above command does not work with ImageMagick older than version
+6.8.0-2.  You can reproduce this EWA Lanczos Radius 3 by manually
+setting the <CODE>blur</CODE> variable.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+          -filter Lanczos -define filter:blur=.9264075766146068 \
+          -distort Resize 500% \
+          -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The <A HREF="../#blur" >Blur Expert Control</A> can be used to adjust
+the sharpness of the scheme.  Decreasing <CODE>blur</CODE> increases
+sharpness, mostly at the expense of increasing jaggies (when
+downsampling, increasing moir&eacute;).  Setting
+"<CODE>blur=.9264075766146068</CODE>" scales the EWA disc so it has a
+radius equal to exactly 3, hence the name "EWA Lanczos Radius
+3". (Setting "<CODE>blur=.9812505644269356</CODE>" reproduces the
+built-in EWA LanczosSharp filter.) </P>
+
+<BR>
+
+If you want something even sharper, use a sigmoidized tensor (orthogonal or
+2-pass resize) "Ginseng 3-lobe" filter.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+          -define filter:window=Jinc -define filter:lobes=3 \
+          -resize 500% -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+"Ginseng" refers to "Jinc-windowed Sinc" filter: it is a pun based on
+the similarity of the pronunciations of "Jinc-Sinc" and "Ginseng".
+Unlike almost all EWA filters, as well as the commonly used
+tensor <A HREF="../#mitchell" >Mitchell-Netravali
+(<CODE>Mitchell</CODE>) filter</A>), the Ginseng tensor filter, like
+the tensor <A HREF="../#lanczos" >Lanczos Filter</A>, is
+interpolatory, usually a good thing as far as sharpness is concerned.
+With HDRI turned on, tensor Ginseng is actually recommended over EWA
+Lanczos Radius 3. </P>
+
+<BR>
+
+If the second halo of the above filters bothers you, try sigmoidized
+EWA Jinc 3-lobe windowed with quadratic B-spline ("QuadraticJinc").
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+          -define filter:window=Quadratic -distort Resize 500% \
+          -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<BR>
+
+You can eliminate the second halo completely using
+sigmoidized <CODE>-distort Resize</CODE> and <CODE>-resize</CODE>
+with <A HREF="../#cubics" >Keys cubics</A>. These filters are
+discussed further in the downsampling section below. I recommend them
+more for downsampling than upsampling. Nonetheless, they are easy to
+adjust to taste, and give pretty good results. Start with tensor
+Mitchell (<CODE>-filter Mitchell -resize</CODE>) and EWA Robidoux
+(<CODE>-distort Resize</CODE>), and give a try to EWA RobidouxSharp
+(<CODE>-filter RobidouxSharp -distort Resize</CODE>) and tensor
+Catmull-Rom (<CODE>-filter CatRom -resize</CODE>) if you want
+something sharper. (Only use <CODE>-resize</CODE> with HDRI.) </P>
+
+<BR>
+
+If you do not want to add any haloing whatsoever, use sigmoidized EWA
+quadratic B-spline smoothing. It is blurry, but it strikes a pretty
+good balance between sharpness and jaggedness for a monotone
+filter. Because it is smoothing, higher values of the contrast are
+recommended.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 9.5 \
+          -filter Quadratic -distort Resize 500% \
+          -sigmoidal-contrast 9.5 -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+If your image contains lines that are perfectly vertical or
+horizontal, or contains synthetic linear color gradients, you may want
+to use sigmoidized <A HREF="../#gaussian_other" >tensor quadratic
+B-spline smoothing filter</A> instead of the EWA version. The tensor
+version is obtained by replacing "<CODE>-distort Resize</CODE>" by
+"<CODE>-resize</CODE>". It is blurrier, by a minuscule amount, than
+the EWA one. Because it has no negative lobe, tensor Quadratic works
+fine without HDRI.</P>
+
+<BR>
+
+If you want neither halos nor jaggies and are willing to live with a
+lot of blur, use sigmoidized EWA cubic B-spline smoothing.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 10.75 \
+          -filter Spline -distort Resize 500% \
+          -sigmoidal-contrast 10.75 -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Again, you may want to try the <A HREF="../#gaussian_other" >tensor
+(<CODE>-resize</CODE>) version</A>; it preserves horizontal and
+vertical features well, and is very slightly more blurry. It works
+fine without HDRI. </P>
+
+<A NAME="upsampling_examples"></A>
+<H3>Upsampling Examples</H3>
+
+In this section, I show the results of enlarging a minuscule image
+produced by the following code, 10 times (from 10x6 to 100x60).
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert -size 10x6 xc:grey20 +antialias \
+          -draw 'fill white line 4,0 5,5' line.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The same test image and enlargement ratio was used in the enlargement
+section of the <A HREF="../#compare" >Filter Comparison.</A> </P>
+
+First, enlargements performed with sigmoidization.
+
+<DIV ALIGN=center>
+   <A HREF="enlarged_sigmoidize.png"
+      ><IMG SRC="enlarged_sigmoidize.png"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+The <CODE>Point</CODE> enlargement, which uses nearest neighbor pixel
+replication, is there to show the tiny 10x6 image, unprocessed. The
+other filters are ordered based on the amount of halo and blur they
+introduce. </P>
+
+Besides nearest neighbour (Point), the comparison includes four
+interpolatory filters: tensor Cosine-windowed Sinc 3-lobe
+a.k.a. Cosine (<CODE>-filter Cosine -resize</CODE>), tensor
+Sinc-windowed Sinc 3-lobe a.k.a. Lanczos (<CODE>-filter Lanczos
+-resize</CODE>), tensor Jinc-windowed Sinc 3-lobe a.k.a. Ginseng
+(<CODE>-define filter:window=Jinc -define filter:lobes=3
+-resize</CODE>), and tensor filtering with the Catmull-Rom Keys
+bicubic a.k.a. Catrom (<CODE>-filter CatRom -resize</CODE>). The
+interpolatory filters are among the sharpest and most jaggy, with deep
+halos.  Indeed, sharpness is approximately proportional to the amount
+of haloing and jaggedness when using a high quality filter. </P>
+
+Here are the results of enlarging through the Lab color space (without
+sigmoidization).
+
+<DIV ALIGN=center>
+   <A HREF="enlarged_lab.png"
+      ><IMG SRC="enlarged_lab.png"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Here are the results of enlarging without the <CODE>colorspace</CODE>
+and <CODE>sigmoidal-contrast</CODE> commands, that is, filtering sRGB
+pixel values directly. They are quite similar to the results of
+enlarging through the Lab color space.
+
+<DIV ALIGN=center>
+   <A HREF="enlarged_srgb.png"
+      ><IMG SRC="enlarged_srgb.png"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Finally, here are the results of enlarging through linear RGB (without
+sigmoidization). Such results are the basis for the "don't enlarge
+through linear light" recommendation.
+
+<DIV ALIGN=center>
+   <A HREF="enlarged_linear.png"
+      ><IMG SRC="enlarged_linear.png"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+
+<A NAME="downsample"></A>
+<H3>Recommended Methods for Downsampling (Shrinking)</H3>
+
+Basically, the filters recommended for upsampling are also recommended
+for downsampling. Downsampling, however, should almost always be done
+using a linear light <A HREF="../../resize/#resize_colorspace"
+>Colorspace Correction</A> technique. </P>
+
+ImageMagick has two linear light <A HREF="../../color_basics/#other"
+>color spaces</A> built in: RGB and XYZ.  With sRGB images, the RGB
+color space, which stands for linear RGB with sRGB primary colors in
+ImageMagick, is the obvious choice.  In some situations (jarringly
+obvious dark halos, sharp images without dense pixel patterns), it may
+be preferable to use mild (contrast&lt;4) sigmoidization.  In general,
+however, you should stick to linear light downsampling. This is what
+is done in the remainder of this section. (Of course, downsample
+without color space conversions when using Q8 ImageMagick.) </P>
+
+First, try downsizing through linear RGB with the
+<A HREF="../#lanczos_sharp" >LanczosSharp EWA Filter</A> variant
+discussed in the upsampling section.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB \
+          -filter Lanczos -define filter:blur=.9891028367558475 \
+          -distort Resize 20%    -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+For sharper results, use linear light <A HREF="../#lanczos_radius"
+>EWA Lanczos Radius 3</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB -filter LanczosRadius \
+          -distort Resize 20% -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+You can increase sharpness by decreasing the <CODE>blur</CODE> value.
+For example, "<CODE>blur=0.88549061701764</CODE>" generates a decent
+strongly sharpening filter called "EWA Lanczos3Sharpest" in the
+ImageMagick Forums and in Adam Turcotte's forthcoming Masters thesis.
+</P>
+
+Very sharp results are obtained with <A HREF="../#cosine" >tensor
+Cosine-windowed Sinc 3-lobe</A>, a.k.a. <CODE>Cosine</CODE>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB -filter Cosine \
+          -resize 20% -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<A HREF="../#lanczos" >Tensor Lanczos</A> is sharper than tensor
+Ginseng but softer than tensor Cosine.  They give similar results. I
+actually prefer the Ginseng results, but many people want very sharp
+results when downsampling. Recommending tensor Cosine is consistent
+with this common preference. (Remember to use HDRI with such
+<CODE>-resize</CODE> filters.) </P>
+
+You can decrease moir&eacute; by increasing the blur value, by
+increasing the number of lobes, and/or by changing window function.
+Increasing the blur value is safe, although it also decreases
+sharpness.  I generally do not recommend using more than three lobes,
+because I do not like seeing more than two halos, and I find the
+benefits of using more than four lobes to be small.  This being said,
+if your original image is blurry, the additional halos may be
+invisible, and increasing the number of lobes may be worth a try. </P>
+
+I do not recommend changing window functions if you don't really know
+what you are doing. (This being said, the Hann window function is a
+solid general purpose window, and Parzen works well with four
+lobes.) </P>
+
+<BR>
+
+Another annoying artefact is <A HREF="../#ringing" >haloing
+(ringing)</A>. The above filters all have noticeable second halos. The
+following filter, EWA quadratic B-spline-windowed Jinc 3-lobe
+("QuadraticJinc"), has a very mild second halo and yet manages fairly
+strong moir&eacute; suppression without being too blurry. </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB -define filter:window=Quadratic \
+          -distort Resize 20% -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<BR>
+
+To eliminate the second halo completely, use linear light
+<A HREF="../#robidoux" >Robidoux EWA Filtering</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB \
+          -distort Resize 20% -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The <A HREF="../#robidoux" >Robidoux Filter</A> is a member of
+the <A HREF="../#cubics" >Keys family of BC-splines</A>. You can
+dial the sharpness and haloing of the result by adjusting the B
+parameter. "<CODE>B=1.0</CODE>" reproduces EWA cubic B-spline
+filtering, a halo-free but very blurry filter; "<CODE>B=0.0</CODE>"
+reproduces EWA Catmull-Rom filtering, a very strongly sharpening
+filter; and linear light EWA Robidoux can be reproduced with the
+following command.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB \
+          -filter Cubic -define filter:B=.37821575509399867 \
+          -distort Resize 20% -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+From blurry (less halo) to sharp (more halo), the named Keys cubics
+are Spline, Robidoux, Mitchell, RobidouxSharp, and CatRom. See
+<A HREF="../#cubic_bc" >Cubic B,C Expert Controls</A> for a table of the
+B values of these filters. Without setting the B value, the named Keys
+cubics can be obtained using
+"<CODE>-filter <I>{filtername}</I></CODE>" instead of
+"<CODE>-filter Cubic -define filter:B=<I>{value}</I></CODE>". </P>
+
+Although, with Keys cubics, I prefer linear light EWA filtering when
+downsampling, linear light tensor filtering with Keys cubics is also
+recommended (provided you use HDRI). This is obtained by replacing
+"<CODE>-distort Resize</CODE>" by "<CODE>-resize</CODE>". Tensor
+filtering with the Mitchell cubic (<CODE>-filter Mitchell
+-resize</CODE>) is particularly good. </P>
+
+<BR>
+
+If you do not want any haloing, use linear light EWA or tensor
+Quadratic or Spline filtering (see the upsampling section). You may
+also get good results with linear light EWA Triangle filtering.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert <I>{input}</I> -colorspace RGB -filter Triangle \
+          -distort Resize 20% -colorspace sRGB <I>{output}</I>
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Linear light tensor Triangle (a.k.a. bilinear) is obtained by replacing
+"<CODE>-distort -resize</CODE>" by "<CODE>-resize</CODE>".  Tensor
+Triangle is slightly blurrier and shows less moir&eacute; than its EWA
+version, and it preserves perfectly horizontal and vertical features
+better as well. It works fine without HDRI. Both EWA and tensor Triangle
+filtering are interpolatory.  </P>
+
+<BR>
+
+With the exception of EWA Triangle, tensor Triangle and EWA
+Lanczos3Sharpest, the above filters also work well when
+enlarging. (Tensor Triangle is actually recommended if you are
+enlarging just a little bit.) </P>
+
+Adjusting the <CODE>blur</CODE> (between 0.7 and 1.0)
+or <CODE>B</CODE> parameters (between 0.0 and 1.0) should obviate the
+need for <A HREF="../../resize/#resize_unsharp" >USM (Unsharp)
+Sharpening</A>, a common final step when downsampling, or allow you to
+use less of it.  Note however that low values of the <CODE>blur</CODE>
+and <CODE>B</CODE> parameters generally lead to considerable
+artefacts; high values, to blur. </P>
+
+<A NAME="downsampling_examples"></A>
+<H3>Downsampling Examples</H3>
+
+These examples use the <A HREF="rings_sm_orig.gif" >Smaller Rings
+Image</A> image also used in the <A HREF="../#aliasing" >Aliasing and
+Moir&eacute; Effects</A> section.  Instead of resizing this 200x200
+image down to 100x100, using sRGB values directly, we downsize to
+101x101 through linear RGB.
+
+<DIV ALIGN=center>
+   <A HREF="reduced_linear.png"
+      ><IMG SRC="reduced_linear.png"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Ideally, many concentric rings should be preserved, without the
+appearance of features which are not in the original. There is no such
+thing as a free lunch: The filters that lose the fewest rings have the
+most obvious artefacts.  Nonetheless, some of the filters manage a
+pretty good balance between sharpness and aliasing, namely EWA
+QuadraticJinc, tensor Mitchell, and tensor Triangle. EWA LanczosSharp,
+EWA Quadratic, EWA Lanczos Radius 3 and EWA Robidoux also do well in
+this test. Generally, EWA methods have good moir&eacute;
+suppression. </P>
+
+<A NAME="borderline"></A>
+<H3>Borderline Cases</H3>
+
+If you are changing the aspect ratio to the extent that you upsample
+(enlarge) in one direction and downsample (reduce) in the other, use
+a technique that works well in both situations, like linear light EWA
+LanczosSharp, tensor Ginseng,  EWA Lanczos Radius 3, or EWA quadratic
+B-spline-windowed Jinc 3-lobe ("QuadraticJinc"). </P>
+
+If you are both downsampling and upsampling, downsampling considerations
+should dominate your choice. For example, resize through linear light,
+as if you are downsampling in both directions. </P>
+
+The same prescription basically holds if the resizing ratio is close to
+1 in both directions, for example if you are resizing a 100x100 image to
+102x102, 95x95 or 102x95 (or rotating the image). First, try
+interpolatory filters like tensor Ginseng or tensor Triangle.  The usual
+EWA Lanczos Radius 3, EWA LanczosSharp and EWA QuadraticJinc work well
+too. Sigmoidization should be used sparingly (constrast&lt;5.5), if at
+all.  In other words, you probably should stick to linear light when
+barely resizing, although the "should" is weaker than if you are
+shrinking a lot in one or both directions.
+
+<A NAME="feedback"></A>
+<H3>Feedback</H3>
+
+I read positive and negative comments with interest. These
+recommendations are a work in progress, and consequently examples in
+which they fall short of expectations are particularly
+valuable. </P>
+
+Sigmoidization and resizing through the Lab color space, in particular,
+are recent additions to my tool kit and their strengths and limitations
+have not been carefully established. Consequently, I am particularly
+interested in hearing about good and bad experiences with these
+techniques. For example, it appears that sigmoidization is not so good
+with "defective" images which already contain significant ringing and
+haloing, or have been heavily manipulated somehow (that are far from
+"natural"), although it seems to do fine at enlarging CG art, line
+drawings and text-like images. </P>
+
+Sending NicolasRobidoux a message through the <A
+HREF="../../forum_link.cgi?u=17521" >ImageMagick Forums System</A> is
+a good way to point me to a relevant post. Otherwise, try
+&lt;nicolas.robidoux&#64;gmail.com&gt;. </P>
+
+<A NAME="thanks"></A>
+<H3>Thanks</H3>
+
+I (Nicolas Robidoux) thank John Cupitt, Henry HO, Bryant Moore, Mathias
+Rauen, Adam Turcotte, Dane Vandeputte, Luiz E. Vasconcellos and <A
+HREF="http://www.fmwconcepts.com/fmw/fmw.html" >Fred Weinhaus</A> for
+useful comments, with special thanks to <A
+HREF="http://www.ict.griffith.edu.au/anthony/anthony.html" >Anthony
+Thyssen</A> on whose shoulders I stood when developing EWA methods.
+Anthony and Cristy built quite a nice platform for image processing
+reseach. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 10 October 2012 <BR>
+Updated: 21 October 2012 <BR>
+Author: <A HREF="http://ca.linkedin.com/pub/nicolas-robidoux/40/3ab/b73"
+        >Nicolas Robidoux</A>, &lt;nicolas.robidoux&#64;gmail.com&gt; <BR>
+Formatting: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/filter/nicolas/</CODE>
+</ADDRESS></BODY></HTML>

@@ -1,0 +1,1921 @@
+<HTML><HEAD>
+<TITLE>Photo Handling -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/photos/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Digital Photo Handling</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#exif"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Digital Camera Meta-Data, the EXIF Profile</A>
+<DD><A HREF="#orient"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Digital Photo Orientation</A>
+<DD><A HREF="#color"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Color Improvements</A>
+    <UL>
+    <LI><A HREF="#brightening"
+        > Brightening Under-exposed Photos</A>
+    <LI><A HREF="#binning"
+        > Binning - Reducing Digital Noise</A>  (Under Construction)
+    </UL>
+<DD><A HREF="#cookbook"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Photo Conversion Cookbook</A>
+    <UL>
+    <LI><A HREF="#rotation"
+        > Minor Rotation Correction</A>
+        <FONT SIZE=-1> - fix a photo that is not quite level</FONT>
+    <LI><A HREF="#tilt_shift"
+        > Tilt-Shift Effect</A>
+        <FONT SIZE=-1> - make scenery look like an artificial model</FONT>
+    <LI><A HREF="#png_jpg"
+        > PNG-JPEG Layered Images</A>
+        <FONT SIZE=-1> - compressing pages while keeping text sharp</FONT>
+    <LI><A HREF="#overlap"
+        > Overlapping Photos</A>
+        <FONT SIZE=-1> - blurred overlaps of appended photos</FONT>
+    <LI><A HREF="#double"
+        > Double Exposures</A>
+        <FONT SIZE=-1> - mixing multiple photos of the same scene</FONT>
+    <LI><A HREF="#anonymity"
+        > Protect Someone's Anonymity</A>
+        <FONT SIZE=-1> - fuzzing out some part of a photo</FONT>
+    <LI><A HREF="#texture"
+        > Add a Texture to an Image</A>
+    <LI><A HREF="#chroma_key"
+        > Chroma Key Masking</A>
+        <FONT SIZE=-1> - Modifying by areas of specific color</FONT>
+    <LI><A HREF="#color-in"
+        > Children's Color-In Images</A>
+    <LI><A HREF="#pencil"
+        > Pencil Sketch</A>
+    <LI><A HREF="#vignettation"
+       > Vignette Removal</A>
+    </UL>
+</DL>
+
+One of the prime uses of ImageMagick is the handling and modification of
+photographs that were taken with the new modern digital camera. </P>
+
+These cameras generally take quite large, high resolution photos, and include
+in them meta-data about the time, scale, zoom, camera, orientation, and so on.
+There are even plans to link cameras to mobile phones, so that it can even
+make a guess as to where you were when the photo was taken and who might
+be in the photo (from what mobile phones are in font of it).  </P>
+
+Here we look at the basics of handling digital photos, and even converting
+them for other purposes, such as artistic renderings. </P>
+
+Special thanks goes to Walter Dnes, a digital camera user, for his help in the
+enhancement of digital photos. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="exif"></A>
+<H2>Digital Camera Meta-Data, the EXIF Profile</H2>
+
+When a digital camera takes a photo, it also includes a lot of extra
+information in the JPEG save file.  This meta-data is known as the EXIF
+profile, and is provided specifically for photographic labs and development.
+
+The ImageMagick "<CODE>identify</CODE>" with a "<CODE><A
+HREF="../option_link.cgi?verbose" >-verbose</A></CODE>" setting will display
+this Exif information. </P>
+
+Here is the EXIF data of a photo I took of a <A HREF="pagoda_sm.jpg"
+>Pagoda, Kunming Zoo, in Southern China</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=pagoda_sm_exif.txt >
+  identify -format "%[EXIF:*]" pagoda_sm.jpg |\
+      sed 's/\(.\{46\}\).*/\1/' | column -c 110
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="pagoda_sm_exif.txt"
+    ><IMG SRC="pagoda_sm_exif.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The EXIF data, or any identify output, should be processed in a case
+  in-sensitive way.  Many older versions of IM for example, will output
+  "<CODE>EXIF:</CODE>" (uppercase) rather than "<CODE>exif:</CODE>"
+  (lowercase).
+</I></FONT></TD></TR></TABLE></P>
+
+Here is a similar example but using 'globbing' (shell-like) expression to
+limit output to EXIF fields involving Time...
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=pagoda_sm_time.txt >
+  identify -format "%[exif:*time*]" pagoda_sm.jpg
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="pagoda_sm_time.txt"
+    ><IMG SRC="pagoda_sm_time.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+There is a lot of information about this photo in the EXIF profile.
+For example <UL>
+<LI>My camera is a Panasonic ('<CODE>Make</CODE>'), DMC-LZ1
+    ('<CODE>Model</CODE>')
+<LI>The camera was rotated ('<CODE>Orientation</CODE>').
+    But I must have corrected that rotation without adjusting the EXIF data.
+    The camera was also tilted upward slightly, but that info is not recorded.
+<LI>The '<CODE>FocalLength</CODE>' of '<CODE>37mm</CODE> shows that I did not
+    make use of my cameras 'Optical Zoom' feature.  My camera could go up to a
+    6X optical zoom for a '<CODE>FocalLength</CODE>' of '<CODE>366/10</CODE>'
+    or '<CODE>222mm</CODE>'.
+<LI>And '<CODE>DigitalZoomRatio</CODE>' shows I did not digitally zoom either.
+<LI>The camera also used a fast 1/8 second '<CODE>ExposureTime</CODE>', and
+    an aperture '<CODE>MaxApertureValue</CODE>' of 3mm, or
+    '<CODE>FNumber</CODE>' of '<CODE>5.6</CODE>' and a
+    '<CODE>ISOSpeedRating</CODE>' of '<CODE>64</CODE>'.
+<LI>The flash ('<CODE>LightSource</CODE>') was not used.
+<LI>The original image was  1728 by 2304 pixels
+    ('<CODE>ExifImageLength</CODE>' and '<CODE>ExifImageWidth</CODE>').
+    Though the actual image, if you like to check is smaller, so I must have
+    cropped and/or resized it.
+<LI>And probably most importantly, it was taken around 14:05pm on 9th of
+    July 2005, according to the '<CODE>DateTime</CODE>' string.  That assumes
+    that I had the cameras time set correctly (which I did).
+<LI>More modern cameras may even have a GPS location and posibily a compass
+    direction of the view!
+</UL>
+
+Also included but not listed above is a small 'thumbnail' preview image that
+the camera used on its own display. </P>
+
+There is also features to mark photos you want to be 'developed' or printed by
+photographic printers, and to adjust other printing parameters. However this
+is rarely used by most people. </P>
+
+Many of these settings can be very useful to users, but the most useful to
+people is generally the date and time of the photo.  This of course assumes
+that the date and time was set correctly on the cemera before the photo was
+taken. Also many people are interested in the orientation of the image so it
+can be rotated correctly when displayed, and That is what we'll look at next.
+</P>
+
+All this data, and especially the preview image, can take up quite a lot of
+space in the image.  And it may be that I don't actually want everyone in the
+world knowing that I was in Kunming, China in July 2005.  As such you may like
+to remove EXIF data from your images before actually publishing it on the
+World Wide Web. </P>
+
+Also the size of an image from a digital camera usually very large (and getting
+larger), allowing you to print it at photo quality level, but is far too large
+for use of the WWW, and especially not for thumbnails.  As such unless you want
+users to actually be able to print photo quality images, I would not publish
+the original image directly. </P>
+
+The above image for example has been cropped and resized for IM examples
+usage, but I purposely left the EXIF data intact for the example.  Normally
+I would strip this information. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="fix"></A>
+<A NAME="orient"></A>
+<H2>Digital Photo Orientation</H2>
+
+I have been told that Photoshop will automatically rotate digital images based
+on the EXIF '<CODE>Orientation</CODE>' setting,  IM will also do this by
+including a "<CODE><A HREF="../option_link.cgi?auto-orient"
+>-auto-orient</A></CODE>" operator, after reading in the image. </P>
+
+However, and this is important
+<DIV ALIGN=center><B>JPEG Format is Lossy</B></DIV></P>
+
+What this means is that any time you decode and save the JPEG file format you
+will degrade the image slightly.  As a general image processor, IM will always
+completely decode and re-encode the format, as such it will always degrade
+JPEG images when it re-saves the image.  For more information on the nature of
+the JPEG format see <A HREF="../formats/#jpg" >JPEG Image File Format</A>.
+</P>
+
+The point is to only use IM to correct digital photo orientation (using
+"<CODE><A HREF="../option_link.cgi?auto-orient" >-auto-orient</A></CODE>")
+when you are also performing other image modifying operations, such as <A
+HREF="../thumbnails/#creation" >Thumbnail Creation</A>, <A
+HREF="../annotating/#anno_on" >Annotating Images</A>, <A
+HREF="../annotating/#watermarking" >Watermarking</A> or even <A
+HREF="#brightening" >Exposure Adjustments</A>. </P>
+
+IM can extract the current orientation (as a number) from the photo using an
+<A HREF="https://legacy.imagemagick.org/script/escape.php" >Image Property
+Escape</A>...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=center><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
+                  <TD WIDTH=80% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=orient_show.txt>
+  identify -format '%[exif:orientation]' pagoda_sm.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=10%>
+  <A HREF="orient_show.txt"
+      ><IMG SRC="orient_show.txt.gif"
+            ALIGN=middle VSPACE=0 HSPACE=20 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE></P>
+
+<!--  THIS FAILS.  If you save it and then look at the result.
+
+You can also set the EXIF value directly (caution is required as no format
+checks are performed).
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=center><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
+                  <TD WIDTH=80% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE NOIMAGE OUT=orient_set.txt>
+  convert pagoda_sm.jpg -set exif:orientation 5 \
+                  -format '%[exif:orientation]'   info:
+</CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=10%>
+  <A HREF="orient_set.txt"
+      ><IMG SRC="orient_set.txt.gif"
+            ALIGN=middle VSPACE=0 HSPACE=20 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE></P>
+-->
+
+IM provides a special "<CODE><A HREF="../option_link.cgi?orient"
+>-orient</A></CODE>" operator (use "<CODE><A HREF="../option_link.cgi?list"
+>-list</A> orientation</CODE>" to see possible values).
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=center><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
+                  <TD WIDTH=80% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=orient_setting.txt>
+  convert pagoda_sm.jpg -orient bottom-right \
+                 -format '%[exif:orientation]'   info:
+</CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=10%>
+  <A HREF="orient_setting.txt"
+      ><IMG SRC="orient_setting.txt.gif"
+            ALIGN=middle VSPACE=0 HSPACE=20 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE></P>
+
+These meta-data setting methods, allow you to adjust the orientation of photos
+you have modified, especially ones you have rotated. Note that a correctly
+orientated photo has an orientation of '<CODE>Top-Left</CODE>' or 1. </P>
+
+Of course you should not remove the EXIF meta-data (using either "<CODE><A
+HREF="../option_link.cgi?strip" >-strip</A></CODE>" or "<CODE><A
+HREF="../option_link.cgi?thumbnail" >-thumbnail</A></CODE>"), if you plan to
+use "<CODE><A HREF="../option_link.cgi?auto-orient" >-auto-orient</A></CODE>"
+later in the image processing.  Use it before stripping the image meta-data.
+</P>
+
+If you do want to correct the orientation of your photo, without degrading or
+otherwise modifying your image, I suggest you use the <A
+HREF="http://www.sentex.net/~mwandel/jhead/" >JHead</A> program.  For example
+here I correct a photos orientation, and delete the built-in preview thumbnail
+all the digital photos in a directory.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  jhead -autorot  *.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The JPEG lossless rotation will only work correctly for images that have
+  a size that is divisible by 8 or 16. This is true with most (but not all)
+  digital camera photos.  If you try this with an image that is an odd size the
+  right or bottom edge blocks (containing the partial size) will not be
+  positioned correctly in the final image, as these block can only exist on
+  the right or bottom edge. </P>
+
+  For an example of this see this <A HREF="../forum_link.cgi?t=16784&p=62157"
+  >specific discussion</A>
+</I></FONT></TD></TR></TABLE></P>
+
+The <A HREF="http://www.sentex.net/~mwandel/jhead/" >JHead</A> program will
+also let you adjust the photos date (if your camera time was set wrong, or you
+have travelled to different time zones), extract/remove/replace the preview
+thumbnail, set the comment field of the image, remove photoshop profiles, and
+do basic image cropping (to remove that stranger exposing himself ;-) so on,
+without degrading the JPEG image data.  </P>
+
+I recommend this program, or other programs like it (see <A
+HREF="../formats/#jpg_non-im" >Other JPEG Processing Programs</A>), to fix
+this information.  Just be sure that it does not actually decode/re-encode the
+JPEG image data. </P>
+
+One final point about orientation. If you pointed your camera almost straight
+up or down, the EXIF orientation setting may not resolve correctly.  The same
+goes for angled or slanted shots.  The orientation (and cameras) just have no
+senses for these situations. </P>
+
+Your only choice for such photos is to do the rotates yourself using the lower
+level non-lossy "<CODE>jpegtrans</CODE>", or IM "<CODE><A
+HREF="../option_link.cgi?rotate" >-rotate</A></CODE>", and then either reset
+the EXIF orientation setting (using <A
+HREF="http://www.sentex.net/~mwandel/jhead/" >JHead</A> or the IM "<CODE><A
+HREF="../option_link.cgi?orient" >-orient</A></CODE>" operator), or just strip
+the EXIF profile. </P>
+
+<PRE>
+Other IM Lossy Modifications...
+  If you are also resizing or otherwise modifying the image, such as reducing
+  its quality and size for use on the web, then data loss is already a fact.
+  As such during those operations IM can do similar things, allowing you to do
+  all the required operations in a single 'load-save' cycle.
+
+  Rotate ALL images to landscape   -rotate 90\<
+                       portrait    -rotate -90\>
+
+</PRE>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="color"></A>
+<H2>Color Improvements</H2>
+
+Before proceeding, it is recommended that you first look at <A
+HREF="../color_mods/" >Color Modifications</A> for an introduction to general
+color modification techniques that will be used. </P>
+
+<A HREF="../color_mods/#normalize" >Normalizing</A> (using "<CODE><A
+HREF="../option_link.cgi?normalize" >-normalize</A></CODE>") high-contrast
+line art and graphics can be great. But normalized photos may look unreal,
+and, as was said earlier, may not print well either. The "<CODE><A
+HREF="../option_link.cgi?contrast-stretch" >-contrast-stretch</A></CODE>"
+operator can limit the "boundaries" of the normalization, but the  "<CODE><A
+HREF="../option_link.cgi?levels" >-levels</A></CODE>" and/or "<CODE><A
+HREF="../option_link.cgi?sigmoidal-contrast" >-sigmoidal-contrast</A></CODE>"
+operator can make "smoother" adjustments (see <A
+HREF="../color_mods/#histogram" >Histogram Adjustments</A> for a lower level
+discussion of what these operators do). </P>
+
+The above input is courtesy of "Tong" form the IM Mailing List. </P>
+
+
+<A NAME="brightening"></A>
+<H3>Brightening Under-exposed Photos
+<FONT SIZE=-2>Contributed by Walter Dnes</FONT>
+</H3>
+
+Sometimes there simply isn't enough available light to allow for a proper
+exposure.  At other times, you may have to use shorter exposure times than
+optimal, in order to eliminate motion-blur. </P>
+
+Underexposed digital photos can have darker areas preferentially brightened,
+without blowing highlights, by using the "<CODE><A
+HREF="../option_link.cgi?sigmoidal-contrast" >-sigmoidal-contrast</A></CODE>"
+operator, with a '<CODE>0%</CODE>' threshold level. See <A
+HREF="../color_mods/#sigmoidal" >Sigmoidal Non-linearity Contrast</A> for more
+details. </P>
+
+Here is a minor underexposure example, which was taken at a free concert after
+sunset.  This has lots of brightly lit areas, which are clear, but also
+dark areas I would like to make more visible.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert night_club_orig.jpg  -sigmoidal-contrast 4,0%  night_club_fixed.jpg
+</CODE></PRE></TD></TR></TABLE>
+<!-- <CODE EXECUTE NOIMAGE>
+  mogrify -format gif -thumbnail 120x90 +repage night_club_fixed.jpg
+</CODE> -->
+  <A HREF="night_club_orig.jpg"
+     ><IMG SRC="night_club_tn.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="night_club_fixed.jpg"
+     ><IMG SRC="night_club_fixed.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    As always, you should use a non-lossy format like TIFF or PNG for
+    intermediate work. The JPEG format is only used here to reduce disk
+    space and download bandwidth for web publishing. </P>
+
+    Select image to see the enlarged version actually used by the examples
+    rather than the small thumbnail shown.
+</I></FONT></TD></TR></TABLE></P>
+
+And here is a  major underexposed example, which was a night-time shot from my
+balcony looking southwards towards the city of Toronto.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert night_scape_orig.jpg -sigmoidal-contrast 10,0%  night_scape_fixed.jpg
+</CODE></PRE></TD></TR></TABLE>
+<!-- <CODE EXECUTE NOIMAGE>
+    mogrify -format gif -thumbnail 120x90 +repage night_scape_fixed.jpg
+</CODE> -->
+  <A HREF="night_scape_orig.jpg"
+     ><IMG SRC="night_scape_tn.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="night_scape_fixed.jpg"
+     ><IMG SRC="night_scape_fixed.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+The main parameter controls the amount of brightening.  The more brightening
+required the higher value used.  And the grainier the output picture will
+look.  This is due to the smaller pixel errors also being enhanced. </P>
+
+Sigmoidal contrast brightening tends to de-emphasize the red end of the
+spectrum.  You may end up having to select a parameter that results in the
+most natural flesh tones, rather than the brightness level you really want.
+</P>
+
+In the case of major underexposure, you will end up with a glorified grainy
+black-and-white image after brightening.  This is a physical limitation of
+digital image enhancement.  If there's no colour data present, IM won't
+generate it for you.  In real life the bricks on the right-hand side of my
+balcony are reddish, and the trees below are green. </P>
+
+<A NAME="binning"></A>
+<H3>Binning -- Reducing Digital Noise
+<FONT SIZE=-2>Contributed by Walter Dnes</FONT>
+</H3>
+
+A lot of serious photographers are unhappy with the side-effects of
+the "megapixel race" by digital camera manufacturers. </P>
+
+Manufacturers pack more megapixels into a digital camera's sensor by making
+them smaller.  Smaller pixels result in a noisier picture at the same ISO
+setting, which forces people to use lower ISO settings.  Using lower ISO
+ratings to avoid noise requires longer exposure times.  This, in turn, means
+that most consumer digital cameras are effectively useless indoors
+beyond the 10-foot range of their built-in flash for anything except a
+still-life picture taken with the camera on a tripod. </P>
+
+Many digital camera users would gladly trade some pixels for less noisy
+pictures at higher ISO settings, but the marketeers who control the companies
+refuse to consider this as an option. </P>
+
+Fortunately, the trade-off can be done after the fact on digital
+photos.  The technical term is 'binning'.  The simplified theory goes
+like so... <UL>
+<LI>Take an n-by-n grid of pixels, and average their components to obtain
+    one "super-pixel".
+<LI>Signal is proportional to the combined pixel area, which means that
+    the amount of signal has increased by a factor of n^2
+<LI>Noise is random.  Which means that it is proportional to the square root
+    of the combined pixel area, a factor of n.  The net result is that SNR
+    (signal-to-noise ratio) has increased by a factor of n.  See <A
+    HREF="http://www.noao.edu/outreach/aop/glossary/binning.html" >Photo
+    Glossary, Binning</A> for more details.
+</UL></P>
+
+When a 1600x1200 digital photo is binned down to 800x600 (i.e. a 2x2
+grid) the signal-to-noise ratio is doubled.  Similarly, a 2560x1920
+picture binned 3x3 to 853x640 pixels will have a factor of 3 improvement
+in signal-to-noise ratio. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    In order to make use of binning, the photo image must be a whole number
+    multiple of the final desired size.
+</I></FONT></TD></TR></TABLE></P>
+
+In ImageMagick, the special "<CODE><A HREF="../option_link.cgi?filter"
+>-filter</A></CODE>" setting '<CODE>box</CODE>' will average groups of pixels
+down to a single pixel when you "<CODE><A HREF="../option_link.cgi?resize"
+>-resize</A></CODE>" an image (See <A HREF="../filter/#filter" >Resampling
+Filters</A> for details. This means that to do a 'binning' you only need to
+resize the image correctly. </P>
+
+<DIV ALIGN=center><FONT SIZE=+2><B>
+<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
+Under Construction
+<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
+</B></FONT></DIV></P>
+
+Walter Dnes also provided the original script <A HREF="binning/binn" >binn</A>
+to perform the calculations, minimally crop the image and perform the
+'binning'. </P>
+
+<A HREF="binning/sample3.html" >Binning examples 3</A></P>
+<A HREF="binning/sample4.html" >Binning examples 4</A></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="cookbook"></A>
+<H2>Photo Conversion Cookbook</H2>
+
+<A NAME="rotation"></A>
+<H3>Minor Rotation Correction
+<FONT SIZE=-1> -- Make a photo more level</FONT></H3>
+
+Typical situation.  You have taken a photo, but the image isn't level, and you
+want to correct it. </P>
+
+<A HREF="beijing_md.jpg"
+   ><IMG SRC="beijing_tn.png"
+         ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></P>
+<!-- <CODE EXECUTE>
+  convert beijing_md.jpg -thumbnail x150 beijing_tn.png
+</CODE> -->
+
+For example here is a photo I took using a hand held camera in Beijing, 2008,
+from the hill in Jingshan Park, immediately behind the Forbidden City. No it
+isn't of the Forbidden City itself, but a temple on the other side of the
+hill. </P>
+
+<I>Click on the thumbnail, to see a larger image.  </I></P>
+
+Yes the image is small, and you should apply the solution to the
+original image not a small thumbnail, but the techniques is the same for any
+image.  In this case the image needs to be rotated by -1.8 degrees, to correct
+it. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+Now if you just simply rotate the image you will get a slightly larger image
+containing areas of color in the corners, making the correction look obvious
+and horible.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert beijing_tn.png -rotate -1.95  beijing_rotate.png
+</CODE></PRE></TD></TR></TABLE>
+</P>
+
+Even if you were to crop the image back to its original size, such as
+demonstarted in <A HREF="../warping/#rotate" >Simple Image Rotations</A> you
+will still get some colored corners. </P>
+
+</TD><TD>
+   <A HREF="beijing_rotate.png"
+      ><IMG SRC="beijing_rotate.png"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The simplist solution would be to now crop that result so as to remove those
+borders, but then your image becomes a rather odd size, which is again rather
+obvious that something has been done. Though the formula to do that clipping
+is not simple, but is demonstrated in <A HREF="../distorts/#rotate_methods"
+>Distortion Rotation Methods</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+The better solution is to not only rotate the image, but scale it slightly so
+as to produce a rotated image that is the same size as the original.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  angle=-1.95
+  convert beijing_tn.png -distort SRT \
+     "%[fx:aa=$angle*pi/180;(w*abs(sin(aa))+h*abs(cos(aa)))/min(w,h)], $angle" \
+     beijing_rot_correction.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="beijing_rot_correction.png"
+      ><IMG SRC="beijing_rot_correction.png"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+And the image is clean looking with a perfectly level wall. </P>
+
+The angle calculation is reasonably straight forward trigonometry, using the
+pixel locations at the ends of a long straight line in the image. However
+I found that simply rotating the image at various small angles by trial and
+error will find a good rotation angle relatively quickly. </P>
+
+When looking how good a particular angle is, take a very close zoomed in look
+at the pixels along the line or edge you using.  The top of the wall in this
+photo.  And remember in image rotations a left or anti-clockwise rotation is
+negative (due to Y-axis pointing downward). </P>
+
+Also remember that if at all possible, always apply operations to the original
+image, avoiding the use intermediate images (and especially intermediate JPEG
+images).  It is always better to apply any photo modification starting with
+the original source than any saved intermediate copy. </P>
+
+
+<A NAME="tilt_shift"></A>
+<H3>Tilt-Shift Effect
+<FONT SIZE=-1> -- make scenery look like an artificial model</FONT></H3>
+
+<A HREF="beijing_md.jpg"
+   ><IMG SRC="beijing_tn.png"
+         ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A></P>
+
+The 'Tilt-Shift' is a technique which causes an image be be blurred at the
+top and bottom, while leaving the center of the image unblurred.  It was
+originally done in very old bellow type cameras where the lens was tilted
+to bring the top and bottom of the image out of focus.  Thanks of the
+introduction of <A HREF="../mapping/#blur" >Variable Blur Mapping</A>,
+added to ImageMagick in v6.5.4-0 this is now easy to do. </P>
+
+If you add to this a very high contrast so as to enhance shadows, and saturate
+the colors, a typical result is that a normal image can be made to look
+artificial.  Almost as if you were taking a photo of a small, highly detailed,
+and brightly lit, model. </P>
+
+<BR CLEAR=all>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+The first thing we need to do, is enhance the colors in the image to give it a
+very high contrast, and perhaps brighten it a bit to make it look like it is
+very well lit with strong studio lights. </P>
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert beijing_md.jpg -sigmoidal-contrast 15x30% beijing_contrast.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="beijing_contrast.jpg"
+      ><IMG SRC="beijing_contrast_tn.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+<!-- <CODE EXECUTE>
+  convert beijing_contrast.jpg -thumbnail x150 beijing_contrast_tn.gif
+</CODE> -->
+
+Note how I used a strong <A HREF="../color_mods/#sigmoidal-contrast"
+>Sigmodial Contrast Operation</A>, to achieve these color effects.  I did not
+just simply use a linear contrast as I did not want to 'clip' the brightest
+and darkest colors of the image.  The contrasting value of '<CODE>15</CODE>'
+is a very very strong contrast.  I also brightened the image a bit by
+offsetting the center of the contrast threshold to a '<CODE>30%</CODE>' gray
+value. </P>
+
+If the colors of the contrast enhanced image does not come out cartoonish
+enough, you may like to try increasing the color saturation of the image,
+using the <A HREF="../color_mods/#modulate" >Modulate Operator</A>. This image
+did not need it as it as the tiled roof and bright green trees already
+provides enough color effects. </P>
+
+If you look at an enlargement of the image (<I>Click on the thumbnail</I>), you
+will see that even just enhancing colors gives the image a feel of artificial
+lights, though it does not look like a model, with too much detail to the
+cars in the background, and people in the foreground. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Now for the tilt-shift. </P>
+
+For this we prepare a gradient image that is white at the top and bottom, and
+black in the middle.  Some people might use a linear gradient for this, but
+I find a parabolic gradient better.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert beijing_contrast.jpg \
+          -sparse-color Barycentric '0,0 black 0,%h white' \
+          -function polynomial 4,-4,1   beijing_blurmap.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="beijing_blurmap.jpg"
+      ><IMG SRC="beijing_blurmap_tn.gif"
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+<!-- <CODE EXECUTE>
+  convert beijing_blurmap.jpg -thumbnail x150 beijing_blurmap_tn.gif
+</CODE> -->
+
+Note that I used the original image itself with a two point <A
+HREF="../canvas/#barycentric" >Barycentric Sparse Coloring</A> to generate a
+linear gradient over the whole image.  That linear gradient is then modified
+using a basic <A HREF="../transform/#function_polynomial" >Polynomial
+Function</A> to make it a parabolic gradient with black in the middle. </P>
+
+Now it is simply a matter of blurring the image according to the blur map to
+create a 'tilt-shift' effect.  The result is that the original image looks
+rather like a scale model, rather than quick snap-shot of the real thing.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert beijing_contrast.jpg  beijing_blurmap.jpg \
+          -compose Blur -set option:compose:args 10 -composite \
+          beijing_model.jpg
+</CODE></PRE></TD></TR></TABLE>
+   <A HREF="beijing_model.jpg"
+      ><IMG SRC="beijing_model.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see in the final image, the trees and the buildings look very
+artificial, due to the strong colors, while the blurring of the near and far
+parts gives the image a 'small' model-like feel to it. Though this must have
+been a very detailed model! </P>
+
+The result could have been improved further by performing a <A HREF="#rotation"
+>Rotation Correction</A> (see previous) as part of the tilt shift processing.
+A perfect camera orientation would simply added to the artificial feel.  </P>
+
+Of course you can string all these operations together to to it all in one
+command, and avoid temporary files, or loss of quality.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert beijing_md.jpg -sigmoidal-contrast 15x30% \
+          \( +clone -sparse-color Barycentric '0,0 black 0,%h gray80' \
+             -solarize 50% -level 50%,0 \) \
+          -compose Blur -set option:compose:args 10 -composite \
+          beijing_model.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In the above I replaced the parabolic gradient with a more traditional linear
+black-white-gray gradient (with the same slope) to the 'tilt-shift' blur map.
+The <A HREF="../color_mods/#solarize" >Solarize & Level</A> technique was used
+to make the linear gradient peak horizontally about 1/3 from the bottom of the
+image.  However I find that the area of focus in a linear gradient too small
+and not very practical. </P>
+
+There are many other way of generating a suitable gradient for a tilt shift
+effect.  For example using <A HREF="../canvas/#gradient_resize" >Resized
+Gradients</A>.  Or horizontally scaling a <A HREF="../canvas/#shepards"
+>Shepards Sparse Color</A> of single column of pixels.  Sine curve gradients
+may also be useful. </P>
+
+<H5>Speed Optimization</H5>
+
+The <A HREF="../mapping/#blur" >Variable Blur Mapping</A> operation is
+essentually using a single pass 2-dimentional blurring method (equivelent to
+an uniform Gaussaian Blur).   However you can get a general speed boost by
+doing the bluring operation in two 1-dimensional variable blur operations.
+</P>
+
+For example here I first blur horizontaly, the vertially...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert beijing_md.jpg -sigmoidal-contrast 15x30% \
+          \( +clone -sparse-color Barycentric '0,0 black 0,%h gray80' \
+             -solarize 50% -level 50%,0 -write mpr:blur_map \) \
+          -compose Blur -set option:compose:args 10x0 -composite \
+          mpr:blur_map \
+          -compose Blur -set option:compose:args 0x10 -composite \
+          beijing_model_2pass.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The result is practially identical (though does differ somewhat), but is a lot
+faster to process. </P>
+
+ASIDE: I believe that swaping the operations (blur vertical then horizontally)
+will generate a more accurite result for this type of blur mapping. basically
+as the horizontal blur is a constant in the direction of that blur pas, so
+should be done last. </P>
+
+
+<H5>Problems with Tilt-Shift Effect vs A Real Model</H5>
+
+If you examine the resulting photo carefully, you will be able to tell it is
+a fake tilt-shift, and not a photo of a real model. </P>
+
+You can see this in that the roof of the larger building is too blurry when
+compared to the base of the building. Even though it is about the same
+distance as the base.  Similarly the base of the 'wall' is more blurry than
+the top of the wall.  That is it can be seen to be a fake.  </P>
+
+The problem is that large vertical objects, should be blurred by the same
+amount over the whole surface, and not just variably blurred by height.
+Remember the blur gradient is meant to represent the focal depth, or distance
+of the various objects in the image, as such the surface of a vertical object
+should all be the same 'distance' and thus blurred by the same amount. </P>
+
+To fix I would need to adjust the blur gradient to make those areas have
+a with a constant (or near constant) color of the 'base' of that object,
+relative to rest of the image.  That is vertical surfaces have a constant blur
+amount while all the horizontal surfaces have a blur gradient. </P>
+
+Basically the blurred gradient should represent the actual 'depth' of each
+point in the image, which for most images is a very complex gradient.  This
+adjustment can be difficult to achieve, as it most likely requires some human
+interpretation of what is a horizontal wall and how far the object is in the
+image. It is also unlikely to be easily automated.  </P>
+
+
+What can you do with this effect?  Mail me your tilt-shift images! I'll
+reference them here.  Or perhaps you can correct the tilt-shift faults in the
+above example.
+
+<A NAME="png_jpg"></A>
+<H3>PNG-JPEG Layered Images</H3>
+
+By separating a large newspaper or magazine page into a text layer that is
+saved as a PNG,  and an image layer saved as JPG,  both using just a white
+background, it is possible to use much less disk space than the two images
+combined! </P>
+
+More importantally images can use a lossy compression (JPEG), the text
+components will remain sharp an clear (PNG). </P>
+
+It sounds silly and weird but it is actually true. The separated images can
+save 3 to 4 times the disk space used by a single combined image. </P>
+
+Usually the two images are generated during the publication process as
+separate layers.  But you can also separate images after the fact too. </P>
+
+The images are just overlayed together...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  ny_family.jpg ny_family.png -composite   ny_family_merged.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="ny_family.jpg"
+     ><IMG SRC="ny_family_tn.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/multiply.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="ny_family.png"
+     ><IMG SRC="ny_family_tn.png"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="ny_family_merged.jpg"
+     ><IMG SRC="ny_family_merged_tn.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<BR><FONT SIZE=-1>Select the resulting images to see a larger copy.</FONT>
+</DIV></P>
+<!-- <CODE EXECUTE>
+  convert ny_family_merged.jpg -thumbnail x100 ny_family_merged_tn.jpg
+</CODE> -->
+
+This uses a normal <A HREF="../compose/#over" >Over Composition</A>, which
+requires the PNG (overlay) image to be transparent.  This transparency comes
+in two forms. Either as a boolean (pure on/off) mask, such as seen in the
+above. </P>
+
+Example code for image separation welcome. </P>
+
+<A NAME="overlap"></A>
+<H3>Overlapping Photos
+<FONT SIZE=-1> -- blurred overlaps of appended photos</FONT></H3>
+
+Creating a series of overlapping photos (and I don't mean a panarama) is
+a common task, especially in web site creation. But is can be tricky to do
+unless you have the right knowledge of IM operators. </P>
+
+The simplest method is to use a <A HREF="../compose/#mask" >Masked
+Composite</A> of the two images, and a mask to select which image to overlay.
+</P>
+
+First however you need to do simple mathematics.  For this example, I am using
+two thumbnail images 120x90 pixels in size and I want to overlap them
+horizontally by 40 pixels.  This means the resulting image should be 120 + 120
+- 40 pixels wide, or a 200x90 pixel image. </P>
+
+Next we need a mask.  This needs to black one one side, white on the other,
+with a 40 pixel gradient in the middle, the size of the final output image.
+That is  120 pixels - 40 pixel gives an 80 pixel area for each of the two
+non-overlapped areas. </P>
+
+So lets generate a masking image...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 90x80 xc:white xc:black   -size 90x40 gradient: \
+          +swap -append -rotate 90    overlap_mask.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="overlap_mask.png"
+     ><IMG SRC="overlap_mask.png"      WIDTH=200   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+An alternative way of generating the masking image is to use Fred Weinhaus's
+"<CODE><A HREF="http://www.fmwconcepts.com/imagemagick/plmlut/index.php"
+>plmlut</A></CODE>" horizontal gradient generator script. This has finer
+controls for the curvature of the gradient rather than a sharp linear gradient
+I generate above. </P>
+
+Now that all of the math is out of the way, all that is left is to do a three
+image masked composition, using the mask we just generated.  However we will
+also need to enlarge the destination (left) image so as to provide enough
+space for the overlapping right image (any color), and position the second
+image correctly using the appropriate gravity (right, or '<CODE>East</CODE>').
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert holocaust_tn.gif -extent 200x90  spiral_stairs_tn.gif \
+          overlap_mask.png  -gravity East -composite   overlap_photos.jpg
+</CODE></PRE></TD></TR></TABLE>
+   <A HREF="holocaust_tn.gif"
+      ><IMG SRC="holocaust_tn.gif"     WIDTH=120  HEIGHT=90
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+   <A HREF="spiral_stairs_tn.gif"
+      ><IMG SRC="spiral_stairs_tn.gif" WIDTH=120  HEIGHT=90
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT=" + ">
+   <A HREF="overlap_mask.png"
+      ><IMG SRC="overlap_mask.png"     WIDTH=200  HEIGHT=90
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+   <A HREF="overlap_photos.jpg"
+      ><IMG SRC="overlap_photos.jpg"   WIDTH=200  HEIGHT=90
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+And we now have two images, which are overlapped using a linear gradient. </P>
+
+Of course the two commands can be merged into a single command, so that you
+don't need to save the 'mask' intermediate image.  This is left as an exercise
+to the reader. </P>
+
+A slight improvement is to use a more curved gradient over a larger overlap
+between the images.  This reduces the sharp change visible at the start and
+end of the overlap area of the final image.  Especially with images contain
+large areas of very different colors. </P>
+
+For example, this uses some <A HREF="../canvas/#gradient_distort" >Distorted
+Gradient</A> techniques to not only generate a smoother gradient curve,
+but also to rotate that gradient so as to have a highly angled overlap.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -page +0-15 -size 1x30 gradient: \
+          -sigmoidal-contrast 5,50% -contrast-stretch 0 \
+          -set option:distort:viewport 180x90-90-45 \
+          +distort SRT 115 +repage \
+          holocaust_tn.gif -extent 180x90 +swap \
+          spiral_stairs_tn.gif +swap \
+          -gravity East -composite   overlap_angled.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="overlap_angled.jpg"
+      ><IMG SRC="overlap_angled.jpg"      WIDTH=160   HEIGHT=90
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+Yes, the above is rather complex, but it shows just what is possible. </P>
+
+If you plan to do more than two images, a better method is to use the mask to
+directly set the transparency of the second and later images.  The multiple
+images can then be overlaid together using a techniques seen in <A
+HREF="../layers/#layer_prog" >Layered Image Examples</A>. </P>
+
+Some of these techniques do not require you calculate the final image size, as
+IM can do this for you.  You only need to make sure you position the images
+correctly.  </P>
+
+For example, here I add a 30 pixel gradient to a second and third image,
+requiring the images to be placed every 90 pixels (width 120 minus 30 pixel
+overlap) from each other.  When all images are given the appropriate
+transparency and positioning, we just <A HREF="../layers/#mosaic" >Mosaic</A>
+the layers together (all offsets are positive), letting IM figure out the
+final canvas size.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 90x90 xc:white -size 90x30 gradient: -append -rotate 90 \
+          hatching_tn.gif \
+          \( chinese_chess_tn.gif -clone 0 \
+                 -compose CopyOpacity +matte -composite -repage +90+0 \) \
+          \( holocaust_tn.gif -clone 0 \
+                 -compose CopyOpacity +matte -composite -repage +180+0  \) \
+          \( spiral_stairs_tn.gif -clone 0 \
+                 -compose CopyOpacity +matte -composite -repage +270+0 \) \
+          -delete 0   -compose Over  -mosaic     overlap_series.jpg
+</CODE></PRE></TD></TR></TABLE>
+   <A HREF="overlap_series.jpg"
+      ><IMG SRC="overlap_series.jpg"     WIDTH=390  HEIGHT=90
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Rather than pre-calculating the positions of the overlapping masked images,
+you can use techniques found in <A HREF="../layers/#append_overlap" >Append
+Overlap</A>, as well as <A HREF="../layers/#layer_calc_inc" >Incrementally
+Calculated Positions</A> for longer image sequences. </P>
+
+<B>Final Notes:</B> </P>
+
+Overlapping photos like this works best for images with a reasonably common
+overall color. </P>
+
+Also you may notice that for the images at either end of the sequence,
+a centered subject may not look very centered due to the overlap on one side
+of the image only.   This problem can be improved either by fading the outside
+edge of those images into transparency, or chopping of some of outside edge to
+help re-center the subject of those images. </P>
+
+<I><CODE>ASIDE: It may be that doing the composition in a different colorspace
+may work better.  Anyone like to experiment and report on your results, good
+or bad?  </CODE></I></P>
+
+
+<A NAME="double"></A>
+<H3>Double Exposures
+<FONT SIZE=-1> -- mixing multiple photos of the same scene</FONT></H3>
+
+With old time film based cameras, there was a technique where a picture was
+take two or more times without 'rolling' the film.  This allowed you to create
+what was known as double exposures, where two images taken at slightly
+different times were merged together.  The result was often a ghosting or
+dimming of parts of the image which moved or changed. </P>
+
+However with careful control of the subjects in the image, the lighting
+effects, and even the development process, it became possible to make some
+very weird or even 'impossible' photos.   With digital images it is even
+easier as you have even better control of the images. </P>
+
+Basically... <I>Seeing may be believing, but cameras lie!</I> </P>
+
+For example suppose I wanted an image in which I appear in twice!  Well that is
+easy to do.   Here for example are the thumbnails of two quick photos I took
+specifically for this example, using a tripod and timer, which I'll use
+directly.
+
+<DIV ALIGN=center>
+  <A HREF="anthony_1.jpg"
+     ><IMG SRC="anthony_1.jpg"     WIDTH=100  HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="anthony_2.jpg"
+     ><IMG SRC="anthony_2.jpg"     WIDTH=100  HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
+<BR><I>Perhaps you can supply a better more amusing photo set?</I>
+</DIV></P>
+
+I will apply the double exposure techniques directly to these thumbnails,
+though more typically I would do this using original image files as inputs, so
+as to get a result of the highest quality. </P>
+
+Now if I used a traditional film-like 'double exposure' with an old style
+camera, the result would be an average of these two images, generating
+see-thru 'ghosts' of myself.  Here is the digital simulation of this
+technique...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert anthony_1.jpg anthony_2.jpg -average  anthony_ghosts.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anthony_ghosts.jpg"
+     ><IMG SRC="anthony_ghosts.jpg"      WIDTH=100   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+However, what if I don't want ghosts, but properly solid images of myself.
+Well then you need to use a mask to select which parts you want to come from
+which image. </P>
+
+This mask can be generated in two ways.  You can just manually create the mask
+by dividing the image along the static or unchanging parts.  A rather simple
+matter in this particular case...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x90 xc: -draw 'rectangle 0,0 50,89' \
+          -blur 0x3  anthony_mask.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anthony_mask.jpg"
+     ><IMG SRC="anthony_mask.jpg"      WIDTH=100   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that I blurred the mask, so as to 'feather' the cut-over between the two
+images.  And here I use a <A HREF="../compose/#mask" >Masked Composition</A>
+to merge the images.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert anthony_1.jpg anthony_2.jpg anthony_mask.jpg \
+          -composite  anthony_doubled.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anthony_doubled.jpg"
+     ><IMG SRC="anthony_doubled.jpg"      WIDTH=100   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+How if you had two (or more) family photos, where some people had eyes closed,
+were speaking, pulling faces, or just looking away. You could pick and choose
+each 'head' from different images and merge the multiple images to form a
+montage, so as to get a photo where everyone is looking at the camera, and
+have their eyes open.  </P>
+
+By swapping the input images, or just negating the mask, you can remove me
+completely from the image, so get an unrestricted view of the static
+background.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert anthony_2.jpg anthony_1.jpg anthony_mask.jpg \
+          -composite  anthony_removed.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anthony_removed.jpg"
+     ><IMG SRC="anthony_removed.jpg"      WIDTH=100   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This can be handy when taking photos of a public monument, where you can't
+afford the expense of crowd control.  Just take lots and lots of photos from a
+tripod, and hopefully you can combine them to remove everyone from the scene!
+</P>
+
+An alturnative to generating a background image which you have hundredes of
+images (video) is to just create an average of all the images. This Turn all
+the people or other transient objects into a light haze of 'ghosts'.  That can
+be an interesting effect in and of itself, but not always what is wanted. </P>
+
+An average image can be an useful step, as once you have it you can compare it
+against each individual image to mask out the person (transient object) from
+each frame, before again combining the backgrounds together, to create a clean
+(no haze) background image). </P>
+
+A major discussion on automatically generating a 'clean background' from video
+images is in IM Discussion Forum on <A HREF="../forum_link.cgi?t=29245"
+>Creating a Referance Image</A> and <A HREF="../forum_link.cgi?t=29233"
+>Extracting change events</A>. </P>
+
+<BR>
+
+With a clean background photo, we we can threshold a difference image to mask
+out the parts of the image that changed. You may need to use some further
+blurring and threshold to expand that mask appropriately to cover not only the
+object within the image, but any shadows or reflections it may cast on the
+background scenery.  A little trial and error may also be needed to get it
+right.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert anthony_removed.jpg anthony_2.jpg \
+          -compose difference -composite \
+          -threshold 5% -blur 0x3 -threshold 20% -blur 0x3 \
+          anthony_automask.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anthony_automask.jpg"
+     ><IMG SRC="anthony_automask.jpg"      WIDTH=100   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Now lets use this mask to mix my 'ghosts' image with the original image so it
+looks like my conscience is 'haunting' me for making such 'impossible'
+pictures.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert anthony_1.jpg anthony_ghosts.jpg anthony_mask.jpg \
+          -composite  anthony_haunted.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anthony_haunted.jpg"
+     ><IMG SRC="anthony_haunted.jpg"      WIDTH=100   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+As a final point, all the above techniques assumes the photos were taken from
+a camera that was locked down securely on a stationary tripod.  If this was
+not the case, but just taken from a hand held position, I can guarantee that
+the images will not match-up or 'align' properly, no matter how hard you tried
+to do it.  In such cases you may require some <A HREF="../distorts/#affine"
+>Affine</A> or even  <A HREF="../distorts/#perspective" >Perspective</A>
+distortion of at least one of the two images to get the backgrounds to align
+properly.  The more complex the background, the more exacting the needed
+re-alignment. </P>
+
+If a flash was used, or the day was cloudy with variable light, you may also
+need some brightness adjustments to the photo. The cause is that most cameras
+'auto-adjust' the brightness of the images, and a flash, or variable light can
+change its handling of the 'auto-level' adjustment for each and every image.
+</P>
+
+As a final example, here is another image I created from two separate photos,
+of my nephew fencing with himself, in front of a climbing wall.  As I was
+holding the camera and used a flash, I did need to do some affine distortion
+adjustments, as well as slight brightness adjustment to get the seamless
+result you see.
+
+<DIV ALIGN=center>
+  <A HREF="jacob_vs_jacob_md.jpg"
+     ><IMG SRC="jacob_vs_jacob_md.jpg"   WIDTH=600 HEIGHT=400
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR><B><I>Jacob</I> vs <I>Jacob</I></B>
+</DIV></P>
+
+If you were trying to decide if this photo was fake or not, you would look at
+the lighting, shadows and reflections.  In the above, a close examination of
+the floor will show that the right 'Jacob' does not have a proper reflection
+on the floor (it was clipped by the photos edge). But you would really need to
+study the photo well to notice this!  </P>
+
+Now think of the possibilities you can use this 'double exposure' technique
+for.  For example how about some <A
+HREF="http://todaypictures.blogspot.com/2006/03/funny-mirror.html" >Funny
+Mirrors</A>.  Email me your results! </P>
+
+
+If you like to get into this further the research paper "<A
+HREF="http://grail.cs.washington.edu/projects/photomontage/photomontage.pdf"
+>Interactive Digital Photomontage</A>", goes into using "Double Exposures" (or
+as it terms it "photo montage"), but making use of user selections expanded
+using "image segmentation", to select what parts of the image is to come from
+where. </P>
+
+One example is if you have a number of photos of a large group of people, in
+each photo someone does not 'look good'.  You can use this technique to
+select which person comes from which image so that you can get a perfect group
+photo where everyone is: facing front, with eyes open, and smiling! </P>
+
+<BR>
+
+<A NAME="anonymity"></A>
+<H3>Protect Someone's Anonymity
+<FONT SIZE=-1> -- fuzzing out some part of a photo</FONT></H3>
+
+The above technique of using a 3 image composite mask can also be used in
+other ways.   For example you can 'pixelate' and image, then use a mask to
+limit the effect to just the face of a person, so as to "Protect their
+Identity".
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert zelda_tn.gif -scale 25%  -scale 400%  zelda_pixelate.gif
+  convert zelda_tn.gif -gamma 0 -fill white \
+          -draw 'circle 65,53 50,40'   zelda_face_mask.gif
+  convert zelda_tn.gif zelda_pixelate.gif zelda_face_mask.gif \
+          -composite   zelda_anonymity.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="zelda_tn.gif"
+     ><IMG SRC="zelda_tn.gif"              WIDTH=120 HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="zelda_pixelate.gif"
+     ><IMG SRC="zelda_pixelate.gif"        WIDTH=120 HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="zelda_face_mask.gif"
+     ><IMG SRC="zelda_face_mask.gif"       WIDTH=120 HEIGHT=90
+          ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="zelda_anonymity.png"
+     ><IMG SRC="zelda_anonymity.png"       WIDTH=120 HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Of course you can do this all in one go, and even smooth the change from
+pixelated to normal. For example..
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert zelda_tn.gif \( +clone -scale 25%  -scale 400% \) \
+          \( +clone -gamma 0 -fill white \
+             -draw 'circle 65,53 50,40' -blur  10x4 \) \
+          -composite  zelda_anonymity.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="zelda_anonymity.jpg"
+     ><IMG SRC="zelda_anonymity.jpg"      WIDTH=120   HEIGHT=90
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Of course rather than pixelate the offending part, you can also blur the area
+instead.  Just replace the two "<CODE><A HREF="../option_link.cgi?scale"
+>-scale</A></CODE>" operators with a single "<CODE><A
+HREF="../option_link.cgi?blur" >-blur</A></CODE>" to fuzz out the details.
+</P>
+
+This technique replacing a masked area can also be used to remove unwanted
+text and logos from images.  For details see <A
+HREF="../masking/#hole_filling" >Hole Filling</A>. </P>
+
+
+<A NAME="texture"></A>
+<H3>Add a Texture to an Image</H3>
+
+The <A HREF="../compose/#hardlight" >Hardlight</A> alpha compositing method or
+even any of the various <A HREF="../compose/#light" >Lighting Composition
+Methods</A> provide ways to give an image a texture pattern. </P>
+
+For example here I add a texture of course fabric to a photo I took of a
+pagoda at the Kunming Zoo, in southern China.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert tile_fabric.gif -colorspace gray  -normalize \
+          -fill gray50 +level 35%      texture_fabric.gif
+  composite texture_fabric.gif  pagoda_sm.jpg \
+            -tile   -compose Hardlight    photo_texture.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="tile_fabric.gif"
+     ><IMG SRC="tile_fabric.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="texture_fabric.gif"
+     ><IMG SRC="texture_fabric.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="photo_texture.jpg"
+     ><IMG SRC="photo_texture.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note that if you want to actually <I>tile</I> the texture over the image you
+need to use the "<CODE>composite</CODE>" command rather than the more
+versatile "<CODE>convert</CODE>" command, though there are a number of other
+ways to <A HREF="../canvas/#tile_memory" >Tile Images in Memory</A> using
+convert. </P>
+
+Also note that when adding a texture like this, the smaller details in the
+original photo can be lost by excess noise of the overlaid texture, textures
+should ge hept either simple, or their effect appropriatally moderated, such
+as the <A HREF="../color_mods/#level_plus" >Decontrasting Level Adjustment</A>
+used above. </P>
+
+To use an image pattern as a texture it should be modified so that a perfect
+gray color is used for areas that is unchanged in the original image.  That is
+the average color of the image should be about 50% gray.  In the example I
+demonstrate one way that you can do this with just about any tileable image,
+though this specific method may not always work well. </P>
+
+Such textures can be found all over the web, as various background patterns
+for web pages.  They may not even look like a texture, be colorful, or even
+very bright or very dark. After adjustment however you will find that you can
+get some very interesting effects. </P>
+
+Just as we did previously, you can limit what parts of an image is actually
+textured by creating an appropriate mask.  For example lets create a mask of
+just the near 'white' sky in the pagoda photo.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert pagoda_sm.jpg -fuzz 10% -transparent white \
+          -alpha extract -negate  pagoda_mask.png
+  convert pagoda_sm.jpg  photo_texture.jpg  pagoda_mask.png \
+          -composite  photo_texture_masked.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="pagoda_mask.png"
+     ><IMG SRC="pagoda_mask.png"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="photo_texture_masked.jpg"
+     ><IMG SRC="photo_texture_masked.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Now imagine an picture of a lady wearing a dress.  You can get any pattern
+shade it appropriately, and then overlay that on the original image so as to
+replace the dress with a completely different design. </P>
+
+Of course there are lots of variations on the above to achieve the final
+result, and which specific technique you use is up to you, but the basic idea
+is the same.   Texture the image, mask and overlay the result. </P>
+
+As an aside, I also recommend you look at the <A HREF="../compose/#overlay"
+>Overlay</A> alpha composing method, which is simply the same as <A
+HREF="../compose/#hardlight" >Hard_Light</A> composition, but with the two
+images swapped.  There is also a lot of other <A HREF="../compose/#shade"
+>Shading Composition Methods</A> that can be used to texture an image in
+various ways. </P>
+
+<BR>
+
+<A HREF="shirt.jpg"
+   ><IMG SRC="shirt.jpg"      WIDTH=188 HEIGH=300
+         ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+<A NAME="chroma_key"></A>
+<H3>Chroma Key Masking
+<FONT SIZE=-1> -- Modifying by areas of specific color</FONT></H3>
+
+The photo to the left was given by an user in a <A
+HREF="../forum_link.cgi?t=18094" >IM Forum Discussion</A>.  he wanted to change
+the color of the girls shirt, which was a nice 'pink' color. The problem is the
+color is not just 'pink' but a whole range of different shades of 'pink'. </P>
+
+As you have seen above, to make changed to an image, the first step is
+typically generating an appropriate mask of the area you are interested in.
+Here I will use a technique known as <A
+HREF="http://en.wikipedia.org/wiki/Chroma_key" >Chroma Key</A> to generate
+mask that specific color. </P>
+
+This technique generally looks for a specific color in an image for use as the
+mask.  It is also the technique used for 'blue' and 'green' screen effects
+used extensively on TV and in Movies. </P>
+
+<BR>&nbsp;<BR>
+
+This basically involves extracting the 'Hue' by <A
+HREF="../color_basics/#separate" >Separating Channel Images</A>, then looking
+up the 'hue shade' wanted.  For example...
+
+<BR CLEAR=all>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert shirt.jpg -colorspace HSL -channel Hue -separate shirt_hue.jpg
+</CODE></PRE></TD></TR></TABLE>
+
+However this Hue image has a couple of problems. </P>
+
+<UL>
+<LI>First a 'pink' color is very close to 'red' which is at the division where
+    Hue 'rolls over'.  To ensure this is not a problem I use <A
+    HREF="../color_mods/#modulate" >Modulate</A>  to adjust the hue away from
+    that 'discontinuity' in the hue. </P>
+
+    This is not a problem for extracting a 'chroma key' for  'green' or 'blue'
+    screens. </P>
+
+<LI>This 'pink' color is also not a highly saturated color, but has a very low
+    saturation value. This means its 'hue' is not as strong as it should be.
+    </P>
+
+<LI>The other problem is the gray background!!!!! Gray is has very little hue,
+    so I need to remove any areas with little to no saturation from my final
+    mask, or I'll be changing things in the background. </P>
+
+    Note that this is technically not needed if I limit changes to hue rolls,
+    which does not effect unsaturated colors. </P>
+
+</UL></P>
+
+In short, the input image would have worked better with a brighter stronger
+color that was also not as simial to skin (or hair) color. A strong blue or
+green shirt for example.  But I will work with what I was given. </P>
+
+</TD><TD>
+  <A HREF="shirt_hue.jpg"
+    ><IMG SRC="shirt_hue.jpg"    WIDTH=188 HEIGH=300
+          ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+So lest extract and combine the two channel masks. Note that Hue = Gray64
+after the image hues was 'rolled' using module, and Saturated = Black for the
+grey background.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert shirt.jpg -modulate 100,100,33.3  -colorspace HSL \
+          -channel Hue,Saturation -separate +channel \
+          \( -clone 0 -background none -fuzz 5% +transparent grey64 \) \
+          \( -clone 1 -background none -fuzz 10% -transparent black \) \
+          -delete 0,1  -alpha extract  -compose multiply -composite \
+          shirt_mask.png
+</CODE></PRE></TD></TR></TABLE></P>
+
+That just leaves a number of small isolated 'specks' that can be removed with
+some <A HREF="../morphology/#smooth" >Morphology Smoothing</A>
+(<CODE>-morphology Smooth Square</CODE>).  It isn't perfect but it will do the
+job.  The better way would be to edit the mask by hand to clean it up. </P>
+
+</P>
+
+Now a mask can be used with <A HREF="../compose/#mask" >Composite Masking</A>
+much like we did with <A HREF="#double" >Double Exposures</A> and <A
+HREF="#anonymity" >Anonymity</A> examples above. </P>
+
+However If you are using a mask to modify an existing image (without
+distorting, or changing the images size), then it is easier to use it to
+define what areas are un-writable.  These are known as <A
+HREF="../masking/#clip-mask" >Clip or Write Masks</A> (see "<CODE><A
+HREF="../option_link.cgi?-mask" >-mask</A></CODE>"
+
+</TD><TD>
+<A HREF="shirt_mask.png"
+   ><IMG SRC="shirt_mask.png"    WIDTH=188 HEIGH=300
+         ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Here I cleanup the previous mask of the small defects (optional), and negate
+it to define what areas I want to 'write protect'.  Then I set this mask,
+shift the hues to turn 'pink' into a 'light blue' color, and save the
+resulting image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert shirt_mask.png -morphology Smooth Square \
+          -negate   shirt_write_mask.png
+
+  convert shirt.jpg  -mask shirt_write_mask.png \
+          -modulate 100,100,25     +mask shirt_blue.jpg
+</CODE></PRE></TD></TR></TABLE></P>
+
+Yes there is a slight 'pink' border, especially in the inside sleeve.  Also
+a small area of skin on her arm turned a rather dark blue.  Basically these
+are mask defects, and with a little more work in perfecting the mask you can
+fix these problems.  But it is not bad result.  </P>
+
+One method of generating a better mask is to use a much larger higher
+resolution image. When the resulting image is later resized these small
+defects will (hopefully) also be reduced to insignificance. </P>
+
+</TD><TD>
+<A HREF="shirt_blue.jpg"
+   ><IMG SRC="shirt_blue.jpg"    WIDTH=188 HEIGH=300
+         ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The real problem with this specific example, is the 'key color' is so close to
+a normal skin color you are really just asking for trouble!  This is why
+people using this technique use 'green' and 'blue' screens, as those colors
+are as different as possible from 'skin' color of people in front of the
+screen. </P>
+
+Note that you are better off NOT using JPEG as your source or working images.
+Really JPEG should only be used for your final images only!  This is part of
+the reason why so many 'mask defects' was generated in the first place. </P>
+
+<A NAME="green_screen"></A>
+<H3>Green Screen</H3>
+
+<I>
+Future example, using Chroma Key Masking of a 'green screen background'.
+Expanded from the wikipedia artical, <A
+HREF="http://en.wikipedia.org/wiki/Chroma_key" >Chroma Key</A> </P>
+
+Real problems in 'green screen' handling is the 'color spill', with fine light
+color hair (blonde) and semi-transparent areas producing the worse color spill
+effects. </P>
+
+Simplistic Colorspill removal (color fix)
+<DIV ALIGN=center><CODE> g(r,g,b) => (r, min(g, b), b) </CODE></DIV>
+
+Alpha determination...
+<DIV ALIGN=center><CODE> a(r,b,g) =>  K0 * b − K1 * g + K2 </CODE></DIV>
+Using values of 1.0 for all K coefficients is good initial guess.</P>
+
+As the Background color is well known, and once the 'alpha' is known
+you can use techniques shown in <A HREF="../masking/#two_background"
+>Background Removal using Two Backgrounds</A> to remove any 'green screen
+halo' that may be present better that the first color formula. </P>
+
+</I>
+<BR>
+
+<A NAME="charcoal"></A>
+<H3>Artist Charcoal Sketch of Image</H3>
+
+The <A HREF="../transform/#charcoal" >Charcoal Sketch Transform</A>, offers
+users a very simple way of generating a simplified gray-scale rendering of the
+image. </P>
+
+It does not work well for 'busy images' but for simpler images it can produce
+a very striking result. </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+     convert holocaust_sm.jpg -charcoal 5 charcoal.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="holocaust_sm.jpg"
+     ><IMG SRC="holocaust_sm.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="charcoal.gif"
+     ><IMG SRC="charcoal.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<A NAME="color-in"></A>
+<H3>Children's Color-In Outline Image</H3>
+
+In a long discussion about <A HREF="../forum_link?t=6974" >Generating
+Coloring-In Pages</A> on the IM Users Forum, the following cookbook recipe was
+developed to convert a simple photo into something children can color in. </P>
+
+Here is the best result we have so far, applied to a photo I took of the
+holocaust memorial, Berlin.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert holocaust_sm.jpg \
+          -edge 1 -negate -normalize \
+          -colorspace Gray -blur 0x.5 -contrast-stretch 0x50% \
+          color-in.gif
+  # For heavily shaded pictures...
+  #     #-segment 1x1 +dither -colors 2 -edge 1 -negate -normalize \
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="holocaust_sm.jpg"
+     ><IMG SRC="holocaust_sm.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="color-in.gif"
+     ><IMG SRC="color-in.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+The final operations in the above attempt to smooth out the lines and improve
+the overall result. </P>
+
+Of course the above technique is only useful for images with good sharp color
+changes, and preferably a higher resolution image than I used above.  </P>
+
+For cartoon images that already have black outlines with a light colored
+background, the use of <A HREF="../transform/#edge" >Edge Detection</A> with
+the above method will directly produce a 'twinning' effect of the black
+outlines.  You can see this effect in the twinned lines of tiles on the path
+leading into the memorial, in the lower-left corner. </P>
+
+This is an artifact of the way <A HREF="../transform/#edge" >Edge
+Detection</A> works, and you can see more examples of this in that section of
+IM Examples.  </P>
+
+The solution is to negate images of this type before using  "<CODE><A
+HREF="../option_link.cgi?edge" >-edge</A></CODE>" to outline the colored
+areas.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert piglet.gif -background white -flatten \
+          -colorspace Gray -negate -edge 1 -negate -normalize \
+          -threshold 50% -despeckle \
+          -blur 0x.5 -contrast-stretch 0x50% \
+          color-in_cartoon.gif
+</CODE></PRE></TD></TR></TABLE>
+   <A HREF="piglet.gif"
+      ><IMG SRC="piglet.gif"              WIDTH=100 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+   <A HREF="color-in_cartoon.gif"
+      ><IMG SRC="color-in_cartoon.gif"          WIDTH=100 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+I also "<CODE><A HREF="../option_link.cgi?threshold" >-threshold</A></CODE>"
+so I can then remove individual dots that "<CODE><A
+HREF="../option_link.cgi?edge" >-edge</A></CODE>" seem to like to generate.
+After that I again attempt to smooth out the aliased lines in the image. </P>
+
+The above was added to in a discussion on <A HREF="../forum_link?t=6974"
+>GIMP Photocopy Filter</A> to make use of the <A HREF="../compose/#divide"
+>Compose Divide</A> method, to find outlines.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert taj_mahal_sm.png -colorspace gray \
+          \( +clone -blur 0x2 \) +swap -compose divide -composite \
+          -linear-stretch 5%x0%   photocopy.png
+</CODE></PRE></TD></TR></TABLE>
+   <A HREF="taj_mahal_sm.png"
+      ><IMG SRC="taj_mahal_sm.png"
+            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+   <A HREF="photocopy.png"
+      ><IMG SRC="photocopy.png"
+            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+The "<CODE><A HREF="../option_link.cgi?linear-stretch"
+>-linear-stretch</A></CODE>" operation in the above adjusts how black the
+dark areas of the images will be, while the "<CODE><A
+HREF="../option_link.cgi?blur" >-blur</A></CODE>" 'sigma' defines the shading
+sharpness. </P>
+
+
+
+<A NAME="pencil"></A>
+<H3>Pencil Sketch</H3>
+
+Using a <A HREF="http://www.state-of-entropy.com/" >Photoshop (PSP)
+tutorial</A> on converting images to <A
+HREF="http://www.state-of-entropy.com/sketching.htm" >Pencil Sketches</A>,
+<I><A HREF="../forum_link.cgi?u=3441" >dognose</A></I> from the <A
+HREF="../forum_link.cgi?f=1" >IM Users Forum</A>, managed to create the
+equivalent ImageMagick commands.  Here is his conversion, simplified into a
+few IM commands, allowing you to batch process lots of images into a 'artists
+pencil sketch' form. </P>
+
+First we need a special "<CODE>pencil.gif</CODE>" image.  This can take a long
+time, so for this example I made it a bit smaller, while preserving its
+ability to be tiled across larger images. See <A HREF="../canvas/#tile_mod"
+>Modifying Tile Images</A> for details of the techniques. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+This only needs to be done once and can then be re-used.  As such you can
+generate a much larger one for your own use, so as to avoid any tiling
+effects. Ideally make it as large as the images you plan to convert.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+<r>  convert -size 256x256 xc:  +noise Random  -virtual-pixel tile \
+             -motion-blur 0x20+135 -charcoal 1 -resize 50% pencil_tile.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="pencil_tile.gif"
+      ><IMG SRC="pencil_tile.gif"      WIDTH=128   HEIGHT=128
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Now it is only a matter of overlaying and blending this 'pencil' shading image
+with a photo.  The pencil image is tiled to make a canvas the same size as the
+image we are processing. Then it is applied to the image using techniques
+found in <A HREF="../canvas/#tile" >Tiled Canvases</A>.  This is then merged
+into a gray-scaled copy of the original image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+     convert pagoda_sm.jpg -colorspace gray \
+          \( +clone -tile pencil_tile.gif -draw "color 0,0 reset" \
+             +clone +swap -compose color_dodge -composite \) \
+          -fx 'u*.2+v*.8' sketch.gif
+</CODE></PRE></TD></TR></TABLE>
+   <A HREF="pagoda_sm.jpg"
+      ><IMG SRC="pagoda_sm.jpg"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+   <A HREF="sketch.gif"
+      ><IMG SRC="sketch.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note that as the "<CODE><A HREF="../option_link.cgi?blend" >-blend</A></CODE>"
+operator of the "<CODE><A HREF="../basics/#composite" >composite</A></CODE>"
+command is not available to the "<CODE>convert</CODE>" command, I opted to do
+the equivalent using the DIY "<CODE><A HREF="../option_link.cgi?fx"
+>-fx</A></CODE>" operator.  There are probably better, faster but more
+complicated ways of doing this. (suggestions are welcome) </P>
+
+This is not the final version, as the operator misses some edge enhancement
+aspects needed for outline some of the more lighter but sharp color changes in
+the image.  Can you improve the above? </P>
+
+The above algorithm was built into IM as an artistic transform "<CODE><A
+HREF="../option_link.cgi?sketch" >-sketch</A></CODE>", though without the
+"<CODE><A HREF="../option_link.cgi?resize" >-resize</A></CODE>" smoothing for
+the generated 'pencil tile'...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+<r>  convert pagoda_sm.jpg -colorspace gray -sketch 0x20+120 sketch_new.gif
+</CODE></PRE></TD></TR></TABLE>
+   <A HREF="pagoda_sm.jpg"
+      ><IMG SRC="pagoda_sm.jpg"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+   <A HREF="sketch_new.gif"
+      ><IMG SRC="sketch_new.gif"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+
+<A NAME="vignettation">
+<H3>Vignette Removal</H3>
+</A>
+
+When taking photos (digital or otherwise, the camera lens generally darkens
+the edges and corners of the image.  This is called 'vignetting'. In fact this
+lens effect is so common, it is often faked on purpose using the "<CODE><A
+HREF="../option_link.cgi?vignette" >-vignette</A></CODE>" operator. See the <A
+HREF="../transform/#vignette" >Vignette Transform</A>. </P>
+
+Martin Herrmann &lt;Martin-Herrmann&#64;gmx.de&gt; wanted to remove camera
+vignetting from the photos. Basically he took a photo of a white sheet of
+paper in a bright light without using a flash. He then wanted to combine this
+with his actual photos to brighten the edges and corners of the image
+appropriately. </P>
+
+Basically what we want to do is divide the original photo by the grey-scale
+image of the photo of the brightly lit white piece of paper and it will then
+brighten the parts of the image by the amount that the 'white paper' photo was
+darkened.  </P>
+
+This is basically the compose method '<CODE><A HREF="../compose/#divide"
+>Divide</A></CODE>' which divides the 'source' image by the 'background'
+image.  For example,
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert nikon18-70dx_18mm_f3.5.jpg  vegas_orig.jpg \
+          -compose Divide -composite  vegas_fixed.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="vegas_orig.jpg"
+     ><IMG SRC="vegas_tn.gif"                           WIDTH=105 HEIGHT=70
+           ALIGN=middle VSPACE=2 HSPACE=5 ALT="[photo]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="nikon18-70dx_18mm_f3.5.jpg"
+     ><IMG SRC="nikon18-70dx_18mm_f3.5.gif"          WIDTH=105 HEIGHT=70
+           ALIGN=middle VSPACE=2 HSPACE=5 ALT="[photo]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="vegas_fixed.jpg"
+     ><IMG SRC="vegas_fixed.gif"                     WIDTH=105 HEIGHT=70
+           ALIGN=middle VSPACE=2 HSPACE=5 ALT="[photo]"></A>
+<BR>(click to see larger photo image)
+</DIV></P>
+<!-- <CODE EXECUTE>
+   convert vegas_fixed.jpg -thumbnail 105x70 +repage vegas_fixed.gif
+</CODE> -->
+
+However as the photo of the 'white paper' will probably not be a true white,
+and you probably do not want to brighten the image by this 'off-white' color.
+To fix this we need to multiply the divisor image by its the center
+pixel color.  </P>
+
+Here is the final solution provided to Martin, which used the very slow <A
+HREF="../transform/#fx" >FX DIY Operator</A>. This pre-dated the addition of
+a <A HREF="../compose/#divide" >Divise Compose Method</A> which can be used to
+speed up this process enormously. </P>
+
+The white photo was also grey scaled to remove any color distortion as well,
+note that I changed the ordering which will also preserve any 'meta-data' that
+was in the original (as it is the 'destination' image in this case.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE_linked_from_photo_store>
+  convert vegas_orig.jpg \( nikon18-70dx_18mm_f3.5.jpg -colorspace Gray \) \
+          -fx '(u/v)*v.p{w/2,h/2}'   vegas_fixed_fx.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="vegas_fixed_fx.jpg"
+     ><IMG SRC="vegas_fixed_fx.gif"                     WIDTH=105 HEIGHT=70
+           ALIGN=middle VSPACE=2 HSPACE=5 ALT="[photo]"></A>
+</TD></TR></TABLE></P>
+<!-- <CODE DO_NOT_EXECUTE_linked_from_photo_store>
+   convert vegas_fixed_fx.jpg -thumbnail 105x70 +repage vegas_fixed_fx.gif
+</CODE> -->
+
+If you look carefully at the enlarged photos, particularly the top-left and
+top-right 'sky' corners, you can see the vignetting effects, and the
+correction that was made. </P>
+
+It is not a perfect solution, and could use a little more tweaking. For
+example rather than using a scaling pixel, we could pre-process the 'white
+page' image, and also adjust it for a better vignette removal result. </P>
+
+Note that using JPEG is not recommended for any sort of photographic work, as
+the format can introduce some artifacts and inconsistencies in the results.
+The format is only good for storage and display of the final results. </P>
+
+A major discussion on correcting vignettation is in the IM User Forums in the
+discussion <A HREF="../forum_link.cgi?f=1&t=18944" >Algorithmic vignetting
+correction for pinhole cameras?</A>. </P>
+
+Things that can effect vignettation include... <UL>
+<LI>Distance of film from lens, further away means more light spread.
+<LI>Area of the aperture 'circle' (lens or pinhole) due to angle of light.
+<LI>Arrangement of camera material around the aperture. For example
+    the lens holder or pinhole thickness.
+</UL>
+
+</DIV></P>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 21 July 2006 <BR>
+Updated: 16 June 2011 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/photos/</CODE>
+</ADDRESS></BODY></HTML>
+

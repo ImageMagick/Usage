@@ -1,0 +1,3459 @@
+<HTML><HEAD>
+<TITLE>Color Basics and Channels -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/color_basics/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Color Basics and Channels</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#intro"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > What is to Color</A>
+    <UL>
+    <LI><A HREF="#intro" > What is Color?</A>
+    <LI><A HREF="#rgb"   > RGB color space</A>
+    <LI><A HREF="#cmy"   > CMY color space</A>
+    <LI><A HREF="#cmyk"  > CMYK color space</A>
+    <LI><A HREF="#other" > Other Color Spaces</A>
+    </UL>
+<DD><A HREF="#perception"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Gamma Correction and sRGB Colorspace</A>
+    <UL>
+    <LI><A HREF="#perception" >Human Color Perception</A>
+    <LI><A HREF="#gamma"      >Gamma Correction</A>
+    <LI><A HREF="#monitor"    >Gamma of your Monitor</A>
+    <LI><A HREF="#srgb"       >sRGB Colorspace Correction</A>
+    <LI><A HREF="#processing" ><B>Processing Real Images</B></A>
+    </UL>
+<DD><A HREF="#colors"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Color Specification</A>
+    <UL>
+    <LI><A HREF="#color_names"       >Colors by Name</A>
+    <LI><A HREF="#color_conflicts"   >Color Name Conflicts</A>
+    <LI><A HREF="#color_semitrans"   >Semi-Transparent Colors</A>
+    </UL>
+<DD><A HREF="#channels"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Color Channels</A>
+    <UL>
+    <LI><A HREF="#colorspace"     >ColorSpace - How Color is Stored</A>
+    <LI><A HREF="#separate"       >Separating Channel Images</A>
+    <LI><A HREF="#grayscale"      >Grayscale Channels from Colorspaces</A>
+    <LI><A HREF="#channel_other"  >Other Channel Separation Methods</A>
+    <LI><A HREF="#combine"        >Combining RGB Channel Images</A>
+    <LI><A HREF="#combine_other"  >Combining non-RGB Channel Images</A>
+    <LI><A HREF="#zeroing"        >Zeroing Color Channels</A>
+    </UL>
+<DD><A HREF="#colorspaces"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Colorspaces</A>
+    <UL>
+    <LI><A HREF="#hue_colorspaces" >Hue based Colorspaces (HSL, HSB)</A>
+    <LI><A HREF="#colorwheel"      >Generating a HSL ColorWheel</A>
+    <LI><A HREF="#colorspace_LAB"  >Perceptual Colorspaces (Lab, Luv)</A>
+    <LI><A HREF="#colorwheel_LCH"  >The LCH ColorWheel</A>
+    </UL>
+<DD><A HREF="#replace"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Replacing Colors in an Image</A>
+    <IMG SRC="../img_www/space.gif" WIDTH=20 HEIGHT=1>
+    <FONT SIZE=-1>(replacing specific colors)</FONT>
+    <UL>
+    <LI><A HREF="#opaque"         >Replace a Specific Color</A>
+    <LI><A HREF="#replace_draw"   >Replace a Color in the Image</A>
+    <LI><A HREF="#floodfill_draw" >Floodfill Draw</A>
+    <LI><A HREF="#floodfill"      >Floodfill Operator</A>
+    <LI><A HREF="#fuzz"           >Fuzz Factor, Matching Near Colors</A>
+    <LI><A HREF="#fuzz_distance"  >Fuzz Factor Distance</A>
+    <LI><A HREF="#fuzz_alpha"     >Fuzz Factor and Transparent Colors</A>
+    </UL>
+</DL></P>
+
+Raster Images, which is what ImageMagick deals with (in general) basically
+consists of an array of individual points or pixels of color.  Modifying the
+individual points and how they are represented is what we will look at in this
+section. </P>
+
+In the next section we will look at more general global modification of the
+colors in an image as a whole. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="intro"></A>
+<H2>What is Color?</H2>
+
+To really understand color, you need to know exactly what color is. </P>
+
+In the physical world color is actually an illusion.  We see color because our
+eyes sense the physical world in very special limited way.  Basically in our
+eyes we have special sensors for Red, Green, Blue, and a minor lesser sensor
+for peripheral and low light conditions. The later is why we see only grey
+colors at night. </P>
+
+<IMG SRC="../img_diagrams/human_eye_response.gif"
+     ALIGN=right WIDTH=240 HEIGHT=181 BORDER=1 ALT="IM Diagram">
+
+For more info see <A HREF="http://en.wikipedia.org/wiki/Cone_cell" >Wikipedia,
+Cone Cells</A>, the graph right which is the response of a typical human eye
+to different wavelengths of light. </P>
+
+Because of this we only sense the world in terms of Red, Green and Blue
+electromagnetic wave lengths, and this is why images and image processing
+is generally all about Red, Green, and Blue, or RGB. </P>
+
+However it isn't quite as simple as that either.  Each of our color sensors
+actually respond to a range of wavelengths.  For example when we see a yellow
+light, we actually sense the light using both red and green sensors.  If our
+color sensors were strictly pure red and green detectors, we would not see any
+yellow colors at all. Rainbows would in fact show 'gaps' in it. </P>
+
+That means a TV or computer display is actually fooling us into seeing yellow
+by the monitor emitting just the right mix of red and green light, rather than
+actual yellow light.  Our color sensors see the same intensity as it would for
+a pure yellow light, and as a result we see yellow, even though in reality we
+are really seeing two different color frequencies.  We just can not tell the
+difference between a pure yellow, and a mix of red and green light.
+In a similar way blue-red (purple) colors do not actually exist as a single
+specific wavelength, but only as a mix of at least two color frequencies,
+though strictly speaking violet is a specific frequency we do react to, mostly
+by blue, and very slightly by the other two sensors. </P>
+
+Note we actually have a forth vision sensor, but it is not color, but a low
+light detector, which is used for night vision, when cone sensors no longer
+work very well.  This is why night time looks monochromatic, and moon light is
+all grays. This sensor is also probably the reason why sRGB colorspace (see
+below) has an odd linear component for very dark colors in it.  </P>
+
+ASIDE: Other animals have different sensors to us. Bees and most other insects
+have sensors for ultra violet, as such to them our printed images, TVs, and
+billboards would probably make very little sense.  More than likely these
+artificial images would probably look more like a rather horrible false color
+image, than the near perfect color we humans are fooled into seeing.  Some
+animals have 4 color sensors, while others only have one (black and white) or
+two. Also some animals see movement far better than any specific color. A bull
+for example, can not see red, but blue-violet and green wavelengths, but
+a flapping cap would show as a blaze of a 'movement' color. To a bull,
+a monitor's 50/60Hz update cycle, would probably look like a blaze of
+'movement' rather than any sort of sensible image! </P>
+
+For more information see <A HREF="http://en.wikipedia.org/wiki/Color_vision"
+>Wikipedia, Color Vision</A> and <A HREF="http://en.wikipedia.org/wiki/Color"
+>Wikipedia, Color</A>. </P>
+
+<A NAME="rgb"></A>
+<H3>RGB Color Space, and Channels</H3>
+
+So RGB color space is really a way of representing images using three values
+Red, Green, and Blue, that will fool us into thinking we are seeing something
+in the real world.  Images can thus be stored as an 3 arrays values, with each
+of the three values forming a single pixel, or point of color, to be
+displayed. </P>
+
+Each of the three arrays of values are known as a channel, which is simply
+a gray-scale image representing the amount of light to create for just one of
+our color sensors. </P>
+
+For example here are the red, green, and blue components of a rose image.
+<TABLE CELLSPACING=0 CELLPADDING=0 ALIGN=center>
+<TR VALIGN=center><TD ALIGN=center>
+  <A HREF="rose.gif"
+     ><IMG SRC="rose.gif"                  WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Rose
+</TD><TD ALIGN=center>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+</TD><TD ALIGN=center>
+  <A HREF="separate_RGB_0.gif"
+     ><IMG SRC="separate_RGB_0.gif"        WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Red
+</TD><TD ALIGN=center>
+  <A HREF="separate_RGB_1.gif"
+     ><IMG SRC="separate_RGB_1.gif"        WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Green
+</TD><TD ALIGN=center>
+  <A HREF="separate_RGB_2.gif"
+     ><IMG SRC="separate_RGB_2.gif"        WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Blue
+</TD></TR></TABLE></P>
+
+Note how the 'Red' image is much brighter to display a rose, than the other
+two color components. But all three images are bright for the white patch near
+the bottom. </P>
+
+<B>RGB are Additive Colors</B></P>
+
+Now Red, Green, and Blue colors are termed 'additive' colors.  That is the
+colors are added together to form the final color image.  This is because
+those are the dominant colors our eyes see, and by combining them together we
+can effectively generate almost every color our eyes can see. </P>
+
+They are additive in that starting with black, such as a blank monitor, you
+would then add red, green, and blue light to generate the appropriate colors
+for the image we see.  The key to this is that you start with a black, or the
+absence of light, and then add appropriate amounts of red, green, and blue.
+</P>
+
+You can also get the same effect by shining three torches with red, green and
+blue cellophane taped over the ends, in a dark room.  When the three colors
+shine on the same spot say on a white wall, we see white. </P>
+
+It is because of how our eyes actually see these 'primary' colors, that color
+images are generally expressed in terms of RGB values, which are also termed
+'color channels'. </P>
+
+
+<A NAME="cmy"></A>
+<H3>CMY color space</H3>
+
+When you are printing you have a different problem.  A piece of paper can not
+generate light, only reflect it.  As such you need to start with a surface
+that reflects all the light that hits it, in all directions.  That is what
+a white surface is. Hopefully the light it is reflecting is itself a pure
+white light either from the sun shining in the window, or being generated by
+the lights in our artificially lit rooms. </P>
+
+Now to create an image on that paper you need to apply ink to that surface,
+which actually removes particular wavelengths of light.  As we 'sense' red,
+green, and blue colors, those are the colors we want to selectively remove
+from the light reflecting from that white piece of paper. Consequently we use
+a cyan ink to remove red light, magenta to remove green light, and yellow to
+remove blue light. The amount of Cyan, Magenta, and Yellow ink needed to
+generate a specific color produces what is termed CMY colorspace. </P>
+
+Here I generate an ink masks is needed to generate a rose image using
+just cyan, magenta and yellow inks (assuming the inks are 'linear')
+
+<!-- <CODE EXECUTE>
+  convert rose: -colorspace CMY -separate separate_CMY_%d.gif
+</CODE> -->
+<TABLE CELLSPACING=0 CELLPADDING=0 ALIGN=center>
+<TR VALIGN=center><TD ALIGN=center>
+  <A HREF="rose.gif"
+     ><IMG SRC="rose.gif"                  WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Rose
+</TD><TD ALIGN=center>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+</TD><TD ALIGN=center>
+  <A HREF="separate_CMY_0.gif"
+     ><IMG SRC="separate_CMY_0.gif"        WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Cyan
+</TD><TD ALIGN=center>
+  <A HREF="separate_CMY_1.gif"
+     ><IMG SRC="separate_CMY_1.gif"        WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Magenta
+</TD><TD ALIGN=center>
+  <A HREF="separate_CMY_2.gif"
+     ><IMG SRC="separate_CMY_2.gif"        WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Yellow
+</TD></TR></TABLE></P>
+
+That is the brighter the cyan mask values, the more cyan ink will be needed to
+remove more of the red.  In other words a cyan mask is the exact negative of
+the mount of red light we want the paper to reflect. </P>
+
+In fact all three of the above channel images are the exact negative of what
+was generated for RGB color-space. </P> So really to convert a RGB image to
+a CMK image all that you need to do is <A HREF="../color_mods/#negate" >Negate
+the Image</A> and then declare the image to be in CMY color-space. </P>
+
+As we are selectively removing wavelengths, Cyan, magenta, and Yellow are
+known as 'subtractive colors'. </P>
+
+
+<A NAME="cmyk"></A>
+<H3>CMYK color space</H3>
+
+The major problem with selectively removing wavelengths, is that just removing
+all red, green, and blue light, by applying all three cyan, magenta, and
+yellow inks, does not actually remove all the light that is being reflected.
+As a result you will be left not with a black color, but a horrible looking
+muddy brown color.  </P>
+
+The inks (or light filters) are not perfect, just as our own eyes are not
+perfect.  As I mentioned before, each of our color sensors does not see just
+one wavelength of light, but a range of wavelengths that we interpret as being
+'red' 'green' or 'blue' (or a mix of those colors).  So much so that our
+'blue' light sensor can actually see (though not very well) a little ultra
+violet. </P>
+
+ASIDE: the filter of a 'black light' is purposefully imperfect, so
+that we can 'just see' the light from such a lamp, so we can know if it is on
+or not. </P>
+
+It is because of this 'leakage' of color from the CMY inks, and our own
+imperfect eyes, that we also add a pure black ink to the mix, allowing it to
+be used to wipe out ALL light that could be reflected from paper.  To prevent
+it being confused with blue the black ink or channel is assigned the letter K.
+As such for printing we use four colored inks: Cyan, Magenta, Yellow, and
+blacK; and define images using these inks, to form a CMYK color space. </P>
+
+For example here are the appropriate CMYK components separated out from this
+image.
+
+<TABLE CELLSPACING=0 CELLPADDING=0 ALIGN=center>
+<TR VALIGN=center><TD ALIGN=center>
+  <A HREF="rose.gif"
+     ><IMG SRC="rose.gif"                  WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Rose
+</TD><TD ALIGN=center>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+</TD><TD ALIGN=center>
+  <A HREF="separate_CMYK_0.gif"
+     ><IMG SRC="separate_CMYK_0.gif"       WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Cyan
+</TD><TD ALIGN=center>
+  <A HREF="separate_CMYK_1.gif"
+     ><IMG SRC="separate_CMYK_1.gif"       WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Magenta
+</TD><TD ALIGN=center>
+  <A HREF="separate_CMYK_2.gif"
+     ><IMG SRC="separate_CMYK_2.gif"       WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Yellow
+</TD><TD ALIGN=center>
+  <A HREF="separate_CMYK_3.gif"
+     ><IMG SRC="separate_CMYK_3.gif"       WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>blacK
+</TD></TR></TABLE></P>
+
+Note how the amount of cyan, magenta, and yellow has been reduced and is now
+darker than in CMY colorspace, as there use was replaced by an appropriate
+amount of black. That is when all three inks are present for a particular
+pixel, black is used instead.  As such to print say pure black, you only use
+pure black ink, and no other inks. </P>
+
+Remember the 'blacK' in the above is the amount of black ink to apply to
+a piece of paper, so the brighter the greyscale channel image is, the more
+black ink should be used.  As such it is also a negative looking image, just
+like the other three images. </P>
+
+Of course adding a pure black in a color printer makes printing black text,
+a lot simpler, as you no longer need to print three different inks, overlaid
+perfectly on the same spot, to generate pure black lines, letters, and shapes.
+This means far less ink, with the paper becoming less 'wet' and less likely
+to run or smuge, which is especially good for printers.  </P>
+
+For another similar discussion of how RGB and CMYK colors work see the
+introduction page of.  <A
+HREF="http://archive.xaraxone.com/webxealot/workbook40/page_1.htm"
+>XaraXone Workbook, Defining Color</A>. </P>
+
+
+<A NAME="other"></A>
+<H3>Other Color Spaces</H3>
+
+Other colorspaces are just other ways of representing those same colors, or
+some of the others beyond strict RGB that our imperfect eyes can also make
+out.  However such color spaces have little bearing on either displaying those
+colors using a monitor, or in printing. </P>
+
+They basically represent other ways of handling and/or processing the colors
+of an image, so as to enhance or highlight specific things such as...
+
+<UL>
+<LI> Better non-linear handling of Dark Colors
+     (<A HREF="http://en.wikipedia.org/wiki/SRGB" >sRGB</A>)
+<LI> Color rainbows and hues
+     (<a HREF="http://en.wikipedia.org/wiki/HSL_and_HSV" >HSB,HSL,HSI,OTHA</A>
+     color spaces - intensity not preserved)
+<LI> Standardized definition colors 
+     (<A HREF="http://en.wikipedia.org/wiki/CIE_1931_color_space" >XYZ</A>)
+<LI> Precise or Perceptual Color Differences 
+     (<A HREF="http://en.wikipedia.org/wiki/Lab_color_space" >LAB</A> and
+     <A HREF="http://en.wikipedia.org/wiki/Luv_color_space" >LUV</A>
+     colorspace, and their LCHab and LCHuv cyclic hue equiv)
+<LI> Expanded High-Dynamic Ranges  (for use with HDRI images)
+     (<A HREF="http://en.wikipedia.org/wiki/ScRGB" >scRGB</A>)
+<LI> Better compression of color values (such as in
+     <A HREF="http://en.wikipedia.org/wiki/YIQ" >YIQ</A> and
+     <A HREF="http://en.wikipedia.org/wiki/YUV" >YUV</A>)
+<LI> Transmission for TVs (YCbCr, YPbPr, where Y = BW signal)
+</UL>
+
+One final colorspace I have yet to mention is 'GrayScale', but that is just
+a simple single array of pixel values. How you interpret these values is
+variable as they could represent many different things.  Typically such an
+image is considered to be Linear-Grayscale and similar to linear RGB, (as
+apposed to non-linear sRGB). </P>
+
+IM version 6 actually does not have such a grayscale color space, and only
+fakes, it with linear RGB color space, setting all RGB settings to the same
+value. If the three values are not the same, the image is no longer grayscale.
+</P>
+
+IM version 7 Greyscale is a single channel image (much smaller memory usage).
+</P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The above changes to the 'colorspace' of an image is only a gross
+  arrangement of the colors of an image within memory.  It also provides very
+  basic (simplistic) color conversions between different colorspaces. </P>
+
+  For exact color specifications and color conversions <A
+  HREF="../formats/#color_profile" >Color Profiles</A> should be used instead,
+  but only works when using image file formats that can handle color profiles.
+  </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="perception"></A>
+<A NAME="gamma_srgb"></A>
+<H2>Gamma Correction and sRGB Colorspace</H2>
+
+<H3>Human Color Perception</H3>
+
+In the above we saw that you can represent images in many different ways.
+All the color-spaces we looked at above are known as 'linear' colorspaces,
+which means that the actual value used represents the actual 'intensity'
+values of the color in an image. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+However real life is never quite so simple. It never is! </P>
+
+For example lets generate and save an image with a simple a linear sequence of
+gray values...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 gradient:'gray(100%)-gray(0)' \
+          -set colorspace sRGB gradient.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="gradient.gif"
+     ><IMG SRC="gradient.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Notes...<UL>
+<LI>The use of "<CODE>gradient:'gray(100%)-gray(0)'</CODE>" ensures IM
+    generates a gradient of linear RGB data, which will be in linear
+    RGB colorspace.
+<LI>The "-set colorspace sRGB" tells IM that this 'linear' gradient is
+    actually in "sRGB" and thus does not need 'correction' when saving into
+    a GIF image file format that can only store sRGB colorspace values.
+</UL></P>
+
+Now the actual color values used in this image are a linear gradient that
+should smoothly change from white at the top to black at the bottom, with
+a perfect mathematically exact 50% gray in the middle.  However if you look at
+the image you will see that the image actually seems to contain a lot more
+dark (near black) colors than light (near white) colors.  </P>
+
+Why? Well human vision when given a light intensity that is only half of its
+maximum range ('white') does not see the pure mid-tone grey that the color
+value indicates, but a much darker color.  As a result the above linear
+gradient does not look like an uniform linear spread of colors from white to
+black, but has far more darker colors than it should. </P>
+
+The actual image value to perceived value is roughly a 'power function' of the
+form...  </P>
+
+<DIV ALIGN=center><CODE><B>
+<I>perceived_grey</I>  =  <I>value</I><sup>2.2</sup>
+</B></CODE></DIV><P>
+
+The value '<CODE>2.2</CODE>' is the average gamma function value, typical of
+most human beings. </P>
+
+<A NAME="gamma" ></A>
+<H3>Gamma Correction</H3>
+
+Gamma Correction is a way of adjusting the color values that are actually
+saved, so that the final image looks much more uniform in its spread of
+colors. </P>
+
+Basically while human vision makes light look darker using a power factor of
+<CODE>2.2</CODE>, to make a linear image 'look' linear we need to reverse that
+power function, using a value of <CODE>1/2.2</CODE>.  That is to make an image
+look linear, we need to correct it using the following formula... </P>
+
+<DIV ALIGN=center><CODE><B>
+<I>gamma_corrected_value</I>  =  <I>value</I><sup>1/2.2</sup>
+</B></CODE></DIV><P>
+
+IM provides Gamma correction via either the <A HREF="../color_mods/#level"
+>Level Operator, Gamma Argument</A>, or more specifically using the <A
+HREF="../color_mods/#gamma" >Gamma Operator</A>.  However you could also
+directly modify the image values using the <A HREF="../transform/#evaluate_pow"
+>Evaluate POW function</A>.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+So lets apply it and see the result of a 'gamma corrected image'..
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 gradient:'gray(100%)-gray(0)' -gamma 2.2 \
+          -set colorspace sRGB gradient_gamma.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="gradient_gamma.gif"
+     ><IMG SRC="gradient_gamma.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note how the image now has far more equal amounts of light and dark colors.
+However the actual values within the image is no longer 'linear', which can
+cause problems when processing this image later. </P>
+
+Gamma correction is only a rough 'quick' method of adjusting the colors to
+make an image 'look' correct.  It is not the usual or even the best method of
+correcting an image for human response. </P>
+
+For a more specific examples of doing gamma correction for image processing
+see <A HREF="../#resize_gamma" >Resize with Gamma Correction</A> </P>
+
+For more information on Gamma Correction see
+
+<UL>
+<LI><A HREF="http://en.wikipedia.org/wiki/Gamma_correction"
+    >Gamma Correction (Wikipedia)</A>
+<LI><A HREF="http://www.4p8.com/eric.brasseur/gamma.html"
+    >Gamma error in picture scaling</A> (includes a section IM usage)
+<LI><A HREF="http://www.poynton.com/notes/colour_and_gamma/GammaFAQ.html#linear"
+    >Gamma FAQ, Image Processing</A>
+</UL></P>
+
+You may also like to look at the "<CODE><A
+HREF="../option_link.cgi?auto-gamma" >-auto-gamma</A></CODE>" operator, which
+tries to adjust gamma to produce a linear-RGB image, with equal amounts of
+light and dark (in linear space). </P>
+
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+<A NAME="monitor" ></A>
+<H3>Gamma of your Monitor</H3>
+
+Stand back from your monitor a few meters (yards) and look at the image to the
+left.  </P>
+
+If your monitor (and web browser) is displaying the sRGB image correctly, the
+point where the central 'hash' pattern is about equal brightness to the
+surrounding sRGB gradient should be in the very middle. </P>
+
+Most computer monitors fail this test!</P>
+
+However HDMI TV's should come out perfect. </P>
+
+The image was created using...
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 45x256 gradient: -size 10x256 pattern:gray50 \
+          -duplicate 1,0 +append -set colorspace sRGB -colorspace RGB \
+          monitor_sRGB.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="monitor_sRGB.png"
+     ><IMG SRC="monitor_sRGB.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Here are some similar images with differnent 'gamma' levels so you can see how
+close your monitor is to a correct '2.2' gamma display for human perception.
+
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  for gamma in 1.6 1.8 2.0 2.2 2.4
+  do
+    convert -size 45x256 gradient: -size 10x256 pattern:gray50 \
+            -duplicate 1,0 +append -gamma $gamma monitor_g$gamma.png
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=80% ALIGN=center>
+<TR><TD ALIGN=center>
+  <A HREF="monitor_g1.6.png"
+     ><IMG SRC="monitor_g1.6.png"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Gamma 1.6
+</TD><TD ALIGN=center>
+  <A HREF="monitor_g1.8.png"
+     ><IMG SRC="monitor_g1.8.png"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Gamma 1.8
+</TD><TD ALIGN=center>
+  <A HREF="monitor_g2.0.png"
+     ><IMG SRC="monitor_g2.0.png"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Gamma 2.0
+</TD><TD ALIGN=center>
+  <A HREF="monitor_g2.0.png"
+     ><IMG SRC="monitor_g2.0.png"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Gamma 2.2
+</TD><TD ALIGN=center>
+  <A HREF="monitor_g2.4.png"
+     ><IMG SRC="monitor_g2.4.png"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Gamma 2.4
+</TD><TR></TABLE>
+</DIV></P>
+
+The image that (when you stand back) where the point of equal brightness is
+about the 50% mark, tells you about the rough gamma level of your monitor.
+If properly tuned, your monitor should have a gamma level of 2.2 which very
+closely matches that of sRGB colorspace. </P>
+
+When I wrote this my old screen (provided by work) was extremely poor.  It has
+a Gamma setting of about 1.8, and actually has a different Gamma at the top of
+the display (darker) than that at the bottom of the display (lighter).
+Something that has caused me problems when comparing images at different
+locations on the screen, as the same image looks different, when placed in
+different positions vertically! </P>
+
+On the other hand my personal laptop (at that time) as a very uniform display,
+with a reasonable 2.0 gamma setting according to the above. </P>
+
+
+<A NAME="srgb" ></A>
+<H3>sRGB Colorspace Correction</H3>
+
+Saving an image using a sRGB Colorspace is very similar to Gamma correcting an
+image, but is slightly more complicated so as to better reproduce the actual
+response of the human eye, specifically with very dark shades of color. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+So lets save our linear gradient in a sRGB corrected colorspace.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 gradient:'gray(100%)-gray(0)' \
+          -set colorspace RGB -colorspace sRGB    gradient_sRGB.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="gradient_sRGB.gif"
+     ><IMG SRC="gradient_sRGB.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  As of IM v6.7.7 the above is simplified to just
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert -size 100x100 gradient:white-black gradient_sRGB.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV>
+
+  This is because the linear gradient will always be generated in a linear
+  (RGB) colorspace (which is the only sensible way for the operator to work).
+  </P>
+
+  However as sRGB colors 'white-black' is being requested, the linear-data
+  gradient will be automatically converted to sRGB colorspace, producing
+  non-linear data values, and a perceptually linear gradient. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM version 6.7.5 the above would have failed as IM had the
+  meanings of 'sRGB' and 'RGB' colorspace reversed.  As such on older versions
+  of IM the two colorspace names needed to be swapped. For example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert -size 100x100 gradient: -set colorspace sRGB \
+          -colorspace RGB gradient_sRGB.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV>
+
+  This colorspace handling weirdness was considered a long time IMv6 bug,
+  though was ment to be fixed in IMv7 only, it was backported to IMv6. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+Note that the above (or any other gradient) is not a perfect, as perfection is
+simply impossible, everyone sees things in there own way with slight
+differences.  Simply put: <I>what you see, is never exactly what other people
+see</I> (its actually very Zen).  All sRGB is, is a very good approximation
+for the majority people, according to numerious surveys, and a lot of
+print/paint/color experts. </P>
+
+For details of the exact sRGB formula see <A
+HREF="http://en.wikipedia.org/wiki/SRGB_color_space" >Wikipedia, sRGB
+Colorspace</A>.  A more complete an accurite 'human luminance response was
+developed, and can be seen on line in the thesis <A
+HREF="http://www.cg.tuwien.ac.at/research/theses/matkovic/node16.html" >Human
+Vision, Just Noticeable Difference</A>. This includes adaptive response in
+situations of major lighting changes. </P>
+
+The World Wide Web has standardized on the use of <A HREF="#sRGB" >sRGB</A> as
+the recommended (and still reasonably simple) default color space, and should
+thus be used for all images that do not contain any colorspace profile
+information.  That is for images such as GIF, PNG, JPEG and TIFF.   </P>
+
+All these formats (except GIF) allow the use of <A
+HREF="../formats/#color_profile" >Color Profiles</A> to definitivally specify
+the colorspace the image. </P>
+
+However image file formats such as <A HREF="../formats/#pbmplus" >PbmPlus</A>
+are typically not regarded as being in sRGB colorspace. As such when working
+with such file formats it is typically a good idea to use "<CODE>-set
+colorspace ...</CODE>" to ensure the colorspace is as you are expecting. </P>
+
+And here are all three images together so you can compare them.
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 ALIGN=center>
+<TR><TD ALIGN=center>
+  <A HREF="gradient.gif"
+     ><IMG SRC="gradient.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Linear
+</TD><TD ALIGN=center>
+  <A HREF="gradient_gamma.gif"
+     ><IMG SRC="gradient_gamma.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Gamma
+</TD><TD ALIGN=center>
+  <A HREF="gradient_sRGB.gif"
+     ><IMG SRC="gradient_sRGB.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>sRGB
+</TD><TR></TABLE></P>
+
+As you can see Gamma and sRGB corrected images are nearly identical, and the
+difference when graphed is actually extremely minor. As such while using <A
+HREF="#sRGB" >sRGB</A> is the more correct method, using <A HREF="#gamma"
+>Gamma Correction</A> is probably easier to apply. </P>
+
+The biggest differences between sRGB and Gamma image are in extreme dark
+pictures.  For a 8-bit Gray value of 1, sRGB is 60 times brighter than the
+equivelent Gamma.  A value of 8 is 5 times brighter.  This will not make any
+noticeable difference in most cases but it can, when a very dark picture is
+handled. </P>
+
+<BR>
+<A NAME="processing"></A>
+<H3>Processing Real Images</H3>
+
+Most image processing operators do not care what colorspace an image is using,
+it just applies its operations to the channel data regardless of its
+colorspace. Though some have to make special effort for handling the extra
+channel data for 'Black', and as you will see later 'Matte' (or inverted
+'Alpha' transparency). </P>
+
+However the colorspace of an image can greatly influence the final result of
+many operations.  As such doing image processing in a different color space can
+generate improved results. </P>
+
+This example more clearly shows why processing in sRGB is not a good idea.
+From a discussion on <A HREF="../forum_link.cgi?t=30974&p=140758" >Color
+Blurs</A> and 'Broken Colors', on the IM Users Forum. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+We take two colors using different color channels and blur them together
+so that within the channel the color is blurring to zero (a low color value).
+First lets do thus using the default sRGB input channel.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 40x80 xc:red xc:lime +append \
+          -blur 0x20 blur_sRGB.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="blur_sRGB.png"
+     ><IMG SRC="blur_sRGB.png"              WIDTH=80  HEIGHT=80
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+If you look at the results, it looks like the colors are blurring from red
+through black and then to green.  That is because the values to our eyes
+appear darker than they should be in sRGB colorspace. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Here I blur the same image again but using a linear RGB colorspace.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 40x80 xc:red xc:lime +append \
+          -colorspace RGB -blur 0x20 -colorspace sRGB blur_RGB.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="blur_RGB.png"
+     ><IMG SRC="blur_RGB.png"              WIDTH=80  HEIGHT=80
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see this time we get a much more sensible result with the red and
+green colors blurring though orange.  You also get similar results by using
+other linear color spaces such as LAB or LUV, which we will look at in more
+detail below. </P>
+
+Basically when processing images that involve mixing colors, for example in
+operations such as <A HREF="../quantize/#quantize" >Color Quantization</A>
+(color reduction), but also in <A HREF="../resize/" >Image Resizing</A> and
+more generally <A HREF="../distorts/" >Image Distorting</A>, you should
+process the images in a linear colorspace for the more accurate results,
+though in reality few people do this. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Helmut Dersch (of Barrel Distortion and Len Correction fame) recommends that
+  you should consider using the linear '<CODE>LAB</CODE>' colorspace for
+  processing images, especially for resizing and image distortions.  </P>
+
+  I only recommend that you move from the 'input' sRGB colorspace to some
+  other 'linear' colorspace, when doing drawing, compositions, resizing or
+  distortions of images.  Whether this is linear-RGB, LAB, or LUV, should not
+  matter that much. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+Here for example are red-blue blurs in the 3 main linear colorspaces.
+I picked these colors as they appear to show the greatest difference,
+in the intermedite colors generated.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT>
+  for colorspace in RGB LUV LAB
+  do
+    convert -size 80x40 xc:red xc:blue -append \
+            -colorspace $colorspace -blur 0x30 -colorspace sRGB \
+            colorspace_$colorspace.png
+  done
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 ALIGN=center>
+<TR><TD ALIGN=center>
+  <A HREF="colorspace_RGB.png"
+     ><IMG SRC="colorspace_RGB.png"         WIDTH=80  HEIGHT=80
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>RGB
+</TD><TD ALIGN=center>
+  <A HREF="colorspace_LUV.png"
+     ><IMG SRC="colorspace_LUV.png"         WIDTH=80  HEIGHT=80
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>LUV
+</TD><TD ALIGN=center>
+  <A HREF="colorspace_LAB.png"
+     ><IMG SRC="colorspace_LAB.png"         WIDTH=80  HEIGHT=80
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <BR>LAB
+</TD><TR></TABLE>
+</DIV></P>
+
+For more examples of processing images with regard to colorspace see <A
+HREF="../resize/#resize_colorspace" >Resizing with Colorspace Correction</A>.
+</P>
+
+Also see warnings about color names and drawing in linear colorspace, in <A
+HREF="../draw/#colorspace" >Drawing with Gamma and Colorspace Correction</A>
+</P>
+
+<BR>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="colors"></A>
+<A NAME="color"></A>
+<H2>Color Specification</H2>
+
+Colors in IM can be specified in many ways. The best guide on this is on the
+Official IM Website <A HREF="https://legacy.imagemagick.org/script/color.php"
+>Color Names</A>. </P>
+
+<A NAME="color_names"></A>
+<H3>Colors by Name</H3>
+
+Many colors have been given specific names, which make then easier to use.
+For example "<CODE>RoyalBlue</CODE>" is a very nice bright off blue color.
+</P>
+
+<A HREF="named_colors.png"
+   ><IMG SRC="named_colors.png"
+         ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+To the right is an image containing all the named colors, including those with
+numbers, that is available in ImageMagick.  The colors were first sorted into
+3 groups, Off-Whites, Mid-Tones, and Dark Colors, and then plotted in three
+separate HSL color-wheels, each with a different vertical offset. Pure white
+and black colors appear as there own separate spots at the very top and bottom
+of the chart, to form the extremes of the vertical range. </P>
+
+The script that generated it is "<CODE><A HREF="../scripts/hsl_named_colors"
+>hsl_named_colors</A></CODE>" and follows a technique looked at in <A
+HREF="../layers/#example" >Programmed Positioning of Layered Images</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Technically as I draw the HSL colors in the 3-dimensional form of
+  a 'bi-cone' rather than a 'cylinder', the radius of each color spot has been
+  set equal to the 'Chroma' of the color ('Saturation'/'Brightness'), rather
+  than just its 'Saturation'.  See <A
+  HREF="http://en.wikipedia.org/wiki/HSL_and_HSV#Basic_idea" >Wikipeadia: HSL
+  and HSV</A>. </P>
+
+  To be even more correct, Hexagonal Pyramids should also have be used instead
+  of Cones, though that is much harder to calculate, for little gain.
+  </P>
+
+</I></FONT></TD></TR></TABLE>
+
+As you can see you there a lot of color names associated with red to yellow
+and a smaller group in the cyan to green hues.  With a similar cluster in
+off-white yellows and cyans. But there is little in the way of named off-green
+colors.  Essentially there are some areas of the HSL color space that have
+very few named colors. </P>
+
+It can be difficult to find a specific named color to use. But by loading the
+image to the right in the IM "<CODE><A HREF="../basics/#display"
+>display</A></CODE>" program you can use the middle mouse button to look at
+the ImageMagick color name for the specific color that has been plotted. </P>
+
+
+<A NAME="none"></A>
+<A NAME="color_specials"></A>
+<H3>Special Color Names</H3>
+
+There are a few special colors, which are used for special purposes within
+ImageMagick. </P>
+
+'<CODE>None</CODE>' or '<CODE>Transparent</CODE>', is a fully transparent
+black color, and generally used to specify background transparency, such as
+when creating a <A HREf="../canvas/#solid" >Solid Color Canvas</A>, or when
+using <A HREF="../layers/#flatten" >Image Layers</A>. </P>
+
+'<CODE>Opaque</CODE>' is just an alias for '<CODE>Black</CODE>', and as such
+is rarely used.  It is typically only used when want to mean ANY opaque color,
+such as when doing Alpha Channel Processing. </P>
+
+<A NAME="color_conflicts"></A>
+<H3>Color Name Conflicts</H3>
+
+Color Names can come from three different sources,  SVG, X11, and XPM, and
+most names produce the same color regardless of the defining source.  But
+there are a few colornames which produce different colors, depending on the
+color specification being used. </P>
+
+The biggest problem is the SVG color '<CODE>Green</CODE>' (half bright green)
+which is is different to the X11/XPM color '<CODE>Green</CODE>' (pure RGB
+green).  If you want a pure green, you are better off using the SVG color name
+'<CODE>Lime</CODE>' which has no conflict. </P>
+
+Wikipedia has an excellent article on the color name conflicts, as well as
+a good table of the actual color names, in <A
+HREF="http://en.wikipedia.org/wiki/X11_color_names" >X11 color names</A>.  You
+may also like to look at the article <A
+HREF="http://en.wikipedia.org/wiki/Web_colors" >Web Colors</A>, which provide
+a set of nicely ordered table of some color ranges. </P>
+
+The most notable conflicts are in four specific colors.  Here is a table of
+the known color name conflicts. Remember the SVG color is what IM will use by
+default. </P>
+
+<TABLE BORDER=1 CELLSPACING=4 ALIGN=center>
+<TR><TH>Conflict<BR>Color Name
+                  <TH COLSPAN=2>SVG Result<BR>(IM default)
+                  <TH COLSPAN=2>X11 Result<BR>for Name
+                  <TH COLSPAN=2>X11 Equivelent<BR>Name
+                  <TH COLSPAN=2>Alternative<BR>Color Name
+<TR><TD>Green     <TD BGCOLOR="#008000" WIDTH=20><TD> #008000
+                  <TD BGCOLOR="#00FF00" WIDTH=20><TD> #00FF00
+                  <TD COLSPAN=2>
+                  <TD BGCOLOR="#00FF00" WIDTH=20><TD> Lime
+<TR><TD>Maroon    <TD BGCOLOR="#800000" WIDTH=20><TD> #800000
+                  <TD BGCOLOR="#B03060" WIDTH=20><TD> #B03060
+                  <TD BGCOLOR="#800000" WIDTH=20><TD> FireBrick
+                  <TD COLSPAN=2>
+<TR><TD>Purple    <TD BGCOLOR="#FF00FF" WIDTH=20><TD> #FF00FF
+                  <TD BGCOLOR="#A020F0" WIDTH=20><TD> #A020F0
+                  <TD BGCOLOR="#FF00FF" WIDTH=20><TD> Magenta
+                  <TD COLSPAN=2>
+<TR><TD>Gray      <TD BGCOLOR="#7E7E7E" WIDTH=20><TD> #7E7E7E
+                  <TD BGCOLOR="#C0C0C0" WIDTH=20><TD> #BEBEBE
+                  <TD COLSPAN=2>
+                  <TD BGCOLOR="#C0C0C0" WIDTH=20><TD> Grey
+</TABLE></P>
+
+Notes about the above...
+<UL>
+<LI>The X11 '<CODE>Grey</CODE>' is a visual mid-gray color. It is also very
+    close (but not exactly the same) as the X11 color '<CODE>Gray74</CODE>'
+    and SVG color '<CODE>Silver</CODE>' ('<CODE>gray(192)</CODE>'). </P>
+
+<LI>The default (SVG) '<CODE>Gray</CODE>' is very close to a perfect
+    mathematical gray which is better specified using the color names
+    '<CODE>Gray50</CODE>' or '<CODE>gray(128)</CODE>' (for 8-bit use).  </P>
+
+<LI>As all named colors are specified using 8-bit (0-255) values, none of
+    them will generate a perfect 16-bit pure gray color! </P>
+
+<LI>When a gray is needed for mathematical processing such as <A
+    HREF="../fourier/#fft_constant" >FFT DC  Phase</A> <A
+    HREF="../convolve/#edgedet" >Edge Detection</A>, <A
+    HREF="../transform/#shade" >Shade Images</A>, <A HREF="../compose/#light"
+    >Composition Lighting Effects</A>, and <A
+    HREF="../mapping/#displacement_maps" >Relative Displacement Maps</A> you
+    are much better off using the color formula '<CODE>gray(50%)</CODE>' which
+    does generate a perfect mathematical mid-tone gray at any color bit depth.
+    </P>
+
+</UL> </P>
+
+<B>Caution is recommended when selecting a color for a specific purpose</B>. </P>
+
+
+<A NAME="color_colorspace"></A>
+<H3>Colors and Colorspace</H3>
+
+While many colors have names, most colors found in images do not, they are
+just a set of values, usually 3, that specify a specific color.  However three
+values on there own does not fully define a color, you also need to specify
+the 'colorspace' or 'color system' that those values belong. </P>
+
+All the above 'named' colors are in sRGB colorspace, which is the colorspace
+they were defined in.  But sometimes you want to define a color in a different
+colorspace. For example, in HSL, or CYMK, or even as a XYZ color.  Imagemagick
+can do this and you can see the details of these specifications in <A
+HREF="https://legacy.imagemagick.org/script/color.php#models" >ImageMagick Color
+Names</A>. </P>
+
+<I>Future: Examples of using other colorspaces (still in development)</I></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  While RGB in ImageMagick represents a linear-RGB colorspace, it is an
+  accepted practice that a colorname of '<CODE>rgb(value,value,value)</CODE>'
+  is actually defining a <B>sRGB color</B>. </P>
+
+  To actually define a linear-RGB color instead of sRGB color use the color
+  formula, '<CODE>icc-color(RGB,value,value,value)</CODE>' (see next).
+</I></FONT></TD></TR></TABLE></P>
+
+As of IM v6.7.8-3, you can use the function
+'<CODE>icc-color(colorspace,color...)</CODE>' to define a color, or re-define
+the colorspace, of a specific color. </P>
+
+<I>Future: Examples of use</I></P>
+
+
+<A NAME="color_semitrans"></A>
+<H3>Semi-Transparent Colors</H3>
+
+You can directly specify semi-transparent colors directly in only two
+different ways. </P>
+
+The most common method of setting a semi-transparent color is to use a hex
+value. </P>
+
+For example here are some color specifications showing various levels of
+color transparency.  I have displayed the generated color images on a
+background pattern so that you can see that pattern though the image
+transparency.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 50x50    xc:'#00FF00FF'   color_hex_1.png
+  convert -size 50x50    xc:'#00FF00C0'   color_hex_2.png
+  convert -size 50x50    xc:'#00FF0090'   color_hex_3.png
+  convert -size 50x50    xc:'#00FF0060'   color_hex_4.png
+  convert -size 50x50    xc:'#00FF0030'   color_hex_5.png
+  convert -size 50x50    xc:'#00FF0000'   color_hex_6.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="color_hex_1.png"
+     ><IMG SRC="color_hex_1.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_hex_2.png"
+     ><IMG SRC="color_hex_2.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_hex_3.png"
+     ><IMG SRC="color_hex_3.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_hex_4.png"
+     ><IMG SRC="color_hex_4.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_hex_5.png"
+     ><IMG SRC="color_hex_5.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_hex_6.png"
+     ><IMG SRC="color_hex_6.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+<!-- <CODE EXECUTE ASSERT>
+  opaque=`convert color_hex_1.png -fx A -verbose info: | \
+      sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*white.*/\1/p;'`; \
+  [ "$opaque" != "2500" ] && echo >&2 \
+    "ASSERTION FAILURE: Hex Color '#00FF00FF' is not opaque."
+
+  trans=`convert color_hex_6.png -fx A -verbose info: | \
+      sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*none.*/\1/p;'`; \
+  [ "$trans" != "2500" ] && echo >&2 \
+    "ASSERTION FAILURE: Hex Color '#00FF0000' is not transparent."
+</CODE> -->
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM v6.3.0, the last set of hex digits contained the colors
+  transparency in the form of a 'matte' or 'opacity' value.  That is the final
+  hexadecimal '<CODE>00</CODE>' represented 'opaque' and
+  '<CODE>FF</CODE></CODE>' was transparent. </P>
+
+  However after IM v6.3.0, this value was inverted so as to represent an
+  'alpha' transparency value, to bring IM in line with SVG standards and other
+  graphics packages.  In other words '<CODE>FF</CODE></CODE>' now represented
+  fully-opaque and '<CODE>00</CODE>' is fully transparent.
+
+</I></FONT></TD></TR></TABLE></P>
+
+You can also specify colors using the special '<CODE>rgba()</CODE>' color
+function.  Where RGB values goes from 0 to 255, and the alpha channel is
+specified as a decimal fraction between 0.0 (transparent) to 1.0 (opaque).
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 50x50   xc:'rgba(255,0,0, 1.0)'   color_rgba_1.png
+  convert -size 50x50   xc:'rgba(255,0,0, 0.8)'   color_rgba_2.png
+  convert -size 50x50   xc:'rgba(255,0,0, 0.6)'   color_rgba_3.png
+  convert -size 50x50   xc:'rgba(255,0,0, 0.4)'   color_rgba_4.png
+  convert -size 50x50   xc:'rgba(255,0,0, 0.2)'   color_rgba_5.png
+  convert -size 50x50   xc:'rgba(255,0,0, 0.0)'   color_rgba_6.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="color_rgba_1.png"
+     ><IMG SRC="color_rgba_1.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_rgba_2.png"
+     ><IMG SRC="color_rgba_2.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_rgba_3.png"
+     ><IMG SRC="color_rgba_3.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_rgba_4.png"
+     ><IMG SRC="color_rgba_4.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_rgba_5.png"
+     ><IMG SRC="color_rgba_5.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_rgba_6.png"
+     ><IMG SRC="color_rgba_6.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM version 6.2.7, the '<CODE>rgba()</CODE>' also used a matte value
+  for the alpha channel value.  That is a value of 0 for fully opaque and
+  255 for fully-transparent.  This was changed as defined by the "W3C CSS3
+  Color Module recommendation for specifying colors", as part of IM becoming
+  more compliant with other image standards, particularly for WWW and SVG
+  use.
+</I></FONT></TD></TR></TABLE></P>
+
+It is currently impossible to directly specify a semi-transparent color by
+name, with an extra alpha value setting.
+
+However you can fudge it by generating that named color, then modifying the
+transparency of the image.  You also have the added complication that you
+must <A HREF="../masking/#alpha_set" >Set the Alpha Channel</A>, before you
+can actually set the colors transparency.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 50x50   xc:RoyalBlue                   color_name_1.png
+  convert -size 50x50   xc:RoyalBlue -alpha set \
+                        -channel A -evaluate set 80%   color_name_2.png
+  convert -size 50x50   xc:RoyalBlue -alpha set \
+                        -channel A -evaluate set 60%   color_name_3.png
+  convert -size 50x50   xc:RoyalBlue -alpha set \
+                        -channel A -evaluate set 40%   color_name_4.png
+  convert -size 50x50   xc:RoyalBlue -alpha set \
+                        -channel A -evaluate set 20%   color_name_5.png
+  convert -size 50x50   xc:RoyalBlue -alpha set \
+                        -channel A -evaluate set  0    color_name_6.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="color_name_1.png"
+     ><IMG SRC="color_name_1.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_name_2.png"
+     ><IMG SRC="color_name_2.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_name_3.png"
+     ><IMG SRC="color_name_3.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_name_4.png"
+     ><IMG SRC="color_name_4.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_name_5.png"
+     ><IMG SRC="color_name_5.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="color_name_6.png"
+     ><IMG SRC="color_name_6.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Yes this is a pain, and it would be nice if transparency could set as part of
+the color name specification.  If you like to see this make a request on the
+<A HREF="../forum_link.cgi?f=2" >IM Developers Forum</A>. </P>
+
+It is also posible to draw a named fill color using <A
+HREF="../draw/#mvg_settings" >MVG Drawing Settings</A>, though you will need a
+transparent starting canvas for this to work correctly. For example...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 50x50 xc:none \
+          -draw "fill Tomato fill-opacity 0.5 rectangle 0,0 49,49" \
+          color_name_draw.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<TABLE BORDER=1 CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="color_name_draw.png"
+     ><IMG SRC="color_name_draw.png"       WIDTH=50 HEIGHT=50
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</TD></TR></TABLE></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Note that a fully-transparent colors while completely invisible, still has
+  a color.  However most IM operators recognise that any color that is
+  fully-transparent, is the same as any other fully-transparent color.
+  Because of this and the way the internal mathematics works, many operators
+  will often replace a fully-transparent color with fully-transparent black,
+  (also known as the special color '<CODE>none</CODE>').
+</I></FONT></TD></TR></TABLE></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="channels"></A>
+<H2>Color Channels</H2>
+
+The actual color data of an image is stored as arrays of values, known as
+channels. Typically an image will have at least 3 channels, representing red,
+green, and blue color values.  But as you saw above the values stored could
+represent other colorspaces. </P>
+
+<A NAME="colorspace"></A>
+<H3>Colorspace, and Channel Naming</H3>
+
+The primary purpose of "<CODE><A HREF="../option_link.cgi?colorspace"
+>-colorspace</A></CODE>" operator is to change the way IM stores the colors of
+an image within memory. </P>
+
+Normally each image has 3 (or 4) channels of image data.  The current 'color
+space' of an image determines what the data of each channel represents.  Now
+normally the channels are named 'Red', 'Green', 'Blue', as that is normally
+the type of image data that is stored in those channels.  However that is not
+always the case. </P>
+
+Don't think of the 'R' or 'Red' channel as being red, think of it as 'channel
+1' which could contain data for 'red', 'hue', 'cyan', or other things depending
+on the colorspace of the the image.  'Red' is just a label for the channel
+typically used for 'red', or the first channel. </P>
+
+The second most common colorspace used is '<CODE>CMYK</CODE>', which defines
+the amount of color 'ink' that should be applied to a darken a 'white' piece
+of paper  (a subtractive colorspace).  Note that K is short for "blacK", which
+a negated intensity values of the image. </P>
+
+As this is very common the 'RGB' channels also have an alternative naming of
+'Cyan', 'Magenta', and 'Yellow', or just the letters 'C', 'M' and 'Y', though
+in reality they refer to the same set of channels that is used for
+'<CODE>RGB</CODE>' images. A special fourth color channel is also added for
+the 'Black' or 'K' color channel. </P>
+
+This basically means that the color channel for "<CODE>Green</CODE>" actually
+refers to the exact same color channel as would be used for
+"<CODE>Magenta</CODE>".  Whether the data itself is 'green' or 'magenta'
+depends NOT on the name of the channel, but the 'colorspace' of the image in
+memory. </P>
+
+The same thing happens for other colorspaces.  For example using
+a '<CODE>LAB</CODE>' color space means the 'Red' channel contains the
+'Lightness' value, while 'Green' channel holds the 'A' (or red-green) value,
+and 'Blue' channel holds the 'B' (or blue-yellow) value.  </P>
+
+<BR>
+
+In a similar way, the channel names '<CODE>Alpha</CODE>' ('<CODE>A</CODE>'),
+'<CODE>Opacity</CODE>' ('<CODE>O</CODE>'), and '<CODE>Matte</CODE>', are all
+aliases for the "<CODE><A HREF="../option_link.cgi?channel"
+>-channel</A></CODE>" setting referring to the images transparency
+information.  It does not matter that an 'alpha' channel is the inverse of
+a 'matte' channel, it still refers to the same channel, and produces the same
+result, the <A HREF="../masking/#matte" >Internal Matte Channel</A> of the
+image. </P>
+
+Whether an operator treates the internal matte channel data as a 'matte' or
+and 'alpha' value depends of the operator.  Low level channel operators like
+"<CODE><A HREF="../option_link.cgi?threshold" >-threshold</A></CODE>" work
+on the raw 'matte' data of the channel in memory. However most higher level
+operators like "<CODE><A HREF="../option_link.cgi?fx" >-fx</A></CODE>" and
+"<CODE><A HREF="../option_link.cgi?composite" >-composite</A></CODE>" treat
+that data as representing 'alpha' data, for operation purposes.
+
+There is one another method of controlling the colorspace of the stored image
+data.  </P>
+
+The "<CODE><A HREF="../option_link.cgi?set" >-set</A> colorspace</CODE>"
+(Added IM v6.4.3-7) will change just the in-memory 'colorspace' setting.  That
+is it can convert a RGB image into a HSL image but without changing or
+modifying the actual pixel data that the image is using.  The most typical use
+of this is when you are manually <A HREF="#combine" >Combining
+Channel Data</A> to set what is the final colorspace of the combined image.
+</P>
+
+<BR>
+
+So lets look at how we can manipulate color channels.  Remember each channel
+is just an array of values.  All the channels would then combine together to
+represent that actual color of each pixel within the image. </P>
+
+
+<A NAME="separate"></A>
+<H3>Separating Channel Images</H3>
+
+The easiest way separating out the individual color channels is to use the
+"<CODE><A HREF="../option_link.cgi?separate" >-separate</A></CODE>" operator to
+extract the current contents of each channel as a gray-scale image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -channel R -separate separate_red.gif
+  convert rose: -channel G -separate separate_green.gif
+  convert rose: -channel B -separate separate_blue.gif
+</CODE></PRE></TD></TR></TABLE>
+ <A HREF="rose.gif"
+    ><IMG SRC="rose.gif"
+          ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+ <A HREF="separate_red.gif"
+    ><IMG SRC="separate_red.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_green.gif"
+    ><IMG SRC="separate_green.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_blue.gif"
+    ><IMG SRC="separate_blue.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Notice how the red rose is prominent in the red channel image, while it is
+quite dark in the blue and green channels. On the other hand the green leaves
+are prominent in the green channel but not the others.  The white near the
+bottom of the image is bright in all the channels. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  In IM v5 and before "<A HREF="../option_link.cgi?channel"
+  ><CODE>-channel</CODE></A>" was not only a setting for later image
+  operations but also on occasion an 'image operator' that converted the
+  specified channel into a grey scale image. Very confusing! <P>
+
+  The IM v6 the "<A HREF="../option_link.cgi?separate"
+  ><CODE>-separate</CODE></A>", was created to 'separate' these two very
+  different different tasks. The "<A HREF="../option_link.cgi?channel"
+  ><CODE>-channel</CODE></A>" option is only a setting that is used by later
+  image operations, while "<A HREF="../option_link.cgi?separate"
+  ><CODE>-separate</CODE></A>" will extract the specified channels into
+  separate gray-scale and fully opaque images.
+
+</I></FONT></TD></TR></TABLE></P>
+
+As of IM v6.2.9-3, the "<A HREF="../option_link.cgi?separate"
+><CODE>-separate</CODE></A>" operator will let you separate multiple color
+channels according to the "<A HREF="../option_link.cgi?channel"
+><CODE>-channel</CODE></A>" setting.  The number of items in the "<A
+HREF="../option_link.cgi?channel" ><CODE>-channel</CODE></A>" setting will
+determine the number of images created (in RGBA order). </P>
+
+For example as the default  "<A HREF="../option_link.cgi?channel"
+><CODE>-channel</CODE></A>" setting is '<CODE>RGB</CODE>' the default action
+is to create three images, which I output below.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -separate separate_RGB_%d.gif
+</CODE></PRE></TD></TR></TABLE>
+ <A HREF="rose.gif"
+    ><IMG SRC="rose.gif"
+          ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+ <A HREF="separate_RGB_0.gif"
+    ><IMG SRC="separate_RGB_0.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_RGB_1.gif"
+    ><IMG SRC="separate_RGB_1.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_RGB_2.gif"
+    ><IMG SRC="separate_RGB_2.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+And here we use the "<A HREF="../option_link.cgi?colorspace"
+><CODE>-colorspace</CODE></A>" operator to convert the way IM is storing the
+color data of the image into a <A HREF="#cmyk" >CMYK color representation</A>.
+Then we extract the four color channels involved.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace CMYK -separate separate_CMYK_%d.gif
+</CODE></PRE></TD></TR></TABLE>
+ <A HREF="rose.gif"
+    ><IMG SRC="rose.gif"
+          ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+ <A HREF="separate_CMYK_0.gif"
+    ><IMG SRC="separate_CMYK_0.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_CMYK_1.gif"
+    ><IMG SRC="separate_CMYK_1.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_CMYK_2.gif"
+    ><IMG SRC="separate_CMYK_2.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_CMYK_3.gif"
+    ><IMG SRC="separate_CMYK_3.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+The last image (the '<CODE>Black</CODE>' or '<CODE>K</CODE>' channel) is
+especially interesting as it appears to be a negated gray-scale image of the
+original image. In reality it represents the amount of 'ink' a CMYK printer
+should deposit on the paper, reducing the amount of color needed by the other
+color channels. </P>
+
+Note that by default the "<A HREF="../option_link.cgi?channel"
+><CODE>-channel</CODE></A>" setting does not include the special <A
+HREF="../masking/#matte" >Matte Transparency Channel</A> of the image.  If you
+want to always generate all channels that is present, you can use
+a "<CODE>-channel ALL</CODE>" channel setting, or use '<CODE>RGBA</CODE>' or
+'<CODE>CMYKA</CODE>' "<A HREF="../option_link.cgi?channel"
+><CODE>-channel</CODE></A>" setting. </P>
+
+<A NAME="grayscale"></A>
+<H3>Grayscale Channels from Colorspace Representations</H3>
+
+You can extract specific channel values from colorspaces for special purposes.
+For example here we extract the images grayscale brightness or intensity from
+the rose image, using a number of different representations.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace Gray                      channel_gray.gif
+  convert rose: -grayscale Rec709Luma                 channel_luma709.gif
+  convert rose: -grayscale Rec601Luma                 channel_luma601.gif
+  convert rose: -colorspace HSI  -channel B -separate channel_average.gif
+  convert rose: -colorspace HSL  -channel B -separate channel_lightness.gif
+  convert rose: -colorspace HSB  -channel B -separate channel_brilliance.gif
+  convert rose: -colorspace CMYK -channel K -negate -separate channel_black.gif
+  convert rose: -colorspace LAB  -channel R -separate channel_lab_light.gif
+</CODE></PRE></TD></TR></TABLE>
+<TABLE><TR VALIGN=top>
+<TD ALIGN=center>
+  <A HREF="channel_gray.gif"
+     ><IMG SRC="channel_gray.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Gray<BR>Gray
+<TD ALIGN=center>
+  <A HREF="channel_luma709.gif"
+     ><IMG SRC="channel_luma709.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Rec709Luma<BR>
+<TD ALIGN=center>
+  <A HREF="channel_luma601.gif"
+     ><IMG SRC="channel_luma601.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Rec601Luma (Y)<BR>YUV/YIQ
+<TD ALIGN=center>
+  <A HREF="channel_average.gif"
+     ><IMG SRC="channel_average.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Average (I)<BR>HSI/OHTA
+<TD ALIGN=center>
+  <A HREF="channel_lightness.gif"
+     ><IMG SRC="channel_lightness.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Lightness<BR>HSL
+<TD ALIGN=center>
+  <A HREF="channel_brilliance.gif"
+     ><IMG SRC="channel_brilliance.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Brightness<BR>HSB
+<TD ALIGN=center>
+  <A HREF="channel_black.gif"
+     ><IMG SRC="channel_black.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Neg Black<BR>CMYK
+<TD ALIGN=center>
+  <A HREF="channel_lab_light.gif"
+     ><IMG SRC="channel_luma709.gif"
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Luminance<sup><font size=-3>*</font></sup><BR>LAB / LUV
+</TR></TABLE>
+</DIV></P>
+
+For the actual formulas see, the official reference to the "<CODE><A
+HREF="../option_link.cgi?colorspace" >-colorspace</A></CODE>" option. </P>
+
+Note as of IM v6.7.7 the grayscale images stored without gamma or sRGB
+modifications, both in memory and when saved.  As such they tend to be darker
+than they did before this version. </P>
+
+Note that 'Gray' (also known as 'Intensity' or more exactly 'Luminance') and
+the 'Luma' of the YUV colorspace are equivalent.  Similarly 'Brightness' of
+HSB colorspace, and the Negated 'blacK' channel of CMYK colorspace, are
+equivalent (and typically overly bright for grey-scale usage). </P>
+
+Note the 'Lightness*' channel from the LAB (and also LUV) colorspace (not to
+be confused with 'Lightness' from HSL) is thought to be best match to the
+human visual perception, though it is not commonly used for generating
+grayscale images. </P>
+
+Note that if given a grayscale image, all the colorspace grayscale images
+produce exactly the same image as the input greyscale image, with the
+exception of 'Lightness*' ('<CODE>R</CODE>') channel image for a LAB / LUV
+colorspace.  </P>
+
+
+<A NAME="channel_other"></A>
+<H3>Other Channel Separation Methods</H3>
+
+One method is to copy one channel to all the other channels, to generate
+a grayscale gray-scale image, just as what the <A HREF="#separate" >Separate
+Operator</A> generates.  A simple, but slow, method is to use the <A
+HREF="../transform/#fx" >FX DIY Operator</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  rose: -fx R channel_red.gif
+  convert  rose: -fx G channel_green.gif
+  convert  rose: -fx B channel_blue.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="rose.gif"
+     ><IMG SRC="rose.gif"
+           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="channel_red.gif"
+     ><IMG SRC="channel_red.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="channel_green.gif"
+     ><IMG SRC="channel_green.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="channel_blue.gif"
+     ><IMG SRC="channel_blue.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+This is often regarded as the 'simplest' solution to understand, and has been
+used in other IM tutorials. </P>
+
+Other methods involve using a multitude of techniques to 'zero' out the
+unwanted channels.  These are listed in <A HREF="#zeroing" >Zeroing Color
+Channels</A> below, and are usally a lot faster that using "<CODE><A
+HREF="../option_link.cgi?fx" >-fx</A></CODE>". </P>
+
+
+<A NAME="combine"></A>
+<H3>Combining RGB Channel Images</H3>
+
+Once you have separated out all the image color channels, and processed them,
+you will also need to be able to rejoin the images back together again. </P>
+
+This can be done using the special list operator "<CODE><A
+HREF="../option_link.cgi?combine" >-combine</A></CODE>", which is basically
+exactly the reverse of "<A HREF="../option_link.cgi?separate"
+><CODE>-separate</CODE></A>".
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  separate_red.gif separate_green.gif separate_blue.gif \
+           -combine -set colorspace sRGB rose_combined.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="separate_red.gif"
+     ><IMG SRC="separate_red.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="separate_green.gif"
+     ><IMG SRC="separate_green.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="separate_blue.gif"
+     ><IMG SRC="separate_blue.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="rose_combined.gif"
+     ><IMG SRC="rose_combined.gif"
+           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV>
+
+These then "<CODE><A HREF="../option_link.cgi?combine" >-combine</A></CODE>"
+to create an image that is declared as being a sRGB colorspace image. </P>
+
+An user wanted to be able to swap the red and blue
+channels of an image, this makes it easy, separate the channels, swap, and
+re-combine.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -separate -swap 0,2 -combine rose_rb_swap.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_rb_swap.gif"
+     ><IMG SRC="rose_rb_swap.gif"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Remember the default "<CODE><A HREF="../option_link.cgi?channel"
+>-channel</A></CODE>" setting is '<CODE>RGB</CODE>', and defines what images
+channel images are being joined together.  If not all the channels being
+combined together are defined, the other channels are set using the color
+values from the current "<A HREF="../option_link.cgi?background"
+><CODE>-background</CODE></A>" setting.  </P>
+
+You should however note that both "<CODE><A HREF="../option_link.cgi?combine"
+>-combine</A></CODE>" and "<A HREF="../option_link.cgi?separate"
+><CODE>-separate</CODE></A>" will ignore the order in which channels are
+defined by the "<CODE><A HREF="../option_link.cgi?channel"
+>-channel</A></CODE>".  Channels will always be processed and generated in the
+standard '<CODE>Red,Green,Blue,Matte</CODE>' channel order, for each channel
+set in the "<CODE><A HREF="../option_link.cgi?channel" >-channel</A></CODE>"
+setting.  </P>
+
+As such, even if you use a "<CODE>-channel BR</CODE>" setting or just
+"<CODE>blue,red</CODE>", the "<A HREF="../option_link.cgi?combine"
+><CODE>-combine</CODE></A>" operator will still expect the two images be red
+first then the blue.  The green and alpha values (if images have transparency)
+will be set from the current "<A HREF="../option_link.cgi?background"
+><CODE>-background</CODE></A>" setting values.  For Example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert  separate_red.gif separate_blue.gif -background black \
+           -channel blue,red  -combine    rose_red_blue.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="separate_red.gif"
+     ><IMG SRC="separate_red.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="separate_blue.gif"
+     ><IMG SRC="separate_blue.gif"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="rose_red_blue.gif"
+     ><IMG SRC="rose_red_blue.gif"
+           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV>
+
+
+<A NAME="combine_other"></A>
+<H3>Combining non-RGB Channel Images</H3>
+
+As of IM v6.4.3-7, you can also "<CODE><A HREF="../option_link.cgi?combine"
+>-combine</A></CODE>" channel images that represent other colorspaces, but you
+need to tell IM what colorspace the resulting image should be. </P>
+
+This is done by using the special "<CODE><A HREF="../option_link.cgi?set"
+>-set</A> colorspace</CODE>" operator. This basically changes the colorspace of
+an image in memory but without mapping the images pixel data, leaving it as is.
+</P>
+
+Once the image has been combined in the right colorspace you can use a normal
+"<CODE><A HREF="../option_link.cgi?colorspace" >-colorspace</A></CODE>"
+operator to map the pixel data back to normal RGB data.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert separate_HSB_?.gif  -set colorspace HSB  -combine  \
+          -colorspace sRGB  rose_HSB_combined.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+  <A HREF="rose_HSB_combined.gif"
+     ><IMG SRC="rose_HSB_combined.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This method also works for CMYK images, which is often difficult to handle
+due to the need for a fourth color channel.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert separate_CMYK_?.gif  -set colorspace CMYK  -combine  \
+          -colorspace sRGB  rose_CMYK_combined.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+  <A HREF="rose_CMYK_combined.gif"
+     ><IMG SRC="rose_CMYK_combined.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+An alternative workaround (for earlier versions of IM) is to load one image
+(the red channel) and changing it so that it is in the right colorspace. After
+that each individual channel image can be loaded and <A
+HREF="../compose/#channel" >Channel Copied</A> into that pre-prepared image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert separate_HSB_0.gif -colorspace HSB \
+          separate_HSB_0.gif -compose CopyRed   -composite \
+          separate_HSB_1.gif -compose CopyGreen -composite \
+          separate_HSB_2.gif -compose CopyBlue  -composite \
+          -colorspace sRGB   rose_HSB_combined_alt.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+  <A HREF="rose_HSB_combined_alt.gif"
+     ><IMG SRC="rose_HSB_combined_alt.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Of course if you used "<CODE><A HREF="../option_link.cgi?set" >-set</A>
+colorspace</CODE>" operation, the data for the first channel will already be
+in place, as this does not change the actual pixel data, only the way the data
+is interpreted.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The last example will not work for '<CODE>CMYK</CODE>' images, as the
+  '<CODE>Black</CODE>' channel image does not actually contain a black
+  channel!  As such "<CODE>-compose CopyBlack</CODE>" will fail to find valid
+  data to copy.  I regarded this as a bug, but is currently unlikely to be
+  fixed.
+</I></FONT></TD></TR></TABLE></P>
+
+<BR>
+
+Using other colorspaces can be useful.  For example here I take the built-in
+rose image and want to negate the luminance channel of the image in
+'<CODE>Lab</CODE>' colorspace.  When finished I re-combine to build a sRGB
+image again. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace Lab -separate \
+          \( -clone 0 -negate \) -swap 0 +delete \
+          -combine -set colorspace Lab \
+          -colorspace sRGB   rose_light_neg.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_light_neg.gif"
+     ><IMG SRC="rose_light_neg.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Previously this example used '<CODE>HSL</CODE>' colorspace, but that is
+  a linear colorspace, and we want to negate in a 'perceptual colorspace'
+  as provided by '<CODE>Lab</CODE>'. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+Note that the image still has the same colors, but the brightness (lightness)
+of the colors were reversed, producing a weird effect.  You can replace the
+"<A HREF="../option_link.cgi?negate" ><CODE>-negate</CODE></A>" with your own
+set of operations to adjust an images brightness levels. </P>
+
+However as "<A HREF="../option_link.cgi?negate" ><CODE>-negate</CODE></A>" is
+itself a channel controlled operator we did not have to "<A
+HREF="../option_link.cgi?separate" ><CODE>-separate</CODE></A>" out the
+luminance channel in order to negate it.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace Lab \
+          -channel R   -negate   +channel \
+          -colorspace sRGB rose_light_neg2.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_light_neg2.gif"
+     ><IMG SRC="rose_light_neg2.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see this simplifies things, but it may not always be practical,
+for the effect you want to achieve.
+
+<A NAME="zeroing"></A>
+<H3>Zeroing Color Channels </H3>
+
+Sometimes you have an image (RGB or some other colorspace) where you just want
+to clear or 'zero' one or two of the color channels but leave all the other
+channels as is. </P>
+
+For example, to make a greyscale image without using a RGB <A
+HREF="../color_mods/#grayscale" >Gray-Scaling Techniques</A>, you could
+'zero' the Saturation channel ('<CODE>G</CODE>') in a HSL colorspace so as to
+make a gray scale image.  The 'Hue' value has no meaning when saturation is
+zero, so you are left with a greyscale image.  </P>
+
+The most direct technique, is often to use the <A
+HREF="../transform/#evaluate" >Evaluate Operator</A> to zero all the values in
+the unwanted channel...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace HSL \
+          -channel G  -evaluate set 0  +channel \
+          -colorspace sRGB rose_grey.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_grey.gif"
+     ><IMG SRC="rose_grey.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+However there are many not so obvious ways you can do this...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+
+  # Evaluate (fast and direct)
+    -channel G -evaluate set 0 +channel
+
+  # FX zeroing (direct simple, but slow)
+    -channel G -fx 0 +channel
+
+  # Separate the channels you want to keep,
+  # then combine using a background color to set the other channels
+    -channel RB -separate -background black -combine +channel
+
+  # Gamma which is a miss-use of the operator, but works VERY well!
+  # ( 1 = leave alone;  0 = zero channel;  -1 = maximize channel )
+  # This is short, simple , needs no channel setting, but very obtuse!
+    -gamma 1,0,1
+
+  # Threshold channels to zero
+    -channel G -threshold 101% +channel
+
+  # Threshold to maximum value then negate to zero
+    -channel G -threshold -1 -negate +channel
+
+  # Multiply with an appropriate primary/secondary color
+  # The color specifies the channels to preserve!  'magenta' = 'red'+'blue'
+    \( +clone +level-colors magenta \) -compose multiply -composite
+
+  # Colorize specific channels to black
+  # (0 = leave alone;   100% set from fill (black) )
+    -fill black -colorize 0,100%,0
+
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<I>Can you think of another ways or zeroing (or maximizing) a color channel
+which I have not listed above? -- mail me</I> </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="colorspaces"></A>
+<H2>Colorspaces</H2>
+
+So far we have concentrated on the '<CODE>sRGB</CODE>', '<CODE>RGB</CODE>' and
+'<CODE>CMYK</CODE>' colorspaces.  That is because these are the colorspaces
+that is typically used for display, printing and traditional storage of images
+in files. </P>
+
+But while these colorspaces are practical, they are not representive of how we
+as humans actually view the world.  Our eyes may see in red, green and blue
+wavelengths, but our brains interpret these as: color hue (what color),
+grayness (how colorful), and intensity (how bright/dark). </P>
+
+Because of this many colorspaces and color systems have been developed, often
+from completely indepenant requirements.  Painters for example developed
+a system of colors (based on color sources like lapus luzuli), shades and
+tinting.  Later computer systems using RGB, needed better ways for users to
+select or modify colors, in ways that was not to computationally intensive.
+</P>
+
+
+<A NAME="hue_colorspaces"></A>
+<H3>Hue Based Colorspaces</H3>
+
+Probably one of the most well known alternative is the cyclic-hue, based
+system, which was developed as a color selection interface for RGB colors. </P>
+
+Basically the RGB color cube was rotated in 3 dimentions so that the
+black-gray-white diagonal axis of the cube became on axis of the colorspace.
+And this specified how dark or light a color was.
+</P>
+
+The key feature of this change was an simple conversion from RGB values that
+spaced the primary colors equally around this axis, so as to form a Hue that
+cycles from red, though green, then blue and back to red. </P>
+
+How far away the color was from this axis (radially) was known as saturation
+or chroma. </P>
+
+<BR>
+
+For example lets <A HREF="#separate" >Separate</A> the channels of the builtin
+'<CODE>rose:</CODE>' image afetr transforming it into the '<CODE>HSB</CODE>'
+(Hue, Saturation, Brilliance, also known as HSV, with V for Value),
+colorspace.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace HSB -separate separate_HSB_%d.gif
+</CODE></PRE></TD></TR></TABLE>
+ <A HREF="rose.gif"
+    ><IMG SRC="rose.gif"
+          ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+ <A HREF="separate_HSB_0.gif"
+    ><IMG SRC="separate_HSB_0.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_HSB_1.gif"
+    ><IMG SRC="separate_HSB_1.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_HSB_2.gif"
+    ><IMG SRC="separate_HSB_2.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Or a similar but not quite the same '<CODE>HSL</CODE>' (Hue, Saturation,
+Lightness).
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -colorspace HSL -separate separate_HSL_%d.gif
+</CODE></PRE></TD></TR></TABLE>
+ <A HREF="rose.gif"
+    ><IMG SRC="rose.gif"
+          ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+ <A HREF="separate_HSL_0.gif"
+    ><IMG SRC="separate_HSL_0.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_HSL_1.gif"
+    ><IMG SRC="separate_HSL_1.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+ <A HREF="separate_HSL_2.gif"
+    ><IMG SRC="separate_HSL_2.gif"
+          ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note that how 'Hue' channel image in both colorspaces is the same mottle of
+almost pure black and white colors.  That is because a Hue is actually
+circular.  That is both black and white in the above channel image are
+actually representations of a 'Red' Hue, and slight variations cause the hue
+to flip from one side of red (producing white) to the other (producing black).
+If this is a problem you can rotate the hue setting using the <A
+HREF="../color_mods/#modulate" >Modulate Operator</A> so that red becomes
+represented by some other hue value. </P>
+
+The real difference between '<CODE>HSL</CODE>' and '<CODE>HSB</CODE>' is how
+bright the primary colors are defined.  But to see this we are better off
+looking at more practical represntations of the colorspace, using
+colorwheels. </P>
+
+If you look at the last 'brightness/lightness' images in the above
+separations, you will see that '<CODE>HSB</CODE>' treats a strong (near
+primary) 'red' color as almost white, while '<CODE>HSL</CODE>' treats it as
+more like a mid-tone gray intensity. </P>
+
+
+<A NAME="colorwheel"></A>
+<H3>Generating a HSL Color Wheel</H3>
+
+The above raw separations of the color from an image is still difficult to
+understand.  To better understand the colorspace, we need to try and view it
+
+
+The colorspace is more usually represented as a circular polar
+gradient, showing some part of the colorspace. </P>
+
+You can generate the separate channel value images, and <A HREF="#combine"
+>Combine</A> them images to generate specific types
+of images which are hard to generate in other ways. For example here we
+generate perfect '<CODE>HSL</CODE>' color wheel.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x300 gradient: -rotate 90 \
+          -distort Arc '360 -90.1 50' +repage \
+          -gravity center -crop 100x100+0+0 +repage  angular.png
+  convert -size 100x100 xc:white                     solid.png
+  convert -size 100x100 radial-gradient: -negate     radial.png
+
+  convert angular.png solid.png radial.png \
+          -combine -set colorspace HSL \
+          -colorspace sRGB colorwheel_HSL.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE VALIGN=top>
+<TR><TD ALIGN=center>
+  <A HREF="angular.png"
+     ><IMG SRC="angular.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Hue
+</TD><TD ALIGN=center>
+  <A HREF="solid.png"
+     ><IMG SRC="solid.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Saturation
+</TD><TD ALIGN=center>
+  <A HREF="radial.png"
+     ><IMG SRC="radial.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Luminance
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+</TD><TD ALIGN=center>
+  <A HREF="colorwheel_HSL.png"
+     ><IMG SRC="colorwheel_HSL.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=1 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+  <BR>HSL Colorwheel
+</TD></TR></TABLE>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The grey scale images are generated as a linear gradient using sRGB values.
+  As such the gradients tend to look a little darker than they should.  It is
+  however tha values in the input images that is important here, not the
+  viewing colorspace. </P>
+
+  On the other hand the resulting image while generated in linear RGB
+  colorspace, is being saved as sRGB colorspace to ensure that browsers
+  and other image display programs, display the gradient in a way
+  that works well visually.
+</I></FONT></TD></TR></TABLE></P>
+
+Also note that the Hue is a 'modulus' value, that wraps around at red (hue
+value = 0).  This can be a pain when doing image processing as you have two
+red colors that visually are identical, but in terms of value are a maximum
+hue distance apart.  This is not a good colorspace to use when working on
+color differences. </P>
+
+Actually the lightness/brilliance channels of HSB and HSL colorspaces is not
+very useful as the various Hue's are not handled equally. Basically it
+'equalizes' the intensity of primary colors.  For example Rotating a 'yellow'
+hue to become a 'blue' hue for example will make the very bright color, very
+dark, and visa-versa. </P>
+
+For more details see <A
+HREF="http://en.wikipedia.org/wiki/HSL_and_HSV#Disadvantages" >HSL
+Disadvantages</A>.  Caution is advised.  </P>
+
+<BR>
+
+
+<A NAME="colorwheel_HSB"></A>
+<A NAME="colorwheel_HCL"></A>
+<A NAME="colorwheel_HCLp"></A>
+
+There are a number of colorpsaces that also use this same 'hex cone' based, hue
+system.  HSB, HCL and HCLp (perceptual HCL) .   Here are colorwheels of all
+four of these 'hex-cone' colorspaces.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert angular.png solid.png radial.png \
+          -combine -set colorspace HSL \
+          -colorspace sRGB colorwheel_HSL.png
+  convert angular.png solid.png radial.png \
+          -combine -set colorspace HSB \
+          -colorspace sRGB colorwheel_HSB.png
+  convert angular.png solid.png radial.png \
+          -combine -set colorspace HCL \
+          -colorspace sRGB colorwheel_HCL.png
+  convert angular.png solid.png radial.png \
+          -combine -set colorspace HCLp \
+          -colorspace sRGB colorwheel_HCLp.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE VALIGN=top>
+<TR><TD ALIGN=center>
+  <A HREF="colorwheel_HSL.png"
+     ><IMG SRC="colorwheel_HSL.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <BR>HSL
+</TD><TD ALIGN=center>
+  <A HREF="colorwheel_HSB.png"
+     ><IMG SRC="colorwheel_HSB.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <BR>HSB
+</TD><TD ALIGN=center>
+  <A HREF="colorwheel_HCL.png"
+     ><IMG SRC="colorwheel_HCL.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <BR>HCL
+</TD><TD ALIGN=center>
+  <A HREF="colorwheel_HCLp.png"
+     ><IMG SRC="colorwheel_HCLp.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=20 BORDER=1 ALT="[IM Output]"></A>
+  <BR>HCLp
+</TD></TR></TABLE>
+</DIV></P>
+
+Remember all colors shown in the above are generated at a maximum color
+saturation.
+
+However the '<CODE>HSB</CODE>' colorspace will produce primary colors at
+maximum lightness (HSL generated these at half intensity). Because of this
+white can only be generated when saturation is zero.  As a result instead of
+a white area around the edges, you get fully-saturated colors, instead. </P>
+
+
+The '<CODE>HCL</CODE>' colorspace uses the same 'hex-cone' hue calculations
+but it adjusts the 'lightness' channel so as to use color intensity, rather
+than direct linear-RGB values.  As a result when using a the
+'<CODE>HCL</CODE>' The primary colors are located at different intensity
+levels, with blue closer toward the central black color, and red colors much
+brighter and further out. </P>
+
+The 50% intensity area of the '<CODE>HCL</CODE>' colorspace does not produce
+strong colors but instead generates more natural pastel colors. </P>
+
+For example, here is a comparison of the saturated hues between HSL and HCL
+colorspaces at a 50% intensity.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:black \
+          -fill white  -draw 'circle 49.5,49.5 40,4' \
+          -fill black  -draw 'circle 49.5,49.5 40,30' \
+          -alpha copy -channel A -morphology dilate diamond anulus.png
+  convert hue_angular.png -size 100x100 xc:white xc:gray50 \
+          -combine -set colorspace HSL -colorspace RGB \
+          anulus.png -alpha off -compose Multiply -composite \
+          anulus.png -alpha on  -compose DstIn -composite \
+          -colorspace sRGB hues_HSL.png
+  convert hue_angular.png -size 100x100 xc:white xc:gray50 \
+          -combine -set colorspace HCL -colorspace RGB \
+          anulus.png -alpha off -compose Multiply -composite \
+          anulus.png -alpha on  -compose DstIn -composite \
+          -colorspace sRGB hues_HCL.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE VALIGN=top>
+<TR><TD ALIGN=center>
+  <A HREF="hues_HSL.png"
+     ><IMG SRC="hues_HSL.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=30 BORDER=0 ALT="[IM Output]"></A>
+  <BR>HSL/HSB
+</TD><TD ALIGN=center>
+  <A HREF="hues_HCL.png"
+     ><IMG SRC="hues_HCL.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=30 BORDER=0 ALT="[IM Output]"></A>
+  <BR>HCL
+</TD></TR></TABLE>
+</DIV></P>
+
+That is not to say '<CODE>HCL</CODE>' does not contain pure colors, they are
+just not 'forced' into a common plane as they are in '<CODE>HSL</CODE>'
+colorspace.  In particular note how all the shades in HCL have the same 50%
+intensity (as requested), unlike the results of the HSL colorspace hues.
+Green is probably the closest of all the main colors to a 50% intensity, so
+has a good response in 50% hues.  </P>
+
+It is recommended you use this colorspace for hue rotations, so as to preserve
+the general brightness of all the colors in the image.  See the examples in <A
+HREF="../color_mods/#modulate_HCL" >Modulate in HCL Colorspace</A>.  </P>
+
+<I>HWB Colorspace ???</I>
+
+
+<A NAME="colorspace_LAB"></A>
+<H4>Perceptual Colorspaces</H4>
+
+The colorspaces '<CODE>Lab</CODE>' and '<CODE>Luv</CODE>' are designed, such
+that they fully separate the greyscale intensity from the color components of
+an image. Unlike '<CODE>RGB</CODE>' and '<CODE>sRGB</CODE>' colorspaces.  This
+makes the colorspace a lot easier to process and modify in general, once you
+get the hang of it. </P>
+
+More specifically '<CODE>Luv</CODE>' was designed to be 'perceptually linear'.
+That is that a small change in color in one part of the colorspace looks to
+be about the same, as a similar change in another part of the colorspace.
+This make Luv colorspace much better suited for image difference comparisons.
+</P>
+
+The two colorspaces are very similar, and generally produce similar results
+when processing image.  Here we separate the channels for the colorspaces
+'<CODE>Lab</CODE>' and '<CODE>Luv</CODE>', just to show just how similar the
+two colorspaces actually are.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: \( -clone 0 -colorspace LAB -separate +append \) \
+                \( -clone 0 -colorspace LUV -separate +append \) \
+          -delete 0 -append -set colorspace sRGB separate_lab_luv.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0><TR VALIGN=center>
+<TD>
+  <A HREF="rose.gif"
+     ><IMG SRC="rose.gif"
+           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+<IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+</TD><TD>
+  <A HREF="separate_lab_luv.png"
+     ><IMG SRC="separate_lab_luv.png"
+           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+  <FONT SIZE=-1>Lab<BR><BR><BR>Luv</FONT>
+</TD></TR></TABLE>
+</DIV></P>
+
+Other better examples of the '<CODE>Lab</CODE>' and '<CODE>Luv</CODE>'
+colorspace can be seen using its cylindrical '<CODE>LCHab</CODE>'
+'<CODE>LCHvu</CODE>' variation, in <A HREF="#colorwheel_LCH" >The LCH Color
+Wheel</A> below. </P>
+
+For practical example of using these colorspace see <A
+HREF="../resize/#resize_lab" >Resizing in Lab colorspace</A>. </P>
+
+
+
+<A NAME="colorwheel_LCH"></A>
+<H4>Lab and Luv, based Color Spaces</H4>
+
+The '<CODE>HCL</CODE>' colorspace is based on the '<CODE>LCHuv</CODE>'
+colorspace, which is a cylindrical representation of the '<CODE>Luv</CODE>'
+colorspace, though with a simpler formula for the lightness channel, so as to
+generate pure white at maximum lightness. </P>
+
+For completeness here are the cylindrical representations of the
+'<CODE>Lab</CODE>' and '<CODE>Luv</CODE>' colorspaces, which are known as
+'<CODE>LCHab</CODE>' and '<CODE>LCHuv</CODE>' respectively. </P>
+
+However note that the order of the channels is the reverse of the
+equivalent '<CODE>HCL</CODE>' colorspace shown above.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert radial.png solid.png angular.png \
+          -combine -set colorspace LCHab \
+          -colorspace sRGB colorwheel_LCHab.png
+  convert radial.png solid.png angular.png \
+          -combine -set colorspace LCHuv \
+          -colorspace sRGB colorwheel_LCHuv.png
+</CODE></PRE></TD></TR></TABLE>
+<TABLE VALIGN=top>
+<TR><TD ALIGN=center>
+  <A HREF="radial.png"
+     ><IMG SRC="radial.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Lightness<SUP>*</SUP>
+</TD><TD ALIGN=center>
+  <A HREF="solid.png"
+     ><IMG SRC="solid.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Chroma
+</TD><TD ALIGN=center>
+  <A HREF="angular.png"
+     ><IMG SRC="angular.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Hue
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+</TD><TD ALIGN=center>
+  <A HREF="colorwheel_LCHab.png"
+     ><IMG SRC="colorwheel_LCHab.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>LCHab
+</TD><TD ALIGN=center>
+  <A HREF="colorwheel_LCHuv.png"
+     ><IMG SRC="colorwheel_LCHuv.png"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>LCHuv
+</TD></TR></TABLE>
+</DIV></P>
+
+Note that '<CODE>LCH</CODE>' colorspace is an alias for '<CODE>LCHab</CODE>'.
+</P>
+
+In the above you can see that '<CODE>LCHuv</CODE>' has a discontinuity where
+unrealistic colors are being set using the colorwheel process.  Normal
+conversions of images will not generate these colors. </P>
+
+
+<H3>scRGB High-DynamicRange Colorspace</H3>
+<PRE>
+
+Wikiepedia:  http://en.wikipedia.org/wiki/ScRGB
+
+This is essentially a method of storing a High dynamic range color
+(with negatives and up to 10 times linear RGB range) in a 16 bit integer,
+with only 1/2 the color resolution of a normal 16-bit sRGB image.
+
+As it is using 16bit integers it can be stored in image files formats that can
+save such images (PNG, PPM, MIFF), though a color profile, or some other
+method should be used to mark those images as holding scRGB colorspace data.
+
+You would have to be very careful, with many image processing operators in
+this colorspace as it has an 'offset' to allow it to handle negative numbers.
+And while some operators like resize and distort can be used directly on this
+colorspace, it is probably a better idea to use a HDRI version of ImageMagick,
+and convert to linear RGB (with negatives), for more general image processing.
+
+<I>Examples and more information on using this colorspace would be good</I>
+
+</PRE>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="replace"></A>
+<H2>Replacing Colors in Images</H2>
+
+ImageMagick naturally provides a number of options to replacing a specific and
+near match colors with another color.  This is great when dealing with icons
+and 'bitmap' type images that contain very few colors, but tends to fail when
+dealing with images containing shades of colors or anti-aliasing edge pixels.
+</P>
+
+Basically you need to remember that colors are replaced by a single shade. So
+if you replace a set or neighbourhood of colors, all those colors are replaced
+by one specific single color and not by a matching range of colors.  That is
+not to say it is impossible to do a shaded color replacement, just not simple
+to do at this time, without a lot of work. </P>
+
+Even so, GIF images does not allow the use of semi-transparency, so replacing
+colors in this way is a good method for controlling GIF background
+transparency (See <A HREF="../formats/#bg_pattern" >GIFs on a Background
+Pattern</A> for examples) </P>
+
+The other aspect is that while you can map all 'close colors' to a given
+colormap, using <A HREF="../quantize/#map" >Pre-Defined Color Maps</A>, there
+is no operator to do a direct one-to-one mapping of a large set of colors to
+another completely different set of colors.  This is a short coming that may
+change in a future version of IM.  </P>
+
+With that caveat, lets look at the ways IM does provide for the direct
+replacement of one specific colors with another color. </P>
+
+
+<A NAME="opaque"></A>
+<A NAME="transparent"></A>
+<H3>Replace a Specific Color</H3>
+
+The "<CODE><A HREF="../option_link.cgi?opaque" >-opaque</A></CODE>" and
+"<CODE><A HREF="../option_link.cgi?transparent" >-transparent</A></CODE>"
+operators are designed for replacing one color in an image with another. </P>
+
+For example to replace a '<CODE>blue</CODE>' color with say '<CODE>white</CODE>'
+you would use a command like this...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert balloon.gif  -fill white -opaque blue   balloon_white.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="balloon.gif"
+     ><IMG SRC="balloon.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="balloon_white.gif"
+     ><IMG SRC="balloon_white.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+Basically any color that was 'blue' has been replaced with the current
+"<CODE><A HREF="../option_link.cgi?fill" >-fill</A></CODE>" color. </P>
+
+However as of IM v6.2.7, this operator is limited by the "<CODE><A
+HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting.  As such, to
+convert a color (say blue) to transparency, you will need to specify
+a "<CODE><A HREF="../option_link.cgi?channel" >-channel</A></CODE>" to include
+the alpha channel to make colors transparent.  You will also need to ensure
+the image has a 'matte' or <A HREF="../basics/#alpha" >alpha channel</A>
+enabled, to hold the transparency information.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert balloon.gif   -alpha set  -channel RGBA \
+                        -fill none -opaque blue   balloon_none.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="balloon.gif"
+     ><IMG SRC="balloon.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="balloon_none.gif"
+     ><IMG SRC="balloon_none.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+Because replacing a color with transparency is such a common operation the
+above has its own special replace with transparency operator "<CODE><A
+HREF="../option_link.cgi?transparent" >-transparent</A></CODE>".
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert balloon.gif  -transparent blue   balloon_trans.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="balloon.gif"
+     ><IMG SRC="balloon.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="balloon_trans.gif"
+     ><IMG SRC="balloon_trans.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+As of IM version  6.3.7-10, the 'plus' versions of these operators inverts the
+color selection.  That is, the colors that do NOT match the given color will
+be replaced.  For example here I replace any color that is NOT pure-black,
+with white, leaving just the pure black borders of the image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert balloon.gif  -fill white +opaque black   balloon_borders.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="balloon.gif"
+     ><IMG SRC="balloon.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="balloon_borders.gif"
+     ><IMG SRC="balloon_borders.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+This may not seem like much, but when you combine it with a <A HREF="#fuzz"
+>Fuzz Factor</A> (see below), this becomes a very powerful tool. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM v6.3.7-10, the inverse operation required the use of some
+  trickiness using image masks.  Basically you replace the color you want to
+  preserve with transparency, then "<CODE><A
+  HREF="../option_link.cgi?colorize" >-colorize</A></CODE>" all the other
+  colors to the desired color to create an overlay mask.  This is then
+  overlaid on the original image to 'mask out' the colors that did not match!
+  </I>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert balloon.gif \
+          \( +clone -matte -transparent black \
+             -fill white  -colorize 100% \) \
+          -composite    balloon_mask_non-black.gif
+
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="balloon.gif"
+     ><IMG SRC="balloon.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="balloon_mask_non-black.gif"
+     ><IMG SRC="balloon_mask_non-black.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+  <I>As you can see the 'plus' form of the operator simplified the 'not this
+  color' replacement operation enormously.
+</I></FONT></TD></TR></TABLE></P>
+
+For more advanced replacement techniques, I suggest you look at <A
+HREF="../masking/#bg_remove" >Background Removal</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Be warned that as all matching colors (especially 'fuzzy matched colors',
+  see below) is replaced with a single uniform color, you will not get any
+  anti-aliasing of the edges of the colored areas.  And you will lose any an
+  all shadow or other shading effects that may be present.  This can have
+  a seriously detrimental effect to the look off any non-simple non-cartoon
+  like images.  </P>
+
+  This type of color replacement is not designed with practical real world
+  images in mind, but more for image masking effects.  Caution is advised.
+
+</I></FONT></TD></TR></TABLE></P>
+
+The "<CODE><A HREF="../option_link.cgi?opaque" >-opaque</A></CODE>" color
+replacement cannot replace a color with a tiled pattern. It will only replace
+colors with another single specific color.  However both the "<CODE><A
+HREF="../option_link.cgi?draw" >-draw</A></CODE>" and "<CODE><A
+HREF="../option_link.cgi?floodfill" >-floodfill</A></CODE>" color replacement
+methods can (see below).
+
+
+<A NAME="replace_draw"></A>
+<H3>Replace using a Color in the Image</H3>
+
+You can also use <A HREF="../draw/#color" >Draw Color Replacement</A> to
+recolor images based on colors present in the image itself, rather than a
+specific color.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -fill red -draw 'color 0,0 replace' present_blue.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_blue.gif"
+     ><IMG SRC="present_blue.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+Note that I never specified the color to be replaced, only the location of the
+color to be replaced.  It is the color at that location that is used for
+'matching' what areas is to be filled, regardless of what that color is. </P>
+
+You can see in the above example the problem with color replacement, the
+specific color may appear in other places that you intend, giving us a line of
+red pixels within the 'present' image above. </P>
+
+Transparency also presents no problem, though some internal parts of the image
+was also made transparent just as they became red in the above...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -matte -fill none \
+                      -draw 'color 0,0 replace' present_none.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_none.gif"
+     ><IMG SRC="present_none.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+Note however that unlike "<CODE><A HREF="../option_link.cgi?opaque"
+>-opaque</A></CODE>" and "<CODE><A HREF="../option_link.cgi?transparent"
+>-transparent</A></CODE>" the <A HREF="../draw/#color" >Draw Color
+Replacement</A>, does not let you invert the 'matching colors' to be replaced.
+</P>
+
+Draw also has a special <A HREF="../draw/#matte" >Matte Replacement</A>, where
+only the transparency of the fill color is replaced.   That is, you can make
+all matching colors transparent, or semi-transparent, without actually
+changing the color of the pixel itself. With the appropriate file format of
+course.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -matte -fill '#00000080' \
+            -draw 'matte 0,0 replace' present_semi.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_semi.png"
+     ><IMG SRC="present_semi.png"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+This becomes much more useful when a <A HREF="#fuzz" >Fuzz Factor</A> is also
+specified. </P>
+
+The biggest advantage of using "<CODE><A HREF="../option_link.cgi?draw"
+>-draw</A></CODE>" is that you can also replace the color with a tile pattern.
+For example..
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -tile pattern:right30 \
+                -draw 'color 0,0 replace' present_tile.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_tile.gif"
+     ><IMG SRC="present_tile.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+For more advanced replacement techniques, I suggest you look at <A
+HREF="../masking/#bg_remove" >Background Removal</A>. </P>
+
+
+<A NAME="floodfill_draw"></A>
+<H3>Floodfill Draw</H3>
+
+The  <A HREF="../draw/#color" >Draw Color</A> methods also provide you with a
+simple method of replacing a color by 'floodfilling'. That is, rather than
+replacing ALL the matching colors within the image, you can select just the
+colors which are 'connected to' or 'attached' to the specified point in the
+image. </P>
+
+The specified point will not only specify the stating (seed point) but also
+the color that you are trying to replace.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -fill red -draw 'color 0,0 floodfill' present_fill.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_fill.gif"
+     ><IMG SRC="present_fill.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+Note that the red areas which was not 'attached' to the 0,0 pixel was not
+replaced. </P>
+
+For background replacing that can be a problem, but the solution is just as
+easy.  Expand the image slightly so the floodfill can 'leak' into the image
+from all directions, then remove that extra space when finished.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -bordercolor white -border 1x1 \
+          -fill red     -draw 'color 0,0 floodfill' \
+          -shave 1x1               present_bgnd.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_bgnd.gif"
+     ><IMG SRC="present_bgnd.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+Of course you can adjust what colors are 'matched' using the <A HREF="#fuzz"
+>Fuzz Factor</A> control setting below, which is especially important for
+<A HREF="../formats/#jpeg" >JPEG</A> images. </P>
+
+
+<A NAME="floodfill"></A>
+<H3>Floodfill Operator</H3>
+
+The "<CODE><A HREF="../option_link.cgi?floodfill" >-floodfill</A></CODE>"
+operator was added to make floodfilling slightly easier, especially when you
+what to exactly specify the color that you specifically want to replace.
+This can be especially important when using <A HREF="#fuzz" >Fuzz Factor</A>
+color matching. </P>
+
+However be warned that if that seed point is not within a <A HREf="#fuzz"
+>Fuzz Factor</A> match of the color you are looking for then "<CODE><A
+HREF="../option_link.cgi?floodfill" >-floodfill</A></CODE>" does nothing.
+This can be regarded as the operators feature as well as its curse.  </P>
+
+<DIV ALIGN=center><B>
+    A small <A HREF="#fuzz" >Fuzz Factor</A> is recommened for flood filling.
+<BR>       Or ensure seed point exactly matches looked for color.
+</B></DIV> </P>
+
+For example, add a border of known color to flood fill from edges...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -bordercolor white -border 1x1 \
+          -fill red    -floodfill +0+0 white \
+          -shave 1x1              present_floodfill.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_floodfill.gif"
+     ><IMG SRC="present_floodfill.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+This will replace any color that is 'white' to 'red' that is directly part of
+the area surrounding the seed pixel starting at +0+0, which is guranteed to be
+'white' due to the added border. </P>
+
+You can also floodfill with a tile pattern.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert present.gif -bordercolor white -border 1x1 \
+                -tile pattern:left30   -floodfill +0+0 white \
+                -shave 1x1           present_pattern.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+<NOBR>
+  <A HREF="present.gif"
+     ><IMG SRC="present.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="present_pattern.gif"
+     ><IMG SRC="present_pattern.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+The '<I>color</I>' argument can sometimes be a pain, in that it must match
+color of the seed point, or no action will take place. But this can also be
+useful, as it will ensure the floodfill does exactly what you wanted, and
+not the unexpected.
+
+For example, here I try to fill white disks with various colors...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert disks.gif \
+          -fill Red   -floodfill +30+50 white \
+          -fill Green -floodfill +60+60 white \
+          -fill Blue  -floodfill +10+40 white \
+          floodfill_hit_miss.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="floodfill_hit_miss.gif"
+     ><IMG SRC="floodfill_hit_miss.gif"    WIDTH=80 HEIGHT=80
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+In this case only the '<CODE>Green</CODE>' and '<CODE>Blue</CODE>' flood-fill
+operations 'hit a disk' (and filled it), while the '<CODE>Red</CODE>'
+flood-fill, did not match a disk, so no disk was filled, without accidentally
+filling the background of the image. </P>
+
+It also means that if you already filled a specific area, later fills will not
+'re-fill' the same area if two points hit that area. that can save a lot of
+time. </P>
+
+You may also like to look at <A HREF="../morphology/#dilate_conditional"
+>Conditional Dilation</A> which represents a lower level floodfill operation
+from multiple 'seed' points in the image. </P>
+
+
+<A NAME="fuzz"></A>
+<H3>Fuzz Factor - Matching Similar/Multiple Colors</H3>
+
+The overall results of just selecting a single color to replace, as shown in
+the previous examples is usually not very nice.  The edges or areas of solid
+colors generally have a mix of colors at the edge, due to anti-aliasing (See
+<A HREF="../antialiasing/" >Anti-Aliasing</A> for more information).  As such
+you should avoid direct color replace if possible. </P>
+
+For example here I take what looks like a simple black and white 'cow' and try
+to make it a red cow.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert cow.gif -fill red -opaque black  cow_replace_red.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cow.gif"
+     ><IMG SRC="cow.gif"   WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cow_replace_red.gif"
+     ><IMG SRC="cow_replace_red.gif"   WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see only the center parts of the 'black' areas actually became red.
+That is because, while the image appears to be black and white it is really a
+gray-scale image with almost all the edges various shades of gray. That is,
+they are not exactly pure-black in color. </P>
+
+The fuzz factor, ("<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>")
+represents a 'similarity' match in multi-dimensional spherical distance
+between colors, using whatever color space the image is using. </P>
+
+Well okay lets try that in plain English.  You have a specific color. Another
+color will be treated as being <I>same</I> as the color being looked for, if
+the difference between these colors is less than the fuzz factor setting. The
+larger the 'fuzz factor' and more 'near' colors will match and be replaced.
+</P>
+
+So lets try that on our cow image so as to convert not only pure-black but
+also near-black colors to red.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert cow.gif -fuzz 40%  -fill red -opaque black  cow_replace_fuzz.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cow.gif"
+     ><IMG SRC="cow.gif"   WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cow_replace_fuzz.gif"
+     ><IMG SRC="cow_replace_fuzz.gif"   WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see we now replaced all the 'dark' pixels of the image to red.  But
+the result is still very bad, with a grayish tinge to the edge, and strong <A
+HREF="../filter/#aliasing" >Aliasing effects</A>.  Direct color replacement is
+not a good solution for this image, even though you can make it work using
+a large 'fuzz factor' . See the examples in <A
+HREF="../color_mods/#level-colors" >Level adjustments by Color</A> for the
+ideal solution for this image.  </P>
+
+This problem is even worse for images where you are trying to replace
+a background color with transparency.  You basically end up with a 'halo'
+around the object on that background color.  This is very difficult to solve,
+and problems like this are looked at in detail in <A
+HREF="../masking/#bg_remove" >Background Removal</A>. </P>
+
+<B>What operations use fuzz factor</B> </P>
+
+The "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" operator
+effects just about any operator which compares specific colors within an
+image. This includes:
+
+"<CODE><A HREF="../option_link.cgi?opaque"      >-opaque</A></CODE>",
+"<CODE><A HREF="../option_link.cgi?transparent" >-transparent</A></CODE>",
+"<CODE><A HREF="../option_link.cgi?floodfill"   >-floodfill</A></CODE>",
+"<CODE><A HREF="../option_link.cgi?trim"        >-trim</A></CODE>",
+"<CODE><A HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>",
+"<CODE><A HREF="../option_link.cgi?draw"        >-draw</A> 'color'</CODE>",
+"<CODE><A HREF="../option_link.cgi?draw"        >-draw</A> 'matte'</CODE>",
+and probably others.  It also effects GIF
+"<CODE><A HREF="../option_link.cgi?layers"  >-layers</A>
+       <A HREF="../anim_opt/#opt_trans"     >OptimizeTransparency</A></CODE>",
+and
+"<CODE><A HREF="../option_link.cgi?compose" >-compose</A>
+       <A HREF="../compose/#changemask"     >ChangeMask</A></CODE>"
+handling.  </P>
+
+It also effects the results of "<CODE>compare</CODE>" and specifically the
+"<CODE><A HREF="../option_link.cgi?metric"      >-metric</A> AE</CODE>" or
+Absolute Error Pixel Count. </P>
+
+<A NAME="fuzz_distance"></A>
+<H4>Fuzz Factor Distance</H4>
+
+The "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" setting is
+actually a form of color 'distance' setting.  Any color that is within the
+given distance of the color being looked for, will match that color, even
+though it is not an exact match. </P>
+
+A value of '<CODE>200</CODE>' represents a distance of 200 color units in the
+current color depth of the IM being used.  For an IM Q16 (<A
+HREF="../basics/#quality" >16 bit quality</A> for color store) this is quite
+small, for an IM Q8  this is VERY large, and will cause a lot of colors to
+match each other. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Here for example I change all the colors that are within 30,000 color units (for
+IM Q16) of '<CODE>blue</CODE>' to white.  With my Q16 ImageMagick programs,
+that represents approximately the distance from '<CODE>blue</CODE> to
+'<CODE>navy</CODE>' (half dark blue),
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png \
+          -fuzz 30000 -fill white -opaque blue \
+          opaque_blue.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="opaque_blue.jpg"
+     ><IMG SRC="opaque_blue.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+To make this easier to understand here I invert the matched colors
+turning the unmatched colors to white.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png \
+          -fuzz 30000 -fill white +opaque blue \
+          opaque_blue_not.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="opaque_blue_not.png"
+     ><IMG SRC="opaque_blue_not.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+If your IM is older than version 6.3.7-10 when the 'plus' form of the
+"<CODE><A HREF="../option_link.cgi?opaque" >-opaque</A></CODE>" operator was
+added, you can use this masking method to invert the result of the color
+match...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png \
+          \( +clone  -fuzz 30000 -transparent blue \
+             -channel RGB +level-colors white +channel \) \
+          -composite   opaque_blue_inv.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="opaque_blue_inv.png"
+     ><IMG SRC="opaque_blue_inv.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Or this method that limits all modifications to just the 'alpha channel', so
+that all the original colors, are left as is. That is, you create a negated
+mask from the color selection, so as to make all non-selected colors
+fully-transparent.  They remain present, just transparent!
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png -fuzz 30000 -transparent blue \
+          -channel A -negate +channel   opaque_blue_inv_alpha.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="opaque_blue_inv_alpha.png"
+     ><IMG SRC="opaque_blue_inv_alpha.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+An advantage of these alternative methods, is that you can expand them to
+generate a '<I>not multiple colors</I>' technique. All that you need to do is
+add more colors to the list being made transparent, before negating the mask,
+and posibly removing the negated transparency.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png \
+          -fuzz 25000 -transparent blue -transparent red -transparent lime \
+          -channel A -negate +channel \
+          -background white -alpha remove   opaque_multi_inv.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="opaque_multi_inv.png"
+     ><IMG SRC="opaque_multi_inv.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<BR>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  As a matter of interest, in an IM with a Q8 compilation setting, a
+  "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" factor of 256
+  (2<SUP>8</SUP>) will make the colors '<CODE>black</CODE>' and
+  '<CODE>blue</CODE>' equivelent.  For an IM with a Q16 setting this number is
+  65536 (2<SUP>16</SUP>). </P>
+
+  To make '<CODE>blue</CODE>' and '<CODE>red</CODE>' colors match this
+  number must be multiplied by the square root of 2, or 362 for IM Q8,
+  and with 92682 for IM Q16. </P>
+
+  To make all colors match (eg colors '<CODE>black</CODE>' and
+  '<CODE>white</CODE>') you will need to multiply by the square root of 3.
+  In other words, a fuzz factor setting of 444 for IM Q8 and 113512 for IM
+  Q16.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  It is likely that better and more realistic color distances can be defined
+  using a 'perceptual' colorspace, such as '<CODE>LAB</CODE>', or
+  '<CODE>LUV</CODE>'.  Just convert images into that colorspace before
+  performing fuzzy color matching.  This will make colors like pure-blue and
+  black much closer, and yellow and white closer, than they are in
+  '<CODE>sRGB</CODE>' or 'linear-<CODE>RGB</CODE>' colorpsaces.
+</I></FONT></TD></TR></TABLE></P>
+
+As you can see from the above formulas, direct color distances is definitely
+not a nice way of setting the fuzz factor to use, as it is also dependant on
+exactly what compile time <A HREF="../basics/#quality" >Quality Setting</A> is
+used. </P>
+
+Setting the "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" factor
+as a percentage, makes its use a lot simpler.  In this case
+'<CODE>100%</CODE>' represents a large enough fuzz factor to cover all colors.
+That is, it represents the color distance from '<CODE>black</CODE>' to
+'<CODE>white</CODE>', across the 3 dimensional diagonal of the RGB color cube.
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Here we replace any color within 90% of the distance from white to black, with
+white.  This should result in only the last 10% colors near
+'<CODE>black</CODE>' to be left on the image, as black is on the opposite side
+of the RGB color cube.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png -fuzz 90% -fill white -opaque white  opaque_w90.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="opaque_w90.jpg"
+     ><IMG SRC="opaque_w90.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Note that this 90% represents a sphere of colors around 'white' in the RGB
+color cube.  However this is is not the same as replacing the colors that are
+not within a 10% sphere of black.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png -fuzz 10% -fill white +opaque black  opaque_k10.jpg
+</CODE></PRE></TD></TR></TABLE></P>
+
+As you can see 10% sphere of colors near the black is much more uniform, than
+selecting a 90% sphere of the colors around white. </P>
+
+Think about how a large sphere centered on the white corner of a cube fills
+that cube. Then think about a small sphere centered on the black corner, and
+you will be able to understand the difference between the two images.</P>
+
+</TD><TD>
+  <A HREF="opaque_k10.jpg"
+     ><IMG SRC="opaque_k10.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  A "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" factor of
+  100%, equates to the RGB color cube distance from '<CODE>black</CODE>' to
+  '<CODE>white</CODE>'. From this we can calculate that a percentage of about
+  57.7% is the distance between '<CODE>black</CODE>' and '<CODE>blue</CODE>',
+  and 81.6% is the distance from '<CODE>blue</CODE>' to '<CODE>red</CODE>' or
+  from either of those colors to '<CODE>white</CODE>'.  </P>
+
+  In summary, anything larger than about 25%, (just short of the RGB distance
+  from '<CODE>blue</CODE>' to '<CODE>navy blue</CODE>' represents a very
+  large color change.
+</I></FONT></TD></TR></TABLE></P>
+
+To demonstrate the color distances more, lets use a progressively larger fuzz
+factor percentage around the blue colors...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png -fuzz 10% -fill white -opaque blue opaque_b10.jpg
+  convert colorwheel.png -fuzz 25% -fill white -opaque blue opaque_b25.jpg
+  convert colorwheel.png -fuzz 57% -fill white -opaque blue opaque_b57.jpg
+  convert colorwheel.png -fuzz 81% -fill white -opaque blue opaque_b81.jpg
+  convert colorwheel.png -fuzz 95% -fill white -opaque blue opaque_b95.jpg
+</CODE></PRE></TD></TR></TABLE><NOBR>
+  <A HREF="opaque_b10.jpg"
+     ><IMG SRC="opaque_b10.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_b25.jpg"
+     ><IMG SRC="opaque_b25.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_b57.jpg"
+     ><IMG SRC="opaque_b57.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_b81.jpg"
+     ><IMG SRC="opaque_b81.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_b95.jpg"
+     ><IMG SRC="opaque_b95.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</NOBR></DIV></P>
+
+From this you can clearly see that it isn't '<CODE>black</CODE>', or
+'<CODE>white</CODE>' that is the most distant color from '<CODE>blue</CODE>',
+but that it is actually '<CODE>yellow</CODE>' that is most distant within RGB
+color space. </P>
+
+Also note that a 81% color difference will just miss matching a pure
+'<CODE>red</CODE>' color, however while pure red does not match other reds,
+(excluding orange-red colors) do match.  That is again due the to 'spherical'
+nature of the color matching.  The moral is that you are probably better off
+either using multiple small "<CODE><A HREF="../option_link.cgi?fuzz"
+>-fuzz</A></CODE>" factored matches or a smaller 'inverted match', than
+a single large value. </P>
+
+Here we compare the colors in the image with another color, the 'near-perfect
+gray' color, changing similar colors to that same gray color, as the 'fuzz
+factor' increases.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert colorwheel.png -fuzz 25% -fill gray50 -opaque gray50 opaque_g25.jpg
+  convert colorwheel.png -fuzz 30% -fill gray50 -opaque gray50 opaque_g30.jpg
+  convert colorwheel.png -fuzz 35% -fill gray50 -opaque gray50 opaque_g35.jpg
+  convert colorwheel.png -fuzz 45% -fill gray50 -opaque gray50 opaque_g45.jpg
+  convert colorwheel.png -fuzz 51% -fill gray50 -opaque gray50 opaque_g51.jpg
+</CODE></PRE></TD></TR></TABLE><NOBR>
+  <A HREF="opaque_g25.jpg"
+     ><IMG SRC="opaque_g25.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_g30.jpg"
+     ><IMG SRC="opaque_g30.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_g35.jpg"
+     ><IMG SRC="opaque_g35.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_g45.jpg"
+     ><IMG SRC="opaque_g45.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="opaque_g51.jpg"
+     ><IMG SRC="opaque_g51.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</NOBR></DIV></P>
+
+As you can see colors in the colorwheel image only just start to match at
+a fuzz factor just before 30%, and slowly increase until at 45% all but the
+most extreme colors have disappeared.  By 51% all the colors in the image has
+matched the near-perfect gray. </P>
+
+What you are seeing is the result of the way RGB colors are arranged into
+a cube in 3-dimensional space.  The 'color wheel' image however only contains
+'fully saturated colors', which basically means all the extreme colors that
+are located on the outside faces of the RGB color cube. </P>
+
+A perfect gray is however located in the center of the cube, quite distant
+from all the 'saturated colors'. As such it is not until you reach a large
+fuzz factor of 28%, that the color in the middle of the cube faces start
+to match. </P>
+
+As the fuzz factor gets larger more and more colors will match until only the
+colors at the extreme corners of the color cube remain.  At around 50% the
+corner colors will also start to match, and so at 51% every opaque RGB color
+will have matched. </P>
+
+<!--
+<I>Fuzz and other colorspaces</I> </P>
+
+Color matching is actually much more 'natural' if the image was stored using
+some other color scheme than RGB, such as YIQ.  The formula is still the same,
+just using a different colorspace. Similarly for other color spaces. </P>
+
+<PRE>How to use YIQ or even CMYK with opaque tests ????
+Colors do not seem to map correctly in matching to images in a different
+colorspace. </PRE>
+-->
+
+<A NAME="fuzz_alpha"></A>
+<H4>Fuzz Factor and Transparent colors</H4>
+
+Using a "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" factor
+becomes more complicated when matching involves transparent and
+semi-transparent colors. </P>
+
+For example here I create a gradient between black and white, across the
+image, but then add a transparent gradient vertically.  I then do a fuzzy
+color match for a perfect gray color (that is 50% gray).  In later images
+I make the color being match more transparent until it is fully-transparent,
+however the <A HREF="#fuzz" >Fuzz Factor</A> remains a constant 20%.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
+          -compose CopyOpacity -composite  trans_gradient.png
+  convert trans_gradient.png -channel RGBA \
+          -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,1.0)' fuzz_trans_100.png
+  convert trans_gradient.png -channel RGBA \
+          -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,.75)' fuzz_trans_75.png
+  convert trans_gradient.png -channel RGBA \
+          -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,.40)' fuzz_trans_40.png
+  convert trans_gradient.png -channel RGBA \
+          -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,0.0)' fuzz_trans_00.png
+</CODE><BR></PRE></TD></TR></TABLE>
+<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="trans_gradient.png"
+     ><IMG SRC="trans_gradient.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="fuzz_trans_100.png"
+     ><IMG SRC="fuzz_trans_100.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="fuzz_trans_75.png"
+     ><IMG SRC="fuzz_trans_75.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="fuzz_trans_40.png"
+     ><IMG SRC="fuzz_trans_40.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="fuzz_trans_00.png"
+     ><IMG SRC="fuzz_trans_00.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Note the use of "<CODE>-channel RGBA</CODE>" in the above is not for color
+matching, but for specifying the color channels to be 'filled'. That is
+without it, the above will still match the same colors, but gray 'fill' will
+remain semi-transparent, and not be set to an opaque gray color. </P>
+
+If you want to match all colors regardless of their transparency, then you
+will need to <A HREF="../masking/#alpha_off">Turn Off Transparent Channel</A>
+of the image, at least temporarilly.  You can turn it back on again afterward,
+though your fill color will again have the same transparency as the original
+color. </P>
+
+In the first image matching with a fully-opaque gray color
+(alpha='<CODE>1.0</CODE>') you get a very spherical match of all the near
+opaque gray colors.  However as the color being matched gets more
+semi-transparent, the number of matching semi-transparent colors that match
+will seem to become larger, until a fully-transparent grey will match any
+near-transparent color. </P>
+
+What is happening is that as transparency increases, the distance between the
+semi-transparent colors decreases. The more transparent two colors are the
+closer the colors will be, compared to their opaque counterparts. When both
+colors are fully transparent, the two colors will be regarded as a perfect, or
+'0' distance, match. </P>
+
+The other thing to notice is that (as of IM v6.6.6-4) the distance from
+a fully-transparent color (grey or otherwise) is purely a function of the
+colors transparency (alpha value).  The last image in the above matched all
+pixels that was within 20% of being fully-transparent, regardless of actual
+color. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+This also means that a large <A HREF="#fuzz" >Fuzz Factor</A> with
+a fully-transparent color (like 'none'), can be used to match all, or
+almost-all semi-transparent colors. For example...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert trans_gradient.png -channel RGBA \
+          -fuzz 95% -fill Gray50 -opaque None \
+          -alpha off  fuzz_trans.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="fuzz_trans.jpg"
+     ><IMG SRC="fuzz_trans.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Notice that only the top 5% of the near opaque colors in the above did not
+match, while all the other semi-transparent colors, was turned grey.  The
+final "<CODE><A HREF="../option_link.cgi?alpha" >-alpha</A> off</CODE>"
+removes the last bit of semi-transparency from the image.  Because of this the
+"<CODE><A HREF="../option_link.cgi?channel" >-channel</A> RGBA</CODE>" setting
+is not actually needed, but is recommended for completeness. </P>
+
+This example is essentially equivalent to a threshold of the alpha channel,
+before adding a gray color underlay (to make transparent colors grey) </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM v6.6.6-4 fuzz color matching did not match fully-transparent with
+  opaque colors equally. In fact Black was much closer match than White. As
+  such the last example will fail.  See <A HREF="../bugs/fuzz_distance/" >Fuzz
+  Distance and Transparent Colors Bug</A> for more details.
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Worse still before IM v6.2.6-2 fuzz color matching did not regard all
+  fully-transparent colors as being the same color. That is fully-transparent
+  black (also known as 'None') was not the same as fully-transparent white (or
+  color '#FFF0'), even though they are both fully-transparent.
+</I></FONT></TD></TR></TABLE></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<DIV ALIGN=center><FONT SIZE=+2><B>
+<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
+Under Construction
+<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
+</B></FONT></DIV></P>
+
+<PRE>
+Color maths (get the average of two or more colors)....
+
+  Example Averaging two colors... Say '#000000'  and  '#DDDDDD'
+
+  Generally the colors are added to images, and the result output as a
+  single pixel 'txt:-' image, which which the color can be extracted.
+
+  * use -resize to merge the colors
+
+      convert -size 2x1 xc:'#000000' -fill '#DDDDDD' \
+              -draw 'point 0,0'  -resize 1x1  txt:-
+
+  * Use -average on them!
+
+      convert -size 1x1 xc:'#000000' xc:'#DDDDDD' \
+              -average  txt:-
+
+    Or for a lot of colors you can use the 'Box' resize filter
+      convert rose: -filter Box -resize 1x1\! txt:
+      # ImageMagick pixel enumeration: 1,1,255,RGB
+      0,0: (145, 89, 80) #915950
+
+  * Use -fx to apply whatever formula you want
+
+      convert -size 1x1 xc:'#000000' xc:'#DDDDDD' \
+              -fx '(u+v)/2'  txt:-
+
+  With an ImageMagick API the results can be more directly retrieved from the
+  image.
+</PRE>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 1 December 2010 <BR>
+Updated: 9 March 2011 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/color_basics/</CODE>
+</ADDRESS></BODY></HTML>
+

@@ -1,0 +1,305 @@
+<html lang="en"><HEAD>
+<TITLE>Composite Mask Bug -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/composite_mask/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Composite Mask Bug - Fixed</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+The following is a demonstration of a known bug, in the handling of composite
+mask for ALL alpha composition modes. Some versions of IM trialed a different
+way of fixing that worked for black an white shape mask, but not a
+greyscale blend of the results.   This is an on going issue. </P>
+
+The following is a demonstration of a known fixed bug in the handling of
+composite mask for ALL alpha composition modes. Before it was fixed
+composition masking only worked correctly for the default 'Over' composition
+of images which did not have any existing alpha channel transparency. </P>
+
+This page is for reference for older IM users who may still have to deal with
+this bug. The examples on this page have not been re-created since the bug was
+fixed.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+The "<CODE>composite</CODE>" command and  "<CODE><A
+HREF="../../option_link.cgi?composite" >-composite</A></CODE>" operator will
+also take a third masking image which is suposed to limit the area effected by
+the "<CODE><A HREF="../../option_link.cgi?compose" >-compose</A></CODE>"
+method. </P>
+
+For example given two images, and a <I>mask</I> image you can overlay part of
+the <I>source</I> image onto the <I>background</I> image, as defined by that
+mask. Please note however that the <I>background</I> image still defines the
+final size of resulting image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:black \
+            -fill white   -draw 'circle 35,35 35,5' \
+            -fill black   -draw 'circle 28,30 35,5'   moon_mask.gif
+    composite tile_water.jpg tile_aqua.jpg \
+              moon_mask.gif  +matte     mask_over.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="tile_water.jpg"
+      ><IMG SRC="tile_water.jpg"
+            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+   <A HREF="tile_aqua.jpg"
+      ><IMG SRC="tile_aqua.jpg"
+            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+   <A HREF="moon_mask.gif"
+      ><IMG SRC="moon_mask.gif"
+            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 HSPACE=10 ALT="==>">
+   <A HREF="mask_over.png"
+      ><IMG SRC="mask_over.png"
+            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+That is the normal working an use of a composite mask operation, and works
+very well.  But it ONLY works when using a mask to select from two
+fully-opaque images! </P>
+
+<HR WIDTH=30%><!-- -------------------- -->
+
+The problems arise when we want to use this mask with images that already have
+a alpha channel.  That is we want to use the mask to limit the area in which
+the compose operation is applied (as defined by the SVG standard.) </P>
+
+Lets use some colored circles for the  source, background, and masking
+images...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 60x60 xc:none -fill red    -draw 'circle 30,21 30,3'  src.png
+  convert -size 60x60 xc:none -fill '#0F0' -draw 'circle 21,39 24,57' bgnd.png
+  convert -size 60x60 xc:black -fill white -draw 'circle 39,39 36,57' mask.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
+   <A HREF="src.png"
+      ><IMG SRC="src.png"     WIDTH=60 HEIGHT=60
+            ALIGN=middle VSPACE=2 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+   <A HREF="bgnd.png"
+      ><IMG SRC="bgnd.png"     WIDTH=60 HEIGHT=60
+            ALIGN=middle VSPACE=2 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+   <A HREF="mask.png"
+      ><IMG SRC="mask.png"     WIDTH=60 HEIGHT=60
+            ALIGN=middle VSPACE=2 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+And apply them, again using an  'Over' compose method...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    composite src.png  bgnd.png   mask.png   mask_masked.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="mask_masked.png"
+      ><IMG SRC="mask_masked.png"           WIDTH=60  HEIGHT=60
+            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Notice how the red circle source image is overlaid as if its alpha channel was
+replaced by the alpha channel of the blue masking image.  That the pixels
+which are supposed to be fully-transparent black have suddenly became visible!
+</P>
+
+What is happening is that at this time the above is equivalent to...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    composite mask.png  src.png +matte -compose CopyOpacity  miff:- |\
+      composite  -  bgnd.png    mask_masked_equiv.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="mask_masked_equiv.png"
+      ><IMG SRC="mask_masked_equiv.png"      WIDTH=60  HEIGHT=60
+            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+However what it should have generated was something like...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    composite mask.png  src.png  -compose DstIn  miff:- |\
+      composite  -  bgnd.png    mask_masked_true.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
+   <A HREF="mask_masked_true.png"
+      ><IMG SRC="mask_masked_true.png"      WIDTH=60  HEIGHT=60
+            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+WARNING: The above is NOT a generic solution, and while close to the correct
+result, is not actually a perfectly correct result. </P>
+
+Because currently a composite masked operation is not performing a proper area
+limited operation, it use is limited to only combining two matte images
+(generally textures) using a mask to select what image is visible. </P>
+
+Also using anything other than an '<CODE>Over</CODE>' compose method probably
+result in other unexpected results. </P>
+
+<HR><!-- ------------------------------------------------------------------ -->
+
+<A NAME="correct"></A>
+<H3>Correct Operation Masking</H3>
+
+The correct fix for users with older versions of IM is NOT simple.... </P>
+
+This is provided purely for reference, and as the bug was fixed in IM v6.3.5
+and the addition of other image operation masking techniques such as "<CODE><A
+HREF="../../option_link.cgi?clip-mask" >-clip-mask</A></CODE>".  It basically
+shows, the true complexity image mask overlaying.  </P>
+
+<HR WIDTH=30%><!-- ---------------------------- -->
+
+There are a number of methods can be used to generated a 'mask limited
+composite operation'.  But the method which is most generic and should work
+with ALL alpha composition methods is... </P>
+
+<BLOCKQUOTE><I>
+To do the alpha composition (with whatever "<CODE><A
+HREF="../../option_link.cgi?compose" >-compose</A></CODE>" method the user
+requested) as normal, but then then use the mask to 'blend' the original image
+with the result, to produce the masked limited result.
+</I></BLOCKQUOTE></P>
+
+This is what I would have expected a 'masked' solution to really be. </P>
+
+Currently however using a mask to blend two images together is a tricky
+matter, but is can be done as shown below. </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    composite src.png bgnd.png                                 composed.png
+    composite mask.png mask.png  +matte -compose CopyOpacity   alpha_mask.png
+
+    composite alpha_mask.png bgnd.png      -compose DstOut  bgnd_masked.png
+    composite alpha_mask.png composed.png  -compose DstIn   composed_masked.png
+
+    composite bgnd_masked.png composed_masked.png -compose Plus  result.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
+<TABLE WIDTH=80% CELLSPACING=0 CELLPADDING=0>
+<TR><TD>
+    <A HREF="src.png"
+       ><IMG SRC="src.png"              WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+    <IMG SRC="../../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALT=" + ">
+</TD><TD>
+    <A HREF="bgnd.png"
+       ><IMG SRC="bgnd.png"            WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+    <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 HSPACE=10 ALT="==>">
+</TD><TD>
+    <A HREF="composed.png"
+       ><IMG SRC="composed.png"              WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD></TD><TD>
+</TD><TD>&nbsp;&nbsp;</TD><TD ALIGN=justify>
+    Do the Normal Alpha Composition of the two images
+</TD></TR> <!-- -------------- -->
+<TR><TD>
+    <A HREF="alpha_mask.png"
+       ><IMG SRC="alpha_mask.png"            WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+    <IMG SRC="../../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALT=" + ">
+</TD><TD>
+    <A HREF="composed.png"
+       ><IMG SRC="composed.png"              WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+    <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 HSPACE=10 ALT="==>">
+</TD><TD>
+    <A HREF="bgnd_masked.png"
+       ><IMG SRC="bgnd_masked.png"           WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+    <IMG SRC="../../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALT=" + ">
+</TD><TD>
+    <A HREF="composed_masked.png"
+       ><IMG SRC="composed_masked.png"       WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>&nbsp;&nbsp;</TD><TD ALIGN=justify>
+    Use the mask to divide the results in unchanged and changed parts
+</TR> <!-- -------------- -->
+<TR><TD>
+    <A HREF="bgnd_masked.png"
+       ><IMG SRC="bgnd_masked.png"           WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+    <IMG SRC="../../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALT=" + ">
+</TD><TD>
+    <A HREF="composed_masked.png"
+       ><IMG SRC="composed_masked.png"       WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD>
+    <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 HSPACE=10 ALT="==>">
+</TD><TD>
+    <A HREF="result.png"
+       ><IMG SRC="result.png"                WIDTH=60 HEIGHT=60
+             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD></TD><TD>
+</TD><TD>&nbsp;&nbsp;</TD><TD ALIGN=justify>
+    Add these parts together to blend the result (EG: masked blend of result)
+</TD></TR></TABLE>
+</DIV></P>
+
+ASIDE: The extra step using '<CODE>CopyOpacity</CODE>' is to convert any pure
+greyscale mask into a image with an alpha mask.  While this is not needed for
+this example, it will allow you to use a greyscale mask with the alpha
+composition methods, '<CODE>DstIn</CODE>' and '<CODE>DstOut</CODE>', as well as
+'<CODE>Plus</CODE>' to blend the images together properly. </P>
+
+Note that the above 'blended' the images together.  You can NOT just 'overlay'
+the masked result onto the final image, as that will produce incorrect
+results.  Specifically it would result in the colors being overlaid multiple
+times, which for semi-transparent pixels will produce a more opaque result
+than is correct.  </P>
+
+I recommend the creation of an internal 'Mask blend' type operation as a
+faster and simpler method of doing the whole thing.  This would be the only
+'three image' operation that should be needed for alpha composition, other
+that <A HREF="../../compose/#displace_2d" >2-Dimensional Displacement
+Mapping</A>.  </P>
+
+</DIV></P>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 26 September 2005 <BR>
+Updated: 18 June 2007 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/composite_mask/</CODE>
+</ADDRESS></BODY></HTML>
+

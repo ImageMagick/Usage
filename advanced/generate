@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+. ../generate_options
+../generate_clear
+jpg_opt='-compress LossLess'
+
+# don't backup intermete images, let IM overwrite as needed
+mv_perl -q 's/_flare_(..)\.png/flare_${1}\.png/' _flare_??.png
+
+ln -s ../img_photos/holocaust_md.jpg .
+ln -s ../img_photos/holocaust_tn.gif .
+ln -s ../images/jigsaw_*.png .
+ln -s ../images/pokemon.gif .
+ln -s ../images/tile_wood.gif .
+
+. ../generate_examples
+
+# Junk the gunplot 'fit' output
+rm -f fit.log
+
+
+../generate_compare
+
+echo "DONE"
+
+

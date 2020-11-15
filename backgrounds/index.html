@@ -1,0 +1,1047 @@
+<HTML><HEAD>
+<TITLE>Backgrounds -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/backgrounds/">
+</HEAD><BODY BGCOLOR="#BOC4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../../w_images/space.gif" width=50 height=1>
+    Background Examples</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+</DL>
+
+This is a table of applying various transforms against some 'random' canvases,
+showing methods of producing interesting random backgrounds at whatever size
+you desire, whether it is a single large image, or a background tile for a web
+page.  </P>
+
+The table starts with the method used to generate the initial 'random' image
+used to generate all the other images shown. Just insert the various image
+'transform' into the command, to convert the raw image into something similar
+to that shown.  From there you can adjust the various setting yourself to
+produce exactly the type of background image you want. </P>
+
+Be sure to read the notes at the end, before attempting to create your own
+examples. and please mail any interesting variations you may come across. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TH>
+     Input Images :-  Generator, Transform and Post-processing
+</TH><TD ROWSPAN=100>&nbsp;</TD></TR>
+
+<TR><TD ALIGN=center><FONT SIZE=-1><I>
+Images results shown here were generated with a "<CODE>-noop</CODE>" null
+transform operator </I></FONT></TD></TR>
+
+<TR><TD>
+Plasma Fractal <FONT SIZE=-1><I>(non-tiling canvas image)</I></FONT>
+</TD></TR><TR><TD>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+  convert -size 120x120  plasma:fractal fractal.png
+  convert fractal.png   <I>{..transform..}</I> \
+           -shave 20x20 +repage  -auto_level  <I>{result}</I>
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
+<TD>
+   <A HREF="fractal_noop.png"
+      ><IMG SRC="fractal_noop.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD>
+Random Noise <FONT SIZE=-1><I>(tilable background image)</I></FONT>
+</TD></TR><TR><TD>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+  convert -size 80x80 xc: +noise Random noise.png
+  convert noise.png -virtual-pixel tile  <I>{..transform..}</I> \
+          -auto_level  <I>{result}</I>
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
+<TD></TD><TD>
+   <A HREF="noise_noop.png"
+      ><IMG SRC="noise_noop.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+
+<TR><TD>
+Random Hex Tile <FONT SIZE=-1><I>(hex tile background image)</I></FONT>
+</TD></TR><TR><TD>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+  convert -size 50x80 xc: +noise Random -write mpr:rand \
+           -extent 100x80   -page +50-40 mpr:rand \
+           -page +50+40 mpr:rand -flatten  hextile.png
+  convert hextile.png -virtual-pixel tile  <I>{..transform..}</I> \
+          -auto_level    <I>{result}</I>
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
+<TD></TD><TD></TD><TD>
+   <A HREF="hextile_noop.png"
+      ><IMG SRC="hextile_noop.png"     WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+<TR><TD>&nbsp;<TD></TR>
+
+<!-- START -->
+
+<TR><TH> Basic Transforms </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="blur_raw">blur_raw</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x1</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_blur_raw.png"
+      ><IMG SRC="fractal_blur_raw.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_blur_raw.png"
+      ><IMG SRC="noise_blur_raw.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_blur_raw.png"
+      ><IMG SRC="hextile_blur_raw.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="blur_1">blur_1</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x1</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_blur_1.png"
+      ><IMG SRC="fractal_blur_1.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_blur_1.png"
+      ><IMG SRC="noise_blur_1.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_blur_1.png"
+      ><IMG SRC="hextile_blur_1.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="blur_3">blur_3</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x3</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_blur_3.png"
+      ><IMG SRC="fractal_blur_3.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_blur_3.png"
+      ><IMG SRC="noise_blur_3.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_blur_3.png"
+      ><IMG SRC="hextile_blur_3.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="blur_5">blur_5</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_blur_5.png"
+      ><IMG SRC="fractal_blur_5.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_blur_5.png"
+      ><IMG SRC="noise_blur_5.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_blur_5.png"
+      ><IMG SRC="hextile_blur_5.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="blur_10">blur_10</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_blur_10.png"
+      ><IMG SRC="fractal_blur_10.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_blur_10.png"
+      ><IMG SRC="noise_blur_10.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_blur_10.png"
+      ><IMG SRC="hextile_blur_10.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="intensity">intensity</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10  -colorspace Gray</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_intensity.png"
+      ><IMG SRC="fractal_intensity.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_intensity.png"
+      ><IMG SRC="noise_intensity.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_intensity.png"
+      ><IMG SRC="hextile_intensity.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="channel">channel</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10  -fx G</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_channel.png"
+      ><IMG SRC="fractal_channel.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_channel.png"
+      ><IMG SRC="noise_channel.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_channel.png"
+      ><IMG SRC="hextile_channel.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="hues">hues</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -auto-level -separate -background white \
+     -compose ModulusAdd -flatten -channel R -combine +channel \
+     -set colorspace HSB -colorspace RGB</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_hues.png"
+      ><IMG SRC="fractal_hues.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_hues.png"
+      ><IMG SRC="noise_hues.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_hues.png"
+      ><IMG SRC="hextile_hues.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Shade Transforms </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="shade_raw">shade_raw</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_shade_raw.png"
+      ><IMG SRC="fractal_shade_raw.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_shade_raw.png"
+      ><IMG SRC="noise_shade_raw.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_shade_raw.png"
+      ><IMG SRC="hextile_shade_raw.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="shade">shade</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_shade.png"
+      ><IMG SRC="fractal_shade.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_shade.png"
+      ><IMG SRC="noise_shade.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_shade.png"
+      ><IMG SRC="hextile_shade.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="shade_dimmed">shade_dimmed</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -shade 120x45 -auto-level -fill grey -colorize 40%</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_shade_dimmed.png"
+      ><IMG SRC="fractal_shade_dimmed.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_shade_dimmed.png"
+      ><IMG SRC="noise_shade_dimmed.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_shade_dimmed.png"
+      ><IMG SRC="hextile_shade_dimmed.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="shade_1">shade_1</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x1 -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_shade_1.png"
+      ><IMG SRC="fractal_shade_1.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_shade_1.png"
+      ><IMG SRC="noise_shade_1.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_shade_1.png"
+      ><IMG SRC="hextile_shade_1.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="shade_2">shade_2</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x2 -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_shade_2.png"
+      ><IMG SRC="fractal_shade_2.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_shade_2.png"
+      ><IMG SRC="noise_shade_2.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_shade_2.png"
+      ><IMG SRC="hextile_shade_2.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="shade_5">shade_5</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5 -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_shade_5.png"
+      ><IMG SRC="fractal_shade_5.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_shade_5.png"
+      ><IMG SRC="noise_shade_5.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_shade_5.png"
+      ><IMG SRC="hextile_shade_5.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="shade_10">shade_10</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -fx G -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_shade_10.png"
+      ><IMG SRC="fractal_shade_10.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_shade_10.png"
+      ><IMG SRC="noise_shade_10.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_shade_10.png"
+      ><IMG SRC="hextile_shade_10.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Emboss Transforms </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="emboss_1">emboss_1</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5  -emboss 1</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_emboss_1.png"
+      ><IMG SRC="fractal_emboss_1.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_emboss_1.png"
+      ><IMG SRC="noise_emboss_1.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_emboss_1.png"
+      ><IMG SRC="hextile_emboss_1.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="emboss_1g">emboss_1g</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5  -emboss 1  -fx G</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_emboss_1g.png"
+      ><IMG SRC="fractal_emboss_1g.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_emboss_1g.png"
+      ><IMG SRC="noise_emboss_1g.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_emboss_1g.png"
+      ><IMG SRC="hextile_emboss_1g.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="emboss_0s">emboss_0s</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x3  -emboss .5 -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_emboss_0s.png"
+      ><IMG SRC="fractal_emboss_0s.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_emboss_0s.png"
+      ><IMG SRC="noise_emboss_0s.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_emboss_0s.png"
+      ><IMG SRC="hextile_emboss_0s.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="emboss_1s">emboss_1s</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5  -emboss 1  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_emboss_1s.png"
+      ><IMG SRC="fractal_emboss_1s.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_emboss_1s.png"
+      ><IMG SRC="noise_emboss_1s.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_emboss_1s.png"
+      ><IMG SRC="hextile_emboss_1s.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="emboss_1gs">emboss_1gs</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5  -emboss 1  -fx G  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_emboss_1gs.png"
+      ><IMG SRC="fractal_emboss_1gs.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_emboss_1gs.png"
+      ><IMG SRC="noise_emboss_1gs.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_emboss_1gs.png"
+      ><IMG SRC="hextile_emboss_1gs.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="emboss_5gs">emboss_5gs</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -emboss 5  -fx G  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_emboss_5gs.png"
+      ><IMG SRC="fractal_emboss_5gs.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_emboss_5gs.png"
+      ><IMG SRC="noise_emboss_5gs.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_emboss_5gs.png"
+      ><IMG SRC="hextile_emboss_5gs.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Edging Transforms </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="charcoal">charcoal</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x2  -charcoal 10 -negate</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_charcoal.png"
+      ><IMG SRC="fractal_charcoal.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_charcoal.png"
+      ><IMG SRC="noise_charcoal.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_charcoal.png"
+      ><IMG SRC="hextile_charcoal.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="charcoal_10s">charcoal_10s</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x2  -charcoal 10 -negate -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_charcoal_10s.png"
+      ><IMG SRC="fractal_charcoal_10s.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_charcoal_10s.png"
+      ><IMG SRC="noise_charcoal_10s.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_charcoal_10s.png"
+      ><IMG SRC="hextile_charcoal_10s.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="charcoal_1s">charcoal_1s</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x2  -charcoal 1  -negate -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_charcoal_1s.png"
+      ><IMG SRC="fractal_charcoal_1s.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_charcoal_1s.png"
+      ><IMG SRC="noise_charcoal_1s.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_charcoal_1s.png"
+      ><IMG SRC="hextile_charcoal_1s.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="edges">edges</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x2  -edge 10</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_edges.png"
+      ><IMG SRC="fractal_edges.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_edges.png"
+      ><IMG SRC="noise_edges.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_edges.png"
+      ><IMG SRC="hextile_edges.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="edge_grey">edge_grey</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x2  -edge 10 -fx G</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_edge_grey.png"
+      ><IMG SRC="fractal_edge_grey.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_edge_grey.png"
+      ><IMG SRC="noise_edge_grey.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_edge_grey.png"
+      ><IMG SRC="hextile_edge_grey.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="mesas">mesas</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x2  -edge 10 -fx G -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_mesas.png"
+      ><IMG SRC="fractal_mesas.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_mesas.png"
+      ><IMG SRC="noise_mesas.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_mesas.png"
+      ><IMG SRC="hextile_mesas.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Line Generating Transforms </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="lines">lines</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -emboss 4 -edge 1</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_lines.png"
+      ><IMG SRC="fractal_lines.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_lines.png"
+      ><IMG SRC="noise_lines.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_lines.png"
+      ><IMG SRC="hextile_lines.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="loops">loops</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -edge 15  -edge 1  -blur 0x1</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_loops.png"
+      ><IMG SRC="fractal_loops.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_loops.png"
+      ><IMG SRC="noise_loops.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_loops.png"
+      ><IMG SRC="hextile_loops.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="engrave_loops">engrave_loops</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -edge 15  -edge 1  -blur 0x1 -fx R+B+G -shade 280x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_engrave_loops.png"
+      ><IMG SRC="fractal_engrave_loops.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_engrave_loops.png"
+      ><IMG SRC="noise_engrave_loops.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_engrave_loops.png"
+      ><IMG SRC="hextile_engrave_loops.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="engrave_loop">engrave_loop</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -edge 15  -edge 1  -blur 0x1 -fx G -shade 280x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_engrave_loop.png"
+      ><IMG SRC="fractal_engrave_loop.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_engrave_loop.png"
+      ><IMG SRC="noise_engrave_loop.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_engrave_loop.png"
+      ><IMG SRC="hextile_engrave_loop.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="color_contours">color_contours</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -normalize -fx 'sin(u*4*pi)*100' -edge 1 -blur 0x1</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_color_contours.png"
+      ><IMG SRC="fractal_color_contours.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_color_contours.png"
+      ><IMG SRC="noise_color_contours.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_color_contours.png"
+      ><IMG SRC="hextile_color_contours.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="contours">contours</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -normalize -fx 'sin(g*4*pi)*100' \
+     -edge 1 -blur 0x1 -shade 280x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_contours.png"
+      ><IMG SRC="fractal_contours.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_contours.png"
+      ><IMG SRC="noise_contours.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_contours.png"
+      ><IMG SRC="hextile_contours.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Complex Textured Blob Transforms </TH></TR>
+
+
+<TR><TD ALIGN=center><FONT SIZE=-1><I>
+  (using a strange '<CODE>-edge 1</CODE>' effect)</I></FONT></TD></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="blobs">blobs</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -edge 1</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_blobs.png"
+      ><IMG SRC="fractal_blobs.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_blobs.png"
+      ><IMG SRC="noise_blobs.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_blobs.png"
+      ><IMG SRC="hextile_blobs.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="blobs_grey">blobs_grey</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -edge 1 -fx '(R+G+B)/3'</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_blobs_grey.png"
+      ><IMG SRC="fractal_blobs_grey.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_blobs_grey.png"
+      ><IMG SRC="noise_blobs_grey.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_blobs_grey.png"
+      ><IMG SRC="hextile_blobs_grey.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="pits">pits</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -edge 1 -fx G -shade 280x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_pits.png"
+      ><IMG SRC="fractal_pits.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_pits.png"
+      ><IMG SRC="noise_pits.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_pits.png"
+      ><IMG SRC="hextile_pits.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="ridges">ridges</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 \( +clone -negate \) -edge 1 -fx u.G+v.G -shade 280x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_ridges.png"
+      ><IMG SRC="fractal_ridges.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_ridges.png"
+      ><IMG SRC="noise_ridges.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_ridges.png"
+      ><IMG SRC="hextile_ridges.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="mottled">mottled</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -write mpr:save -negate -edge 1 -negate -fx G \
+     \( mpr:save -edge 1 -fx G \) -shade 280x45 -average</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_mottled.png"
+      ><IMG SRC="fractal_mottled.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_mottled.png"
+      ><IMG SRC="noise_mottled.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_mottled.png"
+      ><IMG SRC="hextile_mottled.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Paint Transforms </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_raw10">paint_raw10</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -paint 10</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_raw10.png"
+      ><IMG SRC="fractal_paint_raw10.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_raw10.png"
+      ><IMG SRC="noise_paint_raw10.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_raw10.png"
+      ><IMG SRC="hextile_paint_raw10.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_areas">paint_areas</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -paint 10  -blur 0x5  -paint 10</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_areas.png"
+      ><IMG SRC="fractal_paint_areas.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_areas.png"
+      ><IMG SRC="noise_paint_areas.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_areas.png"
+      ><IMG SRC="hextile_paint_areas.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_raw10s">paint_raw10s</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -paint 10  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_raw10s.png"
+      ><IMG SRC="fractal_paint_raw10s.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_raw10s.png"
+      ><IMG SRC="noise_paint_raw10s.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_raw10s.png"
+      ><IMG SRC="hextile_paint_raw10s.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_8">paint_8</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5  -paint 8</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_8.png"
+      ><IMG SRC="fractal_paint_8.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_8.png"
+      ><IMG SRC="noise_paint_8.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_8.png"
+      ><IMG SRC="hextile_paint_8.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_8s">paint_8s</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5  -paint 8  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_8s.png"
+      ><IMG SRC="fractal_paint_8s.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_8s.png"
+      ><IMG SRC="noise_paint_8s.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_8s.png"
+      ><IMG SRC="hextile_paint_8s.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_3">paint_3</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -paint 3</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_3.png"
+      ><IMG SRC="fractal_paint_3.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_3.png"
+      ><IMG SRC="noise_paint_3.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_3.png"
+      ><IMG SRC="hextile_paint_3.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_3s">paint_3s</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -paint 3  -shade 120x45</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_3s.png"
+      ><IMG SRC="fractal_paint_3s.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_3s.png"
+      ><IMG SRC="noise_paint_3s.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_3s.png"
+      ><IMG SRC="hextile_paint_3s.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="paint_3d">paint_3d</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x10 -paint 3 \( +clone -shade 120x45 \) \
+     +swap  -compose overlay -composite</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_paint_3d.png"
+      ><IMG SRC="fractal_paint_3d.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_paint_3d.png"
+      ><IMG SRC="noise_paint_3d.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_paint_3d.png"
+      ><IMG SRC="hextile_paint_3d.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Gradient Transforms </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="levels">levels</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x12 -fx intensity -normalize \
+     -size 1x9 gradient:navy-lavender \
+     -interpolate integer -fx 'v.p{0,G*(v.h-1)}'</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_levels.png"
+      ><IMG SRC="fractal_levels.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_levels.png"
+      ><IMG SRC="noise_levels.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_levels.png"
+      ><IMG SRC="hextile_levels.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="levels_3d">levels_3d</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x12 -fx intensity -normalize \
+     -size 1x9 gradient:navy-lavender \
+     -interpolate integer -fx 'v.p{0,G*(v.h-1)}' \
+     \( +clone -shade 120x45 -normalize \) \
+     -compose overlay -composite</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_levels_3d.png"
+      ><IMG SRC="fractal_levels_3d.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_levels_3d.png"
+      ><IMG SRC="noise_levels_3d.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_levels_3d.png"
+      ><IMG SRC="hextile_levels_3d.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="zebra">zebra</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x12 -normalize \
+     -size 1x19   pattern:gray50   -fx 'v.p{0,G*(v.h-1)}'</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_zebra.png"
+      ><IMG SRC="fractal_zebra.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_zebra.png"
+      ><IMG SRC="noise_zebra.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_zebra.png"
+      ><IMG SRC="hextile_zebra.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="midlevel">midlevel</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x12 -normalize \
+     \( -size 1x9 xc: -draw 'color 0,4 point' -negate \) \
+     -fx 'v.p{0,G*(v.h-1)}'</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_midlevel.png"
+      ><IMG SRC="fractal_midlevel.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_midlevel.png"
+      ><IMG SRC="noise_midlevel.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_midlevel.png"
+      ><IMG SRC="hextile_midlevel.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="edged_level">edged_level</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x12 -normalize \
+     \( -size 1x9 xc: -draw 'color 0,4 point' \) \
+     -fx '(.6+.2*v.p{0,G*(v.h-1)})' \
+     \( +clone -normalize -edge 1 \)  -fx 'u+v'</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_edged_level.png"
+      ><IMG SRC="fractal_edged_level.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_edged_level.png"
+      ><IMG SRC="noise_edged_level.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_edged_level.png"
+      ><IMG SRC="hextile_edged_level.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="layered_levels">layered_levels</A> <FONT SIZE=-1><I>(no post -auto-level)</I></FONT>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x12 -normalize \
+     \( -size 1x9 xc: -draw 'color 0,4 point' \) \
+     -fx '(.5+.3*v.p{0,u*(v.h-1)})' \
+     \( +clone -normalize -edge .3 -fx 'R+G+B' \) \
+     -fx 'intensity+v'  -fill skyblue -tint 100</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_layered_levels.png"
+      ><IMG SRC="fractal_layered_levels.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_layered_levels.png"
+      ><IMG SRC="noise_layered_levels.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_layered_levels.png"
+      ><IMG SRC="hextile_layered_levels.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR>
+<TR><TH> Miscellaneous </TH></TR>
+
+<TR><TD WIDTH=100% ALIGN=justify>
+<A NAME="filaments">filaments</A>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC"
+><TR><TD><PRE>  -blur 0x5 -normalize -fx g \
+     -sigmoidal-contrast 15x50% -solarize 50%</PRE></TD></TR></TABLE>
+</TD><TD>
+   <A HREF="fractal_filaments.png"
+      ><IMG SRC="fractal_filaments.png"       WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Fractal]"></A>
+</TD><TD>
+   <A HREF="noise_filaments.png"
+      ><IMG SRC="noise_filaments.png"         WIDTH=80 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD><TD>
+   <A HREF="hextile_filaments.png"
+      ><IMG SRC="hextile_filaments.png"       WIDTH=100 HEIGHT=80
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[Noise]"></A>
+</TD></TR><!-- END -->
+
+</TABLE><P>
+
+If you have or come up with a nice background generator or image transform,
+please let me know so it can be added here to share with others. </P>
+
+
+<H3>Final Important Notes</H3>
+
+The two <A HREF="../canvas/#random" >Random Noise Images</A>, being so
+'random' are tilable, and we use "<CODE><A
+HREF="../option_link.cgi?virtual-pixels" >-virtual-pixels</A></CODE>" to
+ensure that they remain tilable during the transformation. However the <A
+HREF="../canvas/#plasma" >Plasma Image</A> is not tilable to start with, so a
+enlarged version with the edges "<CODE><A HREF="../option_link.cgi?shave"
+>-shave</A></CODE>" off afterward is used to remove the unwanted edge effect
+of many operations.  These technique is discussed further in <A
+HREF="../canvas/#tile_mod" >Modifying Tile Images</A>.  </P>
+
+Note that the final "<CODE><A HREF="../option_link.cgi?normalize"
+>-auto_level</A></CODE>" is applied to most images to enhance the contrast of
+the results, unless the transform is marked as not requiring it so as to
+preserve and coloring or shadings that resulted from the transformation.  </P>
+
+Because many image transformations such as, "<CODE><A
+HREF="../option_link.cgi?blur" >-blur</A></CODE>", "<CODE><A
+HREF="../option_link.cgi?emboss" >-emboss</A></CODE>", and "<CODE><A
+HREF="../option_link.cgi?edge" >-edge</A></CODE>"  are grey-scale
+transformations, they work on the three color channels, completely
+independently of each other. As a result, in many of the images, the result
+looks like three separate images have been overlaid, then shaded. </P>
+
+The final example "<CODE>layered_levels</CODE>" was designed to works on each
+of the three levels simultaneously, while keeping them separate, until the
+final step where they are added together and color tinted.  </P>
+
+This triple effect can be removed by either applying an initial gray-scaling
+operation, or extracting just one of the channels when finished.  Typically I
+extract the '<CODE>green</CODE>' or '<CODE>G</CODE>' channel as it is normally
+the strongest channel in a grey scale image anyway, though any of the three
+channels can be used. </P>
+
+</DIV></P>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 15 December 2004 <BR>
+Updated: 20 December 2006 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/backgrounds/</CODE>
+</ADDRESS></BODY></HTML>
+

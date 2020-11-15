@@ -1,0 +1,1739 @@
+<HTML><HEAD>
+Author: <A HREF="http://www.ict.griffith.edu.au/anthony/anthony.html"
+        >Anthony Thyssen</A>, &lt;A.Thyssen&#64;griffith.edu.com&gt;<BR>
+<TITLE>Annotating -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/annotating/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Annotating Images</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#annotating"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Labeling Images</A>
+    <IMG SRC="../img_www/space.gif" WIDTH=20 HEIGHT=1>
+    <FONT SIZE=-1>(techniques for labeling images)</FONT>
+    <UL>
+    <LI><A HREF="#anno_below" > Labeling below (or above) an Image</A>
+    <LI><A HREF="#anno_on"    > Labeling on top of the Image Itself</A>
+    </UL>
+<DD><A HREF="#overlay"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Overlaying Images</A>
+    <IMG SRC="../img_www/space.gif" WIDTH=20 HEIGHT=1>
+    <FONT SIZE=-1>(overlaying and merging images on top of each other)</FONT>
+<DD><A HREF="#watermarking"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Watermarking</A>
+    <IMG SRC="../img_www/space.gif" WIDTH=20 HEIGHT=1>
+    <FONT SIZE=-1>(annotating for copy protection)</FONT>
+    <UL>
+    <LI><A HREF="#wmark_symbol" > Watermarking with Symbols</A>
+    <LI><A HREF="#wmark_text"   > Watermarking with Text</A>
+    <LI><A HREF="#wmark_image"  > Watermarking with Images</A>
+    </UL>
+<DD><A HREF="#text_position"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Text and Image Positioning Methods</A>
+    <UL>
+    <LI><A HREF="#gravity"       > The 'Gravity' of the Situation</A>
+    <LI><A HREF="#gravity_image" > Image Positioning using Gravity</A>
+    <LI><A HREF="#gravity_text"  > Text Positioning using Gravity</A>
+    <LI><A HREF="#gravity_left"  > Text on Left Edge using Gravity</A>
+    <LI><A HREF="#draw"          > Text Positioning using Draw</A>
+    <LI><A HREF="#distort"       > Text Positioning using Distort</A>
+    </UL>
+</DL>
+
+This document presents various ways of annotating a large image with either
+text or some other image.  The annotation may be bold and highly visible,
+or subtle and hidden. </P>
+
+Reasons for annotating images are varied, but are usually either to
+<UL>
+<LI> Mark the image with information about what the image is about.
+<LI> Point out or highlight some aspect of the image.
+<LI> Add copyright or logos to the image as a form of copy protection.
+</UL></P>
+
+<A HREF="https://legacy.imagemagick.org/" >ImageMagick</A> provides a lot of ways
+to do these things, but not all are easy to discover from the manuals on your
+own. This page tries to present the common methods used.  Many of the specific
+methods are discussed more fully on other example pages. </P>
+
+If you are interested in annotating or watermarking a GIF animation, I suggest
+you first look though this document, then jump to <A
+HREF="../anim_mods/#annotating" >Annotating GIF Animations</A>, to start you
+off. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="annotating"></A>
+<H2>Annotating Images</H2>
+
+The basic problem with labeling an image is doing so the text is readable no
+matter what the image.  The following show many methods, show of which can be
+expanded to do more complex tasks. </P>
+
+In these examples, I am limiting myself to the default font of ImageMagick.
+You are encouraged to use different fonts and point sizes appropriate to what
+you want to achieve. </P>
+
+<A NAME="anno_below"></A>
+<H3>Labeling Below (or Above) an Image</H3>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Append a Label</B> with centering is now possible, from IM v6.4.7-1,
+as <A HREF="../layers/#append" >Image Appending</A> now follows the gravity
+setting, for alignment purposes.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert dragon.gif   -background Khaki  label:'Faerie Dragon' \
+          -gravity Center -append    anno_label.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="anno_label_append.jpg"
+     ><IMG SRC="anno_label.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+By reordering the images you can append the label above the image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert dragon.gif   -background Orange  label:'Faerie Dragon' \
+          +swap  -gravity Center -append    anno_label2.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="anno_label2.jpg"
+     ><IMG SRC="anno_label2.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+
+<B>Splice and Draw</B> is very simple way of adding extra space to an image to
+allow us to draw/annotate the label into the image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert dragon.gif \
+          -gravity South   -background Plum   -splice 0x18 \
+          -annotate +0+2 'Faerie Dragon'   anno_splice.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_splice.gif"
+     ><IMG SRC="anno_splice.gif"
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+The same method can be used to draw a label above the image, just replace the
+gravity setting of '<CODE>South</CODE>' with '<CODE>North</CODE>'.  Easy!
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert dragon.gif \
+          -gravity North   -background YellowGreen  -splice 0x18 \
+          -annotate +0+2 'Faerie Dragon'   anno_splice2.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_splice2.gif"
+     ><IMG SRC="anno_splice2.gif"
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The "<CODE><A HREF="../option_link.cgi?draw" >-draw</A></CODE>" operator is no
+longer recommended for direct drawing onto images, unless part of more complex
+drawing functions.  See the section on <A HREF="../text/" >Text to Image
+Handling</A> for more details of other text drawing methods and techniques.
+</P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Label using Montage</B>  The montage command in ImageMagick is often
+overlooked by users as only useful for creating a display of a whole directory
+of images. It does provide a very simple way to add labels an image.
+
+<!-- dragon photo is linked from "images" -->
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  montage -label "Faerie Dragon"  dragon.gif \
+          -geometry +0+0 -background Gold anno_montage.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_montage.jpg"
+     ><IMG SRC="anno_montage.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+Montage can also add a frame and other things to the image for you, so this
+form of labeling has a lot of extra possibilities beyond that of simple
+labeling of the image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  montage -label "Faerie Dragon" dragon.gif \
+          -font Candice -pointsize 15 \
+          -frame 5  -geometry +0+0 anno_montage2.jpg
+</CODE></PRE></TD></TR></TABLE>
+For more info about using montage see <A HREF="../montage/" >Montage, Arrays
+of Images</A>.
+
+</TD><TD>
+  <A HREF="anno_montage2.jpg"
+     ><IMG SRC="anno_montage2.jpg"
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Label using Polaroid</B>  An alternative to using montage, is to use the
+<A HREF="../transform/#polaroid" >Polaroid Image Transformation</A>, to
+generate a rather fancy commented image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+<r>  convert -caption "Faerie Dragon" dragon.gif -gravity center \
+           -background black +polaroid anno_polaroid.png
+</CODE></PRE></TD></TR></TABLE>
+Warning this image is distorted, (curved and rotated) with some randomization,
+as such the final image size can vary, unless rotation is disabled. It also
+contains complex shadow and transparency effects, so a PNG format image was
+used to save the resulting image.
+
+</TD><TD>
+  <A HREF="anno_polaroid.png"
+     ><IMG SRC="anno_polaroid.png"
+           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+You can reduce the 'fuzziness' in the resulting image caused by the rotation
+by using a 'Super Sampling' technique. See <A HREF="../transform/#polaroid"
+>Polaroid Image Transformation</A> for an example of this. </P>
+
+
+<A NAME="anno_on"></A>
+<H3>Labeling on top of the Image itself...</H3>
+
+The problem with writing text directly on a picture is that you can't be
+sure the text will be readable in the color you have chosen.  The image
+being drawn onto could be black, white or a rainbow of colors. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Outlined Label</B>:  The simplest method is to draw the string with a
+outline to separate the text from the image.  However as the "<CODE><A
+HREF="../option_link.cgi?stoke" >-stroke</A></CODE>" font setting adds
+thickness to a font both inward and outward, reducing its effectiveness
+(See <A HREF="../draw/#stroke" >Stroke and StrokeWidth</A> for more
+information. </P>
+
+The better way to draw an font with a background outline is to draw the text
+twice.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert dragon.gif -gravity south \
+          -stroke '#000C' -strokewidth 2 -annotate 0 'Faerie Dragon' \
+          -stroke  none   -fill white    -annotate 0 'Faerie Dragon' \
+          anno_outline.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_outline.jpg"
+     ><IMG SRC="anno_outline.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see it works, but not very well. It does work better with a thicker
+font, than the default '<CODE>Times</CODE>' or '<CODE>Arial</CODE>' font. </P>
+
+For more details of this technique see <A HREF="../fonts/#thick_stroke" >Thick
+Stroke Compound Font</A>.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Draw Dim Box</B>: The more classical method of making the annotated text
+more visible is to 'dim" the image in the area the text will be added, then
+draw the text in the opposite color.  For example...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert dragon.gif \
+          -fill '#0008' -draw 'rectangle 5,128,114,145' \
+          -fill white   -annotate +10+141 'Faerie Dragon' \
+          anno_dim_draw.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_dim_draw.jpg"
+     ><IMG SRC="anno_dim_draw.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This method works well, but as you can see I decided not to use "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" in this example to
+place the text, as the darkened rectangle cannot be positioned with gravity
+(this may change in the future).  Also its size and position can depend on the
+image and final text size, which may require some extra math calculations.
+</P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Undercolor Box</B>: Instead of trying to draw the background box yourself,
+you can get ImageMagick to use an 'undercolor' on the box. See <A
+HREF="../text/#box" >Text Undercolor Box</A>. </P>
+
+The text 'undercolor' (as used in the library API), can be specified on the
+command line using the "<CODE><A HREF="../option_link.cgi?undercolor"
+>-undercolor</A></CODE>" option.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert dragon.gif  -fill white  -undercolor '#00000080'  -gravity South \
+          -annotate +0+5 ' Faerie Dragon '     anno_undercolor.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_undercolor.jpg"
+     ><IMG SRC="anno_undercolor.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see it is a lot simpler that drawing the dimmed box yourself,
+though an extra space at the start and end of the drawn text is recommended,
+to pad out the box slightly.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Composited Label</B>: The more ideal solution is to prepare a text image
+before-hand and then overlay it as an image. </P>
+
+Here we create a simple label on a semi-transparent background, and overlay
+it.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -background '#00000080' -fill white label:'Faerie Dragon' miff:- |\
+    composite -gravity south -geometry +0+3 \
+              -   dragon.gif   anno_composite.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_composite.jpg"
+     ><IMG SRC="anno_composite.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This last technique has very some distinct advantages.  The dimmed box can be
+sized to fit the label, and it can be position with "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" to position it
+correctly, without needing any specific knowledge of the image it is being
+added to, or of the drawn font being used. </P>
+
+<BR>
+
+Also you are not limited to using just a simple dimmed box. Instead you can
+prepare very complex font image, either before-hand, so you can apply it many
+times, or on the fly on a per image basis.  Just about all the <A
+HREF="../fonts/" >Compound Font Effects</A> styles are also available to you,
+allowing you to make your text additions very exciting and professional
+looking. </P>
+
+<B>Auto-Sized Caption</B>: With the release of IM v6.3.2, the "<CODE><A
+HREF="../text/#caption" >caption:</A></CODE>" can now automatically adjust the
+size of text to best fit a box of a particular size. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+But to make proper use of this for an overlay you really need to know how wide
+the image being annotated is. Here I gather that info then create and overlay
+a caption such that the text is automatically sized to best fit the space
+provided, with word wrapping.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  width=`identify -format %w dragon.gif`; \
+  convert -background '#0008' -fill white -gravity center -size ${width}x30 \
+          caption:"Faerie Dragons love hot apple pies\!" \
+          dragon.gif +swap -gravity south -composite  anno_caption.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_caption.jpg"
+     ><IMG SRC="anno_caption.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This technique is ideal for overlaying image comments onto an image, though
+doing so on the command line has its own problems as you are creating a new
+image, not annotating an old image. See <A HREF="../text/#user_escapes" >User
+defined option escapes</A> for a solution to this problem. </P>
+
+
+<A NAME="anno_fancy"></A>
+<B>Fancy Label</B>: As a final example I will overlay a text string created
+using a fancy <A HREF="../fonts/#denser_soft_outline" >soft outlined font</A>
+to make sure it remains visible, but without creating a rectangular box for
+the annotation.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x14 xc:none -gravity center \
+          -stroke black -strokewidth 2 -annotate 0 'Faerie Dragon' \
+          -background none -shadow 100x3+0+0 +repage \
+          -stroke none -fill white     -annotate 0 'Faerie Dragon' \
+          dragon.gif  +swap -gravity south -geometry +0-3 \
+          -composite  anno_fancy.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="anno_fancy.jpg"
+     ><IMG SRC="anno_fancy.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+
+If you are planning to composite the same label (say a copyright message) onto
+a lot of images, it would probably be better to generate your label separately
+and compose that label onto each image using the "<A HREF="../basics/#mogrify"
+>mogrify</A>" command. </P>
+
+The "<CODE>-geometry +0-3</CODE>" offset in the above is used to position the
+composite overlay closer to the edge, as the soft fuzzy outline of this image
+is often larger that is necessary. </P>
+
+<BR>
+
+All the above examples should of course be adjusted to suit your own
+requirements.  Don't be a sheep and follow what everyone else does.
+Experiment, and give your own web site or program a distinct flavor from
+everyone else. And more importantly tell the IM community about it. </P>
+
+<PRE>FUTURE: select the black or white color based on the images relative
+intensity.  This uses a number if very advanced techniques.
+
+  convert input.jpg  -font myfont -pointsize 25 \
+      \( +clone -resize 1x1  -fx 1-intensity -threshold 50% \
+         -scale 32x32 -write mpr:color +delete \)  -tile mpr:color \
+       -annotate +10+26 'My Text'              output.jpg
+
+Explanation:  Copy of image is resized to 1 pixel to find the images
+average color.  This is then inverted and greyscaled using -fx, then
+thresholded to either black or white, (as appropriate).
+This single color pixel is now scaled to a larger tiling image, and
+saved into a named memory register (mpr:).
+
+The image is then used to set the fill tile, for the annotated text.
+Their is however no simple method (at this time) to set the outline -stroke
+color of the draw text to its inverse.
+
+Other techniques are to use some text as a 'negate image' mask, or even a color
+burn or color dodge compose operation, to distort the image with the text.
+
+</PRE>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="overlay">
+<H2>Overlaying Images</H2>
+</A>
+
+The "<CODE>composite</CODE>" command and the "<CODE><A
+HREF="../option_link.cgi?composite" >-composite</A></CODE>" image operator in
+ImageMagick provides the primary means to place image on top of other images
+in various ways.  The details of these methods are given in <A
+HREF="../compose/" >Alpha Compositing</A> Examples Page. </P>
+
+However there are more higher level operators that also make use of alpha
+compositing of images.  These include <A HREF="../layers/" >Image
+Layering</A>, as well as <A HREF="#image_gravity" >Positioning Images with
+Gravity</A>, further down this examples page. </P>
+
+The default compose method of compose is "<CODE>Over</CODE>" which just
+overlays the overlay image onto the background image, handling transparencies
+just as you would expect. </P>
+
+The background image also determines the final size of the result, regardless
+of where the overlay is placed (using the "<CODE><A
+HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" option).  It doesn't
+matter if the overlay is in the middle, halfway off the background image, or
+far far away, the output image is the same size as the background image.
+</P>
+
+The geometry position of the image is also effected by "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>", so the positioning of
+the overlaid image can be defined relative to any of nine (9) different
+locations. See "<A HREF="#gravity" >Positioning Images and Text</A>" below.
+</P>
+
+On top of "<CODE><A HREF="../option_link.cgi?geometry" >-geometry</A></CODE>"
+of the compose overlay, individual images can also have a page or canvas
+information (set using "<CODE><A HREF="../option_link.cgi?page"
+>-page</A></CODE>" and "<CODE><A HREF="../option_link.cgi?repage"
+>-repage</A></CODE>" options), that can effect the final position of the
+images.  This image specific information is however not effected by "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>". </P>
+
+On with the examples...</P>
+
+<B>Overlaying</B> is probably the most common form of image annotation, and is
+very simple to do.  Here I overlay a 32x32 icon of a castle in the middle of a
+prepared button frame.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite -gravity center  castle.gif  frame.gif  castle_button.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="castle.gif"
+     ><IMG SRC="castle.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="frame.gif"
+     ><IMG SRC="frame.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="castle_button.gif"
+     ><IMG SRC="castle_button.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+You can also position the sub-images exactly.  Here we set a hand to point out
+the small craws of the faerie dragon.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite -geometry +31+105  hand_point.gif dragon.gif \
+            dragon_claw_pointed.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="hand_point.gif"
+     ><IMG SRC="hand_point.gif"     WIDTH=32 HEIGHT=32
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="dragon.gif"
+     ><IMG SRC="dragon.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="dragon_claw_pointed.jpg"
+     ><IMG SRC="dragon_claw_pointed.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Exactly how an image is drawn on the background is controlled by the "<CODE><A
+HREF="../option_link.cgi?compose"
+>-compose</A></CODE>" setting.  The default as used above is "<CODE>-compose
+over</CODE>" which just overlays the image on the background.  Most of the
+other compose methods provided are not very usable except in very specific
+situations, but here are some of them.  For more details of this setting and
+its effects see <A HREF="../compose/" >Alpha Compositing</A>. </P>
+
+
+<B>Bumpmap</B> is a tricky compose method and basically darkens the
+background image in accordance to the brightness of the overlay image.
+Anything that is white in the overlay is handled like it is transparent, while
+anything black becomes black on the output image. It is a bit like using the
+overlay as an ink stamp and that is a good way of picturing this operation.
+</P>
+
+As a hint, overlaying with a bumpmap works best with light colored images.  So
+you may need to prepare the bumpmap image before using.  </P>
+
+Here we resize our dragon image before using "<CODE>-compose bumpmap</CODE>"
+to draw it on a paper scroll image.
+
+<!-- scroll image is linked from "images" -->
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite \( dragon.gif -resize 50% \) scroll.gif \
+            -compose bumpmap -gravity center   dragon_scroll.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="dragon.gif"
+     ><IMG SRC="dragon.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="scroll.gif"
+     ><IMG SRC="scroll.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="dragon_scroll.gif"
+     ><IMG SRC="dragon_scroll.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+Bumpmaps can also be used to set an overall effect on an image, in this case we
+tile a light colored background pattern over our dragon.  Remember that a
+bumpmap image is treated as a grey-scale image, so any color in our overlay
+image is lost.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite -compose bumpmap  -tile rings.jpg \
+            dragon.gif  dragon_rings.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="rings.jpg"
+     ><IMG SRC="rings.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="dragon.gif"
+     ><IMG SRC="dragon.gif"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="dragon_rings.jpg"
+     ><IMG SRC="dragon_rings.jpg"
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>" option above
+  only works for compose operations using the "<CODE>composite</CODE>"
+  command. In "<CODE>convert</CODE>" you will have to use the "<CODE><A
+  HREF="../canvas/#tile" >tile:</A></CODE>" image generator with a "<CODE><A
+  HREF="../option_link.cgi?size" >-size</A></CODE>" to specify the extent.
+
+  You can of course make your source image overlay larger than the background
+  image you are overlaying, as the result will be the size of the background
+  or destination image.
+</I></FONT></TD></TR></TABLE></P>
+
+<B>Multiply</B> compose method is best known for its ability to merge two
+images with white backgrounds (like onto a page of text). Unlike the
+'<CODE>bumpmap</CODE>' compose method, it does not pre-convert the overlaid
+image into grey-scale.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  mesgs PictureWords |\
+      convert -pointsize 18 text:-  -trim +repage \
+              -bordercolor white -border 10x5   text.gif
+  composite -compose multiply -geometry +400+3 \
+            paint_brush.gif  text.gif  text_multiply.gif
+</CODE></PRE></TD></TR></TABLE>
+ <A HREF="paint_brush.gif"
+    ><IMG SRC="paint_brush.gif"     WIDTH=32 HEIGHT=32
+          ALIGN=middle VSPACE=5 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+ <A HREF="text.gif"
+    ><IMG SRC="text.gif"
+          ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+ <A HREF="text_multiply.gif"
+    ><IMG SRC="text_multiply.gif"
+          ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+ASIDE: The complex command to generate "<CODE>text.gif</CODE>" above is just
+to create a typical text only image, the "<CODE>mesgs</CODE>" command just
+outputs a specific quotation, like "<CODE>fortune</CODE>" does but with more
+control. </P>
+
+This method works very well in a lot of situations, but generally only if one
+(either) image is basically black (or greyscale) on a mostly white background.
+If both images contain regions of color, then you may get unusual results.
+</P>
+
+In other words, this technique is perfect for overlaying line drawings,
+diagrams or images of text, on white (or reasonably light colored) images,
+such as images of printed or scanned pages.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="watermarking"></A>
+<H2>Water Marking</H2>
+
+Watermarking is an important job, as it provides a way of marking an image
+as belonging to some company or web site. Unfortunately this involves
+trashing the image in some way, to the detriment of the image itself. </P>
+
+The basic goals of watermarking is <UL>
+<LI>The mark should be clearly visible regardless of whether the image is
+    light or dark in color.
+<LI>It should be difficult to erase.
+<LI>and it shouldn't be too annoying to viewers.
+</UL>
+
+All these factors are in conflict, and this is one reason why watermarking is
+so difficult to do well. </P>
+
+<A NAME="wmark_symbol"></A>
+<H3>Watermarking with Symbols</H3>
+
+One of the simplest, and most annoying forms of watermarking is to just to
+place a very small but specific image somewhere on the image being
+watermarked.  Here we generated an image (using "<CODE>logo:</CODE>") that we
+want to watermark, using a small 'eyes' symbol.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert logo: -resize x180  -gravity center  -crop 180x180+0+0  logo.jpg
+  composite -geometry +160+13 eyes.gif   logo.jpg  wmark_symbol.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="logo.jpg"
+     ><IMG SRC="logo.jpg"                 WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="eyes.gif"
+     ><IMG SRC="eyes.gif"                 WIDTH=18   HEIGHT=18
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="wmark_symbol.jpg"
+     ><IMG SRC="wmark_symbol.jpg"         WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+The best idea for the placement of the small image is to add it so it looks to
+be actually part of the original image.  In the above I added the "eyes" image
+so it looks almost like it is part of the wizards hat, (you don't want it to
+become too integrated into the image either). Consequently, this technique
+requires the human touch, which makes it impossible to fully automate. </P>
+
+The small image can also be very difficult to remove, as it destroys
+completely the part of the image it overlaid.  And if done well, is hardly
+noticeable, unless you are specifically looking for it. </P>
+
+I have seen it used to good effect in many places on the web.  One web site
+used a small dagger-like symbol.  Images stolen from that website became very
+obvious when I spotted that same dagger symbol on images I found on other web
+sites.  </P>
+
+<A NAME="wmark_text">
+<H3>Watermarking with Text</H3>
+</A>
+
+Just drawing text on an image is also a simple way of watermarking, and any
+of the <A HREF="#anno_on" >label on image</A> examples above can be used as a
+type of wartermark. </P>
+
+However to do this properly you should use two different colors to prevent the
+text from disappearing when drawn on different colored backgrounds.  As such
+some sort of <A HREF="../fonts/" >Compound Font Effects</A> should be used.
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert logo.jpg  -font Arial -pointsize 20 \
+          -draw "gravity south \
+                 fill black  text 0,12 'Copyright' \
+                 fill white  text 1,11 'Copyright' " \
+          wmark_text_drawn.jpg
+</CODE></PRE></TD></TR></TABLE>
+This works well and can be automated, but it is too bold to be used as a good
+watermark as it stands out too well from the image. </P>
+</TD><TD>
+  <A HREF="wmark_text_drawn.jpg"
+     ><IMG SRC="wmark_text_drawn.jpg"    WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+But by doing some preparation, an image with transparent background can be
+created that will be less evasive. For details of the steps being used to
+generate the watermark text, see <A HREF="../fonts/#mask" >Font Masking</A>.
+Also the mask examples of <A HREF="../masking/#masks" >Masking Images</A>
+may be useful for you understanding.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE NOWARN>
+  convert -size 300x50 xc:grey30 -font Arial -pointsize 20 -gravity center \
+          -draw "fill grey70  text 0,0  'Copyright'" \
+          stamp_fgnd.png
+  convert -size 300x50 xc:black -font Arial -pointsize 20 -gravity center \
+          -draw "fill white  text  1,1  'Copyright'  \
+                             text  0,0  'Copyright'  \
+                 fill black  text -1,-1 'Copyright'" \
+          +matte stamp_mask.png
+  composite -compose CopyOpacity  stamp_mask.png  stamp_fgnd.png  stamp.png
+  mogrify -trim +repage stamp.png
+</CODE></PRE></TD></TR></TABLE>
+<!--
+  <A HREF="stamp_fgnd.png"
+     ><IMG SRC="stamp_fgnd.png"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="stamp_mask.png"
+     ><IMG SRC="stamp_mask.png"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+-->
+  <A HREF="stamp.png"
+     ><IMG SRC="stamp.png"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+Now we have a watermark font we can apply it to our image...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite -gravity south -geometry +0+10 stamp.png  logo.jpg \
+            wmark_text_stamped.jpg
+</CODE></PRE></TD></TR></TABLE>
+As you can see the watermark is not as bold as before, and even uses shades of
+grey rather the pure white and black.  Even so it is still highly visible no
+matter what the background.  The <A HREF="../fonts/" >Compound Font
+Effects</A> page details a lot of font styles that can be used in this way
+without overwhelming the image being watermarked.
+
+</TD><TD>
+  <A HREF="wmark_text_stamped.jpg"
+     ><IMG SRC="wmark_text_stamped.jpg"  WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+You can also tile the text over the whole image. </P>
+
+Here we also avoid the need for an intermediate image by using a 'pipeline' of
+commands, with the output of one, feeding the next.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 140x80 xc:none -fill grey \
+          -gravity NorthWest -draw "text 10,10 'Copyright'" \
+          -gravity SouthEast -draw "text 5,15 'Copyright'" \
+          miff:- |\
+    composite -tile - logo.jpg  wmark_text_tiled.jpg
+</CODE></PRE></TD></TR></TABLE>
+This takes advantage of the fact that an image (like a photograph, not a
+diagram) will generally have some areas in which the tiled test string will be
+visible.  You might like to make the text semi-transparent for your own
+watermarking (using say a half transparent grey such as
+"<CODE>'#80808080'</CODE>"). </P>
+
+You may also like to keep this tiling technique in mind with the following
+proper watermarking techniques. </P>
+
+</TD><TD>
+  <A HREF="wmark_text_tiled.jpg"
+     ><IMG SRC="wmark_text_tiled.jpg"    WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<A NAME="wmark_image"></A>
+<H3>Watermarking with Images</H3>
+
+<!-- wmark_image images are linked from "images" -->
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+ImageMagick also provides a number of options that are specifically useful for
+more subtle watermarking, over a larger area. This is usually what is more
+commonly referred to, when you 'watermark' an image. </P>
+
+To the right is a "water dragon" image I will use for these demonstrations.
+It has some transparency, which I used to check that IM is doing the right
+thing with respect to transparency, avoiding any horrible 'square' look to the
+results.
+
+</TD><TD ALIGN=center>
+  <A HREF="wmark_image.png"
+     ><IMG SRC="wmark_image.png"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Before IM version 6, the options "<A HREF="../option_link.cgi?watermark"
+  ><CODE>-watermark</CODE></A>" and "<A HREF="../option_link.cgi?dissolve"
+  ><CODE>-dissolve</CODE></A>" were broken with their handling of the alpha
+  channel (transparency) for the overlaying image, producing some very
+  strange effects.
+</I></FONT></TD></TR></TABLE></P>
+
+
+<A NAME="watermark"></A>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Watermark</B> compositing was meant to watermark images, and while it
+works, it tends only to work with pure white and black overlay images,
+producing ugly edge artifacts.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite -watermark 30% -gravity south \
+            wmark_image.png  logo.jpg    wmark_watermark.jpg
+</CODE></PRE></TD></TR></TABLE>
+
+For more detailed information on this option see the <A
+HREF="../compose/#watermark" >Watermark Option Usage</A> page. </P>
+
+</TD><TD>
+  <A HREF="wmark_watermark.jpg"
+     ><IMG SRC="wmark_watermark.jpg"     WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+<TR><TD></TD></TR></TABLE></P>
+
+
+<A NAME="dissolved"></A>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<B>Dissolve</B> was found by me and others to work better.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite -dissolve 25% -gravity south \
+            wmark_image.png   logo.jpg  wmark_dissolve.jpg
+</CODE></PRE></TD></TR></TABLE>
+
+This works very well, but parts of the watermark will disappear on images with
+pure white and black pixels. That is dissolving white on white and black on
+black will not be visible in the final image. As these two colors are very
+common, it is better to do some extra pre-processing of the watermark so that
+is uses various shades of grey rather than pure white and black.  (See
+"Greyed Dissolve" below)
+
+</TD><TD>
+  <A HREF="wmark_dissolve.jpg"
+     ><IMG SRC="wmark_dissolve.jpg"    WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+<TR><TD></TD></TR></TABLE></P>
+
+For more detailed information on this option see the <A
+HREF="../compose/#dissolve" >Dissolve Option Usage</A> page. </P>
+
+
+<A NAME="tiled"></A>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Tiled:</B>  You can also tile the watermark across the background image
+instead of just adding it in one location.  Just replace your gravity position
+with "<CODE><A HREF="../option_link.cgi?tile"
+>-tile</A></CODE>" instead.  Of course in that case you may want to
+make the watermark even less intrusive.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite -dissolve 15 -tile \
+            wmark_image.png   logo.jpg  wmark_tiled.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="wmark_tiled.jpg"
+     ><IMG SRC="wmark_tiled.jpg"       WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+<TR><TD></TD></TR></TABLE></P>
+
+
+<A NAME="grey_bumpmap"></A>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Greyed Bumpmap:</B> To use bumpmap properly as a watermark the image needs
+some preparation to make both white and black a lighter grey color range,
+using a <A HREF="../color_basics/#greying" >Grey-Scale Adjustment</A>
+technique.  If this is not done the result would be very very bold.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert wmark_image.png  -fill Gray91 -colorize 80  miff:- |\
+  composite -compose bumpmap -gravity south \
+            -  logo.jpg    wmark_bumpmap.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="wmark_bumpmap.jpg"
+     ><IMG SRC="wmark_bumpmap.jpg"       WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+<TR><TD></TD></TR></TABLE></P>
+
+The biggest problem with bumpmap as a watermark is that the operation will
+only darken an image. As such this technique is fairly useless for very dark
+images. </P>
+
+
+<A NAME="grey_dissolve"></A>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Greyed Dissolve:</B> The same preprocessing technique can also be useful
+with dissolve method so the white parts of the watermark image darken
+slightly on white background, and ditto also to lighten black areas of the
+watermark on black parts of the image.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert wmark_image.png  -fill grey50 -colorize 40  miff:- |\
+  composite -dissolve 30 -gravity south -  logo.jpg wmark_dissolve_grey.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="wmark_dissolve_grey.jpg"
+     ><IMG SRC="wmark_dissolve_grey.jpg"    WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+<TR><TD></TD></TR></TABLE></P>
+
+This I'd say is just about ideal as a watermark, satisfying all the
+requirements.  I would however further adjust the final dissolve to make the
+watermark even less noticeable. </P>
+
+
+<A NAME="grey_tiled"></A>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+<B>Tiled Greyed Dissolve:</B> This is exactly as above but tiled over the
+image with an even lower dissolve value.
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert wmark_image.png  -fill grey50 -colorize 40  miff:- |\
+  composite -dissolve 15 -tile  -  logo.jpg wmark_dissolve_tile.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="wmark_dissolve_tile.jpg"
+     ><IMG SRC="wmark_dissolve_tile.jpg"      WIDTH=180   HEIGHT=180
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The "<CODE>composite</CODE>" command does not know how to handle multi-image
+  files such as animations.  However other methods do allow you to do this.
+  See <A HREF="../anim_mods/#annotating" >Modifying Animations, Annotating</A>
+  for examples of annotating and overlaying multi-image files.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="text_position"></A>
+<H2>Positioning Images and Text with Gravity</H2>
+
+<A NAME="gravity"></A>
+<H3>The 'Gravity' of the Situation</H3>
+
+As you can see above, being able to position images and text in a larger image
+can be just as important as anything else.  Naturally the "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" setting is one of the
+most important aspects of this. </P>
+
+<DL>
+<DT>On the ImageMagick Mailing list, Tim Hunter declared
+<DD><I><FONT SIZE=+2>&#8220;</FONT>
+       Gravity will make you crazy until you get the hang of it.
+<FONT SIZE=+2>&#8221;</FONT></I>
+<DT>This is a sentiment to which I agree wholeheartedly.
+</DL></P>
+
+Gravity will only be applied in the following situations...
+
+<UL>
+<LI>Any operation that involves a 'geometry' like setting, like "<CODE><A
+    HREF="../option_link.cgi?crop" >-crop</A></CODE>"  and "<CODE><A
+    HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" positioning of
+    images for <A HREF="../compose/" >Alpha Composition</A>, including <A
+    HREF="../anim_mods/#composite" >Multi-image Layered Composition</A>. </P>
+
+<LI> It is also used, as means of specifying the text justification by the
+     various text to image generators such as "<CODE><A HREF="../text/#label"
+     >label:</A></CODE>" and the text justification by the various text to
+     image generators such as "<CODE><A HREF="../text/#caption"
+     >caption:</A></CODE>". </P>
+
+<LI>The "<CODE><A HREF="../option_link.cgi?annotate" >-annotate</A></CODE>"
+    text drawing operator also uses it for text positioning as well as
+    justification. </P>
+
+<LI>And finally it is used by the "<CODE><A HREF="../option_link.cgi?draw"
+    >-draw</A></CODE>" method for its '<CODE>text</CODE>' and
+    "<CODE>image</CODE>' methods, and ONLY those methods. </P>
+
+</UL></P>
+
+However "<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" is
+<B>NOT</B> used for
+
+<UL>
+<LI>Any image list or layer operators, such as "<CODE><A
+    HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>", "<CODE><A
+    HREF="../option_link.cgi?flatten" >-flatten</A></CODE>" and most "<CODE><A
+    HREF="../option_link.cgi?layers" >-layers</A></CODE>" methods, and
+    especially not in GIF animations.  </P>
+
+    All of these operations uses image offsets on a larger virtual canvas (set
+    using the "<CODE><A HREF="../option_link.cgi?page" >-page</A></CODE>",
+    "<CODE><A HREF="../option_link.cgi?repage" >-repage</A></CODE>" meta-data
+    settings) to position images. Such offsets are always relative to the
+    top-left corner of the images virtual canvas.  No understanding of
+    "<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" is used
+    in this methodology. </P>
+
+<LI>Any other "<CODE><A HREF="../option_link.cgi?draw" >-draw</A></CODE>"
+    method does not use "<CODE><A HREF="../option_link.cgi?gravity"
+    >-gravity</A></CODE>" for positioning. It is also unlikely to do so as
+    "<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" is not
+    defined under the SVG draft which IM follows for these low level
+    functions. </P>
+
+</UL></P>
+
+What does all this this mean? </P>
+
+First and most importantly it defines the origin point that "<CODE><A
+HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" uses to position
+overlay text and images relative to the images edges, sides and center,
+without the user needing to know the actual size of the image.  This is its
+primary function. </P>
+
+Secondly it defines horizontal and vertical justification of the overlaid
+object (text or image) relative to that defined point of gravity.  For
+example, with '<CODE>East</CODE>' gravity the text or image will be placed to
+the right (right justification) of the defined point. </P>
+
+Justification should technically be a separate setting to "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>", though closely
+related, however IM currently combines both into a single setting. </P>
+
+There is a push to separate the two aspects such if a
+"<CODE>justification</CODE>" setting is undefined it falls back to using the
+current "<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A></CODE>"
+setting. If you find you need this, request it from Cristy (via the mail
+list). If enough users ask for it I am sure it will eventually be implemented.
+</P>
+
+
+<A NAME="gravity_image"></A>
+<H3>Image Positioning using Gravity</H3>
+
+Here is an example of using gravity to position images on a background.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite label:Default                      rings.jpg gravity_default.jpg
+  composite label:Center    -gravity center    rings.jpg gravity_center.jpg
+  composite label:South     -gravity south     rings.jpg gravity_south.jpg
+  composite label:East      -gravity east      rings.jpg gravity_east.jpg
+  composite label:NorthEast -gravity northeast rings.jpg gravity_northeast.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="gravity_default.jpg"
+     ><IMG SRC="gravity_default.jpg"        WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="gravity_center.jpg"
+     ><IMG SRC="gravity_center.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="gravity_south.jpg"
+     ><IMG SRC="gravity_south.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="gravity_east.jpg"
+     ><IMG SRC="gravity_east.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="gravity_northeast.jpg"
+     ><IMG SRC="gravity_northeast.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note that the actual position of the image is also justified according to the
+the "<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" setting.
+That is a gravity of "<CODE>South</CODE>" will center the image at the bottom
+of the larger image, but above that gravity point.  This will become more
+important later with text rotation. </P>
+
+The other thing to remember is that the position specified by any "<CODE><A
+HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" setting is relative
+to the position gravity places the image.  Not only that the direction of the
+position is also modified so that a position direction is inward. </P>
+
+For example the "<CODE>-gravity South -geometry +10+10</CODE>" will move the
+label image further into the background.  That is the Y direction of the
+geometry position has been reversed, while the X direction was left alone.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite label:Default   -geometry +10+10 \
+            rings.jpg gravity_default_pos.jpg
+  composite label:South     -geometry +10+10 -gravity south \
+            rings.jpg gravity_south_pos.jpg
+  composite label:NorthEast -geometry +10+10 -gravity northeast \
+            rings.jpg gravity_northeast_pos.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="gravity_default_pos.jpg"
+     ><IMG SRC="gravity_default_pos.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=30 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="gravity_northeast_pos.jpg"
+     ><IMG SRC="gravity_northeast_pos.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=30 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="gravity_south_pos.jpg"
+     ><IMG SRC="gravity_south_pos.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=5 HSPACE=30 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+You can also use "<CODE><A HREF="../option_link.cgi?gravity"
+>-gravity</A></CODE>" with "<CODE>-draw image</CODE>", to multiple images with
+a single command.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg \
+          -gravity Center     -draw "image Over     0,0 0,0 'castle.gif'" \
+          -gravity NorthEast  -draw "image Bumpmap  0,0 0,0 'castle.gif'" \
+          -gravity SouthWest  -draw "image Multiply 0,0 0,0 'castle.gif'" \
+          gravity_image.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_image.jpg"
+     ><IMG SRC="gravity_image.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+And you can also now use "<CODE><A HREF="../option_link.cgi?composite"
+>-composite</A></CODE>" to overlay images onto the background as well...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg \
+          -gravity Center     castle.gif  -compose Over     -composite \
+          -gravity NorthWest  castle.gif  -compose Bumpmap  -composite \
+          -gravity SouthEast  castle.gif  -compose Multiply -composite \
+          gravity_image2.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_image2.jpg"
+     ><IMG SRC="gravity_image2.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+For more detail of about the "<CODE><A HREF="../option_link.cgi?compose"
+>-compose</A></CODE>" settings used above see <A HREF="../compose/" >Alpha
+Composition</A>.  For other methods of overlaying combining and overlaying
+multiple images into one single image, see The IM Examples section <A
+HREF="../layers/" >Layers of Multiple Images</A>.
+
+
+<A NAME="gravity_text"></A>
+<H3>Text Positioning with Gravity</H3>
+
+That is all well and good for images but what about drawing text directly on
+images.  Well the same basic effects as for images apply. </P>
+
+As mentioned above gravity will also effect the positioning of text using
+either the "<CODE><A HREF="../option_link.cgi?draw" >-draw</A></CODE>"
+'<CODE>text</CODE>' method, or the better "<CODE><A
+HREF="../option_link.cgi?annotate" >-annotate</A></CODE>" text drawing
+operator.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg -resize 120x120  \
+          -gravity northwest  -annotate 0 'NorthWest' \
+          -gravity east       -annotate 0 'East' \
+          -gravity center     -annotate 0 'Center' \
+          -gravity south      -annotate 0 'South' \
+          -gravity northeast  -annotate 0 'NorthEast' \
+          gravity_text.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_text.jpg"
+     ><IMG SRC="gravity_text.jpg"         WIDTH=120  HEIGHT=120
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR>
+</TD></TR></TABLE></P>
+
+There is one very important difference between positioning images and text.
+If you draw a text string, without defining any form of "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>", the string will be
+drawn relative to the 'baseline' of the font.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+For example, lets actually do this...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg -annotate 0 'String' gravity_text_none.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_text_none.jpg"
+     ><IMG SRC="gravity_text_none.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+If you look carefully you will only see the small loop tail of the 'g' in
+'String' was visible at the top edge of the resulting image.  The rest of the
+string has been drawn outside the background image.  </P>
+
+However if you set "<CODE><A HREF="../option_link.cgi?gravity"
+>-gravity</A></CODE>" to '<CODE>NorthWest</CODE>' the text will be positioned
+as if it was an image.  That is relative to its <A HREF="../text/#box" >
+bounding or undercolor box</A> as defined by the font.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+For example...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg -gravity NorthWest -annotate 0 'String'  gravity_text_nw.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_text_nw.jpg"
+     ><IMG SRC="gravity_text_nw.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The reason for the distinction is to ensure that IM text drawing remains
+compatible with other vector drawing image formats like the "SVG". These
+formats do not use gravity, so turning on gravity tells IM to follow the same
+rules as image placement when doing text drawing, rather than the vector
+graphics rules, involving the font 'baseline' and 'start' point of the text.
+</P>
+
+If you do turn on gravity and then want to later turn it off, you can use
+either "<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A> none</CODE>"
+or "<CODE><A HREF="../option_link.cgi?gravity" >+gravity</A></CODE>" to reset
+it back to the default 'no gravity' setting. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Lets apply a text offset and draw both the default '<CODE>None</CODE>' and
+'<CODE>NorthWest</CODE>' arguments for "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>", just so you can see
+how closely the two forms are related.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg \
+          -gravity NorthWest -annotate +10+20 'NorthWest' \
+          -gravity None      -annotate +10+20 'None' \
+          gravity_text_pos.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_text_pos.jpg"
+     ><IMG SRC="gravity_text_pos.jpg"         WIDTH=94  HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+While it may not look it in this example, these two strings can overlap,
+particularly with regard to descenders on letters such as '<CODE>g</CODE>',
+and '<CODE>p</CODE>'.  That this the two string are not properly separated by
+'pointsize' units, but only by the fonts baseline height. </P>
+
+The best idea is not to mix the two modes in your own image
+processing.  Either use gravity, or don't. The choice is yours. </P>
+
+<A NAME="gravity_left">
+<H4>Text on Left Edge using Gravity</H4>
+
+As a final example here is the way to actually annotate centered along the
+left edge of an image. </P>
+
+The problem here is that when you rotate text, it rotates around the text
+'handle'. Unfortunatally this handle is set by gravity BEFORE the text is
+rotated, and as such does not work very well, unless you use restrict yourself
+to 'centered text'. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+For example here is a typical 'first try' to positioning text so that it is
+positioned along the center of the left edge of the image.  Of course it fails
+rather unexpectally!
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg \
+          -gravity West -annotate 90x90+10+0 'String' \
+          gravity_text_left_fail.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_text_left_fail.jpg"
+     ><IMG SRC="gravity_text_left_fail.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see the text was positioned on the left edge, but only so that
+start (where the pre-rotated 'handle' is) is centered. </P>
+
+The cause of this problem is that in IMv6 the "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" setting is also
+directly used to set the text 'justification' (which sets the 'handle' used to
+position the text).  </P>
+
+There is some animated demos of gravity effects on rotated text written in
+PerlMagick API (Download "<CODE><A HREF="../scripts/im_annotation.pl"
+><B>im_annotation.pl</B></A></CODE>". I also created a shell script version of
+the same program, "<CODE><A HREF="../scripts/im_annotation"
+><B>im_annotation</B></A></CODE>", and "<CODE><A
+HREF="../scripts/im_annotation_2" ><B>im_annotation_2</B></A></CODE>". </P>
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+A trick to making this work to rotate the whole image first then use center
+south!  It is a non-sensical solution, but it works.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg -rotate -90 \
+          -gravity South -annotate +0+2 'String' \
+          -rotate 90  gravity_text_left.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="gravity_text_left.jpg"
+     ><IMG SRC="gravity_text_left.jpg"         WIDTH=94   HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+An alternative method is shown below in <A HREF="#distort" >Text Positioning
+using Distort</A>. </P>
+
+<A NAME="draw"></A>
+<H3>Text Positioning using Draw</H3>
+
+While in the above I used a 'text offset' to position the text relative to the
+"<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" point, it is
+not the only way to do so.  The other method is to use a "</CODE>-draw
+translate</CODE>" option to position the text. </P>
+
+This has the advantage in that you can arrange to position text without
+gravity effects, while still using gravity to 'justify' the positioning
+'handle' within the text. </P>
+
+In these examples I added some extra construction lines (which are also not
+gravity effected) to show how the position is applied from the center point of
+the image. </P>
+
+Text with an offset...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:white -gravity Center \
+          -fill cyan  -draw 'line 50,50 70,70' \
+          -fill red   -draw 'line 68,70 72,70 line 70,68 70,72' \
+          -fill blue  -draw "text 20,20 'Offset'" \
+          text_offset.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="text_offset.jpg"
+     ><IMG SRC="text_offset.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+Text with a translation...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:white -gravity Center \
+          -fill cyan -draw 'line 50,50 70,70' \
+          -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
+          -fill blue -draw "translate 20,20 text 0,0 'Translate'" \
+          text_translate.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="text_translate.jpg"
+     ><IMG SRC="text_translate.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see both produce the same effective result. But as the "<CODE>-draw
+text</CODE>" requires you to give an offset that was part of its arguments, it
+is more commonly used to position the drawn text from the command line. </P>
+
+However while both of these methods produce the same result, they will produce
+completely different results when text rotation is also applied. Basically
+due to the order in which the actions are being applied. </P>
+
+
+<A NAME="draw_text_rotation"></A>
+<H4>Draw Rotated Text</H4>
+
+There are two separate ways of positioning drawn text: use a 'text offset', or
+'translate' the text to the final position. The effects of these two
+positioning methods produce very different results when rotation is also
+applied.  The reason for this is complex, but essentially involves how IM does
+<A HREF="../draw/#transform" >Drawing Surface Warps</A>. </P>
+
+Having said that lets look at what happens if you rotate some text using the
+two different positions. </P>
+
+Just an offset, without rotation...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:white -gravity Center \
+          -fill cyan -draw 'line 50,50 70,70' \
+          -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
+          -fill blue -draw "text 20,20 'None'" \
+          rotate_none.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_none.jpg"
+     ><IMG SRC="rotate_none.jpg"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Rotating Text with an offset...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:white -gravity Center \
+          -fill cyan -draw 'line 50,50 50,78' \
+          -fill red  -draw 'line 48,78 52,78  line 50,76 50,80' \
+          -fill blue -draw "rotate 45 text 20,20 'Offset'" \
+          rotate_offset.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_offset.jpg"
+     ><IMG SRC="rotate_offset.jpg"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Rotating Text with translation...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:white -gravity Center \
+          -fill cyan -draw 'line 50,50 70,70' \
+          -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
+          -fill blue -draw "translate 20,20 rotate 45 text 0,0 'Translate'" \
+          rotate_translate.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_translate.jpg"
+     ><IMG SRC="rotate_translate.jpg"     WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+This is actually what most people want. Though the offset rotation can be
+useful for some special effects.  Note how order of these <A
+HREF="../draw/#transform" >Drawing Surface Warps</A> are reversed to the order
+they are given.  The rotation is performed first, and the translation is
+performed second.  If you reverse the 'rotate' and 'translate' methods you
+will get the same result as an ordinary 'text offset', a rotated offset. </P>
+
+The "<CODE><A HREF="../option_link.cgi?annotate" >-annotate</A></CODE>"
+operator was designed specifically to make positioning rotated text easier, by
+specifically asking IM to draw the text with rotation, instead of 'doing
+surface warping'. </P>
+
+Annotate with rotate and offset...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:white -gravity Center \
+          -fill cyan -draw 'line 50,50 70,70' \
+          -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
+          -fill blue -annotate 45x45+20+20 'Annotate' \
+          rotate_annotate.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="rotate_annotate.jpg"
+     ><IMG SRC="rotate_annotate.jpg"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The problem with the above examples is that the IMv6 "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" setting not only
+refers to the position on the background image, but also the position in the
+overlay image that is to be drawn. </P>
+
+IMv7 will be adding 'Text Justification', which refers to the overlay
+position, as a separate (but related) setting to gravity (background position).
+</P>
+
+<A NAME="distort"></A>
+<H4>Text Positioning using Distort</H4>
+
+Using <A HREF="../distort/#srt" >SRT Distortion</A> with <A
+HREF="../layers/#flatten" >Layering Images</A>, is particularly good method for
+placing images (or text in images). </P>
+
+Basically it allows you complete low level control over both the point at
+which the image is placed, as well as how the image is to be arranged at
+relative to that point. </P>
+
+To start with here we create a 'text image' with a transparent background and
+simply 'layer' the image onto the background image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg -background none label:'Some Text' \
+          -flatten  layer_simple.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="layer_simple.jpg"
+     ><IMG SRC="layer_simple.jpg"      WIDTH=94 HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see the text simply added to image at top left corner.  </P>
+
+Lets rotate it using distort (layers variant) -- Not the use of parenthesis to
+limit what image we distort!
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg \( -background none label:'Some Text' \
+             +distort SRT 70 \
+          \) -flatten  layer_rotate.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="layer_rotate.jpg"
+     ><IMG SRC="layer_rotate.jpg"      WIDTH=94 HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that the text position was NOT changed! All that happens was that the
+distort rotated the text around the center point (the handle), but so that
+relative to the 'virtual canvas' that point did not move.  Thus when the now
+larger image is <A HREF="../layers/#flatten" >Flattened</A> its point of
+rotation 'the center of the text image' did not move. </P>
+
+The next step is to move that handle, but for this we need to use almost the
+full set of <A HREF="../distort/#srt" >SRT Distortion</A> arguments. </P>
+
+Because we want to continue to use the 'center handle' as well we need to use
+some <A HREF="http://imagemagick.org/script/escape.php" >Image Property
+Percent Escapes</A>, or more specifically <A HREF="../transform/#fx_escapes"
+>FX Percent Escapes</A>. </P>
+
+So lets place the center at '<CODE>+60+60</CODE>' in the background image
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg \( -background none label:'Some Text' \
+             +distort SRT '%[fx:w/2],%[fx:h/2] 1 70 60,60' \
+          \) -flatten  layer_translate.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="layer_translate.jpg"
+     ><IMG SRC="layer_translate.jpg"      WIDTH=94 HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Another way of moving a 'layer image' is using the <A HREF="../basics/#page"
+>Repage Operator</A>. Especially a relative move using a '<CODE>!</CODE>'
+flag. The 'handle' for this is by the nature of layer images, the top left
+corner. </P>
+
+The <A HREF="../distort/#srt" >SRT Distortion Operator</A> will not only
+translate the image using the handle specified, but can use sub-pixel
+(floating point) positions for both of those handles.  That is it can distort
+the text by sub-pixel increments to any location, without the integer
+restrictions most other operations have. </P>
+
+The final example is placing the 90 degree rotated text on the left edge.
+</P>
+
+The handle of the text to rotate around and position will this time be at the
+be the center bottom of the text, before it was rotated.  That is a calculated
+position of '<CODE>%[fx:w/2],%h</CODE>'. </P>
+
+Position on the background image must also now be calculated to be the center
+left edge, ('<CODE>0,%[fx:h/2]</CODE>').  The problem is the <A
+HREF="../distort/#srt" >SRT Distortion Operator</A> does not have access to
+the background image when it is distorting the text image. </P>
+
+The solution is to do this position calculation when the background image
+available, and save it into some 'personal setting' which can then be added to
+the distort arguments. This technique is looked more closely in <A
+HREF="../transform/#fx_other" >Extract Information from Other Images</A>. </P>
+
+So here is the result.  First calculate the position on the background image.
+Then distort the text image so its 'handle' is also moved to that
+pre-calculated position.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rings.jpg -set option:my:left_edge '0,%[fx:h/2]' \
+          \( -background none label:'Some Text' \
+             +distort SRT '%[fx:w/2],%h 1 90 %[my:left_edge]' \
+          \) -flatten  layer_on_left.jpg
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="layer_on_left.jpg"
+     ><IMG SRC="layer_on_left.jpg"      WIDTH=94 HEIGHT=94
+           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The '<CODE>my:</CODE>' string can be anything that does not clash with
+existing prefixes. That is I use it to hold MY settings, separate to any other
+settings ImageMagick may use for coders or specific options. Prefixing
+'<CODE>my:</CODE>' is a good choice for this. </P>
+
+Percent escapes are handled purely as string substitutions, and in fact we
+could generate the whole Distort option as a string. The only problem is you
+can not do math on your '<CODE>my:</CODE>' settings, after they have been set.
+So any mathematics must be done before hand.  This is something that will be
+looked at for IMv7, so that FX expresions use % escape variables. </P>
+
+
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 16 December 2003 <BR>
+Updated: 22 April 2012 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/annotating/</CODE>
+</ADDRESS></BODY></HTML>

@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Generate a motage array using various resize filters
+# to shrink a smaller rings image down
+#
+echo "Generating Resize Filters Montage (smaller)..."
+
+. ../generate_options
+
+for filter in Box Hermite Triangle \
+              Gaussian Quadratic Spline \
+              Lanczos Hamming Blackman \
+              Lagrange Catrom Mitchell \
+;do
+  if [ "$filter" = 'null:' ]; then
+    convert null: miff:-
+  else
+    convert -label $filter rings_sm_orig.gif \
+            -filter $filter -resize 100x  miff:-
+  fi
+done |
+  montage -  -tile 6x  -geometry +4+2  -pointsize 10 \
+          -background $page_bg_color -mattecolor $page_bg_color \
+          montage_smaller.png
+
+chmod 644 montage_smaller.png
+
+

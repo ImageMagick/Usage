@@ -1,0 +1,2185 @@
+<HTML><HEAD>
+<TITLE>Usage under Windows -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/windows/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+  <SCRIPT SRC="" TYPE=text/javascript></SCRIPT>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR=#B0C4DE>
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Usage under Windows </H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DD><A HREF="#intro"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Introduction</A>
+    <UL>
+    <LI><A HREF="#why"
+        >What's the use of an IM script on my Windows PC?</A>
+        <LI><A HREF="#environments"
+            >Possible environments for IM's command line tools</A>
+        <LI><A HREF="#scripts"
+            >Running scripts effectively</A>
+        <LI><A HREF="#convert_issue"
+            >The Convert issue</A>
+        <LI><A HREF="#character_encoding"
+            >Character Encoding</A>
+        <LI><A HREF="#IM_setup"
+            >Installing ImageMagick under Windows</A>
+        <LI><A HREF="#auxiliary"
+            >Auxiliary programs and alternatives</A>
+    </UL>
+<DD><A HREF="#cygwin"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Using Cygwin</A>
+<DD><A HREF="#dos"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Using the DOS Shell and Batch Files</A>
+    <UL>
+    <LI><A HREF="#conversion"
+        >Converting Scripts: UNIX Shell to Window DOS</A>
+    <LI><A HREF="#filenames"
+        >Filename Handling in Batch files</A>
+    <LI><A HREF="#for_loops"
+        >FOR Loops</A> -- Batch Processing Several Files
+    <LI><A HREF="#for_recursive"
+        >Batch processing a (sub-)directory tree</A>
+    <LI><A HREF="#arbitrary"
+        >Batch Processing an Arbitrary Number of Files</A>
+    <LI><A HREF="#output"
+        >Re-using the Output of an IM command</A>
+    <LI><A HREF="#single"
+        >Processing Single Line Output</A>
+    <LI><A HREF="#calculations"
+        >Performing Calculations</A>
+        <UL>
+        <LI><A HREF="#calc_fx"
+            >Using IM's FX Expressions</A>
+        <LI><A HREF="#calc_set"
+            >Using the SET command</A>
+        <LI><A HREF="#calc_other"
+            >Using Other External Calculators</A>
+        </UL>
+    <LI><A HREF="#debugging"
+        >Editing, Debugging and Runtime Error Testing</A>
+    <LI><A HREF="#summing_it_up"
+        >Summing it up</A>
+    </UL>
+<DD><A HREF="#vb"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Visual Basic Script (VBS)</A>
+    <UL>
+    <LI><A HREF="#vb_example"
+        >A Basic Example: Lens Correction</A>
+    <LI><A HREF="#vb_files"
+        >Working with Several Files</A>
+    <LI><A HREF="#vb_text"
+        >Working with Text Files</A>
+    <LI><A HREF="#vb_testing"
+        >Testing and Debugging VBScripts</A>
+    </UL>
+<DD><A HREF="#more_info"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Further Information</A>
+</DL>
+
+Most of the commands in IM Examples were written specifically with LINUX and
+UNIX shell scripting in mind, as these systems are designed with batch
+processing and network servers in mind. However, more and more users of
+ImageMagick want to use it from the Windows Environment. This section provides
+details and examples of how you can use IM in that environment and, more
+important, how to convert a UNIX shell command (as used in the rest of the IM
+Examples) into its Windows DOS equivalent.  </P>
+
+I wish to express specific thanks to Wolfgang Hugemann
+&lt;ImageMagick_AT_Hugemann.de&gt; who completely re-wrote the original notes
+and expanded them to cover a much larger range of topics, of specific concern
+to window users. What you see here is his work, and IM users are indebted to
+him for his time and patience.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="intro"></A>
+<H2>Introduction</H2>
+
+<A NAME="why"></A>
+<H3>What's the use of an IM script on my Windows PC?</H3>
+
+The following examples basically assume that you run IM on a Windows desktop
+computer, probably attached to a network. Well, there are a lot of readily
+available image manipulation programs, such as Adobe Photoshop, Corel's Paint
+Shop Pro, IrfanView (<A HREF="http://www.irfanview.com/"
+>http://www.irfanview.com/</A>) and even GIMP (<A HREF="http://www.gimp.org/"
+>http://www.gimp.org/</A>). So why should you bother to perform image
+processing by IM's command line programs and scripts?  </P>
+
+The genuine advantage of using ImageMagick instead of a mouse-driven interface
+is that you can completely automate routine manipulations, either for single
+files or for bulks of files. Tasks such as:  </P>
+
+<DL><DD><DL>
+<DT><B>Bulk format conversion</B>
+<DD>This is offered by quite a lot of Windows programs, such as IrfanView.
+    However, IM's versatility when it comes to image formats is unsurpassed.
+    You can for instance convert all the pages of a PDF into a series of JPEGs
+    (if GhostScript is installed on your computer).  </P>
+
+<DT><B>Shrinking and preprocessing digital photographs</B>
+<DD>When embedding digital photographs into a word processor document, you
+    should usually reduce their resolution, such that the document can be
+    printed faster. The same holds if you convert the document into a PDF via
+    a PDF printer driver such as <A HREF="http://freepdfxp.de/">FreePDF</A>.
+    Preprocessing could also comprise colour and lens correction routines.
+    </P>
+
+<DT><B>Placing your logo into a bulk of digital photographs</B> </P>
+
+<DT><B>Applying a series of operations to a bulk of digital photographs</B>
+<DD>Having worked out a series of working steps by use of a mouse-driven
+    program, you might wish to automate these steps for future bulk
+    processing.  However, script languages (such as Adobe's Action Script) are
+    not very common in Windows image processing programs.  </P>
+
+<DT><B>Combining several images to a catalog image</B> </P>
+
+</DL></DL></P>
+
+Although some of these tasks (especially bulk-shrinking) are also offered by
+other freeware programs (especially by IrfanView's batch processing), you are
+never free of choice in what processing steps to apply: you have to live with
+those offered by the program. For instance, IrfanView's batch processing
+offers to place a text string into a bulk of photographs, but not a logo. It
+also offers to change the gamma value, but the histogram of the photograph
+cannot be clipped at its ends (as done by "<CODE><A
+HREF="../option_link.cgi?contrast-stretch" >-contrast-stretch</A></CODE>" in
+IM, see <A HREF="../color_mods/#contrast-stretch" >Normalize and Contrast
+Stretch</A>).  </P>
+
+IM scripts are especially suited for productive use in a company network,
+because ready-made scripts can be applied by anyone &ndash; end users do not
+necessarily have to know about what's going on in the background. Thus
+standard workflow steps on images can be completely automised (and really
+standardised).  Several of the scripts presented in the following were derived
+for productive use in our small company (working in the field of accident
+reconstruction).  </P>
+
+I am neither an outstanding Windows script programmer nor most familiar with
+IM's command line tools. There are probably more elegant approaches to some of
+the problems treated in the following. The points I want to make are:
+
+<UL>
+<LI>to demonstrate some basic techniques of Windows script programming with
+    IM's command line tools.
+<LI>to prove that the use of IM-based scripts is neither art for art's sake
+    nor an academic pastime.
+<LI>to show that IM's command line tools can do real work in a local network
+    (and not only on webservers).
+</UL></P>
+
+As in the rest of IM's Example pages, we will only use IM's command line tools
+and leave its various programming interfaces aside. The scripts are intended
+to run within a local network with drive letters assigned to each network
+drive.  Most of the scripts are intended to be run on the client computers of
+that network, few aim at the network (file) server.</P>
+
+<A NAME="environments"></A>
+<H3>Possible environments for IM's command line tools</H3>
+
+Under Windows, simple IM commands are usually run in the Windows Command Shell
+(a "DOS Shell" run by starting <CODE>cmd.exe</CODE>). For complex operations,
+performed in a lengthy command line or in a series of command lines, you will
+better write a script. For a series of simple commands, this will most
+probably be a DOS batch file, executed in the Windows Command Shell. This
+approach, however, has its shortcomings, as the batch file command set is
+rather limited in comparison to those of common UNIX command shells.  </P>
+
+When running IM under Windows, you basically have the following alternatives:
+
+<DL>
+<DT><B>The Windows command shell ("DOS window")</B>
+<DD>This is run by <CODE>cmd.exe</CODE> (32-bit mode) on Windows NT 4.0,
+    Windows XP and later versions and is present on any Windows computer.
+    See <A HREF="#scripts" > Using the DOS Shell and Batch Files</A>, as well
+    as the  special note about the <A HREF="#convert_issue" >The Convert
+    Issue</A>. </P>
+
+<DT><B>Cygwin</B>
+<DD>A bash-like command shell (<A HREF="http://www.cygwin.com/"
+    >http://www.cygwin.com/</A>). When using this shell, the IM examples
+    presented in the rest of this usage section can be run exactly as
+    given, as you have access to a UNIX style command line shell.
+    See <A HREF="#cygwin" >Using Cygwin</A> below.</P>
+
+<DT><B>The Windows Script Host</B>
+<DD>The Windows Script Host is based on the .COM technology. It is present on
+    any contemporary Windows computer and WSH scripts are much more powerful
+    than simple DOS batch files. The Windows Script Host offers several
+    programming interfaces, with VBScript (Visual Basic Script) and JScript
+    (Java Script) being the most common. The IM command line tools can be
+    invoked by using the DOS shell commands <CODE>Run</CODE> or
+    <CODE>Exec</CODE> of the Shell object.  See <A HREF="#vb" > Visual Basic
+    Script (VBS)</A> below. </P>
+
+<DT><B>The Windows Powershell</B>
+<DD>The much more powerful successor of the ancient DOS shell, based on the
+    .NET 2.0 technology.  The Powershell shipped with Windows 7 and is run by
+    <CODE>powershell.exe</CODE>. It can be downloaded for Windows XP and Vista
+    at Microsoft's website.
+
+</DL></P>
+
+<A NAME="scripts"></A>
+<H3>Running scripts effectively</H3>
+
+Let's assume you have a perfect Windows script (a DOS batch file, a VBScript,
+or whatever) that takes the name(s) of the input file(s) as command line
+parameter(s), performs some manipulation and spits out the result as a single
+image or a series of images. You surely won't like to start a DOS command
+shell (or an alternative) everytime and provide the script with the filenames
+by typing them. To avoid such cumbersome ways of proceeding, you can basically
+use <B>Drag &amp; Drop</B> or <B>SendTo</B>: </P>
+
+When using <B>Drag &amp; Drop</B>, you place the DOS batch file or the
+VBScript (or whatever) in a location that is easily accessible, like the
+desktop or the directory which holds the image files to be processed. You then
+select the files to be processed in the Windows Explorer and just drop them
+onto the script file. The filenames will be handed over to the script as the
+command line parameters and can be referred to in the script.  </P>
+
+As an alternative, you can place your script (or a link to it) in the
+<B>SendTo</B> folder.  The programs in this folder appear in the context menu
+of the Windows Explorer when right-clicking in the Explorer's file pane.
+Again, the names of the selected files are handed over to the script as
+command line parameters. The SendTo folder is named <CODE>SendTo</CODE>. Its
+location seems to move with each new Windows version. A bullet-proof way to
+find it is typing <CODE>shell:sendto</CODE> into the run box.  </P>
+
+<A NAME="convert_issue"></A>
+<H3>The Convert issue</H3>
+
+IM's Windows installation routine adds IM's program directory to the search
+path, such that you can call IM's command line tools directly from the command
+prompt, without providing a path name. However, the names of IM's command line
+tools are rather unspecific (EG: Convert, Identify, Compare ...) which
+provokes name conflicts with other programs. Especially, Convert is a Windows
+system tool, located in the Windows system directory
+(<CODE>c:\Windows\system32\convert.exe</CODE>), which converts the FAT32 file
+system into the now common NTFS. </P>
+
+This tool was first shipped with Windows XP and generated a name conflict with
+IM's command line tool "<CODE>convert</CODE>" as IM's program directory was
+<B>appended</B> to the DOS search path (IE: the PATH environment variable),
+the system tool was found first and simple calls to "<CODE>convert</CODE>" in
+older scripts weren't resolved correctly. Current versions of IM's Windows
+setup program however place IM's program directory at the head of the search
+path, thereby insuring that in case of conficting names, IM's command line
+tool is found first. </P>
+
+The introduction of the Convert tool with Windows XP caused a lot of legacy
+scripts to crash.  The common solution was to rename IM's Convert tool to
+something else, such as "<CODE>IMconvert</CODE>" (Note that you can not rename
+the system command, as the next Windows service pack would probably just
+restore it, ignoring the renamed version.)  This solution, although
+unnecessary now, can still be found all over the Internet. The best solution
+to avoid possible future name conflicts is to call IM's command line tools by
+their full pathname in any script. That is, storing its location in a variable
+or constant. For reasons of simplicity, we will not do this everytime in the
+following, but you should keep this in mind as a good habit. </P>
+
+For a good alternative summery and solutions to this problem see
+<A HREF="http://savage.net.au/ImageMagick/html/install-convert.html" >Ron
+Savage: MS Windows and convert.exe</A>. </P>
+
+
+<A NAME="character_encoding"></A>
+<H3>Character Encoding</H3>
+
+ImageMagick encodes strings in Unicode, more precisely in <A
+HREF=http://en.wikipedia.org/wiki/Utf-8 >UTF-8</A>.  To the contrary, DOS uses
+codepages to encode characters (mostly in 8-bits). This generates problems
+when writing strings into images, such as when working with 'label' or
+'-title': When using non-ASCII charcters, things will go wrong in the easy
+approach. </P>
+
+For example trying to create a label of German umlauts such as
+'<CODE>&auml;</CODE>', '<CODE>&ouml;</CODE>', '<CODE>&uuml;</CODE>', you can
+simply use the following in Linux...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  convert label:&auml;&ouml;&uuml; test.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+But this would not create the desired string under windows. You can however
+read and UTF-8 coded string from a textfile:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  convert label:umlauts.txt test.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+and you can even create this textfile by the use of "<CODE>echo</CODE>, if you
+switch the codepage to UTF-8 in advance: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  CHCP 65001
+  ECHO &auml;&ouml;&uuml; > umlauts.txt
+  convert label:umlauts.txt test.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+But if you want to process the output of a DOS command, for example when
+trying to title an index print of the JPEGs contained in a certain directory
+with the name of this directory, you are in trouble.  Switching to codepage
+65001 will not work with most of the DOS commands, especially when looping
+through directory trees. And switching the codepage to and fro between, say
+1252 (West European Latin) and 65001 will usually not work either or become at
+least rather tricky. </P>
+
+The safest approach is to convert strings when they are needed, using an
+external command line program, such as "<CODE>Iconv.exe</CODE>", a UNIX tool
+which is also available for Windows.  Download the setup file from <A
+HREF="http://gnuwin32.sourceforge.net/packages/libiconv.htm" >SourgeForge</A>
+and install the files into the standard directory <CODE>C:\Program
+Files\GnuWin32</CODE>.  Then dump the output of the DOS command to a text file
+in your script and convert that file to UTF-8 in the following: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  CHCP 1252
+  DIR /B &auml;&ouml;&uuml;.jpg > temp.txt
+  "C:\Program Files\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8 temp.txt > title.txt
+  convert label:@title.txt &auml;&ouml;&uuml;.jpg -append &auml;&ouml;&uuml;_labelled.jpg
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The parameters tell Iconv to transcode from ISO-8859-1 (codepage 1252) to
+UTF-8.  Iconv writes its output to stdout, so that you have to redirect it to
+a file in order to use it with 'label'. Please note that dumping the output to
+a textfile is recommendable anyway, because it tells ImageMagick to
+interpretate the files contents literally, without taking the Windows
+backslash ("\") for an escape character. </P>
+
+Of course, the code in the above example does not make much sense as it is
+presented here for demonstration purposes. In a practical DOS batch file, the
+file name will probably be generated in a FOR loop. A practical example is
+given below (See <A HREF="#for_recursive">Batch processing a (sub-)directory
+tree</A>). </P>
+
+For more on UTF handling see the other IM examples and information in <A
+HREF="../text/#unicode" >Unicode or UTF8 Format Text Handling</A>. </P>
+
+
+<A NAME="IM_setup"></A>
+<H3>Installing ImageMagick under Windows</H3>
+
+ImageMagick is under constant development, new versions are released roughly
+on a monthly basis. It is strongly recommended to use an up-to-date version of
+IM, especially when IM doesn't seem to perform a job quite as you expect it to
+do. In most cases, the installation of the current version will solve the
+problem. The setup program of the current binary release can be found at <A
+HREF="https://legacy.imagemagick.org/script/binary-releases.php#windows"
+>https://legacy.imagemagick.org/script/binary-releases.php#windows</A>.</p>
+
+By default, IM installs itself in a program directory called <CODE>C:\Program
+Files\ImageMagick x.x.x-x</CODE>, where "x.x.x-x" stands for its version
+number. By default, the setup program suggest to extend the PATH environment
+variable according to this, when IM is installed for the first time (IE. "Add
+application path to your system path" is checked). If you forget to de-install
+older versions, you will quickly have a nice collection of various ImageMagick
+versions with their according PATH extensions.</P>
+
+In our office, we therefore took the habit to install IM into <CODE>C:\Program
+Files\ImageMagick</CODE>, installing newer versions just over the older ones
+and leaving the PATH environment variable untouched.  We couldn't find anything
+wrong with this way of proceeding in years of usage.  If you really want to
+know the IM version number, you can always call <CODE>Convert -version</CODE>
+and a dummy-proof script should evaluate the version number in case that it
+relies on a certain minimum version number. See section "<A
+HREF="#debugging">Editing, Debugging and Runtime Error Testing</A>" for more
+information on this.</P>
+
+ImageMagick writes a few Registry keys to <CODE>HKEY Local
+Machine\Software\ImageMagick</CODE>. If you do deal with several installed
+versions of IM, the most important key is <CODE>HKEY Local
+Machine\Software\ImageMagick\Current</CODE>, where you can also find the path
+to IM's binarys, called <CODE>BinPath</CODE>. You can query this registry entry
+at the start of any script and thus determine the program path without having
+to rely on the PATH environment variable. See section "<A
+HREF="#debugging">Editing, Debugging and Runtime Error Testing</A>" for more
+information on this.</P>
+
+When working with PostScript files, ImageMagick relies on another program,
+"<CODE>Ghostscript</CODE>" for the reading and conversion of PostScript and
+PDF files into a image format it can use.  That is to read such documents,
+Ghostscript needs to be installed on your computer.  Its latest version can be
+downloaded at <A
+HREF="http://sourceforge.net/projects/ghostscript/files/GPL%20Ghostscript"
+>SourceForge</A>. </P>
+
+The order in which you install GhostScript and ImageMagick does not matter.
+You do not have to install GhostScript prior to ImageMagick, and ImageMagick
+will run fine without it being installed. It is only needed if you want to
+work with Postscript or PDF files.  IM will determines the location of
+Ghostscript at runtime, quering it from the Registry.</P>
+
+
+<A NAME="auxiliary"></A>
+<H3>Auxiliary programs and alternatives</H3>
+
+Yes, it's true.  There <B>are</B> certain jobs that other programs can do
+better than ImageMagick.  Typically ones which are designed with specific
+formats in mind, rather than general image manipulation that ImageMagick
+provides.
+
+<UL>
+<LI><A HREF="http://www.irfanview.com">IrfanView</A> is probably the most
+    common image viewer under Windows, which also allows some basic image
+    manipulation.</P>
+<LI>A GUI program like Adobe Photoshop or <A
+    HREF="http://www.gimp.org">Gimp</A> is more suited for direct editing
+    and testing complex image manipulation steps.</P>
+<LI>For manipulations on the EXIF header of digital photographs, <A
+    HREF="http://http://www.sentex.net/~mwandel/jhead">Jhead</A> and <A
+    HREF="http://www.sno.phy.queensu.ca/~phil/exiftool">ExifTool</A> are more
+    versatile than ImageMagick.</P>
+<LI>Extraction of JPEG streams from PDFs should be done with <A
+    HREF="http://www.foolabs.com/xpdf">xPDF</A>.</P>
+<LI>Video processing should better be done with <A
+    HREF="www.virtualdub.org">VirtualDub</A>, best of all in combination with
+    <A HREF="http://avisynth.org">AviSynth</A> and its editor <A
+    HREF="http://avisynth.org/qwerpoi">AvsP</A>.</P>
+</UL>
+
+This is not to say ImageMagick should be ignored for such image work. But you
+can do a lot more by combining them together. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="cygwin"></A>
+<H2>Using Cygwin</H2>
+
+As has been said above, ImageMagick was designed with UNIX and Linux in mind,
+so the easiest approach is probably to install a Bash shell on your Windows
+system and run the variety of IM scripts which have already been written for
+that system, for example <A HREF="http://www.fmwconcepts.com/imagemagick"
+>Fred Weinhaus' scripts</A>. </P>
+
+<A HREF="http://cygwin.com" >Cygwin</A> is &ndash; as its developers put it,
+provides a "a Linux-like environment for Windows".  It consists of all the
+tools which are normally available in the Linux shell. I have tested a few of
+Fred Weinhaus' bash scripts under Cygwin's Bash shell and found them to be
+fully functional. </P>
+
+At the bottom of the root page of the Cygwin website, you will find a link
+labeled <A HREF="http://cygwin.com/setup.exe" >Install or update now!</A>,
+which will download an installation stub named Setup.exe. When you start this
+program, it will offer a list of site mirrors. After you have chosen one of
+them, the routine will provide a tree view of what tools it is going to
+install. The standard selection seems reasonable to me, so you might just
+proceed. The installation routine will then download the packages needed and
+install Cygwin on your computer.</P>
+
+When you start Cygwin, its Bash shell looks pretty much like a DOS box, that
+is a text window with black background.  Like for the DOS window, the font can
+be chosen by clicking on the window's system menu, located left in the title
+bar. The basic commands are:</P>
+
+<UL>
+<LI>You change the current directory with <CODE>CD</CODE> command, more or
+    less like in DOS. However, the backslash ("\") has to be substituted by
+    the forward slash ("/").  Drives are also changed via <CODE>CD</CODE>, as
+    under DOS. As such <CODE>CD w:</CODE> will switch to drive w:   Unlike in
+    a nomal Unix environment, pathnames are case-insensitive.  Special
+    characters, such as umlauts, can be used.  For some commands drivenames
+    have to be passed in a special syntax, avoiding the colon. For example
+    <CODE>/cygdrive/w/test</CODE>.</P>
+
+<LI>Cywin reads the Windows PATH environment variable and sets its own PATH
+    accordingly. You can check that by typing <CODE>echo $PATH</CODE> into the
+    Bash shell. Note: Unlike under Windows, the names of environment variables
+    are case-sensitive, so you have to use capital letters when referring to
+    PATH.</P>
+
+<LI>Unlike under Windows, the current directory in <B>not</B> in the search
+    path by default!  If for example the shell script "autolevel1" resides in
+    <CODE>W:\scripts</CODE>, you can not just to switch to that directory when
+    calling the shell script.  You must append at least a minimal directory
+    location to the start of the script, like this: <CODE>./autolevel1</CODE>
+    (for the script located in current directory).  Or the script complete
+    path, like this <CODE>/cygdrive/w/scripts</CODE>. </P>
+
+<LI>Alturnativally you can append that script directory explicitly to the
+    search path using <CODE>PATH=$PATH:/cygdrive/w/scripts</CODE>.  As the
+    colon is used as a path separator, you have to use this special
+    nomenclature, such as <CODE>/cygdrive/w/scripts</CODE> instead of
+    <CODE>w:/scripts</CODE>.  </P>
+</UL>
+
+This description of the Cygwin shell will be extended in future versions of
+this page.  For the moment, the above information should suffice to get you
+started. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="dos"></A>
+<H2>Using the DOS Shell and Batch Files</H2>
+
+<A NAME="conversion"></A>
+<H3>Converting Scripts: UNIX Shell to Window DOS</H3>
+
+When invoking IM commands directly from the DOS command shell (using
+<CODE>cmd.exe</CODE>) you have to modify the scripts presented on IM's Example
+site (if they don't stem from this section), as most examples provided (in
+other sections) are generally intended to be run in a UNIX or LINUX command
+shell. </P>
+
+In order to run them from a DOS command shell, you have to perform the
+following modifications:
+
+<UL>
+<LI>Most often, double quotes '<CODE>"</CODE>' have to be used in place of
+    single quotes '<CODE>'</CODE>' so that the command arguments remain
+    correct.  Watch out for quotes within quotes such as in <CODE><A
+    HREF="../option_link.cgi?draw">-draw</A></CODE> operator. You can use
+    single quotes within a DOS double quoted argument as these are passed to
+    IM for handling, and not processed by the script.  </P>
+
+<LI>Backslashes '<CODE>\</CODE>' appearing on the end of the shown example
+    lines represents a 'line continuation' which appends the next line to the
+    same command line sequence.  </P>
+
+    Just append all the lines onto one line and remove those backslashes.  OR
+    replace them with '<CODE>^</CODE>' character to denote line continuation
+    in DOS batch files.  </P>
+
+  <LI>All reserved shell characters which are not in double quotes must be
+      escaped with a '<CODE>^</CODE>' (caret or circumflex) if used in
+      a literal sense (i.e. not fulfilling their usual purpose). These
+      reserved shell characters are: '<CODE>&amp;</CODE>', '<CODE>|</CODE>',
+      '<CODE>(</CODE>', '<CODE>)</CODE>', '<CODE>&lt;</CODE>',
+      '<CODE>&gt;</CODE>', '<CODE>^</CODE>'.  </P>
+
+      This especially means that:
+      <UL>
+      <LI>The special character '<CODE>&gt;</CODE>' (used for resize geometry)
+          needs to be escaped using '<CODE>^</CODE>'. For example
+          "<NOBR><CODE>-resize 100x100^&gt;</CODE></NOBR>"
+      <LI>Similarly the 'internal fit resize' flag '<CODE>^</CODE>' needs to
+          be doubled to become '<CODE>^^</CODE>'.
+      </UL></P>
+
+<LI>UNIX shell escaping backslashes '<CODE>\</CODE>' are not needed to escape
+    parenthesis '<CODE>()</CODE>' or exclamation marks '<CODE>!</CODE>'.  </P>
+
+<LI>Otherwise the UNIX shell escaping backslashes '<CODE>\</CODE>' will need
+    to be replaced with a circumflex '<CODE>^</CODE>' character,  when that
+    escape characters such as '<CODE>&lt;</CODE>' and '<CODE>&gt;</CODE>'.
+    <BR>
+
+    For example: "<NOBR><CODE>-resize 100x100\&gt;</CODE></NOBR>" will become
+    "<NOBR><CODE>-resize 100x100^&gt;</CODE></NOBR>".  </P>
+
+<LI>In DOS batch files, the percent '<CODE>%</CODE>' character also has
+    a special meaning as it references to the command line parameters.  For
+    example <CODE>%1, %2, ...</CODE> (in UNIS shell a '$' sign is used for the
+    same general meaning). In a DOS batch file, single percent signs (as they
+    appear in the "<CODE>FOR</CODE> command") will need to be doubled to
+    '<CODE>%%</CODE>' </P>
+
+<LI>Keep in mind that Windows filenames can include space characters. Spaces
+    can also be used under UNIX but not so common.  Such filenames which may
+    contain spaces have to be included in double quotes <CODE><NOBR>"file
+    name.jpg"</NOBR></CODE> or <CODE><NOBR>"file name".jpg</NOBR></CODE>.
+    A filename passed to a script or batchfile via Drag &amp; Drop or SendTo
+    as a command line parameter needs special attention, as it is passed to
+    the script without quotes, if it doesn't contain space characters, and
+    with quotes when it does.  </P>
+
+<LI>Comments in UNIX shell scripts start with an unquoted '<CODE>#</CODE>'
+    anywhere in a line and continue to the end of the line.  Color settings
+    (such as "<CODE>#FF0000</CODE>" for a red color) will often be quoted with
+    to remove this special meaning. This quoting is not needed, but using
+    double quotes '<CODE>"</CODE>" around them does not matter and should be
+    kept.  </P>
+
+    In DOS, comments can only appear at the start of a line using
+    a '<CODE>REM</CODE>', '<CODE>@REM</CODE>', or '<CODE>::</CODE>' prefix.
+    Though they also continue to the end of the line. It is your choice which
+    method of commenting you should use.  However good commenting in any batch
+    file is always recommended, so you know what the command is attempting to
+    do at each step, when you go back to the script months or years later.
+    Makes it a lot easier for others to figure out too.  </P>
+
+    All scripts should start with a larger comment explaining what the script
+    does and how it should be used. This is just good programming practice.
+    </P>
+
+<LI>When executing a DOS batch file, the individual commands are echoed by
+    default, That is commands are displayed in the output DOS box. Under UNIX
+    you would instead need to add a special command or option to print
+    commands being exected in this way. </P>
+
+    You can turn off this 'echoed' output by starting your script with
+    "<CODE>@ECHO&nbsp;OFF</CODE>". </P>
+
+    The special starting comment "<CODE>#!/path/to/shell</CODE>" in UNIX shell
+    scripts is not needed for DOS batch files.  So this line can be replaced by
+    the "<CODE>@ECHO OFF</CODE>" command for DOS batch files.  </P>
+
+</UL></P>
+
+For example, following the above rules, this UNIX shell script...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  #!/bin/sh
+  # Create a negated rose image and overlay a comment
+  convert -background none -fill red -gravity center \
+          -font Candice -size 140x92 caption:'A Rose by any Name' \
+          \( rose: -negate -resize 200% \) +swap -composite \
+          output.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+will become something like this as a Windows DOS batch file...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  @ECHO OFF
+  :: Create a negated rose image and overlay a comment
+  convert -background none -fill red -gravity center  ^
+          -font "C:\path\to the\font\candice.ttf"  ^
+          -size 140x92   caption:"A Rose by any Name"  ^
+          ( rose: -negate -resize 200%% ) +swap -composite  ^
+          C:\where\to\save\output.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+I have written a basic Linux shell to DOS batch file converter by the use of
+SED (<B>S</B>treaming <B>ED</B>itor).  SED is a common UNIX / Linux text file
+manipulation program which is also available for Windows at <A
+HREF="http://sed.sourceforge.net/">http://sed.sourceforge.net/</A>. Like IM is
+a command-driven image manipulator, SED is a command-driven editor. </P>
+
+The SED script <CODE>cim.txt</CODE> that performs the needed manipulations
+looks like this (when stripped of any comments):
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  s/'/\"/g
+  s/%/%%/g
+  s/\\\([()!]\)/\1/g
+  s/\([&amp;|&lt;&gt;]\)/^\1/g
+  s/^[ ]*#/::/
+  s/\(^.*\)\( #.*$\)/\2\n\1/
+  s/\(.:.*\.[a-z,A-Z]*\)[ ]/\"\1\" /g
+  s/\\[ ]*$/^/
+  s/^[ ][ ]//
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+You can download the fully commented version file <A
+HREF="sed_script.zip">sed_script.zip</A>. </P>
+
+If you place the SED script <CODE>cim.txt</CODE> in the same folder as the
+Linux shell script which is to be converted, you invoke the conversion by:
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  %programfiles%\GnuWin32\bin\SED -f  cim.txt linux.scr &gt; windows.bat
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+You can also invoke the conversion via SendTo or Drag &amp; Drop by use of the
+following batch file:
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+SET SP=%programfiles%\GnuWin32\bin
+%SP%\SED -f %SP%\cim.txt "%~1"&gt; "%~dpn1.bat"
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This batch file assumes that you have placed the SED script
+<CODE>cim.txt</CODE> within SED's program folder. It takes the filename of the
+Linux shell script as the only command line parameter and generates a batch
+file with the same name, but extension '.bat' in the same folder. (The crytic
+filename manipulation "%~dpn1.bat" is explained in the next section.) </P>
+
+Please note: The above SED script will only perform the rudimentary
+replacements mentioned above. It will NOT turn sophisticated Linux shell
+scripts (like those presented on <A
+HREF="http://www.fmwconcepts.com/imagemagick" >Fred Weinhaus' website</A>)
+into the equivalent batch file!  </P>
+
+<A NAME="filenames"></A>
+<H3>Filename Handling in Batch files</H3>
+
+As has been said above, IM is particulary useful when applying a standard
+sequence of processing steps to an image file.  In such a case, the filename
+will be passed to the script as a command line parameter, either via Drag
+&amp; Drop or via SendTo. Using these techniques, the filename handed to the
+DOS batch file will be a fully qualified filename, i.e.  include the drive
+name and the directory path. You can test this by dropping a file onto the
+following batch file:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+ECHO Filename: %1
+PAUSE
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Due to the <CODE>PAUSE</CODE> statement, the DOS box will stay open until the
+user presses a key, such that you can inspect the result. Try the above with
+a filename that contains spaces and you will notice that the filename will be
+bracketed by double quotes.</P>
+
+Please note that here and in all following examples we assume that any network
+file has been assigned with a drive letter. Practically speeaking, I have
+never seen different in a local commercial network. When working with batch
+files, you should not try to handle UNC names: You may get your batch working,
+but it will cause you a lot of unecessary trouble.</P>
+
+When using this filename in an Convert command line, this behaviour can cause
+trouble. Let us perform a simple conversion from any other format to JPEG. The
+most basic code would be:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+convert %1 %1.jpg
+PAUSE
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This will produce a JPEG file (with standard quality and resolution) in the
+same directory, tailed with an additional ".jpg" extension. The above code
+works on any filename, whether it contains spaces or not. If you want to get
+rid of the original extension, things become a little trickier:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+convert %1 "%~dpn1.jpg"
+PAUSE
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The above batch file manipulates the filename by use of the <CODE>~</CODE>
+operator:
+
+<TABLE ALIGN=center>
+<TR><TD>%~1&nbsp;&nbsp;&nbsp;&nbsp;
+             <TD>expands %1 removing any surrounding quotes (")
+<TR><TD>%~f1 <TD>expands %1 to a fully qualified path name
+<TR><TD>%~d1 <TD>expands %1 to a drive letter only
+<TR><TD>%~p1 <TD>expands %1 to a path only
+<TR><TD>%~n1 <TD>expands %1 to a file name only
+<TR><TD>%~x1 <TD>expands %1 to a file extension only
+</TABLE></P>
+
+These modifiers can be combined, such that "<CODE>%~dpn1</CODE>" means "drive
++ path + name without extension and bracketing quotes". Consequently, we have
+to bracket the name by double quotes, such that the code also works for
+filenames including spaces. (If it doesn't, the quotes do no harm.) The
+<CODE>PAUSE</CODE> statement is for testing purposes only and can be dropped
+in the final batch file. </P>
+
+If you just want to test your code without actually invoking IM, you should
+write:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+ECHO convert %1 "%~dpn1.jpg"
+PAUSE
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+which will just show the result of your string manipulation.</P>
+
+
+<A NAME="for_loops"></A>
+<H3>Batch Processing Several Files</H3>
+
+The DOS <CODE>FOR</CODE> command can be used to process a series of files in
+a similar manner as it does under UNIX.  In order to scale all JPEG files in
+the current directory by 50%, you could type the following line into a DOS
+box: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR %a in (*.jpg) DO convert %a -resize 50% small_%a
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Please note that the percent sign is <B>not</B> doubled. If you however place
+this command in a batch file you will have to replace it by </P>
+
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR %%a in (*.jpg) DO convert %%a -resize 50%% small_%%a
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Again, it is convenient to invoke this bulk operation by Drag &amp; Drop or
+SendTo, passing a fully qualified filename (or a folder name) to a DOS batch
+file which is possibly located in another directory (such as
+<CODE>shell:sendto</CODE>). In this case, we should make the file's directory
+the current directory in the first step:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  %~d1
+  CD "%~p1"
+  MD small
+  FOR %%a in (*.jpg) DO convert %%a -resize 50%% small\%%a
+  PAUSE
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In this batch file we
+<UL>
+<LI>change the drive by supplying the drive name (d: or whatever) </P>
+
+<LI>make the file's folder the current directory</P>
+<LI>create a sub-directory named "small"</P>
+<LI>scale all JPEG files by 50% and place these shrunken versions in the new
+    sub-directory. </P>
+</UL></P>
+
+Please note: As the tilde (~) frees the filename passed as a command line
+parameter of any possibly bracketing quotes, we usally have to bracket the
+result of any such manipulation by quotes again. We therefore wrote <CODE>CD
+"%~p1"</CODE> in the example above. In case of the <CODE>CD</CODE> command, we
+might even have omitted the bracketing quotes, as this very command accepts
+only one parameter and can therefore handle blanks without bracketing
+quotes.</P>
+
+Making the file's directory the current directory in the first step does make
+the follow-up steps a little easier, as the references to filenames become
+a little easier and shorter. We could however as well have written:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  MD "%~dp1small"
+  FOR %%a in ("%~dp1*.jpg") DO convert "%%a" -resize 50%% "%%~dpasmall\%%~nxa"
+  PAUSE
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This might make things a little shorter, but also a lot trickier. Please note
+that the file name modifiers also work on the For loop variable
+<CODE>%%a</CODE>. Note two: The final backslash is part of the pathname.
+Therefore it must be <CODE>"%~dp1small"</CODE> and <B>not</B>
+<CODE>"%~dp1\small"</CODE>, which doesn't make the code more readable,
+especially in the case of <CODE>"%%~dpasmall\%%~nxa"</CODE>.</P>
+
+There are several shortcomings and caveats of the <CODE>FOR</CODE> statement.
+</P>
+
+One of them is that you basically perform only one single command after
+<CODE>DO</CODE>. You can however group a series of DOS commands in parantheses
+"(", ")" and thereby perform a simple sequence of commands:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  @ECHO OFF
+  :: Lighten darker areas of all images in a directory
+  %~d1
+  CD "%~p1"
+  FOR %%a in (*.jpg) DO (
+    ECHO Processing file: "%%~nxa"
+    convert %%a -blur 30 -negate %%a.miff
+    composite %%a.miff %%a -compose overlay "%%~dpn1_light"%%~xa
+    DEL %%a.miff
+  )
+  PAUSE
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This batch file will process all images found in the directory passed as the
+command line argument. First it blurs the original image and negates it,
+storing the intermediate result in a file with an additional
+"<CODE>.miff</CODE>" extension. Then it superposes the original image over
+this modified version, thereby lightening the darker sections of the original
+image.  Finally the intermediate image is deleted.  </P>
+
+Please note that in the above, emphasis must be put on the <B>simple sequence
+of commands</B>: You cannot make use of <CODE>GOTO</CODE> jumps within the
+block. If you need such behaviour, you have to call another batch file by the
+<CODE>FOR</CODE> loop:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  %~d1
+  CD %~p1
+  MD small
+  FOR %%a in (*.jpg) DO CALL "%~dp0process" "%%~fa"
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Where "<CODE>process.bat</CODE>" is the batch file which does the actual work
+and which is located in the same directory as the calling batch file. The
+command line parameter 0 ("<CODE>%0</CODE>") is the name of the batch file
+itself, such that "<CODE>%~dp0process</CODE>" calls the batch file
+<CODE>process.bat</CODE> in the same directory. The <CODE>FOR</CODE> statement
+provides just the filename, which is turned into a fully qualified filename
+via "<CODE>%~fa</CODE>". In the present case, the code in the batch file
+<CODE>process.bat</CODE> would be the same as the one that was put between the
+parantheses in the above example:</P>
+
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert %%1 -blur 30 -negate %%1.miff
+  composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
+  DEL %%1.miff
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The use of a separate batch file, however, offers all the (limited)
+possibilities of a DOS batch file. This does not make any difference in this
+example, but we will show the benefits of this approach further down. </P>
+
+If you don't want to bother with two batch files, you can have the script
+create the second <CODE>process.bat</CODE> script (using <CODE>ECHO</CODE>),
+call it from the main loop, then deleted it when the job is finished:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  ECHO convert %%1 -blur 30 -negate %%1.miff &gt;%~dp0process.bat
+  ECHO composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1 &gt;&gt;%~dp0process.bat
+  ECHO DEL %%1.miff &gt;&gt;%~dp0process.bat
+  %~d1
+  CD %~p1
+  MD small
+  FOR %%a in (*.jpg) DO CALL "%~dp0process" "%%~fa"
+  DEL %~dp0process.bat
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+When using the <CODE>ECHO</CODE> command, we have to escape any special DOS
+characters, especially the percent sign, a second time.  </P>
+
+And yes, IM could have done all the above in a single processing command,
+removing the need for the "<CODE>.miff</CODE>" intermediate image, but that is
+not the point of this example. </P>
+
+
+<A NAME="for_recursive"></A>
+<H3>Batch processing a (sub-)directory tree</H3>
+
+There are several techniques to process all files in a (sub-)directory tree.
+The simplest approach is to use the "<CODE>/R</CODE>" flag in the
+<CODE>FOR</CODE> statement to make it loop over all the files in all
+sub-directories under the current directory. In order to convert all TIFF
+files in the subdirectory tree to JPEG you thus simply type:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /R %%a IN (*.tif) DO imconv "%%~a" "%%~dpna.jpg"
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+When using the "<CODE>/R</CODE>" flag, you are always looping through the
+entire subdirectory tree, without options for sorting or filtering files.
+</P>
+
+In the oncoming example, we will generate photo index prints for all
+subdirectories and place these within the root directory. This offers an easy
+way to perform a visual search for a certain photograph, similar to the
+preview in the Windows Explorer, but without the (time-consuming) need to
+re-scan the entire directory tree for each search.  </P>
+
+As a start, we approach the problem with the help of two batch files, one
+performing the loop and one doing the actual work. The index prints will be
+low-quality JPEG files named <CODE>IDX_0001.jpg, IDX_0002.jpg,
+IDX_0003.jpg</CODE> and so on. First we establish the loop: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  DEL IDX_????.JPG
+  SET COUNT=0
+  FOR /F "delims=" %%a in ('DIR /S /B /AD ^|FIND /I "Porsche" ^|SORT') DO CALL c.bat "%%a"
+  DEL title.txt
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The first line cleans up any results from previous searches. In the second
+line, we define the environment variable COUNT, which we will use to generate
+the <CODE>IDX_nnnn.JPG</CODE> filenames. In the third line, we establish
+a list of all subdirectories via <CODE>DIR /S /B /AD</CODE>, extract those
+directories that contain the word "Porsche" (case-insensitive by use of the
+option <CODE>/I</CODE>) and sort this filtered list. Sorting will ensure that
+the numerical ordering of the IDX files will coincide with the alphabetical
+ordering of the directory pathnames. The option <CODE>"delims="</CODE> will
+inhibit the standard behaviour of truncating the lines after the first blank.
+</P>
+
+When calling the batch file <CODE>C.BAT</CODE>, we bracket the pathname by
+quotes to ensure that blanks are treated correctly. In the last line, we
+delete a temporary file that is created by the batch file <CODE>C.BAT</CODE>.
+We now come to the actual work:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  CHCP 1252
+  DIR %1\*.jpg&gt;nul || goto END
+
+  :: Generate IDX filename
+  SET /A COUNT+=1
+  SET TFILE=000%COUNT%
+  SET TFILE=IDX_%TFILE:~-4%.jpg
+
+  :: Generate title without bracketing quotes
+  ECHO %~1&gt;temp.txt
+  "C:\Program Files\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8 temp.txt>title.txt
+
+  montage -geometry 210x140+0+5 -tile 6x -title @title.txt %1\*.jpg -quality 30%% %TFILE%
+  jhead -cl %1 %TFILE%
+  :END
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In the first line we switch the codepage to Western European Latin
+(ISO-8859-1).  In the second line, we check whether the directory actually
+contains any photographs and skip the rest of the batch if not. (Executing the
+rest of the batch instead would actually do no harm, as <CODE>montage</CODE>
+would simply generate no output, but the count of the IDX files would no
+longer be consecutive.) </P>
+
+We then generate the filename "<CODE>TFILE</CODE>" of the index file by
+incrementing "<CODE>COUNT</CODE>", attaching some leading zeros and extracting
+the last 4 characters via <CODE>%TFILE:~-4%</CODE> then concatenating it to
+create a filename of the form "<CODE>IDX_nnnn.jpg</CODE>". The use of the
+<CODE>SET /A</CODE> statement to perform calculations is explained in <A
+HREF="#calc_set" >Calculations using SET</A> later. </P>
+
+In the following lines we free the pathname "<CODE>PNAME</CODE>" of the quotes
+and store the result in the intermediate file '<CODE>temp.txt</CODE>', which
+is transcoded to Unicode (UTF-8) by the help of "<CODE>Icon.exe</CODE>", (see
+"<A HREF="#character_encoding" >Character Encoding</A>").  The Unicode string
+stored in '<CODE>title.txt</CODE>' in is then read by IM's Montage.  This
+ensures that the string is treated literally, so that we don't have to escape
+the backslashes in Windows pathnames.  </P>
+
+Montage then combines the photographs in rows by six (<CODE>-tile 6x</CODE>)
+and titles them with the pathname. The resulting index print will be 1260
+pixels wide and is stored with 30% JPG quality in order to reduce storage
+demands.  </P>
+
+In the last line, we use the program <A
+HREF="http://www.sentex.net/~mwandel/jhead/ ">JHEAD</A> to write the pathname
+into the JPEG comment. This offers the possibilty to filter the index prints
+within the Windows Explorer by text-searching the files for certain substrings
+in the filename.  </P>
+
+We can combine the two batch files, placing the code of the "working
+batch" into the <CODE>FOR</CODE> loop:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  SETLOCAL EnableDelayedExpansion
+  SET ICONV="%PROGRAMFILES%\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8
+  CHCP 1252
+  DEL IDX_????.JPG
+  SET COUNT=0
+  FOR /F "delims=" %%a in ('DIR /S /B /AD ^|FIND /I "Porsche" ^|SORT') DO (
+    DIR "%%a\*.jpg"&gt;nul
+    IF !ERRORLEVEL!==0 (
+      SET /A COUNT+=1
+      SET TFILE=000!COUNT!
+      SET TFILE=IDX_!TFILE:~-4!.jpg
+      ECHO %%a &gt;temp.txt
+      %ICONV% temp.txt>title.txt
+      montage  -geometry 210x140+0+5 -tile 6x -title @title.txt "%%a\*.jpg" -quality 30%% !TFILE!
+      jhead -cl %%a !TFILE!
+    )
+  )
+  DEL temp.txt
+  DEL title.txt
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Basically, two modifications have to be applied to the initial code:
+<UL>
+<LI>We have to enable <B>delayed expansion</B> and refer to the environment
+    variables used within the <CODE>FOR</CODE> loop by bracketing them with
+    exclamation marks instead of percent signs.
+<LI>We have to avoid the <CODE>GOTO</CODE> statement which would reset the
+    command processor.
+</UL>
+
+Per default, the environment variables within a <CODE>FOR</CODE> loop are
+<B>not</B> evaluated at runtime. Instead, the code is pre-processed using the
+list given in the paranthesis. A reference to <CODE>%COUNT%</CODE> within the
+<CODE>FOR</CODE> loop therefore always hands back the same value. In order to
+enable the runtime evaluation of environment variables, you have to switch on
+delayed expansion. This can be done when calling the command processor via
+<CODE>cmd /V:on</CODE> or be generally switched on in the registry, using the
+following REG file:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor]
+"DelayedExpansion"="1"
+
+[HKEY_CURRENT_USER\Software\Microsoft\Command Processor]
+"DelayedExpansion"="1"
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+However, the dummy-proof version is setting this option in the batch itself by
+use of <CODE>SETLOCAL EnableDelayedExpansion</CODE> which will also limit any
+changes to environment variables to the current version of the command
+processor, which is probably desired. References to the runtime values of
+environment variables within the loop now have to use exclamation marks
+instead of percent signs.  </P>
+
+The use of <CODE>GOTO</CODE> statements within a <CODE>FOR</CODE> loop is
+a possible source of very subtle errors and should therefore be avoided. In
+our batch we can however easily exchange the jump by an <CODE>IF</CODE>
+statement bracketing the code block with the montage code.  </P>
+
+<A NAME="arbitrary"></A>
+<H3>Batch Processing an Arbitrary Number of Files</H3>
+
+In DOS batch files, only nine command line parameters  can be addressed
+directly by <code>%1</code> to <code>%9</code>. In former Windows versions,
+you could only circumvent this limitation by the <code>SHIFT</CODE> command,
+which caused a circular shift of the command line parameters.  In newer
+versions, the command line parameters can be treated in a For loop:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  FOR %%i in (%*) DO ...
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This allows us to Montage an arbitrary number of images passed by Drag &amp; Drop:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  @ECHO OFF
+  SETLOCAL EnableDelayedExpansion
+  %~d1
+  CD "%~p1"
+  DEL Files.txt   2>nul:
+  DEL FSorted.txt 2>nul:
+  FOR %%I in (%*) DO ECHO %%~nxI>>files.txt
+  FOR /F "delims=" %%A in ('TYPE files.txt ^| Sort') Do (
+  ECHO %%A>>fsorted.txt
+  )
+  SET MONTAGE=montage -tile 3x
+  FOR /F "delims=" %%A in (FSorted.txt) Do (
+  SET MONTAGE=!MONTAGE! %%A
+  )
+  SET MONTAGE=%MONTAGE% result%~x1
+  %MONTAGE%
+  DEL Files.txt
+  DEL FSorted.txt
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The above code assumes that the files handed over as command line parameters
+reside in the same directory and have to be montaged according to the
+alphanumerical order of their filenames.  This would for example make sense
+for an index of digital photographs which would thereby be ordered according
+to their shooting time. We first make the files' directory the current
+directory, which makes the further code a lot simpler. We then dump the
+filenames into <CODE>files.txt</CODE>.  Even if the files were picked in
+alphabetical order, we cannot rely on that this ordering is perserved when the
+filenames are handed over to the script. Therefore, we order the files in
+a second working step, dumping them in <CODE>fsorted.txt</CODE>. </P>
+
+Based on that file, we then construct the Montage command line in another For
+loop. The Montage output file uses the same extension as the first input file
+(<code>%~x1</CODE>). (Assuming, that all files share the same extension.)
+Please note that the final Montage command is just called by evaluating the
+environment variable, i.&nbsp;e. <CODE>%MONTAGE%</CODE>.</P>
+
+<A NAME="output"></A>
+<H3>Re-using the Output of an IM command</H3>
+
+In recent versions of Windows, the <CODE>FOR</CODE> statement has become much
+more powerful, see <A HREF="http://www.computerhope.com/forhlp.htm" >DOS "For"
+Command Help</A>. By using the "<CODE>/F</CODE>" option, you can read the
+input for the substitution variable from a file, a string or from the output
+of another DOS command or another program. The latter is especially useful
+with IM.  </P>
+
+To get a rough idea on what IM's overlay methods really are about, you could
+use the following batch file:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  @ECHO OFF
+  :: compose two gradients using all compose methods available
+  ::
+  convert -size 80x80 -flip gradient: compose_src.png
+  convert compose_src.png -rotate 90 compose_dst.png
+  FOR /F %%A in ('convert -list compose') DO ^
+     composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
+</CODE></PRE></TD></TR>
+</TABLE></P>
+<TABLE  CELLSPACING=0 CELLPADDING=0 WIDTH=80%>
+<TR VALIGN=middle><TD ALIGN=middle>
+  <A HREF="compose_src.png"
+     ><IMG SRC="compose_src.png"      WIDTH=80 HEIGHT=80
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Src
+</TD><TD ALIGN=middle>
+  <A HREF="compose_dst.png"
+     ><IMG SRC="compose_dst.png"      WIDTH=80 HEIGHT=80
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Dst
+</TD><TD ALIGN=middle>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+</TD><TD ALIGN=middle>
+  <A HREF="compose_multiply.png"
+     ><IMG SRC="compose_multiply.png"      WIDTH=80 HEIGHT=80
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Multiply
+</TD><TD ALIGN=middle>
+  <A HREF="compose_screen.png"
+     ><IMG SRC="compose_screen.png"        WIDTH=80 HEIGHT=80
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Screen
+</TD><TD ALIGN=middle>
+  <A HREF="compose_overlay.png"
+     ><IMG SRC="compose_overlay.png"       WIDTH=80 HEIGHT=80
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <BR>Overlay
+</TD></TR></TABLE>
+</DIV></P>
+
+This script composes two gradient images together, using every possible <A
+HREF="../compose/" >Alpha Composition method</A> available, so you can see how
+operators effect image colors. Only some of the images it generates are shown
+above. This is similar to the images that were generated for <A
+HREF="../compose/tables/" >Composition Tables</A>, so you can see how
+operators affect image colors.  </P>
+
+As the above lines are are assumed to be a batch file, we have to double the
+percent signs.  </P>
+
+The above script first creates two orthogonal (right angle aligned) gray-scale
+images with gradients covering the entire grey-scale range. The IM command
+<CODE>Convert -list compose</CODE> will provide us with a list of possible
+options, each placed within a single output line. Please note that we have to
+use single quotes when referring to a command in the parenthesis.  </P>
+
+Using the "<CODE>/F</CODE>" option, the <CODE>FOR</CODE> command will then
+process each of these output lines and hand it over to the command executed by
+<CODE>DO</CODE>. As a consequence, the two gradient images are superposed
+applying all the overlay methods that IM knows of. The output files are named
+accordingly to the overlay method.  </P>
+
+<A NAME="cube"></A>
+
+In the next example, we illustrate the color spaces which IM provides. We use
+the same gradient technique as above to generate the surfaces of a cube as
+spanned by the three coordinates of the colour space:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+convert -size 256x256 gradient: gy.miff
+convert gy.miff -rotate 90 gx.miff
+convert -size 256x256 xc:black black.miff
+
+::R + G top left
+convert gy.miff gx.miff -flop black.miff -set colorspace %1 -combine ^
+        -resize 260x300! -background none -shear 0x-30 ^
+        -virtual-pixel Transparent RG.miff
+
+:: R + B top right
+convert gy.miff  black.miff gx.miff -set colorspace %1 -combine ^
+        -resize 260x300! -background none -shear 0x30 RB.miff
+
+:: G + B bottom
+convert black.miff gx.miff gy.miff -set colorspace %1 -combine ^
+        -resize  260x300! -background none -shear 0x30 -rotate 120 ^
+        -crop 520x300+0+75 GB.miff
+
+convert -set colorspace %1 RG.miff RB.miff +append top.miff
+convert -set colorspace %1 -size 520x150 xc:Transparent w.miff
+convert top.miff w.miff -append topx.miff
+
+composite -geometry +0+299 GB.miff  topx.miff colorspace_%1.png
+DEL *.miff
+</CODE></PRE></TD></TR></TABLE>
+<TABLE  CELLSPACING=0 CELLPADDING=0>
+<TR><TD ALIGN=middle>
+  <A HREF="colorspace_RGB.png"
+     ><IMG SRC="colorspace_RGB.png"       WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=2 HSPACE=25 BORDER=0 ALT="[IM Output]"></A>
+  <BR>colorspace RGB
+</TD><TD ALIGN=middle>
+  <A HREF="colorspace_sRGB.png"
+     ><IMG SRC="colorspace_sRGB.png"       WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=2 HSPACE=25 BORDER=0 ALT="[IM Output]"></A>
+  <BR>colorspace sRGB
+</TD></TR></TABLE></P>
+
+A similar example to the above using UNIX shell scripting is given in <A
+HREF="../warping/#sheared_cube" >Isometric Cube using Shears</A>.
+</DIV></P>
+
+This batch file takes the color space as a command line parameter
+"<CODE>%1</CODE>". It then generates the three sides of the cube and shears
+and mounts them such that we get an isometric view, where the point (0,0,0)
+lies at the centre of a hexagon. The final picture is named after the color
+space (IE. "<CODE>%1</CODE>") and stored as a PNG.  </P>
+
+We now want to call this batch file (saved as "<CODE>cspace.bat</CODE>") from
+another batch file that provides the names of the colour spaces:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /F %%A in ('convert -list colorspace') DO CALL cspace %%A
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+We can also filter the output of the <CODE>-list</CODE> option by piping it in
+DOS:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert -list colorspace | FIND "RGB" &gt;&gt;clist.txt
+  FOR /F %%A in (clist.txt) DO CALL cspace %%A
+  DEL clist.txt
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In this example, we filter those lines from the output that contain "RGB" and
+write them to the file <CODE>clist.txt</CODE>. This file is than used as the
+input for the <CODE>FOR /F</CODE> command. We can also do this in one run,
+avoiding the temporary file:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /F %%A in ('convert -list colorspace ^| FIND "RGB"') DO CALL cspace %%A
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In this case, the pipe symbol "<CODE>|</CODE>" has to be escaped, because it
+is not bracketed by double quotes (only by the single quotes needed for the
+<CODE>FOR</CODE> statement) and is (at least in command line above) not meant
+in is usual sense.  </P>
+
+
+<A NAME="single"></A>
+<H3>Processing Single Line Output</H3>
+
+This technique can also usefully be applied to a single-line output. We can
+for example apply an automatic gamma correction that roughly sets the average
+brightness of a picture to the middle of the quantum range (i.e. 127 for
+a color depth of 8 bit) by a technique explained on <A
+HREF="http://www.fmwconcepts.com/imagemagick/" >Fred Weinhaus' website</A>:
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /F %%a in ('identify -format "%%[fx:log(mean)/log(0.5)]" %1') DO ^
+  convert %1 -gamma %%a "%~dpn1"_c.%~x1
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This batch file is handed a fully qualified filename as the command line
+parameter "<CODE>%1</CODE>", most likely via Drag &amp; Drop or SendTo. The
+output of IM's Identify command then provides with a gamma value, which will
+set the image's average brightness to the middle of its dynamic range. This
+value is calculated using a <A HREF="../transform/#fx_escapes" >FX Format
+Expression</A>. The single line output of the Identify command is saved into
+the "<CODE>%%a</CODE>" variable, and passed to the Convert command as an
+argument for the <A HREF="../color_mods/#gamma" >Gamma Operator</A>.  </P>
+
+Please note that the <CODE>FOR</CODE> command seems to be quite sensitive
+when it comes to line continuations: If you use them at all, make sure that you
+better don't start the next line with spaces.
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  This method of automatic gamma correction is now built into IM using
+  "<CODE><A HREF="../option_link.cgi?auto-gamma" >-auto-gamma</A></CODE>", and
+  was added to IM v6.5.5-1. But it shows the technique of re-using command
+  output for use in later command arguments.
+</I></FONT></TD></TR></TABLE></P>
+
+With the same <CODE>FOR</CODE> technique, we can read from the EXIF
+information embedded in a photograph and write it into the top left corner of
+the image:
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /F "tokens=1,2" %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
+  convert %1 -pointsize 18 -fill white -gravity northwest ^
+    -annotate +0+0 "%%i %%j" "%~dpn1"_dated%~x1
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Photos are typically saved using JPEG format. Reading and re-saving JPEG
+  images causes slight degrading of the image due to <A HREF="../formats/#jpeg"
+  >JPEG Lossy Compression</A> and as such saving back to JPEG is not
+  recommended.
+</I></FONT></TD></TR></TABLE></P>
+
+In the above batch file, the filename of the photograph is supplied as the
+single command line parameter, which is referred to as "<CODE>%1</CODE>".  The
+Identify command reads the date and time that the photograph was taken from
+the EXIF information within the JPEG file. The <CODE>FOR</CODE> command then
+hands this output over to Convert which annotates the photograph accordingly
+in the upper left corner.  </P>
+
+The EXIF date and time information is formatted as "yyyy:mm:dd hh:mm:ss", EG:
+"2006:12:26 00:22:38". Thus date and time are separated by a space character.
+By default, the <CODE>FOR</CODE> statement would only find the first token
+("word") in each line, with tab and space characters as the standard
+delimiters. Thus in the example above, the standard processing would only
+handle back the date, but not the time. Using the option
+"<CODE>tokens=1,2</CODE>" we declare our interest in both tokens, which are
+named consecutive, IE. "<CODE>%x, %y</CODE>". We can however change the rather
+unconventional formatting of the date by the following code: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
+  convert %1 -pointsize 18 -fill white -gravity northwest ^
+    -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+We now defined the colon ('<CODE>:</CODE>') as an additional delimiter,
+causing the date to be broken up into the three tokens "<CODE>%i</CODE>",
+"<CODE>%j</CODE>", "<CODE>%k</CODE>". The next delimiter found is the space
+character separating date and time. With the asterisk ("*") we asking the rest
+of the line to be stored in the fourth token "<CODE>%l</CODE>". We can now
+format the date as we like to. We have chosen the Anglo-American notation
+"mm/dd/yyyy" as in the above example.  </P>
+
+
+<A NAME="calculations"></A>
+<H3>Performing Calculations</H3>
+
+The DOS command interpreter is poor when it comes to calculations. You can use
+it to perform simple integer arithmetics. But for doing more complex floating
+point mathematics, you have access to IM's <A HREF="../transform/#fx_escapes
+">FX Format Expression</A>, or a third party DOS calculator program.  </P>
+
+<A NAME="calc_fx"></A>
+<H4>Using IM's FX Expressions</H4>
+
+IM's <A HREF="../transform/#fx_escapes">FX Format Expression</A> can be used
+for floating point mathematics and can add that maths to larger formated
+strings, as has been demonstrated above in the first example of the section <A
+HREF="#single">Processing Single Line Output</A>. By use of the
+<CODE>SET</CODE> command, the result can be stored in an environment variable
+and used later in the batch file. As a simple example, we may wish to adjust
+the font size date-time string in the above example according to the
+dimensions of the photograph: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /F %%i IN ('identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
+  convert %1 -pointsize %psize% -fill white -gravity northwest ^
+    -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In the first line we evaluate the smaller dimension of the photograph by
+"<CODE>%[fx:min(w,h)]</CODE>", take 5% of this value and store it in the
+environment variable PSIZE. This value is referred to in the next statement
+(<CODE>%psize%</CODE>) to set the font size of the time-date information.
+ </P>
+
+And here we calculate a random angle between as an integer between
+-15?and +15?to create a rotated thumbnail image.
+ </P>
+
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  FOR /F %%x IN ('convert null: -format "%%[fx:int(rand()*31)-15]" info:') DO SET angle=%%x
+  convert %1 -thumbnail x90 -matte ^
+            -background none -rotate %angle%   "%~dpn1"_rotated.png
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The <A HREF="../transform/#fx_escapes" >FX Expressions</A> cannot only
+generate numbers, but can also generate multiple numbers, embedded in a larger
+string. For example in <A HREF="../thumbnails/#rounded_border" >Border with
+Rounded Corner</A> it was used to directly generate a complex draw string
+based on image width and height information. This added feature, along with
+avoiding and further dependence on other external programs makes this method
+a preferable method for doing calculations in your batch script.  </P>
+
+
+<A NAME="calc_set"></A>
+<H4>Using the SET command</H4>
+
+The <CODE>SET</CODE> command can perform some simple integer math and some
+basic string manipulation when the "<CODE>/A</CODE>" option is invoked. In the
+following example, we roughly calculate the width of the time-date string by
+use of the <CODE>SET</CODE> command:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  :: Determine the font height
+  FOR /F %%i IN ('identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
+
+  :: The width of the date-time string is roughly 9 times its height
+  SET /A pwidth=%psize% * 9
+
+  :: Calculate the average brightness in this section
+  :: and choose the text color accordingly
+  FOR /F %%i IN ('identify -format "%%[fx:mean]" -crop %pwidth%x%psize%+0+0 %1') DO SET mean=%%i
+  IF %mean% LEQ 0.5 (SET fcolor=white) ELSE SET fcolor=black
+
+  :: Annotate the photograph
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
+  convert %1 -pointsize %psize% -fill %fcolor% -gravity northwest ^
+    -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+This sample batch file chooses the color of the date-time string according to
+the average brightness (<CODE>%mean%</CODE>) in the area where it will be
+placed.  If the average color intensity is less than 50%, the string will be
+white, otherwise it will be black. </P>
+
+The example also makes use of the <CODE>IF</CODE> statement. Please note that
+the <CODE>ELSE</CODE> part has to be placed in the same line and that the
+first command has to be bracketed.
+
+
+<A NAME="calc_other"></A>
+<H4>Using Other External Calculators</H4>
+
+As an alternative, you can use a DOS program which provides floating point
+math, such as <A HREF="http://tp.lc.ehu.es/anonym/msdos/eval100.zip"
+>EVAL</A>.  If you place this file in the IM program directory or in the
+Windows system directory, you can perform floating point calculations in any
+DOS shell window.  </P>
+
+By using the <CODE>EVAL</CODE> program, the <CODE>FOR</CODE> command and
+environment variables, we can make the color cube example from above somewhat
+more flexible and its various calculations more transparent:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+  convert -size 256x256 gradient: gy.gif
+  convert gy.gif -rotate 90 gx.gif
+  convert -size 256x256 xc:black black.gif
+
+  :: Set the dimension of the color cube / hexagon and calculate the various lengths
+  SET l1=512
+  FOR /F %%i IN ('EVAL "round(cos(degree*30)*%l1%)"') DO SET l2=%%i
+  FOR /F %%i IN ('EVAL "2*%l2%"') DO SET l3=%%i
+  FOR /F %%i IN ('EVAL "round((1+sin(degree*30))*%l1%/2)"') DO SET l4=%%i
+  FOR /F %%i IN ('EVAL "round(%l1%/4)"') DO SET l5=%%i
+
+  convert gy.gif gx.gif -flop black.gif -set colorspace %1 -combine ^
+          -resize %l2%x%l1%! -background none -shear 0x-30 ^
+          -virtual-pixel Transparent RG.miff
+
+  convert gy.gif  black.gif gx.gif -set colorspace %1 -combine ^
+          -resize %l2%x%l1%! -background none -shear 0x30 RB.miff
+
+  convert black.gif gx.gif gy.gif -set colorspace %1 -combine ^
+          -resize  %l2%x%l1%! -background none -shear 0x30 -rotate 120 ^
+          -crop %l3%x%l1%+0+%l5% GB.miff
+
+  convert -set colorspace %1 RG.miff RB.miff +append top.miff
+  convert -set colorspace %1 -size %l3%x%l4% xc:Transparent w.miff
+  convert top.miff w.miff -append topx.miff
+
+  composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
+  DEL *.miff
+  DEL *.gif
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+
+<A NAME="debugging"></A>
+<H3>Editing, Debugging and Runtime Error Testing</H3>
+
+In principle, DOS batch files can be written in any editor, even with Windows'
+Notepad. You should however use an editor with syntax highlighting for DOS
+batch files. I personally think that <A
+HREF="http://sourceforge.net/projects/notepad-plus/" >Notepad++</A> is the
+tool of choice, but talking of editors tends to make people nasty. So: yes,
+any other editor will do.  </P>
+
+As far as I know, there is no free batch file IDE (integrated development
+environment) on the market. One would think that this should be something
+which comes with the operating system, but this has never been the case. So
+far, I have written all my batch files with Notepad++, but for those who write
+batch files on a regular basis, the <A HREF="http://www.steppingsoftware.com/"
+>Running Steps</A> batch IDE might be of help. It is shareware and costs about
+$80.  </P>
+
+Comprehensive explanations of the DOS commands can be found at <A
+HREF="http://www.computerhope.com/msdos.htm"
+>http://www.computerhope.com/msdos.htm</A>.  </P>
+
+As the DOS batch language itself, debugging batch files is a rather odd
+business. I would test any batch file in a DOS box as a start. When testing
+Drag &amp; Drop or SendTo, it is recommendable to end the batch file with
+a <CODE>PAUSE</CODE> statement such that the DOS box stays open after the
+batch job has been finished.  </P>
+
+Considering runtime error messages, the general approach is to check the DOS
+<CODE>ERRORLEVEL</CODE> and jump to an according error message generated by
+the <CODE>ECHO</CODE> command. I found that one of the most probable error
+sources is that the Convert programm is not properly found on the machine
+running the script. So if you intend to share your batch scripts with others,
+you should first of all check whether Convert is accessible: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  @ECHO OFF
+  convert -version 1&gt;nul: 2&gt;nul:
+  IF NOT %errorlevel%==0 GOTO NoMagick:
+  convert ...
+  GOTO END:
+  ...
+  :NoMagick
+  ECHO ImageMagick (convert.exe) not found.
+  PAUSE
+  :END
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+In the first line, we question the ImageMagick version, supressing the
+standard output by <CODE>1>nul:</CODE> (or just <CODE>>nul:</CODE>) and any
+error message by <CODE>2>nul:</CODE>, i.&nbsp;e. we redirect
+<CODE>stdout</CODE> and <CODE>stderr</CODE> to <CODE>nul:</CODE>. If the call
+to IM's Convert fails, the system program Convert will be called instead,
+which cannot handle the <CODE>-version</CODE> option and will set the
+ERRORLEVEL variable.</P>
+
+You might try to determine why Convert is not found and attempt to fix the
+problem: You can determine whether IM's programm path is part of the
+environment variable PATH:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  @ECHO OFF
+  PATH | FIND /I "ImageMagick"
+  IF NOT %errorlevel%==0 GOTO NoPath:
+  ...
+  :NoPath
+  ...
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+If Find (called with the case-insensitive option /I) cannot find the string,
+it sets the ERRORLEVEL. In a more sophisticated approach, you can check the
+Registry entry instead, no longer relying on PATH:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  @ECHO OFF
+  FOR /F "tokens=1,2,*" %%A in ^
+  ('reg  query "HKCU\Software\ImageMagick\Current" ^| FIND "BinPath"') DO ^
+  SET MPATH=%%C
+  IF [%MPATH%]==[] GOTO NoMagick:
+  "MPATH\convert.exe" ...
+  ...
+  :NoMagick
+  ...
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+With this code, we query IM's Registry key <CODE>Current</CODE> and search for
+the entry BinPath. The decisive line of the output is:</P>
+
+<CODE>LibPath   REG_SZ  C:\Programme\ImageMagick</CODE></P>
+
+The "words" in this line of text are separated by tabs (in Windows XP) or
+several blanks (Windows Vista). These are the standard delimiters used by
+<CODE>For /F</CODE>. The third "word" (%%C) is the one we are looking for and
+we store it in the environment variable MPATH, which we can refer to when
+calling convert later in the script.</P>
+
+A script might require a certain minimum version number of ImageMagick to be
+installed.  For example, the <A HREF=../distorts/#perspective >Perspective
+Distortion Method</A> was first implemented in version 6.3.5-9 (in September
+2007).  So if your script deals with perspective rectification, you should
+test whether the installed version of IM is newer than that:</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  @ECHO OFF
+  SETLOCAL EnableDelayedExpansion
+  SET MINVERSION=7.5.3-0
+  FOR /F "tokens=1,2,3" %%a in ('convert -version ^|FIND "Version"') DO SET VERSION=%%c
+  IF %VERSION% LSS %MINVERSION% GOTO GetNewVersion:
+  Goto End:
+  :GetNewVersion
+  ECHO This Script requires et least ImageMagick version %MINVERSION%.
+  ECHO Yours is %VERSION%.
+  PAUSE
+  Goto End:
+  :End
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<CODE>SETLOCAL</CODE> restricts any changes to environment variables to the
+current script, such that we do not have to fear side effects. The option
+<CODE>EnableDelayedExpansion</CODE> is not really needed over here, but it's
+good habit to use that option anytime you use <CODE>SETLOCAL</CODE>.  We then
+store the minimum required version in the environment variable MINVERSION. In
+the third line, we call Convert with the '-version' option, extract the first
+line from the output via <CODE>^|FIND "Version"</CODE>, get the third word
+from that line and store it in the environment variable VERSION. We then
+compare this version to the minimal required version in the forth line. </P>
+
+<A NAME="summing_it_up"></A>
+<H3>Summing it up</H3>
+
+The above examples prove that the simple DOS batch file is astonishingly
+versatile when it is combined with the possibilities offered by ImageMagick.
+In fact, almost everything can be done in some (crude) way in a batch file.
+Once you get into thinking in the strange ways followed in the development of
+the DOS batch file language, scripts can even turn out rather short.
+Nevertheless, these few line of code will probably have consumed hour of
+tedious experiments, unless you are really familiar with the batch file
+language. </P>
+
+If you are aiming at more than basic image processing tasks, it is probably
+recommendable to use a more sophisticated script language, as the development
+of the code will turn out to be simpler and more structured. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="vb"></A>
+<H2>Visual Basic Script (VBS)</H2>
+
+The scripting capabilities of the <A
+HREF="http://en.wikipedia.org/wiki/Windows_Script_Host" >Microsoft Windows
+Script Host</A> (WSH) are more sophisticated than those of the simple batch
+file language. The WSH is language-independent in the sense that it can make
+use of different Active Scripting language engines. By default it interprets
+and runs plain-text JScript files (Java Script) and VBScript files
+(VisualBasic Script).  The Windows Script Host is distributed and installed by
+default for Windows 98 and newer (it may however have been switched off on
+a possible target machine because of security concerns). The WSH implements an
+object model which exposes a set of COM interfaces that allow you to address
+system objects, especially the file system.  </P>
+
+I will not discuss the Windows Script Host in detail over here, as this is
+done elsewhere (and probably better than I could do), but rather give some
+practical examples how to address typical problems. The examples are given in
+VisualBasic Script, but the JScript code would be very much alike, thus it
+should be easy to re-write the examples in JScript, if this is your favourite
+language.  </P>
+
+Like batch files, VB Scripts can be written in any editor and I would again
+suggest Notepad++ as the editor of choice. As for batch files, Microsoft
+offers no IDE taylored to support the development if VBScripts. There has been
+a Microsoft Script Editor shipped with Microsoft Office 2000 through 2003, but
+I have never tried it. Microsoft also provides the (very rudimentary)
+Microsoft Script Debugger, but again, I have not much personal experience with
+it. There are several commercial VBS IDEs offered as shareware at reasonable
+prices, like <A HREF="http://www.vbsedit.com/">VbsEdit</A>.  </P>
+
+<A NAME="vb_example"></A>
+<H3>A Basic Example: Lens Correction</H3>
+
+As the use of the WSH generates some overhead, our start example is not too
+basic, in order to demonstrate the advantages of VBScript compared to a simple
+batch file. In the following, we will correct the lens distortion for the
+Nikon 995 digital camera by use of IM's <A HREF="../distorts/#barrel">barrel
+distortion</A>. The correction parameter(s) depend on the focal length, which
+is looked up via <CODE>identify</CODE> first.  </P>
+
+For the correction of the Nikon 995 lens, we only need the parameter <I>b</I>
+(i.e. <I>a, c</I> = 0), which can be calculcated from the focal length
+<I>f</I> by: </P>
+
+<I>b</I>&nbsp;=&nbsp;0.000005142
+<I>f</I>&nbsp;&sup3;&nbsp;-&nbsp;0.000380839
+<I>f</I>&nbsp;&sup2;&nbsp;+&nbsp;0.009606325
+<I>f</I>&nbsp;-&nbsp;0.075316854
+</P>
+
+This dependency was found by means of the <A HREF="http://lensfun.berlios.de/"
+>lensfun database</A> which lists the barrel distortion parameters for this
+lens. </P>
+
+So here is our VBScript:
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  const strConv = "Convert" ' name of the IM Convert program
+  const strAdd = "_ptr"       ' string atached to the filename
+  '
+  Dim wsh,fs
+  Set wsh = CreateObject("Wscript.Shell")
+  Set fs = CreateObject("Scripting.FileSystemObject")
+  '
+  ' names of the in- and output files
+  strFileIn = WScript.Arguments(0)
+  Pos = InStrRev(strFileIn,".")
+  strFileOut = Left(strFileIn,Pos - 1) &amp; strAdd &amp; Mid(strFileIn, Pos)
+  '
+  ' evaluation of the focal length and calculation of parameter b
+  command = "cmd /k identify -format ""%[EXIF:FocalLength]"" " &amp; strFileIn
+  Set objExec = wsh.Exec(command)
+  strf = objExec.StdOut.Readline
+  f = eval(strf)
+  b =  0.000005142 * f * f * f -0.000380839 * f * f + 0.009606325 * f  -0.075316854
+  d = 1 - b
+ 'b=replace(b,",",".") ' only needed in the German version
+ 'd=replace(d,",",".")
+ '
+  Command = strConv &amp; " """ &amp; strFileIn _
+    &amp;  """ -quality 80%% -virtual-pixel black -filter point -distort Barrel   ""0.0 " _
+    &amp; b &amp; " 0.0 " &amp; d &amp; """ """ &amp; strFileOut &amp; """"
+  wsh.run command, 7, true
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The three lines after the definition of the string constants are standard
+overhead, as we always need a <CODE>Shell</CODE> object in order to start IM's
+programs via its <CODE>Exec</CODE> or <CODE>Run</CODE> method. As we always
+process files, the <CODE>FileSystemObject</CODE> is also also commonly needed.
+</P>
+
+The only script argument is a filename, which we usually provide via Drag
+&amp; Drop or SendTo. The filename is stored in <CODE>strFileIn</CODE>, from
+which we derive the name of the output file <CODE>strFileOut</CODE>. We then
+run IM's Identify program in a DOS command box, using the option
+<CODE>/K</CODE> in order to wait for the command to complete before continuing
+the execution of the script. The result (i.e. the EXIF rational representing
+the focal length) is stored in <CODE>strf</CODE>. EXIF rationals are provided
+as nominator / denominator, e.g. 82 / 10 = 8.2mm. The rational thus has to be
+evaluated before using it in the formula which calculates the parameter
+<I>b</I>.  </P>
+
+The parameter <I>d</I> is calculated and provided to the Convert command,
+too, as it does not seem to be calculated automatically if omitted (as claimed
+in the documentation).  </P>
+
+Replacing of the decimal comma by a decimal point is of course only needed in
+the German version, but added here because it provides a very common pitfall:
+When converting decimals to strings, VBScript inevitably uses the local
+settings. This behaviour is convenient when program output is concerned, but
+can generate problems if the string is handed to another program, especially
+Convert.  </P>
+
+In the last two lines, we construct the Convert command line and execute the
+statement via the Run method of the Shell object. The parameter 7 minimises
+the window and TRUE tells the script to wait for the result.  </P>
+
+The above script lins out the general strategy when using VBScript with IM's
+command line tools: These are called either
+
+<UL>
+<LI>via the Run command of the Shell object, if no textual output is expected
+<LI>within a command shell if their textual output has to evaluated, as
+    typically is the case with Identify.
+</UL></P>
+
+<A NAME="vb_files"></A>
+<H3>Working with Several Files</H3>
+
+One genuine advantage of VBScript in comparison to DOS batch files is that you
+can easily work with an abitrary count of command line arguments. You could
+for instance pick an arbitrary number of filenames in the Windows Explorer and
+combine the selected images to an index print via IM's Montage. The basic code
+would be: </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  Dim FName()
+  Dim wsh,fs
+  Set wsh = CreateObject("Wscript.Shell")
+  Set fs = CreateObject("Scripting.FileSystemObject")
+  '
+  NArgs = WScript.Arguments.Count
+  Redim FName(NArgs-1)
+  strInputFiles  = ""
+  For i = 0 to NArgs - 1
+         FName(i) = """" &amp; WScript.Arguments(i) &amp; """"
+         strInputFiles = strInputFiles &amp; " " &amp; Fname(i)
+  next
+ '
+  Command = "montage -geometry 210x140+0+5 -tile 6x " &amp; strInputfiles &amp; " -quality 80% " &amp; fs.getParentFolderName(FName(0)) &amp; "\index.jpg"""
+  wsh.run command, 7, true
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+The script demonstrates several techniques to handle multiple input files.
+First of all, you can determine the number of command line arguments via
+<CODE>WScript.Arguments.Count</CODE>. For larger scripts it is convenient to
+store the filenames in an array: You define an dynamic array via <CODE>Dim
+FName()</CODE> and redimension it via <CODE>Redim FName(NArgs-1)</CODE>. When
+generating the command line, the script also demonstrates how to determine the
+parent folder via the FileSystemObject:
+<CODE>fs.getParentFolderName(FName(0))</CODE>.  </P>
+
+The command line of Montage will possibly become very long, because in the
+input file list, each file is named by its fully qualified filename.
+Practically speaking, this will seldomly generate problems, as the command
+line handed to the Run method is allowed to be very long. (How long exactly
+seems to depend on the Windows version.) </P>
+
+Quite often, the filenames will have to be sorted aphabetically, as Drag &amp;
+Drop or SendTo will pass them to the script in abitrary order. This can be
+done by bubble sorting:
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  for i = 0 to NArgs - 1
+    for j = i + 1 to NArgs - 1
+      if FName(i) &gt; FName(j) then
+        Temp = FName(i)
+        FName(i) = FName(j)
+        FName(j) = Temp
+      end if
+    next
+  next
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<A HREF="clip.jpg"
+   ><IMG SRC="clip.jpg"
+         ALIGN=right HSPACE=5 BORDER=1 ALT="[clip]"></A>
+
+A more sophisticated application of the concept outlined above is presented at
+the right: A set of video frames has been mounted to two parallel "film
+strips" by means of a VBScript and ImageMagick. The perforation gives a visual
+hint that the progression of the frames is from top to bottom, i.e. column by
+column, in contrast to the usual western reading pattern left-to-right and
+then top-to-bottom. The entire script which performs the job can be downloaded
+from the archive <A HREF="strip.zip" >strip.zip</A>. </P>
+
+Marginal note: The red time code at the rigth top of each frame was generated
+by an <A HREF="http://avisynth.org/" >AVIsynth</A> script. The frames were
+dumped by exporting them from <A HREF="http://www.virtualdub.org/"
+>VirtualDub</A>. With the embedded time code, the frames do not necessarily
+have to be temporally equidistant, i.e. can be chosen as needed in the Windows
+Explorer and sent to the script, which is placed in the SendTo folder.  </P>
+
+<A NAME="vb_text"></A>
+<H3>Working with Text Files</H3>
+
+When working with scripts on a client computer, the input information is
+generally supplied via Drag &amp; Drop or SendTo, i.e.  basically consists of
+filenames which will be processed in a manner predefined by the script. Any
+additional information has either to be supplied by user interaction at
+runtime or to be supplied in form of a text file. </P>
+
+Basically, we have the following options:
+
+<UL>
+<LI>The script accepts image files as input, accompanied by a (possibly
+    optional) text file, supplying additional information.  </P>
+<LI>The script accepts a single text file for input, which lists the images to
+    be processed as well as any additional information needed. </P>
+</UL></P>
+
+In the former case, it is suitable to place the optional text file in the same
+directory as the images, assigning a standard name to it. The script may then
+derive the parent directory name from the input images and open the text file
+in the same directory if present. An example of this approach is the "film
+strip" mentioned above: At the start of the script we will probably define
+some standard ordering of the frames, depending of the number of images passed
+to the script. But there might be scenarios in which we want to deviate from
+the standard ordering of the frames. Thus we could place a text file named
+<CODE>ordering.txt</CODE> in the frames directory, which, if present, will
+control the ordering of the frames:
+
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  strTxtFile="ordering.txt"
+  PDir = fs.getParentFolderName(FName(0)) &amp; "\"
+  Wsh.CurrentDirectory = PDir
+
+  If fs.FileExists(strTxtFile) then
+    Set objFile = fs.OpenTextFile(strTxtFile, 1)
+    bCtrlFile = True
+    NCols = objFile.ReadLine
+    objFile.close
+  else
+    bCtrlFile = False
+  end if
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+<A HREF="wm.jpg"
+   ><IMG SRC="wm.jpg"
+         ALIGN=right HSPACE=5 BORDER=1 ALT="[clip]"></A>
+
+You can download a copy of all the files and images involved in the file <A
+HREF="wmpr.zip" >wmpr.zip</A>. </P>
+
+A useful application of the second concept can be found in the perspective
+mapping of an image to a target plane as <A
+HREF="http://www.fmwconcepts.com/imagemagick/3Dbox" >demonstrated</A> on Fred
+Weinhaus' website. We could use this concept to "skin" a perspectively
+distorted image onto a perspectively (mostly) correct version, as demonstrated
+to the right: In the upper part, the left image shows a photograph taken at
+the screne of a minor accident. The right photograph was taken at a later
+visit to the scene, from a somewhat elevated position. In the lower part, the
+accident photograph (i.e. the planar road surface) is mapped onto the target
+photograph by means of a perspective transformation. (The aim of this is to
+visualise the orientation angle of the faint skid mark left by the right front
+tyre of the black car.) </P>
+
+In order to perform this task, the user has to choose four points in the
+source image and their target points in the perspectively correct image. We
+could do this by hand, determining the coordinates in the source image and in
+the target image by picking the points in an image viewer (like <A
+HREF="http://www.irfanview.com/" >IrfanView</A>), noting their coordinates and
+supplying these to an Convert command line.  </P>
+
+This tedious work can however be simplified by the freeware program <A
+HREF="http://www.debugmode.com/winmorph" >WinMorph</A>, which offers
+a convenient interface to do just this: Pick some source points and their
+according target points from two pictures. The yellow polylines in the two
+photographs connect the four chosen points in each picture.  </P>
+
+The morphing algorithm itself is however not suited to perform a perspective
+correction. (The basic functioning of this algorithm is explained in the <A
+HREF="../distorts/#shepards" >Distorts</A> part in the Usage section of the IM
+website. A demonstration of its usability for morphing is found in Fred
+Weinhaus' <A HREF="http://www.fmwconcepts.com/imagemagick/shapemorph"
+>ShapeMorph</A> script.) </P>
+
+WinMorph stores its information in a structured text file which contains
+(amongst other information) the filenames of both the source and the target,
+as well as the coordinates of source and target points. Thus we can derive all
+information needed for IM's perspective distortion from the WinMorph file. The
+script performing the job can be downloaded by clicking on the image example.
+</P>
+
+<A NAME="vb_testing"><A>
+<H3>Testing and Debugging VBScripts</H3>
+
+Basically, we are using VBScript to construct the argument list for IM's
+command line tools, which are then run either themselves or within a DOS box.
+This means that first of all you should ensure that
+<UL>
+<LI>the command line itself does what we expect it to do
+<LI>the command line is constructed correctly by the script.
+</UL>
+
+So as a start, you should test the command line itself within a DOS box. When
+first testing the script, you should not run the IM command, but rather
+display the text string in a message box via <CODE>MsgBox(strCommand)</CODE>,
+because if the command line itself is wrong, there is little any debugging
+tool could do. The simple message box is also helpful when debugging the
+script and I never really felt the need for a sophisticated debugger.  </P>
+
+Considering runtime testing, you should ensure
+<UL>
+<LI>IM's command line tools can be accessed correctly
+<LI>the user has selected what you expected her/him to select, i.e.  several
+    files (possibly of certain type), a directory, a text file, etc.
+</UL>
+
+Error messages can easily be displayed by the use of <CODE>MsgBox(...)</CODE>.
+</P>
+
+<HR> <!-- ---------------------------------------------------------------- -->
+
+<A NAME="more_info"></A>
+<H2>Further Information</H2>
+
+Unfortunatally there is no known tutorial (other than this) which specifically
+cover using ImageMagick commands in DOS batch files. However the <A
+HREF="http://www.pc-ask.com/xp-dos/xp-dos-cmd.html" >PC-Ask.com</A> web site
+has a useful summary of DOS commands (look in the secion on
+"<CODE>FOR</CODE>"), while <A HREF="http://www.computerhope.com/forhlp.htm"
+>DOS "For" Command Help</A> web page has a better explaination of using the
+"<CODE>FOR</CODE>" command. </P>
+
+You may also like to look at <I><A HREF="forum_link.cgi?u=6256"
+>Bonzo</A>'s</I> <A HREF="http://www.rubblewebs.co.uk/imagemagick/batch.php"
+>Batch Script</A> page. </P>
+
+</DIV></P>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 23 April 2009 <BR>
+Updated: 15 February 2010 <BR>
+Author: Wolfgang Hugemann, &lt;ImageMagick_AT_Hugemann.de&gt;<BR>
+Author: <A HREF="http://www.ict.griffith.edu.au/anthony/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/windows/</CODE>
+</ADDRESS></BODY></HTML>

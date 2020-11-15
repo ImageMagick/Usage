@@ -1,0 +1,253 @@
+<html lang="en"><HEAD>
+<TITLE>Fuzz Distance -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/fuzz_distance/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>Fuzz Distance and Transparent Colors  -- FIXED </H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+Exploration of the distance algorithm used by <A
+HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE> color matching algorithm.
+Especially with regards to transparent colors. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+The <A HREF="../../color/#fuzz" >Fuzzy Distance Matching</A> formula should
+<OL>
+<LI>Oaqpue color distance should reflect the color space (EG: RGB or CMY color
+    cubes, or HSL cones etc).  Specifically Black to White color distance
+    should be 100%
+<LI>All Color with full transparency, should be classed as being identical.
+    That is they have zero color distance.
+<LI>Two colors with partical transparency should be closer thna the same
+    colors without any transparency (opaque)
+<LI>Transparent colors should have some distance non-transparent colors.
+<LI>Fully-Transparent should be equally distance from all fully-opaque colors
+</OL></P>
+
+The current IM formula (before IM v6.6.6-4) follows all but the last of these
+recommendation, which causes some problems when transparency is involved. </P>
+
+For example...  Here we fuzzy match at various percentage distances between
+the fully-transparent Black (or '<CODE>None</CODE>' and a color wheel of
+opaque colors...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
+  for P in 50 60 80 100 110; do
+    convert colorwheel.png -alpha set -channel RGBA \
+            -fuzz $P% -fill none -opaque none \
+            -fill black -gravity SouthWest -annotate +2+2 "$P%%" \
+            miff:-
+  done |\
+    montage - -tile x1 -background none -geometry +2+2 fuzz_none_color.png
+</CODE><BR></PRE></TD></TR></TABLE>
+  <A HREF="fuzz_none_color.png"
+     ><IMG SRC="fuzz_none_color.png"
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see any fully-opaque near black color will match the
+fully-transparent black color '<CODE>none</CODE>' before other fully-opaque
+colors, between 50 and 60% </P>
+
+In other words the color '<CODE>None</CODE>' is currently closer to black,
+than other opaque colors. </P>
+
+Stranger still white does not match until just after 110%!</P>
+
+
+Here is another example that clearly shows that opaque colors are not the same
+distance from full transparency.  This generates a greyscale and transparency
+gradient, and then replaces 'similar colors' to full-transparency.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE>
+  convert -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
+          -compose CopyOpacity -composite  gradient.png
+  convert gradient.png -channel RGBA \
+          -fuzz 25% -fill Red -opaque None  fuzz_gradient_25.png
+  convert gradient.png -channel RGBA \
+          -fuzz 50% -fill Red -opaque None  fuzz_gradient_50.png
+  convert gradient.png -channel RGBA \
+          -fuzz 75% -fill Red -opaque None  fuzz_gradient_75.png
+</CODE><BR></PRE></TD></TR></TABLE>
+<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="gradient.png"
+     ><IMG SRC="gradient.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
+  <A HREF="fuzz_gradient_25.png"
+     ><IMG SRC="fuzz_gradient_25.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="fuzz_gradient_50.png"
+     ><IMG SRC="fuzz_gradient_50.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+  <A HREF="fuzz_gradient_75.png"
+     ><IMG SRC="fuzz_gradient_75.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Remember the distance from 'None' to 'White' is just over 110% ! And all
+fully-transparent colors are 0 distance (regarded as equal). </P>
+
+<B>As of IM v 6.6.6-4, bug has been fixed.</B> Basically the
+<CODE>IsMagickColorSimilar()</CODE> function was set to use the equivelent of
+the last formula below. </P>
+
+<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+Here is what the LAST image in the above looks like from IM v6.6.6-4 on, where
+the fuzz factor has been fixed with regard to transparencies.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert gradient.png -channel RGBA \
+          -fuzz 75% -fill Red -opaque None  fuzz_gradient_75_fixed.png
+</CODE><BR></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+<TABLE BORDER=1 CELLPADDING=5 BACKGROUND="../../images/bg.gif"><TR>
+<TD ALIGN=center>
+  <A HREF="fuzz_gradient_75_fixed.png"
+     ><IMG SRC="fuzz_gradient_75_fixed.png"     WIDTH=100  HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</TD></TR></TABLE></P>
+
+As you can see all opaque colors will now be treated as an equal 100%
+distance from fully-transparent. </P>
+
+Note however that a semi-transparent color, does still have a valid color, and
+as such opaque colors will not all be equal distance it.  However the close
+a color is to fully-transparent, the more equidistant the opaque colors are
+from it.  That is as it should be. </P>
+
+
+<HR><!-- ---------------------------------------------------- -->
+</P>
+<A NAME="formulas"></A>
+
+FX Formulas...</P>
+
+These are expressed as FX formulas where 'u' is the first image and
+'v' is the second image, See <A HREF="../../transform/#fx" >
+Using FX, The DIY Image Operator</A>, in the expresion... </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert xc:color1 xc:color2 -print \
+    <B>"%[fx:...expression...]%%"</B> \
+    null:
+</CODE><BR></PRE></TD></TR></TABLE></P>
+</DIV></P>
+
+
+RGB Opaque Color Distance...
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
+    "%[fx:(100)*sqrt(( (u.r-v.r)^2 +
+                       (u.g-v.g)^2 +
+                       (u.b-v.b)^2  )/3 )]%%" \
+</CODE><BR></PRE></TD></TR></TABLE>
+(no transparency handling)
+</DIV></P>
+
+RMSE Distance?
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
+    "%[fx:(100)*sqrt(( (u.r-v.r)^2 +
+                       (u.g-v.g)^2 +
+                       (u.b-v.b)^2 +
+                       (u.a-v.a)^2  )/4 )]%%" \
+</CODE><BR></PRE></TD></TR></TABLE>
+(But "compare -metric RMSE" different values!)
+</DIV></P>
+
+Color with Alpha Multiply
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
+    "%[fx:(100)*sqrt(( (u.r*u.a-v.r*v.a)^2 +
+                       (u.g*u.a-v.g*v.a)^2 +
+                       (u.b*u.a-v.b*v.a)^2  )/3 )]%%"
+</CODE><BR></PRE></TD></TR></TABLE>
+(This results in  '<CODE>Black</CODE>' == '<CODE>None</CODE>' )
+</DIV></P>
+
+Current (buggy) fuzz calculation being used (to IM v6.6.6-3)
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
+    "%[fx:(100)*sqrt(( (u.r*u.a-v.r*v.a)^2 +
+                       (u.g*u.a-v.g*v.a)^2 +
+                       (u.b*u.a-v.b*v.a)^2 +
+                       (u.a-v.a)^2          )/3 )]%%"
+</CODE><BR></PRE></TD></TR></TABLE>
+(Added transparency difference, but Black still closer to None than white)
+</DIV></P>
+
+The correct calculation should be (implemented IM v6.6.6-4)
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
+    "%[fx:(100)*sqrt( ( (u.r-v.r)^2 +
+                        (u.g-v.g)^2 +
+                        (u.b-v.b)^2 )*u.a*v.a/3   + (u.a-v.a)^2  )  ]%%"
+</CODE><BR></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Note how the 3-D RGB color distances is vastly simplified and handled, almost
+as a completely separate item to the alpha channel distance. </P>
+
+Also note that if either color is fully transparent, the actual color become
+irrelevent, and the fuzz factor becomes strictly a simple alpha distance fuzz
+factor. </P>
+
+In this scheme...<UL>
+<LI> The distances white to black is 100%,
+<LI> Distance of any transparent to any opaque color is 100%,
+<LI> any two fully-transparent colors are equal or 0% distant.
+</UL></P>
+
+Other color space can also easilly use this formula as the 'color space'
+distance is just a simple and complete component of the additional alpha
+channel component. </P>
+
+<B>UPDATE:</B> this color distance metric is now also used for
+<CODE><NOBR>"compare -metric <B>Fuzz</B>"</NOBR></CODE> </P>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 7 December 2010 <BR>
+Updated: 8 December 2010 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/fuzz_distance/</CODE>
+</ADDRESS></BODY></HTML>
+

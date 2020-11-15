@@ -1,0 +1,312 @@
+<HTML><HEAD>
+<TITLE>Future Development -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/future/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v7 -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Percent Escapes and FX Expression Development</H1>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="./"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+<HR><!-- ---------------------------------------------------------------- -->
+<A NAME="settings"></A>
+<H2>Use of percent escapes in ALL arguments (implemented in IMv7)</H2>
+
+This is a suggestion that popped up from quite a large number of sources, in
+many different forms.  Basically it is a way of retrieving colors, and image
+widths and heights from images either in memory or on disk. </P>
+
+Basically allow users to make use of escape substitution in all option
+arguments. </P>
+
+The problem is, that 'percents' are also often used as special 'flags' in
+things like 'geometry' expressions, and as such should not expand. </P>
+
+Settings could be used to hold...  numbers, colors, arguments, method names,
+filenames, and even operational sequences (like a complex function). </P>
+
+<BR>
+
+WARNING: some options have delayed percent escape expansion: For example
+"<CODE>-define</CODE>", "<CODE>-label</CODE>", "<CODE>-caption</CODE>",
+"<CODE>-comment</CODE>", "<CODE>-format</CODE>".&nbsp;  These must store the
+given string, including all percent escapes, without modification. </P>
+
+Note that "<CODE>-label</CODE>" is equivalent to  "<CODE>-define
+label=...</CODE>" which does NOT perform any percent escapes until the define
+is actually used.  (delayed escaping). </P>
+
+<H4>The Implemented Proposal....</H4>
+
+Proposal, allow percent escapes in all arguments, but restricts exactly when
+a percent escape is recognised.  Specifically if the % is after a number,
+don't expand it, as it is a number percentage. </P>
+
+<PRE>100%x30       rgb(100%,100%,100%,.5)</PRE></P>
+
+More specifically: Expand percent escapes when there is no digit before it,
+unless followed by a '[' or escaped by another '%'. That allows you to
+override the percent after number rule.
+
+That is these are expanded, or escaped...
+
+But these are expanded as percent escapes...
+<PRE>100%%     %wx%h      max=%[maximum]  100%[x]30 </PRE></P>
+
+That is the double percent is shrunk to a single percent (escape). <BR>
+While the others do not have a digit before it, or is followed by '['. </P>
+
+Note that '<CODE>100%x30</CODE>' did not expand the '<CODE>x</CODE>', but
+'<CODE>100%[x]30</CODE>' does expand '<CODE>%[x]</CODE>' (X resolution or
+density). </P>
+
+The BIG problem is it is overly complex, and may cause a few problems for DOS
+users which also use percent escapes in its scripting. However in general it
+will mean things just work as the user would expect in most situations.  The
+only time it fails is if a number is given before the percent prefix
+character. </P>
+
+Full Example in use...
+<PRE>
+magick  -size 100x100 xc: -print '45%x\n' null:
+45%x
+magick  -size 100x100 xc: -print '45%[h]\n' null:
+45100
+magick  -size 100x100 xc: -print '45x%h\n' null:
+45x100
+magick  -size 100x100 xc: -print '%wx%h\n' null:
+100x100
+</PRE>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="expand"></A>
+<H2>Expansions to Percent Escapes...</H2>
+
+Suggestions to alleviate some smaller existing problems with percent escapes.
+</P>
+
+<UL>
+<LI>Allow "<CODE>%[w]</CODE>"  to be equivalent to just "<CODE>%w</CODE>",
+    currently this does NOT work. </P>
+
+    Note that "<CODE>%[width]</CODE>" does NOT mean the same thing!
+    That is the original width of the image, not the current width.</P>
+
+<LI>Access to more attributes and especially operational settings.
+    For example "<CODE>%[fill]</CODE>", "<CODE>%[background]</CODE>",
+    "<CODE>%[mattecolor]</CODE>". </P>
+
+<LI>As part of this expansion "<CODE>-set background</CODE>"  should be
+    equivalent to "<CODE>-background</CODE>" command. In fact most settings
+    may be handled in this way. </P>
+
+    Also remember the difference in usage of "<CODE>-define label=...</CODE>"
+    vs "<CODE>-set label ...</CODE>". </P>
+
+<LI>Have alternative color string escapes beyond "<CODE>%[pixel:...]</CODE>"
+    which returns either a color name or a rgb() value. </P>
+
+    For example  "<CODE>%[rgb:...]</CODE>" and "<CODE>%[rgba:...]</CODE>"
+    which forces the color output to the '<CODE>rgb(...)</CODE>' forms.  </P>
+
+    And "<CODE>%[hexcolor:...]</CODE>" for the colorspace independent
+    '<CODE>#......</CODE>' form.  <B>-- NOT implemented</B>
+    </P>
+
+</UL></P>
+<HR><!-- ---------------------------------------------------------------- -->
+From this point things have not been implemented
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="problems"></A>
+<H2>Other Existing Problems (IMv6)...</H2>
+
+<UL>
+<LI>Inter-Image Propriety Copying... </P>
+
+    You currently can not access say the comment of image 3 to use in
+    setting the comment of image 1. </P>
+
+<LI>Multi-Image String selection...
+
+    You can not select strings based on some number, for example
+    you can not implement something like the pseudo-code
+    <BR><NOBR><CODE>&nbsp; &nbsp; &nbsp;
+       if %w &gt; 500 then "too wide code", otherwise "normal code"
+    </CODE></NOBR></P>
+
+    Perhaps a boolean string selector?
+    <BR><NOBR><CODE>&nbsp; &nbsp; &nbsp;
+        %[select: %[fx:w&gt;500] : %[value1] : %[value2] ]
+    </CODE></NOBR>
+    <BR>But that seems messy to me. </P>
+
+    Also that will not let you do selections by string compares!
+    <BR><NOBR><CODE>&nbsp; &nbsp; &nbsp;
+       if %m == 'JPG' then "Lossy", otherwise "non-Lossy"
+    </CODE></NOBR></P>
+
+    On the other hand a selection of numbers and colors can be done using FX
+    That is this works...
+    <BR><NOBR><CODE>&nbsp; &nbsp; &nbsp;
+        %[pixel:w&gt;h?red:blue]
+    </CODE></NOBR>
+    <BR>or to only shrink images that are too wide...
+    <BR><NOBR><CODE>&nbsp; &nbsp; &nbsp;
+        -resize '%[fx: w&gt;500 ? 500 : w ]x'
+    </CODE></NOBR></P>
+
+    Ideally  both  string handling (Percent escapes) and number mathematics (FX
+    expressions)  needs to be merged more fully. </P>
+
+    Some good macro handling of strings is needed.
+
+</UL></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="format"></A>
+<H2>Formatting Percent Escapes...</H2>
+
+Currently there is only minimal formatting the number resulting from an FX
+expression using the -precision setting.  You can not specify number of
+digits, leading spaces or alignment. </P>
+
+Similarly there is no way to format a simple number percent escape such as %X
+exactly as you want.  For example to always include leading numerical sign.
+</P>
+
+Proposed Solution:  '<CODE>%[...][format]</CODE>' where '...' is a normal
+percent escape and 'format' is a printf() format for a single floating
+point number or string. (could a integer %x format be allowed - for
+colors?)  </P>
+
+For example:   '<CODE>%[w][%03g]</CODE>'  image width containing least
+3 digits, using leading zeros. </P>
+
+Or '<CODE>%[fx:100*s.h/u.h][%06.2f]%%</CODE>' which calculates the
+percentage height relative to first image in the current image list, but
+outputting a string 6 digits long filled with leading zeros, and 2 decimal
+places, and a final percent symbol.  For example the result of the above
+expression could be something like... "<CODE>098.30%</CODE>" </P>
+
+This can also be used for string to space it out to X characters. <BR>
+For example..  %[background][%-20s] </P>
+
+NOTE: in this sceme you will need to escape the '[' if the format
+is NOT what you want.  EG:  %[f]\[]
+
+
+Alternative... </P>
+
+Use a %[..] printf style of string function.<BR>
+   %[printf:format:argument]<BR>
+For example<BR>
+   %[printf:%%03g:%w]<BR>
+this allows the formatting string and argument to also expanding percent
+escapes!</P>
+
+Can %[..] handle nesting of %[..], and what of single ']' in strings? <BR>
+Would this mean to include % in the printf format you would need %%%% ? </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+<A NAME="fx"></A>
+<H2>FX Expression handling</H2>
+<PRE>
+Initial Recommendations...
+
+  * FX access to image information, including user defined numerical
+    'properties' and 'artifacts', possibly even evaluate expressions.
+
+    For example pre-calculate and save statistic information and constants
+    into pre-image properties or global artifacts, then call FX which uses
+    that pre-calculated numbers so as to avoid recalculating them all the
+    time.
+
+     EG:  -define fx:angle=10  -fx 'r*log(angle)'
+
+  * Saving FX constants into properties. This will allow you to do your own
+    'tally' of image information, and each FX expression is parsed.
+    Note that some values may be different for different images!!!
+
+Problems...
+
+ * Single letter variable names in FX do not match those in percent escapes?
+
+ * What if you want to access the meta-data of a different image?
+   You can access pixel data, why not metadata?
+
+
+Additional Recommendations
+
+  * FX expression first parsed into an execution tree
+
+  * FX variables are both numbers and strings (like awk)
+
+  * Remove '%' to mean modulus, but 'setting lookup' instead.
+    Or again only allow  %[...] as being different to just %
+
+  * Various string processing functions.
+
+  * Allow FX to format strings and numbers for output.
+
+Discussion...
+  https://legacy.imagemagick.org/discourse-server/viewtopic.php?f=1&t=19273
+
+Specially involving the security concerns of allowing 'eval' or repeated
+execution of arguments.  That is what if FX expressions are found in
+a input string?
+
+----
+<B>FX Access to Percent Escapes (simple numbers and colors)</B>
+
+
+For example  tint a image by the background color...
+
+    -fx '( u + %[background] )/2'
+
+The %[background] will be replaced by the current background color value of the
+image in the expression before being executed across the whole image.
+
+However for FX this may mean that the modulus operator  '%' may either always
+need doubling (%%), OR replacing that operator with a mod()  function.
+Alternately only allow %[...] syntax in FX expressions.
+
+
+NOTE: I will also have the problem of percent escapes in percent escapes.
+For example
+
+   -background  '%[pixel: ( u.p{0,0} + %[fill] ) / 2  ]'
+
+So I need to make sure that percent escapes become savvy enough to allow
+embedded percent escapes
+
+</PRE>
+
+</DL></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Updated: 9 March 2012 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/IMv7_FX_and_Percent.html</CODE>
+</ADDRESS></BODY></HTML>
+

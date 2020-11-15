@@ -1,0 +1,10 @@
+BilinearForward Mapping Equations:
+    i = +0.666667*x -0.000000*y +0.003704*x*y +0.000000;
+    j = +0.333333*x +1.000000*y -0.003704*x*y +0.000000;
+BilinearForward Distort, FX Equivelent:
+  -fx 'ii=i+page.x+0.500000; jj=j+page.y+0.500000;
+       bb=-0.003704*ii -0.003704*jj +0.666667;
+       rt=bb*bb -0.014815*(0.333333*ii-0.666667*jj);
+       yy=( -bb + sqrt(rt) ) / 0.007407;
+       xx=(ii +0.000000*yy)/(0.666667 +0.003704*yy);
+       (rt < 0 ) ? red : p{ xx-page.x-.5, yy-page.y-.5 }'

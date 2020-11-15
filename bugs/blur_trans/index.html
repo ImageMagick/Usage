@@ -1,0 +1,366 @@
+<html lang="en"><HEAD>
+<TITLE>Blur Transparency Bug -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/blur_trans/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Blur Transparency Bug -- FIXED</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+<DD><A HREF="#trans_color"
+    ><IMG SRC="../../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Blur with Transparency</A> OR  Transparency has a Color!</A>
+<DD><A HREF="#color_blur"
+    ><IMG SRC="../../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Blurs with a Non-Black Color</A>
+</DL>
+
+This is a demostration the blur with transparency bug.  This was extracted
+from the main examples page, when it was realised that this was really a bug,
+and not just a quirk with the blur function.  As such these pages are written
+as if the problem being discussed was not a bug. </P>
+
+This major bug has now been fixed for IM version 6.2.5. Blurs with
+transparency now do things properly when the alpha channel is also blurred
+with the other channels.  </P>
+
+For examples of using the fixed version of blur see, <A
+HREF="../../convolve/#blur" >Blurring Images</A>. </P>
+
+This page is for reference for older IM users who may still have to deal with
+this bug. The examples on this page have not been re-created when/if the bug
+was fixed.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+First of all remember...
+
+<DIV ALIGN=center><B>
+     Blur and other greyscale operators are limited by the channel setting.
+<BR>    Use "<CODE>-channel</CODE>" to add the alpha channel if needed.
+</B></DIV> </P>
+
+As such in these examples pay particular attension to the "<CODE><A
+HREF="../../option_link.cgi?channel" >-channel</A></CODE>" setting of the IM
+commands. </P>
+
+
+<A NAME="trans_color"></A>
+<H2>Transparency has a Color</H2>
+
+As  "<CODE><A HREF="../../option_link.cgi?blur" >-blur</A></CODE>" and
+"<CODE><A HREF="../../option_link.cgi?gaussian" >-gaussian</A></CODE>" are
+greyscale operators, they really have no idea what color or transparency
+actually means.  All they do is take the image they are working with and treat
+each channel of the image as a separate grey scale image. </P>
+
+Now this works great on grey scale images, and surprisingly it works equally
+well with RGB colored images when you apply the same algorithm to all three
+collor channels (the default).  But if you try to combine blurring of color
+with an alpha channel you run into serious problems.  Basically a RGBA color
+needs to be handled in a very special way.  But greyscale operators do not
+understand how color and transparency relates to each other.  What is worse,
+in a RGBA image, transparency has a color!  </P>
+
+Because of this lack of understanding blurring images with colors other than
+black (and sometimes even with just black) produces serious side effects.  For
+example, what if instead of a black circle on a transparent background we used
+a yellow circle instead...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:none \
+              -fill yellow -draw 'circle 35,35 20,25'  blur_yellow.png
+    convert blur_yellow.png  -channel RGBA -blur 0x8  blur_yellow_2.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+<NOBR>
+   <A HREF="blur_yellow.png"
+      ><IMG SRC="blur_yellow.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+   <A HREF="blur_yellow_2.png"
+      ><IMG SRC="blur_yellow_2.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+Where did all that dark color come from? </P>
+
+Well as the blur operators have no idea of transparency, it blurred our yellow
+circle, NOT into transparency, but into but a fully-transparent black! </P>
+
+It basically did not realise that a transparent area should not produce any
+sort of color, so it just blindly merged the invisible black background with
+our yellow circle.  The result is a yellow center, fading into a
+semi-transparent black, then on into full-transparency. </P>
+
+In summary...
+<DIV ALIGN=center><B>
+        Transparency has a Color, even if you can't see it.
+</B></DIV>
+and
+<DIV ALIGN=center><B>
+     Blur and other greyscale operators do not understand transparency.
+</B></DIV> </P>
+
+This was not a problem with a black circle, as your were blurring an opaque
+black drawn on a transparent black (the IM color of '<CODE>none</CODE>'). As
+such no color blurring occurred, and only the alpha or transparency channel
+was modified.  </P>
+
+But with colors and transparency, as you see we do have problems.  We can
+demonstrate that this is what is happening by using an unusual
+fully-transparent red canvas, rather than the more typical
+'<CODE>none</CODE>'.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:'#F00F' \
+              -fill yellow -draw 'circle 35,35 20,25'  blur_on_red.png
+    convert blur_on_red.png  -channel RGBA -blur 0x8  blur_on_red_2.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+<NOBR>
+   <A HREF="blur_on_red.png"
+      ><IMG SRC="blur_on_red.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+   <A HREF="blur_on_red_2.png"
+      ><IMG SRC="blur_on_red_2.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+As you can see, this time we get dark reddish colors, even though the starting
+image looks exactly the same as it did in the previous case. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+We can highlight this problem even more limiting the blur to just the alpha
+channel of the image.  In this case the colors are left completely alone and
+only the transparency of the image is blurred.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert blur_on_red.png  -channel A -blur 0x8  blur_on_red_3.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="blur_on_red_3.png"
+      ><IMG SRC="blur_on_red_3.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+
+Horrible looking isn't it! </P>
+
+But what is that black area?  Isn't this a yellow circle on a transparent red.
+</P>
+
+Well no actually it isn't!  At that is the point. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+To see what colors we were actually blurring, lets just turn off the alpha
+channel on our source image...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert blur_on_red.png   +matte blur_on_red_4.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="blur_on_red_4.png"
+      ><IMG SRC="blur_on_red_4.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+When IM drew the yellow circle on a fully-transparent red background, it
+generated some fully-transparent black around the circle.  That is because the
+mathematics it used told it that '<I>it does not matter, it's
+fully-transparent!</I>'. Well in most cases it really doesn't matter.  But for
+blurs it does matter, as <I>blurs do not understand transparency</I>.  As such
+you need to be aware of just what the transparency colors are present when
+using the blur operators. </P>
+
+Most blurring is with either fully opaque images, or just the alpha channel
+for the creation of shadows.  Keeping the two types of blurring separate
+works well.  As such...
+
+<DIV ALIGN=center><B>
+     Either blur colors,  or blur transparency,  do not blur both.
+</B></DIV> </P>
+
+
+<A NAME="color_blur">
+<H2>Blurs with Non-Black Colors</H2>
+</A>
+
+So how can we generate a blurred yellow circle (or any other shape), without
+all those extra colors? </P>
+
+First if you are blurring a black shape, just do it. and you should have no
+problems as the black shape should (most of the time) be on a
+fully-transparent black canvas. </P>
+
+For any other color, the best technique is to blur only the alpha channel,
+then replace the colors of the image using some fancy alpha compositing. (See
+<A HREF="../../compose/#atop" >Compose ATop Method</A> for details. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+            -channel A -blur 0x8  blur_black.png
+    composite -compose Atop -size 70x70 xc:yellow blur_black.png \
+            blur_color.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+<NOBR>
+   <A HREF="blur_black.png"
+      ><IMG SRC="blur_black.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+   <A HREF="blur_color.png"
+      ><IMG SRC="blur_color.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
+</NOBR>
+</TD></TR></TABLE></P>
+
+You can do this in a single command, with the help of some IM v6 constructs.
+The one real difference here is we limited the blur to just the the alpha
+channel of the image.  Yes that image will look horrible but it will not be
+seen in the output as we immediately replace the colors in the image, use some
+color canvas generation methods.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+            -channel A -blur 0x8 \
+            \( +clone  -fill green  -draw 'color 0,0 reset' \) \
+            -compose ATop -composite    blur_green.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="blur_green.png"
+      ><IMG SRC="blur_green.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Using "<A HREF="../../compose/#atop" ><CODE>-compose ATop</CODE></A>" does not
+just limit you to a simple color.  You can use any fully-opaque colored image
+as a source.  For example a simple white to grey gradient, can produce a
+interesting looking 'cloud' like object.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:none  -draw 'circle 35,35 15,25' \
+            -channel A -blur 0x4  -size 70x70 gradient:white-grey40 \
+            -compose ATop -composite      blur_gradient.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="blur_gradient.png"
+      ><IMG SRC="blur_gradient.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+While on the subject of re-adding colors, some of the simplier colors can be
+also be added by using one or two "<CODE><A HREF="../../option_link.cgi?fx"
+>-fx</A></CODE>" operators.
+
+Here is a blur that is re-colored as '<CODE>navy</CODE>' or half-bright blue.
+Only the blue channel is replaced, as the red and green channels are already 0
+in value as the source image is black.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+            -channel A -blur 0x8   -channel B -fx .5    blur_navy.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="blur_navy.png"
+      ><IMG SRC="blur_navy.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+In actual fact you can color the whole image in this way <I>before</I> you
+blur.  If all the RGB channels already have the right color, bluring the alpha
+channel will then produce the desired result. </P>
+
+Here for example we set all the colors to white, wether they were transparent
+or not.  Then we blur just the alpha channel.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+            -fx 1   -channel A -blur 0x8   blur_white.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="blur_white.png"
+      ><IMG SRC="blur_white.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note you can not use a normal color replacement for this, as was done for <A
+HREF="../../canvas/#canvas_specific" >Canvases with a Specific Color</A> as
+this image operator does understand transparency, so a transparent white is
+different to a opaque white. </P>
+
+Alturnativally as all the RGB colors were black, "<CODE><A
+HREF="../../option_link.cgi?negate" >-negate</A></CODE>" them to white.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+            -negate   -channel A -blur 0x8   blur_negate.png
+</CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+   <A HREF="blur_negate.png"
+      ><IMG SRC="blur_negate.png"     WIDTH=70  HEIGHT=70
+            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Negate is another operator that does not understand transparency, and obeys
+the  "<CODE><A HREF="../../option_link.cgi?channel" >-channel</A></CODE>"
+setting. It just does not have quite the same problem that blur has with
+transparent colors. </P>
+
+<HR WIDTH=30%></P>
+
+In summary, blur operations, like many IM image operators, do not understand
+the difference between a color and an alpha channel.  Blurring fully-opaque
+colors work prefectally fine.  Blurring just the alpha channel or image mask
+also works fine.   As long as you ensure the colors that will become
+semi-transparent are also set correctly, before or more easilly, after, the
+blur operation, you should have no problems.  </P>
+
+Basically, be cautious, and think before you blur. </P>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 19 April 2004 <BR>
+Updated: 6 May 2005 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/blur_trans/</CODE>
+</ADDRESS></BODY></HTML>

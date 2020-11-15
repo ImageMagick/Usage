@@ -1,0 +1,169 @@
+<html lang="en"><HEAD>
+<TITLE>Semi-Transparency Bug -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/bugs/trans_bug/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR=white BACKGROUND="bg.gif">
+
+<H1>ImageMagick 5.5.7 -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Semi-Transparent Draw and Overlay Bug -- FIXED</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Known and Fixed Bugs Index</A>
+</DL>
+
+
+Demonstrantion of a Semi-transparent white on transparent black bug, found in
+ImageMagick 5.5.7 and earlier. They were fixed during the ImageMagick version
+6 development. </P>
+
+The background pattern on this page was choosen so that any transparency would
+be visible in a web browser, that understands PNG transparency (like Mozilla
+basied browsers).  </P>
+
+This page is for reference for older IM users who may still have to deal with
+this bug. The examples on this page have not been re-created when/if the bug
+was fixed.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+Generate an opaque rectangle
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+    convert -size 200x200 xc:none -fill "#808080" \
+            -draw "rectangle 0,0 150,100" rectangle.png
+</CODE><BR></PRE></TD></TR></TABLE>
+   <A HREF="rectangle.png"
+      ><IMG SRC="rectangle.png"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+and a white circle  (Semi-Transparent Bug  in -draw command happens here)
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+    convert -size 200x200 xc:none -fill "#FFFFFF" \
+            -draw "circle 125,125 73,73" circle_white.png
+</CODE><BR></PRE></TD></TR></TABLE>
+   <A HREF="circle_white.png"
+      ><IMG SRC="circle_white.png"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+If the bug happened the you will see dark, near black, edges to the pure white
+circle. </P>
+
+Make it semi-transparent
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+    convert circle_white.png  -fill "#FFFFFF80" -opaque "#FFFFFF" circle.png
+</CODE><BR></PRE></TD></TR></TABLE>
+   <A HREF="circle.png"
+      ><IMG SRC="circle.png"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<FONT SIZE=-1><I><B>WARNING:</B> This is not a practical example of generating
+a semi-transparent white circle, and should not be taken as a the best method
+to do so.  </I></FONT></P>
+
+Overlay circle on rectangle (Semi-Transparency Bug  in overlays happens here)
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+    composite circle.png rectangle.png alpha.png
+</CODE><BR></PRE></TD></TR></TABLE>
+   <A HREF="alpha.png"
+      ><IMG SRC="alpha.png"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+If the bug happens here, the result should be that while the overlays grey
+rectangle becomes a lighter color, the rest of the semi-transparent white
+circle becomes grey in color, instead of remaining unchanged. </P>
+
+Overlay the above result onto a white background, so we can see the result on
+browsers like IE.
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+    composite alpha.png  -size 200x200 xc:white  result.png
+</CODE><BR></PRE></TD></TR></TABLE>
+   <A HREF="result.png"
+      ><IMG SRC="result.png"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+The final result above should be a only a slight whitening of the grey
+rectangle, where the circle overlaps.  Anywhere else and the white circle
+should disappear (semi-transparent white on white gives white!). <P>
+
+If the bug is present you will see a grey circle instead, and due to the
+presence of the bug in the "<CODE>-draw</CODE>" command, the edges of the
+circle will appear even darker, instead of shading into the white background.
+<P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<H3>Correct results with IM version 6</H3>
+
+This is what the above image should look like (generated with IM version
+6) </P>
+
+<DIV ALIGN=center>
+   <A HREF="result_correct.png"
+      ><IMG SRC="result_correct.png"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+NOTE: Due to the inaccurate way the white circle is made semi-transparent
+(using "<CODE>-fill</CODE>" and "<CODE>-opaque</CODE>") there is a thin almost
+white' border between the dark rectangle and the overlayed circle.  This is
+not a bug, just incorrect image handling.  </P>
+
+If I had generated the semi-transparent circle using this (more correct)
+command instead (only valid in IMv6)...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE>
+    convert circle_white.png  -channel A -fx A/2  circle.png
+</CODE><BR></PRE></TD></TR></TABLE>
+</DIV></P>
+
+Then we will not see the thin white border in the final result.
+
+<DIV ALIGN=center>
+   <A HREF="result_correct2.png"
+      ><IMG SRC="result_correct2.png"
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 15 December 2003 <BR>
+Updated: 28 April 2005 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/trans_bug/</CODE>
+</ADDRESS></BODY></HTML>
+

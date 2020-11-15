@@ -1,0 +1,419 @@
+-------------------------------------------------------------------------------
+Login setting and operator execution...
+
+   -debug Command
+
+It is very verbose.
+
+-------------------------------------------------------------------------------
+
+Properities and Attributes
+  These are esentually the same thing. Both sets image meta data that will
+  in general be saved with the image when written, if the image file format
+  allows it.  It is what a percent escape would normally return when you
+  request it.
+
+
+  The difference is that an attribute are specifically known per-image
+  settings that are stored in special way that can be more easilly used by
+  ImageMagick. Properties however are stored as free form strings of any type,
+  as such if a setting you make is not a known attribute it will still be
+  stored for later use, perhaps even after saving and re-loading the image
+  from disk.
+
+  You must have an image in memory to set a properity or attribute.
+  Otherwise you will get a "No Image for Properity" error.
+
+  Attributes will not be found and listed when you request a 'glob' pattern
+  for an escape sequence.
+
+Artifacts and Options
+
+  These are essentually identical, except that artifacts are stored with
+  and actual image, while options are stored globally. Typically these are
+  free-form strings that can be listed.  They are not saved with images,
+  unless it copied to an image as an attribute or property.
+
+  Many global options are specifically known and even have special setting
+  arguments to set there value, and used for specific commands,
+  for example, (-fill, -bordercolor, -matte).  Other Options are converted to
+  per-image propertys when an image is read in or specifically created by the
+  user (-label, -comment, -page).
+
+  Artifacts are per-image settings that are used by specific image file format
+  coders (for example "jpeg:size", "distort:viewport")  but if a per-image
+  artifact is not found, the global option of the same name will be used
+  instead.
+
+
+  -set 'artifact:key' 'value'   sets a per-image artifact.
+  -set 'option:key'   'value'   sets a global option (no image required).
+
+  In both cases any percent escapes in the value will be expanded
+  immediatally.  In the case of 'option:key' any attributes/ properties/
+  artifacts; needed for the percent escape expansion will be taken from the
+  first image in the current image list. While 'artifact:key' will have
+  percent escape expansion according to individual image being processed
+  (unless it matches a 'global option') the per-image artifact is being saved
+  with.
+
+  -define 'key=value' will set a global option.
+
+  Any percent escapes are however not expanded when saved as an option, but
+  may be expanded when it is about to be used  (delayed percent expansion).
+  This is important so that something like -define label='%f' (equivelent to
+  -label "%f").
+
+  Using delayed percent escapes with some specific known global options (like
+  'fill') is currently not posible and will produce an error. However this may
+  change as more global options simply become strings, that may contain
+  percent escapes that will be parsed as they are needed.
+
+
+  Note: using '%[artifact:key]' will return the global option 'key' (with
+  any delayed percent escapes expanded) if no artifact 'key' is defined.
+  On the other hand using '%[option:key]' will not expand any delaied percent
+  escapes that may be present.
+
+Registry
+
+  Strings and Images???
+
+
+Percent Escapes...
+
+  They come in two forms...
+  Single letter expansions   %n  %w  %h
+  and a long form     %[page]  %[width]  $[height]
+  You can use single letters in long form    %[n] %[w] %[h]
+
+  A percent after a number is NOT expanded unless it is a long form
+  escape.   For example  "1%x"  will not be expanded but  "1%[x]" will
+
+  This is a weird rule, but it will allow percent escapes to be used in
+  'geometry' arguments.  For example..
+
+        '50%x30%'
+
+  In this case the '%x' does NOT get expanded as the '%' follows a number.
+  In other words geometry args to still come out as 'expected', allow you to
+  use percent escapes in geometry arguments, such as in these examples...
+
+    '%wx%h'
+    '%[fx:w/2]x%[fx:h/2]'
+    '%[my:percent]%%x%[my:percent]%%'
+
+  All of which should work as you would expect.
+
+  That last is important as the double perfect is needed as there is no number
+  before it.
+
+
+  Percent escapes are substituted in the following ways...
+
+  1/ Single letter attibutes/properities are handled. An image is required
+     except for %n, %S, and %%. (also for delegates  %o, %u, %Z)
+     which return either a global option or are calculated.
+
+  2/ Any special '%[prefix:key]' is handled, to restrict the lookup to a
+     specific source for the 'key' being searched for.
+
+     This includes... specific source 'property:', 'artifact:' 'option:'
+     'registry:', profile lookups such as %[exif:...], and special
+     calculators, such as 'fx:' and 'pixel:'
+
+     Many special sources also allows the lookup using a glob pattern such as
+     '*' or '?', in which case a list of the matching keys, in the format
+     'key=value\n'
+
+  3/ If no prefix is present but a glob (pattern match) character such as '*'
+     or '?' is present you will get the same list as if you used
+     a  '%[property:...]' prefix.  EG:  %[a*] is equivelent to %[properity:a*]
+
+  4/ any matching attribute or properity
+  5/ any matching artifact
+  6/ any matching global option  (and any delayed percent escpase is expanded)
+
+
+Setting Percent escapes.
+
+  By default all arguments to settings or options are expanded, this includes
+  the -define (set a global option) and -set (set a saved per-image property).
+
+  Only -set understands the use of a special prefix to specify where a key is
+  to be saved. But -define only sets global options, without percent
+  expansion.
+
+  When -set is being applied to all images (property or artifact)
+  the 'key' will be  percent escaped once (using the first image)
+  but 'value' will be expanded for each each image.
+
+  You can not set unset keys using a glob expression.
+  (FUTURE: implement unset based on globs)
+
+  You cannot create an array of values based on image index using the
+  image themselves, for that you would need to use a image map.
+
+  Setting (or removing) a global 'option:' will also delete all artifacts of
+  the same key, in the current image list, so as to remove it completely from
+  the operation system.
+
+-------------------------------------------------------------------------------
+Printing Image Settings
+
+-format
+
+This prints a line for each image in the current image list.
+A end-of-line character is automatically added between each image ouput.
+
+  magick rose: im/images/rose.png granite: \
+         -format '%n %p %m %M \"%f\"' -identify null:
+  3 0 PPM rose: ""
+  3 1 PNG im/images/rose.png "rose.png"
+  3 2 GIF granite: ""
+
+-print
+
+This prints something once, regardless of how many images are in memory.
+No end-of-line character is included you will need to supply your own.
+
+  magick rose: im/images/rose.png granite: \
+         -print '%n %p %m %M \"%f\"\n' null:
+  3 0 PPM rose: ""
+
+-------------------------------------------------------------------------------
+Using Globs and listing all settings
+
+You can use the glob patterns '*' and '?' to list multiple (or all)
+the settings currently set.
+
+For example...
+
+   magick xc: \
+      -define define=define \
+      -set set_var      set \
+      -set option:var   option \
+      -set artifact:var artifact \
+      -set property:var property \
+      \
+      -print "__Properties__\n%[*]" \
+      -print "__Artifacts__\n%[artifact:*]" \
+      -print "__Options__\n%[option:*]" \
+      null:
+
+Note that when listing globs a end-of-line is supplied, but each value is
+prefixed with each setting name.
+
+Here we list an array of values stored as global options.
+
+   magick xc: \
+      -define array_1=11 \
+      -define array_2=22 \
+      -define array_3=33 \
+      -define array_4=44 \
+      -define array_5=55 \
+      -define array_9=99 \
+      \
+      -print "__Array\n%[option:array_?]" \
+      null:
+
+-------------------------------------------------------------------------------
+Properties are saved with images...
+
+The key difference between a per-image property and a per-image artifact is
+that properties are saved (if format allows) with the image when written.
+
+Formats which can save free-form properties include: PNG, MIFF.  This can be
+useful as a way to store extra metadata with an image for later use.
+
+For example save a image with some 'prefered resize and crop data'...
+
+  magick logo: -set resize_setting '30%' \
+               -set crop_setting '89x121+78+23'   logo.png
+
+  identify -format '%[*_setting]' logo.png
+
+
+  crop_setting=89x121+78+23
+  resize_setting=30%
+
+Now you can load the image and make use of the saved information for some
+special purpose.  For example the above resize, crop properties that was
+saved with the image.
+
+  magick logo.png -resize '%[resize_setting]' -crop '%[crop_setting]' show:
+
+-------------------------------------------------------------------------------
+You can save a setting using the same name multiple times.
+
+You can however use a prefix to limit which type of setting you are wanting,
+when a name is used for different types. The exception is that you can not
+set a property that is an attribute, you will either set the attribute, or
+you will get a 'read only attribute' warning.  Attributes are typically
+read-only when it is a fixed aspect of an image (like %[width], or %[height] )
+or is calculated, (such as %[mean]).
+
+  option:
+  artifact:
+
+If no prefix is used the first 'match' found is returned from
+  attribute, properity, artifact, option.
+
+For example...
+   magick xc: \
+      -define define=define \
+      -set set_var      set \
+      -set option:var   option \
+      -set artifact:var artifact \
+      -set property:var property \
+      \
+      -print "%%[set_var] -> %[set_var]\n" \
+      -print "%%[var] -> %[var]\n" \
+      -print "%%[artifact:var] -> %[artifact:var]\n" \
+      -print "%%[option:var] -> %[option:var]\n" \
+      null:
+
+Note that the order is image specific before global. as such you can set a
+global option, and then override individual images using a per-image artifact,
+of the same name.
+
+However setting a global option will unset all artifacts of the same name.
+As such you should always set a global first, then set individual image
+settings.
+
+Note: Under IMv6 all global options are copied into artifacts, before every
+operation, and as such you can not overirde an option by setting a specific
+artifact for a specific image.
+
+-------------------------------------------------------------------------------
+Globbing bug?
+
+Note that while %[your_setting] will list the first matching setting
+found in the attribute, property, artifact, option order, using a glob
+without a prefix will only list matching properties.
+
+WARNING: newlines stored in a variable, can cause formating problems.  ********
+
+    magick xc: -define var1="1
+var2=2" \
+           -print "__Vars__\n%[option:var?]" \
+           -print "-------------\n" \
+           -print "var2=%[var2]\n" \
+           null:
+
+__Vars__
+var1=1
+var2=2
+-------------
+var2=
+magick: unknown image property "%[var2]" @ warning/property.c/InterpretImageProperties/3315.
+
+magick: unknown image property "%[var2]"
+@ warning/property.c/InterpretImageProperties/3315.
+var2=2accessing var2 =
+
+The option "var2" appears in the glob listing as if it existed but
+when we try to access it we get a 'unknown property' error as it was
+not found to exist as any setting type.
+
+Here is another example but producing a different result than expected when
+accessed, but does nto produce an error.
+
+
+    magick xc: -set option:var1 "1
+var2=wrong" \
+           -set artifact:var2 right \
+           -print "__Vars__\n%[option:var?]" \
+           -print "-------------\n" \
+           -print "var2=%[var2]\n" \
+           null:
+
+__Vars__
+var1=1
+var2=wrong
+-------------
+var2=right
+
+Solution -- add quotes and convert controls to special sequences.
+
+NOTE: this could be a problem in MIFF image saves.
+
+-------------------------------------------------------------------------------
+Saving to Single Letter Options...
+
+While single letters normally refer to 'specially defined attributes', you
+can set and refer to single letter artifacts and options.  But you can only
+do so by using a source prefix...
+
+-set a a   is an error but   -set option:a  is not
+
+magick rose: \
+       -set option:o o   -set artifact:a a \
+       \
+       -print 'o=%[option:o]   a=%[artifact:a]\n' \
+       -print "__Properties__\n%[*]" \
+       -print "__Artifacts__\n%[artifact:*]" \
+       -print "__Options__\n%[option:*]" \
+       null:
+
+NOTE: setting single letter properties  (such as '%[property:p]') is an
+      error (read only attribute).
+
+Use of single letter settings (other than the predefined properities) is
+not recommented due to the confusion that it can cause.
+
+-------------------------------------------------------------------------------
+Percent escapes without images in memory.
+
+One special requirment of IMv7 is to let you set and use global options for
+calculations when there are no images in memory.
+
+For example..
+
+magick -print 'images in memory: %n\n' null:
+
+This is useful to let you set some script constants at the top of
+a script for later use.
+
+magick -define my_size=100 \
+       -define my_bgnd=lime \
+       \
+       -size '%[my_size]x%[my_size]' \
+       -background '%[my_bgnd]' xc: \
+       show:
+
+What is not working at this time...
+   %[fx:...]
+   %[pixel:...]i
+   xc:{percent escaped color}
+   percent expansion, within percent expansion!  eg:  '%[option:a_%[p]]'
+
+
+Only global options can be set.  Any attempt to set or access a per-image
+properity or artifact when there is no image will generate a warning about "no
+image to apply properity".  But IM will not abort the command or "magick"
+script.
+
+-------------------------------------------------------------------------------
+Still To Do
+
+Calculate an appropriate sized image fit a 100 long diagonal.
+
+  magick -set diagonal 100 \
+         -set size '%[fx:%[diagonal]*sin(45*PI/180)+1]' \
+         -size '%[size]x%[size]' xc: \
+         canvas.png
+
+Note this will mean % operator must be replaced by a mod(...) function
+which may be the best solution to adding % escapes in fx expressions.
+
+Also still to do
+
+Sub Scripts that can set options for later operations
+
+  echo '-set my_bgnd red' > settings.mgk
+  magick -script settings.mgk -size 100x100 xc: show:
+
+-------------------------------------------------------------------------------
+
+

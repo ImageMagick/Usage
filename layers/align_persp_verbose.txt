@@ -1,0 +1,12 @@
+Perspective Projection:
+  -distort PerspectiveProjection \
+      '0.557197, 0.151382, 10.000000, -0.136130, 
+       0.846806, 12.000000, -0.006022, 0.003670'
+Perspective Distort, FX Equivelent:
+  -size 1x1 -page +9+5 xc: +insert \
+  -fx 'ii=i+page.x+0.5; jj=j+page.y+0.5;
+       rr=+0.009340*ii -0.006004*jj + 1;
+       xx=(+1.630158*ii -0.232880*jj -13.507021)/rr;
+       yy=(+0.129700*ii +1.253769*jj -16.342230)/rr;
+       rr>0 ? v.p{ xx-v.page.x-.5, yy-v.page.y-.5 } : blue' \
+align_red.png=> PNG 60x40=>1x1 1x1+9+5 16-bit sRGB 0.000u 0:00.000

@@ -1,0 +1,304 @@
+
+Considerations for changes in ImageMagick Version 7
+
+
+Expanded from IM discussion forum topic...
+ImageMagick version 7 wish list
+  http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=11502
+
+NOTHING presented here has been finalized, or programmed.
+
+This presents an opportunity to make some major non-backward compatible
+changes (not to major) that may have been needed for a long time.
+
+During the last Major Revision IM v5 to IM v6 resulted "convert" and most
+other IM commands switching to a 'do options in order given' type change. See
+IM Examples, "Basics", for details.   This in turn allowed for the
+introduction of things like parenthesis, and image sequence re-ordering
+operators, as well as the addition of the "-composite" into the convert
+command.
+
+With IM version 7 development now a possibility, other similar changes can
+also now be looked at and thought about. The following list is what I consider
+the most important changes that need to be made, to make IM even better for
+everyone.
+
+----------------------
+
+Major Changes....
+
+ * Data structures modified to handle transparency as ALPHA rather than
+   MATTE.
+
+   I consider this vital, as just about ever complex function in IM has to
+   'negate' matte for correct math color processing. Almost all input and
+   output handling of transparency is also generally given in terms of
+   alpha values rather than matte values.
+
+   Currently the only operators that deal with 'matte' data in that form is
+   -separate, -combine, -threshold, and -level. All other operators I know
+   about use 'alpha' values, those operators include -fx and -evaluate.
+
+ * Handling of image 'channels'.
+
+     o Greyscale only has one channel.
+     o General create/delete/swap of channels.
+     o User defined channels (say holding masks, labels, distance)
+
+     o Use of 'sync' flag to 'syncronize' alpha weighting, and color handling.
+       That is 'sync' means treat all channels as a single color unit,
+       and not as separate entities. See -auto-level, -morphology convolve,
+       and alpha blending in mathematical compositions.
+
+     o Use of a channel for the 'write-mask' (clip mask) for various
+       operations.   This includes fixing bugs and other usage problems
+       in many operators.
+
+       See my notes (developers only) in
+          http://wraith.rcs.griffith.edu.au/~anthony/im/STORE/
+             write_masking_operations.txt
+
+     o Make expensive operations avoid calculating results pixels with
+       a 'write mask' set.
+
+     o Combine 'write mask' with a virtual-pixel Ignore/Disable so as to
+       generate a 'read mask' or 'ignore pixel contribution' mask.
+       OR a completely separate 'read mask' channel posibility.
+
+       Specific example: allow the compilation of statistics from just
+       a masked area of the using -identify, and histogram generation.
+
+       Also: Perform blurs, distortions, morphology with specific areas,
+       and especially virtual pixels, able to be completely ignored, just
+       as -resize does normally.
+
+ * Rewrite of "convert" so as to, remove the old 'legacy' handling (giving
+   errors if no images are present), and to allow 'single pass', or file
+   stream parsing of the image processing operations.
+
+   That means image processing operations could be read from a file, or even
+   from a pipeline.  That is no more command line length limits.  It may even
+   be posible to have a daemon process to which the calling program (such as
+   PHP) submits image processing operations 'on the fly'.
+
+   Imagine for example a shell script that reads images, does calculations
+   the feeds operations to a background running imagemagick command!  That
+   would completely remove the need for IM to
+
+     o A 'reset' option will be needed that will completely reset the
+       command.  That is remove all images, MPC buffers, and return settings
+       to defaults.
+
+     o close/exit/quit options to: close the input stream completely,
+       stop reading current stream (at least for the moment),
+       have image command quite completely (perhaps do final image write)
+
+     o Replace the current 3 sets of CASE statements with better function
+       handling method that will speed up the library calls.
+
+     o Use of a 'wand' for passing of image 'attributes', per-image
+       'properities', and global 'artifacts' into operators.
+
+   The command will probbaly not be called "convert" perhaps "imagick"?
+
+ * A fully-defined system of argument handling to allow the use of image
+   information.  EG: the update to the current system of 'attributes',
+   'properities', and 'artifacts'
+
+     o allow use of escapes in geometry arguments.
+
+     o FX access to image information, including user defined numerical
+       'properities' and 'artifacts', posibly even evaluate expressions.
+
+        For example precalculate and save statistic information and constants
+        into pre-image properitys or global artifacts, then call FX which uses
+        that pre-calculated numbers so as to avoid recalculating them all the
+        time.
+
+        Also saving FX constants in properities, allowing you to do your own
+        'tally' of image information as to go.
+
+     o Formatting of "fx" number, and other strings 
+       (That is some method of formating percent escapes)
+
+ * Consolidation of color space and color profile handling?
+   These are after all really the same thing.
+
+     o Input images are to be 'thought' to be using a "sRGB" profile
+       on both read and write, unless the default color profile is specified.
+       (-linear flag?)
+
+     o We will need a "sGray" (non-linear) vs a "gray" (linear) colorspace
+       for saves to MIFF and to handle conversions between them.
+
+     o ALL linear processing commands such as  resize,  blur,  distort, level,
+       draw, morphology, dither etc., should either: automatically convert
+       images to a linear RGB colorspace, or produce a warning (image is not
+       linear).
+
+       WARNING: automatic conversion may not be a good idea for IM Q8 versions
+       popular amongst window, and large image, users.
+
+     o all color settings (-fill, -background, etc) should have a colorspace
+       associated (RGB, sRGB, undefined). Note that '#...' colors has
+       no defined colorspace and could be any colorspace.
+
+   For more details of all the known colorspace problems to be fixed see
+   http://www.imagemagick.org/Usage/bugs/future/#colorpace
+
+
+Minor Changes and handling (may also be added in IM v6)
+
+  * Ability to handle a variable number of arguments for some options
+    (only posible in a one pass system option handling system), to allow for
+    optional arguments to different operation 'methods'.
+
+    For example  -noise random  does not need an argument, but
+    other noise methods do.
+
+  * Complete removal of many old obsolete options, like -pen,
+    Flag many others as depreciated!
+
+  * Text/Image Justification, as separate to Gravity Positioning.
+    But undefined justification uses the gravity setting.
+
+    Perhaps Justification can be like gravity, or a specific 'handle' point
+    within the image.  EG: +X+Y pin-point inside the image!
+
+  * Image Layout methods such as the paged array provided in "montage" images.
+    As a result the "montage" command itself could be simply a "script"
+    wrapper around the pipe-lined imagemagick processor.
+
+  * Consolidation of 'auto-level' type options such as -normalize,
+    -contrast-stretch, -linear-stretch, -equalize into a single option with
+    various methods, to allow for easier expansion with many other automatic
+    image leveling and image enhancement techniques and methods. Many of
+    these have been 'proven' in scripts developed by Fred Weinhaus.
+
+  * Consolidation of specialised blurs such as "-radial-blur" and
+    "-motion-blur" with correct naming of the blur, and directional
+    effect selection.  EG:  -blur-special method args
+
+  * Draw by default turns fill on and stroke off, but this is no good for
+    drawing lines! This may be why 'fill' is 1/2 pixel too big!  the fill size
+    should be fixed so it it only fills to actual boundary, but may need
+    'stroke' to draw rectanges to whole pixel boundaries.
+
+  * FX parsing to execution tree.
+
+  * Make histogram: comments 'off' by default, unless specifically enabled.
+
+    Better still remove histogram: and replace with a -histogram (image to
+    single row of 'value bins') and -profile (graph a row or column of pixels)
+    options instead!  Probably a separate function to return color counts (as
+    per "identify" output.
+
+  * Defining of the 'intensity' method to use for things requiring a
+    greyscale value from color values.
+    Specifically  -compose LightenIntensity, -compose CopyOpacity
+    -clut (color to A index color)  and so on.
+
+  * Fine control of settings (context) using \[...\]
+    For example
+      \( -font arial label:unbold \[ -font arialb \) label:bold \] label:unbold
+
+    That would then imply that -respect-parenthesis is either not needed, or
+    simply means that \( ...\) also does a \[ ... \] as part of its handling.
+
+  * ensure -region geometry ... +region  is working
+    internally replace with a \( +clone -crop geometry ... \) -compose
+    NOTE: any image sequence operator can also terminate -region
+
+  * Limit simple image operations to specific images (reduces clone needs)
+      -image-list list ... +image-indexes
+    NOTE: a image list operator also terminates -region
+
+  * -fx-image expression    process/replace all images using the expression
+    not just the first image (a simple -fx version)
+
+  * Replace -rotate with a call to distort images (VP background, bestfit)
+    Merge old Rotation method into -shear with '@' flag,  or as -shear-rotate
+
+  * expert option to change '%' escape to some other character (same rules)
+
+There will probably be many items that would not be compatible with the
+current system.
+
+Posibilities and thoughts from the above (IM v8 posibility hooks).
+
+ * As part of this consider the parsing of each option (setting/operation)
+   into a data structure to allow for the future addition of repeatable options
+   for creating loops, functions and if-then-else control structures.
+
+ * We could even go so far as to allow for the automatic generation of an
+   equivelent C program source from convert arguments.  This however depends
+   on how the above is implemented.
+
+-------------------------------------------------------------------------------
+
+IM 7 Suggestions/Thoughts -- from Fred Weinhaus
+
+1) Implement a skip factor for selecting frames
+
+1a) Anthony:  Read one image from a stream of images, without EOF or closing
+    stream. Not just ALL images in a stream to EOF.   That is allow for loop
+    processing of an image stream!
+
+2) Implement some mechanism to permit compiled-like fx expressions, i.e.
+  a way to speed them up.
+
+  By this I mean allow sequencing through the output and indexing into the
+  input image(s) according to the expression.
+
+  A simple means of doing this would be a new -process filter template. That
+  way, someone like me can code the fx expression operation without having to
+  know all the details of IM core programming.
+
+3) Modularize the histogram functions so that operations could be performed
+  on/using the cumulative as well as regular and normalized histograms. For
+  example, many of my automatic thresholding scripts need to perform some
+  math operation such as log on the normalized histogram (probability
+  distribution) cumulating arrays from both ends.
+
+4) Perhaps modularize the code in such a way that one can piece together new
+  functions without having to know all the internal details of IM core
+  operations.
+
+  Anthony has mentioned macro-like programming with loops, etc. This may well
+  be what I am after.
+
+  Seems like many more people might be able to contribute to IM functions if
+  modules or functions could simply be pieced together.
+
+  This may not be practical as I know little about programming.
+
+  Alternately, more -process templates like I mentioned above could be
+  provided so that users could more actively contribute back new functions.
+
+5) Improvements to display to allow control point pair picking and storing
+  in a file
+
+6) Improvements to display to allow interactive drawing (lines, circles etc),
+  measuring and/or reporting (distances and angles of lines and
+  radius/diameter of circles, etc)
+
+7) Ability to generate new images such as contants and gradients from the sizes
+  of earlier images in the command line. This would include fx-like
+  computations from the width and height in specifying the constant or
+  gradient image size.  I think this may already be in Anthony's list.
+
+8) Functions using the histogram, such as -normalize, -equalize,
+  -contrast-stretch, (level?) etc should permit at least the first 2, if not
+  up to the following 4 ways to operate as relevant: a) process each (rgb)
+  channel separately, b) process all (rgb) channels in concert based upon the
+  images global stats or, c) access some other user-specified colorspace to
+  compute the histogram (or min/max) from the appropriate intensity-like
+  channel and apply to the rgb image and d) similar to the latter c) option,
+  but convert to the other colorspace, process the intensity like channel
+  only, then convert back to rgb.
+
+9) Layer positioning with some sort of gravity control.
+
+9a) Anthony:  And Justification relative to the gravity defined position!
+
+-------------------------------------------------------------------------------

@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+if [ "X$1" != "X-f" ]; then
+  echo >&2 "ABORTING generation for bugs examples -- use '-f' for force"
+  exit 10
+else
+  shift
+fi
+
+. ../../generate_options
+../../generate_clear
+
+rm -f *.ico *.tif
+
+ln -s ../../images/rose.gif .
+# ln -s ../../images/bg.gif .
+# ln -s ../../images/hatch_anim.gif .
+# ln -s ../../images/koala.gif .
+# ln -s ../../images/terminal.gif .
+# ln -s ../../images/{eye,news,storm,tree}.gif .
+# ln -s ../../images/{balloon,medical,present,shading}.gif .
+# ln -s ../../anim_basics/canvas_prev.gif .
+# ln -s ../../images/tile_*.jpg .
+# ln -s ../../compose/moon_mask.gif .
+# ln -s ../../images/colorwheel.png .
+
+# ../../generate_font_chars --numbers
+. ../../generate_examples
+
+../../generate_compare
+
+echo "DONE"
+

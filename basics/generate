@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+. ../generate_options
+../generate_clear
+
+ln -s ../images/{eye,news,storm,tree,frame}.gif .
+ln -s ../images/font_[0-9].gif .
+ln -s ../images/rose.gif .
+
+../generate_examples
+
+# # handle extra gif images
+# for gif in  image*.gif  write_*.gif  cyclops_*.gif
+# do
+#   [ -f "$gif" ] || continue
+#   if [ "$gifsicle" ]; then
+#     echo "  Optimizing GIF format of \"$gif\"..."
+#     gifsicle -O -b $gif
+#   fi
+#   chmod -f 644 $gif
+# done
+
+../generate_compare
+echo "DONE"

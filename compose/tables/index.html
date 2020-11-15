@@ -1,0 +1,150 @@
+<html lang="en"><HEAD>
+<TITLE>Compose Tables -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/compose/tables/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../../img_www/space.gif" width=50 height=1>
+    Compose Tables</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+</DL>
+
+<H2>Compose Tables</H2>
+
+The following tables of most of the IM compose methods with various shapes and
+gradients. They form a summary of these important alpha compositing methods,
+and was vital in helping me figure out exactly what each composition method
+did and for what purpose they can be used. </P>
+
+The command that is being run is generally...
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE -->
+  convert {<I>Dst</I>} {<I>Src</I>} \
+          -gravity center -compose {<I>method</I>} -composite \
+          {<I>result</I>}
+</CODE></PRE></TD></TR></TABLE>
+</DIV></P>
+
+
+A shell script "<CODE><A HREF="../../scripts/compose_table"
+>compose_table</A></CODE>" also generates and displays various tables (with
+various options) of compose methods, and was developed later. </P>
+
+</P>
+
+For these first set of tables with I am using two images which are simular to
+the test images used in the documentation for <A
+HREF="http://www.w3.org/TR/SVG12/rendering.html" >SVG Alpha Compositing</A>.
+They are perfect for demonstrating the 12 'Duff-Porter' compose operators.
+They are trianglular images containng no semi-transparent pixels (only
+transparent and opaque colors). </P>
+
+However I have found that using overlapping circles, such as typically used in
+'Ven Disgrams' for set theory to be more useful. </P>
+
+As some of compositing operators will modify the whole background
+(destination) image, including outside the overlaid area, or even if the
+source is completely transparent.  Because of this I have increased the size
+of the background (destination) image slightly, and added a "<CODE>-gravity
+center</CODE>" setting. </P>
+
+Operators that clear the area outside the overlayed region are:
+<CODE>Clear</CODE>, <CODE>Src</CODE>, <CODE>In</CODE>, <CODE>Dst_In</CODE>,
+<CODE>Out</CODE>, and <CODE>Dst_Atop</CODE>.  However if you do not want this
+you can use the operational setting "<CODE>-define
+compose:outside-overlay=false</CODE>" to turn off this aspect of Duff-Porter
+Composition. </P>
+
+<TABLE BORDER=1 CELLSPACING=3 CELLPADDING=0 BGCOLOR=skyblue ALIGN=center>
+<TR><TD>
+   <A HREF="montage_triangles.jpg"
+      ><IMG SRC="montage_triangles.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD><TD>
+   <A HREF="montage_circles.jpg"
+      ><IMG SRC="montage_circles.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<HR>
+
+However while the Duff-Porter methods are usful for basic image overlays,
+Their are a set of math methods that are much more useful with image masks.
+</P>
+
+To demostrate I created some black and white images of circles which overlap,
+so you can see the results. </P>
+
+<TABLE BORDER=1 CELLSPACING=3 CELLPADDING=0 BGCOLOR=skyblue ALIGN=center>
+<TR><TD>
+   <A HREF="montage_circles_1.jpg"
+      ><IMG SRC="montage_circles_1.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD><TD>
+   <A HREF="montage_circles_2.jpg"
+      ><IMG SRC="montage_circles_2.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note the 'edge' effects that result in some of the above images.  These are
+caused by the edges of the circles being some shade of gray (anti-aliasing),
+rather than purely black or white.  They appear in '<CODE>ModulusAdd</CODE>'
+and '<CODE>ModulusSubtract</CODE>' as these are 'modulus wrapped'.  (See the
+specific section on <A HREF="../#add" >Add</A> and <A HREF="../#subtract"
+>Subtract</A>, mathematical composition for more details. </P>
+
+<HR>
+
+Gradients make the best demonstration of the mathematical methods as well as
+"Channel Coping" and  "Color Manupliation"  alpha blending methods.  </P>
+
+<TABLE BORDER=1 CELLSPACING=3 CELLPADDING=0 BGCOLOR=skyblue ALIGN=center>
+<TR><TD>
+   <A HREF="montage_gradient_1.jpg"
+      ><IMG SRC="montage_gradient_1.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+<TABLE BORDER=1 CELLSPACING=3 CELLPADDING=0 BGCOLOR=skyblue ALIGN=center>
+<TR><TD>
+   <A HREF="montage_gradient_2.jpg"
+      ><IMG SRC="montage_gradient_2.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD><TD>
+   <A HREF="montage_gradient_3.jpg"
+      ><IMG SRC="montage_gradient_3.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR><TR><TD>
+   <A HREF="montage_gradient_4.jpg"
+      ><IMG SRC="montage_gradient_4.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD><TD>
+   <A HREF="montage_gradient_5.jpg"
+      ><IMG SRC="montage_gradient_5.jpg"
+            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 5 January 2004 <BR>
+Updated: 11 July 2009 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/compose/tables/</CODE>
+</ADDRESS></BODY></HTML>

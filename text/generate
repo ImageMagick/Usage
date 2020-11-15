@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Regenerage all the images from the code blocks in the index.html
+#
+
+. ../generate_options
+../generate_clear
+
+ln -s ../images/bg.gif .
+ln -s ../images/tile_* .
+ln -s ../images/text_data.txt .
+ln -s ../images/pango_test.txt .
+
+../generate_examples
+
+# These images always change, due to date contents
+# I do not want these to be recovered from backups (yet)
+rm -f _ps_*
+
+../generate_compare
+echo "DONE"
+

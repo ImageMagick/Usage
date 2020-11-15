@@ -1,0 +1,987 @@
+<html lang="en"><HEAD>
+<TITLE>Fourier Multiply/Divide -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical"
+      HREF="https://legacy.imagemagick.org/Usage/fourier/fft_math/">
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="../../img_www/pngfix.js"></script>
+<![endif]><![endif]-->
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Fourier Multiply/Divide</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    >ImageMagick Examples Preface and Index</A>
+<DT><A HREF="../"
+    ><IMG SRC="../../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    >Fourier Transforms</A>
+<DD><A HREF="#intro"
+    ><IMG SRC="../../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    >DIY FFT Mathematics Introduction</A>
+<DD><A HREF="#multiply"
+    ><IMG SRC="../../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    >FFT Multiply</A>
+    <UL>
+    <LI><A HREF="#multiply_mp"
+        >Magnitude/Phase Images, Using IM Q16 non-HDRI</A>
+    <LI><A HREF="#multiply_ri"
+        >Real/Imaginary Images, Using IM Q16 HDRI</A>
+    </UL>
+<DD><A HREF="#divide"
+    ><IMG SRC="../../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    >FFT Division</A>
+    <UL>
+    <LI><A HREF="#divide_mp"
+        >Magnitude/Phase Images, Using IM Q16 non-HDRI</A>
+    <LI><A HREF="#divide_ri"
+        >Real/Imaginary Images, Using IM Q16 HDRI</A>
+    </UL>
+</UL>
+</DL></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="intro"></A>
+<H2>DIY FFT Mathematics Introduction</H2>
+
+Below are examples of a number of techniques for doing multiplication and
+Division with the two different styles of Fast Fourier Transform images. </P>
+
+Their are basically two ways of doing the mathematics.  Using FX math, and
+using Composite Maths....
+
+<Dl>
+<DT><B>FX Math</B>
+<DD>Using <A HREF="../../transforms/#fx" >FX, DIY Operator</A> applies the
+    formula directly.  But as it is interpreted, it is very slow.  However the
+    formulas are applied all in a single expression, avoiding the need for
+    intermedite images. For non-HDRI versions of IM this will reduce Quantum
+    Rounding effects. </P>
+
+<DT><B>Composite math</B>
+<DD>This uses Image Composition to perform mathematical operations, which is
+    much faster than 'FX Math'.  However you can only do one mathematical
+    operation at a time, which means after every operation the image must be
+    saved into another in-memory image.  For non-HDRI versions this will
+    produce extra 'rounding effects' between operations. </P>
+
+</DL></P>
+
+The other aspect touched on above is the use of HDRI. </P>
+
+<A HREF="../../basics/#hdri" >HDRI versions of ImageMagick</A> saves the color
+values as floating point numbers instead of QuantumRange scaled integers (See
+<A HREF="../../basics/#quality" >Quality</A>).  As such when generating the
+FFT images, or saving the intermedite results to a new image, does not cause
+'rounding effects' especially when small values (typical in FFT images) are
+involved. </P>
+
+Also as Real/Imaginary FFT image pairs require the use of negative numbers
+you must use a HDRI version of image magick when processing these types of
+FFT images. </P>
+
+Negatives are however not a problem for Magnitude/Phase FFT images, so you can
+process such images without using HDRI, though you will still have strong
+'rounding effects' between each and every image processing step. </P>
+
+Because of this Fast Fourier transforms, are best used on <A
+HREF="../../basics/#hdri" >HDRI</A> versions of ImageMagick, regardless of the
+type of FFT images you are using.   The exact same commands are used for both
+HDRI and non-HDRI version of ImageMagick.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+   When saving intermediate <A HREF="../../basics/#hdri" >HDRI</A> images to
+   a disk file, you will need to use one of the very few floating point image
+   file formats.  These formats include <A HREF="../../formats/#netpbm"
+   >NetPBM PFM</A> file format, <A HREF="../../formats/#tiff" >TIFF</A>, or
+   the <A HREF="../../files/#miff" >MIFF</A> file format with the special
+   setting "<CODE>-define quantum:format=floating-point</CODE>".  </P>
+</I></FONT></TD></TR></TABLE></P>
+
+<BR>
+
+Here is the convolution kernel image we will be using...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  # motion blur kernel
+  #convert -size 128x128 xc:black -fill white -draw 'line 60,64 68,64' \
+  #        -alpha off convolve_kernel.png
+
+  # disk blur kernel (Fred Wienhaus's version)
+  convert -size 128x128 xc:black -fill white -draw 'circle 64,64 54,64' \
+          -alpha off convolve_kernel.png
+
+</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The convolution kernel must be rolled so that pixel 0,0 contains the center of
+convolution.  In this case a "<CODE>-roll -64-64</CODE>" needs to be applied
+immediately the kernel image is read in. </P>
+
+The kernel image also needs to be divided by its mean so as to preserve the
+intensity of the image it is being FFT multiplied or divided against.  This is
+a major complication with FFT multiplication and division.  </P>
+
+As non-HDRI images can not be normalized in this way this is generally done
+after the FFT conversion has been applied, and before multiplication. </P>
+
+For HDRI version of IM you can do this at any time. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="multiply"></A>
+<H2>FFT Multiplication
+&nbsp <FONT SIZE=5>(
+<IMG SRC="../../img_www/fft_multiply.gif" ALIGN=absmiddle>
+)</FONT></H2>
+
+<A NAME="multiply_mp"></A>
+<H3>FFT multiply of Magnitude/Phase Images, Using IM Q16</H3>
+
+<PRE>
+    R = A <FONT SIZE=+2>&otimes;</FONT> B       ( FFT Multiply )
+
+    Rm = Am &times; Bm
+    Rp = mod( Ap + Bp +0.5, 1.0)
+
+    mean = the DC value (center pixel) of the magnitude image
+</PRE>
+
+Using FX Math,
+<BR>(note value v.p{64x64} is the DC, or mean of the convolve kernel)
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  # non-HDRI
+  convert convolve_kernel.png -roll -64-64 -fft \
+          \( cameraman_sm.png -fft \) \
+          \
+          \( -clone 0,2 -fx 'u*v / p{64,64} ' \) \
+          \( -clone 1,3 -fx 'mod(u + v + 0.5, 1.0)' \) \
+          \
+          -delete 0-3 -ift  cameraman_convolve_1.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_1.png"
+     ><IMG SRC="cameraman_convolve_1.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Using Composite Maths...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  # non-HDRI
+  convert convolve_kernel.png -roll -64-64 -fft \
+          \( -clone 0 -crop 1x1+64+64 +repage -scale 128x128 \
+             -clone 0 -compose divide -composite \) -swap 0 +delete \
+          \( cameraman_sm.png -fft \) \
+          \
+          \( -clone 0,2 -compose multiply -composite \) \
+          \( -clone 1,3 -compose add -background gray50 -flatten \) \
+           -delete 0-3 -ift  cameraman_convolve_2.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_2.png"
+     ><IMG SRC="cameraman_convolve_2.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note that "add" is a modulo addition composition, which works to add values
+the 50% biased values, to generate a 50% biased value. </P>
+
+Alternative <BR>
+Divide with mean from original image
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  # non-HDRI
+  convert convolve_kernel.png \( -clone 0 -roll -64-64 -fft \) \
+          \( -clone 0 -scale 1x1 -scale 128x128 \
+             -clone 1 -compose divide -composite \) \
+          -delete 0,1 +swap \
+          \( cameraman_sm.png -fft \) \
+          \
+          \( -clone 0,2 -compose multiply -composite \) \
+          \( -clone 1,3 -compose add -background gray50 -flatten \) \
+           -delete 0-3 -ift  cameraman_convolve_2b.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_2b.png"
+     ><IMG SRC="cameraman_convolve_2b.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Alternative...
+<BR>Note that the DC value divided by DC value ==&gt; 1.0 </P>
+
+As DC value is the largest value in a magnitude spectrum, why not just
+normalise!  EG:  <CODE>-auto-level</CODE>" </P>
+
+This can only be done to a magnitude image, and will not work
+with real/imaginary pairs as they have to be stretched by the same amount.
+</P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  # non-HDRI
+  convert convolve_kernel.png -roll -64-64 -fft \
+          \( -clone 0 -auto-level \) -swap 0 +delete \
+          \( cameraman_sm.png -fft \) \
+          \
+          \( -clone 0,2 -compose multiply -composite \) \
+          \( -clone 1,3 -compose add -background gray50 -flatten \) \
+          \
+          -delete 0-3 -ift  cameraman_convolve_2c.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_2c.png"
+     ><IMG SRC="cameraman_convolve_2c.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+
+
+<A NAME="multiply_ri"></A>
+<H3>FFT multiply of Real/Imaginary Images, Using IM HDRI</H3>
+<PRE>
+    R = A <FONT SIZE=+2>&otimes;</FONT> B       ( FFT Multiply )
+
+    Rr = Ar&times;Br - Ai&times;Bi
+    Ri = Ar&times;Bi + Ai&times;Br
+
+    mean = the DC value (center pixel) of the real image
+</PRE>
+
+Using FX...
+<BR>5 images involved, the 5'th being scaled mean - FX does the division
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI>
+  # HDRI
+  convert convolve_kernel.png -roll -64-64 \( +clone +fft \) \
+          \( cameraman_sm.png +fft \) +matte \
+          \( -clone 0 -scale 1x1 \) -delete 0 \
+          \
+          \( -clone 0-4 -fx '( u[0]*u[2] - u[1]*u[3] ) / u[4].p{0,0}' \) \
+          \( -clone 0-4 -fx '( u[0]*u[3] + u[1]*u[2] ) / u[4].p{0,0}' \) \
+          -delete 0-4 +ift  cameraman_convolve_3.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_3.png"
+     ><IMG SRC="cameraman_convolve_3.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Using FX...
+<BR>using the DC value for the mean (no 5'th image)
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI>
+  # HDRI
+  convert convolve_kernel.png -roll -64-64 +fft \
+          \( cameraman_sm.png +fft \) \
+          \
+          \( -clone 0-3 -fx '( u[0]*u[2] - u[1]*u[3] ) / u[0].p{64,64}' \) \
+          \( -clone 0-3 -fx '( u[0]*u[3] + u[1]*u[2] ) / u[0].p{64,64}' \) \
+          -delete 0-3 +ift  cameraman_convolve_3b.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_3b.png"
+     ><IMG SRC="cameraman_convolve_3b.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Using Composite Maths...
+<BR>With the scale image mean!
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI>
+  # HDRI
+  convert convolve_kernel.png -roll -64-64 \
+          \( -clone 0 -scale 1x1 -scale 128x128 \) \
+          \( -clone 0 +fft \) \
+          \( -clone 1,2 -compose divide -composite \) \
+          \( -clone 1,3 -compose divide -composite \) \
+          -delete 0--3 \
+          \
+          \( cameraman_sm.png  +fft \) \
+          \
+          \( -clone 0,2 -compose multiply -composite \) \
+          \( -clone 1,3 -compose multiply -composite \) \
+          \( -clone 0,3 -compose multiply -composite \) \
+          \( -clone 1,2 -compose multiply -composite \) \
+          \
+          \( -clone 4,5 +swap +matte -compose minus -composite \) \
+          \( -clone 6,7 -compose plus -composite \) \
+          \
+          -delete 0--3 +ift  cameraman_convolve_4.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_4.png"
+     ><IMG SRC="cameraman_convolve_4.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Optimized Composite Maths...
+<BR>Mean from image scaling
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI>
+  # HDRI
+  convert convolve_kernel.png -roll -64-64 \
+          \( -clone 0 -scale 1x1 -scale 128x128 \) \
+          \( -clone 0 +fft    null: +insert    -clone 1 +insert \
+             -compose divide -layers composite \) -delete 0,1  \
+          \
+          \( cameraman_sm.png +fft \) \
+          \
+          \( -clone 0,1,0,1 null: -clone 2,3,3,2 \
+                -compose multiply -layers composite \) \
+          \( -clone 4,5 +swap +matte -compose minus -composite \) \
+          \( -clone 6,7 -compose plus -composite \) \
+          \
+          -delete 0--3 +ift  cameraman_convolve_4b.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_4b.png"
+     ><IMG SRC="cameraman_convolve_4b.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Alternative...
+<BR>Use the DC value for mean...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI>
+  # HDRI
+  convert convolve_kernel.png -roll -64-64 +fft \
+          \( -clone 0 -crop 1x1+64+64 +repage -scale 128x128 \) \
+          null: +insert +insert   -compose divide -layers composite \
+          \
+          \( cameraman_sm.png +fft \) \
+          \
+          \( -clone 0,1,0,1 null: -clone 2,3,3,2 \
+                -compose multiply -layers composite \) \
+          \( -clone 4,5 +swap +matte -compose minus -composite \) \
+          \( -clone 6,7 -compose plus -composite \) \
+          \
+          -delete 0--3 +ift  cameraman_convolve_4c.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_4c.png"
+     ><IMG SRC="cameraman_convolve_4c.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Alturnative...
+<BR>Apply DC value mean, AFTER the FFT multiply...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI>
+  # HDRI
+  convert convolve_kernel.png -roll -64-64 +fft \
+          \( cameraman_sm.png  +fft \) \
+          \
+          \( -clone 0,1,0,1 null: -clone 2,3,3,2 \
+                -compose multiply -layers composite \) \
+          \( -clone 4,5 +swap -compose minus -composite \) \
+          \( -clone 6,7 -compose plus -composite \) \
+          \
+          \( -clone 0 -crop 1x1+64+64 +repage -scale 128x128 \
+             null: -clone -2,-1  -compose divide -layers composite \) \
+          \
+          -delete 0--3 +ift  cameraman_convolve_4d.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_multiply.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_4d.png"
+     ><IMG SRC="cameraman_convolve_4d.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<HR><!- ------------------------------------------------------------------ -->
+
+<A NAME="divide"></A>
+<H2>FFT Division
+&nbsp <FONT SIZE=5>(
+<IMG SRC="../../img_www/fft_divide.gif" ALIGN=absmiddle>
+)</FONT></H2>
+
+Here use use division to remove or de-convolve (for want of a better word) the
+blur that was added to the above image.   It is basically exactly the same
+except that the 'normalized' convolution kernel is divided from the main
+image. </P>
+
+Each Example uses the image generated, using the same technique as above. </P>
+
+<A NAME="divide_mp"></A>
+<H3>FFT divide of Magnitude/Phase,  Using IM Q16</H3>
+<PRE>
+    R = B <FONT SIZE=+2>&oslash;</FONT> A       ( FFT Divide )
+
+    Rm = Bm / Am
+    Rp = mod( -Ap + Bp +1.5, 1.0)
+
+    mean = the DC value (center pixel) of the magnitude image
+</PRE>
+
+NOTE: A minimum of QuantumScale is added to the denominator to avoid perfect
+division by zero. This is also used later to remove noise from images. </P>
+
+Using FX Math...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=cameraman_deconvolve_1.png>
+  # non-HDRI
+  noise=QuantumScale
+  convert convolve_kernel.png -roll -64-64 -fft \
+          \( cameraman_convolve_1.png -fft \) \
+          \
+          \( -clone 0,2 -fx "v/(u/p{64,64}+$noise)" \) \
+          \( -clone 1,3 -fx 'mod( -u + v + 1.5, 1.0)' \) \
+          \
+          -delete 0--3 -ift cameraman_deconvolve_1.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_convolve_1.png"
+     ><IMG SRC="cameraman_convolve_1.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_divide.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_1.png"
+     ><IMG SRC="cameraman_deconvolve_1.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_1.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_1.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_1.png null:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_1.txt"
+    ><IMG SRC="roundtrip_cmp_1.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Using HDRI version of IM to do roundtrip MP convolved FFT (FX Math)
+
+<DIV ALIGN=center>
+<!--
+<CODE EXECUTE HDRI SCRIPT IMAGE=cameraman_deconvolve_1hdri.png>
+  convert convolve_kernel.png -roll -64-64 -fft \
+          \( cameraman_sm.png  -fft \) \
+          \
+          \( -clone 0,2 -fx 'u*v/ p{64,64} ' \) \
+          \( -clone 1,3 -fx 'mod(u + v + 0.5, 1.0)' \) \
+          \
+          -delete 0-3 -ift  cameraman_convolve_1hdri.png
+
+  #noise=Epsilon
+  noise=QuantumScale
+  convert convolve_kernel.png -roll -64-64 -fft \
+          \( cameraman_convolve_1hdri.png -fft \) \
+          \
+          \( -clone 0,2 -fx "v/(u/p{64,64}+$noise)" \) \
+          \( -clone 1,3 -fx 'mod( -u + v + 1.5, 1.0)' \) \
+          \
+          -delete 0--3 -ift cameraman_deconvolve_1hdri.png
+</CODE>
+<CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_1hdri.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_1hdri.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_1hdri.png null:
+</CODE>
+-->
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_1hdri.png"
+     ><IMG SRC="cameraman_convolve_1hdri.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_1hdri.png"
+     ><IMG SRC="cameraman_deconvolve_1hdri.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_1hdri.txt"
+    ><IMG SRC="roundtrip_cmp_1hdri.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Using Composite Maths...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=cameraman_deconvolve_2.png>
+  # non-HDRI
+  noise=1
+  convert convolve_kernel.png -roll -64-64 -fft \
+           \( -clone 0 -crop 1x1+64+64 +repage -scale 128x128 \
+              -clone 0 -compose divide -composite \) -swap 0 +delete \
+          \( cameraman_convolve_2.png -fft \) \
+          \
+          \( -clone  0  -evaluate add $noise \
+             -clone  2  -compose divide -composite \) \
+          \( -clone 1,3 -compose subtract -background gray50 -flatten \) \
+          \
+          -delete 0--3 -ift cameraman_deconvolve_2.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_convolve_2.png"
+     ><IMG SRC="cameraman_convolve_2.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_divide.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_2.png"
+     ><IMG SRC="cameraman_deconvolve_2.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_2.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_2.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_2.png null:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_2.txt"
+    ><IMG SRC="roundtrip_cmp_2.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Using HDRI version of IM to do roundtrip MP convolved FFT (Composite Math)
+
+<DIV ALIGN=center>
+<!--
+<CODE EXECUTE HDRI SCRIPT IMAGE=cameraman_deconvolve_2hdri.png>
+  convert convolve_kernel.png -roll -64-64 -fft \
+          \( -clone 0 -crop 1x1+64+64 +repage -scale 128x128 \
+             -clone 0 -compose divide -composite \) -swap 0 +delete \
+          \( cameraman_sm.png -fft \) +matte \
+          \
+          \( -clone 0,2 -compose multiply -composite \) \
+          \( -clone 1,3 -compose add -background gray50 -flatten \) \
+          \
+          -delete 0-3 -ift  cameraman_convolve_2hdri.png
+
+  noise=1
+  convert convolve_kernel.png -roll -64-64 -fft \
+           \( -clone 0 -crop 1x1+64+64 +repage -scale 128x128 \
+              -clone 0 -compose divide -composite \) -swap 0 +delete \
+          \( cameraman_convolve_2hdri.png -fft \) \
+          \
+          \( -clone  0  -evaluate add $noise \
+             -clone  2  -compose divide -composite \) \
+          \( -clone 1,3 -compose subtract -background gray50 -flatten \) \
+          \
+          -delete 0--3 -ift cameraman_deconvolve_2hdri.png
+
+</CODE>
+<CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_2hdri.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_2hdri.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_2hdri.png null:
+</CODE>
+-->
+  <A HREF="cameraman_sm.png"
+     ><IMG SRC="cameraman_sm.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_convolve_2hdri.png"
+     ><IMG SRC="cameraman_convolve_2hdri.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_2hdri.png"
+     ><IMG SRC="cameraman_deconvolve_2hdri.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_2hdri.txt"
+    ><IMG SRC="roundtrip_cmp_2hdri.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+
+
+<A NAME="divide_ri"></A>
+<H3>FFT divide of Real/Imaginary, Using HDRI version of IM</H3>
+
+<PRE>
+    R = B <FONT SIZE=+2>&oslash;</FONT> A       ( FFT Divide )
+
+    Denom = Ar&times;Ar + Ai&times;Ai + noise
+    Rr = ( Ar&times;Br + Ai&times;Bi ) / Denom
+    Ri = ( Ar&times;Bi - Ai&times;Br ) / Denom
+
+    mean = the DC value (center pixel) of the real image
+</PRE>
+
+Using FX...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI SCRIPT IMAGE=cameraman_deconvolve_3.png>
+  # HDRI
+  #noise=QuantumScale
+  noise=Epsilon
+  convert convolve_kernel.png -roll -64-64 +fft \
+          \( -clone 0 -fx "u/p{64,64}" \) \( -clone 0,1 -fx "v/u.p{64,64}" \) \
+          -delete 0,1 \
+          \( cameraman_convolve_3.png +fft \) \
+          \
+          \( -clone 0-3 -fx "u[0]*u[0] + u[1]*u[1] + $noise" \) \
+          \( -clone 0-3 -fx 'u[0]*u[2] + u[1]*u[3]' \) \
+          \( -clone 0-3 -fx 'u[0]*u[3] - u[1]*u[2]' \) \
+          \( -clone 4,5 -fx 'u==0?0:v/u' \) \
+          \( -clone 4,6 -fx 'u==0?0:v/u' \) \
+          \
+          -delete 0--3 +ift cameraman_deconvolve_3.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_convolve_3.png"
+     ><IMG SRC="cameraman_convolve_3.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_divide.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_3.png"
+     ><IMG SRC="cameraman_deconvolve_3.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_3.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_3.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_3.png null:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_3.txt"
+    ><IMG SRC="roundtrip_cmp_3.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+The -fx divide I used above is not nearly as good as a composite divide.
+Presumably due to the extra FX scaling involved.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI SCRIPT IMAGE=cameraman_deconvolve_3b.png>
+  # HDRI
+  #noise=QuantumScale
+  noise=Epsilon
+  convert convolve_kernel.png -roll -64-64 +fft \
+          \( -clone 0 -fx "u/p{64,64}" \) \( -clone 0,1 -fx "v/u.p{64,64}" \) \
+          -delete 0,1 \
+          \( cameraman_convolve_3.png +fft \) \
+          \
+          \( -clone 0-3 -fx "u[0]*u[0] + u[1]*u[1] + $noise" \) \
+          \( -clone 0-3 -fx 'u[0]*u[2] + u[1]*u[3]' \) \
+          \( -clone 0-3 -fx 'u[0]*u[3] - u[1]*u[2]' \) \
+          \( -clone 4,5 -compose divide -composite \) \
+          \( -clone 4,6 -compose divide -composite \) \
+          \
+          -delete 0--3 +ift cameraman_deconvolve_3b.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_convolve_3.png"
+     ><IMG SRC="cameraman_convolve_3.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_divide.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_3b.png"
+     ><IMG SRC="cameraman_deconvolve_3b.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_3b.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_3b.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_3b.png null:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_3b.txt"
+    ><IMG SRC="roundtrip_cmp_3b.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+
+
+Using Composite Maths (verbose)...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI SCRIPT IMAGE=cameraman_deconvolve_4.png>
+  # HDRI
+  noise=0.00000001  # Epsilon
+  convert \( convolve_kernel.png -roll -64-64 +fft \
+             \( -clone 0 -crop 1x1+64+64 +repage -scale 128x128 \) \
+             \( -clone 2,0 -compose divide -composite \) \
+             \( -clone 2,1 -compose divide -composite \) \
+             -delete 0-2 \) \
+          \( cameraman_convolve_4.png +fft \) \
+          \
+          \( -clone 0,0 -compose multiply -composite \) \
+          \( -clone 1,1 -compose multiply -composite \) \
+          \( -clone 0,2 -compose multiply -composite \) \
+          \( -clone 1,3 -compose multiply -composite \) \
+          \( -clone 0,3 -compose multiply -composite \) \
+          \( -clone 1,2 -compose multiply -composite \) \
+          \
+          \( -clone 4,5 -compose plus  -composite -evaluate add $noise \) \
+          \( -clone 6,7 -compose plus -composite \) \
+          \( -clone 8,9 +swap -compose minus -composite \) \
+          \
+          \( -clone 10,11 -compose divide -composite \) \
+          \( -clone 10,12 -compose divide -composite \) \
+          \
+          -delete 0--3 +ift cameraman_deconvolve_4.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_convolve_4.png"
+     ><IMG SRC="cameraman_convolve_4.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_divide.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_4.png"
+     ><IMG SRC="cameraman_deconvolve_4.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_4.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_4.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_4.png null:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_4.txt"
+    ><IMG SRC="roundtrip_cmp_4.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Optimized Composite Maths...
+
+<!--
+  This seems to produce a VERY bad response  especially for 'black'
+  #noise='#000100010001'
+  noise=black
+          \( -clone 4,5 -background $noise -compose plus -flatten \) \
+  Similarly  for  -evaluate add
+-->
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE HDRI SCRIPT IMAGE=cameraman_deconvolve_4b.png>
+  # HDRI
+  noise=0.00000001  # Epsilon
+  convert \( convolve_kernel.png -roll -64-64 +fft \
+             \( -clone 0 -gravity center -extent 1x1 -scale 128x128 \) \
+             null: +insert +insert -compose divide -layers composite \) \
+          \( cameraman_convolve_4.png +fft \) \
+          \
+          \( -clone 0,1,0,1,0,1 null: -clone 0,1,2,3,3,2 \
+                -compose multiply -layers composite \) \
+          \( -clone 4,5 -compose plus  -composite -evaluate add $noise \) \
+          \( -clone 6,7 -compose plus  -composite \) \
+          \( -clone 9,8 -compose minus -composite \) \
+          \( -clone 10 null: -clone 11,12 \
+                -compose divide -layers composite \) \
+          \
+          -delete 0--3 +ift cameraman_deconvolve_4b.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="cameraman_convolve_4.png"
+     ><IMG SRC="cameraman_convolve_4.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/fft_divide.gif" WIDTH=20 HEIGHT=30 ALIGN=middle >
+  <A HREF="convolve_kernel.png"
+     ><IMG SRC="convolve_kernel.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="cameraman_deconvolve_4b.png"
+     ><IMG SRC="cameraman_deconvolve_4b.png"   WIDTH=128 HEIGHT=128
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV>
+
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT ERR2OUT OUT=roundtrip_cmp_4b.txt>
+  echo -n "Peak = "
+  compare -metric PAE cameraman_sm.png cameraman_deconvolve_4b.png null:
+  echo -n "Avg = "
+  compare -metric RMSE cameraman_sm.png cameraman_deconvolve_4b.png null:
+</CODE></PRE></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD>
+  <A HREF="roundtrip_cmp_4b.txt"
+    ><IMG SRC="roundtrip_cmp_4b.txt.gif"
+          ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+<HR><!-- ---------------------------------------------------------------- -->
+
+<I><B>UPDATE:</B> the use of the color 'gray50' in the above should be change
+to 'gray(50%)' to generate a more accurite 50% gray value.  The former 'named'
+color is actually only an 8-bit color, and as such not very accurite. </P>
+
+Also with the new colorspace handling, gray50 is in sRGB colorspace while
+gray(50%) is linear colorspace, which is what should be used in the above
+calculations. </P>
+
+The examples also needs to be checked with respect to the use a linear
+gray-scale colorspace. </P>
+
+</I>
+
+</DIV>
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 13 August 2009 <BR>
+Updated: 6 October 2009 <BR>
+Author: <A HREF="http://www.fmwconcepts.com/fmw/fmw.html" >Fred Wienhaus</A>,
+        &lt;fmw at alink.net&gt;
+with editing and formatting by
+        <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/fourier/fft_math/</CODE>
+</ADDRESS></BODY></HTML>
+

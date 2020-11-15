@@ -1,0 +1,3067 @@
+<HTML><HEAD>
+<TITLE>Image Mapped Effects -- IM v6 Examples</TITLE>
+<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
+<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/mapping/">
+</HEAD><BODY BGCOLOR="#B0C4DE">
+
+<H1>ImageMagick v6 Examples -- <BR>
+    <IMG SRC="../img_www/space.gif" width=50 height=1>
+    Image Mapped Effects</H1>
+
+<DIV ALIGN=justify>
+
+<DL>
+<DT><B>Index</B>
+<DT><A HREF="../"
+    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > ImageMagick Examples Preface and Index</A>
+<DD><A HREF="#intro"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Introduction to Image Mapping</A>
+<DD><A HREF="#distort"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Distorting Images using Image Mapping</A>
+<DD><A HREF="#distortion_maps"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Absolute Distortion Lookup Maps</A>
+    <UL>
+    <LI><A HREF="#distortion_maps"
+        >Absolute Distortion Maps</A>
+    <LI><A HREF="#compose_distort"
+        >Absolute Distortion Composition</A>
+    <LI><A HREF="#no-op_distortion_map"
+        >No-op Distortion Map Revisited</A>
+    <LI><A HREF="#distortion_problems"
+        >Problems with Distortion Maps</A>
+    <LI><A HREF="#undefined_masking"
+        >Set Undefined Pixels using a Mask</A>
+    <LI><A HREF="#distortion_unified"
+        >Unified Distortion Image</A>
+    <LI><A HREF="#hourglass"
+        >Hourglass Distortion Map</A>
+    <LI><A HREF="#spherical"
+        >Spherical Distortion Map</A>
+    <LI><A HREF="#circlar_arc"
+        >Circular Arc Distortion Map</A>
+    <LI><A HREF="#polar"
+        >Polar Distortion Map</A>
+    </UL>
+<DD><A HREF="#displacement_maps"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Relative Displacement Lookup Maps</A>
+    <UL>
+    <LI><A HREF="#displacement_maps"
+        >Relative Displacement Maps</A>
+    <LI><A HREF="#composite_displace"
+        >Composite Displace Operator</A>
+    <LI><A HREF="#displace_simple"
+        >Simple Displacement Examples</A>
+    <LI><A HREF="#displace_graph"
+        >Displacement Graphing</A>
+    <LI><A HREF="#displace_areas"
+        >Area Displacement</A>
+    <LI><A HREF="#water_ripples"
+        >Rippled Water Reflections</A>
+    <LI><A HREF="#displace_2d"
+        >2 Dimensional Displacement Maps</A>
+    <LI><A HREF="#displace_cylinder"
+        >Cylindrical Displacment</A>
+    <LI><A HREF="#displace_mirror"
+        >Fractured Mirror</A>
+    </UL>
+<DD><A HREF="#blur"
+    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
+    > Variable Blur Mapping</A>
+    <UL>
+    <LI><A HREF="#blur_ellipse"
+        >Elliptical Blurring</A>
+    <LI><A HREF="#blur_aspect"
+        >Blur with Variable Aspect Ratio</A>
+    <LI><A HREF="#blur_angle"
+        >Blur with Variable Angle</A>
+    </UL>
+</DL>
+</P>
+
+Distorting or modifying image using some sort of secondary 'mapping' image
+that controls the process. Be it replacing colors, variably bluring the image,
+or distorting images by specifying source coordinates absolutely or
+relativally.  </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="intro"></A>
+<H2>Introduction</H2>
+
+As you have seen in the previous sections on <A HREF="../compose/"
+>Composition</A>, <A HREF="../warping/" >Simple Warping</A>, and <A
+HREF="../distorts/" >Distorting</A>, you can modify images in many different
+ways.  However they all are limited to the specific methods that have been
+built into ImageMagick. </P>
+
+You can even 'roll your own' image distortion using the <A
+HREF="../transform/#fx" >'FX' DIY Operator</A>, or directly modify the values
+of an image using operators such as <A HREF="../transform/#evaluate"
+>Evaluate</A> or <A HREF="../transform/#function" >Function</A>, or even the
+various <A HREF="../color_mods/#level" >Level</A> operators. </P>
+
+However distortions take a lot of calculations (and time) to do there task,
+and if you plan to do the same task against multiple images, having IM repeat
+all those calculations can be a real waste of time. </P>
+
+The other aspect is that it is very hard to limit the effects of the
+distortion in a free form way.  You can't simple edit or modify the distortion
+that you want to apply.  You have limited control. </P>
+
+<B>Image Mapping</B> is different. You use an extra 'mapping' image to control
+what parts of an image is to be modified, and by how much, or in what way.  It
+does not have to modify the whole image, nor does it have to modify the image
+in some pre-defined or pre-programmed way. </P>
+
+You can create a 'map' that can modify an image in <I>ANY</I> posible way,
+without limitation.  You can also <I>edit</I> or further modify the mapping,
+to adjust or limit its effect, making it more complex, by merging different
+maps together, or just smooth or blur the effect.  And finally you can
+<I>save</I> the mapping so as to use it again later.  It is the 'map' image
+controls the results.  </P>
+
+As the modification is 'map' controlled, there is usally very little
+calculation needed to be performed by ImageMagick, as such 'image mapping' is
+in general <I>very fast</I>. </P>
+
+It is also <I>repeatable</I>, as you can apply the same very complex map, to
+any number of images, to get the exact same modification.  That is to say you
+can apply it to a whole directory of images very quickly. </P>
+
+In essence what <I>Image Mapping</I> does is move the slow, and complex
+mathematics of a particular effect from a specific image, to a more general
+'map' image.  once that 'map' is generated it can then be applied to a lot of
+actual images very quickly. </P>
+
+<A NAME="image_maps"><A?>
+<H3>What are Image Maps</H3></P>
+
+Mapping images are basically "Look Up Tables" or LUTs that define how
+a particular effect sould be applied to an image on an individual pixel by
+pixel bases.  That is wether an effect is applied and to what degree is
+completely controled by the image map. </P>
+
+Essentually an image is an array of values, and what those values mean depends
+on the mapping process that is being applied.  They could indicate... <UL>
+<LI> a direct replacement value (color lookup),
+<LI> which image a color should come from (image masking),
+<LI> how much a pixel should be lighted or darkened (highlighting),
+<LI> specify a the source coordinate (distortion),
+<LI> or a location relative to the current position (displacement).
+<LI> how much to blur pixels at this location
+</UL></P>
+
+Many of these we have already seen in <A HREF="../compose/" >Image
+Composition</A>, and in a sense image mapping is just another way of merging
+multiple images together.  In fact many image mapping techniques are simply
+implemented as specialized compose methods! </P>
+
+Just remember true image composition is really just the overlying if two real
+color images in various ways (specifically the <A
+HREF="../compose/#duff-porter" >Duff-Porter Alpha Composition Methods</A>).
+Image mapping more generally involves using specialised images that modify one
+images in a special way. </P>
+
+The hardest part about image mapping is to generate a particular 'map' for
+a particular effect.  And this is where a lot of the work, effort and
+techniques that are present on this page is involved with.  Once you have
+a map however, you can use it many times with many different images very
+quickly. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="distort"></A>
+<H2>Distorting Images using Image Mapping</H2>
+
+While the various distortion operators described in the previous sections of IM
+Exampled (such as <A HREF="../warping/" >Simple Image Warping</A> and <A
+HREF="../distorts/" >General Image Distortions</A>), you are restricted to
+just the various types distortions that have been programmed into the IM
+graphics library, generally using specific mathematical equations and
+formulas. </P>
+
+However there are times where you want to design your own distortion in a more
+freeform and less mathematical way.  For example to generate a more complex
+distortion, such a mapping an image into a particular shape, or with a
+particular complex lens effect, that is easier to draw than to define
+mathematically. Sometimes you just want to be able to repeat your distortion
+over a large number of images and avoid having to re-calculate the distortion
+over and over. </P>
+
+The solution is to pre-calculate your distortion, and save it as special
+look-up table (LUT) in the form of a grayscale image. </P>
+
+That is for each output pixel, we look-up the LUT, then use that value to
+look-up the color from the source image.  That is three steps are needed.
+
+<OL>
+<LI>Look-up up each destination pixel in the LUT
+<LI>Map the LUT value to the source image location (two methods)
+<LI>Look-up the color from the source image
+</OL> </P>
+
+As an image is used for the 'lookup table' of the distortion, you can create,
+or modify a the distortion map using an image editor, such as
+'<CODE>Gimp</CODE>' or '<CODE>PhotoShop</CODE>', giving you the freedom to do
+some really fancy and complex distortions. </P>
+
+You must remember however that just like all other distortion methods we have
+seen, the lookup is  pplied as a <A HREF="#mapping" >Reverse Pixel
+Mapping</A>.  That is for each pixel in the destination image, we look-up the
+color of the pixel from the source image, using the distortion method being
+applied.  In this case the method is to look-up the source coordinate from the
+provided Look-up Table Image. </P>
+
+<BR>
+
+Now there are two ways of using an image map to determine where in the source
+image a color shoul dbe looked up...  <B>absolute</B>  or  <B>relative</B>.
+</P>
+
+With <B>absolute</B> coordinate lookup a <A HREF="#distortion_maps"
+>Distortion Map</A> converts the LUT color value directly into a coordinate in
+the source image from which to look up the color to use.  It does not matter
+where the color in the LUT is, each color refers to the exact lookup point to
+use. The distortion LUT images will have a gradient of colors, but any warping
+or distortion of that graident will achieve the same effect when the map is
+applied. </P>
+
+With <B>relative</B> coordinate lookup a <A HREF="#displacement_maps"
+>Displacement Map</A> uses the color value to offset the current coordinate to
+figure out the location in the source image to lookup the color. This means
+a pure-grey LUT image is used with lighter and darker areas defining how
+pixels are to be shifted or displaced by the map, regardless of their location
+in the map. </P>
+
+Both methods have advantages and disadvantages, as you will see. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+
+<A NAME="distortion_maps"></A>
+<H2>Absolute Distortion Lookup Maps</H2>
+
+Creating an <B>Absolute Distortion LUT Map</B> is the simpler of the two
+methods to both understand, create distortion LUT maps for, and to apply.
+However, as you will see, it has a very serious drawbacks making them less
+practical than a <A HREF="#displace" >Relative Displacement Map</A>. </P>
+
+It is the color at any particular point in the 'Distortion Map' directly
+refers to a location in the source image.  That is the greyscale gradient
+across the 'map' defined the 'texture' that is to be placed at that location.
+</P>
+
+Now consider that the Map image is acually an image of a complex opject such as
+a tee-shirt, with complex folds and ripples.  If that shirt has a gradient
+across it, you can map any flat image onto that shirt.  That is the power of
+an absolute distortion map. </P>
+
+Any 'black' pixel in the LUT image (color value 0) will be thought of as the
+left-most pixel or '<CODE>0</CODE>' X coordinate of the source image, while
+anything that is 'white' in the LUT (value 1), is to be thought of as the
+right-most pixel (the width of the source image).   </P>
+
+Note that this LUT will only look-up the X or horizontal position of color in
+the source image. It will not change the height or Y positions of colors. </P>
+
+So lets try this with a simple plain gray-scale horizontal gradient for the
+LUT.
+
+<!-- <CODE EXECUTE>
+    convert -size 75x75 gradient: -rotate 90 map_gradient_x.gif
+</CODE>> -->
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif \( -size 75x75 gradient: -rotate 90 \) \
+          -fx 'p{v*w,j}'      distort_noop.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_gradient_x.gif"
+     ><IMG SRC="map_gradient_x.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_noop.gif"
+     ><IMG SRC="distort_noop.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note that this did not make any real changes in mapping the source image to
+the destination image.  That is because the X coordinate that we looked up from
+the distortion map, was the same position we were looking up the color for.
+</P>
+
+By simply flipping the gradient over the look-up of the pixels is also
+flipped, creating a mirror image. That is white is on the left and 'black' is
+on the right, and a horizontal gradient across the image.
+
+<!-- <CODE EXECUTE>
+    convert -size 75x75 gradient: -rotate -90 map_gradient-x.gif
+</CODE>> -->
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif \( -size 75x75 gradient: -rotate -90 \) \
+          -fx 'p{v*w,j}'      distort_mirror_x.gif
+</CODE></PRE></TD></TR></TABLE>
+    <A HREF="koala.gif"
+       ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+    <A HREF="map_gradient-x.gif"
+       ><IMG SRC="map_gradient-x.gif"          WIDTH=75 HEIGHT=75
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+    <A HREF="distort_mirror_x.gif"
+       ><IMG SRC="distort_mirror_x.gif"          WIDTH=75 HEIGHT=75
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+If we take the original gradient and compress it using a contrast enhancement
+operator, we can get a much more useful distortion.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 gradient: -rotate 90 \
+          -sigmoidal-contrast 8,50%      map_compress.gif
+  convert koala.gif  map_compress.gif -fx 'p{v*w,j}'  distort_compress.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_compress.gif"
+     ><IMG SRC="map_compress.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_compress.gif"
+     ><IMG SRC="distort_compress.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Notice that the sides of the distortion is stretched while the center is
+compressed. </P>
+
+We can expand this to two dimensions by using 2 distortion maps, one to adjust
+the X coordinate, the other for the Y coordinate.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert map_compress.gif -rotate 90 map_compress_y.gif
+  convert koala.gif  map_compress.gif map_compress_y.gif \
+          -fx 'p{u[1]*w,u[2]*h}'   distort_compress_2D.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_compress.gif"
+     ><IMG SRC="map_compress.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="map_compress_y.gif"
+     ><IMG SRC="map_compress_y.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_compress_2D.gif"
+     ><IMG SRC="distort_compress_2D.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see the above recreated a variation of the implosion method, though
+only by compressing the images along the X and Y axis (simultaneously), rather
+than radially as the <A HREF="#implode" >Implode</A> operator does. </P>
+
+The key here is whatever you do to the absolute distortion map, you will do to
+the final image of whatever image you are applying it to.  That is the power
+of distoprtion maps. </P>
+
+
+<A NAME="compose_distort"></A>
+<H3>Composite 'Distort' Method</H3>
+
+So far we have been using <A HREF="../transform/#fx" >FX, General DIY
+Operator</A> to apply absolute distortion maps.  This provides a way to
+exactly taylor and tweek exactly what you are doing but is also very slow.
+</P>
+
+The <A HREF="../compose/#compose" >Composition Operator</A>
+"<CODE>Distort</CODE>" encodes a very similar formula we have been using
+above.  Though it has been implemented in a way that also makes it a little
+more compatible with the "<CODE>Displace</CODE>" composition operator that we
+will look at later in <A HREF="#displacement_maps" >Relative Displacement
+Maps</A>.  <P>
+
+So lets repeat the last 'implode' example using a "<CODE>Distort</CODE>"
+composition.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  map_compress.gif map_compress_y.gif \
+          -compose Distort  -define compose:args=37.5x37.5 -composite \
+          distort_compose.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_compress.gif"
+     ><IMG SRC="map_compress.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="map_compress_y.gif"
+     ><IMG SRC="map_compress_y.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_compose.gif"
+     ><IMG SRC="distort_compose.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Note the use of the "<A HREF="../basics/#define" >Define Setting</A>"
+"<CODE>compose:args</CODE>" in the above.  This value is a multiplyer against
+the LUT gradient that is used (centered on a perfect gray).  The value used
+'<CODE>37.5</CODE>' in the is half the width and height of the image (75
+pixels).  You can change that multiplier to expand or contract the overall
+scale of the distortion. </P>
+
+If the "<CODE>compose:args</CODE>" values are NOT defined, it will default to
+the correct values.  If the value is set to zero, no distortion will be
+applied in that direction. </P>
+
+If you wanted to set the composition arguments automatically you can use the
+following equivelent <A HREF="../basics/#set_option" >Set "option:"</A> method
+to calculate it...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  map_compress.gif map_compress_y.gif \
+          -set option:compose:args '%[fx:w/2]x%[fx:h/2]' \
+          -compose Distort  -composite \
+          distort_compose_set.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_compose_set.gif"
+     ><IMG SRC="distort_compose_set.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Or undefine it so as to let IM calculate the correct values (for a 2D
+Distort)...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif  map_compress.gif map_compress_y.gif \
+          -compose Distort -define compose:args='' -composite \
+          distort_compose_default.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_compose_default.gif"
+     ><IMG SRC="distort_compose_default.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<BR>
+
+<A NAME="no-op_distortion_map"></A>
+<H3>No-op Distortion Map</H3>
+
+Before we get any further I would like to just step back a moment a have
+another look at the the 'noop' example above.   This actually will blur the
+image slightly, as the formula as I have outlined is actually not exactly
+correct.  Getting the 'no-op' copy of the original is a good test that you
+have the mathematics of your distortion correct. <P>
+
+That is when given a perfect gradient, you can map each pixel from the source
+image to the destination image.  That is the LUT 'white' (or 1.0) value will
+map exact to right-most (or bottom-most) pixel in the destination. </P>
+
+For testing no-op distortions we use a 'pixel checks image' (EG:
+"<CODE>pattern:gray50</CODE>") as it will show up any distortion, and thus any
+problem in the applied mathematics used.
+
+So lets try to apply a no-op distortion to the methods we have so far used...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 pattern:gray50 \
+          \( gradient: -rotate 90 \) \( gradient: -flip \) \
+          -fx 'p{u[1]*w,u[2]*h}'    distort_fx_check.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_fx_check.gif"     WIDTH=75 HEIGHT=75
+     ><IMG SRC="distort_fx_check.gif"     WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 pattern:gray50 \
+          \( gradient: -rotate 90 \) \( gradient: -flip \) \
+          -set option:compose:args '%[fx:w/2] x %[fx:h/2]' \
+          -compose Distort  -composite  distort_compose_check.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_compose_check.gif"     WIDTH=75 HEIGHT=75
+     ><IMG SRC="distort_compose_check.gif"     WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see BOTH methods failed to reproduce the 'pixel check' image.
+Though they did so in slightly different ways due to the way the coordinates
+are calculated. </P>
+
+What happened is that scaling factor, from color lookup, to pixel coordinate,
+is out by 1 pixel.  For details as to why this has happened see,  <A
+HREF="../distorts/#control_coordinates" >Distorts, Image Coordinates vs Pixel
+Coordinates</A>. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The FX distortion is centered on the upper right corner (pixel location
+  0,0), and generates duplicate virtual pixels along the bottom and right
+  edges.  That is because it makes no attempt to change center of the scaling,
+  from lookup color, to image coordinates used for the actual lookup. As such
+  black pixels remain centered at pixel 0,0, even though the scaling is wrong.
+  </P>
+
+  The compose "<CODE>Distort</CODE>" operator translates the coordinates so
+  zero is in the center of the image, before the scaling is applied. It does
+  this as part of the scaling for 'displacement maps' (see later).  As such
+  the inaccurate scaling pulls the edges of the image inward by 1/2 a pixel
+  along each edge, while leaving the center of the image correct.
+
+</I></FONT></TD></TR></TABLE></P>
+
+Here is the corrected 'perfect no-op' versions for absolution distortion maps,
+which essentually uses Image Coordinates (width and height reduced by one),
+when calculating the scaling factor between color and coordients. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 pattern:gray50 \
+          \( gradient: -rotate 90 \) \( gradient: -flip \) \
+          -fx 'p{u[1]*(w-1),u[2]*(h-1)}'    distort_fx_check_correct.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_fx_check_correct.gif"     WIDTH=75 HEIGHT=75
+     ><IMG SRC="distort_fx_check_correct.gif"     WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 pattern:gray50 \
+          \( gradient: -rotate 90 \) \( gradient: -flip \) \
+          -set option:compose:args '%[fx:(w-1)/2] x %[fx:(h-1)/2]' \
+          -compose Distort  -composite  distort_compose_check_correct.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_compose_check_correct.gif"     WIDTH=75 HEIGHT=75
+     ><IMG SRC="distort_compose_check_correct.gif"     WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+In actual fact the default values for "<CODE>compose:args</CODE>", if
+undefined, uses the correct scaling values.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 pattern:gray50 \
+          \( gradient: -rotate 90 \) \( gradient: -flip \) \
+          -compose Distort -define compose:args='' -composite \
+          distort_compose_default_check.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_compose_default_check.gif"     WIDTH=75 HEIGHT=75
+     ><IMG SRC="distort_compose_default_check.gif"     WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+However it should be pointed out these slight inaccuracies are normally not
+that important when using distortions, so any slight differences is generally
+ignored.  Just keep it in mind so you know about it when it does actually
+matter.  </P>
+
+
+<A NAME="distortion_problems"></A>
+<H3>Problems with Distortion Maps</H3>
+
+Lets continue with out image distorting by attempting a rotation. </P>
+
+For this generating the rotated map can be a little tricky, but can be done...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 gradient: -background black -rotate 45 \
+          -gravity center -crop 75x75+0+0 +repage  map_rot45_x.png
+  convert map_rot45_x.png  -rotate 90              map_rot45_y.png
+  convert koala.gif  map_rot45_x.png   map_rot45_y.png \
+          -compose Distort  -composite    distort_rot45.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_rot45_x.png"
+     ><IMG SRC="map_rot45_x.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_rot45_y.png"
+     ><IMG SRC="map_rot45_y.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_rot45.gif"
+     ><IMG SRC="distort_rot45.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+And we now have another way of rotating any image. </P>
+
+The biggest problem with this technique is that by creating our distortion maps
+using rotates, we introduced some oddly colored pixels along the sides of the
+diagonal edges.  In the last example this caused some random pixels to be added
+in a line along the bottom right corner of the image. </P>
+
+These 'random' colors are anti-aliasing values that the rotate introduced to
+produce a 'better' image.  However for distortion maps, anti-aliased edge
+pixels can cause a real problems. </P>
+
+Now we can try to better define the colors at the edges of the rotated LUT
+images.  In this case we can generate a larger gradient image, then  cropping
+the rotation down to the correct size.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x20 xc:white xc:black -size 115x75 gradient: \
+          +swap -append   -rotate 45 \
+          -gravity center -crop 75x75+0+0 +repage   map_rot45b_x.png
+  convert map_rot45b_x.png  -rotate 90              map_rot45b_y.png
+  convert koala.gif  map_rot45b_x.png   map_rot45b_y.png \
+          -compose Distort  -composite     distort_rot45_better.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_rot45b_x.png"
+     ><IMG SRC="map_rot45b_x.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_rot45b_y.png"
+     ><IMG SRC="map_rot45b_y.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_rot45_better.png"
+     ><IMG SRC="distort_rot45_better.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+In this way all the pixels in the LUT are now defined properly with no
+anti-alising. </P>
+
+This now shows a slightly different problem.  All the pixels in the final
+image are properly defined, but some pixels should not be part of the final
+image.  They have no real meaning in resulting image. </P>
+
+This represents the biggest problem with using an LUT to specify the absolute
+coordinates to get from the source image.  You have no way of specifying what
+IM should do in these undefined areas. </P>
+
+<A NAME="undefined_masking"></A>
+<H3>Set Undefined Pixels using a Mask</H3>
+
+A more general way of solving the 'undefined pixel' problem is to define a map
+of what pixels are actually a valid defined result in the distortion. In other
+words a masking image. </P>
+
+For example...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 xc:white -background black -rotate 45 \
+          -gravity center -crop 75x75+0+0 +repage  map_rot45b_m.png
+  convert distort_rot45_better.png map_rot45b_m.png \
+          +matte -compose CopyOpacity -composite   distort_rot45_masked.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="distort_rot45_better.png"
+     ><IMG SRC="distort_rot45_better.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="map_rot45b_m.png"
+     ><IMG SRC="map_rot45b_m.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_rot45_masked.png"
+     ><IMG SRC="distort_rot45_masked.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Now we have three images involved with the distortion map, and the results is
+getting complex indeed.  Of course in a typical situation you probably will
+not need to go that far, but for the general case you do.  </P>
+
+<A NAME="distortion_unified"></A>
+<H3>Unified Distortion Image</H3>
+
+You may however have noticed that all three maps are all grey scale images.
+This means it is quite reasonable to merge all the maps into a single
+distortion map image. </P>
+
+For example, lets map the 'X distortion map' to the '<CODE>red</CODE>'
+channel, the 'Y map' to the '<CODE>green</CODE>', and the mask to the
+'<CODE>alpha</CODE>' or transparency channel, which makes it easier to handle.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert map_rot45b_x.png map_rot45b_y.png \( map_rot45b_m.png -negate \) \
+          +matte -channel RGA -background black -combine  map_rot45u.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="map_rot45b_x.png"
+     ><IMG SRC="map_rot45b_x.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="map_rot45b_y.png"
+     ><IMG SRC="map_rot45b_y.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="map_rot45b_m.png"
+     ><IMG SRC="map_rot45b_m.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="map_rot45u.png"
+     ><IMG SRC="map_rot45u.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The '<CODE>blue</CODE>' channel in the <A HREF="../color_basics/#combine"
+  >Combined Channel Image</A> is not defined, so takes its value from the
+  current "<A HREF="../option_link.cgi?background"
+  ><CODE>-background</CODE></A>" color, which I preset to '<CODE>black</CODE>'
+  or a value of zero in the above.
+</I></FONT></TD></TR></TABLE></P>
+
+Now lets apply this unified distortion map to our koala image.  This
+unfortunately requires two image processing steps, one to distort the image,
+and one to mask the result.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -matte   map_rot45u.png \
+          \( -clone 0,1  -fx 'p{v.r*w,v.g*h}' \
+             +clone -compose Dst_In -composite \) -delete 0,1 \
+          distort_rot45_unified.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="map_rot45u.png"
+     ><IMG SRC="map_rot45u.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="distort_rot45_unified.png"
+     ><IMG SRC="distort_rot45_unified.png"          WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+You can also use the "<A HREF="#compose_distort" >Distort</A>" composition
+method directly using the unified distortion map image...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif -matte   map_rot45u.png \
+          -compose Distort -define compose:args='' -composite \
+          distort_rot45_compose.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_rot45_compose.gif"        WIDTH=75 HEIGHT=75
+     ><IMG SRC="distort_rot45_compose.gif"    WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+
+There is still an unused channel (<CODE>blue</CODE>) in the 'unified
+distortion map' image. One logical use for it is as a means to add highlights
+and shadows to the distorted image.  (See <A HREF="../compose/#overlay"
+>Overlay highlights</A>). </P>
+
+You can see this technique taken one step further in the <A HREF="#spherical"
+>Spherical Distortion Map</A> example below.  </P>
+
+
+<A NAME="hourglass"></A>
+<H3>Hourglass Distortion Map</H3>
+
+Now I wanted an one dimensional distortion map, that scaled each row of the
+image differently based on that rows height.  Sort of producing a real
+carnival fun house mirror distortion that makes fat people look very thin.
+In other words a sort of hourglass distortion. </P>
+
+This is quite a complex LUT image, and after a lot of fiddling I came up with
+the following expression to generate the height variable, but horizontally
+linear gradient map.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:  -channel G \
+          -fx 'sc=.15; (i/w-.5)/(1+sc*cos(j*pi*2/h)-sc)+.5' \
+          -separate  map_hourglass.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="map_hourglass.png"
+     ><IMG SRC="map_hourglass.png"        WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  When generating gray-scale gradients, you can make the -fx operator 3 times
+  faster, simply by asking it to only generate one color channel only, such as
+  the '<CODE>G</CODE>' or green channel in the above example.  This channel
+  can then be <A HREF="../color_basics/#separate" >Separated</A> to form the
+  required gray-scale image.  This can represent a very large speed boost,
+  especially when using a very complex "<CODE><A HREF="../option_link.cgi?fx"
+  >-fx</A></CODE>" formula.
+</I></FONT></TD></TR></TABLE></P>
+
+The '<CODE>sc</CODE>' is the scaling factor for the hourglass (value ranges
+from 0 to 0.5), and allows you to adjust the magnitude of the distortion. </P>
+
+Now lets apply this map to the built-in "<CODE>rose:</CODE>" image. </P>
+
+Note that the 100x100 pixel map does not match the 70x46 pixel image.  This
+complicates things, as we will need to scale the current pixel in the source
+image by the appropriate amount to match the distortion map we give, to look-up
+the location of that pixels color. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose:   map_hourglass.png \
+          -fx 'p{ v.p{i*v.w/w,j*v.h/h}*w,  j}'  distort_hourglass.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+    <A HREF="distort_hourglass.png"
+       ><IMG SRC="distort_hourglass.png"
+             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+If you look at this carefully the pixels X coordinate '<CODE>i</CODE>' is
+multiplied by the width of the distortion map image '<CODE>v.w</CODE>', and
+divided by the original images width '<CODE>w</CODE>', to produce
+'<CODE>i*v.w/w</CODE>.  The same thing happens for the pixels Y coordinate,
+'<CODE>j*v.h/h</CODE>'.  This re-scales the pixel coordinate in the
+destination image to match the distortion LUT image.  The looked up coordinate
+is then scaled by multiplying the LUT value with the source images width, to
+become the X coordinate for the color look-up. </P>
+
+If you have both an X and a Y distortion map, then you will have to repeat the
+scaled look-up for the Y map. </P>
+
+Of course we have the same 'edge' distortions we saw previously, so lets
+change the <A HREF="../misc/#virtual" >Virtual Pixel Setting</A> to
+transparency.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -alpha set  -virtual-pixel transparent -channel RGBA \
+          map_hourglass.png  -fx 'p{ v.p{i*v.w/w,j*v.h/h}.g*w, j}' \
+          distort_hourglass2.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="distort_hourglass2.png"
+     ><IMG SRC="distort_hourglass2.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note the use of the "<A HREF="../option_link.cgi?channel"
+><CODE>-channel</CODE></A>" setting to ensure that "<CODE><A
+HREF="../option_link.cgi?fx" >-fx</A></CODE>" will work with and return alpha
+channel (transparent) values from the source image.  Specifically the
+transparent virtual pixels. </P>
+
+Also note that when looking up the distortion map we ony looked up from the
+green channel (using '<CODE>v.p{}.g</CODE>'). If this is not done, the same
+channel as being process from the source image will be used, and for the map
+'alpha' is not defined. </P>
+
+This distortion map could be made even better by using a non-linear gradient
+so the image remains rectangular, with more distortion at the edges than in
+the middle, to give it a more 'rounded' or 'cylindrical' look. </P>
+
+<I>Anyone like to give this a go? Mail Me</I> </P>
+
+
+<A NAME="spherical"></A>
+<H3>Spherical Distortion Map</H3>
+
+In the previous <A HREF="#hourglass" >Hourglass Distortion Map</A> example,
+I generated a gradient which was horizontally scaled by a cosine curve.
+With a little more work you can generate a spherical shape instead...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:  -channel R \
+          -fx 'yy=(j+.5)/h-.5; (i/w-.5)/(sqrt(1-4*yy^2))+.5' \
+          -separate  +channel     sphere_lut.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="sphere_lut.png"
+     ><IMG SRC="sphere_lut.png"        WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note however that the above is not strictly accurate. The compressed gradient
+remains a liner gradient, just compressed to fit within a circle.  A more
+accurate representation would probably require the creation of a non-linear
+gradient. Which would in absolute position terms be a 'arccos()' function.
+</P>
+
+Now this mapping also has some large areas which would be classed as invalid,
+so will need some type of masking to define what pixels will be valid and
+invalid in the final image.  A simple circle will do in this case.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:black -fill white \
+          -draw 'circle 49.5,49.5 49.5,0'    sphere_mask.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+    <A HREF="sphere_mask.png"
+       ><IMG SRC="sphere_mask.png"      WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+And to complete we also need a shading highlight, such as developed in <A
+HREF="../transform/#shade_overlay" >Overlay Highlights</A>, for use by <A
+HREF="../compose/#overlay" >Overlay</A> or <A HREF="../compose/#hardlight"
+>Hardlight</A> composition...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert sphere_mask.png \
+          \( +clone -blur 0x20 -shade 110x21.7 -contrast-stretch 0% \
+             +sigmoidal-contrast 6x50% -fill grey50 -colorize 10%  \) \
+          -composite sphere_overlay.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+    <A HREF="sphere_overlay.png"
+       ><IMG SRC="sphere_overlay.png"      WIDTH=100 HEIGHT=100
+             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Remember the above shading will only matter within the bounds of the sphere
+object, so the fact that the shade overflows those bounds is not important.
+Actually if you like to try and come up with a better spherical shading, that
+produces an even better ball like image, would love to see it. </P>
+
+So lets apply all three images: X coordinate LUT, Overlay Shading, and
+Transparency Mask;  to an actual image of the right size (for simplicity).
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert lena_orig.png -resize 100x100   sphere_lut.png   -fx 'p{ v*w, j }' \
+          sphere_overlay.png   -compose HardLight  -composite \
+          sphere_mask.png -alpha off -compose CopyOpacity -composite \
+          sphere_lena.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="lena_orig.png"
+     ><IMG SRC="lena_orig.png"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="sphere_lena.png"
+     ><IMG SRC="sphere_lena.png"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+This particular example shows the most powerful aspect of a <A
+HREF="#distortion_map" >Absolute Distortion Map</A>.  You can define a
+gradient on any freeform object (not nessarially mathematically), so that any
+image can be mapped onto that object, whether it be curves, wrinkles, folds,
+etc.  Simply put, once you have the object mapping worked out you can map any
+image onto its surface. </P>
+
+Then to make it more realistic looking, you can overlay a second mapping, to
+add highlights, shadows, edges, and other features. </P>
+
+Of course as all three images are grayscale, you can combine them into a
+single <A HREF="#distortion_unified" >Unified Distortion Map</A> image, for
+easy storage.  In this case I'll make it a more spherical distortion
+by re-using the X coordinate distortion LUT for the Y coodinate as well.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert sphere_lut.png   \( +clone -transpose \) \
+          sphere_overlay.png   \( sphere_mask.png -negate \) \
+          -channel RGBA  -combine    spherical_unified.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="spherical_unified.png"
+     ><IMG SRC="spherical_unified.png"      WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+It is a rather pretty map. But if trying to interprete it, remember that: the
+'red' and 'green' channels are the X and Y coodinate LUT,  'blue' is the high
+light and shadow effects overlay, and the transparency channel holds the
+invalid pixel mask for the final image. </P>
+
+So lets apply it using the "<A HREF="#compose_distort" >Distort</A>"
+composition method.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert mandrill_grid_sm.jpg   spherical_unified.png  \
+          \( -clone 0,1 -alpha set -compose Distort -composite \) \
+          \( -clone 1   -channel B -separate +channel \) \
+          \( -clone 2,3 -compose HardLight -composite \) \
+          \( -clone 4,1 -compose DstIn -composite \) \
+          -delete 0--2  spherical_mandrill.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="mandrill_grid_sm.jpg"
+     ><IMG SRC="mandrill_grid_sm.jpg"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="spherical_mandrill.png"
+     ><IMG SRC="spherical_mandrill.png"       WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+In sequence... <UL>
+<LI> we apply the distortion map (which includes the mask)
+<LI> extract the shading map from the unified image map
+<LI> apply the shading map to the distorted image
+<LI> restore the mask lost from the shading operation
+<LI> delete all but the final image and save it
+</UL></P>
+
+The complexity of this is purely due to the need extract the shading mask, and
+restoring the alpha mask the shading removed.  </P>
+
+
+<A NAME="circlar_arc"></A>
+<H3>Circular Arc Distortion Map</H3>
+
+Just to show just what is really possible by using positional distortion maps,
+here is an absolute distortion LUT, similar to what is provided by the <A
+HREF="#arc" >'Arc' Distortion Method</A> above. </P>
+
+Basically instead of calculating the coordinate mappings for each and every
+pixel in each and every image being distorted, we save those calculated
+coordinates into the two X and Y coordinate gray-scale LUT maps. </P>
+
+That is we pre-calculate the whole distortion into a simpler look-up table
+image, allowing it to be applied over, and over, and over, without needing
+further square roots or trigonometric functions. </P>
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -pointsize 30 -font Candice label:Anthony -trim +repage \
+          -gravity center -resize 95x95 -crop 100x100+0+0\! \
+          -flatten text_image.jpg
+  convert -size 100x100 xc: -channel G  -fx 'atan(j/(i+.5))*2/pi' \
+          -separate   -flip -flop       map_p_angle.png
+  convert -size 100x100 xc: -channel G  -fx '1-hypot(i,j)/(w*1.6)' \
+          -separate   -transverse       map_p_radius.png
+  convert text_image.jpg   map_p_angle.png map_p_radius.png \
+              -fx 'p{u[1]*w,u[2]*h}'    distort_p_curved.jpg
+</CODE></PRE></TD></TR></TABLE>
+<TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN=center>
+  <A HREF="text_image.jpg"
+     ><IMG SRC="text_image.jpg"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Color Source</FONT>
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <BR>&nbsp;
+</TD><TD ALIGN=center>
+  <A HREF="map_p_angle.png"
+     ><IMG SRC="map_p_angle.png"         WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Angle - X Map</FONT>
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <BR>&nbsp;
+</TD><TD ALIGN=center>
+  <A HREF="map_p_radius.png"
+     ><IMG SRC="map_p_radius.png"        WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Radius - Y Map</FONT>
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <BR>&nbsp;
+</TD><TD ALIGN=center>
+  <A HREF="distort_p_curved.jpg"
+     ><IMG SRC="distort_p_curved.jpg"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Curved Text</FONT>
+</TD></TR></TABLE>
+</DIV></P>
+
+Of course generating that distortion map was difficult, but once it has been
+done once, using any means you like (even artistically using an image editor
+like "<CODE>Gimp</CODE>" ), you can then reuse it on a huge number of images.
+</P>
+
+
+<A NAME="polar"></A>
+<H3>Polar Distortion Map</H3>
+
+Sometimes you may need the destination image to be defined by the distortion
+map, rather than the source image, just to make things work correctly. </P>
+
+For example, if we want to map some text into a circle (also known as a polar
+transform), you really need to be able to use an image that is about 3 to 4
+times long than it is high (high aspect ratio) or the result will not be very
+readable. </P>
+
+To do that we place the distortion map images before the color source image,
+so that the first (X map) image will be used to set the size of the final
+result, rather than the input source image.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x100 xc:  -channel G \
+          -fx 'atan2(i-w/2,h/2-j)/pi/2 + .5' \
+          -separate  map_p_angular.png
+  convert -size 100x100 xc:  -channel G \
+          -fx 'rr=hypot(i-w/2,j-h/2); (.5-rr/70)*1.2+.5' \
+          -separate  map_p_radial.png
+  convert -font Candice -gravity center -size 200x50 \
+                                label:'Around  the  World'    text.jpg
+  convert map_p_angular.png map_p_radial.png text.jpg \
+                 -fx 'u[2].p{ u*u[2].w, v*u[2].h }' distort_p_circle.jpg
+</CODE></PRE></TD></TR></TABLE>
+<TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN=center>
+  <A HREF="map_p_angular.png"
+     ><IMG SRC="map_p_angular.png"         WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Angular - X Map</FONT>
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <BR>&nbsp;
+</TD><TD ALIGN=center>
+  <A HREF="map_p_radial.png"
+     ><IMG SRC="map_p_radial.png"        WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Radial - Y Map</FONT>
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <BR>&nbsp;
+</TD><TD ALIGN=center>
+  <A HREF="text.jpg"
+     ><IMG SRC="text.jpg"
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Color Source</FONT>
+</TD><TD ALIGN=center>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <BR>&nbsp;
+</TD><TD ALIGN=center>
+  <A HREF="distort_p_circle.jpg"
+     ><IMG SRC="distort_p_circle.jpg"    WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <FONT SIZE=1><BR>Circled Text</FONT>
+</TD></TR></TABLE>
+</DIV></P>
+
+Essentially the color source image can now be any size or aspect ratio, and
+things will be handled correctly, however you may need to adjust the
+generation of the distortion map to handle the source images aspect ratio
+correctly. </P>
+
+In generating the above maps, the value '<CODE>70</CODE>' controls the final
+size of the circle, along which the mid-line is placed.  The
+'<CODE>1.2</CODE>' value on the other hand controls the vertical scaling of
+the image into the circle, allowing you to adjust the height of the distorted
+text. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Remember this "<A HREF="../option_link.cgi?fx" ><CODE>-fx</CODE></A>"
+  expression requires the distortion maps to be given first, and the color
+  source to be given as the third (index 2) image. However this will also
+  mean that any meta-data that is stored in the source image will also be
+  lost.
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The problem with this distortion map is that there is a very sharp
+  disjunction of colors in the 'X map' (caused by an asymptote in the
+  mathematics).  This line must remain sharp when you do any color look-up,
+  or resizing of the map, to produce a larger image.  That is you will need
+  to ensure that any resize or interpolated look-up of this map does not
+  produce a grey look-up color along that asymptotic line. </P>
+
+  If you do generate grey look-ups along this line, you will get a line of
+  colored pixels (looked up from the middle of the image) in your final
+  result. </P>
+
+  Because of this it is recommend you always generate this distortion map
+  at the size you need for the final image, and never use any scaling
+  technique previously shown.
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+
+You can use this for other effects too, like a circular checkerboard...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert map_p_angular.png map_p_radial.png \
+          -size 150x90 pattern:checkerboard \
+          -fx 'u[2].p{ u*u[2].w, v*u[2].h }'   distort_check_circle.gif
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_check_circle.gif"
+     ><IMG SRC="distort_check_circle.gif"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Try some of the other <A
+HREF="https://legacy.imagemagick.org/script/formats.php#builtin-images" >Built-In
+Patterns</A> that IM provides with the above for other interesting effects.
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The above clearly shows the limits of image distortions using "<A
+  HREF="../option_link.cgi?fx" ><CODE>-fx</CODE></A>".  Near center of the
+  image, the radial lines are becoming aliased as pixel merging of a large
+  areas into a single pixel does not take place. On the other hand the edges
+  of the image, particularly the corners, show an appropriate blurring the
+  radial lines. </P>
+
+  The cause is that "<A HREF="../option_link.cgi?fx" ><CODE>-fx</CODE></A>"
+  (and most older distortion methods) only so simple unscaled interpolated
+  look-ups of the colors in the source image.  This means that as the image
+  scales smaller the source image pixels are not merged together to produce
+  the correct color for the destination pixel. </P>
+
+  This is not a problem for areas of enlargement (as in the corners) only of
+  extreme compression (center).  As such one solution is the use of <A
+  HREF="super-sample" >Super Sampling</A>, but all this does is postpone the
+  problems to a higher level of compression.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  The same asymptotic line (sudden change) in the distortion map (center to
+  bottom of image) also produces a sharp color change along that line in the
+  above example.  Compare that line with the other radial lines (like to the
+  from center to the top of the image) which get very fuzzy as it approces the
+  edge of the image due to interpolated look-up previously noted. </P>
+
+  This may be a problem when generating a circular pattern with a tileable
+  image (such as the above), and may require some special handling to avoid
+  visible differences in that part of the image. </P>
+
+  To avoid this it may be better to distort the top half of the image
+  separately to the bottom half so as to avoid the asymptotic region. </P>
+
+</I></FONT></TD></TR></TABLE></P>
+
+<A NAME="shuffling"></A>
+<H3>Shuffling Rows</H3>
+
+In this example we do something a little more unusual...  Shuffling the rows
+of an image at random. </P>
+
+First we create a map, that has a gradient for X (red channel), a random noise
+image for the Y (green channel).
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: \
+          \( -size 46x70 gradient: -rotate -90 \) \
+          \( -size 1x46 gradient: -spread 23 -scale 70x46\! \) \
+          -compose Distort -define compose:args='' -composite \
+          rose_row_shuffle.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="rose.png"
+     ><IMG SRC="rose.png"         WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="rose_row_shuffle.png"
+     ><IMG SRC="rose_row_shuffle.png"  WIDTH=70 HEIGHT=46
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+Unfortunately "<A HREF="../option_link.cgi?spread" ><CODE>-spread</CODE></A>"
+seems to include virtual pixels in its selection of pixels to swap, and means
+some rows become duplicates, while others are lost completely.   In otherwords
+the 'shuffle' imagemap is not quite right. </P>
+
+<I>Do you have a better solution to shuffling pixels?</I> </P>
+
+<BR>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="displace"></A>
+<A NAME="displacement_maps"></A>
+<H2>Relative Lookup Displacement Maps</H2>
+
+As you can see creating a <A HREF="#distortion_maps" >Absolute Distortion
+Map</A> is reasonably easy to create and use.  However it has a serious
+problem when a distortion has 'undefined' regions, or areas where the
+distortion goes 'outside' the normal bounds of the source image.  </P>
+
+A more serious problem is that you are always dealing with gradents, which
+define the absolute coordinates for the color lookup.  No part of the mapping
+image is simple, or clean, or easy to modify or edit by hand.  Special
+techniques and mathematics is needed in there creation and use.  That that
+generally means there is very little in the way of 'artistic' development
+involved.  </P>
+
+There is however another method of using a Lookup Table, to specify the
+coordinates in which to get the final color.  By using a <B>Relative
+Displacement Map</B>. </P>
+
+Instead of the 'map' defining the exact coordinate in which to lookup each
+pixels color from the source image, it instead defines an offset or
+<I>displacement</I> relative to the current position. </P>
+
+Now an offset could be a positive or negative value, and a negative value
+requires a little trickiness to encode into a color value.  So what they do is
+define 'pure gray' and being a 0 displacement of the coordinate (no change).
+They then make 'black' mean a maximum negative displacement, and 'white' to
+mean a maximum positive displacement. </P>
+
+This can be hard to describe so lets look at an example.
+
+First we create a test image to 'displace'.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -font Candice -gravity center -size 150x50 \
+                                           label:'Anthony'    label.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="label.jpg"
+     ><IMG SRC="label.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Now I'll use some 'magick' to create a 'pure gray' image with 'pure white' and
+'pure black' areas.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  echo "P2 5 1 255\n 127 0 127 255 127" |\
+                convert - -scale 150x50\! +matte   displace_map.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displace_map.jpg"
+     ><IMG SRC="displace_map.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Now to use this image as a 'displacement map' we get the 'gray value' from the
+displacement map, and add it either (or both) the X and Y coordinate.  That is
+we displace the lookup by a relative amount from the current position
+according to the 'greyness' of the displacement map.  </P>
+
+The 'value' is handled in a special way, so that a 'pure-gray' will mean
+a zero displacement of the lookup point (just the Y coodinate in this case)
+but a 'maximum displacement' is used for a 'white' (positive) or 'black'
+(negative) value. </P>
+
+For example, lets apply the displacement map to our "label" image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert label.jpg  displace_map.jpg  -virtual-pixel Gray \
+          -fx 'dy=10*(2*v-1); p{i,j+dy}'   displaced.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displaced.jpg"
+       ><IMG SRC="displaced.jpg"   WIDTH=150 HEIGHT=50
+             ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see the various sections of the image looked like they 'moved'
+according to the color of the displacement map.   A 'white' region will
+add the given 'displacement value' to the lookup point, so in that area
+each pixel looks up the source image '10' pixels 'south-ward' (positive Y
+direction).  As a result it looks as if the source image moved upward. </P>
+
+Remember it is the lookup that is displaced, NOT the actual image itself,
+which is why it appeared to move upward or a negative direction for white.
+</P>
+
+A similar effect was also seen for the areas with a 'black' displacement.
+The source image appeared to move downward, because the lookup displacement
+was done in a negative direction. Think about it carefully. </P>
+
+You will also notice that the 'displaced lookup' can actually look beyond
+the normal image bounds allowing you to use a <A HREF="../misc/#virtual-pixel"
+>Virtual Pixel</A> setting to control these out of bounds pixels.  In the
+above I just requested that a gray pixel be returned. </P>
+
+The 'maximum displacement' value '<CODE>10</CODE>' in the above example is
+very important, and is the maximum relative distance any part of the source
+image appears to move, for a 'pure white' or 'pure black' displacement value
+in the mapping image.  You can not displace the lookup, and thus the input
+image anything further than this value.  </P>
+
+Other shades of gray between the maximum white or black values and the central
+no-displacement 50% gray value, will displace the lookup by an appropriate
+amount.  As such a 25% gray value will displace the lookup by 1/2 the
+displacement value in the negative direction, while a 75% gray will displace
+by 1/2 that value in the positive direction. </P>
+
+This value is a key difference between a <A HREF="#distortion_map" >Absolute
+Distortion Map</A> and <A HREF="#displacement_map" >Relative Displacement
+Map</A>.  You can increase or decrease the relative displacements, making the
+image more or less distorted, simply by changing the displacement value,
+without needing to change the displacement map at all.  </P>
+
+Also as a 'zero-displacement' map is just a solid 50% or pure gray, and not a
+complex gradient, you can start with a simple gray image, and artistically
+lighten or darken areas to generate the desired displacements.  You can do
+this simply by drawing shapes or areas, rather then needing a complex
+and exact mathematical formula. </P>
+
+And finally as all the displacements are relative, wild values such as
+produced by edge-effects does not produce wild or random pixel colors.  In
+fact as you will see smoothing or blurring <A HREF="#displacement_map"
+>Displacement Maps</A> is actually a good thing as it removes the disjoint or
+discontinuous 'cutting' effect you can see in the above example. </P>
+
+<B>In summary</B> A displacement map are much more controllable, and artistic,
+providing localized displacements without the need for complex and exacting
+mathematics, and are very forgiving with regard to mistakes, edge effects, or
+even displacement map blurring. </P>
+
+It is ideal for simple 'displacement' type distortions such as when generating
+effects such as water, waves,  distorting mirrors, the bending of light,
+lens-like effects, or frosted or bubbles glass effects. </P>
+
+On the other hand highly mathematical distortions such as 'polar', rotational,
+and 'perspective' distortions, or other real-world 3-d type mappings, are not
+easily achieved.  That is not to say it is impossible, as later we will show
+that you can in fact convert between the two styles of maps, just more
+difficult. </P>
+
+<A NAME="composite_displace"></A>
+<H2>Composite Displacement Method</H2>
+
+We have used <A HREF="../transform/#fx" >DIY FX Operator</A> was used to do
+the displacement mapping, so you can see what is actually being done.  But it
+is a slow technique.  But their is an equivelent built-in <A
+HREF="../compose/#compose" >Composition Operator</A>, "<CODE>Displace</CODE>".
+</P>
+
+Here is how you you use it...
+
+<DL><DD><PRE><B>
+convert {<I>image</I>} {<I>displacement_map</I>} \
+        -compose Displace   -define compose:args={<I>X</I>}x{<I>Y</I>} \
+        -composite   {<I>result</I>+}
+
+convert {<I>image</I>} {<I>displacement_map</I>} \
+        -compose Displace   -set option:compose:args {<I>X</I>}x{<I>Y</I>} \
+        -composite   {<I>result</I>+}
+
+composite {<I>displacement_map</I>} {<I>image</I>} \
+          -displace {<I>X</I>}x{<I>Y</I>}    {<I>result</I>+}
+</B></PRE></DL>
+
+Note the order, expecially in the "<CODE>composite</CODE>" command. </P>
+
+The use of "<CODE>-set</CODE>" instead of define also allows you to use <A
+HREF="../basics/#arg_percent" >Percent Escapes</A> in the argument. </P>
+
+The '<I>X</I>' and '<I>Y</I>' values define the direction and 'maximum
+displacement' that will be used for 'white' and 'black' colors in the given
+displacement map. You can define either one, or both values, so as to allow
+you to displace in any particular direction. </P>
+
+That is normally displacement maps provide a linear displacement in some
+random direction with a maximum intensity controlled by the '<I>X</I>' and
+'<I>Y</I>' values.  The 'map image' then sets how much of that maximum is
+applied from a negatative maximum (black) to a positive maximum (white), with
+a perfect gray meaning no displacement of the lookup for that pixel. </P>
+
+For example here is the same Y displacement example we had above...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert label.jpg  displace_map.jpg  -virtual-pixel Gray \
+          -compose Displace -define compose:args=0x10 -composite \
+          displaced_y.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displaced_y.jpg"
+     ><IMG SRC="displaced_y.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+You can also make use of other setting like "<CODE><A
+HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" and "<CODE><A
+HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" settings, to adjust
+the area the displacement map is overlayed on the image.  The pixel look up
+resulting from the displacement map can still reference areas outside the
+overlaid part of the image, duplicating them inot the overlayed area. </P>
+
+<!--
+<A NAME="convertion"></A>
+<H3>Absolute to Relative Map Conversion</H3>
+
+You can convert absolute position distortion maps, directly into an equivalent
+displacement map, on the condition that the vector scaling is set to the size
+of the original image.  It just requires some extra processing.  </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+For example here I convert the 'trapezoidal' X positional map created above
+into a X displacement map.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE>
+  convert map_p_trapezoidal.png -interpolate integer \
+          -fx '(u-i/w)/2+.5'   map_p2d_trapezoidal.png
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="map_p2d_trapezoidal.png"
+     ><IMG SRC="map_p2d_trapezoidal.png"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+
+Okay so we now have a displacement map, lets try it using the fast "<A
+HREF="../option_link.cgi?displace" ><CODE>-displace</CODE></A>" composite
+operator.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE _EXECUTE>
+  composite map_p2d_trapezoidal.png box_image.png \
+            -displace 100x0   distort_p2d_trapezoidal.png
+</CODE></PRE></TD></TR></TABLE>
+</TD><TD>
+  <A HREF="distort_p2d_trapezoidal.png"
+     ><IMG SRC="distort_p2d_trapezoidal.png"          WIDTH=100 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As this displacement map was just a converted positional distortion map,
+the invalid areas remain 'clipped' or 'pegged' to the edge colors of the
+source image (black). </P>
+-->
+
+<A NAME="displace_simple"></A>
+<H3>Simple Displacement Examples</H3>
+
+A displacement map of raw areas of colors, without any smooth transition will
+generaly produce disjoint (discontinuous) displacements between the different
+areas in the resulting image, just as you saw above. </P>
+
+You can in fact produce a displacement map that 'fractures' as if you were
+looking into a cracked mirror, using this technique. For example see the <A
+HREF="#displace_mirror" >Fractured Mirror</A> below. </P>
+
+You can produce nicer and smoother results if the colors smoothly flowed from
+one area to another.  For example, by bluring the displacement map you
+generate a wave like transtion between the displaced areas...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert displace_map.jpg  -blur 0x10   dismap_wave.jpg
+  convert label.jpg  dismap_wave.jpg  -virtual-pixel Gray \
+          -compose Displace -define compose:args=0x10 -composite \
+          displaced_wave_y.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="dismap_wave.jpg"
+     ><IMG SRC="dismap_wave.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+  <A HREF="displaced_wave_y.jpg"
+     ><IMG SRC="displaced_wave_y.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Rather than displace the image in a Y direction you can also use a map to
+displace the image in a X direction resulting in a sort of compression wave.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert label.jpg  dismap_wave.jpg  -virtual-pixel Gray \
+          -compose Displace -define compose:args=10x0 -composite \
+          displaced_wave_x.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displaced_wave_x.jpg"
+     ><IMG SRC="displaced_wave_x.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+By using the same displacement map for both X and Y directions, we can
+add both a compression wave as well as an amplitude wave.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert label.jpg  dismap_wave.jpg  -virtual-pixel Gray \
+          -compose Displace -define compose:args=10x10 -composite \
+          displaced_wave_xy.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displaced_wave_xy.jpg"
+     ><IMG SRC="displaced_wave_xy.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that the image is still displaced in a single linear direction, resulting
+in the above image being stretched on the downward slope, and squeezed
+together on the upward slope.  That is the distortion is being performed at
+an angle or 'vector', with both horizontal and vertical components. </P>
+
+You can see that this effect is remarkably like it is underwater, with the
+image being distorted by gentle ripples on the water's surface. </P>
+
+A distortion map however can contain multiple copies of the original image,
+just as you can in a reflected or refracted images...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  echo "P2 3 1 255\n 255 127 0 " | convert - -scale 150x50\! dismap_copy.jpg
+  convert label.jpg  dismap_copy.jpg \
+          -compose Displace -define compose:args=66x0 -composite \
+          displaced_copy.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="dismap_copy.jpg"
+     ><IMG SRC="dismap_copy.jpg"      WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+  <A HREF="displaced_copy.jpg"
+     ><IMG SRC="displaced_copy.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+You can also create mirrored flips or flops of parts of the image, by using
+gradients. For example here you can use a linear displacement map, to copy
+pixels from one side of the image to the other.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 50x150 gradient: -rotate -90  +matte  dismap_mirror.png
+  convert label.jpg  dismap_mirror.png \
+          -compose Displace -define compose:args=150x0 -composite \
+          displaced_mirror.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="dismap_mirror.png"
+     ><IMG SRC="dismap_mirror.png"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+  <A HREF="displaced_mirror.jpg"
+     ><IMG SRC="displaced_mirror.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Can figure out how this displacement map works? &nbsp; As a hint figure out
+what displacement the left most and the right most edges have, then see how
+the rest of the image fits into that. </P>
+
+However as you are again using a gradient image you loose the simplicity of
+displacement maps.  As such mirrors are either better done using a direct <A
+HREF="../warping/#flip" >Flip Operation</A> on the image, or by using a <A
+HREF="#distortion_maps" >Absolute Distortion Map</A> instead. </P>
+
+Note that by flipping the gradient over, you shrink the image.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 50x150 gradient: -rotate 90  +matte  dismap_shrink.png
+  convert label.jpg  dismap_shrink.png \
+          -compose Displace -define compose:args=150x0 -composite \
+          displaced_shrink.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="dismap_shrink.png"
+     ><IMG SRC="dismap_shrink.png"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+  <A HREF="displaced_shrink.jpg"
+     ><IMG SRC="displaced_shrink.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The above also demonstrates a particular problem that displacement maps have.
+</P>
+
+When an area (or all) of an image gets compressed by more than 50%, you will
+start to generate <A HREF="../filter/#aliasing" >Aliasing Artefacts</A>.  this
+is particularly noticable in the staircased 'aliased' edges that is clearly
+visible. </P>
+
+As previously discussed, one solution to this is to <A
+HREF="../distorts/#super_sample" >Super Sample</A> the number of pixels being
+used to generate each output pixel. To do that we enlarge both the image and
+displacement map, then resize the resulting image back to its more normal
+size.  This will allow more pixels to take part in the setting of a specific
+pixel in the result, and thus produce better image. </P>
+
+For example...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert label.jpg  dismap_shrink.png  -resize 200% \
+          -compose Displace -define compose:args=400x0 -composite \
+          -resize 50%    displaced_resize.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displaced_resized.jpg"
+     ><IMG SRC="displaced_resized.jpg"   WIDTH=150 HEIGHT=50
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+A much better and smoother result, though perhaps a little fuzzy too. </P>
+
+
+<A NAME="displace_graph"></A>
+<B>Graphing a gradient</B> </P>
+
+Directly resulting from the above examples was an idea that by using Y
+displacements of a simple line, you can generate a graph of the colors of a
+displacement map. </P>
+
+For example here I generate a mathematical <CODE>sinc()</CODE> function (
+which is defined as '<CODE>sin(x)/x</CODE>'), and graph that gradient by
+using it as a displacement map...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 121x100 xc: -fx 'sin(i*24/w-12)/(i*24/w-12)/1.3+.2' \
+                                                      gradient_sinc.gif
+  convert -size 121x100 xc: -draw 'line 0,50 120,50'     graph_source.gif
+  convert graph_source.gif gradient_sinc.gif \
+          -compose Displace -define compose:args=0x49 -composite \
+          displace_graph.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="gradient_sinc.gif"
+     ><IMG SRC="gradient_sinc.gif"            WIDTH=121 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="graph_source.gif"
+     ><IMG SRC="graph_source.gif"            WIDTH=121 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="displace_graph.gif"
+     ><IMG SRC="displace_graph.gif"         WIDTH=121 HEIGHT=100
+           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see it works, though I wouldn't like to use it for mathematical
+plots.  Better to use a proper graphing package.  This technique however is
+useful as a dirty method of plotting the intensities of a row or column of
+pixels in an image. </P>
+
+What it does do is show how large differences in displacements can easily
+produce a discontinuity or non-smooth result.  Basically as only each
+individual pixel in the "graph source" is only looked at one at a time,
+without averaging, a large difference in the displaced lookup from one pixel
+to the next, can produce a large color change in the result. </P>
+
+The moral is that displacement work best not only with smooth displacement
+maps, but also with displacing images that contains large areas or shades of
+color.  It does not work so well for sharp thin lines. </P>
+
+Of course you can improve things by again <A HREF="../distort/#super_sample"
+>Super Sampling</A> the distort map...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert graph_source.gif gradient_sinc.gif  -resize 400% \
+          -compose Displace -define compose:args=0x196 -composite \
+          -resize 25%   displace_graph_2.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displace_graph_2.gif"
+     ><IMG SRC="displace_graph_2.gif"   WIDTH=121 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The result is a lot better, though not as good as what can be achieved using a
+graphing package. Still only ImageMagick was used in its creation. </P>
+
+Here is another version of the same graph, but this time using a solid color,
+which works a lot better than displacing a thin line.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 121x50 xc:white xc:black -append \
+          gradient_sinc.gif  -resize 400% \
+          -compose Displace -define compose:args=0x196 -composite \
+          -resize 25%   displace_graph_3.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displace_graph_3.gif"
+     ><IMG SRC="displace_graph_3.gif"   WIDTH=121 HEIGHT=100
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+
+<A NAME="displace_areas"></A>
+<H3>Area Displacement (Linear)</H3>
+
+Lets try a more logical displacement problem.  Moving an area of an image in a
+straight line from one location to another.  </P>
+
+As we have seen a 'pure gray' image will not cause any displacement, while a
+'white' color will cause a positive lookup displacement from the source image.
+</P>
+
+For example lets create such an image....
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 xc:gray50 -fill white \
+          -draw 'circle 37,37 37,20'  dismap_spot.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="dismap_spot.jpg"
+     ><IMG SRC="dismap_spot.jpg"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Now when we apply this image the contents of the area marked should have
+a copy of whatever appears in the direction of the given displacement value.
+So lets try a  displacement value of <I>X</I>+10 and <I>Y</I>+10 or
+'<CODE>10x10</CODE>'...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif dismap_spot.jpg \
+          -compose Displace -define compose:args=10x10 -composite \
+          displace_spot.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="dismap_spot.jpg"
+     ><IMG SRC="dismap_spot.jpg"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="displace_spot.png"
+     ><IMG SRC="displace_spot.png"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see the contents of the marked area now contains a copy of the
+image that was <CODE>+10,+10</CODE> pixels to the South-East. Basically a
+image of the koala's 'tail'.  In other words, within the circle the image was
+displaced North-East, or <CODE>-10,-10</CODE> pixels. </P>
+
+Remember the displacement is of the lookup, so the source image is shifted by
+a negative amount due to the <A HREF="../distort/#mapping" >Reversed Pixel
+Mapping</A>.  The image displaces in the reverse direction!  </P>
+
+Note also that it is the image within the area marked that is moved. You are
+not displacing the image marked, but displacing the image <I>INTO</I> the area
+marked. </P>
+
+And finally note the sharp discontinuity at the edges of the circle. Areas
+inside the marked area are moved, while the areas outside remain exactly as
+they were. </P>
+
+These are the facts, so it is worth repeating.
+<DIV ALIGN=center><B>
+         Displacement moves images in oppisite direction to the value.
+<BR>     Only the areas marked not gray will be displaced.
+<BR>     Sharp color changes produce sharp image discontinuities.
+</B></DIV></P>
+
+So lets try something more practical.  Lets move the center between
+the nose and eyes of the koala, located at '<CODE>32,22</CODE>', to the center
+of our white (full positive displacement) circle at '<CODE>37,37</CODE>'.
+That needs a displacement value of  '<CODE>-5,-15</CODE>' (remeber it is
+a reversed direction)...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif dismap_spot.jpg \
+          -compose Displace -define compose:args=-5x-15 -composite \
+          displace_head.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displace_head.png"
+     ><IMG SRC="displace_head.png"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+And there we have a nicely centered copy of the central part of the koalas
+head. </P>
+
+But the image is still 'disjoint', and using a negative value is not very
+nice.  The solution is to use a black spot instead, but also to blur the edges
+of that spot. Also lets make it larger to encompass more of the koala's head.
+So here is out 'positive movement spot' image...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 xc:gray50 -fill black \
+          -draw 'circle 37,37 37,17'  -blur 0x5  dismap_area.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="dismap_area.jpg"
+     ><IMG SRC="dismap_area.jpg"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+You do not want to blur the image too much or the center of the spot will no
+longer be a flat black color.  Alternatively you could just <A
+HREF="../color_mods/#normalize" >Normalize</A>, <A HREF="../color_mods/#level"
+>Reverse Level Adjust</A> the image to ensure that the drawn area is black,
+and surrounding parts are perfect grays.  You will see this done a lot in
+later examples. </P>
+
+Now lets repeat that last 'head' displacing using our black 'fuzzy spot'
+displacement map.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif dismap_area.jpg \
+          -compose Displace -define compose:args=5x15 -composite \
+          displace_area.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="displace_area.png"
+     ><IMG SRC="displace_area.png"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+As you can see we move move the image <CODE>+5,+15</CODE> into the 'fuzzy'
+area, but this time the border of the area is smoother and connected to the
+rest of the image. </P>
+
+Of course the ears on the edge of the circle was distorted by the fuzzy edge,
+and the body of the koala compressed as well, but it is still a lot better
+than what we had before. </P>
+
+To prevent the 'tearing' of the image you see on the trailing side, or leaving
+copies of the displaced part, you want to expand that spot, or make a more
+complex gradient type of displacement image. </P>
+
+
+For example suppose you want to move the koalas head from its starting position
+at '<CODE>32,22</CODE>', to the center of the image at '<CODE>37,37</CODE>',
+or a movement of <CODE>+5,+15</CODE> pixels, but you want to adjust the whole
+image to this change, to give a much smoother effect. </P>
+
+To do this you will want the maximum displacement of black (a positive image
+displacement) at '<CODE>37,37</CODE>' and displacing by a value of
+<CODE>+5,+15</CODE>.  but you also want the make sure the rest of the image
+remains intact by 'pinning' the corners at 50% gray.  That is perfect for a <A
+HREF="../canvas/#shepards" >Shepard's Interpolated Sparse Gradient</A>.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 xc:  -sparse-color  Shepards \
+          '37,37 black   0,0 gray50  74,74 gray50  0,74 gray50  74,0 gray50' \
+          dismap_move.jpg
+  convert koala.gif dismap_move.jpg \
+          -compose Displace -define compose:args=5x15 -composite \
+          displace_move.png
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="dismap_move.jpg"
+     ><IMG SRC="dismap_move.jpg"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="koala.gif"
+     ><IMG SRC="koala.gif"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="displace_move.png"
+     ><IMG SRC="displace_move.png"   WIDTH=75 HEIGHT=75
+           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see you get a larger area of displacement spread is spread over the
+whole image. The result is a much more smoothly changing image than the
+tighter 'spot' method used before. </P>
+
+This is actually exactly equivalent to the <A HREF="../distorts/#shepards"
+>Shepard's Distortion</A> but only for an one moving control point.  It is also
+the exact same method used in Fred Weinhaus script '<CODE><A
+HREF="http://www.fmwconcepts.com/imagemagick/shapemorph/"
+>shapemorph</A></CODE>', but with some animation. </P>
+
+In summary: For small localized displacements a 'blurred spot' displacements
+can be used. But for larger displacements over a longer distance, a larger
+smooth gradient displacement map should be used to prevent tearing or
+duplicating the source image. </P>
+
+<DIV ALIGN=center><FONT SIZE=+2><B>
+<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
+Under Construction
+<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
+</B></FONT></DIV></P>
+
+
+<A NAME="simple_morph"></A>
+<H3>Simple Displacement Morphing</H3>
+<PRE>Modifying the Size of Displacement Vectors</PRE>
+<PRE>Two Image Morphing</PRE>
+
+<PRE>Random 1D Displacements</PRE>
+
+
+<A NAME="water_ripples"></A>
+<H3>Rippled Water Reflections</H3>
+
+As mentioned before displacement maps are especially useful for generating
+water and glass like distortions. </P>
+
+<!-- <CODE EXECUTE>
+  convert flower_md.jpg -resize 150x -crop 150x80+0+0 flower.jpg
+</CODE> -->
+
+  <A HREF="flower.jpg"
+     ><IMG SRC="flower.jpg"   WIDTH=150 HEIGHT=80
+           ALIGN=right VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+
+For this example I generated a small image by <A HREF="../crop/#crop"
+>Cropping</A> a flower image.  Now I want to make it look like it is
+sitting on some rippled water. </P>
+
+
+To generate ripples, I need a sine wave gradient of the same size which I can
+generate using the <A HREF="../transform/#evaluate_cos" >Evaluate Sin
+Function</A>. The number '<CODE>8</CODE>' represents the number of 'waves'
+that will be added to the gradient.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 150x80 gradient:  -evaluate sin 8  wave_gradient.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="wave_gradient.png"
+     ><IMG SRC="wave_gradient.png"   WIDTH=150 HEIGHT=80
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Now lets distort that image using the an angled displacement vector, not just
+a simple vertical or horizontal distortion, so as to give it more emphasis.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  composite wave_gradient.png  flower.jpg -displace 5x5 flower_waves.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="flower_waves.png"
+     ><IMG SRC="flower_waves.png"   WIDTH=150 HEIGHT=80
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+Now that does not seem very interesting, but what if you flip that image
+compress it vertically and append it to the original...
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert flower_waves.png -flip \
+          flower.jpg  +swap -append  flower_waves_2.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="flower_waves_2.png"
+     ><IMG SRC="flower_waves_2.png"   WIDTH=150 HEIGHT=160
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Unfortunately it still looks rather artificial.  The reason is that the
+reflection looks the same at both the top and bottom of the image.  It has no
+sense of 'depth' to it.  The reflection is also the same brightness as the
+original image which is rarely the case. </P>
+
+To make it more realistic you need to use ripple pattern that varies in
+intensity. </P>
+
+The following uses some fancy <A HREF="../transform/#gradient_math" >Gradient
+Mathematics</A> to 'attenuate' the wave gradient we were using above. </P>
+
+That is we made the wave pattern linearly smaller as it goes from top to the
+bottom. This trickiness ensures that the waves finishes at the pure-gray or
+'no displacement' color at the bottom of the image (which is later flipped).
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 150x80 gradient: \
+          \( wave_gradient.png \
+             +clone -compose multiply -composite \) \
+          \( -clone 0 -negate -evaluate divide 2 \
+             -clone 1 -compose plus -composite \) \
+          -delete 0-1      waves_decreasing.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="waves_decreasing.png"
+     ><IMG SRC="waves_decreasing.png"   WIDTH=150 HEIGHT=80
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+
+So lets apply this gradient, to form a new reflection of the flower.  I also
+darkened the reflected image slightly to represent some light being lost into
+the water itself, making it seem more like a water reflection.
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert flower.jpg  waves_decreasing.png  \
+          -compose Displace -define compose:args=8x8 -composite \
+          -flip   +level 0,80% \
+          flower.jpg  +swap -append   flower_in_water.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="flower_in_water.png"
+     ><IMG SRC="flower_in_water.png"   WIDTH=150 HEIGHT=160
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note that as the distorted image is <A HREF="../warping/#flip" >Flipped</A> to
+form a reflection. Also the image will have less 'ripples' at the top of the
+'water' closest to where it joins the original image, than at the bottom.
+This gives the distortion a sense of distance from the viewer. </P>
+
+You can make it even more realistic by distorting the wave displacement maps
+with a slight rotation, arc, or just with 'random' displacements.  This will
+give the waves a more natural look. Though it is better to do it before it is
+'attenuated' so that the 'depth' is added afterward. </P>
+
+Try it, experiment, and let me know what you come up with. </P>
+
+<PRE>Future Animated Ripples -
+  Using -function Sinusoid with phase changing</PRE>
+<BR>
+
+<A NAME="displace_2d" ></A>
+<H3>2-Dimensional Displacement Mapping</H3>
+
+So far all the relative displacement maps have only displace the image in one
+direction only. Though that direction can be set to any angle desired by
+setting the appropriate '<CODE><I>X</I>x<I>Y</I></CODE>' displacement value or
+'vector'.  </P>
+
+However you can produce a much more complex displacement where the image is
+displaced in any direction by any amount, by using two separate displacement.
+To do this we need to create two displacement maps, one for each of the X and
+Y directions separately. </P>
+
+Here are the commands you can use...
+
+<DL><DD><PRE><B>
+convert {<I>image</I>} {<I>X displacement</I>} {<I>Y displacement</I>} \
+        -compose Displace   -define compose:args={<I>X</I>}x{<I>Y</I>} \
+        -composite   {<I>result</I>+}
+
+convert {<I>image</I>} {<I>X displacement</I>} {<I>Y displacement</I>} \
+        -compose Displace   -set option:compose:args {<I>X</I>}x{<I>Y</I>} \
+        -composite   {<I>result</I>+}
+
+composite {<I>X displacement</I>} {<I>image</I>} {<I>Y displacement</I>} \
+          -displace {<I>X</I>}x{<I>Y</I>}    {<I>result</I>+}
+</B></PRE></DL>
+
+Note the input image order in the "<CODE>composite</CODE>" command.  the wierd
+ording is caused by the need to abuse the "<CODE>composite</CODE>" option
+handling, as well as historical reasons.  It is vital you get this correct.
+</P>
+
+Because of this I recommend you use the "<CODE>convert</CODE>" command, rather
+than "<CODE>composite</CODE>". </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify><FONT SIZE=-1><I>
+  Before IM v6.4.4 using 2 separate displacement maps for separate X and Y
+  displacements was a hit or miss affair.  It sometimes worked, and sometimes
+  did not.  It is not recommended to attempt to even try to use it on IM's
+  older than this version.
+</I></FONT></TD></TR></TABLE></P>
+
+Also, like with <A HREF="#distortion_unified" >Unified Distortion Maps</A>
+you can use a single "Unified Displacemant Map".  If only one displacement
+image is provided, then the X displacement will be looked up from the 'red'
+channel,  the Y displacement will be looked up from the 'green' channel,
+and any alpha mask will also be transfered from the displacement map to the
+final image.  The 'blue' channel is ignored. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Internally both "<CODE>convert</CODE>" and "<CODE>composite</CODE>' actually
+  merge the two images (if provided) so as to generate a 'unified displacement
+  map', before passing that to the internal API. </P>
+
+  This does not effect the previous 'linear displacements' we looked and
+  previously as the displacement map given was a greyscale image, so both
+  'red' and 'green' channels were identical.
+</I></FONT></TD></TR></TABLE></P>
+
+<A NAME="displace_cylinder"></A>
+<H3>Cylindrical Displacement</H3>
+
+Something that has come up a number of times in the IM forums is a way of
+mapping an image onto a cylinder, such as to overlay it on a coffee mug, or
+a soft drink can.  This is the solution...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert rose: -background black -gravity south -splice 0x8 \
+          \( +clone -sparse-color barycentric '0,0 black 69,0 white' \) \
+          \( -clone 1 -function arcsin 0.5 \) \
+          \( -clone 1 -level 25%,75% \
+                 -function polynomial -4,4,0 -gamma 2 \
+                 +level 50%,0 \) \
+          -delete 1 \
+          -virtual-pixel black  -define compose:args=17x7 \
+          -compose Displace  -composite   rose_cylinder.png
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="rose_cylinder.png"
+     ><IMG SRC="rose_cylinder.png"
+           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+The above is very complex but in essence uses two separate displacements
+simultaneously.  An arcsin() compression in the X direction, and a circular arc
+displacement in the Y direction. </P>
+
+Here is what the command is doing... <UL>
+<LI> Load the "rose" image and add some space for the vertical displacement
+<LI> Create a horizontal mathematical gradient for later mathematical functions
+<LI> convert a copy of the gradient to generate a compressing displacement map
+<LI> convert another copy to a vertical elliptical arc displacement
+<LI> remove the linear gradient
+<LI> prepare and do the displacement
+</UL></P>
+
+Result...  A rose wrapped correctly into 30 degree isometric view of
+a cylinder.  Break apart the above command to save and view the individual
+displacement maps. </P>
+
+The key to remember is that the two map displacement performs the lookups of
+both X and Y values, to work out what pixel should end up at the location
+of the lookup.  Remember the displacement is not an actually a displacement of
+the source image, but a displacement of the lookup into the source image. </P>
+
+This displacement distortion method has been built into the "<CODE><A
+HREF="http://www.fmwconcepts.com/imagemagick/cylinderize/"
+>cylinderize</A></CODE>" script by Fred Wienhaus. </P>
+
+
+<A NAME="displace_mirror"></A>
+<H3>Fractured Mirror</H3>
+
+You can create a 'fractured mirror' look to an image by generating random
+areas of X and Y displacements.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE SCRIPT RANDOM IMAGE=mirror_areas.gif>
+  convert dragon_sm.gif -sparse-color voronoi '  \
+                  %[fx:rand()*w],%[fx:rand()*h]  red
+                  %[fx:rand()*w],%[fx:rand()*h]  lime
+                  %[fx:rand()*w],%[fx:rand()*h]  black
+                  %[fx:rand()*w],%[fx:rand()*h]  yellow
+               ' -interpolate integer -implode 1     mirror_areas.gif
+</CODE><CODE EXECUTE SCRIPT
+>  convert   mirror_areas.gif -channel R  -separate   mirror_dismap_x.gif
+  convert   mirror_areas.gif -channel G  -separate   mirror_dismap_y.gif
+
+  composite mirror_dismap_x.gif  dragon_sm.gif  mirror_dismap_y.gif +matte \
+            -background white -virtual-pixel background -displace 7 \
+                                                        mirror_displaced.gif
+
+  convert   mirror_areas.gif -edge 1 -threshold 20% \
+            -evaluate multiply .7 -negate               mirror_cracks.gif
+  composite mirror_displaced.gif  mirror_cracks.gif -compose multiply \
+                                                        mirror_cracked.gif
+</CODE></PRE></TD></TR></TABLE>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD ALIGN=right>
+  <A HREF="mirror_areas.gif"
+      ><IMG SRC="mirror_areas.gif"            WIDTH=82 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+</TD><TD ALIGN=left>
+  <A HREF="mirror_dismap_x.gif"
+      ><IMG SRC="mirror_dismap_x.gif"         WIDTH=82 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="dragon_sm.gif"
+      ><IMG SRC="dragon_sm.gif"               WIDTH=82 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="mirror_dismap_y.gif"
+      ><IMG SRC="mirror_dismap_y.gif"         WIDTH=82 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+</TD><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD><TD ALIGN=right>
+  <A HREF="mirror_displaced.gif"
+      ><IMG SRC="mirror_displaced.gif"        WIDTH=82 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+  <A HREF="mirror_cracks.gif"
+      ><IMG SRC="mirror_cracks.gif"           WIDTH=82 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD><TD ALIGN=left>
+<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="mirror_cracked.gif"
+      ><IMG SRC="mirror_cracked.gif"          WIDTH=82 HEIGHT=100
+            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE>
+</DIV></P>
+
+Four randomly displaced areas are generated using a randomized <A
+HREF="../canvas/#voronoi" >Voronoi Sparse Color</A> image.  This is then given
+an <A HREF="../warping/#implode" >Implosion Distortion</A> to warp those areas
+into the center of the image.  As each of the four colored areas remain solid
+colors, each area will contain an undistorted, but displaced copy of the
+original image. However each area will have displaced the image in a different
+way, just as each shard of a fractured mirror would.  </P>
+
+To finish off the mirror, <A HREF="../transform/#edge" >Edge Detection</A> is
+used to outline the edges of the regions and thus the fractured nature of the
+resulting image. That is the cracks are also made visible. </P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
+    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Technically I did not have to separate the 'red' and 'green' channels in
+  colored random displacement map that was generated.  I could have used them
+  directly as X displacement is looked up from the 'red' channel, and
+  Y displacement is looked up from the 'green' channel.  That is I could have
+  used the "mirror_areas.gif" image directly as a "unified displacement map".
+</I></FONT></TD></TR></TABLE></P>
+
+
+<DIV ALIGN=center><FONT SIZE=+2><B>
+<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
+Under Construction
+<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
+</B></FONT></DIV></P>
+
+<A NAME="shepards"></A>
+<H3>Shepards Displacement</H3>
+
+<A NAME="random"></A>
+<H3>Random Displacements</H3>
+
+<A NAME="lensing"></A>
+<H3>Lensing Effects</H3>
+
+<A NAME="frosted_glass"></A>
+<H3>Frosted Glass Effects</H3>
+
+<A NAME="dispersion"></A>
+<H3>Dispersion Effects (rotated displacements)</H3>
+
+<A NAME="dispersion_displace"></A>
+<H3>Dispersion Effects with Randomized Displacement</H3>
+
+FUTURE: Other possible distort / displace mapping examples
+<UL>
+<LI>Raytrace a gradient onto 3D objects so that later ANY image can be
+    be mapped onto those objects.
+   <UL>
+   <LI> X and Y gradient mapped images
+   <LI> Pure Gray Image for color, highlights and shading
+   </UL>
+
+</UL></P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+
+<A NAME="blur"></A>
+<H2>Variable Blur Mapping</H2>
+
+Added to ImageMagick version 6.5.4-0, the "<CODE><A
+HREF="../option_link.cgi?compose" >-compose</A></CODE>" method
+'<CODE>Blur</CODE>' provides you with a method of replacing each individual
+pixel by an Elliptical Gaussian Average (a blur) of the neighbouring pixels,
+according to a mapping image. </P>
+
+<DL><DD><PRE><B>
+composite -blur {<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]<!--
+-->          blur_map  image   result
+
+convert image  blur_map \
+        -define compose:args='{<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]' \
+        -compose blur -composite   result
+
+convert image  blur_map \
+        -set option:compose:args '{<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]' \
+        -compose blur  -composite   result
+</B></PRE></DL>
+
+Note that this <A HREF="../compose" >Image Composition</A> requires the use of
+an operational argument, which can be set in a number of ways.  See <A
+HREF="../basics/#artifact" >Globally Defined Artifacts</A> for more details.
+
+By using a variable map to control the blur you can blur one part of an image,
+while leaving another part completely alone, or you can produce effects such
+as <A HREF="../photos/#tilt_shift" >Tilt-Shift Effect</A>, where a real world
+image is made to appear more like a small artifical model. </P>
+
+For example, here I blur one half of an image of a koala while leaving the
+other half completely un-blurred...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 37x75 xc:black -size 38x75 xc:white +append  blur_map_bool.gif
+  convert koala.gif blur_map_bool.gif \
+          -compose blur -define compose:args=3 -composite \
+          blur_koala_bool.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+    ><IMG SRC="koala.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_bool.gif"
+    ><IMG SRC="blur_map_bool.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_koala_bool.gif"
+    ><IMG SRC="blur_koala_bool.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+<!--
+TESTING equivelence with blur and gaussian blur
+
+    blur=1
+    convert ~/im/images/koala.gif \
+            \( -clone 0 -blur 0x$blur -set label blur \) \
+            \( -clone 0 +level-colors white \
+               -clone 0 +swap -define compose:args=$blur \
+               -compose blur -composite -set label ewa \) \
+            \( -clone 0 -gaussian 0x$blur -set label gaussian \) \
+            -delete 0 miff:- | \
+      montage - -background gray -geometry +2+2 show:
+
+-->
+
+
+As you can see any pixel that was 'white' on the 'blur_map' image was blurred
+using the maximum value of '<I>sigma</I>' given, while anything that was
+'black' was not blurred at all. </P>
+
+In other words you have a very simple masked blur. Of course this could have
+been achieved in many other ways, but that does not explain where the power of
+blur mapping is. </P>
+
+What makes this blur mapping versitile is that it is variable across the image.
+That is if the blur mapping color is gray in color, than you will get a
+corresponding smaller blurred result, using a smaller 'neighbourhood', for that
+pixel. Black however is not blurred, while white is maximumally blurred, by the
+values given. </P>
+
+One thing to note is that only the areas blurred will take extra time needed.
+Pixels which are not blurred, do not need this extra processing.  This makes
+the above much faster than either using a <A HREF="#mask" >Masked
+Composite</A> which is the same as bluring the whole image and merging the
+results.  This time saving can be even more important when dealing with large
+blurs of very small areas of an image. </P>
+
+For example, lets make the koala progressivally more blurry toward his feet...
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 gradient:black-white blur_map_gradient.gif
+  convert koala.gif blur_map_gradient.gif \
+          -compose blur -define compose:args=3 -composite \
+          blur_koala_gradient.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="koala.gif"
+    ><IMG SRC="koala.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_gradient.gif"
+    ><IMG SRC="blur_map_gradient.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_koala_gradient.gif"
+    ><IMG SRC="blur_koala_gradient.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+
+</DIV></P>
+
+And here is the same blur again but showing how the  blur varies with the
+height.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert blur_map_bool.gif blur_map_gradient.gif \
+          -compose blur -define compose:args=15 -composite \
+         blur_edge_gradient.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="blur_map_bool.gif"
+    ><IMG SRC="blur_map_bool.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_gradient.gif"
+    ><IMG SRC="blur_map_gradient.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+
+  <A HREF="blur_edge_gradient.gif"
+    ><IMG SRC="blur_edge_gradient.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+For a practical example of Variable Mapped Blurs, have a look at <A
+HREF="../photos/#tilt_shift" >Photo Tilt Shift Effect</A>, and <A
+HREF="../fonts/#var_blur" >Distance Blurred Shadow Font</A>. </P>
+
+Note that it is the neighbourhood around each individual pixel that is used to
+generate the 'blurred color' for that pixel.  That means that even though you
+may specify some part of an image to not be blurred, colors from that
+unblurred area may be used as part of the blur of surrounding pixels. </P>
+
+That is just because an area is not blurred does not mean that colors from
+that area is not used as part of result of other blurred pixels. That is
+colors from the unblurred area can 'leak' into the surrounding blurred areas.
+</P>
+
+To blur a background without including foreground pixels you need to use a <A
+HREF="../masking/#read_mask" >Read Mask Technique</A> to prevent them being
+read as part of the blur operatotion. </P>
+
+
+<A NAME="blur_ellipse"></A>
+<H3>Elliptical Blurring</H3>
+
+The '<CODE>Blur</CODE>' compose setting uses a different technique to the
+normal <A HREF="../blur/#blur" >Blur or Gaussian Blur Operators</A>, as it
+is implemented by using a Gaussian <A HREF="../distorts/#area_resample"
+>Elliptical Area Resampling</A> algorithm that was developed for scaled image
+resampling as part of <A HREF="../distorts/#distort" >Generalized Distortion
+Operator</A>. </P>
+
+The elliptical area used for the neighbourhood resampling, also makes this
+method of blurring more versitile than a normal uniform 'circluar' blur
+provided by the operators "<CODE><A HREF="../option_link.cgi?blur"
+>-blur</A></CODE>" and "<CODE><A HREF="../option_link.cgi?gaussian-blur"
+>-gaussian-blur</A></CODE>".  The ellipse itself is defined by the
+'<I>width</I>', '<I>height</I>' of the sigma for the blurred area. The ellipse
+can also be rotated from an orthogonal alignment by the given '<I>angle</I>'
+(clock-wise). </P>
+
+For example in the following diagram we show how the blurred color of a single
+pixel will get its color from a rotated elliptical area, based on the given
+sigma values.  The pixels in this area are then weighted averaged together
+according to a <A HREF="../filter/#gaussian" >Gaussian Filter</A> (using
+an elliptical distance formula, to produce the blurred color.
+
+<!-- <CODE EXECUTE>
+  convert koala.gif \( +clone -size 75x75 xc: \
+             -compose blur -define compose:args=5x1-30 -composite \) \
+          -compose over -bordercolor blue -border 1x1    +append \
+          -gravity North -background LightSteelBlue -splice 17x0 \
+          -draw "stroke Firebrick fill None \
+                 path 'M 40,45  A 4,1 -30  0,0 40,55 \
+                                A 4,1 -30  1,0 40,45 Z' " \
+          -draw "stroke Firebrick fill None \
+                 path 'M 131,50 L 56,40 M 131,50 L 35,60' " \
+          elliptical_average.gif
+</CODE>-->
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+  convert koala.gif -compose blur -define compose:args=5x1-30 -composite \) \
+             elliptical_blur.gif
+  # ... other commands to create diagram of blur effect ...
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="elliptical_average.gif"
+    ><IMG SRC="elliptical_average.gif"
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+</DIV></P>
+
+As mentioned, this is exactly the same color lookup method that is used by the
+<A HREF="../distorts/#distort" >Generalized Distortion Operator</A> to
+generate the colors for its distorted images, as it allows for a scaled (and
+filtered) merge of an area of the source image into one pixel, especially in
+extreme distortions such as exampled in <A HREF="../distorts/#horizon"
+>Viewing Distant Horizons</A>. For more details of this process see <A
+HREF="../distorts/#area_resample" >Area Resampling</A> and <A
+HREF="../filter/#filter" >Resampling Filters</A>.  <P>
+
+As an example of the elliptical controls available for variable blur mapping,
+lets use a black dot using the same gradient blur map we used before. But this
+time we will scale a long thin horizontal ellipse '<CODE>30x0</CODE>', rather
+than a circle.  The 'x0' may seem weird but basically means no vertical
+blurring should be seen, just an ellipse of smallest height needed to generate
+a good result.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 75x75 xc: -draw 'circle 36,36 36,8'  black_circle.gif
+  convert black_circle.gif blur_map_gradient.gif \
+          -compose blur -define compose:args=15x0 -composite \
+          blur_horizontal.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="black_circle.gif"
+    ><IMG SRC="black_circle.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_gradient.gif"
+    ><IMG SRC="blur_map_gradient.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+
+  <A HREF="blur_horizontal.gif"
+    ><IMG SRC="blur_horizontal.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+As you can see the amount of the blur is still varied with the map image
+provided, producing very little blur at the top of the image, and a lot of
+blur at the bottom.  But also notice that the bottom edge is blurred
+horizontally equally in both directions, but not vertically, producing a sharp
+cut off in the vertical direction. </P>
+
+By either rotating the long thin ellipse by giving a third <I>angle</I>
+argument, or by directly defining a vertical ellipse, you can blur the image
+vertically only...
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert black_circle.gif blur_map_gradient.gif \
+          -compose blur -define compose:args=0x15 -composite \
+          blur_vertical.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="blur_vertical.gif"
+    ><IMG SRC="blur_vertical.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Note however that the blur was not applied equally! The top half appears less
+blurred than the bottom, because that is what the 'mapping image' told it to
+do.  This in turn distorts the image making it appear a little truncated by
+the blurring effect. </P>
+
+Finally lets do this one more time but with a horizontal ellipse rotated by
+a fixed 45 degree angle.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert black_circle.gif blur_map_gradient.gif \
+          -compose blur -define compose:args=15x0+45 -composite \
+          blur_angle.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="blur_angle.gif"
+    ><IMG SRC="blur_angle.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+
+</TD></TR></TABLE></P>
+
+The image may appear very odd, but that is because the variable blur map is
+vertical while the blur itself is angled, producing the odd looking effect,
+due to the way the ellipse angle and the angle of the blur map do not align.
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
+    ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
+<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+  Note that using long thin ellipses like this is actually a lot faster that
+  using a single large circle.  In fact the "<CODE><A
+  HREF="../option_link.cgi?blur" >-blur</A></CODE>" operator gets its speed by
+  using two separate horizontal and vertical blurs, where as the "<CODE><A
+  HREF="../option_link.cgi?gaussian" >-gaussian</A></CODE>" blur operator does
+  a full 2 dimensional <A HREF="../morphology/#convolve" >convolution</A> in
+  a simpler way to the '<CODE>Blur</CODE>' composition method just described.
+
+</I></FONT></TD></TR></TABLE></P>
+
+<A NAME="blur_aspect"></A>
+<H3>Blur with Variable Aspect Ratio</H3>
+
+So far the we have varied the size of the elliptical area used for the blur
+using 'blur map'.  However the while the size of the ellipse and even its
+angle can be rotated, it shape and angle remains fixed. </P>
+
+Now the 'blur map' is an image that is composed of three color channels: red,
+green, and blue. As we used a grey-scale image all three color channels had
+the same values.  However internally the width of the ellipse is scaled by
+just the red channel value, while the height is scaled by the green channel
+value. Any effect of the blue channel value is typically ignored except in
+a special case which we will look at later. </P>
+
+This means the elliptical shape or its 'aspect ratio' can be varied by using
+different maps for the individual red and green channels. As with a normal
+blur map a zero (or 'black' in just that channel) value will result in minimal
+width or height, while a maximum value (or 'white') will result in the blur
+amount given. </P>
+
+For example here I can divide the image so that two quarters of the image is
+blurred horizontally (red channel is maximal) while making the other areas
+blur vertically (green channel is maximal). </P>
+
+For this example I generated with width and height maps separately, before <A
+HREF="../color_basics/#combine" >Combining</A> them into a single and now
+colorful 'blur map'. In normal practice you can create the map in any way you
+like, or even use pre-prepared maps for specific blur effects.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 2x2 pattern:gray50 -sample 75x75! blur_map_r.gif
+  convert blur_map_r.gif -negate blur_map_g.gif
+  convert blur_map_r.gif blur_map_g.gif -background black \
+          -channel RG -combine blur_map_aspect.gif
+  convert black_circle.gif blur_map_aspect.gif \
+          -compose blur -define compose:args=10x10 -composite \
+          blur_aspect.gif
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="blur_map_r.gif"
+    ><IMG SRC="blur_map_r.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_g.gif"
+    ><IMG SRC="blur_map_g.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_map_aspect.gif"
+    ><IMG SRC="blur_map_aspect.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+  <A HREF="black_circle.gif"
+    ><IMG SRC="black_circle.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_aspect.gif"
+    ><IMG SRC="blur_map_aspect.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_aspect.gif"
+    ><IMG SRC="blur_aspect.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+You can of course still set a fixed angle to the ellipse.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert black_circle.gif blur_map_aspect.gif \
+          -compose blur -define compose:args=15x15+45 -composite \
+          blur_aspect_angle.gif
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="blur_aspect_angle.gif"
+    ><IMG SRC="blur_aspect_angle.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
+<TR VALIGN=top>
+<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
+    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
+<TD ALIGN=justify><FONT SIZE=-1><I>
+  Before IM version 6.5.8-8 a bug was found in the handling of an angled
+  vertical elliptical blur.
+</I></FONT></TD></TR></TABLE></P>
+
+<A NAME="blur_angle"></A>
+<H3>Blur with Variable Angle</H3>
+
+So far the angle of the ellipse used for bluring the image has been a constant
+angle over the whole image.  That is the ellipse used for the blur has always
+been at the same angle, even though the aspect ratio of the ellipse can be
+varied by modifying the red and green channels of the blur map. </P>
+
+As of IM v6.5.8-8 you can provide variable an angle to the blur, using the blue
+channge of the blur mapping image.  This is gone by giving two angles to the
+blur arguments.  The first angle argument is used to define the angle for
+a zero ('0' or 'black') value in the blue channel, while the second angle
+given is used to define the maximum ('QuantumRange' or 'white') value of the
+blue channel. </P>
+
+If only one angle value is given, then that angle is used to set the angles
+for both zero and maximum 'blue' channel value which basically means the angle
+becomes fixed, regardless of what value is present in the blue channel of the
+'blur map' image.  This is why in previous examples, the angle has been
+constant.  </P>
+
+For example, here I use a horizontally blurring ellipse, but then vary the
+angle of the ellipse using the blue channel over the angle range from '+0' to
+'+360' around the center of the image. The map generation uses a polar
+gradient, the details of which can be found in <A
+HREF="../canvas/#gradient_distort" >Distorted Gradients</A>. </P>
+
+Note how when placing that gradient into the blue channel, I use the "<CODE><A
+HREF="../option_link.cgi?background" >-background</A></CODE>" color setting
+with the <A HREF="../color_basics/#combine" >Combine Operator</A> to ensure
+both the red and green channels are set to a maximum ('white') value, so it
+does not scale the angled ellipse.  Of course that means in the final mapping
+image white means use the maximum angle, while yellow (or zero blue channel
+value) means the minimum angle.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 100x300 gradient: -rotate 90 \
+          +distort Polar '36.5,0,.5,.5' +repage -flop gradient_polar.jpg
+  convert gradient_polar.jpg -background white \
+          -channel B -combine blur_map_angle.jpg
+  convert koala.gif blur_map_angle.jpg \
+          -compose blur -define compose:args=5x0+0+360 -composite \
+          blur_rotated.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="gradient_polar.jpg"
+    ><IMG SRC="gradient_polar.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_map_angle.jpg"
+    ><IMG SRC="blur_map_angle.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+  <A HREF="koala.gif"
+    ><IMG SRC="koala.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_angle.jpg"
+    ><IMG SRC="blur_map_angle.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_rotated.jpg"
+    ><IMG SRC="blur_rotated.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+The result is as you can see a rotationally blurred image. </P>
+
+Compare the result with the blur mapping that was used.  At the top of the
+image the angle, the gradient was either white or black, which with the
+arguments used means the ellipse was angled at either 0 or 360 so the ellipse
+remained horizontal. at the bottom the graident was pure gray, so an angle
+midway between the rangle given was use, or 180 degrees. This means the
+ellipse is again horizontal. But at the sizes the image the gradient was
+either 25% or 75% gray. thus the angle was either 90 or 270 degress making the
+ellipse rotate vertically.  All the other angles follow though causing the
+ellipse to rotate smoothly around the image. </P>
+
+However the center of the resulting image was blurred really weirdly! That is
+because the ellipse size remained constant and does not get appropriatally
+smaller toward the middle of the image. </P>
+
+The solution is to also set the ellipse size using the red and green channels.
+For example.
+
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert -size 106x106 radial-gradient: -negate \
+          -gravity center -crop 75x75+0+0 +repage gradient_radial.jpg
+  convert gradient_radial.jpg gradient_radial.jpg gradient_polar.jpg \
+          -channel RGB -combine blur_map_polar.jpg
+  convert koala.gif blur_map_polar.jpg \
+          -compose blur -define compose:args=10x0+0+360 -composite \
+          blur_polar.jpg
+</CODE></PRE></TD></TR></TABLE>
+  <A HREF="gradient_radial.jpg"
+    ><IMG SRC="gradient_radial.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="gradient_radial.jpg"
+    ><IMG SRC="gradient_radial.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="gradient_polar.jpg"
+    ><IMG SRC="gradient_polar.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_map_polar.jpg"
+    ><IMG SRC="blur_map_polar.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+<BR>
+  <A HREF="koala.gif"
+    ><IMG SRC="koala.gif"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/plus.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT=" + ">
+  <A HREF="blur_map_polar.jpg"
+    ><IMG SRC="blur_map_polar.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
+  <A HREF="blur_polar.jpg"
+    ><IMG SRC="blur_polar.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</DIV></P>
+
+A much better result. </P>
+
+Note however that while the result looks good, the blurring ellipse is not
+properly curved in an arc as it should be for a true rotationally blurred
+image. As such the above is only an approximation of a true rotational blur.
+But for small blur distances (equating to blur angle) it quite good. </P>
+
+The better way to do rotational blurs is to use a special <A
+HREF="..distorts/#rotation_blur" >Polar-Depolar Distortion Technique</A>,
+or the currently miss-named <A HREF="../blur/#radial-blur" >Radial Blur
+Operator</A>. </P>
+
+By changing the angle range used for the ellipse angle (blue channel) you can
+easily convert the above into a radial blur that becomes more blurry with
+distance from the center.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif blur_map_polar.jpg \
+          -compose blur -define compose:args=5x0+90+450 -composite \
+          blur_radial.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="blur_radial.jpg"
+    ><IMG SRC="blur_radial.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+But you can also do much more than these radial/rotational blurs, as you can
+rotate and scale the blur anywhere by any amount over the whole image.  You
+have total control. </P>
+
+For example you can make a very weird mixture of the two by using different
+angle range so the angle of the blur ellipse does not match the angle around
+the image center.
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
+<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD><PRE><CODE EXECUTE>
+  convert koala.gif blur_map_polar.jpg \
+          -compose blur -define compose:args=10x0+0+180 -composite \
+          blur_weird.jpg
+</CODE></PRE></TD></TR></TABLE></TD><TD>
+  <A HREF="blur_weird.jpg"
+    ><IMG SRC="blur_weird.jpg"     WIDTH=75 HEIGHT=75
+          ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
+</TD></TR></TABLE></P>
+
+Basically you now have complete control of the how and what parts of the image
+will be blurred.  And with the use of templates you can create a whole library
+of blurring effects. </P>
+
+<HR><!-- ---------------------------------------------------------------- -->
+<ADDRESS>
+Created: 14 January 2009 (distorts sub-division) <BR>
+Updated: 7 January 2019 <BR>
+Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
+        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
+Examples Generated with:
+        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
+URL: <CODE>https://legacy.imagemagick.org/Usage/mapping/</CODE>
+</ADDRESS></BODY></HTML>
