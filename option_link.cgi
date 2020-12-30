@@ -8,7 +8,7 @@ $ENV{PATH} = '/bin:/usr/bin';
 
 # Location of the option manual
 # Eg option =  $URL.$JOIN."trim"
-$URL = 'http://www.imagemagick.org/script/command-line-options.php';
+$URL = 'https://legacy.imagemagick.org/script/command-line-options.php';
 $JOIN = '?#';
 
 # Remove the indent of a here file...

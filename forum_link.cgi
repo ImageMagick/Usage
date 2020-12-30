@@ -6,7 +6,7 @@ $ENV{PATH} = '/bin:/usr/bin';
 
 # Location of the option manual
 # Eg   location = $URL.$USER."u=1163"
-$URL = 'http://www.imagemagick.org/discourse-server/';
+$URL = 'https://legacy.imagemagick.org/discourse-server/';
 $FORUM = 'viewforum.php?';
 $TOPIC = 'viewtopic.php?';
 $USER = 'memberlist.php?mode=viewprofile&';
