@@ -137,7 +137,7 @@ Lanczos filter. It has to do with the ImageMagick implementation of
 tensor filters, which saves memory by clamping intermediate results as
 a side effect of storing them into 8 or 16-bit unsigned integers (HDRI
 saved them as doubles, so are unaffected). In other words, the generally
-mild artefacts that arise when using tensor Lanczos without HDRI result
+mild artifacts that arise when using tensor Lanczos without HDRI result
 from an "engineering decision" that allows <CODE>-resize</CODE> filters
 to run significantly faster than EWA ones. The present recommendations
 focus on quality, not speed. </P>
@@ -299,7 +299,7 @@ using a tensor (2-pass) <A HREF="../../resize/#resize" >Resize
 Operator</A> (<CODE><A HREF="../../option_link.cgi?resize"
 >-resize</A></CODE>) with a filter with one or more negative
 lobes. HDRI prevents internal clipping of "between resize passes"
-intermediate values. This clipping leaves small artefacts, especially
+intermediate values. This clipping leaves small artifacts, especially
 when enlarging. HDRI is not necessary with the <A HREF="../#triangle"
 >Triangle</A>, <A HREF="../#quadratic" >Quadratic</A> and
 <A HREF="../#spline" >Spline</A> filters, because they don't have negative
@@ -329,7 +329,7 @@ transparency channel. </P>
 
 Downsampling (reducing the image's pixel count, for example, producing
 thumbnails) and upsampling (enlarging or, more generally, resampling
-without downsampling much) produce different artefact mixes. For this
+without downsampling much) produce different artifact mixes. For this
 reason, different techniques are recommended for each type of geometrical
 operation. </P>
 
@@ -340,7 +340,7 @@ operation. </P>
 Results of resizing using the <A HREF="../#lanczos_sharp"
 >LanczosSharp EWA Filter</A> through
 a <A HREF="../../resize/#resize_sigmoidal" >Sigmoidized Colorspace</A>
-are fairly artefact free, if a bit blurry. The built-in LanczosSharp,
+are fairly artifact free, if a bit blurry. The built-in LanczosSharp,
 discussed in the <A HREF="#short" >Short Answer</A>, works well, but I
 prefer a version with slightly less de-blur, obtained with the
 "<CODE>-filter Lanczos -define filter:blur=.9891028367558475</CODE>".
@@ -382,10 +382,10 @@ the sigmoidal contrast (up to 11.5, say). Higher contrasts are
 especially recommended with greyscale images (even "false RGB
 greyscale" that have three proportional color channels).  The downside
 of sigmoidization is that it sometimes produces "color bleed"
-artefacts that look a bit like cheap flexographic ("gummidruck")
+artifacts that look a bit like cheap flexographic ("gummidruck")
 printing or chromatic aberration. In addition, sigmoidization's
 "fattening" of extreme light and dark values may not work for your
-image content. If such artefacts are obvious, push the contrast value
+image content. If such artifacts are obvious, push the contrast value
 down from 7.5 (to 5, for example, or even lower). Setting the contrast
 to 0 is equivalent to enlarging through linear RGB. </P>
 
@@ -723,7 +723,7 @@ lobes.) </P>
 
 <BR>
 
-Another annoying artefact is <A HREF="../#ringing" >haloing
+Another annoying artifact is <A HREF="../#ringing" >haloing
 (ringing)</A>. The above filters all have noticeable second halos. The
 following filter, EWA quadratic B-spline-windowed Jinc 3-lobe
 ("QuadraticJinc"), has a very mild second halo and yet manages fairly
@@ -817,7 +817,7 @@ need for <A HREF="../../resize/#resize_unsharp" >USM (Unsharp)
 Sharpening</A>, a common final step when downsampling, or allow you to
 use less of it.  Note however that low values of the <CODE>blur</CODE>
 and <CODE>B</CODE> parameters generally lead to considerable
-artefacts; high values, to blur. </P>
+artifacts; high values, to blur. </P>
 
 <A NAME="downsampling_examples"></A>
 <H3>Downsampling Examples</H3>
@@ -837,7 +837,7 @@ image down to 100x100, using sRGB values directly, we downsize to
 Ideally, many concentric rings should be preserved, without the
 appearance of features which are not in the original. There is no such
 thing as a free lunch: The filters that lose the fewest rings have the
-most obvious artefacts.  Nonetheless, some of the filters manage a
+most obvious artifacts.  Nonetheless, some of the filters manage a
 pretty good balance between sharpness and aliasing, namely EWA
 QuadraticJinc, tensor Mitchell, and tensor Triangle. EWA LanczosSharp,
 EWA Quadratic, EWA Lanczos Radius 3 and EWA Robidoux also do well in
