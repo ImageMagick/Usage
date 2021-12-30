@@ -185,7 +185,7 @@ have been enlarged).
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=pixel_spread.gif ERR=spread_kernel.txt>
   convert xc: -bordercolor black -border 5x5 pixel.gif
-  convert pixel.gif -define showkernel=1 \
+  convert pixel.gif -define morphology:showkernel=1 \
           -morphology Convolve '3x3: 0.0, 0.5, 0.0
                                      0.5, 1.0, 0.5
                                      0.0, 0.5, 0.0'  pixel_spread.gif
@@ -416,7 +416,7 @@ For example here is manually 'normalized' result, and the kernel definition...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE IMAGE=face_spread_norm.png
                                           ERR=kernel_spread_norm.txt>
-convert face.png  -define showkernel=1 \
+convert face.png  -define morphology:showkernel=1 \
         -morphology Convolve \
                 '3x3: 0.0,.1667,0.0  .1667,.3333,.1667   0.0,.1667,0.0' \
         face_spread_norm.png
@@ -1039,7 +1039,7 @@ quickly)...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=kernel_gaussian.txt>
-  convert xc:  -define showkernel=1 \
+  convert xc:  -define morphology:showkernel=1 \
                -morphology Convolve:0 Gaussian:0x0.8  null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -1155,7 +1155,7 @@ a small '<CODE>Blur</CODE>' kernel.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=kernel_blur.txt>
-  convert xc:  -define showkernel=1 \
+  convert xc:  -define morphology:showkernel=1 \
                -morphology Convolve:0 Blur:0x0.8  null:
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="kernel_blur_profile.gif"
@@ -1245,7 +1245,7 @@ kernel.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=kernel_comet.txt>
-  convert xc:  -define showkernel=1 \
+  convert xc:  -define morphology:showkernel=1 \
                -morphology Convolve:0 Comet:0x1.0  null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -1930,7 +1930,7 @@ For example radius=1 (for a 3x3 kernel) and a sigma of 1 will generate...
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_isotropic.txt>
-  convert face.png  -define showkernel=1 -bias 50% \
+  convert face.png  -define morphology:showkernel=1 -bias 50% \
           -morphology Convolve DoG:1,0,1  face_laplacian_isotropic.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_isotropic.png"
@@ -2044,7 +2044,7 @@ normalized kernel with a <A HREF="#kernel_bias" >Output Bias</A>.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_0.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
           -morphology Convolve:0 Laplacian:0 null:
   convert face.png -define convolve:scale='!' -bias 50% \
           -morphology Convolve Laplacian:0   face_laplacian_0.png
@@ -2142,7 +2142,7 @@ The 4 neighbour Laplacian. Also very commonly used.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_1.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:1 null:
   convert face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:1   face_laplacian_1.png
@@ -2172,7 +2172,7 @@ laplacian. </P>
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_2.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:2 null:
   convert face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:2   face_laplacian_2.png
@@ -2199,7 +2199,7 @@ laplacian. </P>
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_3.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:3 null:
   convert face.png -define convolve:scale='400%!' -bias 50% \
           -morphology Convolve Laplacian:3    face_laplacian_3.png
@@ -2229,7 +2229,7 @@ above) to see make any result visible. </P>
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_5.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:5 null:
   convert face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:5   face_laplacian_5.png
@@ -2260,7 +2260,7 @@ detail. </P>
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_7.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:7 null:
   convert face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:7   face_laplacian_7.png
@@ -2287,7 +2287,7 @@ A Discrete 5x5 LoG (Sigma approximatally 1.4)
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_15.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:15 null:
   convert face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:15   face_laplacian_15.png
@@ -2314,7 +2314,7 @@ A Discrete 9x9 LoG (Sigma approximatally 1.4)
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_19.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:19 null:
   convert face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:19   face_laplacian_19.png
@@ -2460,7 +2460,7 @@ So lets have a look at some of the 'named' directional kernels. </P>
 <H4>Sobel</H4>
 
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_sobel.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
           -morphology Convolve:0 Sobel null:
 </CODE>-->
 <BLOCKQUOTE>
@@ -2800,7 +2800,7 @@ needed by a factor of three.  It then uses HSB colorspace to create direction
 <H4>Roberts</H4>
 
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_roberts.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
           -morphology Convolve:0 Roberts null:
 </CODE>-->
 <BLOCKQUOTE>
@@ -2876,7 +2876,7 @@ adding them together, you get a much smaller sharper edge detection with only
 <H4>Prewitt</H4>
 
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_prewitt.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
           -morphology Convolve:0 Prewitt null:
 </CODE>-->
 <BLOCKQUOTE>
@@ -2913,7 +2913,7 @@ specific edge detection.  The result is thus a little more fuzzy.
 <H4>Compass</H4>
 
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_compass.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
           -morphology Convolve:0 Compass null:
 </CODE>-->
 <BLOCKQUOTE>
@@ -2948,7 +2948,7 @@ sense than '<CODE><A HREF="#sobel" >Sobel</A></CODE>'.
 <H4>Kirsch</H4>
 
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_kirsch.txt>
-  convert xc: -define showkernel=1 -precision 2 \
+  convert xc: -define morphology:showkernel=1 -precision 2 \
           -morphology Convolve:0 Kirsch null:
 </CODE>-->
 <BLOCKQUOTE>
@@ -2989,7 +2989,7 @@ HREF="#sobel" >Sobel</A></CODE>', where the '<CODE>2</CODE>' values have been
 replaced by a Square Root of 2.
 
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_freichen.txt>
-  convert xc: -define showkernel=1 \
+  convert xc: -define morphology:showkernel=1 \
           -morphology Convolve:0 Frei-Chen null:
 </CODE>-->
 <BLOCKQUOTE>
@@ -3028,11 +3028,11 @@ To make things easier two kernels (with the same weighting) have been
 provided, one like the above for orthogonal use, the other for diagonal use.
 
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_freichen1.txt>
-  convert xc: -define showkernel=1 \
+  convert xc: -define morphology:showkernel=1 \
           -morphology Convolve:0 Frei-Chen:1 null:
 </CODE>-->
 <!--<CODE EXECUTE NOIMAGE ERR=kernel_freichen2.txt>
-  convert xc: -define showkernel=1 \
+  convert xc: -define morphology:showkernel=1 \
           -morphology Convolve:0 Frei-Chen:2 null:
 </CODE>-->
 <BLOCKQUOTE>
