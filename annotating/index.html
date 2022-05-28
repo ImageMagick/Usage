@@ -7,7 +7,7 @@ Author: <A HREF="http://www.ict.griffith.edu.au/anthony/anthony.html"
 <TITLE>Annotating -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/annotating/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/annotating/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -69,7 +69,7 @@ Reasons for annotating images are varied, but are usually either to
 <LI> Add copyright or logos to the image as a form of copy protection.
 </UL></P>
 
-<A HREF="https://legacy.imagemagick.org/" >ImageMagick</A> provides a lot of ways
+<A HREF="https://imagemagick.org/" >ImageMagick</A> provides a lot of ways
 to do these things, but not all are easy to discover from the manuals on your
 own. This page tries to present the common methods used.  Many of the specific
 methods are discussed more fully on other example pages. </P>
@@ -104,7 +104,7 @@ setting, for alignment purposes.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon.gif   -background Khaki  label:'Faerie Dragon' \
+  magick dragon.gif   -background Khaki  label:'Faerie Dragon' \
           -gravity Center -append    anno_label.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -120,7 +120,7 @@ By reordering the images you can append the label above the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon.gif   -background Orange  label:'Faerie Dragon' \
+  magick dragon.gif   -background Orange  label:'Faerie Dragon' \
           +swap  -gravity Center -append    anno_label2.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -138,7 +138,7 @@ allow us to draw/annotate the label into the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon.gif \
+  magick dragon.gif \
           -gravity South   -background Plum   -splice 0x18 \
           -annotate +0+2 'Faerie Dragon'   anno_splice.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -154,7 +154,7 @@ gravity setting of '<CODE>South</CODE>' with '<CODE>North</CODE>'.  Easy!
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon.gif \
+  magick dragon.gif \
           -gravity North   -background YellowGreen  -splice 0x18 \
           -annotate +0+2 'Faerie Dragon'   anno_splice2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -173,14 +173,14 @@ Handling</A> for more details of other text drawing methods and techniques.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 
-<B>Label using Montage</B>  The montage command in ImageMagick is often
-overlooked by users as only useful for creating a display of a whole directory
+<B>Label using Montage</B>  The magick montage command in ImageMagick is often
+overlooked by users as only useful for creating a magick display of a whole directory
 of images. It does provide a very simple way to add labels an image.
 
 <!-- dragon photo is linked from "images" -->
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage -label "Faerie Dragon"  dragon.gif \
+  magick montage -label "Faerie Dragon"  dragon.gif \
           -geometry +0+0 -background Gold anno_montage.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="anno_montage.jpg"
@@ -197,11 +197,11 @@ labeling of the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage -label "Faerie Dragon" dragon.gif \
+  magick montage -label "Faerie Dragon" dragon.gif \
           -font Candice -pointsize 15 \
           -frame 5  -geometry +0+0 anno_montage2.jpg
 </CODE></PRE></TD></TR></TABLE>
-For more info about using montage see <A HREF="../montage/" >Montage, Arrays
+For more info about using magick montage see <A HREF="../montage/" >Montage, Arrays
 of Images</A>.
 
 </TD><TD>
@@ -220,7 +220,7 @@ generate a rather fancy commented image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -caption "Faerie Dragon" dragon.gif -gravity center \
+<r>  magick -caption "Faerie Dragon" dragon.gif -gravity center \
            -background black +polaroid anno_polaroid.png
 </CODE></PRE></TD></TR></TABLE>
 Warning this image is distorted, (curved and rotated) with some randomization,
@@ -261,7 +261,7 @@ twice.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon.gif -gravity south \
+  magick dragon.gif -gravity south \
           -stroke '#000C' -strokewidth 2 -annotate 0 'Faerie Dragon' \
           -stroke  none   -fill white    -annotate 0 'Faerie Dragon' \
           anno_outline.jpg
@@ -286,7 +286,7 @@ draw the text in the opposite color.  For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon.gif \
+  magick dragon.gif \
           -fill '#0008' -draw 'rectangle 5,128,114,145' \
           -fill white   -annotate +10+141 'Faerie Dragon' \
           anno_dim_draw.jpg
@@ -317,7 +317,7 @@ command line using the "<CODE><A HREF="../option_link.cgi?undercolor"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon.gif  -fill white  -undercolor '#00000080'  -gravity South \
+  magick dragon.gif  -fill white  -undercolor '#00000080'  -gravity South \
           -annotate +0+5 ' Faerie Dragon '     anno_undercolor.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="anno_undercolor.jpg"
@@ -340,8 +340,8 @@ it.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -background '#00000080' -fill white label:'Faerie Dragon' miff:- |\
-    composite -gravity south -geometry +0+3 \
+  magick -background '#00000080' -fill white label:'Faerie Dragon' miff:- |\
+    magick composite -gravity south -geometry +0+3 \
               -   dragon.gif   anno_composite.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="anno_composite.jpg"
@@ -378,10 +378,10 @@ provided, with word wrapping.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  width=`identify -format %w dragon.gif`; \
-  convert -background '#0008' -fill white -gravity center -size ${width}x30 \
+  width=`magick identify -format %w dragon.gif`; \
+  magick -background '#0008' -fill white -gravity center -size ${width}x30 \
           caption:"Faerie Dragons love hot apple pies\!" \
-          dragon.gif +swap -gravity south -composite  anno_caption.jpg
+          dragon.gif +swap -gravity south -magick composite  anno_caption.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="anno_caption.jpg"
      ><IMG SRC="anno_caption.jpg"
@@ -404,25 +404,25 @@ the annotation.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x14 xc:none -gravity center \
+  magick -size 100x14 xc:none -gravity center \
           -stroke black -strokewidth 2 -annotate 0 'Faerie Dragon' \
           -background none -shadow 100x3+0+0 +repage \
           -stroke none -fill white     -annotate 0 'Faerie Dragon' \
           dragon.gif  +swap -gravity south -geometry +0-3 \
-          -composite  anno_fancy.jpg
+          -magick composite  anno_fancy.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="anno_fancy.jpg"
      ><IMG SRC="anno_fancy.jpg"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE>
 
-If you are planning to composite the same label (say a copyright message) onto
+If you are planning to magick composite the same label (say a copyright message) onto
 a lot of images, it would probably be better to generate your label separately
 and compose that label onto each image using the "<A HREF="../basics/#mogrify"
 >mogrify</A>" command. </P>
 
 The "<CODE>-geometry +0-3</CODE>" offset in the above is used to position the
-composite overlay closer to the edge, as the soft fuzzy outline of this image
+magick composite overlay closer to the edge, as the soft fuzzy outline of this image
 is often larger that is necessary. </P>
 
 <BR>
@@ -435,7 +435,7 @@ everyone else. And more importantly tell the IM community about it. </P>
 <PRE>FUTURE: select the black or white color based on the images relative
 intensity.  This uses a number if very advanced techniques.
 
-  convert input.jpg  -font myfont -pointsize 25 \
+  magick input.jpg  -font myfont -pointsize 25 \
       \( +clone -resize 1x1  -fx 1-intensity -threshold 50% \
          -scale 32x32 -write mpr:color +delete \)  -tile mpr:color \
        -annotate +10+26 'My Text'              output.jpg
@@ -506,7 +506,7 @@ prepared button frame.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -gravity center  castle.gif  frame.gif  castle_button.gif
+  magick composite -gravity center  castle.gif  frame.gif  castle_button.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/castle.gif"
      ><IMG SRC="../images/castle.gif"
@@ -527,7 +527,7 @@ the small craws of the faerie dragon.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -geometry +31+105  hand_point.gif dragon.gif \
+  magick composite -geometry +31+105  hand_point.gif dragon.gif \
             dragon_claw_pointed.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/hand_point.gif"
@@ -569,7 +569,7 @@ to draw it on a paper scroll image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite \( dragon.gif -resize 50% \) scroll.gif \
+  magick composite \( dragon.gif -resize 50% \) scroll.gif \
             -compose bumpmap -gravity center   dragon_scroll.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/dragon.gif"
@@ -593,7 +593,7 @@ image is lost.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose bumpmap  -tile rings.jpg \
+  magick composite -compose bumpmap  -tile rings.jpg \
             dragon.gif  dragon_rings.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rings.jpg"
@@ -627,16 +627,16 @@ image is lost.
 
 <B>Multiply</B> compose method is best known for its ability to merge two
 images with white backgrounds (like onto a page of text). Unlike the
-'<CODE>bumpmap</CODE>' compose method, it does not pre-convert the overlaid
+'<CODE>bumpmap</CODE>' compose method, it does not pre-magick the overlaid
 image into grey-scale.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   mesgs PictureWords |\
-      convert -pointsize 18 text:-  -trim +repage \
+      magick -pointsize 18 text:-  -trim +repage \
               -bordercolor white -border 10x5   text.gif
-  composite -compose multiply -geometry +400+3 \
+  magick composite -compose multiply -geometry +400+3 \
             paint_brush.gif  text.gif  text_multiply.gif
 </CODE></PRE></TD></TR></TABLE>
  <A HREF="../images/paint_brush.gif"
@@ -696,8 +696,8 @@ want to watermark, using a small 'eyes' symbol.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo: -resize x180  -gravity center  -crop 180x180+0+0  logo.jpg
-  composite -geometry +160+13 eyes.gif   logo.jpg  wmark_symbol.jpg
+  magick logo: -resize x180  -gravity center  -crop 180x180+0+0  logo.jpg
+  magick composite -geometry +160+13 eyes.gif   logo.jpg  wmark_symbol.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo.jpg"
      ><IMG SRC="logo.jpg"                 WIDTH=180   HEIGHT=180
@@ -744,7 +744,7 @@ some sort of <A HREF="../fonts/" >Compound Font Effects</A> should be used.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.jpg  -font Arial -pointsize 20 \
+  magick logo.jpg  -font Arial -pointsize 20 \
           -draw "gravity south \
                  fill black  text 0,12 'Copyright' \
                  fill white  text 1,11 'Copyright' " \
@@ -767,16 +767,16 @@ may be useful for you understanding.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
-  convert -size 300x50 xc:grey30 -font Arial -pointsize 20 -gravity center \
+  magick -size 300x50 xc:grey30 -font Arial -pointsize 20 -gravity center \
           -draw "fill grey70  text 0,0  'Copyright'" \
           stamp_fgnd.png
-  convert -size 300x50 xc:black -font Arial -pointsize 20 -gravity center \
+  magick -size 300x50 xc:black -font Arial -pointsize 20 -gravity center \
           -draw "fill white  text  1,1  'Copyright'  \
                              text  0,0  'Copyright'  \
                  fill black  text -1,-1 'Copyright'" \
           +matte stamp_mask.png
-  composite -compose CopyOpacity  stamp_mask.png  stamp_fgnd.png  stamp.png
-  mogrify -trim +repage stamp.png
+  magick composite -compose CopyOpacity  stamp_mask.png  stamp_fgnd.png  stamp.png
+  magick mogrify -trim +repage stamp.png
 </CODE></PRE></TD></TR></TABLE>
 <!--
   <A HREF="stamp_fgnd.png"
@@ -797,7 +797,7 @@ Now we have a watermark font we can apply it to our image...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -gravity south -geometry +0+10 stamp.png  logo.jpg \
+  magick composite -gravity south -geometry +0+10 stamp.png  logo.jpg \
             wmark_text_stamped.jpg
 </CODE></PRE></TD></TR></TABLE>
 As you can see the watermark is not as bold as before, and even uses shades of
@@ -821,11 +821,11 @@ commands, with the output of one, feeding the next.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 140x80 xc:none -fill grey \
+  magick -size 140x80 xc:none -fill grey \
           -gravity NorthWest -draw "text 10,10 'Copyright'" \
           -gravity SouthEast -draw "text 5,15 'Copyright'" \
           miff:- |\
-    composite -tile - logo.jpg  wmark_text_tiled.jpg
+    magick composite -tile - logo.jpg  wmark_text_tiled.jpg
 </CODE></PRE></TD></TR></TABLE>
 This takes advantage of the fact that an image (like a photograph, not a
 diagram) will generally have some areas in which the tiled test string will be
@@ -887,7 +887,7 @@ producing ugly edge artifacts.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -watermark 30% -gravity south \
+  magick composite -watermark 30% -gravity south \
             wmark_image.png  logo.jpg    wmark_watermark.jpg
 </CODE></PRE></TD></TR></TABLE>
 
@@ -910,7 +910,7 @@ HREF="../compose/#watermark" >Watermark Option Usage</A> page. </P>
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -dissolve 25% -gravity south \
+  magick composite -dissolve 25% -gravity south \
             wmark_image.png   logo.jpg  wmark_dissolve.jpg
 </CODE></PRE></TD></TR></TABLE>
 
@@ -944,7 +944,7 @@ make the watermark even less intrusive.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -dissolve 15 -tile \
+  magick composite -dissolve 15 -tile \
             wmark_image.png   logo.jpg  wmark_tiled.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -966,8 +966,8 @@ technique.  If this is not done the result would be very very bold.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert wmark_image.png  -fill Gray91 -colorize 80  miff:- |\
-  composite -compose bumpmap -gravity south \
+  magick wmark_image.png  -fill Gray91 -colorize 80  miff:- |\
+  magick composite -compose bumpmap -gravity south \
             -  logo.jpg    wmark_bumpmap.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="wmark_bumpmap.jpg"
@@ -992,8 +992,8 @@ watermark on black parts of the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert wmark_image.png  -fill grey50 -colorize 40  miff:- |\
-  composite -dissolve 30 -gravity south -  logo.jpg wmark_dissolve_grey.jpg
+  magick wmark_image.png  -fill grey50 -colorize 40  miff:- |\
+  magick composite -dissolve 30 -gravity south -  logo.jpg wmark_dissolve_grey.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="wmark_dissolve_grey.jpg"
      ><IMG SRC="wmark_dissolve_grey.jpg"    WIDTH=180   HEIGHT=180
@@ -1014,8 +1014,8 @@ watermark even less noticeable. </P>
 image with an even lower dissolve value.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert wmark_image.png  -fill grey50 -colorize 40  miff:- |\
-  composite -dissolve 15 -tile  -  logo.jpg wmark_dissolve_tile.jpg
+  magick wmark_image.png  -fill grey50 -colorize 40  miff:- |\
+  magick composite -dissolve 15 -tile  -  logo.jpg wmark_dissolve_tile.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="wmark_dissolve_tile.jpg"
      ><IMG SRC="wmark_dissolve_tile.jpg"      WIDTH=180   HEIGHT=180
@@ -1140,11 +1140,11 @@ Here is an example of using gravity to position images on a background.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite label:Default                      rings.jpg gravity_default.jpg
-  composite label:Center    -gravity center    rings.jpg gravity_center.jpg
-  composite label:South     -gravity south     rings.jpg gravity_south.jpg
-  composite label:East      -gravity east      rings.jpg gravity_east.jpg
-  composite label:NorthEast -gravity northeast rings.jpg gravity_northeast.jpg
+  magick composite label:Default                      rings.jpg gravity_default.jpg
+  magick composite label:Center    -gravity center    rings.jpg gravity_center.jpg
+  magick composite label:South     -gravity south     rings.jpg gravity_south.jpg
+  magick composite label:East      -gravity east      rings.jpg gravity_east.jpg
+  magick composite label:NorthEast -gravity northeast rings.jpg gravity_northeast.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gravity_default.jpg"
      ><IMG SRC="gravity_default.jpg"        WIDTH=94   HEIGHT=94
@@ -1181,11 +1181,11 @@ geometry position has been reversed, while the X direction was left alone.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite label:Default   -geometry +10+10 \
+  magick composite label:Default   -geometry +10+10 \
             rings.jpg gravity_default_pos.jpg
-  composite label:South     -geometry +10+10 -gravity south \
+  magick composite label:South     -geometry +10+10 -gravity south \
             rings.jpg gravity_south_pos.jpg
-  composite label:NorthEast -geometry +10+10 -gravity northeast \
+  magick composite label:NorthEast -geometry +10+10 -gravity northeast \
             rings.jpg gravity_northeast_pos.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gravity_default_pos.jpg"
@@ -1207,7 +1207,7 @@ a single command.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg \
+  magick rings.jpg \
           -gravity Center     -draw "image Over     0,0 0,0 'castle.gif'" \
           -gravity NorthEast  -draw "image Bumpmap  0,0 0,0 'castle.gif'" \
           -gravity SouthWest  -draw "image Multiply 0,0 0,0 'castle.gif'" \
@@ -1226,10 +1226,10 @@ And you can also now use "<CODE><A HREF="../option_link.cgi?composite"
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg \
-          -gravity Center     castle.gif  -compose Over     -composite \
-          -gravity NorthWest  castle.gif  -compose Bumpmap  -composite \
-          -gravity SouthEast  castle.gif  -compose Multiply -composite \
+  magick rings.jpg \
+          -gravity Center     castle.gif  -compose Over     -magick composite \
+          -gravity NorthWest  castle.gif  -compose Bumpmap  -magick composite \
+          -gravity SouthEast  castle.gif  -compose Multiply -magick composite \
           gravity_image2.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1261,7 +1261,7 @@ operator.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg -resize 120x120  \
+  magick rings.jpg -resize 120x120  \
           -gravity northwest  -annotate 0 'NorthWest' \
           -gravity east       -annotate 0 'East' \
           -gravity center     -annotate 0 'Center' \
@@ -1288,7 +1288,7 @@ For example, lets actually do this...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg -annotate 0 'String' gravity_text_none.jpg
+  magick rings.jpg -annotate 0 'String' gravity_text_none.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="gravity_text_none.jpg"
@@ -1312,7 +1312,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg -gravity NorthWest -annotate 0 'String'  gravity_text_nw.jpg
+  magick rings.jpg -gravity NorthWest -annotate 0 'String'  gravity_text_nw.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="gravity_text_nw.jpg"
@@ -1342,7 +1342,7 @@ how closely the two forms are related.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg \
+  magick rings.jpg \
           -gravity NorthWest -annotate +10+20 'NorthWest' \
           -gravity None      -annotate +10+20 'None' \
           gravity_text_pos.jpg
@@ -1381,7 +1381,7 @@ rather unexpectally!
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg \
+  magick rings.jpg \
           -gravity West -annotate 90x90+10+0 'String' \
           gravity_text_left_fail.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -1415,7 +1415,7 @@ south!  It is a non-sensical solution, but it works.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg -rotate -90 \
+  magick rings.jpg -rotate -90 \
           -gravity South -annotate +0+2 'String' \
           -rotate 90  gravity_text_left.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -1450,7 +1450,7 @@ Text with an offset...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:white -gravity Center \
+  magick -size 100x100 xc:white -gravity Center \
           -fill cyan  -draw 'line 50,50 70,70' \
           -fill red   -draw 'line 68,70 72,70 line 70,68 70,72' \
           -fill blue  -draw "text 20,20 'Offset'" \
@@ -1469,7 +1469,7 @@ Text with a translation...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:white -gravity Center \
+  magick -size 100x100 xc:white -gravity Center \
           -fill cyan -draw 'line 50,50 70,70' \
           -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
           -fill blue -draw "translate 20,20 text 0,0 'Translate'" \
@@ -1508,7 +1508,7 @@ Just an offset, without rotation...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:white -gravity Center \
+  magick -size 100x100 xc:white -gravity Center \
           -fill cyan -draw 'line 50,50 70,70' \
           -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
           -fill blue -draw "text 20,20 'None'" \
@@ -1526,7 +1526,7 @@ Rotating Text with an offset...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:white -gravity Center \
+  magick -size 100x100 xc:white -gravity Center \
           -fill cyan -draw 'line 50,50 50,78' \
           -fill red  -draw 'line 48,78 52,78  line 50,76 50,80' \
           -fill blue -draw "rotate 45 text 20,20 'Offset'" \
@@ -1544,7 +1544,7 @@ Rotating Text with translation...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:white -gravity Center \
+  magick -size 100x100 xc:white -gravity Center \
           -fill cyan -draw 'line 50,50 70,70' \
           -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
           -fill blue -draw "translate 20,20 rotate 45 text 0,0 'Translate'" \
@@ -1574,7 +1574,7 @@ Annotate with rotate and offset...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:white -gravity Center \
+  magick -size 100x100 xc:white -gravity Center \
           -fill cyan -draw 'line 50,50 70,70' \
           -fill red  -draw 'line 68,70 72,70  line 70,68 70,72' \
           -fill blue -annotate 45x45+20+20 'Annotate' \
@@ -1613,7 +1613,7 @@ simply 'layer' the image onto the background image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg -background none label:'Some Text' \
+  magick rings.jpg -background none label:'Some Text' \
           -flatten  layer_simple.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1631,7 +1631,7 @@ limit what image we distort!
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg \( -background none label:'Some Text' \
+  magick rings.jpg \( -background none label:'Some Text' \
              +distort SRT 70 \
           \) -flatten  layer_rotate.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -1661,7 +1661,7 @@ So lets place the center at '<CODE>+60+60</CODE>' in the background image
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg \( -background none label:'Some Text' \
+  magick rings.jpg \( -background none label:'Some Text' \
              +distort SRT '%[fx:w/2],%[fx:h/2] 1 70 60,60' \
           \) -flatten  layer_translate.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -1707,7 +1707,7 @@ pre-calculated position.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rings.jpg -set option:my:left_edge '0,%[fx:h/2]' \
+  magick rings.jpg -set option:my:left_edge '0,%[fx:h/2]' \
           \( -background none label:'Some Text' \
              +distort SRT '%[fx:w/2],%h 1 90 %[my:left_edge]' \
           \) -flatten  layer_on_left.jpg
@@ -1738,5 +1738,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/annotating/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/annotating/</CODE>
 </ADDRESS></BODY></HTML>

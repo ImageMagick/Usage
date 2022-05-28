@@ -5,7 +5,7 @@
 <TITLE>Basic Usage -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/basics/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/basics/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -75,7 +75,7 @@
     > ImageMagick Commands</A>
     <UL>
     <LI><A HREF="#convert"
-        > Convert -- convert and modify images</A>
+        > Convert -- magick and modify images</A>
     <LI><A HREF="#identify"
         > Identify -- Output information about this image</A>
         <UL>
@@ -243,9 +243,9 @@ and did the same thing.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  -negate  image.gif   output.gif
+  magick -negate  image.gif   output.gif
 
-  convert   image.gif  -negate  output.gif
+  magick  image.gif  -negate  output.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -255,7 +255,7 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 40x20 xc:red  xc:blue \
+  magick -size 40x20 xc:red  xc:blue \
           -append   -rotate 90    append_rotate.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
@@ -293,7 +293,7 @@ explicitly ask IM v6 to do it in that order.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 40x20 xc:red  xc:blue \
+  magick -size 40x20 xc:red  xc:blue \
           -rotate 90  -append    append_rotate_bad.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -348,8 +348,8 @@ images. </P>
 <H3>Types of Options - Operators and Settings...</H3>
 
 A summary of the following is now also available from the <A
-HREF="https://legacy.imagemagick.org/" >ImageMagick Website</A> on <A
-HREF="https://legacy.imagemagick.org/script/command-line-processing.php" >The
+HREF="https://imagemagick.org/" >ImageMagick Website</A> on <A
+HREF="https://imagemagick.org/script/command-line-processing.php" >The
 Anatomy of the Command Line</A>. </P>
 
 All command line options will now fall into two basic groups: 'settings' and
@@ -632,7 +632,7 @@ determine exactly when, and to what images, the option will be applied to.
 </P>
 
 The <A HREF="../reference.html" >IM Examples Options Reference</A> can be used
-to identify what is an 'setting' and what is an 'operator'. </P>
+to magick identify what is an 'setting' and what is an 'operator'. </P>
 
 
 <A NAME="example"></A>
@@ -644,7 +644,7 @@ Let's take a look at an example, and how it will be processed by IM version 6.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  eye.gif news.gif -append    storm.gif tree.gif \
+  magick eye.gif news.gif -append    storm.gif tree.gif \
            -background skyblue +append    result.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="result.gif"
@@ -738,7 +738,7 @@ For example, this IMv5 legacy (UNIX option handling) command....
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  -flip  storm.gif   cmd_flip_legacy.gif
+  magick -flip  storm.gif   cmd_flip_legacy.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="cmd_flip_legacy.gif"
      ><IMG SRC="cmd_flip_legacy.gif"
@@ -751,7 +751,7 @@ Will produce the same result as this IM version 6 command...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  storm.gif -flip  cmd_flip_postfix.gif
+  magick storm.gif -flip  cmd_flip_postfix.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="cmd_flip_postfix.gif"
      ><IMG SRC="cmd_flip_postfix.gif"
@@ -952,7 +952,7 @@ Operational Option</A> (see below).  For example using the command...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -list gravity
+  magick -list gravity
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -962,7 +962,7 @@ setting you will get an error.  For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=gravity_error.txt >
-  convert xc: -gravity Invalid   null:
+  magick xc: -gravity Invalid   null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1062,7 +1062,7 @@ HREF="../option_link.cgi?gamma" >-gamma</A></CODE>", may only use a small part
 of the full geometry syntax. </P>
 
 This type of argument is so common that a special (and complex) parser has
-been written to convert such string arguments to numbers and flags, for use by
+been written to magick such string arguments to numbers and flags, for use by
 any operator that needs a geometry argument.  </P>
 
 A geometry argument basically allows an user to specify a single string
@@ -1344,7 +1344,7 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify.txt >
-  identify  tree.gif
+  magick identify  tree.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1370,7 +1370,7 @@ etc..  However be warned that the output really is... <I>verbose</I>! </P>
 Specific information can be obtained and output in specific ways by using the
 "<CODE><A HREF="../option_link.cgi?format" >-format</A></CODE>" setting, and
 IM special percent ('<CODE>%</CODE>') escapes to output <A
-HREF="https://legacy.imagemagick.org/script/escape.php" >Image Properties</A>.
+HREF="https://imagemagick.org/script/escape.php" >Image Properties</A>.
 However typically you need to specify an EOL (newline under UNIX or MacOSX)
 as part of that argument (changed in IM v6.8.5-8).
 </P>
@@ -1381,7 +1381,7 @@ image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_colors.txt >
-  identify -format '%k\n' tree.gif
+  magick identify -format '%k\n' tree.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1409,7 +1409,7 @@ image.
 
 IM "<CODE><A HREF="#identify" >identify</A></CODE>" by default only reads
 minimal basic information about an image, using a technique know as "<CODE><A
-HREF="../option_link.cgi?ping" >-ping</A></CODE>". This means identify only
+HREF="../option_link.cgi?ping" >-ping</A></CODE>". This means magick identify only
 reads enough of the image file to determine simple image information, such as
 size, without trying to read the whole image into memory.
 See <A HREF="#ping"
@@ -1429,8 +1429,8 @@ attempt to use a simple format setting to print out that label.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE IMAGE=rose.png OUT=identify_ping.txt >
-  convert rose: -set label "rose with a label" rose.png
-  identify -format '"%l"\n' rose.png
+  magick rose: -set label "rose with a label" rose.png
+  magick identify -format '"%l"\n' rose.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="rose.png"
     ><IMG SRC="rose.png"
@@ -1451,7 +1451,7 @@ escapes will automatically disable the use of a minimal 'ping' read.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_no_ping.txt >
-  identify -format '"%[label]"\n' rose.png
+  magick identify -format '"%[label]"\n' rose.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1467,7 +1467,7 @@ to read in the image 'in total' so it gets the desired information.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_ping_off.txt >
-  identify +ping -format '"%l"\n' rose.png
+  magick identify +ping -format '"%l"\n' rose.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1490,7 +1490,7 @@ HREF="../transform/#fx_escapes" >FX Escape Expressions</A>...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_maths.txt >
-  identify -ping -format 'double_width=%[fx:w*2] PI=%[fx:atan(1)*4]\n' tree.gif
+  magick identify -ping -format 'double_width=%[fx:w*2] PI=%[fx:atan(1)*4]\n' tree.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1505,7 +1505,7 @@ allowing you to use IM as a simple floating point calculator for use within
 your scripts. </P>
 
 As we are only needing basic information we used the <A HREF="#ping" >Ping</A>
-control to prevent identify from reading in the whole image. It has no effect
+control to prevent magick identify from reading in the whole image. It has no effect
 on the outcome in this case, but can speed up the command enormously. </P>
 
 <A NAME="identify_cavats"></A>
@@ -1539,14 +1539,14 @@ on the outcome in this case, but can speed up the command enormously. </P>
     a large image comment. </P>
 
 <DT>Exit Status
-<DD>The identify program returns a non-zero exit status if a corrupted image
+<DD>The magick identify program returns a non-zero exit status if a corrupted image
     is encountered and you add a <A HREF="#regard-warnings" >Regard Warnings
     Control</A>. </P>
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  error=`identify -regard-warnings image 2>&1 >/dev/null;`
+  error=`magick identify -regard-warnings image 2>&1 >/dev/null;`
   if [ $? -eq 0 ]; then
     echo "The image is good"
   else
@@ -1561,14 +1561,14 @@ on the outcome in this case, but can speed up the command enormously. </P>
 <A NAME="identify_alt" ></A>
 <H4>Identify Output Alternatives</H4>
 
-As of IM v6.2.4 you can also produce identify output from the "<CODE><A
+As of IM v6.2.4 you can also produce magick identify output from the "<CODE><A
 HREF="#convert" >convert</A></CODE>" command using the special "<CODE><A
 HREF="../files/#info" >info:</A></CODE>" output file format.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT OUT=output_info.txt >
-  convert ../images/k* \
+  magick ../images/k* \
           -format 'image \"%f\" is of size %G\n'  info:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -1591,8 +1591,8 @@ the normal 'standard output'. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT OUT=output_identify.txt >
-  convert ../images/k* \
-          -format 'Image #%p named \"%f\" is a %m\n' -identify \
+  magick ../images/k* \
+          -format 'Image #%p named \"%f\" is a %m\n' -magick identify \
           null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -1610,7 +1610,7 @@ information.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT OUT=output_print.txt >
-  convert null: -print ' (50 + 25)/5  ==&gt;  %[fx: (50+25)/5 ]\n' null:
+  magick null: -print ' (50 + 25)/5  ==&gt;  %[fx: (50+25)/5 ]\n' null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1634,11 +1634,11 @@ the previous example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT OUT=output_html.txt >
-  convert ../images/k* \
+  magick ../images/k* \
      -print "&lt;HTML&gt;&lt;BODY&gt;&lt;CENTER&gt;\n" \
      -print "&lt;H1&gt;  Display of %n Thumbnails  &lt;/H1&gt;\n" \
      -print "\n" \
-     -format "&lt;IMG SRC=\"%i\" ALT=\"%f\" WIDTH=%w HEIGHT=%h&gt;\n" -identify \
+     -format "&lt;IMG SRC=\"%i\" ALT=\"%f\" WIDTH=%w HEIGHT=%h&gt;\n" -magick identify \
      -print "\n" \
      -print "&lt;BR&gt;That's all folks\!\n" \
      -print "\n" \
@@ -1704,7 +1704,7 @@ As such a command like...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  mogrify    -format jpg   *.png
+  magick mogrify    -format jpg   *.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1730,7 +1730,7 @@ an existing sub-directory, using something like this...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  mogrify   -path thumbnail-directory   -thumbnail 100x100  *
+  magick mogrify   -path thumbnail-directory   -thumbnail 100x100  *
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1775,7 +1775,7 @@ For example..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE>
-  mogrify -format gif  -size 200x200  -pointsize 18 \
+  magick mogrify -format gif  -size 200x200  -pointsize 18 \
           -font Candice -gravity north  -annotate 0 "%f" \
           -font Ravie   -gravity Center -annotate 0 "%f" \
           -font Gecko   -gravity south  -annotate 0 "%f" \
@@ -1850,8 +1850,8 @@ which I then use to cut out a circle shape from all those images, using
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=/dev/null>
   cp_perl  's/^/mogrify_/'  eye.gif news.gif storm.gif tree.gif
-  convert  -size 32x32 xc:none -draw 'circle 15.5,15.5 15.5,0'  circle.gif
-  mogrify  -alpha Set -draw 'image Dst_In 0,0 0,0 "circle.gif"'  mogrify_*.gif
+  magick -size 32x32 xc:none -draw 'circle 15.5,15.5 15.5,0'  circle.gif
+  magick mogrify  -alpha Set -draw 'image Dst_In 0,0 0,0 "circle.gif"'  mogrify_*.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/eye.gif"
      ><IMG SRC="../images/eye.gif"
@@ -1916,7 +1916,7 @@ appropraite output image filename.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert *.jpg   -thumbnail 120x90 \
+  magick *.jpg   -thumbnail 120x90 \
           -set filename:fname '%t_tn' +adjoin '%[filename:fname].gif'
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1967,7 +1967,7 @@ include...
   # Use a simple shell loop, to process each of the images.
   mkdir thumbnails
   for f in *.jpg
-  do   convert $f -thumbnail 200x90 thumbnails/$f.gif
+  do   magick $f -thumbnail 200x90 thumbnails/$f.gif
   done
 
   # Use find to substitute filenames into a 'convert' command.
@@ -1975,15 +1975,15 @@ include...
   # the -prune option, as well as doing other file checks (like image type,
   # or the disk space used by an image).
   find * -prune -name '*.jpg' \
-         -exec  convert '{}' -thumbnail 200x90 thumbnails/'{}'.gif \;
+         -exec  magick '{}' -thumbnail 200x90 thumbnails/'{}'.gif \;
 
   # Use xargs -- with a shell wrapper to put the argument into a variable
   # This can be combined with either "find" or "ls" to list filenames.
-  ls *.jpg | xargs -n1 sh -c 'convert $0 -thumbnail 200x90 thumbnails/$0.gif'
+  ls *.jpg | xargs -n1 sh -c 'magick $0 -thumbnail 200x90 thumbnails/$0.gif'
 
   # An alternative method on linux (rather than plain unix)
   # This does not need a shell to handle the argument.
-  ls *.jpg | xargs -r -I FILE   convert FILE -thumbnail 200x90 FILE_thumb.gif
+  ls *.jpg | xargs -r -I FILE   magick FILE -thumbnail 200x90 FILE_thumb.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2020,7 +2020,7 @@ Processing Several Files</A>. </P>
   commands will also expand all filenames containing shell meta-characters
   such as '*' and '?'.  This is done to allow the use of these meta-characters
   on the old DOS command line shell. However this could cause a bug, repeated
-  mogrify execution, or possibly even a 'hack' from a some evil source that
+  magick mogrify execution, or possibly even a 'hack' from a some evil source that
   provided the filename to use.  Caution and complete understanding of
   security issues is advised.
 
@@ -2099,7 +2099,7 @@ For more details about "<CODE>montage</CODE>" see <A HREF="../montage/"
 <H3>display
 <FONT SIZE=-1>-- Slideshows of Images</FONT></H3>
 
-The "<CODE>display</CODE>" program is designed to display an image, or list
+The "<CODE>display</CODE>" program is designed to magick display an image, or list
 of images in the form of a looped slideshow.  It is not designed for a
 carefully orchestrated and timed animation of images,  for that use the
 "<CODE><A HREF="#animate" >animate</A></CODE>" command. </P>
@@ -2110,9 +2110,9 @@ unless other options (like window "<CODE><A HREF="../option_link.cgi?geometry"
 also generally be displayed on a checkerboard background so as to show the
 effects of any transparency the image may have (see below). </P>
 
-Remember this is NOT designed for the display of an animation, but as
+Remember this is NOT designed for the magick display of an animation, but as
 a slideshow of actual images. As such some caution may be needed when using
-display in a scripting program. </P>
+magick display in a scripting program. </P>
 
 <B>Image Display Time, Loop, and other options</B></P>
 
@@ -2143,7 +2143,7 @@ disposed of, and virtual canvas sizes and offsets are ignored.  In other words
 you will see the raw partial images in a GIF animation, not the correctly
 overlaid image.  It does provide a "<CODE><A
 HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" option to clean up
-such animations for display purposes.  </P>
+such animations for magick display purposes.  </P>
 
 <H4>Transparency Handling</H4>
 
@@ -2157,9 +2157,9 @@ You can change that by selecting a different background with
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  display -texture granite: test.png
+  magick display -texture granite: test.png
 
-  display -texture xc:black test.png
+  magick display -texture xc:black test.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2169,7 +2169,7 @@ transparency in the color table.  That is a generally random color may be used
 (typically black) rather than the default checkerboard pattern.  This could be
 regarded as a bug, though technically it isn't. </P>
 
-However if you like display to handle such images in the same way as other
+However if you like magick display to handle such images in the same way as other
 images containing transparency information, you can remove the palette
 meta-data before feeding the image to "<CODE>display</CODE>" using the
 following commands to change the internal style for the image output format.
@@ -2177,7 +2177,7 @@ following commands to change the internal style for the image output format.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image.gif -type truecolormatte miff:- | display -
+  magick image.gif -type truecolormatte miff:- | magick display -
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2189,7 +2189,7 @@ using "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>".
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  display -coalesce image.gif
+  magick display -coalesce image.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2203,14 +2203,14 @@ Yes these methods are clumsy, but they work. </P>
 <A NAME="display_convert"></A>
 <H4>Display Using Convert</H4>
 
-An alternative display method (other than using "<CODE>animate</CODE>", see
+An alternative magick display method (other than using "<CODE>animate</CODE>", see
 next) is to use the simpler  "<CODE>x:</CODE>" output image format (See <A
-HREF="../files/#show" >display output format</A>).
+HREF="../files/#show" >magick display output format</A>).
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image.png x:
+  magick image.png x:
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2226,7 +2226,7 @@ output image, and exiting without waiting for that window to be closed.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image.png show:
+  magick image.png show:
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2240,18 +2240,18 @@ setting can also be used to fix the windows position on the X window display.
 </P>
 
 Images which are larger that the screen, will also not be resized, but
-will overflow the screen, display will however also provide a 'scroll
+will overflow the screen, magick display will however also provide a 'scroll
 window' to let the user slide around the image. </P>
 
 This can be painful when viewing a modern high resolution digital photo. </P>
 
-To limit display to say a 800x600 pixel area (only resize smaller, never
+To limit magick display to say a 800x600 pixel area (only resize smaller, never
 larger), use...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  display -resize 800x600\> photo.jpg
+  magick display -resize 800x600\> photo.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2262,7 +2262,7 @@ Control Options</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  display -define jpeg:size=1600x1200 -thumbnail 800x600\> photo.jpg
+  magick display -define jpeg:size=1600x1200 -thumbnail 800x600\> photo.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2279,12 +2279,12 @@ HREF="../option_link.cgi?immutable" >-immutable</A></CODE>" setting to
 <H4>Scripted use of Display</H4>
 
 With these options in mind, the following is my recommendation for using
-"<CODE>display</CODE>" to display results from a complex shell script...
+"<CODE>display</CODE>" to magick display results from a complex shell script...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  display -delay 0 -loop 1 -coalesce -resize 800x600\>   some_random_image
+  magick display -delay 0 -loop 1 -coalesce -resize 800x600\>   some_random_image
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2294,7 +2294,7 @@ With these options in mind, the following is my recommendation for using
 <H4>Display with X Windows</H4>
 
 The option "<CODE><A HREF="../option_link.cgi?window" >-window</A> root</CODE>"
-can be used to display an image on the X window background (root) window. In
+can be used to magick display an image on the X window background (root) window. In
 this case the "<CODE>display</CODE>" program automatically exits. </P>
 
 By default an image is tiled across the background. For example try this..
@@ -2302,7 +2302,7 @@ By default an image is tiled across the background. For example try this..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  display -window root pattern:checkerboard
+  magick display -window root pattern:checkerboard
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2328,7 +2328,7 @@ fill the X window background completely.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
   screen_size=`xdpyinfo | sed '/dimensions:/!d;s/^[^0-9]*//;s/ pixels.*//'`
-  display  -resize $screen_size! -window root photo.jpg
+  magick display  -resize $screen_size! -window root photo.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2345,22 +2345,22 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  display wizard: &
+  magick display wizard: &
   sleep 5
-  display -remote logo: &
+  magick display -remote logo: &
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
-Will display the built in "wizard" image in a backgrounded command.  The
+Will magick display the built in "wizard" image in a backgrounded command.  The
 script will then wait 5 seconds before replace it with the built-in "logo"
 image.</P>
 
 Note that if no "<CODE>display</CODE>" command is running, the current command
 will open a window and not exit.  As such you should also background the
-"<CODE>display -remote</CODE>" commands as a precaution. </P>
+"<CODE>magick display -remote</CODE>" commands as a precaution. </P>
 
 At this time you can not request a remote "<CODE>display</CODE>" to exit. As
-such the best way to close the remote display is to either kill the running
-process, or 'delete' the display window using some X window command. </P>
+such the best way to close the remote magick display is to either kill the running
+process, or 'delete' the magick display window using some X window command. </P>
 
 For example (using the non-IM command "<CODE>xdotool</CODE>")...
 <DIV ALIGN=center>
@@ -2385,7 +2385,7 @@ pause between each frame for user input. </P>
 
 "<CODE>animate</CODE>" on the other hand will apply any <A
 HREF="../anim_basics/#gif_anim" >GIF Animation Settings</A> that are saved
-with the image, and only display each image according to its 'time delay'
+with the image, and only magick display each image according to its 'time delay'
 settings, looping back to the start to repeat the animation.  In other words
 "<CODE>animate</CODE>" 'animates' animation formats properly where "<CODE><A
 HREF="#display" >display</A></CODE>" does not. </P>
@@ -2395,7 +2395,7 @@ the output image size, and other image will be overlaid into that image area.
 </P>
 
 Of course as the images are animated, you do have a fine control of the image
-display timing, using options such as "<CODE><A
+magick display timing, using options such as "<CODE><A
 HREF="../option_link.cgi?delay" >-delay</A></CODE>".  The command also has an
 extra argument "<CODE><A HREF="../option_link.cgi?pause" >-pause</A></CODE>"
 to add an extra pause at the end of the animation loop, beyond whatever the
@@ -2409,8 +2409,8 @@ using something like..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image1.png image2.png -scale 400% miff:- |\
-     animate -delay 50 -loop 0 -
+  magick image1.png image2.png -scale 400% miff:- |\
+     magick animate -delay 50 -loop 0 -
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2449,7 +2449,7 @@ HREF="../option_link.cgi?channel" >-channel</A></CODE>" option. </P>
 
 However "<CODE>stream</CODE>" will only output the raw color bytes of the
 image (RAW format) as defined by the image depth, as such you may need to pipe
-the output of the extracted segment into convert. </P>
+the output of the extracted magick segment into convert. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
@@ -2458,8 +2458,8 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  stream -map rgb -storage-type char -extract 100x100+200+100 logo: - |\
-    convert -depth 8 -size 100x100 rgb:-   stream_wand.gif
+  magick stream -map rgb -storage-type char -extract 100x100+200+100 logo: - |\
+    magick -depth 8 -size 100x100 rgb:-   stream_wand.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="stream_wand.gif"
      ><IMG SRC="stream_wand.gif"          WIDTH=100 HEIGHT=100
@@ -2482,26 +2482,26 @@ display...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  import -page A4 -gravity center ps:- | lpr
+  magick import -page A4 -gravity center ps:- | lpr
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
 It is actually rarely used as the special file format "<CODE><A
 HREF="../file/#x" >X:</A></CODE>" also provides exactly the same functionality
-from within the convert command.  </P>
+from within the magick command.  </P>
 
 The only difference between the two is that "<CODE>import</CODE>" has more X
 window specific settings than the "<CODE><A HREF="../file/#x" >X:</A></CODE>"
 format, such as specifying the display, screen, and/or window ID, the image is
 to be grabbed from. </P>
 
-Other options include controls display 'beeping' and repeated snapshots.  </P>
+Other options include controls magick display 'beeping' and repeated snapshots.  </P>
 
 If no specific window is specified, the mouse can be used to select what parts
-of the display the user wants to grab as an image. </P>
+of the magick display the user wants to grab as an image. </P>
 <UL>
 <LI>If a single mouse click is used the whole window clicked in is grabbed and
-    returned as an image.  Note that if any other windows on the display is
+    returned as an image.  Note that if any other windows on the magick display is
     obscuring part of the window selected, then you will grab an image of the
     obscuring other windows are obscuring the selected window being grabbed.
     </P>
@@ -2509,7 +2509,7 @@ of the display the user wants to grab as an image. </P>
     return the whole screen. </P>
 <LI>If a mouse click and drag is used a <A HREF="../crop/#crop" >Cropped</A>
     section of the whole screen is returned, which of course also means the
-    location (virtual canvas offset) on the whole display (virtual canvas, or
+    location (virtual canvas offset) on the whole magick display (virtual canvas, or
     page, size) is also returned. </P>
 </UL></P>
 
@@ -2523,8 +2523,8 @@ See also the special input format,  "<CODE><A HREF="../files/#x"
 >X:</A></CODE>" as an alternative to using "<CODE>import</CODE>". </P>
 
 <PRE>
-    Note to import from the Windows clipboard use
-      convert clipboard:myimage image.png
+    Note to magick import from the Windows clipboard use
+      magick clipboard:myimage image.png
     and not "import"
 </PRE>
 
@@ -2629,7 +2629,7 @@ Let's look at some simple examples...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert   eye.gif  storm.gif  -negate  +append  cmd_negate.gif
+  magick  eye.gif  storm.gif  -negate  +append  cmd_negate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="cmd_negate.gif"
      ><IMG SRC="cmd_negate.gif"
@@ -2647,7 +2647,7 @@ image...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert   eye.gif \(  storm.gif  -negate \) +append  cmd_bracket.gif
+  magick  eye.gif \(  storm.gif  -negate \) +append  cmd_bracket.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="cmd_bracket.gif"
      ><IMG SRC="cmd_bracket.gif"
@@ -2689,7 +2689,7 @@ do in a single "<CODE>convert</CODE>" command.  Generating arrays of images!
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  eye.gif news.gif  +append \
+  magick eye.gif news.gif  +append \
          \( storm.gif tree.gif +append \)   -append  cmd_array.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="cmd_array.gif"
@@ -2708,7 +2708,7 @@ free to add some extra parenthesis. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( eye.gif    news.gif  +append \) \
+  magick \( eye.gif    news.gif  +append \) \
           \( storm.gif  tree.gif  +append \) \
           -append  cmd_array2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2739,7 +2739,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -pointsize 24 \
+  magick -pointsize 24 \
           -font Candice label:Outside \
           \(              label:Inside \
              -font Gecko  label:Inside \) \
@@ -2776,7 +2776,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -respect-parenthesis   -pointsize 24 \
+  magick -respect-parenthesis   -pointsize 24 \
           -font Candice label:Outside \
           \(              label:Inside \
              -font Gecko  label:Inside \) \
@@ -2797,7 +2797,7 @@ short time...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -respect-parenthesis \
+  magick -respect-parenthesis \
           -font Arial   label:"This is a line of plain text." \
           \( -font Candice -pointsize 16 -fill red -undercolor lightblue \
               label:"A line using a lot of different settings." \) \
@@ -2838,7 +2838,7 @@ images from the current image list.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif -delete 1 +append  seq_delete.gif
+  magick font_[0-3].gif -delete 1 +append  seq_delete.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_delete.gif"
      ><IMG SRC="seq_delete.gif"
@@ -2857,7 +2857,7 @@ deleted.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-7].gif -delete 1-4,6 +append  seq_delete2.gif
+  magick font_[0-7].gif -delete 1-4,6 +append  seq_delete2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_delete2.gif"
      ><IMG SRC="seq_delete2.gif"
@@ -2870,7 +2870,7 @@ Or delete everything (and add a new image)...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-7].gif -delete 0--1  tree.gif seq_delete3.gif
+  magick font_[0-7].gif -delete 0--1  tree.gif seq_delete3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_delete3.gif"
      ><IMG SRC="seq_delete3.gif"
@@ -2896,7 +2896,7 @@ using a sequence like...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE NO_EXECUTE>
-  convert animation.gif  new_frame.gif  -delete -25  animation_new.gif
+  magick animation.gif  new_frame.gif  -delete -25  animation_new.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2914,7 +2914,7 @@ That means that last example could be re-written like this...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE NO_EXECUTE>
-  convert long_animation.gif  new_frame.gif  -delete 0--25  animation_new.gif
+  magick long_animation.gif  new_frame.gif  -delete 0--25  animation_new.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2938,7 +2938,7 @@ list and insert so that it is positioned at the given index.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif tree.gif -insert 1 +append seq_insert.gif
+  magick font_[0-3].gif tree.gif -insert 1 +append seq_insert.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_insert.gif"
      ><IMG SRC="seq_insert.gif"
@@ -2962,7 +2962,7 @@ image list.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif tree.gif -insert -2 +append seq_insert2.gif
+  magick font_[0-3].gif tree.gif -insert -2 +append seq_insert2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_insert2.gif"
      ><IMG SRC="seq_insert2.gif"
@@ -2977,7 +2977,7 @@ will move the last image to the front of the image list (index
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif tree.gif +insert +append seq_insert3.gif
+  magick font_[0-3].gif tree.gif +insert +append seq_insert3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_insert3.gif"
      ><IMG SRC="seq_insert3.gif"
@@ -3004,7 +3004,7 @@ current image list.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif  -swap 0,2  +append  seq_swap.gif
+  magick font_[0-3].gif  -swap 0,2  +append  seq_swap.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_swap.gif"
      ><IMG SRC="seq_swap.gif"
@@ -3020,7 +3020,7 @@ list. In other words, it is equivalent to "<NOBR><CODE>-swap
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif  +swap  +append  seq_swap2.gif
+  magick font_[0-3].gif  +swap  +append  seq_swap2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_swap2.gif"
      ><IMG SRC="seq_swap2.gif"
@@ -3038,8 +3038,8 @@ HREF="../option_link.cgi?fx" >-fx</A></CODE>".
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  frame.gif   +swap \
-          -gravity center  -composite   framed_tree.gif
+  magick tree.gif  frame.gif   +swap \
+          -gravity center  -magick composite   framed_tree.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="framed_tree.gif"
      ><IMG SRC="framed_tree.gif"
@@ -3054,7 +3054,7 @@ with a single number will swap the last image with the number given.  That is
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif  -swap 1  +append  seq_swap3.gif
+  magick font_[0-3].gif  -swap 1  +append  seq_swap3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_swap3.gif"
      ><IMG SRC="seq_swap3.gif"
@@ -3074,7 +3074,7 @@ list.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif -reverse  +append seq_reverse.gif
+  magick font_[0-3].gif -reverse  +append seq_reverse.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_reverse.gif"
      ><IMG SRC="seq_reverse.gif"
@@ -3104,7 +3104,7 @@ the last saved (pushed) image list, so you can process it further.  For example.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-2].gif \( -clone 1 -rotate 90 \) +append  seq_clone.gif
+  magick font_[0-2].gif \( -clone 1 -rotate 90 \) +append  seq_clone.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_clone.gif"
      ><IMG SRC="seq_clone.gif"
@@ -3119,7 +3119,7 @@ further
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-2].gif \( +clone -flip \) +append  seq_clone2.gif
+  magick font_[0-2].gif \( +clone -flip \) +append  seq_clone2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_clone2.gif"
      ><IMG SRC="seq_clone2.gif"
@@ -3134,7 +3134,7 @@ range of indexes of the form '<CODE><I>{index}-{index}</I></CODE>'.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-2].gif \( -clone 1-2 \) +append  seq_clone_range.gif
+  magick font_[0-2].gif \( -clone 1-2 \) +append  seq_clone_range.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_clone_range.gif"
      ><IMG SRC="seq_clone_range.gif"
@@ -3151,7 +3151,7 @@ and works fine.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-2].gif \( -clone 0--1 \) +append  seq_clone_all.gif
+  magick font_[0-2].gif \( -clone 0--1 \) +append  seq_clone_all.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_clone_all.gif"
      ><IMG SRC="seq_clone_all.gif"
@@ -3165,7 +3165,7 @@ that order you specify.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-2].gif \( -clone 2,0,1 \) +append  seq_clone_list.gif
+  magick font_[0-2].gif \( -clone 2,0,1 \) +append  seq_clone_list.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_clone_list.gif"
      ><IMG SRC="seq_clone_list.gif"
@@ -3180,7 +3180,7 @@ process.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-2].gif \( -clone 2-0 \) +append  seq_clone_reversed.gif
+  magick font_[0-2].gif \( -clone 2-0 \) +append  seq_clone_reversed.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_clone_reversed.gif"
      ><IMG SRC="seq_clone_reversed.gif"
@@ -3227,7 +3227,7 @@ this...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_5.gif   -duplicate 4   +append seq_duplicate.gif
+  magick font_5.gif   -duplicate 4   +append seq_duplicate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_duplicate.gif"
      ><IMG SRC="seq_duplicate.gif"
@@ -3246,7 +3246,7 @@ If more than one image is present, the last image is duplicated N times...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-1].gif   -duplicate 3   +append seq_dup_n.gif
+  magick font_[0-1].gif   -duplicate 3   +append seq_dup_n.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_dupl_n.gif"
      ><IMG SRC="seq_dup_n.gif"
@@ -3260,7 +3260,7 @@ of the argument.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif  +duplicate   +append seq_dup_last.gif
+  magick font_[0-3].gif  +duplicate   +append seq_dup_last.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_dup_last.gif"
      ><IMG SRC="seq_dup_last.gif"
@@ -3274,7 +3274,7 @@ specify image index as a second argument.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-2].gif  -duplicate 2,0  +append seq_dup_index.gif
+  magick font_[0-2].gif  -duplicate 2,0  +append seq_dup_index.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_dup_index.gif"
      ><IMG SRC="seq_dup_index.gif"
@@ -3288,7 +3288,7 @@ three times the original number of images...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-4].gif  -duplicate 2,0--1  +append seq_dup_list.gif
+  magick font_[0-4].gif  -duplicate 2,0--1  +append seq_dup_list.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="seq_dup_list.gif"
      ><IMG SRC="seq_dup_list.gif"
@@ -3302,7 +3302,7 @@ also easy to create by using an image list that is reversed.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-9].gif -duplicate 1,-2-1 \
+  magick font_[0-9].gif -duplicate 1,-2-1 \
           -set delay 50 -set dispose previous -loop 0  seq_reverse_anim.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_reverse_anim.gif"
@@ -3328,7 +3328,7 @@ identical images, then use "<CODE><A HREF="../option_link.cgi?morph"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_7.gif \( +clone \) -morph 3  +append seq_dup_morph.gif
+  magick font_7.gif \( +clone \) -morph 3  +append seq_dup_morph.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_dup_morph.gif"
      ><IMG SRC="seq_dup_morph.gif"
@@ -3360,7 +3360,7 @@ one.  </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif  \( -clone 1  -modulate 100,100,166 \) \
+  magick font_[0-3].gif  \( -clone 1  -modulate 100,100,166 \) \
           -delete 1  -insert 1    +append seq_update_1.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_update_1.gif"
@@ -3379,7 +3379,7 @@ replace the modified image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_[0-3].gif  \( -clone 2  -modulate 100,100,166 \) \
+  magick font_[0-3].gif  \( -clone 2  -modulate 100,100,166 \) \
           -swap 2  +delete     +append seq_update_2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_update_2.gif"
@@ -3418,12 +3418,12 @@ a red button on a black background.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 30x30 xc:black -fill white  -draw 'circle 15,15 5,15' \
+  magick -size 30x30 xc:black -fill white  -draw 'circle 15,15 5,15' \
           \( +clone -shade 110x90 -normalize -negate -alpha Off \) \
-          \( +clone -clone -2 -compose Plus -composite \) \
+          \( +clone -clone -2 -compose Plus -magick composite \) \
           \( -clone 0 -shade 110x50 -normalize -alpha Off \) \
           \( +clone -gamma 1,0,0 \) \
-          \( -clone 2,-1  -compose Multiply -composite \) \
+          \( -clone 2,-1  -compose Multiply -magick composite \) \
           -append  seq_process_fx.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_process_fx.gif"
@@ -3431,7 +3431,7 @@ a red button on a black background.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-Each line of the convert command generates a new image, except the last line
+Each line of the magick command generates a new image, except the last line
 where I just <A HREF="../layers/#append" >Appended</A> all the working images
 together to output the results of all the processing steps, rather than just
 the final image. </P>
@@ -3462,12 +3462,12 @@ file.  That is, use something like this for the last line...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE NO_EXECUTE>
-          +append  miff:- | display -
+          +append  miff:- | magick display -
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
 Alternatively instead of "<CODE><A HREF="#display" >display</A></CODE>" you
-can use '<CODE>show:</CODE>' which will display the resulting image on screen,
+can use '<CODE>show:</CODE>' which will magick display the resulting image on screen,
 and then allow the original command to continue or exit.  See <A
 HREF="../files/#show" >Show, Display Image Output</A> for more information.
 
@@ -3488,7 +3488,7 @@ You can even get fancier by using "<CODE><A HREF="#montage"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE NO_EXECUTE>
-          miff:- | montage - -bordercolor blue -border 1 -geometry +2+2 show:
+          miff:- | magick montage - -bordercolor blue -border 1 -geometry +2+2 show:
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3504,10 +3504,10 @@ lines this in between "<NOBR><CODE>\( ...  \)</CODE></NOBR>" statements.
 </DIV></P>
 
 IM will automatically continue processing once that intermediate image has
-been output for display purposes. See <A HREF="../files/#show" >Show, Display
+been output for magick display purposes. See <A HREF="../files/#show" >Show, Display
 Image Output</A>. </P>
 
-Alternatively, by inserting this line instead, you can display all the
+Alternatively, by inserting this line instead, you can magick display all the
 current images generated so far at that point in the processing...
 
 <DIV ALIGN=center>
@@ -3532,14 +3532,14 @@ memory.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -font Ravie -pointsize 48 -background black -fill white \
+  magick -font Ravie -pointsize 48 -background black -fill white \
           label:'IM' -bordercolor black -border 5  seq_label.gif
 
-  convert seq_label.gif -alpha Off \
+  magick seq_label.gif -alpha Off \
           \( +clone  -shade 110x90 -normalize -negate \
-             +clone  -compose Plus -composite \) \
+             +clone  -compose Plus -magick composite \) \
           \( -clone 0 -shade 110x50 -normalize -gamma 1,0,0 -alpha Set \) \
-          -delete 0 +swap  -compose Multiply -composite  seq_button.gif
+          -delete 0 +swap  -compose Multiply -magick composite  seq_button.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="seq_label.gif"
      ><IMG SRC="seq_label.gif"
@@ -3671,7 +3671,7 @@ ways...
     reading and image processing of all the images. An example of which
     is the "<CODE>verbose</CODE>" setting that causes some operations to
     output general information about there actions, including more verbose
-    identify output. </P>
+    magick identify output. </P>
 
     Users can modify these global values using <A HREF="#define" >Define</A>
     (see below), or with a special case of the <A HREF="#set" >Set</A>, (see
@@ -3713,7 +3713,7 @@ For example....
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -label one  image_one.png \
+  magick -label one  image_one.png \
           -label two  image_two.png     output_image_list
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -3727,7 +3727,7 @@ the images read in so far.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert \( image_one.png -set label one \) \
+  magick \( image_one.png -set label one \) \
           \( image_two.png -set label two \)  output_image_list
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -3764,7 +3764,7 @@ HREF="../anim_basics" >Animation</A> from them...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -delay 100 -dispose Background \
+  magick -delay 100 -dispose Background \
             -page 100x100+5+10  eye.gif  \
             -page +35+30        news.gif  \
             \( storm.gif  -set page +62+50 \) \
@@ -3790,7 +3790,7 @@ For example to change the image offset of the third image (image index
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert animation_page.gif \
+  magick animation_page.gif \
           \( -clone 2 -set page +55+10 \) -swap 2  +delete \
           animation_mod.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3810,7 +3810,7 @@ specific image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=comments.txt>
-  convert xc: -duplicate 9 \
+  magick xc: -duplicate 9 \
               -set comment 'T minus %[fx:n-t]' \
               \( -clone 7 -set comment 'We have ignition!' \) -swap 7 +delete \
               -format "image #%p : %c" info:
@@ -3834,12 +3834,12 @@ and replace the comment with a 'Good' one...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=comment_change.txt>
-  convert -comment 'Bad Comment' rose: \
+  magick -comment 'Bad Comment' rose: \
           \
           -write mpr:rose +delete \
           -comment Good   mpr:rose  rose.jpg
 
-<n>  identify -format "image comment = %c" rose.jpg
+<n>  magick identify -format "image comment = %c" rose.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -4093,7 +4093,7 @@ added my own user defined 'property' setting.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE REPLACE OUT=properties.txt>
-  convert rose:   -set my_property my_value   -verbose info: |\
+  magick rose:   -set my_property my_value   -verbose info: |\
     sed -n '/Artifacts/q; /Properties/,$ p'
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -4115,7 +4115,7 @@ image property.
 <TR><TD WIDTH=100%>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE REPLACE OUT=property_label.txt>
-  convert -size 100x label:Anthony  -verbose -identify  property_label.gif |\
+  magick -size 100x label:Anthony  -verbose -magick identify  property_label.gif |\
     sed -n '/Artifacts/q; /Properties/,$ p'
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="property_label.gif"
@@ -4154,7 +4154,7 @@ image property.
 
 </I></FONT></TD></TR></TABLE></P>
 
-Here I use an identify "<CODE><A HREF="../option_link.cgi?format"
+Here I use an magick identify "<CODE><A HREF="../option_link.cgi?format"
 >-format</A></CODE>" setting to get IM to output the pointsize of the label it
 created and discarded.
 
@@ -4162,7 +4162,7 @@ created and discarded.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=property_pointsize.txt>
-  convert -size 100x label:Anthony \
+  magick -size 100x label:Anthony \
           -format 'pointsize = %[label:pointsize]pts' info:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="property_pointsize.txt"
@@ -4179,7 +4179,7 @@ One of the most useful user defined settings you can use is the
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert rose: -set filename:my_area '%wx%h' 'rose-%[filename:my_area].png'
+  magick rose: -set filename:my_area '%wx%h' 'rose-%[filename:my_area].png'
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -4268,7 +4268,7 @@ a '<CODE>verbose</CODE>' artifact. For example...</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=artifact_verbose.txt>
-  convert xc: -verbose info: |\
+  magick xc: -verbose info: |\
     sed -n '/Tainted:/q; /Artifacts:/,$ p'
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -4298,7 +4298,7 @@ For example creating a "<CODE>rose:</CODE>" image with a label set
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE REPLACE OUT=rose_properties.txt>
-  convert -label "%wx%h"  rose:  -verbose info:  |\
+  magick -label "%wx%h"  rose:  -verbose info:  |\
       sed -n '/Tainted:/q; /Properties:/,$ p'
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -4338,7 +4338,7 @@ We showed above how you can "<CODE><A HREF="../option_link.cgi?set"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x40 xc:  -set myinfo 'I love IM!' \
+  magick -size 80x40 xc:  -set myinfo 'I love IM!' \
           -gravity center -annotate 0x0 '%[myinfo]' \
           property_annotate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4355,7 +4355,7 @@ will fail...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -set myinfo 'I love IM!'  label:'== %[myinfo] ==' \
+  magick rose:  -set myinfo 'I love IM!'  label:'== %[myinfo] ==' \
           -gravity center  -append   property_append_fail.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="property_append_fail.gif"
@@ -4376,7 +4376,7 @@ As such as using a "<CODE><A HREF="../option_link.cgi?define"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -define myinfo='I love IM!'  label:'== %[myinfo] ==' \
+  magick rose:  -define myinfo='I love IM!'  label:'== %[myinfo] ==' \
           -gravity center  -append   artifact_append.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="artifact_append.gif"
@@ -4398,7 +4398,7 @@ For example, this is equivelent to the last example.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -set option:myinfo 'I love IM!'  label:'== %[myinfo] ==' \
+  magick rose:  -set option:myinfo 'I love IM!'  label:'== %[myinfo] ==' \
           -gravity center  -append   property_option_append.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="propertyoption_append.gif"
@@ -4410,9 +4410,9 @@ More importantally the "<CODE><A HREF="../option_link.cgi?set"
 >-set</A></CODE>" option will expand <A
 HREF="http://imagemagick.org/script/escape.php" >Percent Escapes</A>.  Which
 means if we have some per-image <A HREF="#properties" >Propriety</A>, we can
-convert it to a global <A HREF="#artifacts" >Artifact</A>.
+magick it to a global <A HREF="#artifacts" >Artifact</A>.
 
-For example, here I create a label, then convert the
+For example, here I create a label, then magick the
 '<CODE>label:pointsize</CODE>' property the "<CODE>label:</CODE>" image
 generator created, into a global artifact '<CODE>my_pointsize</CODE>'.  As an
 artifact, this information is available when I create a second label image.
@@ -4423,7 +4423,7 @@ line).  <I>A very tricky example</I>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x -gravity center label:Anthony \
+  magick -size 100x -gravity center label:Anthony \
           -set option:my_pointsize '%[label:pointsize]' \
           -set option:my_height '%h' \
           -size 100x1 xc:gray \
@@ -4472,7 +4472,7 @@ time of the file I/O, though only to ensure the image is in a form that was
 expected.  </P>
 
 For example "<CODE><A HREF="../option_link.cgi?type" >-type</A></CODE>" has a
-special '<CODE>bilevel</CODE>' setting that can be used convert and save
+special '<CODE>bilevel</CODE>' setting that can be used magick and save
 images as a two color monochrome image for some image formats.  Similarly
 '<CODE>TrueColor</CODE>' and '<CODE>TrueColorMatte</CODE>' can be used force a
 <A HREF="../formats/#tiff" >TIFF</A> image to be saved as a full color RGB
@@ -4721,7 +4721,7 @@ follow.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Using a normal non-HDRI version of IM...
-  convert -size 20x600 gradient:  -rotate 90 \
+  magick -size 20x600 gradient:  -rotate 90 \
           +level 0,15  -level 0,15  level_rounding.png
   im_profile -s level_rounding.png  level_rounding_pf.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4761,7 +4761,7 @@ values go well beyond the "Quantum Range", before being restored again.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Using a normal non-HDRI version of IM...
-  convert -size 20x600 gradient:  -rotate 90 \
+  magick -size 20x600 gradient:  -rotate 90 \
           -level 20%  +level 20%    level_clipping.png
   im_profile -s level_clipping.png  level_clipping_pf.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4794,9 +4794,9 @@ today's modern computer hardware, due to floating point accelerators.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI>
   # Using HDRI version of IM...
-  convert -size 20x600 gradient:  -rotate 90 \
+  magick -size 20x600 gradient:  -rotate 90 \
           +level 0,15  -level 0,15  level_rounding_hdri.png
-  convert -size 20x600 gradient:  -rotate 90 \
+  magick -size 20x600 gradient:  -rotate 90 \
           -level 20%  +level 20%    level_clipping_hdri.png
   im_profile -s level_rounding_hdri.png  level_rounding_hdri_pf.gif
   im_profile -s level_clipping_hdri.png  level_clipping_hdri_pf.gif
@@ -4825,7 +4825,7 @@ between the two level options.   For example...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI>
   # Using a HDRI version of IM...
-  convert -size 20x600 gradient:  -rotate 90 \
+  magick -size 20x600 gradient:  -rotate 90 \
           -level 20%    -clamp   +level 20%   level_hdri_clamp.png
   im_profile -s level_hdri_clamp.png  level_hdri_clamp_pf.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4851,7 +4851,7 @@ be vitally important when using HDRI, to achieve the result you are wanting.
 
 <!--
   See notes on correct floating point rounding
-  https://legacy.imagemagick.org/discourse-server/viewtopic.php?f=3&t=16157&p=58377#p58377
+  https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=16157&p=58377#p58377
 -->
 
 
@@ -4952,7 +4952,7 @@ is you are doing extreme operations. </P>
 The <I>Density</I> of an image is the spatial (space) resolution of the image.
 That is the density (generally expressed as dpi, or dots per inch) of an image
 define how far apart (or how big) the individual pixels, and thus the overall
-size of the image in real world terms, and generally used for display or
+size of the image in real world terms, and generally used for magick display or
 printing of the image on a real world device. </P>
 
 It is just some number stored with the image to tell output devices such as
@@ -4978,9 +4978,9 @@ of '<CODE>PixelsPerCentimeter</CODE>' (PNG uses the latter).  </P>
 
 For example, a 200x200 pixel image at 600 dpi will thus be displayed in 1/3
 inch square in real world terms.  On the other hand a much smaller 72x72 pixel
-image at 72 dpi will display in a 1 inch square, in the real world, though its
+image at 72 dpi will magick display in a 1 inch square, in the real world, though its
 spatial quality will not be very good in comparison. The former being 'photo
-quality' while the later being 'display resolution'. </P>
+quality' while the later being 'magick display resolution'. </P>
 
 In practical terms, a 72dpi image will look 'digital' or 'dotty' on a printer.
 On the other hand a large modern digital photo taken at 1200dpi image would
@@ -5360,5 +5360,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/basics/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/basics/</CODE>
 </ADDRESS></BODY></HTML>

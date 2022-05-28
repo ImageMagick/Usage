@@ -5,7 +5,7 @@
 <TITLE>Animation Basics -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/anim_basics/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/anim_basics/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -82,7 +82,7 @@
 
 These examples continue the previous example page on <A HREF="../layers/"
 >Layers of Multiple Images</A> but instead of layering multiple images on top
-of each other to produce a single image, here we display each image for a
+of each other to produce a single image, here we magick display each image for a
 short period of time so as to  produce an animation of images. </P>
 
 The following section provides a basic understanding of the complexities of
@@ -106,7 +106,7 @@ form of a 'GIF animation'.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -delay 100  -size 100x100 xc:SkyBlue \
+  magick -delay 100  -size 100x100 xc:SkyBlue \
           -page +5+10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50 present.gif   -page +10+55 shading.gif  \
           -loop 0  animation.gif
@@ -128,10 +128,10 @@ HREF="../advanced/#stars" >random star fields</A>. </P>
   star_field 70x46  stars1.gif
   star_field 70x46  stars2.gif
   star_field 70x46  stars3.gif
-  convert rose:   -compose Screen \
-          \( -clone 0 stars1.gif -composite \) \
-          \( -clone 0 stars2.gif -composite \) \
-          \( -clone 0 stars3.gif -composite \) \
+  magick rose:   -compose Screen \
+          \( -clone 0 stars1.gif -magick composite \) \
+          \( -clone 0 stars2.gif -magick composite \) \
+          \( -clone 0 stars3.gif -magick composite \) \
           -delete 0 -set delay 25 -layers Optimize rose_sparkle.gif
   rm stars[123].gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -266,7 +266,7 @@ animations... </P>
 
       Positive offsets larger than the image canvas are quite acceptable but
       may result in the image not appearing in the canvas drawing area when
-      displayed.  How a GIF animation display program handles this is
+      displayed.  How a GIF animation magick display program handles this is
       undefined.   Caution is advised.
     </I></FONT></TD></TR></TABLE></P>
 
@@ -376,7 +376,7 @@ Here for example is a standard 'None dispose' animation...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -delay 100 -dispose None \
+  magick -delay 100 -dispose None \
               -page 100x100+5+10  balloon.gif  \
               -page +35+30 medical.gif  \
               -page +62+50 present.gif  \
@@ -395,7 +395,7 @@ transparency, such as animations drawn on a solid, or patterned background.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -dispose none  -delay 100 \
+  magick -dispose none  -delay 100 \
                 -size 100x100 xc:SkyBlue +antialias \
                 -fill DodgerBlue -draw 'circle 50,50 15,25' \
                 -page +5+10  balloon.gif  \
@@ -437,7 +437,7 @@ for just the duration of that image...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -dispose none  -delay 0 \
+  magick -dispose none  -delay 0 \
                 -size 100x100 xc:SkyBlue +antialias \
                 -fill DodgerBlue -draw 'circle 50,50 15,25' \
           -dispose previous -delay 100 \
@@ -501,7 +501,7 @@ Here for example we just replace each frame with the next frame.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -delay 100 -dispose Background \
+  magick -delay 100 -dispose Background \
               -page 100x100+5+10  balloon.gif  \
               -page +35+30 medical.gif  \
               -page +62+50 present.gif  \
@@ -521,7 +521,7 @@ the animation, so you can see how a '<CODE>Background</CODE>' actually
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -delay 100 -dispose none \
+  magick -delay 100 -dispose none \
                 -size 100x100 xc:SkyBlue +antialias \
                 -fill DodgerBlue -draw 'circle 50,50 15,25' \
           -dispose background \
@@ -608,7 +608,7 @@ frame.  You can see some of this information using the default IM
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOWARN OUT=identify_prev.txt>
-  identify canvas_prev.gif
+  magick identify canvas_prev.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -640,7 +640,7 @@ some of the more specialzed <A HREF="http://imagemagick.org/script/escape.php"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOWARN OUT=identify_prev_more.txt>
-  identify -format "%f canvas=%Wx%H size=%wx%h offset=%X%Y %D %Tcs\n" \
+  magick identify -format "%f canvas=%Wx%H size=%wx%h offset=%X%Y %D %Tcs\n" \
            canvas_prev.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -674,7 +674,7 @@ frame images in the animation sequence.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif -scene 1 +adjoin  frame_%03d.gif
+  magick canvas_prev.gif -scene 1 +adjoin  frame_%03d.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="frame_001.gif"
      ><IMG SRC="frame_001.gif"
@@ -717,7 +717,7 @@ in.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert frame_???.gif  anim_rebuilt.gif
+  magick frame_???.gif  anim_rebuilt.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="anim_rebuilt.gif"
      ><IMG SRC="anim_rebuilt.gif"      WIDTH=100 HEIGHT=100
@@ -742,7 +742,7 @@ the timing delays and disposals.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif  +repage  -set delay 0   -set dispose None \
+  magick canvas_prev.gif  +repage  -set delay 0   -set dispose None \
           +adjoin  repage_%03d.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="repage_000.gif"
@@ -786,7 +786,7 @@ did, just by looking at the individual sub-frames of the animation.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif  +repage  +adjoin  script_k_%02d.gif
+  magick script_k.gif  +repage  +adjoin  script_k_%02d.gif
 </CODE></PRE></TD></TR></TABLE>
 <NOBR>
   <A HREF="script_k_00.gif"
@@ -837,7 +837,7 @@ rather than an animation sequence. Such a sequence, known as a <A
 HREF="#coalesced" >Coalesced Animation</A> is much easier to study, edit,
 modify and re-optimize. </P>
 
-Here for example will generate a montage of the same 'confusing' animation
+Here for example will generate a magick montage of the same 'confusing' animation
 sequence I showed above, but this time we'll "<CODE><A
 HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" the sequences, so
 you can see what is really happening.
@@ -846,7 +846,7 @@ you can see what is really happening.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage script_k.gif -coalesce \
+  magick montage script_k.gif -coalesce \
           -tile x1 -frame 4 -geometry '+2+2' \
           -background none -bordercolor none coalesce_k_montage.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -875,7 +875,7 @@ latest version). </P>
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
-  An even better montage technique for examining animations is given in the
+  An even better magick montage technique for examining animations is given in the
   next example section.
 </I></FONT></TD></TR></TABLE></P>
 
@@ -886,7 +886,7 @@ the "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" operator
 will set the "<CODE><A HREF="../option_link.cgi?dispose" >-dispose</A></CODE>"
 setting of each frame to either '<CODE><A HREF="#none" >None</A></CODE>' or
 '<CODE><A HREF="#background" >Background</A></CODE>' as appropriate, so that
-the coalesced image sequence will continue to animate correctly (as shown
+the coalesced image sequence will continue to magick animate correctly (as shown
 above).  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -930,14 +930,14 @@ resulting frames of the animation, both methods leave out a lot of information
 about the animation. </P>
 
 By using some very careful manipulation of the animation images, you can
-display the frames so as to show not only the actual frames, but also the
+magick display the frames so as to show not only the actual frames, but also the
 placement of those frames on the larger canvas.  Here is one such method of
 displaying an animation.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -dispose Background   script_k.gif  -matte \
+  magick -dispose Background   script_k.gif  -matte \
           -compose Copy -bordercolor black -border 1x1 -compose Over \
           -coalesce  -bordercolor none   -frame 4x4+2+2 \
           -bordercolor none -border 2x2 +append  script_k_parts.gif
@@ -952,7 +952,7 @@ positioned so as to add to all the previous overlays. The result is a slowly
 growing picture.  Each frame is also a lot smaller than the 'virtual canvas'
 on which it is positioned. </P>
 
-I use this display technique a lot during the development and debugging of GIF
+I use this magick display technique a lot during the development and debugging of GIF
 animations, as such I converted it into a shell script "<B><CODE><A
 HREF="../scripts/gif_anim_montage" >gif_anim_montage</A></CODE></B>", and
 expanded it to also list some of the details above each frame in the
@@ -961,7 +961,7 @@ animation.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  gif_anim_montage   script_k.gif   script_k_frames.gif
+  gif_anim_magick montage   script_k.gif   script_k_frames.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="script_k_frames.gif"
      ><IMG SRC="script_k_frames.gif"
@@ -981,7 +981,7 @@ new sub-frames modifies the displayed animation.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  gif_anim_montage  -u  script_k.gif  script_k_frames.png
+  gif_anim_magick montage  -u  script_k.gif  script_k_frames.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="script_k_frames.png"
      ><IMG SRC="script_k_frames.png"
@@ -1169,8 +1169,8 @@ methods. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  canvas_none.gif -layers Dispose canvas_none_dispose.gif
-  gif_anim_montage canvas_none_dispose.gif canvas_none_dispose_frames.gif
+  magick canvas_none.gif -layers Dispose canvas_none_dispose.gif
+  gif_anim_magick montage canvas_none_dispose.gif canvas_none_dispose_frames.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="canvas_none_dispose_frames.gif"
      ><IMG SRC="canvas_none_dispose_frames.gif"
@@ -1181,8 +1181,8 @@ methods. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  canvas_prev.gif -layers Dispose canvas_prev_dispose.gif
-  gif_anim_montage canvas_prev_dispose.gif canvas_prev_dispose_frames.gif
+  magick canvas_prev.gif -layers Dispose canvas_prev_dispose.gif
+  gif_anim_magick montage canvas_prev_dispose.gif canvas_prev_dispose_frames.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="canvas_prev_dispose_frames.gif"
      ><IMG SRC="canvas_prev_dispose_frames.gif"
@@ -1193,8 +1193,8 @@ methods. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  canvas_bgnd.gif -layers Dispose canvas_bgnd_dispose.gif
-  gif_anim_montage canvas_bgnd_dispose.gif canvas_bgnd_dispose_frames.gif
+  magick canvas_bgnd.gif -layers Dispose canvas_bgnd_dispose.gif
+  gif_anim_magick montage canvas_bgnd_dispose.gif canvas_bgnd_dispose_frames.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="canvas_bgnd_dispose_frames.gif"
      ><IMG SRC="canvas_bgnd_dispose_frames.gif"
@@ -1214,8 +1214,8 @@ method in the later frames that is imporant. </P>
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
     The "<CODE>-layers Dispose</CODE>" operation only generates the
     'coalesced' sequence of the disposal frames. It does not reset the
-    disposal setting itself, and as such the result may not animate properly.
-    To make the above animate correctly set all disposal methods to
+    disposal setting itself, and as such the result may not magick animate properly.
+    To make the above magick animate correctly set all disposal methods to
     '<CODE>previous</CODE>' or '<CODE>background</CODE>' or you can optimize
     the animation, before saving.
 
@@ -1253,7 +1253,7 @@ longer recommended</I>. Instead you use should use the <A
 HREF="../anim_opt/#optimize" >General GIF Optimizer</A>. </P>
 
 This operator will take a coalesced sequence of images (the animation frames
-as they actually appear when displayed), and compare the second and later
+as they actually appear when displayed), and magick compare the second and later
 images with that of the previous image. It then replaces that image with the
 smallest rectangular area of the pixels that had changed.  Any pixel change,
 will count, regardless of if it is a color change (overlay) or cleared
@@ -1275,10 +1275,10 @@ HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" operator.
 <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  canvas_prev.gif   -coalesce     coalesce.gif
-  convert  coalesce.gif     -deconstruct   deconstruct.gif
-  gif_anim_montage  coalesce.gif     coalesce_frames.gif
-  gif_anim_montage  deconstruct.gif  deconstruct_frames.gif
+  magick canvas_prev.gif   -coalesce     coalesce.gif
+  magick coalesce.gif     -deconstruct   deconstruct.gif
+  gif_anim_magick montage  coalesce.gif     coalesce_frames.gif
+  gif_anim_magick montage  deconstruct.gif  deconstruct_frames.gif
 </CODE></PRE></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="deconstruct.gif"
@@ -1330,7 +1330,7 @@ HREF="../option_link.cgi?deconstruct" >-deconstruct</A></CODE>" cycle.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_bgnd.gif  -coalesce  -deconstruct  deconstruct_erase.gif
+  magick canvas_bgnd.gif  -coalesce  -deconstruct  deconstruct_erase.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="deconstruct_erase.gif"
      ><IMG SRC="deconstruct_erase.gif"          WIDTH=100 HEIGHT=100
@@ -1375,11 +1375,11 @@ disposed</A>' animation.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_bgnd.gif  -coalesce  canvas_bgnd_coal.gif
-  gif_anim_montage canvas_bgnd_coal.gif canvas_bgnd_coal_frames.gif
+  magick canvas_bgnd.gif  -coalesce  canvas_bgnd_coal.gif
+  gif_anim_magick montage canvas_bgnd_coal.gif canvas_bgnd_coal_frames.gif
 
-  convert canvas_bgnd_coal.gif  -layers CompareAny   compare_any.gif
-  gif_anim_montage compare_any.gif compare_any_frames.gif
+  magick canvas_bgnd_coal.gif  -layers CompareAny   compare_any.gif
+  gif_anim_magick montage compare_any.gif compare_any_frames.gif
 </CODE></PRE></TD></TR></TABLE>
 <NOBR>
   <A HREF="canvas_bgnd_coal_frames.gif"
@@ -1407,8 +1407,8 @@ next.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=/dev/null>
-  convert canvas_bgnd_coal.gif -quiet -layers CompareClear compare_clear.gif
-  gif_anim_montage compare_clear.gif compare_clear_frames.gif
+  magick canvas_bgnd_coal.gif -quiet -layers CompareClear compare_clear.gif
+  gif_anim_magick montage compare_clear.gif compare_clear_frames.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="compare_clear_frames.gif"
      ><IMG SRC="compare_clear_frames.gif"
@@ -1435,8 +1435,8 @@ the previous frame.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_bgnd_coal.gif  -layers CompareOverlay  compare_overlay.gif
-  gif_anim_montage compare_overlay.gif compare_overlay_frames.gif
+  magick canvas_bgnd_coal.gif  -layers CompareOverlay  compare_overlay.gif
+  gif_anim_magick montage compare_overlay.gif compare_overlay_frames.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="compare_overlay_frames.gif"
      ><IMG SRC="compare_overlay_frames.gif"
@@ -1508,7 +1508,7 @@ simplified and completely un-optimized form of any animation. </P>
 
 This naming convention is from the name of the IM "<CODE><A
 HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>" operator that is used
-to convert GIF disposal animations, into an un-optimized 'Coalesced Animation'.
+to magick GIF disposal animations, into an un-optimized 'Coalesced Animation'.
 </P>
 
 Most video formats (MPEG, AVI etc) are actually also 'Coalesced Animations' by
@@ -1529,7 +1529,7 @@ HREF="#none" >Undefined</A></CODE>'  GIF disposal setting. </P>
 
 Here is an example of an animation that is also by its nature a Coalesced
 Animation, plus a "<CODE><A HREF="../scripts/gif_anim_montage"
->gif_anim_montage</A></CODE>" display of the animations individual frames.
+>gif_anim_montage</A></CODE>" magick display of the animations individual frames.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR VALIGN=middle><TD WIDTH=10%>
@@ -1641,8 +1641,8 @@ applying some form of <A HREF="../anim_opt/#compress_opt" >Compression
 Optimization</A> without destroying the 'Overlay Only' requirement of the
 animation.  </P>
 
-Typically 'Overlay Animations' display no transparency at all (they can use
-it as part of optimization, but they don't display it).  And if no
+Typically 'Overlay Animations' magick display no transparency at all (they can use
+it as part of optimization, but they don't magick display it).  And if no
 transparency is displayed, then the animation is guaranteed to be a 'Overlay
 Animation'. </P>
 
@@ -1729,7 +1729,7 @@ For example lets place our bunny on some grass....
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert bunny_grass.gif bunny_anim.gif -loop 0  bunny_on_grass.gif
+  magick bunny_grass.gif bunny_anim.gif -loop 0  bunny_on_grass.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="bunny_on_grass.gif"
      ><IMG SRC="bunny_on_grass.gif"   WIDTH=120 HEIGHT=80
@@ -1758,7 +1758,7 @@ transparent edges to frame optimize it, and reset the disposals.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert any_animation.gif -coalesce -trim \
+  magick any_animation.gif -coalesce -trim \
           -set dispose previous   cleared_frame_animation.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1770,7 +1770,7 @@ You can even re-position the animation on that background...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert bunny_grass.gif \( bunny_anim.gif -repage 0x0+5+15\! \) \
+  magick bunny_grass.gif \( bunny_anim.gif -repage 0x0+5+15\! \) \
           -loop 0  bunny_on_grass2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="bunny_on_grass2.gif"
@@ -1798,11 +1798,11 @@ bunny vanished for a moment, when the animation looped, and the background
 image is re-loaded. (See notes in <A HREF="#zero" >Zero Delay Frames</A> )</P>
 
 Though this is not a problem for applications that use this technique, for
-adding animated symbols to displayed objects, as they just don't display that
+adding animated symbols to displayed objects, as they just don't magick display that
 'intermediate' frame, anyway. </P>
 
 As such if are adding a non-transparent background to the GIF animation, then
-it is generally a good idea to convert the simple <A HREF="#cleared" >Cleared
+it is generally a good idea to magick the simple <A HREF="#cleared" >Cleared
 Frame Animation</A> into a <A HREF="#overlay" >Overlay Animation</A>.  That is
 add that background to every frame of the animation, rather than give an
 initial canvas. </P>
@@ -1819,9 +1819,9 @@ For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert bunny_grass.gif \( bunny_anim.gif -repage 0x0+5+15\! \) \
+  magick bunny_grass.gif \( bunny_anim.gif -repage 0x0+5+15\! \) \
           -coalesce -delete 0 -deconstruct -loop 0  bunny_bgnd.gif
-  gif_anim_montage  bunny_bgnd.gif  bunny_bgnd_frames.gif
+  gif_anim_magick montage  bunny_bgnd.gif  bunny_bgnd_frames.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="bunny_bgnd.gif"
      ><IMG SRC="bunny_bgnd.gif"   WIDTH=120 HEIGHT=80
@@ -1883,7 +1883,7 @@ animations background.  A ball hitting a lever would be one example.  </P>
 <PRE><I>Simple Example wanted</I></PRE>
 
 Similarly animations involving two very small moving objects on a larger
-transparent display can only be optimized well by mixing up the disposal
+transparent magick display can only be optimized well by mixing up the disposal
 techniques, so that each object is moved using separate animation frames. </P>
 
 <PRE>FUTURE,
@@ -2026,7 +2026,7 @@ Here is summary of applications that I know about or have been told,
 <TD>Will give a slight non-zero pause on such frames.  This presumably is so
     that animations that have no time delays at all, do use up all the
     computers CPU cycles.  But "<CODE>firefox</CODE>" still doesn't relax that
-    restriction if an animation has an overall non-zero display time.
+    restriction if an animation has an overall non-zero magick display time.
     </BR>&nbsp;
 
 <TR VALIGN=top><TD><B>Internet Explorer</B>
@@ -2067,5 +2067,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/anim_basics/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/anim_basics/</CODE>
 </ADDRESS></BODY></HTML>

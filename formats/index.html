@@ -5,7 +5,7 @@
 <TITLE>Common Formats -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/formats/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/formats/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -141,7 +141,7 @@ and ways to improve results in those formats. </P>
 For an introduction to reading and writing image formats see <A
 HREF="../files/" >Image File Formats</A>.  While a list of all the
 ImageMagick file formats are given on the <A
-HREF="https://legacy.imagemagick.org/script/formats.php" >IM Image Formats
+HREF="https://imagemagick.org/script/formats.php" >IM Image Formats
 Page</A>. </P>
 
 Here is a very quick summary of the most common 'normal' image file formats,
@@ -269,7 +269,7 @@ as well as their general advantages and disadvantages...
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
   Some system (like ubuntu) disable the use specific image file formats using
-  a security policy.  Type <CODE>convert -list policy</CODE> to see what
+  a security policy.  Type <CODE>magick -list policy</CODE> to see what
   policies and where they are set from are present on your system.
 </I></FONT></TD></TR></TABLE></P>
 
@@ -353,22 +353,22 @@ See <A HREF="../quantize/#colors" >Color Quantization</A>.
 
 See <A HREF="../advanced/#3d-bullets" >Advanced 3-D Bullet Scripting</A> for
 an example of generating multiple images over a range of colors.  This
-technique can also be used to auto-convert your image into multiple images for
+technique can also be used to auto-magick your image into multiple images for
 many different backgrounds colors and patterns. </P>
 
 <!-- <CODE EXECUTE ASSERT>
-  [ `convert -size 1x256 gradient: gif:- |\
-       identify -format %k - ` -eq 256 ] || echo >&2 \
+  [ `magick -size 1x256 gradient: gif:- |\
+       magick identify -format %k - ` -eq 256 ] || echo >&2 \
     "ASSERTION FAILURE: GIF did not save a 256 color gradient"
-  [ `convert -size 1x256 gradient: -transparent Gray30 gif:- |\
-       identify -format %k - ` -eq 256 ] || echo >&2 \
+  [ `magick -size 1x256 gradient: -transparent Gray30 gif:- |\
+       magick identify -format %k - ` -eq 256 ] || echo >&2 \
     "ASSERTION FAILURE: GIF did not save a 256 color gradient (with trans)"
 </CODE> -->
 
 <A NAME="gif_trans"></A>
 <H2>GIF Transparency Color</H2>
 
-For example here we use identify to extract the transparent color, and the
+For example here we use magick identify to extract the transparent color, and the
 color table a particular GIF image file used to represent transparency.
 The perl script extracts just the specific fields of interest (which can be
 multi-line).
@@ -378,7 +378,7 @@ multi-line).
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=hand_point.txt>
-  identify -verbose hand_point.gif |\
+  magick identify -verbose hand_point.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -418,8 +418,8 @@ reads, processes and writes a GIF image.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE  OUT=hand_white.txt>
-  convert hand_point.gif    -fill white -opaque wheat   hand_white.gif
-  identify -verbose hand_white.gif |\
+  magick hand_point.gif    -fill white -opaque wheat   hand_white.gif
+  magick identify -verbose hand_white.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -446,8 +446,8 @@ However if the final image has no transparency, the transparency color entry
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE  OUT=hand_flatten.txt>
-  convert hand_point.gif   -background white -flatten    hand_flatten.gif
-  identify -verbose hand_flatten.gif |\
+  magick hand_point.gif   -background white -flatten    hand_flatten.gif
+  magick identify -verbose hand_flatten.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -472,8 +472,8 @@ example...
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=hand_wheat.txt>
-  convert hand_point.gif -transparent-color wheat  hand_wheat.gif
-  identify -verbose hand_wheat.gif |\
+  magick hand_point.gif -transparent-color wheat  hand_wheat.gif
+  magick identify -verbose hand_wheat.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -526,7 +526,7 @@ specific area of the gray-scale color range is for the transparent color. </P>
 
 Note that setting "<CODE><A HREF="../option_link.cgi?transparent-color"
 >-transparent-color</A></CODE>" does NOT add any transparency to a GIF image,
-nor does it convert the specified color to become transparent. All the option
+nor does it magick the specified color to become transparent. All the option
 does is specify what color should placed in the color table for the color
 index that is used representing the transparent colors in a GIF image. </P>
 
@@ -553,9 +553,9 @@ First I will output using the PNG format...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 xc:none -fill white -stroke black \
+  magick -size 60x60 xc:none -fill white -stroke black \
           -draw 'circle 30,30 5,20' circle.png
-  convert circle.png -crop 10x10+40+3 +repage  -scale 600%  circle_mag.png
+  magick circle.png -crop 10x10+40+3 +repage  -scale 600%  circle_mag.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
    <A HREF="circle.png"
@@ -575,9 +575,9 @@ Now lets output the same image using the "GIF" image format...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 xc:none -fill white -stroke black \
+  magick -size 60x60 xc:none -fill white -stroke black \
           -draw 'circle 30,30 5,20' circle.gif
-  convert circle.gif -crop 10x10+40+3 +repage  -scale 600%  circle_mag.gif
+  magick circle.gif -crop 10x10+40+3 +repage  -scale 600%  circle_mag.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
    <A HREF="circle.gif"
@@ -657,10 +657,10 @@ using.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 xc:none -fill white -stroke black \
+  magick -size 60x60 xc:none -fill white -stroke black \
           -draw 'circle 30,30 5,20' \
           -channel A -threshold 50%  circle_threshold.gif
-  convert circle_threshold.gif -crop 10x10+40+3 +repage \
+  magick circle_threshold.gif -crop 10x10+40+3 +repage \
           -scale 600%   circle_threshold_mag.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
@@ -693,7 +693,7 @@ HREF="../fonts/#fuzzy_shadow" >fuzzy semi-transparent shadow</A> such as this
 image (in PNG format)...
 
 <!--  The shadow equivalent -- not as much control over the final size.
-  convert -background none -fill white -stroke black \
+  magick -background none -fill white -stroke black \
           -font Candice -pointsize 50 label:A \
           \( +clone -background black -shadow 100x5+5+5 \) +swap \
           -background none -flatten  -crop 70x60+10+0 +repage   a.png
@@ -702,7 +702,7 @@ image (in PNG format)...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x60 xc:none -font Candice -pointsize 50 \
+  magick -size 70x60 xc:none -font Candice -pointsize 50 \
           -fill black -annotate +10+45 'A' -channel RGBA  -blur 0x5 \
           -fill white -stroke black -draw "text 5,40 'A'"   a.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -711,7 +711,7 @@ image (in PNG format)...
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-If you just convert this letter directly to GIF format or even use a "<CODE><A
+If you just magick this letter directly to GIF format or even use a "<CODE><A
 HREF="../option_link.cgi?threshold" >-threshold</A></CODE>" operation to
 control the Boolean transparency, you will be sorely disappointed.
 
@@ -719,8 +719,8 @@ control the Boolean transparency, you will be sorely disappointed.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png  a.gif
-  convert a.png -channel A -threshold 75%   a_threshold.gif
+  magick a.png  a.gif
+  magick a.png -channel A -threshold 75%   a_threshold.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
    <A HREF="a.gif"
       ><IMG SRC="a.gif"              WIDTH=70 HEIGHT=60
@@ -735,12 +735,12 @@ control the Boolean transparency, you will be sorely disappointed.
   # from  2786 Jan06 (FC5),   2794 in Dec06 (FC6),   2775 in June07 (FC7)
   # These appear to be font changes due to OS upgrades.
   # (Better non-font related test needed)
-  a50=`convert a.png -fill black -colorize 100% \
+  a50=`magick a.png -fill black -colorize 100% \
               -channel A -threshold 50% -verbose info: | \
       sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*none.*/\1/p;'`; \
   [ "$a50" -lt 2750 -o "$a50" -gt 2800 ] && echo >&2 \
     "ASSERTION FAILURE: 50% threshold not in expected range"; \
-  a=`identify -verbose a.gif | \
+  a=`magick identify -verbose a.gif | \
       sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*none.*/\1/p;'`; \
   [ "$a" != "$a50" ] && echo >&2 \
     "ASSERTION FAILURE: GIF did not threshold alpha at 50%!"
@@ -759,7 +759,7 @@ about all semi-transparent pixels.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png -channel A -threshold 15%   a_no_shadow.gif
+  magick a.png -channel A -threshold 15%   a_no_shadow.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
    <A HREF="a_no_shadow.gif"
@@ -778,11 +778,11 @@ will now look at. </P>
 </A>
 
 What we would really like to to somehow preserve the shading of the
-semi-transparent and anti-aliased pixels, and still display it nicely on the
+semi-transparent and anti-aliased pixels, and still magick display it nicely on the
 WWW.  To do this we have to be a little tricky. </P>
 
 The typical solution is to match the image to the background on which you are
-going to display the image on.  This is simple to do, just overlay the image
+going to magick display the image on.  This is simple to do, just overlay the image
 onto a background of the appropriate color, before you save it to the GIF
 format.  This removes the need for any form of transparency and the whole
 thing becomes a non-issue.  Of course the limited number of colors is still an
@@ -792,7 +792,7 @@ issue, but often not a big problem.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png -background LightSteelBlue -flatten  a_overlay.gif
+  magick a.png -background LightSteelBlue -flatten  a_overlay.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
    <A HREF="a_overlay.gif"
@@ -834,7 +834,7 @@ the image down to a single pixel, then read the resulting color.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=bg_color_avg.txt>
-  convert bg.gif -scale 1x1\! -depth 8 txt:-
+  magick bg.gif -scale 1x1\! -depth 8 txt:-
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE>
@@ -854,7 +854,7 @@ HREF="../option_link.cgi?flatten" >-flatten</A></CODE>".
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png  -background '#BABBD7' -flatten  a_bg.gif
+  magick a.png  -background '#BABBD7' -flatten  a_bg.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD></TD><TD>
 <TABLE BORDER=1 CELLPADDING=10 BACKGROUND="../images/bg.gif" ALIGN=center>
@@ -883,7 +883,7 @@ way threshold did above.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png  -background '#B9BBD6' -flatten \
+  magick a.png  -background '#B9BBD6' -flatten \
           -fuzz 5%   -transparent '#B9BBD6'   a_bg_trans.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD></TD><TD>
@@ -914,7 +914,7 @@ the outside of your image becoming transparent!
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png  -background '#B9BBD6' -flatten \
+  magick a.png  -background '#B9BBD6' -flatten \
           -fuzz 25%  -transparent '#B9BBD6'   a_bg_overfuzz.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD></TD><TD>
@@ -937,7 +937,7 @@ floodfill</A></CODE>' to set the areas we want transparent.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png  -background '#B9BBD6' -flatten \
+  magick a.png  -background '#B9BBD6' -flatten \
           -fuzz 25%  -draw 'fill none  matte 0,0 floodfill' a_bg_none.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>&nbsp;</TD><TD>
@@ -1025,8 +1025,8 @@ image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png \( +clone -fx a +matte -monochrome \) \
-          -compose CopyOpacity -composite   a_dither.gif
+  magick a.png \( +clone -fx a +matte -monochrome \) \
+          -compose CopyOpacity -magick composite   a_dither.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
    <A HREF="a_dither.gif"
@@ -1042,20 +1042,20 @@ HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting (unlike
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png -channel A -ordered-dither   o2x2   a_ordered_2x2.gif
-  convert a.png -channel A -ordered-dither   o3x3   a_ordered_3x3.gif
-  convert a.png -channel A -ordered-dither   o4x4   a_ordered_4x4.gif
+  magick a.png -channel A -ordered-dither   o2x2   a_ordered_2x2.gif
+  magick a.png -channel A -ordered-dither   o3x3   a_ordered_3x3.gif
+  magick a.png -channel A -ordered-dither   o4x4   a_ordered_4x4.gif
 
-  convert a.png -channel A -ordered-dither  checks  a_halftone_2.gif
-  convert a.png -channel A -ordered-dither  h4x4a   a_halftone_4.gif
-  convert a.png -channel A -ordered-dither  h6x6a   a_halftone_6.gif
-  convert a.png -channel A -ordered-dither  h8x8a   a_halftone_8.gif
+  magick a.png -channel A -ordered-dither  checks  a_halftone_2.gif
+  magick a.png -channel A -ordered-dither  h4x4a   a_halftone_4.gif
+  magick a.png -channel A -ordered-dither  h6x6a   a_halftone_6.gif
+  magick a.png -channel A -ordered-dither  h8x8a   a_halftone_8.gif
 
-<r>  convert a.png -channel A -random-threshold  5x95% a_random_5x95.gif
-<r>  convert a.png -channel A -random-threshold  5x70% a_random_5x60.gif
-<r>  convert a.png -channel A -random-threshold 50x95% a_random_50x95.gif
-<r>  convert a.png -channel A -random-threshold 45x55% a_random_45x55.gif
-  convert a.png -channel A -random-threshold 50x50% a_random_50x50.gif
+<r>  magick a.png -channel A -random-threshold  5x95% a_random_5x95.gif
+<r>  magick a.png -channel A -random-threshold  5x70% a_random_5x60.gif
+<r>  magick a.png -channel A -random-threshold 50x95% a_random_50x95.gif
+<r>  magick a.png -channel A -random-threshold 45x55% a_random_45x55.gif
+  magick a.png -channel A -random-threshold 50x50% a_random_50x50.gif
 </CODE></PRE></TD></TR></TABLE>
 <NOBR>
    <A HREF="a_ordered_2x2.gif"
@@ -1145,7 +1145,7 @@ the "Floyd-Steinberg" "<CODE><A HREF="../option_link.cgi?monochrome"
 The big advantage of "<CODE><A HREF="../option_link.cgi?random-threshold"
 >-random-threshold</A></CODE>" however is the limit controls it provides.  By
 making the parameters very restrictive (for example as '50x50%') you would
-convert <CODE><A HREF="../option_link.cgi?random-threshold"
+magick <CODE><A HREF="../option_link.cgi?random-threshold"
 >-random-threshold</A></CODE>" into a simple "<CODE><A
 HREF="../option_link.cgi?threshold" >-threshold</A></CODE>" operator.  By
 being only a little less restrictive you can randomize just the very edge of
@@ -1261,14 +1261,14 @@ can be a real pain when designing GIF image animations. </P>
 
 If Internet Explorer web browser is given an GIF image whose 'page offset'
 places the image somewhere outside the 'page canvas size', it will ignore the
-page size and offset and display it as if it has no such offset. </P>
+page size and offset and magick display it as if it has no such offset. </P>
 
-The ancient Mozilla web browser on the other hand will just display the image
+The ancient Mozilla web browser on the other hand will just magick display the image
 canvas, and apply the offsets to the image. This can result in an empty canvas
-being display with no image data present, which while correct, can be
+being magick display with no image data present, which while correct, can be
 unexpected. </P>
 
-Both will display the image using the page canvas size, with the appropriate
+Both will magick display the image using the page canvas size, with the appropriate
 page offset if the image is wholly contained on that page canvas. </P>
 
 <A NAME="gif87"></A>
@@ -1361,8 +1361,8 @@ gradients are not handled well.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 5x10  gradient: gradient:blue-navy  +append jpg_lossy.gif
-  convert jpg_lossy.gif                  jpg_lossy.jpg
+  magick -size 5x10  gradient: gradient:blue-navy  +append jpg_lossy.gif
+  magick jpg_lossy.gif                  jpg_lossy.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="jpg_lossy.gif"
      ><IMG SRC="jpg_lossy_mag.gif"    WIDTH=100 HEIGHT=100
@@ -1392,11 +1392,11 @@ Lets have a look at the effect of quality on the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert jpg_lossy.gif   -quality 100%  jpg_lossy_100.jpg
-  convert jpg_lossy.gif   -quality  80%  jpg_lossy_80.jpg
-  convert jpg_lossy.gif   -quality  50%  jpg_lossy_50.jpg
-  convert jpg_lossy.gif   -quality  20%  jpg_lossy_20.jpg
-  convert jpg_lossy.gif   -quality   5%  jpg_lossy_5.jpg
+  magick jpg_lossy.gif   -quality 100%  jpg_lossy_100.jpg
+  magick jpg_lossy.gif   -quality  80%  jpg_lossy_80.jpg
+  magick jpg_lossy.gif   -quality  50%  jpg_lossy_50.jpg
+  magick jpg_lossy.gif   -quality  20%  jpg_lossy_20.jpg
+  magick jpg_lossy.gif   -quality   5%  jpg_lossy_5.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="jpg_lossy.gif"
      ><IMG SRC="jpg_lossy_mag.gif"    WIDTH=100 HEIGHT=100
@@ -1436,8 +1436,8 @@ of the results and their size in bytes. </P>
 
 <!-- <CODE EXECUTE NOIMAGE OUT=jpg_ls_lossy.txt>
   ls -lS --time-style=+ jpg_lossy*.jpg | awk '{ print $5, $6 }'
-  convert jpg_lossy.gif -scale 100x100 'jpg_lossy_mag.gif'
-  convert jpg_lossy*.jpg -scale 100x100 \
+  magick jpg_lossy.gif -scale 100x100 'jpg_lossy_mag.gif'
+  magick jpg_lossy*.jpg -scale 100x100 \
           -set filename:fname '%t_tn' +adjoin '%[filename:fname].gif'
 </CODE> -->
 
@@ -1497,13 +1497,13 @@ such transparency was not an issue it was concerned about, when the format was
 created.  Consequently the designers never worried about including an alpha
 channel, or other transparency information in the file format. </P>
 
-For example let take the PNG with transparency we used above and convert it
+For example let take the PNG with transparency we used above and magick it
 directly to JPEG.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  a.png  a.jpg
+  magick a.png  a.jpg
 </CODE></PRE></TD></TR></TABLE>
    <A HREF="a.png"
       ><IMG SRC="a.png"
@@ -1537,7 +1537,7 @@ use.  For example let us look at how many colors are in the IM built-in
 <TR VALIGN=top><TD WIDTH=10%></TD><TD WIDTH=70% VALIGN=middle>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_none.txt>
-  identify -format "Colors: %k" netscape:
+  magick identify -format "Colors: %k" netscape:
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 WIDTH=100% HEIGHT=100% BGCOLOR="#CCCCCC"><TR><TD>
     <A HREF="jpg_colors_none.txt"
@@ -1556,8 +1556,8 @@ produces...
 <TR VALIGN=top><TD WIDTH=10%></TD><TD WIDTH=70% VALIGN=middle>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_def.txt>
-  convert netscape: JPG:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+  magick netscape: JPG:- |\
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 WIDTH=100% HEIGHT=100% BGCOLOR="#CCCCCC"><TR><TD>
     <A HREF="jpg_colors_def.txt"
@@ -1577,8 +1577,8 @@ any color distortion...
 <TR VALIGN=top><TD WIDTH=10%></TD><TD WIDTH=70% VALIGN=middle>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_100.txt>
-  convert netscape: -quality 100 JPG:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+  magick netscape: -quality 100 JPG:- |\
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 WIDTH=100% HEIGHT=100% BGCOLOR="#CCCCCC"><TR><TD>
     <A HREF="jpg_colors_100.txt"
@@ -1598,8 +1598,8 @@ Now let us try "Lossless"...
 <TR VALIGN=top><TD WIDTH=10%></TD><TD WIDTH=70% VALIGN=middle>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_lless.txt>
-  convert netscape: -quality 100 -compress Lossless JPG:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+  magick netscape: -quality 100 -compress Lossless JPG:- |\
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 WIDTH=100% HEIGHT=100% BGCOLOR="#CCCCCC"><TR><TD>
     <A HREF="jpg_colors_lless.txt"
@@ -1619,8 +1619,8 @@ newer JP2 image file format.
 <TR VALIGN=top><TD WIDTH=10%></TD><TD WIDTH=70% VALIGN=middle>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jp2_colors_lless.txt>
-  convert netscape: JP2:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+  magick netscape: JP2:- |\
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 WIDTH=100% HEIGHT=100% BGCOLOR="#CCCCCC"><TR><TD>
     <A HREF="jp2_colors_lless.txt"
@@ -1641,8 +1641,8 @@ JPEG image file format...
 <TR VALIGN=top><TD WIDTH=10%></TD><TD WIDTH=70% VALIGN=middle>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jp2_colors_50.txt>
-  convert netscape: -quality 50% JP2:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+  magick netscape: -quality 50% JP2:- |\
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 WIDTH=100% HEIGHT=100% BGCOLOR="#CCCCCC"><TR><TD>
     <A HREF="jp2_colors_50.txt"
@@ -1652,7 +1652,7 @@ JPEG image file format...
 </TD></TR></TABLE></P>
 
 For more information of using the JPEG2000 coder, see <A
-HREF="https://legacy.imagemagick.org/script/jp2.php" >JPEG2000 encoding parameter
+HREF="https://imagemagick.org/script/jp2.php" >JPEG2000 encoding parameter
 documentation</A>. </P>
 
 
@@ -1686,8 +1686,8 @@ documentation</A>. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-    convert -define jpeg:size=64x64   jpeg_large.jpg jpeg_size_hint.jpg
-    convert -define jpeg:size=128x128 jpeg_large.jpg \
+    magick -define jpeg:size=64x64   jpeg_large.jpg jpeg_size_hint.jpg
+    magick -define jpeg:size=128x128 jpeg_large.jpg \
                                    -thumbnail 64x64  jpeg_thumbnail.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1885,7 +1885,7 @@ The JPEG quantization tables are not however preserved. </P>
     profile ('<CODE>8BIM</CODE>') stored in the image.  </P>
 
     Density is really only important when an output device is being used, such
-    as printers or monitors, allowing these devices to display the image
+    as printers or monitors, allowing these devices to magick display the image
     scaled to real world sizes.  For example ensuring the photo or page you
     scanned is printed at the right size.  For more information about density
     see and <A HREF="../basics/#density" >Image Density Meta-data</A> and <A
@@ -2112,7 +2112,7 @@ level, not at the actual pixel level.</P>
 If you are creating <A HREF="../montage/#html" >Montage Thumbnail Web Index
 Pages</A> of your JPEG photos, and like to use the comments you add to the
 JPEG files, using the above programs, use a "<CODE>-label '%c'</CODE>" to tell
-montage to use the 'comment' field, before reading filename on the
+magick montage to use the 'comment' field, before reading filename on the
 "<CODE>montage</CODE>" command line. </P>
 
 You can also use that comment in a <A HREF="../transform/#polaroid" >Complex
@@ -2150,7 +2150,7 @@ IM can extract these thumbnails using...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-   convert  image.jpg   thumbnail:thumb.jpg
+   magick image.jpg   thumbnail:thumb.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2314,7 +2314,7 @@ transparency.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png  -fuzz 10% -transparent none  a_compress.png
+  magick a.png  -fuzz 10% -transparent none  a_compress.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -2342,7 +2342,7 @@ transparency channel <A HREF="../color_mods/#level" >Levels</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png  -channel A -level 20,100%,0.85 +channel \
+  magick a.png  -channel A -level 20,100%,0.85 +channel \
           -background black -alpha background a_compress2.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -2368,7 +2368,7 @@ size of your PNG image by using a smaller number of colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image.jpg -thumbnail 200x90 -colors 256 \
+  magick image.jpg -thumbnail 200x90 -colors 256 \
           -quality 90 -depth 8  thumbnail.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -2382,7 +2382,7 @@ technique.  </P>
 <H3>PNG, Web Browsers and Transparency</H3>
 
 The Microsoft Internet Explorer (IE version 6 and earlier) does not correctly
-display PNG when any sort of transparency is involved.  Now while this is the
+magick display PNG when any sort of transparency is involved.  Now while this is the
 most well known browser not to fully support PNG, it isn't the only one.  The
 <A HREF="http://trific.ath.cx/web/png/" >PNG transparency test</A> and <A
 HREF="http://entropymine.com/jason/testbed/pngtrans/" >Another PNG test</A>
@@ -2396,7 +2396,7 @@ HREF="http://www.ict.griffith.edu.au/anthony/wwwlab/pngtest/" >PNG with
 Transparency and IE</A>, where I test and demonstrate the the "PNG in IE"
 solution I am using.  </P>
 
-Other solutions are to convert the PNG to either JPEG (with the right colored
+Other solutions are to magick the PNG to either JPEG (with the right colored
 background), or GIF formats.  These methods are discussed thoroughly for <A
 HREF="#bgnd" >GIF Images on Backgrounds</A>. </P>
 
@@ -2415,7 +2415,7 @@ this by either turning off the alpha channel, or saving it a JPEG...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png test.jpg
+  magick test.png test.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <A HREF="test.jpg"
      ><IMG SRC="test.jpg"         WIDTH=150  HEIGHT=100
@@ -2431,7 +2431,7 @@ HREF="../masking/#alpha_background" >Alpha Background</A> operator)...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png   -background silver -alpha Background   test_silver.png
+  magick test.png   -background silver -alpha Background   test_silver.png
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <A HREF="test_silver.png"
      ><IMG SRC="test_silver.png"         WIDTH=150  HEIGHT=100
@@ -2450,7 +2450,7 @@ fully-transparent pixels.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test_silver.png test_silver.jpg
+  magick test_silver.png test_silver.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <A HREF="test_silver.jpg"
      ><IMG SRC="test_silver.jpg"         WIDTH=150  HEIGHT=100
@@ -2480,7 +2480,7 @@ image back into fully-transparent black. See the <A
 HREF="../masking/#alpha_background" >Alpha Background</A> operator for a list
 of operators known to do this. </P>
 
-My preference is for PNG display problems, is for Microsoft to fix IE, and it
+My preference is for PNG magick display problems, is for Microsoft to fix IE, and it
 seems that IE version 7 will finally have a fully working PNG transparency
 handling, in all situations. </P>
 
@@ -2511,8 +2511,8 @@ the image is visible within the virtual canvas bounds (Added to IM v6.1.7)...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -repage 0x0+40+30 png:- |\
-      convert - -background LightBlue -flatten  png_offset_flattened.jpg
+  magick rose: -repage 0x0+40+30 png:- |\
+      magick - -background LightBlue -flatten  png_offset_flattened.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="png_offset_flattened.jpg"
@@ -2532,8 +2532,8 @@ canvas size information...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -repage 100x100+10+10 png:- |\
-      convert - -background LightBlue -flatten  png_size_flattened.jpg
+  magick rose: -repage 100x100+10+10 png:- |\
+      magick - -background LightBlue -flatten  png_size_flattened.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="png_size_flattened.jpg"
@@ -2619,7 +2619,7 @@ save that image using a "<CODE>PNG8:</CODE>" format...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert {input_image}  -type Palette  indexed.png
+  magick {input_image}  -type Palette  indexed.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2629,7 +2629,7 @@ indexed image use...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert {input_image}  -type GrayScale -depth 8  gray.png
+  magick {input_image}  -type GrayScale -depth 8  gray.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2638,7 +2638,7 @@ You can (added IM v6.3.5-9) also output greyscale with a transparency channel.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert {input_image}  -type GrayscaleMatte  gray_with_transparency.png
+  magick {input_image}  -type GrayscaleMatte  gray_with_transparency.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2647,7 +2647,7 @@ And for a simple two color image...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert {input_image}  -type BiLevel  bitmap.png
+  magick {input_image}  -type BiLevel  bitmap.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2660,7 +2660,7 @@ as being transparent.  For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png -channel A -threshold 75% +channel \
+  magick a.png -channel A -threshold 75% +channel \
           -background hotpink  -alpha background png24:a_png24_alpha.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
    <A HREF="a_png24_alpha.png"
@@ -2775,14 +2775,14 @@ Global Setting</A></CODE>" controls, for IM v6.5.2. These include...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE> convert logo: logo.jpg convert logo.jpg
+<TR><TD><PRE><CODE DO_NOT_EXECUTE> magick logo: logo.jpg magick logo.jpg
     logo1.png
 
   sleep 2; touch logo.jpg      # change the JPG file timestamp
-  convert logo.jpg logo2.png
+  magick logo.jpg logo2.png
 
   diff -s logo1.png logo2.png
-  compare -metric RMSE logo1.png logo2.png null:
+  magick compare -metric RMSE logo1.png logo2.png null:
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2803,11 +2803,11 @@ Global Setting</A></CODE>" controls, for IM v6.5.2. These include...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert logo: logo.jpg
-  convert logo.jpg +set date:create +set date:modify logo1.png
+  magick logo: logo.jpg
+  magick logo.jpg +set date:create +set date:modify logo1.png
 
   sleep 2; touch logo.jpg
-  convert logo.jpg +set date:create +set date:modify logo2.png
+  magick logo.jpg +set date:create +set date:modify logo2.png
 
   diff -s logo1.png logo2.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2819,7 +2819,7 @@ Global Setting</A></CODE>" controls, for IM v6.5.2. These include...
     </DIV></P>
 
     ASIDE: you can also use other UNIX programs such as "<CODE>cmp</CODE>",
-    "<CODE>md5sum</CODE>", or "<CODE>sha1sum</CODE>" to compare binary image
+    "<CODE>md5sum</CODE>", or "<CODE>sha1sum</CODE>" to magick compare binary image
     files. The latter two programs is not guranteed, but they are practically
     impossible to fool, and are faster for comparing more than two files
     (using the checksum) </P>
@@ -2902,7 +2902,7 @@ To list what profiles are present in an image use...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  identify -verbose image.tif | grep 'Profile-.*bytes'
+  magick identify -verbose image.tif | grep 'Profile-.*bytes'
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2928,8 +2928,8 @@ IM provides for this purpose. For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -define jpeg:size=64x64  image.jpg  iptc:profile.iptc
-  convert -define jpeg:size=64x64  image.jpg  xmp:profile.xmp
+  magick -define jpeg:size=64x64  image.jpg  iptc:profile.iptc
+  magick -define jpeg:size=64x64  image.jpg  xmp:profile.xmp
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3007,12 +3007,12 @@ Consortium</A>. </P>
 <A NAME="color_profile_changing"></A>
 <H3>Changing Colorspace via Profiles</H3>
 
-While you can just simple convert color spaces directly like this...
+While you can just simple magick color spaces directly like this...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>cmyk_image.jpg</I> -colorspace rgb <I>rgb_image.jpg</I>
+  magick <I>cmyk_image.jpg</I> -colorspace rgb <I>rgb_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3057,7 +3057,7 @@ If the input image already has a color profile then only one is needed.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>rgb_image.jpg</I> -profile USCoat.icm <I>cmyk_image.jpg</I>
+  magick <I>rgb_image.jpg</I> -profile USCoat.icm <I>cmyk_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3067,7 +3067,7 @@ profile), you can use...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-    convert <I>rgb_image.jpg</I> +profile icm \
+    magick <I>rgb_image.jpg</I> +profile icm \
             -profile sRGB.icc  -profile USCoat.icm <I>cmyk_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -3079,7 +3079,7 @@ For the reverse (image already has a profile) use...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-    convert <I>cmyk_image.jpg</I> -profile sRGB.icc <I>rgb_image.jpg</I>
+    magick <I>cmyk_image.jpg</I> -profile sRGB.icc <I>rgb_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3092,7 +3092,7 @@ For example
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-    convert <I>cmyk_image.jpg</I> -profile "CMYK.icc" -profile "RGB.icc" \
+    magick <I>cmyk_image.jpg</I> -profile "CMYK.icc" -profile "RGB.icc" \
                   <I>output_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -3108,17 +3108,17 @@ ICC profile conversion behaviour</A>) </P>
 <A NAME="color_profile_mods"></A>
 <H4>Color Profile Modification</H4>
 
-The images you want to convert should all have ICC profiles embedded.
-As such to convert your images with same a CMYK ICC profile...
+The images you want to magick should all have ICC profiles embedded.
+As such to magick your images with same a CMYK ICC profile...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>rgb_image.jpg</I> -profile CMYK_PROFILE <I>cmyk_image.jpg</I>
+  magick <I>rgb_image.jpg</I> -profile CMYK_PROFILE <I>cmyk_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
-This will convert using perceptive intent, the default (see <A
+This will magick using perceptive intent, the default (see <A
 HREF="http://www.cambridgeincolour.com/tutorials/color-space-conversion.htm"
 >Color Space Conversion</A> for an detailed explanation on rendering
 intents). Because the results via perceptive intent can differ greatly
@@ -3131,7 +3131,7 @@ result that is somewhat nearer to what one might expect.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>rgb_image.jpg</I>  -intent relative -black-point-compensation \
+  magick <I>rgb_image.jpg</I>  -intent relative -black-point-compensation \
           -profile CMYK_PROFILE     <I>cmyk_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -3185,7 +3185,7 @@ If you want to add an IPTC profile to an image, you need a single -profile:
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>image.jpg</I> -profile iptc <I>iptc_image.jpg</I>
+  magick <I>image.jpg</I> -profile iptc <I>iptc_image.jpg</I>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3195,7 +3195,7 @@ profile to other similar images:
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>iptc_image.jpg</I> iptcData.iptc
+  magick <I>iptc_image.jpg</I> iptcData.iptc
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3203,7 +3203,7 @@ Or you can extract a text version of the profile that you can edit
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-    convert <I>iptc_image.jpg</I> IPTCTEXT:iptcData.pro
+    magick <I>iptc_image.jpg</I> IPTCTEXT:iptcData.pro
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3228,7 +3228,7 @@ You can add this profile to an image using
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>image.jpg</I> +profile 8BIM -profile 8BIMTEXT:iptcData.pro \
+  magick <I>image.jpg</I> +profile 8BIM -profile 8BIMTEXT:iptcData.pro \
           iptc_image.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -3239,7 +3239,7 @@ preview (EPT), that also contains the IPTC profile.  (Thanks <I>Tee Tanne</I>).
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert <I>itpc_image.jpg</I>  EPT:image.eps
+  magick <I>itpc_image.jpg</I>  EPT:image.eps
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3252,7 +3252,7 @@ Extract a XMP profile from a TIF image...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert picture.tif metadata.xmp
+  magick picture.tif metadata.xmp
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3293,20 +3293,20 @@ Why is this important?  Because IM is a 'raster image processor', and while it
 can read or write images stored in one of the vector formats it does so by
 converting the image to and from an internal raster image. </P>
 
-Consequently if you are trying to convert an image from a vector format, to
+Consequently if you are trying to magick an image from a vector format, to
 another vector format, IM will essentially rasterize this image at the
 currently defined <A HREF="../basics/#density" >resolution or density</A>
 which will hopefully (but unlikely) be suitable for the output device you
 intend to use it on. </P>
 
 In other words, any output from IM will never be a true vector format. While it
-can convert its internal raster format into a vector format file, the result
+can magick its internal raster format into a vector format file, the result
 is only a superficial vector image wrapper around an image in raster format.
 And unless the raster image is defined properly (at the right resolution) for
 the output device, the result will not be particularly good. </P>
 
 Unfortunately new uses to IM do not know anything about this.  They see IM as
-a converter that can convert say PDF to Postscript, producing images with
+a converter that can magick say PDF to Postscript, producing images with
 'blocky' aliasing effects, 'washed out' colors, or blurry images that just do
 not look good at all, on the intended output device. </P>
 
@@ -3342,7 +3342,7 @@ program  <A
 HREF="http://sk1project.org/modules.php?name=Products&product=uniconvertor"
 >UniConvertor, Sk1 Project</A> (usually available as a standard linux package)
 and the  <A HREF="http://scratchcomputing.com/projects/vectorsection/"
->VectorSection</A>  can be used to convert vector-to-vector without
+>VectorSection</A>  can be used to magick vector-to-vector without
 actually rasterizing the images. </P>
 
 For general conversion of Postscript to other vector formats, look at "<CODE><A
@@ -3355,7 +3355,7 @@ typically available in your systems extra package repositories. Also look at
 do with Postscript and PDF formats. </P>
 
 For SVG to PDF conversion, Wolfgang Hugemann &lt;Auto&#64;hugemann.de&gt;
-suggests that the easiest vector to vector conversion was to display the SVG
+suggests that the easiest vector to vector conversion was to magick display the SVG
 in a browser (Firefox) and the print it using a PDF printer driver. Though the
 "Uniconvertor" could be used too. </P>
 
@@ -3405,7 +3405,7 @@ when inserting the postscript it defines into other postscript documents. </P>
 
 IM handles it in basically the same way as postscript.  (See above). </P>
 
-<PRE>  convert image.jpg -compress none eps2:image.eps</PRE>
+<PRE>  magick image.jpg -compress none eps2:image.eps</PRE>
 
 Use "EPS2:" or "EPS3:" to create JPEG compressed EPS files:
 
@@ -3520,12 +3520,12 @@ Another possibility is to create a personal "<A HREF="../files/#delegate"
 "<CODE>pdfalt</CODE>" which invokes the program "<CODE>pdftoppm</CODE>"
 or even "<CODE>pdfimage</CODE>" from the "<CODE>xpdf</CODE>" package. </P>
 
-Then your stream would look something like this:
+Then your magick stream would look something like this:
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert pdfalt:image.pdf image.png
+  magick pdfalt:image.pdf image.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3533,7 +3533,7 @@ Then your stream would look something like this:
 
 You may also like to try using "<CODE>pstoedit</CODE>" which can convert
 a postscript file to other vector formats, or passes the postscript into the
-ImageMagick API, to convert it to bitmap.  I have not experiment or tested
+ImageMagick API, to magick it to bitmap.  I have not experiment or tested
 this, and would like some feedback. </P>
 
 <A NAME="pdf_images"></A>
@@ -3621,10 +3621,10 @@ Group4 (Fax) compression.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert image.gif -alpha off -monochrome -compress Zip -quality 100 \
+  magick image.gif -alpha off -monochrome -compress Zip -quality 100 \
           -units PixelsPerInch -density 600  image_deflate.pdf
 
-  convert image.gif -alpha off -monochrome -compress Group4 -quality 100 \
+  magick image.gif -alpha off -monochrome -compress Group4 -quality 100 \
           -units PixelsPerInch -density 600  image_group4.pdf
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -3730,7 +3730,7 @@ producing a better PDF than a simpler one that IM will generate...
 for x in ./*.jpeg
 do
     echo $x to ${x}.pdf
-    convert $x -quality 75 ${x}.pdf
+    magick $x -quality 75 ${x}.pdf
 done
 
 echo Merging...
@@ -3790,7 +3790,7 @@ an odd-ball quality range.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   echo "P2 6 1 5   0 1 2 3 4 5" | \
-      convert - -scale 120x20  pgm_step_gradient.gif
+      magick - -scale 120x20  pgm_step_gradient.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="pgm_step_gradient.gif"
@@ -3820,7 +3820,7 @@ and simple image processing.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE TXT2GIF REPLACE>
-  convert -size 20x2 xc: +noise random -channel G -separate +channel \
+  magick -size 20x2 xc: +noise random -channel G -separate +channel \
           -depth 16  -compress none   pgm_random_values.pgm
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -3852,7 +3852,7 @@ Here is another example outputing a 9x9 array of grayscale values from 0 to
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE TXT2GIF OUT=pgm_array.pgm>
-  convert rose:[9x9+0+0] -colorspace gray -transpose -depth 8 PGM:- |\
+  magick rose:[9x9+0+0] -colorspace gray -transpose -depth 8 PGM:- |\
     pnmtopnm -plain
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -3877,7 +3877,7 @@ Here is an example of outputing a very small ASCII PBM bitmap.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE TXT2GIF OUT=pbm_array.pbm>
-  convert label:O pbm: | pnmtopnm -plain
+  magick label:O pbm: | pnmtopnm -plain
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -3905,13 +3905,13 @@ Sometimes you want more control of the depth of PGM and PPM images, for
 example to use a percentile range of values from 0 to 99. </P>
 
 One method is to use the NetPBM program "<CODE>pamdepth</CODE>", which can
-convert images to any range (up to internal limits of 65335). Here for example
+magick images to any range (up to internal limits of 65335). Here for example
 is an image array of values but using a 0 to 99 range of output values.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE TXT2GIF OUT=pgm_percent.pgm>
-  convert -size 9x9 radial-gradient: -depth 16 PGM:- |\
+  magick -size 9x9 radial-gradient: -depth 16 PGM:- |\
     pamdepth 99 | pnmtopnm -plain
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -3930,7 +3930,7 @@ but the 'maxval' in the PGM image does not match the max value of the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE TXT2GIF OUT=pgm_percent_2.pgm>
-  convert -size 9x9 radial-gradient: +depth +level 0,99 PGM:- |\
+  magick -size 9x9 radial-gradient: +depth +level 0,99 PGM:- |\
     pnmtopnm -plain
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -3958,7 +3958,7 @@ PbmPlus/NetPBM file format.  For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE TXT2GIF OUT=pgm_comment.pgm>
-  convert -size 2x2 xc:grey -set comment "by Anthony" -compress none PGM:-
+  magick -size 2x2 xc:grey -set comment "by Anthony" -compress none PGM:-
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -3974,7 +3974,7 @@ comments, and even lose them when it processes the file.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE TXT2GIF OUT=pgm_comment_2.pgm>
-  convert -size 2x2 xc:grey -set comment "by Anthony" PGM:- | pnmtopnm -plain
+  magick -size 2x2 xc:grey -set comment "by Anthony" PGM:- | pnmtopnm -plain
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -4001,12 +4001,12 @@ newer PAM format does), and does not provide a general way of passing image
 meta-data with the image data. </P>
 
 All the PbmPlus/NetPBM formats (like the ImageMagick internal format, see <A
-HREF="../files/#miff_stream" >MIFF Image Streaming</A>) can handle a stream of
+HREF="../files/#miff_stream" >MIFF Image Streaming</A>) can handle a magick stream of
 multiple images, simply by concatenating or appending the images together, one
 after the other. This makes it very well suited for pipelined, multi-image
 streaming, methods of image processing, such as for video processing. However
 be warned that some PbmPlus/NetPBM programs only deal with single images and
-will not handle a stream of multiple images.  </P>
+will not handle a magick stream of multiple images.  </P>
 
 However as it is more low-level, and pre-dates ImageMagick, it is often
 selected for raw image outputs such as video image output and handling.
@@ -4073,7 +4073,7 @@ both be installed and used for serious image work. </P>
 
   JPEG to TIFF conversion...
 
-    convert image.jpg image.tif
+    magick image.jpg image.tif
 
   This will either save the image inside the TIFF file using JPEG compression
   (which was inherited from the JPEG input.  Or it will error such as...
@@ -4087,9 +4087,9 @@ both be installed and used for serious image work. </P>
   You can get around this problem by changing the setting to use a different
   compression algorithm:
 
-      convert image.jpg -compress zip  image.tif
-      convert image.jpg -compress lzw  image.tif
-      convert image.jpg +compress      image.tif
+      magick image.jpg -compress zip  image.tif
+      magick image.jpg -compress lzw  image.tif
+      magick image.jpg +compress      image.tif
 
   WARNING:  -compress Group4  with a TIFF works, but ONLY if you remove all
   transparent and semi-transparent pixels from the image.  Typically you can
@@ -4111,7 +4111,7 @@ both be installed and used for serious image work. </P>
          -depth 64 -define quantum:format=floating-point
 
   14 bit TIFF images...
-       convert logo: -sharpen 0x1 -depth 14 logo.tif
+       magick logo: -sharpen 0x1 -depth 14 logo.tif
 
        tiffinfo logo.tif
 
@@ -4126,16 +4126,16 @@ both be installed and used for serious image work. </P>
        Rows/Strip: 2
        Planar Configuration: single image plane
        DocumentName: logo.tif
-       Software: ImageMagick 6.2.8 07/27/06 Q16 https://legacy.imagemagick.org
+       Software: ImageMagick 6.2.8 07/27/06 Q16 https://imagemagick.org
 
   12 bit TIFF images...
 
-  To convert 16-bit TIFF images to 12-bit:
-        convert image.tif -depth 12 image-12.tif
+  To magick 16-bit TIFF images to 12-bit:
+        magick image.tif -depth 12 image-12.tif
 
   Pure black and white images...
 
-       convert image ...  -type truecolor -type bilevel   image.tiff
+       magick image ...  -type truecolor -type bilevel   image.tiff
 
     Results in normal images and the smallest filesize, and correct
     black/white handling in Photoshop, Microsoft Windows Picture and Fax
@@ -4183,7 +4183,7 @@ both be installed and used for serious image work. </P>
 
   Windows Picture and Fax Viewer, Windows Explorer
 
-    These can can only display TIFFs that have certain Photometric
+    These can can only magick display TIFFs that have certain Photometric
     Interpretation values, such as RGB.  IM Options...
         -compress LZW -type TrueColor
 
@@ -4196,7 +4196,7 @@ both be installed and used for serious image work. </P>
     If you want to split a multi-page tiff into separate pages, IM may have
     problems as it will still use up a lot of memory to hold previous pages
     even if you use a command like...
-        convert "a.tif[i]" b%03d.tif
+        magick "a.tif[i]" b%03d.tif
 
     This might be regarded as a bug, or perhaps a future improvement.
 
@@ -4211,7 +4211,7 @@ both be installed and used for serious image work. </P>
 
     To get the EXIF attributes try this.
 
-      identify -verbose -define tiff:exif=true image.tif
+      magick identify -verbose -define tiff:exif=true image.tif
 
 </PRE>
 
@@ -4224,7 +4224,7 @@ You can use that 'clip' mask your image with that path using...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image_clip.tif  -clip \
+  magick image_clip.tif  -clip \
           ...do_various_operations... \
           +clip-mask  image_masked.png
 </CODE></PRE></TD></TR></TABLE>
@@ -4260,7 +4260,7 @@ See <A HREF="../masking/#clip-mask" >Write or Clip Masks</A> for more details.
   ImageMagick, (for example a Windows Background Image), you can enforce the
   generation of a BMP3 format image using...
 
-       convert image BMP3:image.bmp
+       magick image BMP3:image.bmp
 
   This format should have no transparency and should be a 'printable image',
   whatever that means.  In other words 'Windows' compatible.
@@ -4271,13 +4271,13 @@ See <A HREF="../masking/#clip-mask" >Write or Clip Masks</A> for more details.
   may be to pipeline the image though a minimal 'image data only' image file
   format like PPM and then re-save as BMP3.  Messy, but it should work.
 
-      convert image.png  ppm:- | convert - BMP3:image.bpm
+      magick image.png  ppm:- | magick - BMP3:image.bpm
 
   IM can not produce BMP's at depth levels other than 8.  However you can
   use NetPBM image processing set to do the final conversion to other depth
   levels (This needs at least a Q16 version of IM)...
 
-       convert image +matte -colors 16 ppm:- |\
+       magick image +matte -colors 16 ppm:- |\
          pnmdepth 4 | ppm2bmp &gt; image.bmp
 
 
@@ -4300,12 +4300,12 @@ See <A HREF="../masking/#clip-mask" >Write or Clip Masks</A> for more details.
   To create a multi-resolution ICO format image simply create all the image
   sizes you require and write them all to the same ICO file.
 
-    convert icon-16.bmp icon-32.bmp icon-64.bmp \
+    magick icon-16.bmp icon-32.bmp icon-64.bmp \
             icon-128.bmp icon-256.bmp   myicon.ico
 
   Update
 
-    convert icon-256.png  \
+    magick icon-256.png  \
             -define icon:auto-resize="256,128,96,64,48,32,16" \
             myicon.ico
 
@@ -4326,7 +4326,7 @@ ICO format.
 <H3>RAW Camera Image Formats (CRW,CR2,NEF,X3F,etc.)</H3>
 
 Most digital cameras, with the exception of the Sigma Foveon sensor and some
-Sony cameras, convert the image produced by the lens into digital data by using
+Sony cameras, magick the image produced by the lens into digital data by using
 millions of sensors which detect the brightness of one specific colour, Red,
 Green or Blue. In order for the camera to respond to colour in approximately
 the same way that the human eye does, there are twice as many green sensors as
@@ -4370,15 +4370,15 @@ information about the original image has been lost. If, on the other hand, you
 had produced a raw file from the camera instead of a JPG, during the conversion
 from raw you can choose a particular white balance setting along with other
 parameters and if the resulting image doesn't look right you can go back,
-change the settings and convert it again until it does look right. This is
+change the settings and magick it again until it does look right. This is
 similar to the ability to produce more prints from film negatives. Without the
 film negative you wouldn't be able to get an 8x10 blowup of one of the 4x6
 snapshots you get when the film was first developed. </P>
 
 While ImageMagick can handle a large variety of different formats, it does not
-'know' how to convert raw camera files, so IM uses the "<CODE><A
+'know' how to magick raw camera files, so IM uses the "<CODE><A
 HREF="http://www.cybercom.net/~dcoffin/dcraw/" >dcraw</A></CODE>" program as a
-delegate program to convert the raw file into a format that it does understand,
+delegate program to magick the raw file into a format that it does understand,
 either a TIFF (with the '<CODE>-T</CODE>' flag) or PNM.  Note that it is
 designed for raw <I>camera</I> images, and not those from, for example, a
 scanner.  The "<CODE><A HREF="http://www.cybercom.net/~dcoffin/dcraw/"
@@ -4387,7 +4387,7 @@ including those from cameras manufactured by Canon, Fuji, Kodak, Nikon and
 Sony. </P>
 
 You can determine whether "<CODE>dcraw</CODE>" will recognize your raw files by
-asking it to identify a sample. For example the command:
+asking it to magick identify a sample. For example the command:
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -4498,17 +4498,17 @@ HREF="../forum_link.cgi?u=3499" >el_supremo</A></I>. </P>
   Also use m2v to avoid heavy compression pixelization that can occur
   using...
 
-      convert *.jpg glacier.mpg
+      magick *.jpg glacier.mpg
 
   EG instead use...
 
-      convert *.jpg m2v:glacier.mpg
+      magick *.jpg m2v:glacier.mpg
 
   Note you may need lots of temporary space to do a large animations
   You can specify a different directory from the normal /tmp using...
 
       setenv MAGICK_TMPDIR /data
-      convert -limit memory 0 -limit map 0 *.jpg image.m2v
+      magick -limit memory 0 -limit map 0 *.jpg image.m2v
 
 Alternatives...
 
@@ -4528,7 +4528,7 @@ Alternatives...
      ffmpeg -f image2 -i %03d.jpg -vcodec mjpeg -y anim.mpg
 
   Extracting an MVG with a transparent background
-      convert -background none -size 320x240 sample.mvg out.png
+      magick -background none -size 320x240 sample.mvg out.png
 
 
   Michael Lenh wrote...
@@ -4568,7 +4568,7 @@ Alternatives...
    You can leave out -j  (clip window) if you want. -g is output size.
 
    Wolfgang Hugemann suggests a new alternative known as 'VirtualDub' under
-   Windows Vista, which will let you run a video, or convert directly from
+   Windows Vista, which will let you run a video, or magick directly from
    a folder of image frames.
 
    WARNING: "<CODE>mplayer</CODE>" apparentally does not like mpeg file with
@@ -4619,7 +4619,7 @@ used to create MNGs. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-convert -size 101x101 radial-gradient: \
+magick -size 101x101 radial-gradient: \
         \( -clone 0 -level 00,100% +level-colors ,#F00 \) \
         \( -clone 0 -level 10,100% +level-colors ,#F12 \) \
         \( -clone 0 -level 20,100% +level-colors ,#F24 \) \
@@ -4679,8 +4679,8 @@ level this table sets where the black and white point lies. </P>
 For a 10 bit logarithmic image where each colour component value ranges from 0
 to 1023 the black and white points are normally set at 95 for black and 685 for
 white. What this means is that the logarithmic file stores colour values that
-are lighter than what the linear version will display as pure white and darker
-than what it will display as pure black. This extra information therefore
+are lighter than what the linear version will magick display as pure white and darker
+than what it will magick display as pure black. This extra information therefore
 remains available for an effects artists who might wish to alter the brightness
 of the image after it has been stored as a dpx file. </P>
 
@@ -4705,7 +4705,7 @@ You can add a time code to any dpx file using the following:
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -define dpx:television.time.code=10000215 \
+  magick -define dpx:television.time.code=10000215 \
           originalFile.00001.dpx    alteredFile.00001.dpx
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -4749,7 +4749,7 @@ buggy.
 
 The following will work with ImageMagick 6.3.8-3
 
-  convert -colorspace log AfterEffectsFile.dpx -set gamma 0.5 \
+  magick -colorspace log AfterEffectsFile.dpx -set gamma 0.5 \
           -set reference-black 95 -set reference-white 685 image.jpg
 
 Alternatively, take a look at the SMTPE documentation
@@ -4758,7 +4758,7 @@ Alternatively, take a look at the SMTPE documentation
 
 You can add text user data to the dpx file by using
 
-  convert image.dpx   -set dpx:userdata "some text"    new.dpx
+  magick image.dpx   -set dpx:userdata "some text"    new.dpx
 
 -- Cristy
 
@@ -4798,7 +4798,7 @@ summary of using IM for this format, then please do... </P>
    right provide when converting (make sure you IM was installed with the LCMS
    delegate library) ....
 
-     convert Test_CMYK.psd -strip -profile USWebCoatedSWOP.icc \
+     magick Test_CMYK.psd -strip -profile USWebCoatedSWOP.icc \
              -profile sRGB.icc Test_RGB.png
 
    See <A HREF="#profiles" >Profiles</A> above for more info.
@@ -4808,7 +4808,7 @@ summary of using IM for this format, then please do... </P>
    last image of a two image read.
 
    To ensure IM never reads the last image use...
-       convert test.psd[0--2] -flatten test.jpg
+       magick test.psd[0--2] -flatten test.jpg
    That is read all images, except the last. But always read the first.
    This can not be done after the read using a "-delete".
 </PRE>
@@ -4848,7 +4848,7 @@ Sounds like a good delegate candidate to me. </P>
 <A NAME="html"></A>
 <H3>Webpage Conversion to Image (HTML)</H3>
 
-If IM loads a HTML it will look for a html2ps to convert the html to
+If IM loads a HTML it will look for a html2ps to magick the html to
 postscript which it can then render as an image. This does not work very well,
 but does work. </P>
 
@@ -4858,7 +4858,7 @@ load the page in a browser and then take a screen shot of it.  This gets a
 perfect image of the page but limited to the window size of the browser. </P>
 
 Another variation is to have the browser output the page as postscript rather than
-have IM convert it. This should page the website into smaller pages quite
+have IM magick it. This should page the website into smaller pages quite
 nicely. </P>
 
 Under LINUX you can to start a virtual X windows Display server that is large
@@ -4879,13 +4879,13 @@ processing, not the html to image generation. </P>
 
 IM PCL is version 6 PCL by default. </P>
 
-For version 5 you need to convert your image to black and white. </P>
+For version 5 you need to magick your image to black and white. </P>
 
 For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert image.png -monochrome image.pcl
+  magick image.png -monochrome image.pcl
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -4901,14 +4901,14 @@ size) and the last the highest resolution (largest size at 3072&times;2048
 pixels). </P>
 
 As users typically what the largest resolution image for processing the way to
-convert a PCD image to some other format like JPG is to grab the sixth or
+magick a PCD image to some other format like JPG is to grab the sixth or
 (index 5) from the image file. </P>
 
 For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -colorspace RGB image.pcd[5] image.jpg
+  magick -colorspace RGB image.pcd[5] image.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -4933,7 +4933,7 @@ For example to output RGB raw data...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert image.jpg -depth 8  image.rgb
+  magick image.jpg -depth 8  image.rgb
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -4958,7 +4958,7 @@ size.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert image.jpg -resize \>512x512 \
+  magick image.jpg -resize \>512x512 \
           -background black -gravity center -extent 512x512 \
           -depth 8  image.rgb
 </CODE></PRE></TD></TR></TABLE>
@@ -4970,7 +4970,7 @@ how big the image is.  For example..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -size 512x512 -depth 8 image.rgb    image.png
+  magick -size 512x512 -depth 8 image.rgb    image.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -4985,7 +4985,7 @@ For example skip a 48 byte header...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -size 512x512+48 -depth 8 image.rgb    image.png
+  magick -size 512x512+48 -depth 8 image.rgb    image.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -5001,7 +5001,7 @@ raw image to compressed tif?</A>. </P>
 <PRE>You can also read (and write) RGB using normalized floating point numbers.
 This however requires the use of special coder -define settings.
 See HDRI floating point file formats
-   https://legacy.imagemagick.org/Usage/basics/#hdri_formats
+   https://imagemagick.org/Usage/basics/#hdri_formats
 
 
 RGB floating point Image generated using C Code (HDRI)...
@@ -5017,7 +5017,7 @@ RGB floating point Image generated using C Code (HDRI)...
 
 Reading Options....
 
-  convert -size 200x100 -depth 32 -define quantum:format=floating-point
+  magick -size 200x100 -depth 32 -define quantum:format=floating-point
           -define quantum:scale=65536.0   -endian lsb   input.rgb
           output.png
 
@@ -5039,6 +5039,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/formats/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/formats/</CODE>
 </ADDRESS></BODY></HTML>
 

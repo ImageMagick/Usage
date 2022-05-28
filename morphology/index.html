@@ -5,7 +5,7 @@
 <TITLE>Morphology of Shapes -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/morphology/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/morphology/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -462,9 +462,9 @@ it more visible.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert xc: -bordercolor black -border 5x5 pixel.gif
-  convert pixel.gif -scale 800% pixel_mag.gif
-  convert pixel.gif -morphology Dilate Diamond \
+  magick xc: -bordercolor black -border 5x5 pixel.gif
+  magick pixel.gif -scale 800% pixel_mag.gif
+  magick pixel.gif -morphology Dilate Diamond \
                     -scale 800% k_diamond.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="pixel.gif"
@@ -517,7 +517,7 @@ using a larger <I>radius</I> to generate a large kernel. </P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for r in 1 2 3 4; do
-    convert pixel.gif -morphology Dilate Diamond:$r -scale 800% k_diamond:$r.gif
+    magick pixel.gif -morphology Dilate Diamond:$r -scale 800% k_diamond:$r.gif
   done
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
@@ -572,7 +572,7 @@ around the 'center'.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif  -morphology Dilate Square -scale 800% k_square.gif
+  magick pixel.gif  -morphology Dilate Square -scale 800% k_square.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="k_square.gif"
      ><IMG SRC="k_square.gif"            WIDTH=88 HEIGHT=88
@@ -591,7 +591,7 @@ argument <I>radius</I> being the most important.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for r in 1 2 3 4; do
-    convert pixel.gif  -morphology Dilate Square:$r -scale 800% k_square:$r.gif
+    magick pixel.gif  -morphology Dilate Square:$r -scale 800% k_square:$r.gif
   done
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
@@ -815,7 +815,7 @@ happens to be the same as the default '<CODE>Diamond</CODE>' kernel. </P>
 Note that a '<CODE>Plus</CODE>' kernel is a generally not used for normal
 morphological methods, and should be avoided for such purposes.  However it is
 a very useful if you are wanting to find and highlight single points in an
-image, such as I do later to display <A HREF="#skeleton_info" >Skeleton
+image, such as I do later to magick display <A HREF="#skeleton_info" >Skeleton
 Information</A>.  Basically it provides a method of <A HREF="../draw/#symbols"
 >Drawing Symbols</A>, without needing to know exactly where the individual
 'points' are located in the image. </P>
@@ -1114,7 +1114,7 @@ be used for convolution blurring of the single pixel image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif   -morphology Convolve \
+  magick pixel.gif   -morphology Convolve \
             "3:  0.3,0.6,0.3   0.6,1.0,0.6   0.3,0.6,0.3" \
                                          -scale 800%  k_user_3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1142,7 +1142,7 @@ And here I defined a 5&times;3 rectangular area, but use the special 'nan'
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif   -morphology Dilate \
+  magick pixel.gif   -morphology Dilate \
             "5x3: nan,1,1,1,nan   1,1,1,1,1   nan,1,1,1,nan " \
                                     -scale 800%   k_user_5x3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1162,7 +1162,7 @@ the rectangular bounds of the kernel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif   -morphology Dilate \
+  magick pixel.gif   -morphology Dilate \
             "2x3+1+1:   1,-   1,-   1,1   "  -scale 800% k_lman.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="k_lspace.gif"
@@ -1181,7 +1181,7 @@ neighbourhood' elements, for morphological methods.  </P>
 
 To make it easier to generate DIY kernels you can use the  "<CODE><A
 HREF="../scripts/image2kernel" >image2kernel</A></CODE>" script to create
-kernels.  For example here I convert a small flag <NOBR>(&nbsp;<IMG
+kernels.  For example here I magick a small flag <NOBR>(&nbsp;<IMG
 SRC="../images/flag.gif" ALIGN=bottom>&nbsp;)</NOBR> into an user kernel data file
 ("<CODE><A HREF="flag_kernel.dat" >flag_kernel.dat</A></CODE>"), then use it
 to dilate an image with a couple of pixels in it.
@@ -1189,11 +1189,11 @@ to dilate an image with a couple of pixels in it.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x80 xc:black -fill white \
+  magick -size 80x80 xc:black -fill white \
           -draw 'point 20,15 point 55,30 point 40,60'  points_pixels.gif
   image2kernel -qgm flag.gif flag_kernel.dat
 
-  convert  points_pixels.gif \
+  magick points_pixels.gif \
              -morphology Dilate @flag_kernel.dat \
            flagged_points.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -1241,7 +1241,7 @@ For example, here is a dialtion of a single pixel using a
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert pixel.gif  -morphology Dilate Diamond:3 -scale 800% k_diamond_x3.gif
+  magick pixel.gif  -morphology Dilate Diamond:3 -scale 800% k_diamond_x3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="k_diamond:3.gif"
      ><IMG SRC="k_diamond:3.gif"            WIDTH=88 HEIGHT=88
@@ -1256,7 +1256,7 @@ But you can also achieve the same result by using a smaller
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif  -morphology Dilate Diamond \
+  magick pixel.gif  -morphology Dilate Diamond \
                      -morphology Dilate Diamond \
                      -morphology Dilate Diamond  -scale 800% k_diamond_x3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1294,7 +1294,7 @@ the operation, that many times.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif   -morphology Dilate:3 Diamond -scale 800%  k_diamond_3.gif
+  magick pixel.gif   -morphology Dilate:3 Diamond -scale 800%  k_diamond_3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="k_diamond_3.gif"
      ><IMG SRC="k_diamond_3.gif"            WIDTH=88 HEIGHT=88
@@ -1322,7 +1322,7 @@ For example, this is not that same as going from '<CODE>Plus</CODE>' (radius
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif   -morphology Dilate:2 Plus  -scale 800%  k_plus_2.gif
+  magick pixel.gif   -morphology Dilate:2 Plus  -scale 800%  k_plus_2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="k_plus_2.gif"
      ><IMG SRC="k_plus_2.gif"            WIDTH=88 HEIGHT=88
@@ -1381,7 +1381,7 @@ and no more changes can be made to the image.  Remember an iteration limit of
 <TR><TD><PRE><CODE EXECUTE SCRIPT
      IMAGE=iterate_infinite.gif ERR=verbose_iterate.txt>
   MAGICK_THREAD_LIMIT=1 \
-    convert pixel.gif -verbose  -morphology Dilate:-1 Octagon \
+    magick pixel.gif -verbose  -morphology Dilate:-1 Octagon \
             +verbose  -scale 800% iterate_infinite.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ROWSPAN=2>
   <A HREF="iterate_infinite.gif"
@@ -1424,7 +1424,7 @@ goes to make up its processing. </P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT ERR=verbose_compound.txt>
   MAGICK_THREAD_LIMIT=1 \
-    convert man.gif   -verbose -morphology Smooth:2 Diamond +verbose   null:
+    magick man.gif   -verbose -morphology Smooth:2 Diamond +verbose   null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1547,7 +1547,7 @@ For example, here is the actual values of the built-in '<CODE><A HREF="#disk"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=k_disk.txt>
-  convert xc: -define showkernel=1 -morphology Dilate:0 Disk null:
+  magick xc: -define showkernel=1 -morphology Dilate:0 Disk null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1573,7 +1573,7 @@ Here is another example. This time of a '<CODE><A HREF="../convolve/#comet"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=k_comet.txt>
-  convert xc:  -define showkernel=1 -morphology Dilate:0 Comet:0x2  null:
+  magick xc:  -define showkernel=1 -morphology Dilate:0 Comet:0x2  null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1600,7 +1600,7 @@ number of significant digits from the default of 6 to 3.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=k_precision.txt>
-  convert xc:  -define showkernel=1 -precision 3 \
+  magick xc:  -define showkernel=1 -precision 3 \
           -morphology Dilate:0 Comet:0x2  null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -1743,7 +1743,7 @@ Here is a <A HREF="#showkernel" >Show Kernel Output</A> of this definition.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT ERR=k_multi.txt>
-  convert xc: -define showkernel=1 -morphology Dilate:0 \
+  magick xc: -define showkernel=1 -morphology Dilate:0 \
              ' 3: 0,0,- 0,1,1 -,1,-  ;
                3: -,1,- 1,1,0 -,0,0  ;
                3: -,0,0 1,1,1 -,1,-  ;
@@ -1907,7 +1907,7 @@ get the following.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif  -morphology Convolve "Blur:0x1&gt;" \
+  magick pixel.gif  -morphology Convolve "Blur:0x1&gt;" \
           -auto-level  blur_re-iterate.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="pixel.gif"
@@ -1937,8 +1937,8 @@ This is equivalent to doing the two steps like this.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert pixel.gif -morphology Convolve "Blur:0x1" -auto-level blur_1.gif
-  convert blur_1.gif -morphology Convolve "Blur:0x1+90" \
+  magick pixel.gif -morphology Convolve "Blur:0x1" -auto-level blur_1.gif
+  magick blur_1.gif -morphology Convolve "Blur:0x1+90" \
           -auto-level blur_re-iterate.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="pixel.gif"
@@ -1983,7 +1983,7 @@ get..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE NO_EXECUTE>
-  convert pixel.gif  -define morphology:compose=Lighten \
+  magick pixel.gif  -define morphology:compose=Lighten \
                      -morphology Convolve "Blur:0x1&gt;" \
           -auto-level blur_union.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -2009,9 +2009,9 @@ That was equivalent to doing...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pixel.gif -morphology Convolve "Blur:0x1"  -auto-level blur_1.gif
-  convert pixel.gif -morphology Convolve "Blur:0x1+90" -auto-level blur_2.gif
-  convert blur_1.gif blur_2.gif -compose Lighten -composite \
+  magick pixel.gif -morphology Convolve "Blur:0x1"  -auto-level blur_1.gif
+  magick pixel.gif -morphology Convolve "Blur:0x1+90" -auto-level blur_2.gif
+  magick blur_1.gif blur_2.gif -compose Lighten -magick composite \
           -auto-level blur_union.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="pixel.gif"
@@ -2051,9 +2051,9 @@ That was equivalent to doing...
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!--
-  convert blur_1.gif -scale 800% blur_1_mag.gif
-  convert blur_2.gif -scale 800% blur_2_mag.gif
-  convert blur_union.gif -scale 800% blur_union_mag.gif
+  magick blur_1.gif -scale 800% blur_1_mag.gif
+  magick blur_2.gif -scale 800% blur_2_mag.gif
+  magick blur_union.gif -scale 800% blur_union_mag.gif
 -->
 
 If you are not sure what IM is actually doing during a morphology, turn on
@@ -2064,7 +2064,7 @@ For example here the verbose output of re-iterating with each kernel...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_re-iterate.txt>
-  convert pixel.gif  -define morphology:compose=None \
+  magick pixel.gif  -define morphology:compose=None \
           -verbose -morphology Convolve "Blur:0x1&gt;" +verbose  null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -2082,7 +2082,7 @@ kernel result....
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_union.txt>
-  convert pixel.gif  -define morphology:compose=Lighten \
+  magick pixel.gif  -define morphology:compose=Lighten \
           -verbose -morphology Convolve "Blur:0x1&gt;" +verbose  null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -2152,7 +2152,7 @@ using a '<CODE><A HREF="#octagon" >Octagon</A></CODE>' kernel.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Erode Octagon  erode_man.gif
+  magick man.gif   -morphology Erode Octagon  erode_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2186,7 +2186,7 @@ It expands the white shapes, making a shape bigger according to the kernel
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Dilate Octagon  dilate_man.gif
+  magick man.gif   -morphology Dilate Octagon  dilate_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2218,7 +2218,7 @@ on the <A HREF="../color_mods/#negate" >Negated Images</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -negate \
+  magick man.gif -negate \
              -morphology Dilate Octagon   -negate dilate_man_neg.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="dilate_man_neg.gif"
@@ -2240,7 +2240,7 @@ kernel.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Open Disk  open_man.gif
+  magick man.gif   -morphology Open Disk  open_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2270,8 +2270,8 @@ it again using the same kernel that was provided
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif         -morphology Erode  Disk  open_erode.gif
-  convert open_erode.gif  -morphology Dilate Disk  open_man_2.gif
+  magick man.gif         -morphology Erode  Disk  open_erode.gif
+  magick open_erode.gif  -morphology Dilate Disk  open_man_2.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2293,7 +2293,7 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert open_man.gif  -morphology Open Disk  open_man_twice.gif
+  magick open_man.gif  -morphology Open Disk  open_man_twice.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2326,7 +2326,7 @@ the kernel larger.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Open:2  Disk  open_man_x2.gif
+  magick man.gif   -morphology Open:2  Disk  open_man_x2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="open_man_x2.gif"
      ><IMG SRC="open_man_x2.gif"      WIDTH=100 HEIGHT=125
@@ -2355,7 +2355,7 @@ is 'close' parts of the background that are about that size. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif    -morphology Close Disk   close_man.gif
+  magick man.gif    -morphology Close Disk   close_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2385,8 +2385,8 @@ HREF="#open" >Open</A></CODE>' does.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif           -morphology Dilate Disk  close_dilate.gif
-  convert close_dilate.gif  -morphology Erode  Disk  close_man_2.gif
+  magick man.gif           -morphology Dilate Disk  close_dilate.gif
+  magick close_dilate.gif  -morphology Erode  Disk  close_man_2.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2424,7 +2424,7 @@ operation.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -negate -morphology Close Disk -negate   close_man_neg.gif
+  magick man.gif   -negate -morphology Close Disk -negate   close_man_neg.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="close_man_neg.gif"
      ><IMG SRC="close_man_neg.gif"      WIDTH=100 HEIGHT=125
@@ -2448,7 +2448,7 @@ Here we smooth the image using a mid-range '<CODE><A HREF="#octagon"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif  -morphology Smooth  Octagon:3  smooth_man.gif
+  magick man.gif  -morphology Smooth  Octagon:3  smooth_man.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="smooth_man.gif"
      ><IMG SRC="smooth_man.gif"      WIDTH=100 HEIGHT=125
@@ -2535,7 +2535,7 @@ With this in mind I have created 'Intensity' versions of these methods.
 '<CODE>ErodeIntensity</CODE>', '<CODE>DilateIntensity</CODE>',
 '<CODE>OpenIntensity</CODE>', '<CODE>CloseIntensity</CODE>'. </P>
 
-These compare the pixels within the defined 'neighbourhood', and replaces the
+These magick compare the pixels within the defined 'neighbourhood', and replaces the
 current pixel color according to the pixels intensity.  That is the whole
 color pixel is copied, and not just the individual channel values. As
 a result... </P>
@@ -2555,8 +2555,8 @@ built-in "<CODE>rose:</CODE>" image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -morphology Dilate          Octagon:3  rose_dilate.gif
-  convert rose: -morphology DilateIntensity Octagon:3  rose_dilate_intensity.gif
+  magick rose: -morphology Dilate          Octagon:3  rose_dilate.gif
+  magick rose: -morphology DilateIntensity Octagon:3  rose_dilate_intensity.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"    WIDTH=70 HEIGHT=46
@@ -2588,7 +2588,7 @@ on the built-in rose image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -morphology ErodeI Octagon:3 rose_erode_intensity.gif
+  magick rose: -morphology ErodeI Octagon:3 rose_erode_intensity.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_erode_intensity.gif"
      ><IMG SRC="rose_erode_intensity.gif"    WIDTH=70 HEIGHT=46
@@ -2599,7 +2599,7 @@ on the built-in rose image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<c>  convert rose: -morphology DilateI Octagon:3 rose_dilate_intensity.gif
+<c>  magick rose: -morphology DilateI Octagon:3 rose_dilate_intensity.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_dilate_intensity.gif"
      ><IMG SRC="rose_dilate_intensity.gif"    WIDTH=70 HEIGHT=46
@@ -2610,7 +2610,7 @@ on the built-in rose image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -morphology OpenI Octagon:3 rose_open_intensity.gif
+  magick rose: -morphology OpenI Octagon:3 rose_open_intensity.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_open_intensity.gif"
      ><IMG SRC="rose_open_intensity.gif"    WIDTH=70 HEIGHT=46
@@ -2621,7 +2621,7 @@ on the built-in rose image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -morphology CloseI Octagon:3 rose_close_intensity.gif
+  magick rose: -morphology CloseI Octagon:3 rose_close_intensity.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_close_intensity.gif"
      ><IMG SRC="rose_close_intensity.gif"    WIDTH=70 HEIGHT=46
@@ -2714,7 +2714,7 @@ edge, but which were part of the original shape is returned.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology EdgeIn Octagon  edgein_man.gif
+  magick man.gif   -morphology EdgeIn Octagon  edgein_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2751,7 +2751,7 @@ immediately next to the shape is returned.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology EdgeOut Octagon  edgeout_man.gif
+  magick man.gif   -morphology EdgeOut Octagon  edgeout_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2782,7 +2782,7 @@ HREF="#erode" >Eroded</A> shape from its <A HREF="#dilate" >Dilated</A> shape.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Edge Octagon  edge_man.gif
+  magick man.gif   -morphology Edge Octagon  edge_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2814,7 +2814,7 @@ minimal '<CODE><A HREF="#diamond" >Diamond</A></CODE>' kernel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert man.gif  -morphology Edge Diamond  man_outline.gif
+  magick man.gif  -morphology Edge Diamond  man_outline.gif
 </CODE></PRE></TD></TR></TABLE></P>
 
 The edge is two pixels thick as it contains the pixels that lie on either side
@@ -2844,7 +2844,7 @@ the points, and the connecting bridged between shapes.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology TopHat Disk  tophat_man.gif
+  magick man.gif   -morphology TopHat Disk  tophat_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2882,7 +2882,7 @@ adds to the image.  That is the the pixels that were used to fill in the
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology BottomHat Disk  bottomhat_man.gif
+  magick man.gif   -morphology BottomHat Disk  bottomhat_man.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -2929,7 +2929,7 @@ of the original 'man figure' image, without modifying the color channels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert figure.gif -channel A  -morphology Erode Diamond:3 \
+  magick figure.gif -channel A  -morphology Erode Diamond:3 \
           +channel   figure_erode.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/figure.gif"
@@ -3027,7 +3027,7 @@ a special morphological test image  (enlarged for viewing individual pixels).
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for method in  erode dilate open close; do
-    convert test_morphology.gif \
+    magick test_morphology.gif \
              -morphology $method  '2x3+1+1: 1,-  1,-  1,1 '  test_$method.gif
   done
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3037,7 +3037,7 @@ a special morphological test image  (enlarged for viewing individual pixels).
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE SCRIPT>
  for method in  '' _erode _dilate _open _close; do
-   convert test$method.gif -scale 156x102 test${method}_mag.gif
+   magick test$method.gif -scale 156x102 test${method}_mag.gif
  done
 </CODE> -->
 
@@ -3135,7 +3135,7 @@ pixel immediately to its right.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Hit-and-Miss '2x1:1,0'  hmt_right.gif
+  magick man.gif   -morphology Hit-and-Miss '2x1:1,0'  hmt_right.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -3174,7 +3174,7 @@ For example if I use a structured element like...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Hit-and-Miss '3x1:1,-,0'  hmt_right2.gif
+  magick man.gif   -morphology Hit-and-Miss '3x1:1,-,0'  hmt_right2.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -3212,7 +3212,7 @@ fall inside the shape but which form a North-West facing corner.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology HMT "3:0,0,- 0,1,1 -,1,-" hmt_nw_corner.gif
+  magick man.gif   -morphology HMT "3:0,0,- 0,1,1 -,1,-" hmt_nw_corner.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -3239,7 +3239,7 @@ the shape.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif  -morphology HMT "3>:0,0,- 0,1,1 -,1,-" hmt_corners.gif
+  magick man.gif  -morphology HMT "3>:0,0,- 0,1,1 -,1,-" hmt_corners.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="kernel_hmt_corners.gif"
      ><IMG SRC="kernel_hmt_corners.gif"
@@ -3296,7 +3296,7 @@ specifically for this purpose.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lines.gif -morphology HMT LineJunctions hmt_junctions.gif
+  magick lines.gif -morphology HMT LineJunctions hmt_junctions.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="lines.gif"
      ><IMG SRC="lines.gif"               WIDTH=80 HEIGHT=80
@@ -3320,11 +3320,11 @@ a '<CODE><A HREF="#ring" >Ring</A></CODE>'.  For example...
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lines.gif \( +clone \
+  magick lines.gif \( +clone \
              -morphology HMT LineJunctions \
              -morphology Dilate Ring \
              -background red -alpha shape \
-          \) -composite              hmt_junctions_rings.gif
+          \) -magick composite              hmt_junctions_rings.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="hmt_junctions_rings.gif"
      ><IMG SRC="hmt_junctions_rings.gif"      WIDTH=80 HEIGHT=80
@@ -3347,11 +3347,11 @@ used to find the free ends of all the lines in the image.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lines.gif \( +clone \
+  magick lines.gif \( +clone \
              -morphology HMT LineEnds \
              -morphology Dilate Ring \
              -background red -alpha shape \
-          \) -composite                  hmt_lineends_rings.gif
+          \) -magick composite                  hmt_lineends_rings.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="hmt_lineends_rings.gif"
      ><IMG SRC="hmt_lineends_rings.gif"      WIDTH=80 HEIGHT=80
@@ -3408,7 +3408,7 @@ the right edge of the shape.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Thicken '3x1+2+0:1,0,0'  thick_right.gif
+  magick man.gif   -morphology Thicken '3x1+2+0:1,0,0'  thick_right.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -3434,7 +3434,7 @@ a few times to continue the sequence.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Thicken:4 '3x1+2+0:1,0,0'  thick_right2.gif
+  magick man.gif   -morphology Thicken:4 '3x1+2+0:1,0,0'  thick_right2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="thick_right2.gif"
      ><IMG SRC="thick_right2.gif"      WIDTH=100 HEIGHT=125
@@ -3471,7 +3471,7 @@ So the better rule is set origin to 'Do Not Care'. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -define morphology:compose=Lighten \
+  magick man.gif -define morphology:compose=Lighten \
                   -morphology HitAndMiss 'Unity ; 3x1+2+0:1,0,0' hmt_thicken.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
@@ -3503,9 +3503,9 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x80 xc:black -fill none -stroke white \
+  magick -size 80x80 xc:black -fill none -stroke white \
           +antialias   -draw 'line 10,20 70,60'     man_line.gif
-  convert man_line.gif   -morphology Thicken ConvexHull  thick_line.gif
+  magick man_line.gif   -morphology Thicken ConvexHull  thick_line.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man_line.gif"
      ><IMG SRC="man_line.gif"               WIDTH=80 HEIGHT=80
@@ -3528,7 +3528,7 @@ between the extremes until it produces a 'octagonal shaped' object. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -morphology Close Diamond \
+  magick man.gif -morphology Close Diamond \
                   -morphology Thicken:-1 ConvexHull \
                   -morphology Close Diamond       man_hull_full.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -3572,10 +3572,10 @@ hull and the original shape.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_hull_full.gif \
+  magick man_hull_full.gif \
               -morphology EdgeIn Diamond man_convex_edge.gif
-  convert man.gif man_convex_edge.gif \
-          -compose Darken -composite man_extremities.gif
+  magick man.gif man_convex_edge.gif \
+          -compose Darken -magick composite man_extremities.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man_convex_edge.gif"
      ><IMG SRC="man_convex_edge.gif"              WIDTH=100 HEIGHT=125
@@ -3611,8 +3611,8 @@ a 50% grey version of the shape.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -evaluate multiply 0.5   man_grey.gif
-  convert man_grey.gif  -morphology Thicken Corners  thick_corners.gif
+  magick man.gif   -evaluate multiply 0.5   man_grey.gif
+  magick man_grey.gif  -morphology Thicken Corners  thick_corners.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man_grey.gif"
      ><IMG SRC="man_grey.gif"               WIDTH=100 HEIGHT=125
@@ -3650,7 +3650,7 @@ For example lets remove any pixel that is 4 pixels in from the right edge.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -morphology Thinning '5x1+0+0:1,1,1,1,0' thin_right.gif
+  magick man.gif   -morphology Thinning '5x1+0+0:1,1,1,1,0' thin_right.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -3688,7 +3688,7 @@ has no matching pixel to remove from the shape. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -define morphology:compose=MinusSrc \
+  magick man.gif -define morphology:compose=MinusSrc \
           -morphology HMT 'Unity ; 5x1+0+0:1,1,1,1,0' hmt_thinning.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
@@ -3750,7 +3750,7 @@ the center lines are left.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif  -morphology Thinning:-1 Skeleton  man_raw_thinned.gif
+  magick man.gif  -morphology Thinning:-1 Skeleton  man_raw_thinned.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
@@ -3782,8 +3782,8 @@ give the kernels something to work with.  I will also only erode and thin the
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel RG -morphology Erode Diamond  man_erode.gif
-  convert man_erode.gif -channel RG \
+  magick man.gif -channel RG -morphology Erode Diamond  man_erode.gif
+  magick man_erode.gif -channel RG \
           -morphology Thinning:-1 Skeleton +channel  man_skeleton.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man_erode.gif"
@@ -3805,7 +3805,7 @@ Here is a close up of loop around the eroded hole.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_skeleton.gif -crop 22x22+47+29 +repage \
+  magick man_skeleton.gif -crop 22x22+47+29 +repage \
           -scale 120x120    man_skeleton_zoom.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="man_skeleton_zoom.gif"
@@ -3846,7 +3846,7 @@ generated using a '<CODE><A HREF="#skeleton2" >Skeleton:2</A></CODE>' kernel,
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif   -channel RG  -morphology Erode Diamond \
+  magick man.gif   -channel RG  -morphology Erode Diamond \
           -morphology Thinning:-1 Skeleton:2 +channel  man_skeleton_hipr.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="man_skeleton_hipr.gif"
@@ -3862,7 +3862,7 @@ And here is a zoom of the loop area, showing how the resulting skeleton is
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_skeleton_hipr.gif -crop 22x22+47+29 +repage \
+  magick man_skeleton_hipr.gif -crop 22x22+47+29 +repage \
           -scale 120x120    man_skeleton_hipr_zoom.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="man_skeleton_hipr_zoom.gif"
@@ -3891,7 +3891,7 @@ the previous 'traditional' skeleton further..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_skeleton.gif -channel RG \
+  magick man_skeleton.gif -channel RG \
           -morphology Thinning:-1 Diagonals \
           -morphology Thinning Corners   man_thin_skeleton.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -3939,10 +3939,10 @@ with the original skeleton, to make their locations highly visible.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_skeleton.gif -channel R -separate +channel \
+  magick man_skeleton.gif -channel R -separate +channel \
           -morphology HMT LineEnds man_ends.gif
-  convert man_ends.gif -morphology Dilate Ring -background Red -alpha Shape \
-          man_skeleton.gif +swap -composite man_ends_marked.gif
+  magick man_ends.gif -morphology Dilate Ring -background Red -alpha Shape \
+          man_skeleton.gif +swap -magick composite man_ends_marked.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man_skeleton.gif"
      ><IMG SRC="man_skeleton.gif"         WIDTH=100 HEIGHT=125
@@ -3975,11 +3975,11 @@ skeleton generation variants.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_thin_skeleton.gif -channel R -separate +channel \
+  magick man_thin_skeleton.gif -channel R -separate +channel \
             -morphology HMT LineJunctions  man_junctions.gif
-  convert man_junctions.gif -morphology Dilate Ring \
+  magick man_junctions.gif -morphology Dilate Ring \
           -background Red -alpha Shape \
-            man_thin_skeleton.gif +swap -composite man_junctions_marked.gif
+            man_thin_skeleton.gif +swap -magick composite man_junctions_marked.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man_thin_skeleton.gif"
      ><IMG SRC="man_thin_skeleton.gif"               WIDTH=100 HEIGHT=125
@@ -4041,7 +4041,7 @@ process about twice as fast.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_skeleton.gif -channel G \
+  magick man_skeleton.gif -channel G \
           -morphology Thinning:-1 'LineEnds:1>' man_loop.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man_skeleton.gif"
@@ -4084,7 +4084,7 @@ We have already covered the first step... resulting in...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE already done>
-  convert man_skeleton.gif -channel R -separate +channel \
+  magick man_skeleton.gif -channel R -separate +channel \
           -morphology HMT LineEnds man_ends.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="man_ends.gif"
@@ -4101,13 +4101,13 @@ locate them). </P>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
 
-To properly disconnect all line segment you will also need to add orthogonal
+To properly disconnect all line magick segment you will also need to add orthogonal
 '<CODE>T</CODE>' kernels to the kernel set, and it is also best to include
 a '<CODE>+</CODE>' junction too.  For example.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_skeleton.gif -channel R -separate +channel \
+  magick man_skeleton.gif -channel R -separate +channel \
       -morphology HMT 'LineJunctions;LineJunctions:3>;LineJunctions:5' \
       man_disconnect.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4125,7 +4125,7 @@ Style</A>), or it will not work correctly.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_skeleton.gif -channel R -separate +channel \
+  magick man_skeleton.gif -channel R -separate +channel \
       -define morphology:compose=Darken \
       -morphology Thinning 'LineJunctions;LineJunctions:3>;LineJunctions:5' \
       man_line_segments.gif
@@ -4142,7 +4142,7 @@ Here is a zoom of the 'loop' showing the disconnected segments.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man_line_segments.gif -crop 22x22+47+29 +repage \
+  magick man_line_segments.gif -crop 22x22+47+29 +repage \
           -scale 120x120    man_line_segments_zoom.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="man_line_segments_zoom.gif"
@@ -4150,7 +4150,7 @@ Here is a zoom of the 'loop' showing the disconnected segments.
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-At this point we can now remove any line segment that contains a match
+At this point we can now remove any line magick segment that contains a match
 with the previously discovered 'line end'. </P>
 
 This can be done either by 'flood filling' from those 'seed' points, to delete
@@ -4178,8 +4178,8 @@ result. </P>
 <H4>Thinning Style - Sequential or Simultaneous</H4>
 
 If you were to do one single 'pruning' of the end of the line segments, and
-compare it to the original image you will find that more often than not a line
-segment was pruned anywhere from 2 to 4 times, depending on the exact shape
+magick compare it to the original image you will find that more often than not a line
+magick segment was pruned anywhere from 2 to 4 times, depending on the exact shape
 and orientation of the lines. </P>
 
 For example (resulting image enlarged) is is a default line ends thining
@@ -4187,9 +4187,9 @@ For example (resulting image enlarged) is is a default line ends thining
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x10 xc:black -fill white \
+  magick -size 10x10 xc:black -fill white \
           +antialias  -draw 'line 1,7 8,3' line.gif
-  convert line.gif -channel GB \
+  magick line.gif -channel GB \
           -morphology Thinning LineEnds  line_seqential.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="line_mag.gif"
@@ -4201,8 +4201,8 @@ For example (resulting image enlarged) is is a default line ends thining
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!--
-  convert line.gif -scale 800% line_mag.gif
-  convert line_seqential.gif -scale 800% line_seqential_mag.gif
+  magick line.gif -scale 800% line_mag.gif
+  magick line_seqential.gif -scale 800% line_seqential_mag.gif
 -->
 
 That is because by default each of the '<CODE><A HREF="#thinning"
@@ -4234,7 +4234,7 @@ selected pixels for a single removal of selected pixels.  For example... </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert line.gif -channel GB  -define morphology:compose=darken \
+  magick line.gif -channel GB  -define morphology:compose=darken \
           -morphology Thinning LineEnds  line_simultaneous.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="line_simultaneous_mag.gif"
@@ -4242,7 +4242,7 @@ selected pixels for a single removal of selected pixels.  For example... </P>
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!--
-  convert line_simultaneous.gif -scale 800% line_simultaneous_mag.gif
+  magick line_simultaneous.gif -scale 800% line_simultaneous_mag.gif
 -->
 
 
@@ -4275,8 +4275,8 @@ by thinning both the left and right edges simultaneously. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x10 xc:black -fill white -draw 'rectangle 4,1 5,7' rect.gif
-  convert rect.gif -channel GB  -define morphology:compose=darken \
+  magick -size 10x10 xc:black -fill white -draw 'rectangle 4,1 5,7' rect.gif
+  magick rect.gif -channel GB  -define morphology:compose=darken \
           -morphology Thinning Edges  rect_simultaneous.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rect_mag.gif"
@@ -4288,8 +4288,8 @@ by thinning both the left and right edges simultaneously. </P>
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!--
-  convert rect.gif -scale 800% rect_mag.gif
-  convert rect_simultaneous.gif -scale 800% rect_simultaneous_mag.gif
+  magick rect.gif -scale 800% rect_mag.gif
+  magick rect_simultaneous.gif -scale 800% rect_simultaneous_mag.gif
 -->
 
 The 'Simultaneous Thinning' actually deleted the center rectangle completely!
@@ -4304,7 +4304,7 @@ The default 'Sequential Thinning' on the other hand produced... </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rect.gif -channel GB \
+  magick rect.gif -channel GB \
           -morphology Thinning Edges rect_seqential.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rect_seqential_mag.gif"
@@ -4312,7 +4312,7 @@ The default 'Sequential Thinning' on the other hand produced... </P>
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!--
-  convert rect_seqential.gif -scale 800% rect_seqential_mag.gif
+  magick rect_seqential.gif -scale 800% rect_seqential_mag.gif
 -->
 
 As you can see it preserved one of the pixels (on the right) to be a skeleton
@@ -4410,7 +4410,7 @@ will match a corner pixel on an octagonal shape. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -20.1 -ml '' -mt x1 "Edges"  miff:- | \
-     convert -background LightSteelBlue  - label:Edges \
+     magick -background LightSteelBlue  - label:Edges \
              -gravity center -append    kernel_edges.gif
 </CODE>-->
   <A HREF="kernel_edges.gif"
@@ -4430,7 +4430,7 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel RG \
+  magick man.gif -channel RG \
           -morphology Thinning:-1 Edges   thin_edges.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
@@ -4455,7 +4455,7 @@ above for an example of its use. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -20.1 -ml '' -mt x1 "Corners"  miff:- | \
-     convert -background LightSteelBlue  - label:Corners \
+     magick -background LightSteelBlue  - label:Corners \
              -gravity center -append    kernel_corners.gif
 </CODE>-->
   <A HREF="kernel_corners.gif"
@@ -4469,7 +4469,7 @@ Here for example I used it to try and thin all diagonal edges...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel RG \
+  magick man.gif -channel RG \
           -morphology Thinning:-1 Corners  thin_corners.gif
 </CODE></PRE></TD></TR></TABLE></P>
 
@@ -4497,7 +4497,7 @@ pixels from a corner toward the center until complete.  </P>
 <DIV ALIGN=center>
 <!-- <CODE EXECUTE>
    kernel2image -20.2 -ml '' -mt x1 "Diagonals"  miff:- | \
-     convert -background LightSteelBlue  - label:Diagonals \
+     magick -background LightSteelBlue  - label:Diagonals \
              -gravity center -append    kernel_diagonals.gif
 </CODE> -->
   <A HREF="kernel_diagonals.gif"
@@ -4569,7 +4569,7 @@ More specifically it find the ends of sharp points. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -20.2 -ml '' -mt x1 "LineEnds"  miff:- | \
-     convert -background LightSteelBlue  - label:LineJunctions \
+     magick -background LightSteelBlue  - label:LineJunctions \
              -gravity center -append    kernel_lineends.gif
 </CODE>-->
   <A HREF="kernel_lineends.gif"
@@ -4586,7 +4586,7 @@ to find all the line ends.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lines.gif -morphology HMT LineEnds  hmt_lineends.gif
+  magick lines.gif -morphology HMT LineEnds  hmt_lineends.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="lines.gif"
      ><IMG SRC="lines.gif"               WIDTH=80 HEIGHT=80
@@ -4672,7 +4672,7 @@ a junction of 3 or more lines.
    ( kernel2image -15.1 -ml '' -mt x1 "LineJunctions:1@"  miff:-
      kernel2image -15.1 -ml '' -mt x1 "LineJunctions:2>"  miff:-
    ) |
-   convert -background LightSteelBlue  - label:LineJunctions \
+   magick -background LightSteelBlue  - label:LineJunctions \
            -gravity center -append    kernel_linejunctions.gif
 </CODE>-->
   <A HREF="kernel_linejunctions.gif"
@@ -4686,7 +4686,7 @@ to find all the line junctions.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE example done previously>
-  convert lines.gif -morphology HMT LineJunctions hmt_junctions.gif
+  magick lines.gif -morphology HMT LineJunctions hmt_junctions.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="lines.gif"
      ><IMG SRC="lines.gif"               WIDTH=80 HEIGHT=80
@@ -4805,7 +4805,7 @@ The default is designed to locate a single pixel thick ridge lines. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
   kernel2image -20.2 -ml '' -mt x1 "Ridges"  miff:- | \
-    convert -background LightSteelBlue  - label:Ridges \
+    magick -background LightSteelBlue  - label:Ridges \
             -gravity center -append    kernel_ridges.gif
 </CODE>-->
   <A HREF="kernel_ridges.gif"
@@ -4824,7 +4824,7 @@ of this sort, including mirrors of those lines. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x3 "Ridges:2"  miff:- | \
-      montage -label Ridges:2 -  -background LightSteelBlue \
+      magick montage -label Ridges:2 -  -background LightSteelBlue \
               -geometry +0+0  kernel_ridges2.gif
 </CODE>-->
   <A HREF="kernel_ridges2.gif"
@@ -4846,7 +4846,7 @@ octagonal shape that can contain the whole of the shape. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x2 "ConvexHull"  miff:- | \
-      montage -label ConvexHull -  -background LightSteelBlue \
+      magick montage -label ConvexHull -  -background LightSteelBlue \
               -geometry +0+0  kernel_convexhull.gif
 </CODE>-->
   <A HREF="kernel_convexhull.gif"
@@ -4865,7 +4865,7 @@ However the kernel will fail for images containing horizontal or vertical
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel R \
+  magick man.gif -channel R \
           -morphology Thicken:-1 ConvexHull  man_hull.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
@@ -4886,7 +4886,7 @@ the central hole) before using  '<CODE><A HREF="#convexhull"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE this was done above>
-  convert man.gif -morphology Close Diamond \
+  magick man.gif -morphology Close Diamond \
                   -morphology Thicken:-1 ConvexHull \
                   -morphology Close Diamond       man_hull_full.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4911,7 +4911,7 @@ a convex hull thickening (red).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circles.gif -channel R \
+  magick circles.gif -channel R \
           -morphology Thicken:-1 ConvexHull  circles_hull.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="circles_hull.gif"
@@ -4946,7 +4946,7 @@ cyclically rotated in 45 degree increments. </P>
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Skeleton:1"  miff:- | \
-      montage -label "Skeleton:1 (Traditional)" - \
+      magick montage -label "Skeleton:1 (Traditional)" - \
           -background LightSteelBlue -geometry +0+0  kernel_skeleton1.gif
 </CODE>-->
   <A HREF="kernel_skeleton1.gif"
@@ -4954,7 +4954,7 @@ cyclically rotated in 45 degree increments. </P>
             ALIGN=middle BORDER=0 ALT="[IM Output]"></A>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel RG \
+  magick man.gif -channel RG \
           -morphology Thinning:-1 Skeleton   thin_skeleton1.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="thin_skeleton1.gif"
@@ -4987,7 +4987,7 @@ Processing Resources</A> documentation. </P>
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Skeleton:2"  miff:- | \
-      montage -label "Skeleton:2 (HIPR2)" - \
+      magick montage -label "Skeleton:2 (HIPR2)" - \
           -background LightSteelBlue -geometry +0+0  kernel_skeleton2.gif
 </CODE>-->
   <A HREF="kernel_skeleton2.gif"
@@ -4995,7 +4995,7 @@ Processing Resources</A> documentation. </P>
             ALIGN=middle BORDER=0 ALT="[IM Output]"></A>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel RG \
+  magick man.gif -channel RG \
           -morphology Thinning:-1 Skeleton:2   thin_skeleton2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="thin_skeleton2.gif"
@@ -5003,7 +5003,7 @@ Processing Resources</A> documentation. </P>
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-If you compare this with the previous set, you will notice that the internal
+If you magick compare this with the previous set, you will notice that the internal
 pixel of the corners have been removed.  This will then allow the thinning
 operation to remove the extra thickening from the diagonals. However this
 diagonal thinning is not symmetrical, and highly dependant of the shape of the
@@ -5019,7 +5019,7 @@ a combined '<CODE><B>Edges;Corners</B></CODE>' kernel list.
 
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Edges;Corners"  miff:- | \
-      montage -label 'Edges ; Corners' - \
+      magick montage -label 'Edges ; Corners' - \
               -background LightSteelBlue -geometry +0+0  kernel_edge-corner.gif
 </CODE>-->
   <A HREF="kernel_edge-corner.gif"
@@ -5028,7 +5028,7 @@ a combined '<CODE><B>Edges;Corners</B></CODE>' kernel list.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel RG \
+  magick man.gif -channel RG \
           -morphology Thinning:-1 'Edges;Corners' thin_edge-corner.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="thin_edge-corner.gif"
@@ -5065,7 +5065,7 @@ However unlike previous skeletons this requires the use of
 
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Skeleton:3"  miff:- | \
-      montage -label "Skeleton:3 (Bloomberg)" - \
+      magick montage -label "Skeleton:3 (Bloomberg)" - \
           -background LightSteelBlue -geometry +0+0  kernel_skeleton3.gif
 </CODE>-->
   <A HREF="kernel_skeleton3.gif"
@@ -5073,7 +5073,7 @@ However unlike previous skeletons this requires the use of
             ALIGN=middle BORDER=0 ALT="[IM Output]"></A>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -channel RG \
+  magick man.gif -channel RG \
           -morphology Thinning:-1 Skeleton:3   thin_skeleton3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="thin_skeleton3.gif"
@@ -5113,38 +5113,38 @@ a set of rotated or mirror-rotated flags to the given kernel definition.
   flags="-tile x1 -background LightSteelBlue -geometry +0+0"
   for i in `seq 41 44`; do
       kernel2image -15.1 -m -ml $i  "ThinSE:$i" miff:-
-  done | montage - $flags miff:- |
-    montage -label "Strong 4-connected" - \
+  done | magick montage - $flags miff:- |
+    magick montage -label "Strong 4-connected" - \
       -font ArialB $flags kernel_thinse_4strong.gif
 
   for i in `seq 45 49`; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | montage - $flags miff:- |
-    montage -label "Weak 4-connected" - \
+  done | magick montage - $flags miff:- |
+    magick montage -label "Weak 4-connected" - \
       -font ArialB $flags kernel_thinse_4weak.gif
 
   for i in `seq 81 84`; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | montage - $flags miff:- |
-    montage -label "Strong 8-connected" - \
+  done | magick montage - $flags miff:- |
+    magick montage -label "Strong 8-connected" - \
       -font ArialB $flags kernel_thinse_8strong.gif
 
   for i in `seq 85 89`; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | montage - $flags miff:- |
-    montage -label "Weak 8-connected" - \
+  done | magick montage - $flags miff:- |
+    magick montage -label "Weak 8-connected" - \
       -font ArialB $flags kernel_thinse_8weak.gif
 
   for i in 423 823; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | montage - $flags -geometry +15+0 miff:- |
-    montage -label "Weak, Combined 2 and 3" - \
+  done | magick montage - $flags -geometry +15+0 miff:- |
+    magick montage -label "Weak, Combined 2 and 3" - \
       -font ArialB $flags -geometry +25+0 kernel_thinse_23comb.gif
 
   for i in 481 482; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | montage - $flags -geometry +15+0 miff:- |
-    montage -label "General 4 & 8 Conection Preserving" - \
+  done | magick montage - $flags -geometry +15+0 miff:- |
+    magick montage -label "General 4 & 8 Conection Preserving" - \
       -font ArialB $flags -geometry +25+0 kernel_thinse_48gen.gif
 -->
 <DIV ALIGN=center>
@@ -5263,7 +5263,7 @@ shape.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -threshold 50% \
+  magick man.gif -threshold 50% \
           -morphology Distance Euclidean:4 \
           +depth  distance.png
 </CODE></PRE></TD></TR></TABLE>
@@ -5326,7 +5326,7 @@ So lets look at the largest color value that was set in the above image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=distance_max.txt>
-  identify -verbose distance.png | grep max:
+  magick identify -verbose distance.png | grep max:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -5353,7 +5353,7 @@ can actually see the full effect of the 'distance gradient' generated.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert distance.png -auto-level  distance_man.gif
+  magick distance.png -auto-level  distance_man.gif
 </CODE></PRE></TD></TR></TABLE>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -5386,7 +5386,7 @@ use a larger distance kernel '<I>scale</I>' value, for example a value of
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4,3000     distance_scaled.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="distance_scaled.gif"
@@ -5407,7 +5407,7 @@ value for each pixel distance from the edge.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4,8%    distance_scale_percent.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="distance_scale_percent.gif"
@@ -5437,7 +5437,7 @@ request a limit of 18 pixel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4,'18!'   distance_range.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="distance_range.gif"
@@ -5469,8 +5469,8 @@ One solution to this is to remove that hole, by using '<CODE><A HREF="#close"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -morphology Close Diamond  man_clean.gif
-  convert man_clean.gif   -morphology Distance Euclidean \
+  magick man.gif -morphology Close Diamond  man_clean.gif
+  magick man_clean.gif   -morphology Distance Euclidean \
                                     -auto-level   distance_clean.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
@@ -5490,17 +5490,17 @@ Of course this also has the effect of also 'closing' the gap between the
 shapes 'legs' too, which effects the lower half of the final result. </P>
 
 An alternative solution is to use a <A HREF="../color_basics/#floodfill_draw"
->Floodfill</A> method to extract the outside of the image, and convert that
+>Floodfill</A> method to extract the outside of the image, and magick that
 into new mask.  The result is that any holes have been closed, but the outside
 boundary of the image has been preserved.  For example..
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -gamma 0,1,1 -bordercolor black -border 1x1 \
+  magick man.gif -gamma 0,1,1 -bordercolor black -border 1x1 \
           -fill red -floodfill +0+0 black -shave 1x1 \
           -channel R -separate +channel -negate  man_floodfill.gif
-  convert man_floodfill.gif    -morphology Distance Euclidean \
+  magick man_floodfill.gif    -morphology Distance Euclidean \
                                     -auto-level   distance_floodfill.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
@@ -5530,7 +5530,7 @@ Kernels'.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_chebyshev_3.txt>
-  convert xc: -define showkernel=1 -precision 3 \
+  magick xc: -define showkernel=1 -precision 3 \
           -morphology Distance:0 Chebyshev:3     null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -5653,7 +5653,7 @@ Here is the actual kernel it generates...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_chebyshev.txt>
-  convert xc: -define showkernel=1  -precision 4 \
+  magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Chebyshev       null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -5685,12 +5685,12 @@ Distance</CODE>' morphology method using an infinite iteration count.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=chebyshev_distance.txt
                            ERR=chebyshev_gradient.txt>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -verbose  -morphology IterativeDistance:-1 Chebyshev  +verbose \
           chebyshev_gradient.png
 
-<n>  identify -format 'Maximum Distance = %[max]' chebyshev_gradient.png
-  convert chebyshev_gradient.png -auto-level chebyshev_gradient.gif
+<n>  magick identify -format 'Maximum Distance = %[max]' chebyshev_gradient.png
+  magick chebyshev_gradient.png -auto-level chebyshev_gradient.gif
   rm chebyshev_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="chebyshev_gradient.gif"
@@ -5756,7 +5756,7 @@ highlights the features of the distance gradient generated.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert chebyshev_gradient.gif -crop 25x20+39+69 +repage \
+  magick chebyshev_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% chebyshev_magnify.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="chebyshev_magnify.gif"
@@ -5794,7 +5794,7 @@ Here is the actual kernel it generates...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_manhattan.txt>
-  convert xc: -define showkernel=1  -precision 4 \
+  magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Manhattan     null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -5819,11 +5819,11 @@ using this 'metric'.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=manhattan_distance.txt>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance Manhattan      manhattan_gradient.png
 
-<n>  identify -format 'Maximum Distance = %[max]' manhattan_gradient.png
-  convert manhattan_gradient.png -auto-level manhattan_gradient.gif
+<n>  magick identify -format 'Maximum Distance = %[max]' manhattan_gradient.png
+  magick manhattan_gradient.png -auto-level manhattan_gradient.gif
   rm manhattan_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="manhattan_gradient.gif"
@@ -5856,7 +5856,7 @@ Here is an magnification of the gradient.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert manhattan_gradient.gif -crop 25x20+39+69 +repage \
+  magick manhattan_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% manhattan_magnify.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="manhattan_magnify.gif"
@@ -5894,7 +5894,7 @@ Here is the actual kernel it generates...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_octagonal.txt>
-  convert xc: -define showkernel=1  -precision 4 \
+  magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Octagonal     null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -5917,11 +5917,11 @@ Here we again calculate the maximum distance...
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=octagonal_distance.txt>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance Octagonal  octagonal_gradient.png
 
-<n>  identify -format 'Maximum Distance = %[max]' octagonal_gradient.png
-  convert octagonal_gradient.png -auto-level octagonal_gradient.gif
+<n>  magick identify -format 'Maximum Distance = %[max]' octagonal_gradient.png
+  magick octagonal_gradient.png -auto-level octagonal_gradient.gif
   rm octagonal_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="octagonal_gradient.gif"
@@ -5947,7 +5947,7 @@ Here is an magnification of the gradient.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert octagonal_gradient.gif -crop 25x20+39+69 +repage \
+  magick octagonal_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% octagonal_magnify.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="octagonal_magnify.gif"
@@ -5999,12 +5999,12 @@ Here is an example
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=fractional_distance.txt>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance '3:3,2,3 2,0,2 3,2,3' \
           fractional_gradient.png
 
-<n>  identify -format 'Maximum Distance = %[max]' fractional_gradient.png
-  convert fractional_gradient.png -auto-level fractional_gradient.gif
+<n>  magick identify -format 'Maximum Distance = %[max]' fractional_gradient.png
+  magick fractional_gradient.png -auto-level fractional_gradient.gif
   rm fractional_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="fractional_gradient.gif"
@@ -6034,7 +6034,7 @@ Here is an magnification of the gradient.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert fractional_gradient.gif -crop 25x20+39+69 +repage \
+  magick fractional_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% fractional_magnify.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fractional_magnify.gif"
@@ -6052,7 +6052,7 @@ with the same color value, red.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert fractional_magnify.gif -fill red -opaque gray53 \
+  magick fractional_magnify.gif -fill red -opaque gray53 \
           fractional_magnify_shape.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fractional_magnify_shape.gif"
@@ -6190,7 +6190,7 @@ Here is the default kernel it generates...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_knight.txt>
-  convert xc: -define showkernel=1  -precision 4 \
+  magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Euclidean    null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -6215,11 +6215,11 @@ created using the default '<CODE>Euclidean</CODE>' or 'Knight Move' kernel.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=knight_distance.txt>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean    knight_gradient.png
 
-<n>  identify -format 'Maximum Distance = %[max]' knight_gradient.png
-  convert knight_gradient.png -auto-level knight_gradient.gif
+<n>  magick identify -format 'Maximum Distance = %[max]' knight_gradient.png
+  magick knight_gradient.png -auto-level knight_gradient.gif
   rm knight_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="knight_gradient.gif"
@@ -6253,7 +6253,7 @@ Here is an magnification of the gradient between the shapes 'legs'.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert knight_gradient.gif -crop 25x20+39+69 +repage \
+  magick knight_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% knight_magnify.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="knight_magnify.gif"
@@ -6299,7 +6299,7 @@ Here is a true '<CODE>Euclidean</CODE>' kernel using the recommended radius of
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_euclidean.txt>
-  convert xc: -define showkernel=1  -precision 4 \
+  magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Euclidean:4     null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -6323,11 +6323,11 @@ Here is its application...
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=euclidean_distance.txt>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4     euclidean_gradient.png
 
-<n>  identify -format 'Maximum Distance = %[max]' euclidean_gradient.png
-  convert euclidean_gradient.png -auto-level euclidean_gradient.gif
+<n>  magick identify -format 'Maximum Distance = %[max]' euclidean_gradient.png
+  magick euclidean_gradient.png -auto-level euclidean_gradient.gif
   rm euclidean_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="euclidean_gradient.gif"
@@ -6353,7 +6353,7 @@ Here is an magnification of the gradient between the shapes 'legs'.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert euclidean_gradient.gif -crop 25x20+39+69 +repage \
+  magick euclidean_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% euclidean_magnify.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="euclidean_magnify.gif"
@@ -6416,11 +6416,11 @@ pixels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 100x100 xc: -draw 'point 20,80'  distance_start.png
+  magick -size 100x100 xc: -draw 'point 20,80'  distance_start.png
 
   for kernel in chebyshev manhattan octagonal euclidean euclidean:2 euclidean:4
   do
-    convert distance_start.png    -morphology Distance $kernel \
+    magick distance_start.png    -morphology Distance $kernel \
             -auto-level  point_$kernel.png
   done
 </CODE></PRE></TD></TR></TABLE>
@@ -6510,7 +6510,7 @@ that simply says make any pixel to the right larger in value.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance  '2x1+0+0: 0,100 ' \
           -auto-level    distance_linear.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6530,7 +6530,7 @@ with different scales for each side!
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -threshold 50% +depth \
+  magick man.gif -threshold 50% +depth \
           -morphology Distance  '3x1: 50,0,100 ' \
           -auto-level    distance_sides.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6558,13 +6558,13 @@ error that may be generated by the function.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 129x129 xc: -draw 'circle 64,64 60,4' \
+  magick -size 129x129 xc: -draw 'circle 64,64 60,4' \
           -negate  circle_shape.png
 
-  convert circle_shape.png  -morphology Distance Euclidean:4 \
+  magick circle_shape.png  -morphology Distance Euclidean:4 \
           -auto-level cone_distance.png
 
-  convert cone_distance.png -shade 135x30 -auto-level \
+  magick cone_distance.png -shade 135x30 -auto-level \
           +level 10,90%  cone_distance_shade.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="circle_shape.png"
@@ -6603,7 +6603,7 @@ applied.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circle_shape.png  -gamma 2 +level 0,100 -white-threshold 99 \
+  magick circle_shape.png  -gamma 2 +level 0,100 -white-threshold 99 \
           -morphology Distance Euclidean:4   -auto-level \
           -shade 135x30 -auto-level +level 10,90%   cone_antialiased.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6612,7 +6612,7 @@ applied.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-What was done was to first convert all those grey pixels from a representation
+What was done was to first magick all those grey pixels from a representation
 of how much of the pixel was inside the circle boundary, to a representation
 of how far the pixel was from the edge of the circle. </P>
 
@@ -6635,7 +6635,7 @@ this does take longer to generate.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circle_shape.png  -gamma 2 +level 0,100 -white-threshold 99 \
+  magick circle_shape.png  -gamma 2 +level 0,100 -white-threshold 99 \
           -morphology Distance Euclidean:7   -auto-level \
           -shade 135x30 -auto-level +level 10,90%   cone_improved.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6653,11 +6653,11 @@ Here is another example, this time using the two <A HREF="#distance_user"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-   convert circle_shape.png -gamma 2 +level 0,100 -white-threshold 99 \
+   magick circle_shape.png -gamma 2 +level 0,100 -white-threshold 99 \
            -morphology Distance  '2x1+0+0:0,100'  -auto-level \
            circle_gradient.png
 
-   convert circle_shape.png -gamma 2 +level 0,100 -white-threshold 99 \
+   magick circle_shape.png -gamma 2 +level 0,100 -white-threshold 99 \
            -morphology Distance  '3x1:50,0,100'  -auto-level \
            circle_ridge.png
 </CODE></PRE></TD></TR></TABLE>
@@ -6684,18 +6684,18 @@ For example here is a 10 pixel 'smoothed' feather around an shaped object.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-   convert rose_orig.png \
+   magick rose_orig.png \
            \( +clone -fill black -colorize 100% \
               -fill white -draw 'circle 114,75 110,2' \
-           \) -alpha off -compose CopyOpacity -composite \
+           \) -alpha off -compose CopyOpacity -magick composite \
            -trim +repage rose_shape.png
 
-   convert rose_shape.png \
+   magick rose_shape.png \
            \( +clone -alpha extract -virtual-pixel black \
               -gamma 2 +level 0,100 -white-threshold 99 \
               -morphology Distance Euclidean:4,10! \
               -sigmoidal-contrast 3,0% \
-           \) -compose CopyOpacity -composite \
+           \) -compose CopyOpacity -magick composite \
            rose_feathered.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rose_shape.png"
@@ -6720,7 +6720,7 @@ a grey-scale image, before merge it back into the final image. </P>
 The special distance kernel will do three iterations of a 4 pixel <A
 HREF="#euclidean" >Euclidean Kernel</A>, to generate enough of a distance
 gradient close to the edge of the shape.  The "<CODE><A
-HREF="../option_link.cgi?level" >-level</A></CODE>" operator then convert that
+HREF="../option_link.cgi?level" >-level</A></CODE>" operator then magick that
 into a linear gradient form the edge ('<CODE>0</CODE>') to 10 pixels
 ('<CODE>1000</CODE>' units) into the shape.. </P>
 
@@ -6751,7 +6751,7 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert figure.gif -channel A -virtual-pixel transparent \
+  magick figure.gif -channel A -virtual-pixel transparent \
           -morphology Distance Euclidean:4,3!  boolean_feathered.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/figure.gif"
@@ -6817,7 +6817,7 @@ recolored, seperating it from the other shapes.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert disks.gif -fill red -draw 'color 60,60 floodfill' \
+  magick disks.gif -fill red -draw 'color 60,60 floodfill' \
           cond_dilate_draw.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
@@ -6837,7 +6837,7 @@ an user provided 'conditional color'.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert disks.gif \
+  magick disks.gif \
           -fill green -floodfill +10+40 white \
           -fill blue  -floodfill +30+50 white \
           cond_dilate_floodfill.gif
@@ -6866,11 +6866,11 @@ To do this we create a <A HREF="../masking/#write_mask" >Write Protect Mask</A>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert disks.gif disks.gif -morphology Erode:7 Diamond disks_big_center.gif
+  magick disks.gif disks.gif -morphology Erode:7 Diamond disks_big_center.gif
 
-  convert disks.gif -negate  disks_mask.gif
+  magick disks.gif -negate  disks_mask.gif
 
-  convert disks_big_center.gif  -mask disks_mask.gif \
+  magick disks_big_center.gif  -mask disks_mask.gif \
           -morphology Dilate:15 Diamond    +mask disks_big_found.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
@@ -6944,13 +6944,13 @@ hit by a diagonal line across the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x80 xc:black -fill white \
+  magick -size 80x80 xc:black -fill white \
                         -draw 'line 0,0 79,79'   disks_line.gif
 
-  convert disks_line.gif disks.gif \
-          -compose Multiply  -composite    disks_line_find.gif
+  magick disks_line.gif disks.gif \
+          -compose Multiply  -magick composite    disks_line_find.gif
 
-  convert disks_line_find.gif  -mask disks_mask.gif \
+  magick disks_line_find.gif  -mask disks_mask.gif \
           -morphology Dilate:15 Diamond    +mask disks_line_found.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
@@ -7005,17 +7005,17 @@ For example here I discover how far each point is from a single 'seed' point
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<c>  convert -size 100x100 xc: -draw 'point 20,80'  distance_start.png
+<c>  magick -size 100x100 xc: -draw 'point 20,80'  distance_start.png
 
-  convert distance_start.png -morphology Distance Euclidean \
+  magick distance_start.png -morphology Distance Euclidean \
           -auto-level  distance_point.png
 
-  convert -font Casual -pointsize 140 label:D \
+  magick -font Casual -pointsize 140 label:D \
           -trim +repage -gravity center -extent 100x100 \
           -threshold 20% distance_bounds.png
 
-  convert distance_point.png \( distance_bounds.png -negate \)  \
-          -compose multiply -composite  -auto-level distance_direct.png
+  magick distance_point.png \( distance_bounds.png -negate \)  \
+          -compose multiply -magick composite  -auto-level distance_direct.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="distance_start.png"
      ><IMG SRC="distance_start.png"    WIDTH=100 HEIGHT=100
@@ -7057,7 +7057,7 @@ Mask</A> so that as the distance gradient is calculated it does not cross
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert distance_start.png  -mask distance_bounds.png \
+  magick distance_start.png  -mask distance_bounds.png \
           -morphology IterativeDistance:150 Euclidean \
           +mask -fill black -opaque white -auto-level \
           distance_constrained.png
@@ -7227,7 +7227,7 @@ For example, here is a skeleton of the shape after it is been <A HREF="#open"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif \
+  magick man.gif \
           -morphology Open  Diamond \
           -morphology Distance  Chebyshev \
           -morphology TopHat Diamond \
@@ -7253,7 +7253,7 @@ Using an Euclidean distance measure produces a better skeleton of the shape.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif \
+  magick man.gif \
           -morphology Open  Diamond \
           -morphology Distance Euclidean:4 \
           -morphology TopHat Diamond \
@@ -7275,7 +7275,7 @@ remains disjointed.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert euclidean_dist_skel.gif -crop 35x28+30+13 +repage \
+  magick euclidean_dist_skel.gif -crop 35x28+30+13 +repage \
           -scale 400%   euclidean_dist_skel_mag.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="euclidean_dist_skel_mag.gif"
@@ -7301,11 +7301,11 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert man.gif -negate man_at_prep.png
+  magick man.gif -negate man_at_prep.png
   autotrace -centerline -output-format svg man_at_prep.png |\
-      convert SVG:-  man_centerline.gif
-  convert man.gif man_centerline.gif \
-          -compose multiply -composite man_at_skeleton.gif
+      magick SVG:-  man_centerline.gif
+  magick man.gif man_centerline.gif \
+          -compose multiply -magick composite man_at_skeleton.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"      WIDTH=100 HEIGHT=125
@@ -7348,5 +7348,5 @@ Major Input:
         &lt;fmw at alink.net&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/morphology/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/morphology/</CODE>
 </ADDRESS></BODY></HTML>

@@ -5,7 +5,7 @@
 <TITLE>Masks -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/masking/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/masking/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -151,7 +151,7 @@ Composition</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    composite -compose Dst_Over -tile pattern:checkerboard \
+    magick composite -compose Dst_Over -tile pattern:checkerboard \
               moon.png  moon_background.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="moon_background.jpg"
@@ -188,11 +188,11 @@ format.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<c>  convert moon.png matte:moon.matte
-<c>  convert MIFF:moon.matte moon_matte2.png
+<c>  magick moon.png matte:moon.matte
+<c>  magick MIFF:moon.matte moon_matte2.png
 
   # You can join those two steps in a pipeline as well...
-  convert moon.png matte:- | convert - moon_matte3.png
+  magick moon.png matte:- | magick - moon_matte3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="moon_matte3.png"
      ><IMG SRC="moon_matte3.png"  WIDTH=70 HEIGHT=70
@@ -270,7 +270,7 @@ simply turn the image alpha channel off.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha off     alpha_off.png
+  magick moon.png  -alpha off     alpha_off.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/moon.png"
     ><IMG SRC="../images/moon.png"          WIDTH=70 HEIGHT=70
@@ -352,7 +352,7 @@ image looked, when '<CODE>Set</CODE>' operation was requested.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha off    -alpha set    alpha_set.png
+  magick moon.png  -alpha off    -alpha set    alpha_set.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_set.png"
      ><IMG SRC="alpha_set.png"          WIDTH=70 HEIGHT=70
@@ -365,7 +365,7 @@ If applied to an image that has an enabled alpha channel, no change is made.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha set    alpha_noset.png
+  magick moon.png  -alpha set    alpha_noset.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_noset.png"
      ><IMG SRC="alpha_noset.png"          WIDTH=70 HEIGHT=70
@@ -408,7 +408,7 @@ immediately turn it back '<CODE>On</CODE>, reproducing the original image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha off  -alpha on    alpha_on.png
+  magick moon.png  -alpha off  -alpha on    alpha_on.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_on.png"
      ><IMG SRC="alpha_on.png"          WIDTH=70 HEIGHT=70
@@ -432,14 +432,14 @@ For an example of this special usage see <A HREF="../transform/#shade_shape"
 >Shaded Shape Images</A>. </P>
 
 <!-- <CODE EXECUTE ASSERT>
-  [ "`convert xc:none +matte -matte txt:- | md5sum`" = \
-      "`convert   xc:black   -matte txt:- | md5sum`" ] || echo >&2 \
+  [ "`magick xc:none +matte -matte txt:- | md5sum`" = \
+      "`magick  xc:black   -matte txt:- | md5sum`" ] || echo >&2 \
   "ASSERTION FAILURE: Alpha Channel not set opaque using '-matte'"
-  [ "`convert xc:none -alpha Off  txt:- | md5sum`" = \
-      "`convert  xc:black txt:- | md5sum`" ] || echo >&2 \
+  [ "`magick xc:none -alpha Off  txt:- | md5sum`" = \
+      "`magick xc:black txt:- | md5sum`" ] || echo >&2 \
   "ASSERTION FAILURE: Alpha Channel 'Off' did not turn off alpha"
-  [ "`convert xc:none -alpha Off -alpha On txt:- | md5sum`" = \
-      "`convert  xc:none txt:- | md5sum`" ] || echo >&2 \
+  [ "`magick xc:none -alpha Off -alpha On txt:- | md5sum`" = \
+      "`magick xc:none txt:- | md5sum`" ] || echo >&2 \
   "ASSERTION FAILURE: Alpha Channel Incorrectly Cleared using '-alpha Off/On'"
 </CODE> -->
 
@@ -455,7 +455,7 @@ or 'deactivated/off'.  For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha opaque    alpha_opaque.png
+  magick moon.png  -alpha opaque    alpha_opaque.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_opaque.png"
      ><IMG SRC="alpha_opaque.png"          WIDTH=70 HEIGHT=70
@@ -471,7 +471,7 @@ channel, then using "<CODE><A HREF="../option_link.cgi?matte"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  +matte -matte  alpha_opaque_matte.png
+  magick moon.png  +matte -matte  alpha_opaque_matte.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_opaque_matte.png"
      ><IMG SRC="alpha_opaque_matte.png"          WIDTH=70 HEIGHT=70
@@ -496,7 +496,7 @@ transparent.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha transparent    alpha_transparent.png
+  magick moon.png  -alpha transparent    alpha_transparent.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_transparent.png"
      ><IMG SRC="alpha_transparent.png"          WIDTH=70 HEIGHT=70
@@ -510,7 +510,7 @@ afterward will again show the images existing colors.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha transparent  -alpha off  alpha_transparent_off.png
+  magick moon.png  -alpha transparent  -alpha off  alpha_transparent_off.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_transparent_off.png"
      ><IMG SRC="alpha_transparent_off.png"          WIDTH=70 HEIGHT=70
@@ -533,7 +533,7 @@ image as a gray-scale channel mask.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha extract    alpha_extract.png
+  magick moon.png  -alpha extract    alpha_extract.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/moon.png"
     ><IMG SRC="../images/moon.png"          WIDTH=70 HEIGHT=70
@@ -559,7 +559,7 @@ technique, using channel extraction.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert moon.png  -channel a -separate +channel -negate alpha_extract.png
+  magick moon.png  -channel a -separate +channel -negate alpha_extract.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -573,7 +573,7 @@ not cleared, so turning the alpha channel back '<CODE><A HREF="#alpha_extract"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -alpha extract -alpha on   alpha_extract_on.png
+  magick moon.png  -alpha extract -alpha on   alpha_extract_on.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_extract_on.png"
      ><IMG SRC="alpha_extract_on.png"          WIDTH=70 HEIGHT=70
@@ -589,7 +589,7 @@ Remove</A> method below)
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_extract_on.png -background white -alpha remove alpha_edge.png
+  magick alpha_extract_on.png -background white -alpha remove alpha_edge.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_edge.png"
      ><IMG SRC="alpha_edge.png"          WIDTH=70 HEIGHT=70
@@ -618,7 +618,7 @@ not) into a shape mask image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_extract.png  -alpha copy   alpha_copy.png
+  magick alpha_extract.png  -alpha copy   alpha_copy.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="alpha_extract.png"
      ><IMG SRC="alpha_extract.png"          WIDTH=70 HEIGHT=70
@@ -649,7 +649,7 @@ but will also color it using the current background color.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_extract.png -background Yellow -alpha shape   alpha_shape.png
+  magick alpha_extract.png -background Yellow -alpha shape   alpha_shape.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="alpha_extract.png"
      ><IMG SRC="alpha_extract.png"          WIDTH=70 HEIGHT=70
@@ -667,7 +667,7 @@ image, then flattening it onto a different background color
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_extract.png -background Yellow -alpha shape \
+  magick alpha_extract.png -background Yellow -alpha shape \
                             -background Blue   -alpha remove alpha_colormask.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_colormask.png"
@@ -697,7 +697,7 @@ channel.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_extract.png  +level-colors Blue,Yellow   level_color.png
+  magick alpha_extract.png  +level-colors Blue,Yellow   level_color.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="level_color.png"
      ><IMG SRC="level_color.png"          WIDTH=70 HEIGHT=70
@@ -729,7 +729,7 @@ HREF="../option_link.cgi?background" >-background</A></CODE>".
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png  -background tan  -alpha remove  alpha_remove.png
+  magick moon.png  -background tan  -alpha remove  alpha_remove.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="alpha_remove.png"
       ><IMG SRC="alpha_remove.png"       WIDTH=70 HEIGHT=70
@@ -780,7 +780,7 @@ For example here I use it to set all fully-transparent pixels to
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon.png -background HotPink -alpha Background moon_hotpink.png
+  magick moon.png -background HotPink -alpha Background moon_hotpink.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="moon_hotpink.png"
      ><IMG SRC="moon_hotpink.png"          WIDTH=70 HEIGHT=70
@@ -797,7 +797,7 @@ channel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert moon_hotpink.png -alpha off moon_hotpink_off.png
+  magick moon_hotpink.png -alpha off moon_hotpink_off.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="moon_hotpink_off.png"
      ><IMG SRC="moon_hotpink_off.png"          WIDTH=70 HEIGHT=70
@@ -820,7 +820,7 @@ This process of replacing the colors is actually almost the same as doing
 a "<CODE>-channel RGB -fill <I>color</I> -opaque None +channel</CODE>".  See
 <A HREF="../color_basics/#replace" >Direct Color Replacement</A>. </P>
 
-Note that many other image processing operators will also convert any
+Note that many other image processing operators will also magick any
 fully-transparent pixels, to fully-transparent black (color
 '<CODE>None</CODE>'), as this is the color equivalent of a mathematical zero.
 Here is a summary of some image operations that are known to do this, though
@@ -829,11 +829,11 @@ none are as direct or as fast as using this operator.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert moon.png \( +clone -alpha off \) \
-                        -compose SrcIn   -composite   moon_black.png
-  convert moon.png -channel RGBA  -blur 1x.000000001  moon_black.png
-  convert moon.png -channel RGBA   -gaussian 1x0      moon_black.png
-  convert moon.png -fuzz 0% -transparent none         moon_black.png
+  magick moon.png \( +clone -alpha off \) \
+                        -compose SrcIn   -magick composite   moon_black.png
+  magick moon.png -channel RGBA  -blur 1x.000000001  moon_black.png
+  magick moon.png -channel RGBA   -gaussian 1x0      moon_black.png
+  magick moon.png -fuzz 0% -transparent none         moon_black.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -858,11 +858,11 @@ transparency.  For example by saving to JPEG...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x60 xc:none -font Candice -pointsize 50 \
+  magick -size 70x60 xc:none -font Candice -pointsize 50 \
           -fill Black -annotate +10+45 'A' -channel RGBA  -blur 0x5 \
           -fill white -stroke black -draw "text 5,40 'A'"   a.png
 
-  convert  a.png  a.jpg
+  magick a.png  a.jpg
 </CODE></PRE></TD></TR></TABLE>
    <A HREF="a.png"
       ><IMG SRC="a.png"
@@ -897,7 +897,7 @@ a background color underlay...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png   -background skyblue  -alpha remove -alpha off a_remove.jpg
+  magick a.png   -background skyblue  -alpha remove -alpha off a_remove.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="a_compose.jpg"
       ><IMG SRC="a_compose.jpg"       WIDTH=70 HEIGHT=60
@@ -922,8 +922,8 @@ Methods for generating such a canvas is exampled in <A HREF="../canvas/#blank"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png \( +clone -alpha opaque -fill SkyBlue -colorize 100% \) \
-          +swap -geometry +0+0 -compose Over -composite  \
+  magick a.png \( +clone -alpha opaque -fill SkyBlue -colorize 100% \) \
+          +swap -geometry +0+0 -compose Over -magick composite  \
           -alpha off  a_compose.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="a_compose.jpg"
@@ -944,7 +944,7 @@ example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png   -background skyblue -flatten  -alpha off  a_flatten.jpg
+  magick a.png   -background skyblue -flatten  -alpha off  a_flatten.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="a_flatten.jpg"
       ><IMG SRC="a_flatten.jpg"       WIDTH=70 HEIGHT=60
@@ -965,7 +965,7 @@ example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert a.png   -bordercolor skyblue -border 0  -alpha off  a_border.jpg
+  magick a.png   -bordercolor skyblue -border 0  -alpha off  a_border.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="a_border.jpg"
       ><IMG SRC="a_border.jpg"       WIDTH=70 HEIGHT=60
@@ -993,7 +993,7 @@ original images meta-data and size is preserved.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Dst_Over -tile pattern:checkerboard \
+  magick composite -compose Dst_Over -tile pattern:checkerboard \
                                                a.png  a_undertile.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="a_undertile.jpg"
@@ -1041,10 +1041,10 @@ the original image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  knight.png \( +clone \
+  magick knight.png \( +clone \
              -channel A -morphology EdgeOut Diamond +channel \
              +level-colors red \
-           \) -compose DstOver -composite    knight_outlined.png
+           \) -compose DstOver -magick composite    knight_outlined.png
 </CODE></PRE></TD></TR></TABLE>
    <A HREF="../images/knight.png"
       ><IMG SRC="../images/knight.png"
@@ -1070,10 +1070,10 @@ the original.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert knight.png \(  +clone \
+    magick knight.png \(  +clone \
               -channel A  -blur 0x2.5 -level 0,50% +channel \
               +level-colors red \
-            \) -compose DstOver  -composite    knight_halo.png
+            \) -compose DstOver  -magick composite    knight_halo.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="knight_halo.png"
       ><IMG SRC="knight_halo.png"
@@ -1113,16 +1113,16 @@ restoring it to the original image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:none   -stroke black  -fill steelblue \
+  magick -size 100x100 xc:none   -stroke black  -fill steelblue \
           -strokewidth 1   -draw "circle 60,60 35,35" \
           -strokewidth 2   -draw "line 10,55 85,10"      drawn.png
 
-  convert drawn.png -alpha extract  mask.png
+  magick drawn.png -alpha extract  mask.png
 
-  convert mask.png -fill black -draw "circle 40,80 60,60" mask_bite.png
+  magick mask.png -fill black -draw "circle 40,80 60,60" mask_bite.png
 
-  convert drawn.png mask_bite.png \
-          -alpha Off -compose CopyOpacity -composite \
+  magick drawn.png mask_bite.png \
+          -alpha Off -compose CopyOpacity -magick composite \
           drawn_bite.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="drawn.png"
@@ -1159,11 +1159,11 @@ HREF="../compose/#CopyOpacity" >CopyOpacity Channel Composition</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert mask_bite.png -fill white \
+  magick mask_bite.png -fill white \
           -draw "circle 50,70 60,60" \
           -draw "roundRectangle  78,5 98,25 5,5" \
           -alpha off  mask_bite2.png
-  composite -compose CopyOpacity mask_bite2.png drawn.png drawn_bite2.png
+  magick composite -compose CopyOpacity mask_bite2.png drawn.png drawn_bite2.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="mask_bite.png"
      ><IMG SRC="mask_bite.png"  WIDTH=100 HEIGHT=100
@@ -1202,9 +1202,9 @@ use a Shape mask as a sort of 'erase' tool using <A HREf="../compose/#dstout"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:none -draw "circle 40,80 60,60" mask_shape.png
+  magick -size 100x100 xc:none -draw "circle 40,80 60,60" mask_shape.png
 
-  convert drawn.png mask_shape.png -compose DstOut -composite drawn_bite3.png
+  magick drawn.png mask_shape.png -compose DstOut -magick composite drawn_bite3.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="drawn.png"
      ><IMG SRC="drawn.png"  WIDTH=100 HEIGHT=100
@@ -1248,7 +1248,7 @@ a mask, which I'll extract from a special 'symbol' font.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -font WebDings -pointsize 24 label:Y \
+  magick -font WebDings -pointsize 24 label:Y \
           +trim +repage  -negate   heart_mask.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_mask.gif"
@@ -1259,7 +1259,7 @@ a mask, which I'll extract from a special 'symbol' font.
 Note that I negated the label image to make it proper mask image, consisting
 of a white foreground (opaque) on black background (transparent). </P>
 
-As of IM v6.4.3-7 the simplest way to convert a grayscale mask, into a colored
+As of IM v6.4.3-7 the simplest way to magick a grayscale mask, into a colored
 shape is to use the <A HREF="#alpha_shape" >Alpha Shape</A> operator, This is
 exactly like <A HREF="#alpha_copy" >Alpha Copy</A>, but with an extra step to
 color the final shape.
@@ -1268,7 +1268,7 @@ color the final shape.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart_mask.gif  -background Red -alpha Shape  heart_red.png
+  magick heart_mask.gif  -background Red -alpha Shape  heart_red.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="heart_red.png"
       ><IMG SRC="heart_red.png"
@@ -1293,7 +1293,7 @@ HREF="../color_basics/#combine" >Combine</A> to generate the shaped image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart_mask.gif -negate  \
+  magick heart_mask.gif -negate  \
           -background Gold  -channel A  -combine   heart_gold.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="heart_gold.png"
@@ -1317,8 +1317,8 @@ use, but is no longer recommended.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart_mask.gif \( +clone \) -alpha off \
-          -compose CopyOpacity  -composite \
+  magick heart_mask.gif \( +clone \) -alpha off \
+          -compose CopyOpacity  -magick composite \
           -fill HotPink  -colorize 100%    heart_hotpink.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="heart_hotpink.png"
@@ -1335,7 +1335,7 @@ any background we want, such as the built-in rose image, using one of the many
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -page +2+2  heart_gold.png \
+  magick rose: -page +2+2  heart_gold.png \
                  \( +clone -repage +7+29 \)  \
                  \( +clone -repage +52+14 \)  \
           -flatten       rose_with_love.gif
@@ -1356,7 +1356,7 @@ immediately after reading in the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \(  heart_gold.png           -repage +2+2   \) \
+  magick rose: \(  heart_gold.png           -repage +2+2   \) \
           \( +clone -fill Red     -colorize 100% -repage +7+29 \) \
           \( +clone -fill HotPink -colorize 100% -repage +52+14 \) \
           -flatten      rose_colored_love.gif
@@ -1401,10 +1401,10 @@ image generated with a tile pattern.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert mask_bite.png -size 100x100   tile:tile_disks.jpg \
-                        -compose Multiply  -composite   compose_multiply.png
-  convert mask_bite.png -size 100x100   tile:tile_water.jpg  \
-                        -compose Screen    -composite   compose_screen.png
+  magick mask_bite.png -size 100x100   tile:tile_disks.jpg \
+                        -compose Multiply  -magick composite   compose_multiply.png
+  magick mask_bite.png -size 100x100   tile:tile_water.jpg  \
+                        -compose Screen    -magick composite   compose_screen.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="mask_bite.png"
      ><IMG SRC="mask_bite.png"  WIDTH=100 HEIGHT=100
@@ -1434,8 +1434,8 @@ together.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100   tile:tile_water.jpg  tile:tile_disks.jpg \
-           mask_bite.png    -composite   compose_masked.png
+  magick -size 100x100   tile:tile_water.jpg  tile:tile_disks.jpg \
+           mask_bite.png    -magick composite   compose_masked.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_masked.png"
      ><IMG SRC="compose_masked.png"  WIDTH=100 HEIGHT=100
@@ -1506,7 +1506,7 @@ black or fully-transparent background.
 
 For another example of DIY image joining, using 'Dst-In', 'Dst-Out', and
 'Plus' composition, see examples in...
-  https://legacy.imagemagick.org/Usage/compose/#dstin
+  https://imagemagick.org/Usage/compose/#dstin
 
 I also go though this joining detail in the bug report of 3 image alpha
 composition <A HREF="../bugs/composite_mask/#correct" >Composite Mask Bug
@@ -1519,7 +1519,7 @@ Examples of correctly joining edge aligned pieces is shown in
 <A HREF="../distorts/#cube3d" >3d Cubes - Affine</A> and again in <A 
 HREF="../distorts/#box3d" >3d Boxes - Perspective</A>
 and in Isometric Cube using Shears
-  https://legacy.imagemagick.org/Usage/warping/#sheared_cube
+  https://imagemagick.org/Usage/warping/#sheared_cube
 
 The Major problems in these examples is that the individual parts were NOT
 generated using the same mask, but distorted to their final positions.
@@ -1546,8 +1546,8 @@ Correct methods of mask joining..
       'Over' compose that piece over a complete image.
 
     * use a three image masked composition
-      see https://legacy.imagemagick.org/Usage/compose/#mask
-      and https://legacy.imagemagick.org/Usage/masking/#masked_compose
+      see https://imagemagick.org/Usage/compose/#mask
+      and https://imagemagick.org/Usage/masking/#masked_compose
       Which uses the mask to select results from two different images.
 
 Remember, 'Over' only needs the 'source' or 'overlay' image masked, the
@@ -1589,7 +1589,7 @@ red rose to a blue rose.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert rose: -mask rose_bg_mask.png \
+  magick rose: -mask rose_bg_mask.png \
           -modulate 110,100,33.3  +mask rose_blue.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.png"
@@ -1629,10 +1629,10 @@ Here is another example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -size 70x70 xc:red  red_image.png
-  convert -size 70x70 xc: -draw 'circle 35,35 30,5'  write_mask.png
+  magick -size 70x70 xc:red  red_image.png
+  magick -size 70x70 xc: -draw 'circle 35,35 30,5'  write_mask.png
 
-  convert red_image.png  -mask write_mask.png \
+  magick red_image.png  -mask write_mask.png \
           -fill blue -opaque red   +mask    masked_color_replace.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="red_image.png"
@@ -1677,10 +1677,10 @@ composition operator being applied.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -size 70x70 xc:green  green_image.png
+  magick -size 70x70 xc:green  green_image.png
 
-  convert red_image.png  green_image.png  write_mask.png \
-          -composite    masked_composite.png
+  magick red_image.png  green_image.png  write_mask.png \
+          -magick composite    masked_composite.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="red_image.png"
      ><IMG SRC="red_image.png"  WIDTH=70 HEIGHT=70
@@ -1703,9 +1703,9 @@ Is equivalent (with a negated mask) to...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert write_mask.png  -negate -write MPR:mask +delete \
+  magick write_mask.png  -negate -write MPR:mask +delete \
           red_image.png -mask MPR:mask \
-          green_image.png  -composite  +mask  masked_composite_equiv.png
+          green_image.png  -magick composite  +mask  masked_composite_equiv.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="masked_composite_equiv.png"
      ><IMG SRC="masked_composite_equiv.png"  WIDTH=70 HEIGHT=70
@@ -1747,7 +1747,7 @@ For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert red_image.png  -clip-mask write_mask.png \
+  magick red_image.png  -clip-mask write_mask.png \
           -fill blue -opaque red   +clip-mask    clipped_modulate.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="clipped_modulate.png"
@@ -1800,7 +1800,7 @@ using...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  identify -format '%[8BIM:1999,2998:#1]' image_clip.tiff
+  magick identify -format '%[8BIM:1999,2998:#1]' image_clip.tiff
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1817,7 +1817,7 @@ again.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert input.tiff -alpha transparent -clip -alpha opaque -strip out.tiff
+  magick input.tiff -alpha transparent -clip -alpha opaque -strip out.tiff
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1850,7 +1850,7 @@ heavily in this case.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert rose: -mask rose_fg_mask.png \
+  magick rose: -mask rose_fg_mask.png \
             -blur 0x8   +mask  rose_bg_blur_fail.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.png"
@@ -1898,12 +1898,12 @@ intermediate images to try and make the technique clear...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert rose: rose_bg_mask.png -alpha off \
-          -compose CopyOpacity -composite   +compose  rose_bg_only.png
-  convert rose_bg_only.png  -channel RGBA -blur 0x8   rose_bg_blurred.png
-  convert rose_bg_blurred.png      -alpha off         rose_bg_blur_opaque.png
-  convert rose_bg_blur_opaque.png \
-                rose:  rose_fg_mask.png -composite    rose_bg_blur_good.png
+  magick rose: rose_bg_mask.png -alpha off \
+          -compose CopyOpacity -magick composite   +compose  rose_bg_only.png
+  magick rose_bg_only.png  -channel RGBA -blur 0x8   rose_bg_blurred.png
+  magick rose_bg_blurred.png      -alpha off         rose_bg_blur_opaque.png
+  magick rose_bg_blur_opaque.png \
+                rose:  rose_fg_mask.png -magick composite    rose_bg_blur_good.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.png"
      ><IMG SRC="../images/rose.png"  WIDTH=70 HEIGHT=46
@@ -1995,7 +1995,7 @@ For example here I color tint the whole rectangular region red...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -region 40x33+15+5 -fill red -colorize 50% \
+  magick koala.gif  -region 40x33+15+5 -fill red -colorize 50% \
           koala_region_red.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="koala_region_red.gif"
@@ -2009,7 +2009,7 @@ You can also make a region transparent...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -alpha set \
+  magick koala.gif -alpha set \
           -region 40x33+15+5 -alpha transparent   koala_region_trans.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="koala_region_trans.gif"
@@ -2066,7 +2066,7 @@ For example here we have a line of stripes.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 600x70 xc:darkred \
+  magick -size 600x70 xc:darkred \
           -fill white -draw 'roundrectangle 5,5  595,65 5,5' \
           -fill black -draw 'rectangle 5,25 595,31' \
           -fill red -draw 'rectangle 5,39 595,45' \
@@ -2083,7 +2083,7 @@ areas.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lines.gif \
+  magick lines.gif \
           -region 90x70+10+0    -swirl  400  \
           -region 90x70+100+0   -swirl  400 \
           -region 90x70+190+0   -swirl -400 \
@@ -2154,7 +2154,7 @@ the result is equivalent to this (for a single image)...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   ... \( +clone -crop WxH+X+Y ...simple-operators... \
-         \) -geometry +X+Y -composite   ...
+         \) -geometry +X+Y -magick composite   ...
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2164,7 +2164,7 @@ Or this (for multiple images)...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   ... \( -clone 0--1 -crop WxH+X+Y ...simple-operators... \
-         null: +insert \) -geometry +X+Y -layer composite ...
+         null: +insert \) -geometry +X+Y -layer magick composite ...
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2184,7 +2184,7 @@ produce some areas of transparency in the corners.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -alpha off -region 30x30+10+10 \
+  magick koala.gif -alpha off -region 30x30+10+10 \
           -alpha on -background None  -rotate 30  koala_region_rotate_1.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="koala_region_rotate_1.gif"
@@ -2205,7 +2205,7 @@ transparency is just 'copied' as is.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -alpha set  -region 30x30+10+10 \
+  magick koala.gif -alpha set  -region 30x30+10+10 \
           -background None  -rotate 30    koala_region_rotate_2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="koala_region_rotate_2.gif"
@@ -2232,7 +2232,7 @@ becomes smaller...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -region 30x30+10+10 \
+  magick koala.gif  -region 30x30+10+10 \
           -resize 75% -fill red -colorize 30%  koala_region_shrink.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="koala_region_shrink.gif"
@@ -2250,7 +2250,7 @@ become covered by the overlaid region image.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -region 30x30+10+10 \
+  magick koala.gif  -region 30x30+10+10 \
           -resize 150% -fill red -colorize 30%  koala_region_enlarge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="koala_region_enlarge.gif"
@@ -2340,7 +2340,7 @@ background.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cyclops.png -alpha set -channel RGBA \
+  magick cyclops.png -alpha set -channel RGBA \
           -fuzz 1% -fill none -floodfill +0+0 white \
           cyclops_flood_1.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
@@ -2360,7 +2360,7 @@ this you need to know the color of the background.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cyclops.png -bordercolor white -border 1x1 \
+  magick cyclops.png -bordercolor white -border 1x1 \
           -alpha set -channel RGBA -fuzz 1% \
           -fill none -floodfill +0+0 white \
           -shave 1x1    cyclops_flood_2.png
@@ -2383,7 +2383,7 @@ image from the background.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cyclops.png -bordercolor white -border 1x1 \
+  magick cyclops.png -bordercolor white -border 1x1 \
           -alpha set -channel RGBA -fuzz 20% \
           -fill none -floodfill +0+0 white \
           -shave 1x1    cyclops_flood_3.png
@@ -2407,7 +2407,7 @@ that are much whiter that normal.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cyclops_flood_3.png -background black -flatten \
+  magick cyclops_flood_3.png -background black -flatten \
           cyclops_flood_3_over.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="cyclops_flood_3_over.png"
@@ -2457,7 +2457,7 @@ primitives</A> do provide an even better way. That is by using the
 the limit of the flood fill instead. </P>
 
 <PRE>
-    convert color_test.png   -fill white  -bordercolor royalblue \
+    magick color_test.png   -fill white  -bordercolor royalblue \
             -draw 'color 30,20 filltoborder'   color_filltoborder.png
 </PRE>
 
@@ -2495,8 +2495,8 @@ background).
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert overlay_figure.gif   overlay_bgnd.gif  \
-            -compose ChangeMask  -composite  overlay_removed.png
+  magick overlay_figure.gif   overlay_bgnd.gif  \
+            -compose ChangeMask  -magick composite  overlay_removed.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/overlay_figure.gif"
      ><IMG SRC="../images/overlay_figure.gif"   WIDTH=100 HEIGHT=125
@@ -2526,7 +2526,7 @@ Image</A>...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite overlay_figure.gif   overlay_bgnd.gif  \
+  magick composite overlay_figure.gif   overlay_bgnd.gif  \
             -compose Difference     overlay_difference.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/overlay_figure.gif"
@@ -2554,7 +2554,7 @@ images.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert overlay_difference.png -channel RGBA -separate +channel \
+  magick overlay_difference.png -channel RGBA -separate +channel \
           -evaluate-sequence add  -threshold 0   overlay_mask.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="overlay_mask.png"
@@ -2569,8 +2569,8 @@ Using this mask we can set anything that has not changed to transparency.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert overlay_figure.gif overlay_mask.png \
-          -alpha off -compose CopyOpacity -composite \
+  magick overlay_figure.gif overlay_mask.png \
+          -alpha off -compose CopyOpacity -magick composite \
           overlay_removed.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="overlay_removed.png"
@@ -2601,8 +2601,8 @@ image and the background color (as defined by top-left most pixel).
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cyclops.png \( +clone -fx 'p{0,0}' \) \
-          -compose Difference  -composite  \
+  magick cyclops.png \( +clone -fx 'p{0,0}' \) \
+          -compose Difference  -magick composite  \
           -modulate 100,0  -alpha off  difference.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
  <A HREF="cyclops.png"
@@ -2628,9 +2628,9 @@ are even the smallest amount different from the background color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert difference.png  -threshold 0  boolean_mask.png
-  convert cyclops.png  boolean_mask.png \
-          -alpha off -compose CopyOpacity -composite \
+  magick difference.png  -threshold 0  boolean_mask.png
+  magick cyclops.png  boolean_mask.png \
+          -alpha off -compose CopyOpacity -magick composite \
           cyclops_boolean.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
   <A HREF="boolean_mask.png"
@@ -2658,9 +2658,9 @@ only) mask, so as to get the mask closer to the image proper.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert difference.png  -threshold 15%  threshold_mask.png
-  convert cyclops.png  threshold_mask.png \
-          -alpha Off -compose CopyOpacity -composite \
+  magick difference.png  -threshold 15%  threshold_mask.png
+  magick cyclops.png  threshold_mask.png \
+          -alpha Off -compose CopyOpacity -magick composite \
           cyclops_threshold.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
    <A HREF="threshold_mask.png"
@@ -2693,10 +2693,10 @@ it, so that the resulting 'halo' becomes diminished by distance.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert difference.png -bordercolor black -border 5 \
+  magick difference.png -bordercolor black -border 5 \
           -threshold 10%  -blur 0x3  halo_mask.png
-  convert cyclops.png -bordercolor white -border 5   halo_mask.png \
-          -alpha Off -compose CopyOpacity -composite  cyclops_halo.png
+  magick cyclops.png -bordercolor white -border 5   halo_mask.png \
+          -alpha Off -compose CopyOpacity -magick composite  cyclops_halo.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
   <A HREF="halo_mask.png"
      ><IMG SRC="halo_mask.png"            WIDTH=100 HEIGHT=100
@@ -2749,10 +2749,10 @@ typically have for anti-aliasing purposes.  A shape with a shadow effect.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x60 xc:none -font Candice -pointsize 50 -stroke black \
+  magick -size 70x60 xc:none -font Candice -pointsize 50 -stroke black \
           -fill black          -annotate +12+42 'A' -channel RGBA  -blur 0x3 \
           -fill tile_disks.jpg -annotate +10+40 'A' \
-          tile_water.jpg  -compose DstOver -composite letter.png
+          tile_water.jpg  -compose DstOver -magick composite letter.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
  <A HREF="letter.png"
     ><IMG SRC="letter.png"
@@ -2771,8 +2771,8 @@ background image, and from that generate the masks we will be using.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert letter.png  tile_water.jpg \
-          -compose Difference -composite \
+  magick letter.png  tile_water.jpg \
+          -compose Difference -magick composite \
           -modulate 100,0 -channel B -evaluate set 0 \
           -alpha Off  diff_mask.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
@@ -2801,7 +2801,7 @@ different fuzz factors, so we can pick the two inside and outside masks we will 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE>
   for fuzz in 01 03 06   28 32 34; do \
-    convert diff_mask.png -fill blue -fuzz $fuzz% \
+    magick diff_mask.png -fill blue -fuzz $fuzz% \
             -bordercolor black -border 1x1 -floodfill +0+0 black \
             -shave 1x1 diff_mask_$fuzz.png; \
   done
@@ -2879,8 +2879,8 @@ background pattern we are removing.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert diff_mask_32.png -channel blue -separate +channel -negate \
-          letter.png +swap -alpha Off -compose CopyOpacity -composite \
+  magick diff_mask_32.png -channel blue -separate +channel -negate \
+          letter.png +swap -alpha Off -compose CopyOpacity -magick composite \
           letter_inside.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
  <A HREF="letter_inside.png"
@@ -2907,8 +2907,8 @@ shadowing pixels...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert diff_mask_01.png -negate diff_mask_32.png \
-          -channel blue -separate +channel -compose multiply -composite \
+  magick diff_mask_01.png -negate diff_mask_32.png \
+          -channel blue -separate +channel -compose multiply -magick composite \
           mask_aliasing_area.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
  <A HREF="mask_aliasing_area.png"
@@ -2924,8 +2924,8 @@ pixels to get a smooth transition from opaque to transparency.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert diff_mask.png -channel red -separate +channel \
-          mask_aliasing_area.png -alpha Off -compose CopyOpacity -composite \
+  magick diff_mask.png -channel red -separate +channel \
+          mask_aliasing_area.png -alpha Off -compose CopyOpacity -magick composite \
           -background gray30 -compose Over -flatten -normalize \
           mask_antialiased_pixels.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
@@ -2980,8 +2980,8 @@ edging pixels.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert mask_antialiased_pixels.png mask_aliasing_area.png \
-          -compose multiply -composite -negate \
+  magick mask_antialiased_pixels.png mask_aliasing_area.png \
+          -compose multiply -magick composite -negate \
           -background '#444' -channel A  -combine letter_edging.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
  <A HREF="letter_edging.png"
@@ -2996,7 +2996,7 @@ semi-transparent edging pixels.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert letter_inside.png letter_edging.png \
+  magick letter_inside.png letter_edging.png \
           -background none  -flatten    letter_recovered.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
  <A HREF="letter_recovered.png"
@@ -3014,7 +3014,7 @@ You can even overlay it onto a completely different background.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert letter_recovered.png tile_aqua.jpg \
+  magick letter_recovered.png tile_aqua.jpg \
           -background none -compose DstOver -flatten    letter_on_aqua.png
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
  <A HREF="letter_on_aqua.png"
@@ -3094,8 +3094,8 @@ and maximize the differences found in each channel.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert match_navy.gif match_gold.gif \
-          -compose difference -composite -separate \
+  magick match_navy.gif match_gold.gif \
+          -compose difference -magick composite -separate \
           -evaluate-sequence max -auto-level -negate \
           match_alpha.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3129,8 +3129,8 @@ object from one of the source images. For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert match_navy.gif match_alpha.png \
-          -alpha Off -compose Copy_Opacity -composite \
+  magick match_navy.gif match_alpha.png \
+          -alpha Off -compose Copy_Opacity -magick composite \
           match_bad_colors.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="match_bad_colors.png"
@@ -3161,9 +3161,9 @@ For example here I restore the original colors...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert match_navy.gif match_alpha.png -alpha Off \
+  magick match_navy.gif match_alpha.png -alpha Off \
           -fx "v==0 ? 0 : u/v - u.p{0,0}/v + u.p{0,0}" \
-          match_alpha.png -compose Copy_Opacity -composite \
+          match_alpha.png -compose Copy_Opacity -magick composite \
           match_recovered.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="match_recovered.png"
@@ -3195,11 +3195,11 @@ Here is the whole sequence all in one command.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert match_gold.gif match_navy.gif -alpha off \
-          \( -clone 0,1 -compose difference -composite \
+  magick match_gold.gif match_navy.gif -alpha off \
+          \( -clone 0,1 -compose difference -magick composite \
              -separate -evaluate-sequence max -auto-level -negate \) \
           \( -clone 0,2 -fx "v==0?0:u/v-u.p{0,0}/v+u.p{0,0}" \) \
-          -delete 0,1 +swap -compose Copy_Opacity -composite \
+          -delete 0,1 +swap -compose Copy_Opacity -magick composite \
           match_recovered_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="match_recovered_2.png"
@@ -3244,10 +3244,10 @@ painfully slow <A HREF="../transform/#fx" >FX DIY Operator</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert match_black.gif match_white.gif -alpha off \
-          \( -clone 0,1 -compose difference -composite -negate \) \
-          \( -clone 0,2 +swap -compose divide -composite \) \
-          -delete 0,1 +swap -compose Copy_Opacity -composite \
+  magick match_black.gif match_white.gif -alpha off \
+          \( -clone 0,1 -compose difference -magick composite -negate \) \
+          \( -clone 0,2 +swap -compose divide -magick composite \) \
+          -delete 0,1 +swap -compose Copy_Opacity -magick composite \
           match_recovered_3.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/match_black.gif"
@@ -3345,7 +3345,7 @@ Suppose we have an image with some ugly text...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert zelda_tn.gif -gravity Southwest -annotate +8+20 Zelda zelda_text.jpg
+  magick zelda_tn.gif -gravity Southwest -annotate +8+20 Zelda zelda_text.jpg
 </CODE></PRE></TD></TR></TABLE></P>
 
 Well what we really want to do is remove that text, and the simplest way is
@@ -3367,7 +3367,7 @@ For this case however I'll create a mask using a drawn line that covers the
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 120x90 xc:black  -stroke white  -strokewidth 7 \
+  magick -size 120x90 xc:black  -stroke white  -strokewidth 7 \
           -draw 'stroke-linecap round line 9,62 36,63' \
           -threshold 10%  zelda_text_mask.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3395,8 +3395,8 @@ that it covers all the unwanted parts.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert zelda_text.jpg \( zelda_text_mask.gif -negate \) \
-          -compose CopyOpacity -composite   zelda_text_hole.png
+  magick zelda_text.jpg \( zelda_text_mask.gif -negate \) \
+          -compose CopyOpacity -magick composite   zelda_text_hole.png
 </CODE></PRE></TD></TR></TABLE></P>
 
 So here we have an image with a 'hole' in it that needs to be filled. </P>
@@ -3421,7 +3421,7 @@ around the hole to 'spread' into the hole, and then remove the transparency.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert zelda_text_hole.png -blur 0x1 -alpha off zelda_text_fill.png
+  magick zelda_text_hole.png -blur 0x1 -alpha off zelda_text_fill.png
 </CODE></PRE></TD></TR></TABLE></P>
 
 The amount of blur you use depends on the size of the hole used.
@@ -3438,8 +3438,8 @@ to 'fill the hole' that we previously made...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert zelda_text_hole.png zelda_text_fill.png \
-          -compose Dst_Over  -composite   zelda_text_removed.png
+  magick zelda_text_hole.png zelda_text_fill.png \
+          -compose Dst_Over  -magick composite   zelda_text_removed.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="zelda_text.jpg"
      ><IMG SRC="zelda_text.jpg"              WIDTH=120 HEIGHT=90
@@ -3524,6 +3524,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/masking/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/masking/</CODE>
 </ADDRESS></BODY></HTML>
 

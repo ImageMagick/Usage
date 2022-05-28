@@ -5,7 +5,7 @@
 <TITLE>Canvas Creation -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/canvas/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/canvas/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -199,7 +199,7 @@ For example... here I generate a '<CODE>khaki</CODE>' colors canvas.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 canvas:khaki  canvas_khaki.gif
+  magick -size 100x100 canvas:khaki  canvas_khaki.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="canvas_khaki.gif"
@@ -218,7 +218,7 @@ I use.  For example here is an image using the X window color of
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:wheat  canvas_wheat.gif
+  magick -size 100x100 xc:wheat  canvas_wheat.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="canvas_wheat.gif"
@@ -238,7 +238,7 @@ color as a single 'input image' argument to many ImageMagick Scripts. </P>
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert 'xc:Salmon[100x100!]'  canvas_salmon.gif
+  magick 'xc:Salmon[100x100!]'  canvas_salmon.gif
 </CODE></PRE></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -267,7 +267,7 @@ can replace that color using the "<CODE><A HREF="../option_link.cgi?opaque"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_khaki.gif -fill tomato -opaque khaki canvas_tomato.gif
+  magick canvas_khaki.gif -fill tomato -opaque khaki canvas_tomato.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="canvas_tomato.gif"
      ><IMG SRC="canvas_tomato.gif"       WIDTH=100 HEIGHT=100
@@ -286,7 +286,7 @@ Here we grab a rose color from the built-in "<CODE>rose:</CODE>" image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -crop 1x1+40+30 +repage -scale 100x100\! canvas_rose_red.gif
+  magick rose:  -crop 1x1+40+30 +repage -scale 100x100\! canvas_rose_red.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="canvas_rose_red.gif"
      ><IMG SRC="canvas_rose_red.gif"       WIDTH=100 HEIGHT=100
@@ -346,7 +346,7 @@ a single color and no comma's, to set all the colors.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -alpha Opaque +level-colors Sienna  color_levelc.gif
+  magick test.png  -alpha Opaque +level-colors Sienna  color_levelc.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="color_levelc.gif"
@@ -375,7 +375,7 @@ same result without it.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -alpha off -fill Chocolate -colorize 100%  
+  magick test.png -alpha off -fill Chocolate -colorize 100%  
 color_colorize.gif
 </CODE></PRE></TD></TR></TABLE> </P>
 
@@ -412,7 +412,7 @@ HREF="#sparse-color" >Sparse Points of Color</A> below).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -alpha Off \
+  magick test.png  -alpha Off \
           -sparse-color Voronoi '0,0 Peru' color_sparse.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -431,7 +431,7 @@ the current "<CODE><A HREF="../option_link.cgi?fill" >-fill</A></CODE>" color.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -fill Tan -draw 'color 0,0 reset' color_reset.gif
+  magick test.png -fill Tan -draw 'color 0,0 reset' color_reset.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="color_reset.gif"
@@ -462,7 +462,7 @@ HREF="../option_link.cgi?background" >-background</A></CODE>" color.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png   -background Wheat \
+  magick test.png   -background Wheat \
             -compose Dst   -flatten   color_flatten.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -491,7 +491,7 @@ used to have it ignore the original image pixel data, so as to onlyuse the
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png   -background LemonChiffon \
+  magick test.png   -background LemonChiffon \
             -compose Dst   -extent 100x100   color_extent.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -512,7 +512,7 @@ source.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png   -bordercolor Khaki \
+  magick test.png   -bordercolor Khaki \
             -compose Dst   -border 0   color_border.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -550,7 +550,7 @@ the transparency channel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -alpha off -fx Gold  color_fx_constant.gif
+  magick test.png -alpha off -fx Gold  color_fx_constant.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="color_fx_constant.gif"
@@ -568,7 +568,7 @@ color...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -alpha off -fx "Gold*.7"  color_fx_math.gif
+  magick test.png -alpha off -fx "Gold*.7"  color_fx_math.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="color_fx_math.gif"
@@ -590,7 +590,7 @@ overlaid on the web pages 'bluish' background we get an off purple-pink color.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -alpha set -fill '#FF000040' -draw 'color 0,0 reset' \
+  magick test.png -alpha set -fill '#FF000040' -draw 'color 0,0 reset' \
             color_semitrans.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -629,7 +629,7 @@ use color blanking.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -fx 'p{0,0}'  color_pick_fx.png
+  magick rose: -fx 'p{0,0}'  color_pick_fx.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="color_pick_fx.png"
@@ -645,7 +645,7 @@ Color</A>. It may seem less simple, but it is much faster.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -sparse-color voronoi '0,0 %[pixel:p{40,30}]' 
+  magick rose: -sparse-color voronoi '0,0 %[pixel:p{40,30}]' 
 color_pick_sparse.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -662,7 +662,7 @@ HREF="#tile_memory" >Tiling with an Image already In Memory</A>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( +clone -crop 1x1+64+22 -write MPR:pixel +delete \) \
+  magick rose: \( +clone -crop 1x1+64+22 -write MPR:pixel +delete \) \
           -fill mpr:pixel  -draw 'color 0,0 reset' \
           color_pick_draw.png
 </CODE></PRE></TD></TR></TABLE>
@@ -676,7 +676,7 @@ HREF="#tile_memory" >Tiling with an Image already In Memory</A>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -set option:distort:viewport '%wx%h+0+0' \
+  magick rose: -set option:distort:viewport '%wx%h+0+0' \
           -crop 1x1+10+25 +repage     -distort SRT 0 \
           color_pick_distort.png
 </CODE></PRE></TD></TR></TABLE>
@@ -712,7 +712,7 @@ the transparency channel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png -threshold 100% -alpha off  black_threshold.png
+  magick test.png -threshold 100% -alpha off  black_threshold.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="black_threshold.png"
@@ -729,7 +729,7 @@ the same effect.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png -level 100%,100% -alpha off  black_level.png
+  magick test.png -level 100%,100% -alpha off  black_level.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="black_level.png"
@@ -747,7 +747,7 @@ it fully opaque.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -fx 0 -alpha off   black_fx.png
+  magick test.png  -fx 0 -alpha off   black_fx.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="black_fx.png"
@@ -764,7 +764,7 @@ version of this should be faster, particularly on larger images.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -evaluate set 0  -alpha off  black_evaluate.png
+  magick test.png  -evaluate set 0  -alpha off  black_evaluate.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="black_evaluate.png"
@@ -780,7 +780,7 @@ You can also mis-use the "<CODE><A HREF="../option_link.cgi?gamma"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -gamma 0  -alpha off  black_gamma.png
+  magick test.png  -gamma 0  -alpha off  black_gamma.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="black_gamma.png"
@@ -796,7 +796,7 @@ resulting in only one color being used, black.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -posterize 1 -alpha off black_posterize.png
+  magick test.png  -posterize 1 -alpha off black_posterize.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="black_posterize.png"
@@ -812,7 +812,7 @@ images mask, using the <A HREF="../basics/#alpha" >Alpha Operator</A>
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -alpha transparent -alpha extract  black_alpha.png
+  magick test.png  -alpha transparent -alpha extract  black_alpha.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="black_alpha.png"
      ><IMG SRC="black_alpha.png"       WIDTH=150 HEIGHT=100
@@ -833,7 +833,7 @@ be sure that all colors will be mapped to white, in all versions of IM.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -threshold -1 -alpha off   white_threshold.png
+  magick test.png  -threshold -1 -alpha off   white_threshold.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="white_threshold.png"
@@ -850,7 +850,7 @@ same effect.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png -level -1,-1 -alpha off  white_level.png
+  magick test.png -level -1,-1 -alpha off  white_level.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="white_level.png"
@@ -867,7 +867,7 @@ HREF="../option_link.cgi?fx" >-fx</A></CODE>" operator.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -fx 1.0 -alpha off  white_fx.png
+  magick test.png -fx 1.0 -alpha off  white_fx.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="white_fx.png"
@@ -884,7 +884,7 @@ version of this should be faster, particularly on larger images.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -evaluate set 100%  -alpha off  white_evaluate.png
+  magick test.png  -evaluate set 100%  -alpha off  white_evaluate.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="white_evaluate.png"
@@ -899,7 +899,7 @@ Or negate some other black canvas generation method.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png -posterize 1 -alpha off -negate  white_posterize.png
+  magick test.png -posterize 1 -alpha off -negate  white_posterize.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="white_posterize.png"
@@ -916,7 +916,7 @@ You can ensure the image is fully opaque (no transparency) then
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -alpha opaque -alpha extract  white_alpha.png
+  magick test.png  -alpha opaque -alpha extract  white_alpha.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="white_alpha.png"
      ><IMG SRC="white_alpha.png"       WIDTH=150 HEIGHT=100
@@ -940,7 +940,7 @@ transparency, using the "<CODE><A HREF="../option_link.cgi?alpha"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -alpha transparent trans_alpha.png
+  magick test.png  -alpha transparent trans_alpha.png
 </CODE></PRE></TD></TR></TABLE></P>
 
 However as this is a very recent addition it is probably not widely available
@@ -962,7 +962,7 @@ ignored.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  null: -alpha set -compose Clear -composite -compose Over \
+  magick test.png  null: -alpha set -compose Clear -magick composite -compose Over \
           trans_compose.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="trans_compose.png"
@@ -980,7 +980,7 @@ this case make it fully-transparent.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -alpha set -fill none  -draw 'matte 0,0 reset' 
+  magick test.png -alpha set -fill none  -draw 'matte 0,0 reset' 
 color_matte.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -998,7 +998,7 @@ HREF="../option_link.cgi?fx" >-fx</A></CODE>" operator.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -alpha set -channel A -fx 0 +channel  trans_fx.png
+  magick test.png -alpha set -channel A -fx 0 +channel  trans_fx.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="trans_fx.png"
@@ -1016,7 +1016,7 @@ larger images.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -alpha set -channel A -evaluate set 0 +channel \
+  magick test.png  -alpha set -channel A -evaluate set 0 +channel \
           trans_evaluate.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1034,7 +1034,7 @@ limiting its effects to just the transparency channel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -channel A -threshold -1 +channel trans_threshold.png
+  magick test.png -channel A -threshold -1 +channel trans_threshold.png
 </CODE></PRE></TD></TR></TABLE>
 
 </TD><TD>
@@ -1059,7 +1059,7 @@ the matte/alpha channel in the image so as to make the colors visible again.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  trans_fx.png -alpha off  trans_fx_alpha_off.jpg
+  magick trans_fx.png -alpha off  trans_fx_alpha_off.jpg
 </CODE></PRE></TD></TR></TABLE></P>
 
 Note however that not all image file formats and very few image operations
@@ -1100,7 +1100,7 @@ For example here I generate a yellow canvas...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -gamma -1,-1,0  -alpha off  yellow_gamma.png
+  magick test.png  -gamma -1,-1,0  -alpha off  yellow_gamma.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="yellow_gamma.png"
@@ -1117,7 +1117,7 @@ channels.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  +level 40%,40%  -alpha off  grey_level.png
+  magick test.png  +level 40%,40%  -alpha off  grey_level.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="grey_level.png"
@@ -1142,7 +1142,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  -size 100x100 gradient:  gradient.jpg
+  magick -size 100x100 gradient:  gradient.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="gradient.jpg"
@@ -1160,11 +1160,11 @@ a gradient of different colors by either specifying one color, or both.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100  gradient:blue              gradient_range1.jpg
-  convert -size 100x100  gradient:yellow            gradient_range2.jpg
-  convert -size 100x100  gradient:green-yellow      gradient_range3.jpg
-  convert -size 100x100  gradient:red-blue          gradient_range4.jpg
-  convert -size 100x100  gradient:tomato-steelblue  gradient_range5.jpg
+  magick -size 100x100  gradient:blue              gradient_range1.jpg
+  magick -size 100x100  gradient:yellow            gradient_range2.jpg
+  magick -size 100x100  gradient:green-yellow      gradient_range3.jpg
+  magick -size 100x100  gradient:red-blue          gradient_range4.jpg
+  magick -size 100x100  gradient:tomato-steelblue  gradient_range5.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gradient_range1.jpg"
      ><IMG SRC="gradient_range1.jpg"       WIDTH=100 HEIGHT=100
@@ -1231,11 +1231,11 @@ Some particularly nice gradients include...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x120  gradient:snow-navy          gradient_ice-sea.jpg
-  convert -size 10x120  gradient:gold-firebrick     gradient_burnished.jpg
-  convert -size 10x120  gradient:yellow-limegreen   gradient_grassland.jpg
-  convert -size 10x120  gradient:khaki-tomato       gradient_sunset.jpg
-  convert -size 10x120  gradient:darkcyan-snow      gradient_snow_scape.jpg
+  magick -size 10x120  gradient:snow-navy          gradient_ice-sea.jpg
+  magick -size 10x120  gradient:gold-firebrick     gradient_burnished.jpg
+  magick -size 10x120  gradient:yellow-limegreen   gradient_grassland.jpg
+  magick -size 10x120  gradient:khaki-tomato       gradient_sunset.jpg
+  magick -size 10x120  gradient:darkcyan-snow      gradient_snow_scape.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>&nbsp;
   <A HREF="gradient_ice-sea.jpg"
      ><IMG SRC="gradient_ice-sea.jpg"         WIDTH=10 HEIGHT=120
@@ -1285,7 +1285,7 @@ As of IM v6.4.4 you can also generate radial gradient images in a similar way.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 radial-gradient:  rgradient.jpg
+  magick -size 100x100 radial-gradient:  rgradient.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="rgradient.jpg"
@@ -1301,7 +1301,7 @@ the size of the image isn't square you will get a 'clipped' radial gradient.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 radial-gradient:  rgradient_clip.jpg
+  magick -size 100x60 radial-gradient:  rgradient_clip.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="rgradient_clip.jpg"
@@ -1317,7 +1317,7 @@ corner by making one edge 1.42 (square root of 2) times larger, and crop it.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x142 radial-gradient: \
+  magick -size 100x142 radial-gradient: \
           -gravity center -crop 100x100+0+0 rgradient_crop.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1333,11 +1333,11 @@ generator.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100  radial-gradient:blue              rgradient_range1.jpg
-  convert -size 100x100  radial-gradient:yellow            rgradient_range2.jpg
-  convert -size 100x100  radial-gradient:green-yellow      rgradient_range3.jpg
-  convert -size 100x100  radial-gradient:red-blue          rgradient_range4.jpg
-  convert -size 100x100  radial-gradient:tomato-steelblue  rgradient_range5.jpg
+  magick -size 100x100  radial-gradient:blue              rgradient_range1.jpg
+  magick -size 100x100  radial-gradient:yellow            rgradient_range2.jpg
+  magick -size 100x100  radial-gradient:green-yellow      rgradient_range3.jpg
+  magick -size 100x100  radial-gradient:red-blue          rgradient_range4.jpg
+  magick -size 100x100  radial-gradient:tomato-steelblue  rgradient_range5.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rgradient_range1.jpg"
      ><IMG SRC="rgradient_range1.jpg"       WIDTH=100 HEIGHT=100
@@ -1369,7 +1369,7 @@ of transparent and semi-transparent colors.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:none-firebrick gradient_transparent.png
+  magick -size 100x100 gradient:none-firebrick gradient_transparent.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_transparent.png"
      ><IMG SRC="gradient_transparent.png"       WIDTH=100 HEIGHT=100
@@ -1399,7 +1399,7 @@ of transparent and semi-transparent colors.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:none-black \
+  magick -size 100x100 gradient:none-black \
           -fill firebrick -colorize 100% gradient_trans_colorize.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_trans_colorize.png"
@@ -1421,7 +1421,7 @@ Contrast</A> function to create a more natural looking gradient.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -sigmoidal-contrast 6,50% \
+  magick -size 100x100 gradient: -sigmoidal-contrast 6,50% \
             gradient_sigmoidal.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_sigmoidal.jpg"
@@ -1446,7 +1446,7 @@ to modify a simple linear gradient.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -evaluate cos 0.5 -negate \
+  magick -size 100x100 gradient: -evaluate cos 0.5 -negate \
             gradient_cosine.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_cosine.jpg"
@@ -1461,7 +1461,7 @@ the linear gradient.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -function Polynomial -4,4,0 \
+  magick -size 100x100 gradient: -function Polynomial -4,4,0 \
             gradient_peak.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_peak.jpg"
@@ -1475,7 +1475,7 @@ Or band or a rippled pattern...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -function sinusoid 4,-90  \
+  magick -size 100x100 gradient: -function sinusoid 4,-90  \
             gradient_bands.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_bands.jpg"
@@ -1510,7 +1510,7 @@ its final size, you can make a diagonal gradient.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 142x142 gradient: -rotate -45 \
+  magick -size 142x142 gradient: -rotate -45 \
           -gravity center -crop 100x100+0+0 +repage \
           gradient_diagonal.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1528,7 +1528,7 @@ pixel image.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -distort SRT 60 gradient_srt.jpg
+  magick -size 100x100 gradient: -distort SRT 60 gradient_srt.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_srt.jpg"
      ><IMG SRC="gradient_srt.jpg"       WIDTH=100 HEIGHT=100
@@ -1554,7 +1554,7 @@ The gradient can also be twisted up...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -swirl 180 gradient_swirl.jpg
+  magick -size 100x100 gradient: -swirl 180 gradient_swirl.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_swirl.jpg"
      ><IMG SRC="gradient_swirl.jpg"       WIDTH=100 HEIGHT=100
@@ -1568,7 +1568,7 @@ You can re-map the gradient into a trapezoidal shape.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -rotate -90 \
+  magick -size 100x100 gradient: -rotate -90 \
           -distort Perspective '0,0 40,0  99,0 59,0  0,99 -10,99 99,99 109,99' 
 \
           gradient_trapezoid.jpg
@@ -1585,7 +1585,7 @@ HREF="../distorts/#distort" >General Distortion Operator</A>...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -distort Arc '180 0 50 0' \
+  magick -size 100x100 gradient: -distort Arc '180 0 50 0' \
           gradient_arc.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_arc.jpg"
@@ -1597,7 +1597,7 @@ HREF="../distorts/#distort" >General Distortion Operator</A>...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: -distort Arc '360 0 50 0' \
+  magick -size 100x100 gradient: -distort Arc '360 0 50 0' \
           gradient_circle.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_circle.jpg"
@@ -1619,7 +1619,7 @@ an even number of pixel dimensions, 76 pixels in this case.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x1000 gradient: -rotate 90 \
+  magick -size 1x1000 gradient: -rotate 90 \
           -distort Arc '360 -90 50 0' +repage \
           -gravity center -crop 76x76+0+0 +repage  gradient_angle_even.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1645,7 +1645,7 @@ pixel size polar gradient image.  In this case a 75 pixel image (radius
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x1000 gradient: -rotate 90 \
+  magick -size 1x1000 gradient: -rotate 90 \
           +distort Polar '36.5,0,.5,.5' +repage \
           -transverse  gradient_angle_odd.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1675,7 +1675,7 @@ with a transparent circular mask.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x1000 gradient: -rotate 90 -alpha set \
+  magick -size 50x1000 gradient: -rotate 90 -alpha set \
           -virtual-pixel Transparent +distort Polar 49 +repage \
           -transverse  gradient_angle_masked.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1699,7 +1699,7 @@ shaped gradient.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 radial-gradient: \
+  magick -size 100x100 radial-gradient: \
           -background black -wave -28x200 -crop 100x100+0+0 +repage \
           gradient_triangle.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1715,7 +1715,7 @@ the top edge of the circular shape.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 radial-gradient: \
+  magick -size 100x100 radial-gradient: \
           +distort Polar '49' +repage \
           gradient_bird.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1735,7 +1735,7 @@ methods.  For example  you can use the <A HREF="../compose/#modulus_add"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: \( +clone +clone \) \
+  magick -size 100x100 gradient: \( +clone +clone \) \
           -background gray50 -compose ModulusAdd -flatten \
           gradient_venetian.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -1750,7 +1750,7 @@ And even do this diagonally.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: \( gradient: -rotate -90 \) \
+  magick -size 100x100 gradient: \( gradient: -rotate -90 \) \
           \( -clone 0--1 -clone 0--1 \) \
           -background gray50 -compose ModulusAdd -flatten \
           gradient_vent_diag.jpg
@@ -1769,9 +1769,9 @@ dimensional colormap gradients.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:yellow-blue \
+  magick -size 100x100 gradient:yellow-blue \
           \( gradient:black-lime -rotate -90 \) \
-          -compose CopyGreen -composite  gradient_colormap.jpg
+          -compose CopyGreen -magick composite  gradient_colormap.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="gradient_colormap.jpg"
      ><IMG SRC="gradient_colormap.jpg"  WIDTH=100 HEIGHT=100
@@ -1790,8 +1790,8 @@ effects.  For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 30x600 xc:red -colorspace HSB \
-          gradient: -compose CopyRed -composite \
+  magick -size 30x600 xc:red -colorspace HSB \
+          gradient: -compose CopyRed -magick composite \
           -colorspace RGB -rotate 90  gradient_rainbow.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gradient_rainbow.jpg"
@@ -1803,7 +1803,7 @@ This first converts a highly saturated color ('<CODE>red</CODE>') into HSL
 colorspace, any saturated color can be used.  This correctly sets the images
 saturation and brightness channels to the appropriate values.  After this
 a gradient is generated and copied into the 'Hue' (equivalent to the 'red')
-channel of this HSL colorspace image.  And hey presto when we convert the HSL
+channel of this HSL colorspace image.  And hey presto when we magick the HSL
 image back to RGB, we get a full rainbow gradient of fully-saturated colors.
 </P>
 
@@ -1811,12 +1811,12 @@ Another method is to generate a gradient of just the right values for one of
 these colorspaces, then change the images colorspace (using "<CODE><A
 HREF="../option_link.cgi?set" >-set</A></CODE>").  This changes the colorspace
 without changing the color values that we created in the image.  Now when we
-convert back to RGB we get the same rainbow of values.
+magick back to RGB we get the same rainbow of values.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 30x600 gradient:'#FFF-#0FF' -rotate 90 \
+  magick -size 30x600 gradient:'#FFF-#0FF' -rotate 90 \
           -set colorspace HSB -colorspace RGB \
           gradient_rainbow_2.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -1838,7 +1838,7 @@ toward to the right, where it is traditionally placed (polar coordinates angle
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x300 gradient:'#FFF-#0FF' -rotate 90 \
+  magick -size 100x300 gradient:'#FFF-#0FF' -rotate 90 \
           -alpha set -virtual-pixel Transparent +distort Polar 49 +repage \
           -rotate 90 -set colorspace HSB -colorspace RGB \
           gradient_hue_polar.png
@@ -1873,7 +1873,7 @@ PBM format) image and feed it into IM for enlargement.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   echo "P1 1 2   0  1 " | \
-  convert - -resize 100x100\!   gradient_resize.jpg
+  magick - -resize 100x100\!   gradient_resize.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="gradient_resize.jpg"
@@ -1907,7 +1907,7 @@ will limit you to a vertical gradient, unless you rotate the result as well.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x2  gradient:khaki-tomato \
+  magick -size 1x2  gradient:khaki-tomato \
           -resize 100x100\!   gradient_resize2.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_resize2.jpg"
@@ -1925,7 +1925,7 @@ Here I use a four pixel 'portable greymap' (or PGM image format) to generate a
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   echo "P2 2 2 2   2 1 1 0 " | \
-  convert - -resize 100x100\!   gradient_resize3.jpg
+  magick - -resize 100x100\!   gradient_resize3.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_resize3.jpg"
      ><IMG SRC="gradient_resize3.jpg"       WIDTH=100 HEIGHT=100
@@ -1957,7 +1957,7 @@ edge.  This becomes more clear if we use a <A HREF="../filter/#triangle"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -filter triangle -resize 100x100\!   gradient_resize4.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1977,7 +1977,7 @@ the resize gradient generate a more edge to edge effect.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x2  gradient: \
+  magick -size 1x2  gradient: \
           -filter Cubic  -resize 100x100\!    gradient_resize5.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1991,7 +1991,7 @@ Here is rough "Rainbow Gradient" created using the 'resize' technique.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert xc:black xc:red xc:yellow xc:green1 xc:cyan xc:blue xc:black \
+  magick xc:black xc:red xc:yellow xc:green1 xc:cyan xc:blue xc:black \
           +append -filter Cubic -resize 600x30\! gradient_rs_rainbow.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gradient_rs_rainbow.jpg"
@@ -2024,7 +2024,7 @@ determine the color for a lookup that falls between two pixels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 600x30 xc:   \( +size xc:gold xc:firebrick +append \)  \
+  magick -size 600x30 xc:   \( +size xc:gold xc:firebrick +append \)  \
           -fx 'v.p{i/(w-1),0}'    gradient_interpolated.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gradient_interpolated.jpg"
@@ -2045,7 +2045,7 @@ a gradient image, using interpolated lookup of the two color image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 30x600 gradient: -rotate 90 \
+  magick -size 30x600 gradient: -rotate 90 \
           \( +size xc:gold xc:firebrick +append \) -clut \
           gradient_clut_recolored.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -2059,7 +2059,7 @@ Using this method also allows you to generate multi-colored gradients.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 30x600 gradient: -rotate 90  -interpolate Bicubic \
+  magick -size 30x600 gradient: -rotate 90  -interpolate Bicubic \
           \( +size xc:black xc:tomato xc:wheat +append \) -clut \
           gradient_clut.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -2088,7 +2088,7 @@ Interpolation</A>), just as easily as purely one dimensions gradients.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap  -fx 'v.p{i/(w-1),j/(h-1)}' \
           gradient_bilinear.jpg
@@ -2106,7 +2106,7 @@ Interpolation</A>, and generating using the <A HREF="../distorts/#distort"
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -filter point -interpolate catrom \
           -define distort:viewport=100x100 \
@@ -2144,7 +2144,7 @@ mesh</CODE>" you can generate a very different 2D gradient.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:gold +append \) \
+  magick \( xc:red xc:gold +append \) \
           \( xc:gold xc:green +append \) -append \
           -filter point -interpolate mesh \
           -define distort:viewport=100x100 \
@@ -2180,7 +2180,7 @@ the image you may be working on.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -channel G -fx 'i/w' -separate   gradient_fx_linear.gif
+  magick rose:  -channel G -fx 'i/w' -separate   gradient_fx_linear.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_fx_linear.gif"
      ><IMG SRC="gradient_fx_linear.gif"
@@ -2207,7 +2207,7 @@ You can even generate some neat non-linear gradients.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -channel G -fx '(i/w)^4' -separate   gradient_fx_x4.gif
+  magick rose:  -channel G -fx '(i/w)^4' -separate   gradient_fx_x4.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_fx_x4.gif"
      ><IMG SRC="gradient_fx_x4.gif"
@@ -2216,7 +2216,7 @@ You can even generate some neat non-linear gradients.
 <TR><TD>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -channel G -fx 'cos(pi*(i/w-.5))' \
+  magick rose:  -channel G -fx 'cos(pi*(i/w-.5))' \
            -separate   gradient_fx_cos.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_fx_cos.gif"
@@ -2231,7 +2231,7 @@ How about a 2-dimensional circular linear radial gradient (a cone).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -channel G \
+  magick -size 100x100 xc: -channel G \
           -fx 'rr=hypot(i/w-.5, j/h-.5); 1-rr*1.42' \
           -separate gradient_fx_radial.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2267,7 +2267,7 @@ HREF="../transform/#shade" >3D Shading Effects</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -channel G \
+  magick -size 100x100 xc: -channel G \
           -fx 'xx=i/w-.5; yy=j/h-.5; rr=xx*xx+yy*yy; 1-rr*4' \
           -separate gradient_fx_spherical.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2277,7 +2277,7 @@ HREF="../transform/#shade" >3D Shading Effects</A>.
 </TD></TR></TABLE></P>
 
 Note how I use some assignment expressions to simplify the calculation of the
-distance from center of the image, then convert it to a gradient.  This
+distance from center of the image, then magick it to a gradient.  This
 feature was added in IM v6.3.0.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
@@ -2289,7 +2289,7 @@ control the amount of fading.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -channel G \
+  magick -size 100x100 xc: -channel G \
           -fx '(1-(2*i/w-1)^4)*(1-(2*j/h-1)^4)' \
           -separate  gradient_fx_quad2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2305,7 +2305,7 @@ Here is an angular gradient, generated using direct mathematics.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:  -channel G \
+  magick -size 100x100 xc:  -channel G \
           -fx '.5 - atan2(j-h/2,w/2-i)/pi/2' \
           -separate  gradient_fx_angular.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2337,7 +2337,7 @@ gradient based on distance ratios, using an extremely complex FX expression.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 100x100 xc: +size xc:red xc:yellow -colorspace RGB \
+  magick -size 100x100 xc: +size xc:red xc:yellow -colorspace RGB \
           -fx 'ar=hypot( i/w-.8, j/h-.3 )*4;
                br=hypot( i/w-.3, j/h-.7 )*4;
                u[1]*br/(ar+br) + u[2]*ar/(ar+br)' \
@@ -2371,7 +2371,7 @@ Here is an inverse distance example for three points.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 100x100 xc: +size xc:red xc:yellow xc:lime -colorspace RGB \
+  magick -size 100x100 xc: +size xc:red xc:yellow xc:lime -colorspace RGB \
           -fx 'ar=1/max(1, hypot(i-50,j-10)  );
                br=1/max(1, hypot(i-10,j-70)  );
                cr=1/max(1, hypot(i-90,j-90)  );
@@ -2390,7 +2390,7 @@ for an IDW interpolation. This is also known as Shepard's Interpolation method.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 100x100 xc: +size xc:red xc:yellow xc:lime -colorspace RGB \
+  magick -size 100x100 xc: +size xc:red xc:yellow xc:lime -colorspace RGB \
           -fx 'ar=1/max(1,  (i-50)*(i-50)+(j-10)*(j-10)  );
                br=1/max(1,  (i-10)*(i-10)+(j-70)*(j-70)  );
                cr=1/max(1,  (i-90)*(i-90)+(j-90)*(j-90)  );
@@ -2414,10 +2414,10 @@ more simply using...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Inverse '50,10 red  10,70 yellow  90,90 lime' \
           -colorspace sRGB  gradient_inverse_alt.gif
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Shepards '50,10 red  10,70 yellow  90,90 lime' \
           -colorspace sRGB  gradient_shepards_alt.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -2459,7 +2459,7 @@ HREF="#gradient_colorspace" >Gradients in Other Colorspaces</A> above).
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 100x100 xc: +size xc:red xc:blue xc:lime -colorspace HSB \
+  magick -size 100x100 xc: +size xc:red xc:blue xc:lime -colorspace HSB \
           -fx 'ar=1/max(1,  (i-50)*(i-50)+(j-10)*(j-10)  );
                br=1/max(1,  (i-10)*(i-10)+(j-70)*(j-70)  );
                cr=1/max(1,  (i-90)*(i-90)+(j-90)*(j-90)  );
@@ -2490,7 +2490,7 @@ Hue. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 100x100 xc: +size xc:red xc:blue xc:lime \
+  magick -size 100x100 xc: +size xc:red xc:blue xc:lime \
           -colorspace HSB -channel R \
           -fx 'aa=u[1]*2*pi; ba=u[2]*2*pi; ca=u[3]*2*pi;
                ar=1/max(1, hypot(i-50,j-10) );
@@ -2550,10 +2550,10 @@ colorspace, and saturate the colors, to generate the hue!
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Inverse '50,10 red  10,70 blue  90,90 lime' \
            -colorspace sRGB gradient_inverse_RGB.png
-  convert gradient_inverse_RGB.png -colorspace HSB \
+  magick gradient_inverse_RGB.png -colorspace HSB \
           -channel GB -evaluate set 100% +channel \
           -colorspace sRGB gradient_inverse_RGB_Hue.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -2613,7 +2613,7 @@ the individual pixel colors.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  -size 1x5 gradient:  -scale 2000% gradient.png
+  magick -size 1x5 gradient:  -scale 2000% gradient.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="gradient.png"
@@ -2648,7 +2648,7 @@ the next section) to generate a perfect edge-to-edge gradient...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x5 xc: \
+  magick -size 1x5 xc: \
           -sparse-color Barycentric '0,-0.5 white  0,%[fx:h-.5] black' \
           -scale 2000%  gradient_math.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2685,7 +2685,7 @@ zero value) is often more desirable in the final result.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x6 gradient: -chop 0x1 -scale 2000%  gradient_chopped.png
+  magick -size 1x6 gradient: -chop 0x1 -scale 2000%  gradient_chopped.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="gradient_chopped.png"
@@ -2776,7 +2776,7 @@ HREF="#sparse-color" >Sparse Color Operator</A>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Barycentric '30,10 red   10,80 blue   90,90 lime' \
           -colorspace sRGB  -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
@@ -2813,11 +2813,11 @@ For example..
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color Barycentric '30,10 red   10,80 blue   90,90 lime' \
           -colorspace sRGB  -fill white -stroke black \
           \( -size 100x100 xc:black -draw 'polygon 30,10  10,80  90,90' \) \
-          +matte -compose CopyOpacity -composite \
+          +matte -compose CopyOpacity -magick composite \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
           sparse_bary_triangle.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2836,7 +2836,7 @@ just alpha masked.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:none -draw "polygon 30,10  10,80  90,90" \
+  magick -size 100x100 xc:none -draw "polygon 30,10  10,80  90,90" \
           -colorspace RGB \
           -sparse-color Barycentric '30,10 red   10,80 blue   90,90 lime' \
           -colorspace sRGB   sparse_bary_triangle_2.png
@@ -2866,7 +2866,7 @@ three simple linear gradients in each color channel.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert sparse_barycentric.png -separate sparse_bary_%d.gif
+  magick sparse_barycentric.png -separate sparse_bary_%d.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="sparse_barycentric.png"
      ><IMG SRC="sparse_barycentric.png"
@@ -2904,7 +2904,7 @@ be made parallel to the two '<CODE>red</CODE>' points...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Barycentric '30,10 red   10,80 red   90,90 lime' \
           -colorspace sRGB  -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
@@ -2922,7 +2922,7 @@ to show how it sets the gradient angle.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Barycentric '50,70 red   10,80 red   90,90 lime' \
           -colorspace sRGB  -fill white -stroke black \
           -draw 'circle 50,70 50,72  circle 10,80 10,82  circle 90,90 90,92' \
@@ -2945,7 +2945,7 @@ going from one corner to another corner, for ANY sized input image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 600x60 xc: -colorspace RGB \
+  magick -size 600x60 xc: -colorspace RGB \
           -sparse-color barycentric '0,0 skyblue  -%w,%h skyblue  %w,%h black' \
           -colorspace sRGB diagonal_gradient.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -2959,7 +2959,7 @@ And to align with the other two corners...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 600x60 xc: -colorspace RGB \
+  magick -size 600x60 xc: -colorspace RGB \
           -sparse-color barycentric '0,%h black  -%w,0 black  %w,0 skyblue' \
           -colorspace sRGB diagonal_gradient_2.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -2990,7 +2990,7 @@ result is a simple linear gradient over which you have a lot of control.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:  -colorspace RGB \
+  magick -size 100x100 xc:  -colorspace RGB \
           -sparse-color  Barycentric '30,10 red  90,90 lime' \
           -colorspace sRGB  -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 90,90 90,92' \
@@ -3009,7 +3009,7 @@ above.  It is angled, just not angled enough to make it 'interesting'.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 600x60 xc: -colorspace RGB \
+  magick -size 600x60 xc: -colorspace RGB \
           -sparse-color barycentric '0,0 skyblue  %w,%h black' \
           -colorspace sRGB  sparse_bary_two_point_wide.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -3029,7 +3029,7 @@ produce an uniform color gradient between the points, and beyond.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:  -colorspace RGB \
+  magick -size 100x100 xc:  -colorspace RGB \
     -sparse-color Bilinear '30,10 red  10,80 blue  70,60 lime  80,20 yellow' \
     -colorspace sRGB  -fill white -stroke black \
     -draw 'circle 30,10 30,12  circle 10,80 10,82' \
@@ -3047,7 +3047,7 @@ the individual color channel gradients.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert sparse_bilinear.png -separate sparse_bilin_%d.gif
+  magick sparse_bilinear.png -separate sparse_bilin_%d.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="sparse_bilinear.png"
      ><IMG SRC="sparse_bilinear.png"
@@ -3089,7 +3089,7 @@ polygonal 'cells' around each point. For example..
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:  -colorspace RGB \
+  magick -size 100x100 xc:  -colorspace RGB \
     -sparse-color  Voronoi '30,10 red  10,80 blue  70,60 lime  80,20 yellow' \
     -colorspace sRGB  -fill white -stroke black \
     -draw 'circle 30,10 30,12  circle 10,80 10,82' \
@@ -3119,7 +3119,7 @@ size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 400x400 xc: -colorspace RGB \
+  magick -size 400x400 xc: -colorspace RGB \
     -sparse-color Voronoi '120,40 red 40,320 blue 270,240 lime 320,80 yellow' 
 \
     -scale 25%  -colorspace sRGB -fill white -stroke black \
@@ -3151,7 +3151,7 @@ slightly...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
     -sparse-color Voronoi '30,10 red  10,80 blue  70,60 lime  80,20 yellow' \
     -blur 1x0.7  -colorspace sRGB  -fill white -stroke black \
     -draw 'circle 30,10 30,12  circle 10,80 10,82' \
@@ -3170,7 +3170,7 @@ gradients between the 'cells' that was generated.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:  -colorspace RGB \
+  magick -size 100x100 xc:  -colorspace RGB \
     -sparse-color  Voronoi '30,10 red  10,80 blue  70,60 lime  80,20 yellow' \
     -blur 0x15  -colorspace sRGB  -fill white -stroke black \
     -draw 'circle 30,10 30,12  circle 10,80 10,82' \
@@ -3197,7 +3197,7 @@ produce a fixed width linear gradient between the cells.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
     -sparse-color  Voronoi '30,10 red  10,80 blue  70,60 lime  80,20 yellow' \
     -blur 10x65535  -colorspace sRGB  -fill white -stroke black \
     -draw 'circle 30,10 30,12  circle 10,80 10,82' \
@@ -3235,7 +3235,7 @@ given colors at infinity.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
     -sparse-color  Shepards '30,10 red  10,80 blue  70,60 lime  80,20 yellow' 
 \
     -colorspace sRGB  -fill white -stroke black \
@@ -3286,7 +3286,7 @@ For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
     -sparse-color  Inverse '30,10 red  10,80 blue  70,60 lime  80,20 yellow' \
     -colorspace sRGB  -fill white -stroke black \
     -draw 'circle 30,10 30,12  circle 10,80 10,82' \
@@ -3315,12 +3315,12 @@ apart they are and the larger individual colors influence results.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color Inverse '45,45 red  55,55 lime' \
           -colorspace sRGB  -fill white -stroke black \
           -draw 'circle 45,45 45,47  circle 55,55 55,57' \
           sparse_inverse_near.png
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color Inverse '30,30 red  70,70 lime' \
           -colorspace sRGB  -fill white -stroke black \
           -draw 'circle 30,30 30,32  circle 70,70 70,72' \
@@ -3342,7 +3342,7 @@ strong.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color Inverse '30,30 red  75,65 lime  65,75 lime' \
           -colorspace sRGB -fill white -stroke black \
           -draw 'circle 30,30 30,32  circle 75,65 75,67  circle 65,75 65,77 ' 
@@ -3373,35 +3373,35 @@ For example
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB -define shepards:power=0.5 \
+  magick -size 100x100 xc: -colorspace RGB -define shepards:power=0.5 \
      -sparse-color Shepards '30,10 red  10,80 blue  70,60 lime  80,20 yellow' 
 \
      -colorspace sRGB -fill white -stroke black \
      -draw 'circle 30,10 30,12  circle 10,80 10,82' \
      -draw 'circle 70,60 70,62  circle 80,20 80,22' \
      sparse_shepards_pow0.5.png
-  convert -size 100x100 xc: -colorspace RGB -define shepards:power=1 \
+  magick -size 100x100 xc: -colorspace RGB -define shepards:power=1 \
      -sparse-color Shepards '30,10 red  10,80 blue  70,60 lime  80,20 yellow' 
 \
      -colorspace sRGB -fill white -stroke black \
      -draw 'circle 30,10 30,12  circle 10,80 10,82' \
      -draw 'circle 70,60 70,62  circle 80,20 80,22' \
      sparse_shepards_pow1.png
-  convert -size 100x100 xc: -colorspace RGB -define shepards:power=2 \
+  magick -size 100x100 xc: -colorspace RGB -define shepards:power=2 \
      -sparse-color Shepards '30,10 red  10,80 blue  70,60 lime  80,20 yellow' 
 \
      -colorspace sRGB -fill white -stroke black \
      -draw 'circle 30,10 30,12  circle 10,80 10,82' \
      -draw 'circle 70,60 70,62  circle 80,20 80,22' \
      sparse_shepards_pow2.png
-  convert -size 100x100 xc: -colorspace RGB -define shepards:power=3 \
+  magick -size 100x100 xc: -colorspace RGB -define shepards:power=3 \
      -sparse-color Shepards '30,10 red  10,80 blue  70,60 lime  80,20 yellow' 
 \
      -colorspace sRGB -fill white -stroke black \
      -draw 'circle 30,10 30,12  circle 10,80 10,82' \
      -draw 'circle 70,60 70,62  circle 80,20 80,22' \
      sparse_shepards_pow3.png
-convert -size 100x100 xc: -colorspace RGB -define shepards:power=8 \
+magick -size 100x100 xc: -colorspace RGB -define shepards:power=8 \
      -sparse-color Shepards '30,10 red  10,80 blue  70,60 lime  80,20 yellow' 
 \
      -colorspace sRGB -fill white -stroke black \
@@ -3489,22 +3489,22 @@ comparison.
 And here is a summery of the various, 3 point methods.
 
 <!--<CODE EXECUTE>
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Voronoi '30,10 red   10,80 blue   90,90 lime' \
           -colorspace sRGB -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
           sparse_voronoi_3pt.gif
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Voronoi '30,10 red   10,80 blue   90,90 lime' \
           -blur 0x15  -colorspace sRGB  -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
           sparse_voronoi_blur_3pt.png
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Shepards '30,10 red   10,80 blue   90,90 lime' \
           -colorspace sRGB -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
           sparse_shepards_3pt.png
-  convert -size 100x100 xc: -colorspace RGB \
+  magick -size 100x100 xc: -colorspace RGB \
           -sparse-color  Inverse '30,10 red   10,80 blue   90,90 lime' \
           -colorspace sRGB -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
@@ -3569,7 +3569,7 @@ example..
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc: -channel G -sparse-color Shepards \
+  magick -size 100x100 xc: -channel G -sparse-color Shepards \
               '30,10 gray70  10,80 black  70,60 white  80,20 gray(33.3333%)' \
           -separate +channel    -fill white -stroke black \
           -draw 'circle 30,10 30,12  circle 10,80 10,82' \
@@ -3594,7 +3594,7 @@ of the built-in "<CODE>rose:</CODE> image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -alpha set -channel A \
+  magick rose: -alpha set -channel A \
           -sparse-color Barycentric \
                  '0,0 opaque   %w,-%h opaque    %w,%h transparent' \
           rose_alpha_gradient.png
@@ -3669,7 +3669,7 @@ others.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:none +antialias -fill none -strokewidth 0.5 \
+  magick -size 100x100 xc:none +antialias -fill none -strokewidth 0.5 \
           -stroke Gold        -draw "path 'M 20,70  A 1,1 0 0,1 80,50'" \
           -stroke DodgerBlue  -draw "line 30,10  50,80" \
           -stroke Red         -draw "circle 80,60  82,60" \
@@ -3688,9 +3688,9 @@ method, '<CODE><A HREF="#shepards" >Shepards</A></CODE>'.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert sparse_source.gif txt:- |\
+  magick sparse_source.gif txt:- |\
     sed '1d; / 0) /d; s/:.* /,/;' |\
-      convert sparse_source.gif -alpha off \
+      magick sparse_source.gif -alpha off \
               -sparse-color shepards '@-' sparse_fill.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="sparse_fill.png"
@@ -3724,13 +3724,13 @@ the missing background or holes (as shown in <A HREF="../morphology/#channels"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert figure.gif -channel A -morphology EdgeIn Diamond 
+  magick figure.gif -channel A -morphology EdgeIn Diamond 
 shape_edge_pixels.gif
-  convert shape_edge_pixels.gif txt:- |\
+  magick shape_edge_pixels.gif txt:- |\
     sed '1d; / 0) /d; s/:.* /,/;' | \
-     convert shape_edge_pixels.gif -alpha off \
+     magick shape_edge_pixels.gif -alpha off \
              -sparse-color shepards '@-' shape_edge_in_lights.png
-  convert shape_edge_in_lights.png figure.gif -composite shape_in_lights.png
+  magick shape_edge_in_lights.png figure.gif -magick composite shape_in_lights.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="figure.gif"
      ><IMG SRC="figure.gif"       WIDTH=100 HEIGHT=125
@@ -3769,7 +3769,7 @@ transparency is junked.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert sparse_source.gif   -channel RGBA -blur 0x15 \
+  magick sparse_source.gif   -channel RGBA -blur 0x15 \
           -alpha off  sparse_blur_simple.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="sparse_source.gif"
@@ -3798,10 +3798,10 @@ on top.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT sparse_blur_layered.png>
   for sigma in  64 32 16 8 4 2 1 0;  do
-    convert sparse_source.gif -depth 16 \
+    magick sparse_source.gif -depth 16 \
             -channel RGBA -blur 0x$sigma miff:-
   done |
-    convert - -background none -flatten -alpha off sparse_blur_layered.png
+    magick - -background none -flatten -alpha off sparse_blur_layered.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="sparse_source.gif"
      ><IMG SRC="sparse_source.gif"       WIDTH=100 HEIGHT=100
@@ -3826,7 +3826,7 @@ HREF="../blur/#blur_resize" >Large Blurs using Resize</A>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert sparse_source.gif \
+  magick sparse_source.gif \
           \( +clone -resize 50% \) \
           \( +clone -resize 50% \) \
           \( +clone -resize 50% \) \
@@ -3904,7 +3904,7 @@ to the far side producing a pink color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:none +antialias -fill none -strokewidth 0.5 \
+  magick -size 100x100 xc:none +antialias -fill none -strokewidth 0.5 \
           -stroke Red    -draw "path 'M 26,0  A 55,61 0 0,1 26,100'" \
           -stroke White  -draw "line 50,0  50,100" \
           sparse_lines_near_source.gif
@@ -3917,9 +3917,9 @@ to the far side producing a pink color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert sparse_lines_near_source.gif txt:- |\
+  magick sparse_lines_near_source.gif txt:- |\
     sed '1d; / 0) /d; s/:.* /,/;' |\
-      convert -size 100x100 xc: -sparse-color shepards '@-' \
+      magick -size 100x100 xc: -sparse-color shepards '@-' \
               sparse_lines_near.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="sparse_lines_near.png"
@@ -3970,9 +3970,9 @@ generate them.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100  plasma:  plasma1.jpg
-  convert -size 100x100  plasma:  plasma2.jpg
-  convert -size 100x100  plasma:  plasma3.jpg
+  magick -size 100x100  plasma:  plasma1.jpg
+  magick -size 100x100  plasma:  plasma2.jpg
+  magick -size 100x100  plasma:  plasma3.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="plasma1.jpg"
      ><IMG SRC="plasma1.jpg"       WIDTH=100 HEIGHT=100
@@ -3995,11 +3995,11 @@ in the exact same way as you can for linear gradients above.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100  plasma:blue              plasma_range1.jpg
-  convert -size 100x100  plasma:yellow            plasma_range2.jpg
-  convert -size 100x100  plasma:green-yellow      plasma_range3.jpg
-  convert -size 100x100  plasma:red-blue          plasma_range4.jpg
-  convert -size 100x100  plasma:tomato-steelblue  plasma_range5.jpg
+  magick -size 100x100  plasma:blue              plasma_range1.jpg
+  magick -size 100x100  plasma:yellow            plasma_range2.jpg
+  magick -size 100x100  plasma:green-yellow      plasma_range3.jpg
+  magick -size 100x100  plasma:red-blue          plasma_range4.jpg
+  magick -size 100x100  plasma:tomato-steelblue  plasma_range5.jpg
 </CODE></PRE></TD></TR></TABLE>
 <NOBR>
   <A HREF="plasma_range1.jpg"
@@ -4031,12 +4031,12 @@ of the original colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100  plasma:black-black          plasma_black.jpg
-  convert -size 100x100  plasma:grey-grey            plasma_grey.jpg
-  convert -size 100x100  plasma:white-white          plasma_white.jpg
-  convert -size 100x100  plasma:yellow-yellow        plasma_yellow.jpg
-  convert -size 100x100  plasma:tomato-tomato        plasma_tomato.jpg
-  convert -size 100x100  plasma:steelblue-steelblue  plasma_steelblue.jpg
+  magick -size 100x100  plasma:black-black          plasma_black.jpg
+  magick -size 100x100  plasma:grey-grey            plasma_grey.jpg
+  magick -size 100x100  plasma:white-white          plasma_white.jpg
+  magick -size 100x100  plasma:yellow-yellow        plasma_yellow.jpg
+  magick -size 100x100  plasma:tomato-tomato        plasma_tomato.jpg
+  magick -size 100x100  plasma:steelblue-steelblue  plasma_steelblue.jpg
 </CODE></PRE></TD></TR></TABLE>
 <NOBR>
   <A HREF="plasma_black.jpg"
@@ -4077,7 +4077,7 @@ black.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100  plasma:grey50-grey50 -auto-level plasma_grey_norm.jpg
+  magick -size 100x100  plasma:grey50-grey50 -auto-level plasma_grey_norm.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_grey_norm.jpg"
      ><IMG SRC="plasma_grey_norm.jpg"       WIDTH=100 HEIGHT=100
@@ -4092,7 +4092,7 @@ them bolder, but without going to extremes.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100  plasma:grey50-grey50 \
+  magick -size 100x100  plasma:grey50-grey50 \
                        -sigmoidal-contrast 8x50%   plasma_grey_contrast.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_grey_contrast.jpg"
@@ -4112,9 +4112,9 @@ exaggerated color changes. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100  plasma:fractal  plasma_fractal1.jpg
-  convert -size 100x100  plasma:fractal  plasma_fractal2.jpg
-  convert -size 100x100  plasma:fractal  plasma_fractal3.jpg
+  magick -size 100x100  plasma:fractal  plasma_fractal1.jpg
+  magick -size 100x100  plasma:fractal  plasma_fractal2.jpg
+  magick -size 100x100  plasma:fractal  plasma_fractal3.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="plasma_fractal1.jpg"
      ><IMG SRC="plasma_fractal1.jpg"       WIDTH=100 HEIGHT=100
@@ -4144,7 +4144,7 @@ Here I have have smoothed out the noise from the middle plasma image above.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert plasma_fractal2.jpg  -blur 0x2  plasma_smooth.jpg
+  magick plasma_fractal2.jpg  -blur 0x2  plasma_smooth.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_smooth.jpg"
      ><IMG SRC="plasma_smooth.jpg"       WIDTH=100 HEIGHT=100
@@ -4159,7 +4159,7 @@ create random blotches of color.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert plasma_fractal2.jpg  -blur 0x1 -paint 8  plasma_paint.jpg
+  magick plasma_fractal2.jpg  -blur 0x1 -paint 8  plasma_paint.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_paint.jpg"
      ><IMG SRC="plasma_paint.jpg"       WIDTH=100 HEIGHT=100
@@ -4176,7 +4176,7 @@ the low level noise.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert plasma_fractal2.jpg  -blur 0x5 -emboss 2 plasma_emboss.jpg
+  magick plasma_fractal2.jpg  -blur 0x5 -emboss 2 plasma_emboss.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_emboss.jpg"
      ><IMG SRC="plasma_emboss.jpg"       WIDTH=100 HEIGHT=100
@@ -4193,7 +4193,7 @@ produced with "<CODE><A HREF="../option_link.cgi?emboss" >-emboss</A></CODE>".
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert plasma_fractal2.jpg  -blur 0x5 -sharpen 0x15 plasma_sharp.jpg
+  magick plasma_fractal2.jpg  -blur 0x5 -sharpen 0x15 plasma_sharp.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_sharp.jpg"
      ><IMG SRC="plasma_sharp.jpg"       WIDTH=100 HEIGHT=100
@@ -4209,7 +4209,7 @@ as a background pattern.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 160x140  plasma:fractal \
+  magick -size 160x140  plasma:fractal \
           -blur 0x2  -swirl 180  -shave 20x20  plasma_swirl.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_swirl.jpg"
@@ -4231,7 +4231,7 @@ The simplest way is to take the plasma image and converted it to grey scale.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 plasma:fractal -blur 0x2 \
+  magick -size 100x100 plasma:fractal -blur 0x2 \
           -colorspace Gray   plasma_greyscale.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_greyscale.jpg"
@@ -4245,7 +4245,7 @@ stronger, single layer, effect.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 plasma:fractal -blur 0x2 \
+  magick -size 100x100 plasma:fractal -blur 0x2 \
           -channel G -separate   plasma_grey_copy.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_grey_copy.jpg"
@@ -4259,7 +4259,7 @@ A final technique is to use "<CODE><A HREF="../option_link.cgi?shade"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 plasma:fractal -blur 0x5 \
+  magick -size 100x100 plasma:fractal -blur 0x5 \
           -shade 120x45  -auto-level  plasma_grey_shade.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_grey_shade.jpg"
@@ -4280,15 +4280,15 @@ of the grey-scale plasma image generated.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 plasma:black-black \
+  magick -size 100x100 plasma:black-black \
            -blur 0x2 -colorspace Gray plasma_grey0.jpg
-  convert -size 100x100 plasma:grey25-grey25 \
+  magick -size 100x100 plasma:grey25-grey25 \
            -blur 0x2 -colorspace Gray plasma_grey1.jpg
-  convert -size 100x100 plasma:grey50-grey50 \
+  magick -size 100x100 plasma:grey50-grey50 \
            -blur 0x2 -colorspace Gray plasma_grey2.jpg
-  convert -size 100x100 plasma:grey75-grey75 \
+  magick -size 100x100 plasma:grey75-grey75 \
            -blur 0x2 -colorspace Gray plasma_grey3.jpg
-  convert -size 100x100 plasma:white-white   \
+  magick -size 100x100 plasma:white-white   \
            -blur 0x2 -colorspace Gray plasma_grey4.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="plasma_grey0.jpg"
@@ -4314,15 +4314,15 @@ the plasma image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 plasma:black-black   \
+  magick -size 100x100 plasma:black-black   \
           -blur 0x2  -channel G  -separate   plasma_grey5.jpg
-  convert -size 100x100 plasma:grey25-grey25 \
+  magick -size 100x100 plasma:grey25-grey25 \
           -blur 0x2  -channel G  -separate   plasma_grey6.jpg
-  convert -size 100x100 plasma:grey50-grey50 \
+  magick -size 100x100 plasma:grey50-grey50 \
           -blur 0x2  -channel G  -separate   plasma_grey7.jpg
-  convert -size 100x100 plasma:grey75-grey75 \
+  magick -size 100x100 plasma:grey75-grey75 \
           -blur 0x2  -channel G  -separate   plasma_grey8.jpg
-  convert -size 100x100 plasma:white-white   \
+  magick -size 100x100 plasma:white-white   \
           -blur 0x2  -channel G  -separate   plasma_grey9.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="plasma_grey5.jpg"
@@ -4373,19 +4373,19 @@ interesting coloration or effect, over and over.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 -seed 4321  plasma:    plasma_seeded.jpg
+  magick -size 100x100 -seed 4321  plasma:    plasma_seeded.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plasma_seeded.jpg"
      ><IMG SRC="plasma_seeded.jpg"       WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`compare -metric PAE plasma_seeded.jpg \
+  [ "`magick compare -metric PAE plasma_seeded.jpg \
                 ../images/plasma_seeded.jpg null: 2>&1 |\
          sed 's/ .*//'`" != '0' ] &&  echo >&2 \
     "ASSERTION FAILURE: Seeded Plasma Image Changed\!"
-  [ "`convert -size 100x100 -seed 1 plasma: -seed 1 plasma: miff:- | \
-      compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
+  [ "`magick -size 100x100 -seed 1 plasma: -seed 1 plasma: miff:- | \
+      magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
 \
     "ASSERTION FAILURE: Repeated Seeded Plasmas do not match\!"
 </CODE> -->
@@ -4401,11 +4401,11 @@ pattern.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 -seed 4321 plasma:grey-grey         plasma_rnd1.jpg
-  convert -size 100x100 -seed 4321 plasma:white-blue        plasma_rnd2.jpg
-  convert -size 100x100 -seed 4321 plasma:green-yellow      plasma_rnd3.jpg
-  convert -size 100x100 -seed 4321 plasma:red-blue          plasma_rnd4.jpg
-  convert -size 100x100 -seed 4321 plasma:tomato-steelblue  plasma_rnd5.jpg
+  magick -size 100x100 -seed 4321 plasma:grey-grey         plasma_rnd1.jpg
+  magick -size 100x100 -seed 4321 plasma:white-blue        plasma_rnd2.jpg
+  magick -size 100x100 -seed 4321 plasma:green-yellow      plasma_rnd3.jpg
+  magick -size 100x100 -seed 4321 plasma:red-blue          plasma_rnd4.jpg
+  magick -size 100x100 -seed 4321 plasma:tomato-steelblue  plasma_rnd5.jpg
 </CODE></PRE></TD></TR></TABLE>
 <NOBR>
   <A HREF="plasma_rnd1.jpg"
@@ -4461,7 +4461,7 @@ effects, pulling the colors out into needle-like streaks.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 200x50 plasma:  plasma_high_aspect.jpg
+  magick -size 200x50 plasma:  plasma_high_aspect.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="plasma_high_aspect.jpg"
      ><IMG SRC="plasma_high_aspect.jpg"       WIDTH=200 HEIGHT=50
@@ -4481,7 +4481,7 @@ see a distinct 'V' in the resulting image...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 60x60 plasma: \( +clone -flop \) +append plasma_flaw.jpg
+  magick -size 60x60 plasma: \( +clone -flop \) +append plasma_flaw.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="plasma_flaw.jpg"
      ><IMG SRC="plasma_flaw.jpg"       WIDTH=120 HEIGHT=60
@@ -4510,7 +4510,7 @@ using Noise Generator, "<CODE><A HREF="../option_link.cgi?noise"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 xc:   +noise Random   random.png
+  magick -size 100x100 xc:   +noise Random   random.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random.png"
      ><IMG SRC="random.png"       WIDTH=100 HEIGHT=100
@@ -4526,7 +4526,7 @@ HREF="../option_link.cgi?fx" >-fx</A></CODE>".
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 xc: -fx 'rand()'   random_fx.png
+  magick -size 100x100 xc: -fx 'rand()'   random_fx.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_fx.png"
      ><IMG SRC="random_fx.png"       WIDTH=100 HEIGHT=100
@@ -4542,7 +4542,7 @@ three color channels) or by using some other image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 gradient: -separate \
+  magick -size 100x100 gradient: -separate \
           -virtual-pixel tile   -spread 200   -combine  random_spread.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_spread.png"
@@ -4574,7 +4574,7 @@ image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random.png  -channel G -threshold 5% -separate \
+  magick random.png  -channel G -threshold 5% -separate \
           +channel -negate    random_mask.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_mask.png"
@@ -4593,15 +4593,15 @@ HREF="../compose/#compose" >Image Composition</A> methods.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random.png   -channel G -threshold 5% -negate \
+  magick random.png   -channel G -threshold 5% -negate \
           -channel RG -separate +channel \
-          -compose Multiply    -composite   random_black.png
-  convert random.png   -channel G -threshold 5% \
+          -compose Multiply    -magick composite   random_black.png
+  magick random.png   -channel G -threshold 5% \
           -channel RG -separate +channel \
-          -compose Screen      -composite   random_white.png
-  convert random.png   -channel G -threshold 5% -negate \
+          -compose Screen      -magick composite   random_white.png
+  magick random.png   -channel G -threshold 5% -negate \
           -channel RG -separate +channel \
-          -compose CopyOpacity -composite   random_trans.png
+          -compose CopyOpacity -magick composite   random_trans.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="random.png"
      ><IMG SRC="random.png"       WIDTH=100 HEIGHT=100
@@ -4626,9 +4626,9 @@ from those dots.  For examples see <A HREF="../advanced/#stars" >Star
 Generators</A>. </P>
 
 <!-- <CODE EXECUTE ASSERT>
-  [ "`convert -size 100x100 xc: -seed 11 +noise Random \
+  [ "`magick -size 100x100 xc: -seed 11 +noise Random \
                       \( +clone -seed 11 +noise Random \) miff:- | \
-      compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
+      magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
 \
     "ASSERTION FAILURE: Seeded Random Images do not match"
 </CODE> -->
@@ -4653,12 +4653,12 @@ produce larger 'blobs' or mottled colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random.png -virtual-pixel tile  -blur 0x1  -auto-level  random_1.png
-  convert random.png -virtual-pixel tile  -blur 0x3  -auto-level  random_3.png
-  convert random.png -virtual-pixel tile  -blur 0x5  -auto-level  random_5.png
-  convert random.png -virtual-pixel tile  -blur 0x10 -auto-level  
+  magick random.png -virtual-pixel tile  -blur 0x1  -auto-level  random_1.png
+  magick random.png -virtual-pixel tile  -blur 0x3  -auto-level  random_3.png
+  magick random.png -virtual-pixel tile  -blur 0x5  -auto-level  random_5.png
+  magick random.png -virtual-pixel tile  -blur 0x10 -auto-level  
 random_10.png
-  convert random.png -virtual-pixel tile  -blur 0x20 -auto-level  
+  magick random.png -virtual-pixel tile  -blur 0x20 -auto-level  
 random_20.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="random.png"
@@ -4704,7 +4704,7 @@ particularly pleasing is to map the values into HSB color hues.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert random_10.png -set colorspace HSB \
+  magick random_10.png -set colorspace HSB \
           -channel GB -evaluate set 100% +channel \
           -colorspace RGB random_hues_cyan.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4733,7 +4733,7 @@ colors. <I>Anyone got a better idea?</I>
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert random_10.png -separate -background white \
+  magick random_10.png -separate -background white \
           -compose ModulusAdd -flatten -channel R -combine +channel \
           -set colorspace HSB -colorspace RGB random_hues.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4759,12 +4759,12 @@ structure of the blurred image...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random.png     -channel G  -separate   random_0_gray.png
-  convert random_1.png   -channel G  -separate   random_1_gray.png
-  convert random_3.png   -channel G  -separate   random_3_gray.png
-  convert random_5.png   -channel G  -separate   random_5_gray.png
-  convert random_10.png  -channel G  -separate   random_10_gray.png
-  convert random_20.png  -channel G  -separate   random_20_gray.png
+  magick random.png     -channel G  -separate   random_0_gray.png
+  magick random_1.png   -channel G  -separate   random_1_gray.png
+  magick random_3.png   -channel G  -separate   random_3_gray.png
+  magick random_5.png   -channel G  -separate   random_5_gray.png
+  magick random_10.png  -channel G  -separate   random_10_gray.png
+  magick random_20.png  -channel G  -separate   random_20_gray.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="random_0_gray.png"
      ><IMG SRC="random_0_gray.png"      WIDTH=100 HEIGHT=100
@@ -4794,12 +4794,12 @@ images at 50%
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random_0_gray.png   -threshold 50%   random_0_thres.png
-  convert random_1_gray.png   -threshold 50%   random_1_thres.png
-  convert random_3_gray.png   -threshold 50%   random_3_thres.png
-  convert random_5_gray.png   -threshold 50%   random_5_thres.png
-  convert random_10_gray.png  -threshold 50%   random_10_thres.png
-  convert random_20_gray.png  -threshold 50%   random_20_thres.png
+  magick random_0_gray.png   -threshold 50%   random_0_thres.png
+  magick random_1_gray.png   -threshold 50%   random_1_thres.png
+  magick random_3_gray.png   -threshold 50%   random_3_thres.png
+  magick random_5_gray.png   -threshold 50%   random_5_thres.png
+  magick random_10_gray.png  -threshold 50%   random_10_thres.png
+  magick random_20_gray.png  -threshold 50%   random_20_thres.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="random_0_thres.png"
      ><IMG SRC="random_0_thres.png"      WIDTH=100 HEIGHT=100
@@ -4850,7 +4850,7 @@ from scratch...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE ALREADY_EXECUTED>
-  convert -size 100x100 xc:  -channel G +noise Random \
+  magick -size 100x100 xc:  -channel G +noise Random \
          -virtual-pixel Tile -blur 0x5 -auto-level \
           -separate +channel   random_5_gray.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4884,7 +4884,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random_5_gray.png  -ordered-dither threshold,3  random_5_blobs.png
+  magick random_5_gray.png  -ordered-dither threshold,3  random_5_blobs.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_5_blobs.png"
      ><IMG SRC="random_5_blobs.png"       WIDTH=100 HEIGHT=100
@@ -4949,7 +4949,7 @@ and white parts of the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 100x100 xc: -channel G +noise random \
+  magick -size 100x100 xc: -channel G +noise random \
           -virtual-pixel tile -blur 0x8 -auto-level  \
           -solarize 50% -separate +channel \
           -threshold 25% -negate   random_granules.png
@@ -5001,7 +5001,7 @@ Here is an idea that allows you to generate such a random pattern. </P>
 
 Rather than think of each random pixel value as being a random intensity, we
 instead think of that value being a 'time' value defining when that pixel is
-at its maximum or minimum intensity.  That is, we convert that value into
+at its maximum or minimum intensity.  That is, we magick that value into
 a position on a 'wave'. Thus each pixel represents some 'phase' of a sine
 curve. </P>
 
@@ -5014,7 +5014,7 @@ point in the time cycle.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert random.png   -function Sinusoid 1,<I>{time}</I> \
+  magick random.png   -function Sinusoid 1,<I>{time}</I> \
           ... do granular blurring,  and other processing ...
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
@@ -5039,7 +5039,7 @@ For example lets generate a time sequence of 12 images...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for i in `seq 0 30 359`; do
-    convert random.png  -channel G  -function Sinusoid 1,${i} \
+    magick random.png  -channel G  -function Sinusoid 1,${i} \
             -virtual-pixel tile -blur 0x8 -auto-level \
             -separate flux_${i}.png
   done
@@ -5123,7 +5123,7 @@ In other words the white and black granules move in far more complex cycle.
 
 
 <!-- <CODE EXECUTE>
-  convert flux_{?,??,???}.png -set delay 20 -loop 0 flux_anim.gif
+  magick flux_{?,??,???}.png -set delay 20 -loop 0 flux_anim.gif
 </CODE> -->
   <A HREF="flux_anim.gif"
      ><IMG SRC="flux_anim.gif"      WIDTH=100 HEIGHT=100
@@ -5166,12 +5166,12 @@ Animation</I>' </P>
 For example, lets just show the movement of just the 'white' granules...
 
 <!-- <CODE EXECUTE>
-  convert flux_{?,??,???}.png -threshold 70% \
+  magick flux_{?,??,???}.png -threshold 70% \
           -set delay 20 -loop 0 flux_thres_anim.gif
 </CODE> -->
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTED_ABOVE>
-  convert flux_anim.gif -threshold 70% flux_thres_anim.gif
+  magick flux_anim.gif -threshold 70% flux_thres_anim.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="flux_thres_anim.gif"
      ><IMG SRC="flux_thres_anim.gif"       WIDTH=100 HEIGHT=100
@@ -5181,7 +5181,7 @@ For example, lets just show the movement of just the 'white' granules...
 Or generate changing electrical filaments that slowly flow over the image.
 
 <!-- <CODE EXECUTE>
-  convert flux_{?,??,???}.png \
+  magick flux_{?,??,???}.png \
           -sigmoidal-contrast 30x50% -solarize 50% -auto-level \
           -set delay 20 -loop 0 filaments_anim.gif
 </CODE> -->
@@ -5189,7 +5189,7 @@ Or generate changing electrical filaments that slowly flow over the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTED_ABOVE>
-  convert flux_anim.gif  \
+  magick flux_anim.gif  \
           -sigmoidal-contrast 30x50% -solarize 50% -auto-level \
           -set delay 20 filaments_anim.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -5239,10 +5239,10 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random_10_gray.png  -function Sinusoid 1,90   ripples_1.png
-  convert random_10_gray.png  -function Sinusoid 2,90   ripples_2.png
-  convert random_10_gray.png  -function Sinusoid 3,90   ripples_3.png
-  convert random_10_gray.png  -function Sinusoid 4,90   ripples_4.png
+  magick random_10_gray.png  -function Sinusoid 1,90   ripples_1.png
+  magick random_10_gray.png  -function Sinusoid 2,90   ripples_2.png
+  magick random_10_gray.png  -function Sinusoid 3,90   ripples_3.png
+  magick random_10_gray.png  -function Sinusoid 4,90   ripples_4.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="random_10_gray.png"
      ><IMG SRC="random_10_gray.png"      WIDTH=100 HEIGHT=100
@@ -5266,7 +5266,7 @@ As you can see the larger the '<I>Frequency</I>' of the <A
 HREF="../transform/#function_sinusoid" >Sinusoid Function</A>, the more
 ripples are being added into the gradient between the 'granules'. </P>
 
-A '<I>Frequency</I>' of '<CODE>1</CODE>' will basically convert both the Light
+A '<I>Frequency</I>' of '<CODE>1</CODE>' will basically magick both the Light
 and Dark 'blobs' in the source image to white, and leave a dark gap between
 them.  A '<I>Frequency</I>' of '<CODE>2</CODE>' squeezes an extra 'ridge' or
 'ripple' in that dark gap.  As the frequency increases you get more and more
@@ -5284,10 +5284,10 @@ between the ripples. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random_10_gray.png        -level 25%            random_enhanced.png
-  convert random_enhanced.png  -function Sinusoid 4,90    ripples_4e.png
-  convert random_10_gray.png   -sigmoidal-contrast 10,50% random_sigmoidal.png
-  convert random_sigmoidal.png -function Sinusoid 4,90    ripples_4s.png
+  magick random_10_gray.png        -level 25%            random_enhanced.png
+  magick random_enhanced.png  -function Sinusoid 4,90    ripples_4e.png
+  magick random_10_gray.png   -sigmoidal-contrast 10,50% random_sigmoidal.png
+  magick random_sigmoidal.png -function Sinusoid 4,90    ripples_4s.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0><TR>
 <TD ROWSPAN=2>
@@ -5329,10 +5329,10 @@ become in the 'rippled' image. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random_enhanced.png  -function Sinusoid 3,0     ripples_3e000.png
-  convert random_enhanced.png  -function Sinusoid 3,90    ripples_3e090.png
-  convert random_enhanced.png  -function Sinusoid 3,180   ripples_3e180.png
-  convert random_enhanced.png  -function Sinusoid 3,270   ripples_3e270.png
+  magick random_enhanced.png  -function Sinusoid 3,0     ripples_3e000.png
+  magick random_enhanced.png  -function Sinusoid 3,90    ripples_3e090.png
+  magick random_enhanced.png  -function Sinusoid 3,180   ripples_3e180.png
+  magick random_enhanced.png  -function Sinusoid 3,270   ripples_3e270.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="random_enhanced.png"
      ><IMG SRC="random_enhanced.png"      WIDTH=100 HEIGHT=100
@@ -5367,7 +5367,7 @@ However if you apply a fractional '<I>Frequency</I>' value of say
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert random_enhanced.png  -function Sinusoid 3.5,90    ripples_3.5e.png
+  magick random_enhanced.png  -function Sinusoid 3.5,90    ripples_3.5e.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="ripples_3.5e.png"
      ><IMG SRC="ripples_3.5e.png"       WIDTH=100 HEIGHT=100
@@ -5408,9 +5408,9 @@ any contrast enhancement.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=ripples_anim.gif>
   for i in `seq 0 30 359`; do
-    convert random_10_gray.png -function Sinusoid 3.5,${i} miff:-
+    magick random_10_gray.png -function Sinusoid 3.5,${i} miff:-
   done |
-    convert miff:- -set delay 15 -loop 0 ripples_anim.gif
+    magick miff:- -set delay 15 -loop 0 ripples_anim.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="ripples_anim.gif"
      ><IMG SRC="ripples_anim.gif"       WIDTH=100 HEIGHT=100
@@ -5441,19 +5441,19 @@ Animation</A> created above, and add ripples to it.  The ripples will in this
 case move only because the gradient in the flux animation moves.
 
 <!-- <CODE EXECUTE>
-  convert flux_{?,??,???}.png -function Sinusoid 3.5,0 \
+  magick flux_{?,??,???}.png -function Sinusoid 3.5,0 \
           -set delay 20 -loop 0  flux_rippled_anim.gif
 </CODE> -->
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTED_ABOVE>
-  convert flux_anim.gif -function Sinusoid 3.5,0 flux_rippled_anim.gif
+  magick flux_anim.gif -function Sinusoid 3.5,0 flux_rippled_anim.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="flux_rippled_anim.gif"
      ><IMG SRC="flux_rippled_anim.gif"       WIDTH=100 HEIGHT=100
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-You can also animate the ripples within the animation. Though you may need to
+You can also magick animate the ripples within the animation. Though you may need to
 use a much larger 'phase cycle rate' (the 'j = 5 * i' expression) for the
 ripples themselves.  Also as you are generating a cycle within a cycle, you
 will need to generate a much longer animation 60 frames in this case. However
@@ -5465,13 +5465,13 @@ that has the benefit of slowing the larger 'flux' movements down too.
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=ripples_flux_anim.gif>
   for i in `seq 0 10 359`; do
     j=`expr $i \* 5`
-    convert random.png -channel G \
+    magick random.png -channel G \
             -function Sinusoid 1,${i} \
             -virtual-pixel tile -blur 0x8 -auto-level \
             -function Sinusoid 2.5,${j} \
             -separate +channel miff:-
   done |
-    convert miff:- -set delay 15 -loop 0 ripples_flux_anim.gif
+    magick miff:- -set delay 15 -loop 0 ripples_flux_anim.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="ripples_flux_anim.gif"
      ><IMG SRC="ripples_flux_anim.gif"       WIDTH=100 HEIGHT=100
@@ -5552,7 +5552,7 @@ HREF="../compose/#tile" >Tile Compositing</A>).
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -tile tile_weave.gif -size 60x60  xc:none   tile_copy.gif
+  magick composite -tile tile_weave.gif -size 60x60  xc:none   tile_copy.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tile_copy.gif"
      ><IMG SRC="tile_copy.gif"       WIDTH=60 HEIGHT=60
@@ -5567,7 +5567,7 @@ and tile it to a specific size.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 tile:bg.gif  tile_size.gif
+  magick -size 60x60 tile:bg.gif  tile_size.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tile_size.gif"
      ><IMG SRC="tile_size.gif"       WIDTH=60 HEIGHT=60
@@ -5604,8 +5604,8 @@ create for the overlay.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -size 200x200 tile:tile_disks.jpg \
-          -composite  tile_over.gif
+  magick test.png -size 200x200 tile:tile_disks.jpg \
+          -magick composite  tile_over.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tile_over.gif"
      ><IMG SRC="tile_over.gif"       WIDTH=150 HEIGHT=100
@@ -5626,7 +5626,7 @@ See <A HREF="../draw/#settings" >MVG Drawing Settings</A>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 xc: -tile tile_aqua.jpg \
+  magick -size 60x60 xc: -tile tile_aqua.jpg \
           -draw "circle 30,30 2,30"   tile_draw.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tile_draw.gif"
@@ -5654,7 +5654,7 @@ tile pattern (if set).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=bottom><TD><PRE><CODE EXECUTE>
-  convert test.png   -tile tile_water.jpg  -draw "color 0,0 reset" \
+  magick test.png   -tile tile_water.jpg  -draw "color 0,0 reset" \
           tile_reset.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tile_reset.gif"
@@ -5684,7 +5684,7 @@ canvas.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -set option:distort:viewport '%g' +delete  \
+  magick rose: -set option:distort:viewport '%g' +delete  \
           tree.gif -virtual-pixel tile -filter point -distort SRT 0 \
           tile_distort_sized.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -5712,8 +5712,8 @@ canvas image using "<CODE>tile:</CODE>" or "<CODE>pattern:</CODE>".
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x80 -tile-offset +30+30 tile:rose:  offset_tile.gif
-  convert -size 80x80 -tile-offset +20+20 \
+  magick -size 80x80 -tile-offset +30+30 tile:rose:  offset_tile.gif
+  magick -size 80x80 -tile-offset +20+20 \
                                  pattern:checkerboard offset_pattern.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="offset_tile.gif"
@@ -5745,7 +5745,7 @@ setting.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage tree.gif     -geometry +24+24 \
+  magick montage tree.gif     -geometry +24+24 \
           -tile-offset +30+30 -texture rose: offset_texture.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="offset_texture.gif"
@@ -5763,7 +5763,7 @@ HREF="../../option_link.cgi?fill" >-fill</A></CODE>" setting.  For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -tile-offset +30+30  -tile rose: \
+  magick -tile-offset +30+30  -tile rose: \
           -size 80x80 xc: -draw 'color 30,20 reset'    offset_tile_fill.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="offset_tile_fill.gif"
@@ -5782,7 +5782,7 @@ above using a '<CODE>checkerboard</CODE>' tile pattern.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -tile-offset +20+20 -tile pattern:checkerboard \
+  magick -tile-offset +20+20 -tile pattern:checkerboard \
           -size 80x80  xc: -draw 'color 30,20 reset'  offset_pattern_fail.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="offset_pattern_fail.gif"
@@ -5824,7 +5824,7 @@ legacy option handling.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x80  xc: \
+  magick -size 80x80  xc: \
           -tile-offset +20+20 +size -tile pattern:checkerboard \
           -draw 'color 30,20 reset'  offset_pattern_good.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -5855,7 +5855,7 @@ For example here we tile the image in a 3x3 array.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif \
+  magick tree.gif \
           \( +clone +clone \) +append \
           \( +clone +clone \) -append \
           tile_clone.gif
@@ -5872,7 +5872,7 @@ This method of tiling has the advantage of allowing you to flip-tile
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif \
+  magick tree.gif \
           \( +clone -flop +clone \) +append \
           \( +clone -flip +clone \) -append \
           tile_clone_flip.gif
@@ -5907,7 +5907,7 @@ size...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif   -write mpr:tile +delete \
+  magick tree.gif   -write mpr:tile +delete \
           -size 100x100 tile:mpr:tile    tile_mpr.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tile_mpr.gif"
@@ -5935,7 +5935,7 @@ reset (see <A HREF="../draw/#color" >Color Fill Primitives</A>)...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -write mpr:tile +delete \
+  magick tree.gif  -write mpr:tile +delete \
           granite: -fill mpr:tile  -draw 'color 0,0 reset' \
           tile_mpr_reset.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -5963,7 +5963,7 @@ such as a circle, using the fill pattern.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif -write mpr:tile +delete \
+  magick tree.gif -write mpr:tile +delete \
           granite:  -tile mpr:tile  -draw 'circle 64,64 10,50' \
           tile_mpr_fill.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -5994,7 +5994,7 @@ HREF="../distorts/#distort_viewport" >Distort Viewport</A> setting.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif -set option:distort:viewport 100x100+0+0 \
+  magick tree.gif -set option:distort:viewport 100x100+0+0 \
           -virtual-pixel tile -filter point  -distort SRT 0 \
           tile_distort.gif
 </CODE></PRE></TD></TR></TABLE>&nbsp;</TD><TD>
@@ -6013,7 +6013,7 @@ tiling control using the viewport setting.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif -set option:distort:viewport 100x100-10-10 \
+  magick tree.gif -set option:distort:viewport 100x100-10-10 \
           -background firebrick  -virtual-pixel CheckerTile \
           -distort SRT 0 +repage    tile_distort_checks.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6038,7 +6038,7 @@ the tree tile. The rest just follows from this.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif -set option:distort:viewport 100x100-50-50 \
+  magick tree.gif -set option:distort:viewport 100x100-50-50 \
           -virtual-pixel tile  -distort Arc '45 0 50' +repage \
           tile_distort_polar.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6052,7 +6052,7 @@ the tree tile. The rest just follows from this.
 <H3>Modifying Built-in IM Patterns/Tiles</H3>
 
 See the full list of <A
-HREF="https://legacy.imagemagick.org/script/formats.php#builtin-images"
+HREF="https://imagemagick.org/script/formats.php#builtin-images"
 >ImageMagick Built In Images and Patterns</A>. There are a lot of such
 patterns, but I'll only look at one or two here. </P>
 
@@ -6065,7 +6065,7 @@ patterns that is provided...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  pattern:checkerboard  pattern_default.gif
+  magick pattern:checkerboard  pattern_default.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="pattern_default.gif"
      ><IMG SRC="pattern_default.gif"    WIDTH=30 HEIGHT=30
@@ -6089,7 +6089,7 @@ Here is one pattern I particularly like to use as a tile pattern...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 pattern:hexagons  pattern_hexagons.gif
+  magick -size 60x60 pattern:hexagons  pattern_hexagons.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="pattern_hexagons.gif"
      ><IMG SRC="pattern_hexagons.gif"       WIDTH=60 HEIGHT=60
@@ -6104,7 +6104,7 @@ operator.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 pattern:hexagons \
+  magick -size 60x60 pattern:hexagons \
           -fill blue -opaque black   -fill skyblue -opaque white \
           pattern_colored.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6126,7 +6126,7 @@ to use.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 pattern:checkerboard -auto-level \
+  magick -size 60x60 pattern:checkerboard -auto-level \
           +level-colors red,blue     pattern_color_checks.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="pattern_color_checks.gif"
@@ -6144,14 +6144,14 @@ with the regular pattern of colors I wanted.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 30x54 pattern:hexagons \
+  magick -size 30x54 pattern:hexagons \
           -fill tomato     -opaque white \
           -fill dodgerblue -draw 'color 10,10 floodfill' \
           -fill limegreen  -draw 'color 10,25 floodfill' \
           -roll +15+27 \
           -fill dodgerblue -draw 'color 10,10 floodfill' \
           -fill limegreen  -draw 'color 10,25 floodfill'   miff:- |\
-    convert -size 100x100 tile:- pattern_color_hexagons.gif
+    magick -size 100x100 tile:- pattern_color_hexagons.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="pattern_color_hexagons.gif"
      ><IMG SRC="pattern_color_hexagons.gif"       WIDTH=100 HEIGHT=100
@@ -6173,7 +6173,7 @@ Generator</A>) on a hexagon pattern I found particularly interesting
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 160x100 pattern:hexagons \
+  magick -size 160x100 pattern:hexagons \
           -wave 3x100 -background white -rotate 90 -wave 4x66 -rotate -87 \
           -gravity center -crop 120x90+0+0 +repage   pattern_distorted.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -6200,10 +6200,10 @@ lines.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pattern:hexagons  -rotate 90 \
+  magick pattern:hexagons  -rotate 90 \
           -blur 0x1  -edge 1  -negate  -shade 120x45 \
           miff:- |\
-    convert  -size 100x100 tile:-   tile_mod_failure.jpg
+    magick -size 100x100 tile:-   tile_mod_failure.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="tile_mod_failure.jpg"
@@ -6227,10 +6227,10 @@ actual image proper.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pattern:hexagons  -rotate 90  -virtual-pixel tile \
+  magick pattern:hexagons  -rotate 90  -virtual-pixel tile \
           -blur 0x1  -edge 1  -negate  -shade 120x45 \
           miff:- |\
-     convert  -size 100x100 tile:-   tile_mod_vpixels.jpg
+     magick -size 100x100 tile:-   tile_mod_vpixels.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="tile_mod_vpixels.jpg"
@@ -6245,10 +6245,10 @@ use various effects to create unusual brick wall tile.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pattern:leftshingle pattern:rightshingle +append \
+  magick pattern:leftshingle pattern:rightshingle +append \
           -virtual-pixel tile  -blur 0x0.75 -resize 150% -shade 100x45 \
           -fill Peru  -tint 100%   miff:- |\
-    convert  -size 100x100 tile:-   tile_slanted_bricks.jpg
+    magick -size 100x100 tile:-   tile_slanted_bricks.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="tile_slanted_bricks.jpg"
@@ -6283,10 +6283,10 @@ For example here I create a 3d "<CODE><A HREF="../option_link.cgi?shade"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 tile:pattern:hexagons  -rotate 90 \
+  magick -size 60x60 tile:pattern:hexagons  -rotate 90 \
           -blur 0x1  -edge 1  -negate  -shade 120x45 \
           -gravity center -crop 18x30+0+0 +repage miff:- |\
-    convert  -size 100x100 tile:-   tile_mod_success.jpg
+    magick -size 100x100 tile:-   tile_mod_success.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="tile_mod_success.jpg"
@@ -6307,10 +6307,10 @@ no need to know the exact size of the tile you are processing.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert pattern:circles \( +clone \) +append \( +clone \) -append \
+  magick pattern:circles \( +clone \) +append \( +clone \) -append \
           -fill grey -opaque black  -blur 0x0.5 -shade 120x45 \
           -gravity center -crop 50%  +repage    miff:- |\
-    convert  -size 100x100 tile:-   tile_circles.jpg
+    magick -size 100x100 tile:-   tile_circles.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="tile_circles.jpg"
@@ -6379,10 +6379,10 @@ technique we used in the last example.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -size 64x64 xc: +noise Random \
+<r>  magick -size 64x64 xc: +noise Random \
           -virtual-pixel tile -blur 0x6 -auto-level  tile_random.jpg
 
-  convert -size 128x128   tile:tile_random.jpg   tiled_random.jpg
+  magick -size 128x128   tile:tile_random.jpg   tiled_random.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center>
   <A HREF="tile_random.jpg"
@@ -6402,11 +6402,11 @@ random noise image image.   For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -size 64x64 xc: +noise Random \
+<r>  magick -size 64x64 xc: +noise Random \
           -virtual-pixel tile  -blur 0x6  -edge 1  -fx G \
           -shade 280x45  -auto-level  tile_random_pits.jpg
 
-  convert -size 128x128 tile:tile_random_pits.jpg tiled_random_pits.jpg
+  magick -size 128x128 tile:tile_random_pits.jpg tiled_random_pits.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center>
   <A HREF="tile_random_pits.jpg"
@@ -6444,9 +6444,9 @@ This is the same sort of tiling effect we get when we tile the special
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  pattern:hexagons  tile_hexagons.gif
+  magick pattern:hexagons  tile_hexagons.gif
 
-  convert  -size 64x64  pattern:hexagons  tiled_hexagons.gif
+  magick -size 64x64  pattern:hexagons  tiled_hexagons.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center>
   <A HREF="tile_hexagons.gif"
@@ -6478,14 +6478,14 @@ to generate a rather nice looking hexagonal tile pattern.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -size 48x64 xc: +noise Random  -write mpr:rand \
+<r>  magick -size 48x64 xc: +noise Random  -write mpr:rand \
           -extent 96x64  -page +48-32 mpr:rand  -page +48+32 mpr:rand \
           -flatten          tile_hex_random.jpg
 
-  convert tile_hex_random.jpg -virtual-pixel tile -blur 0x10 -paint 3 \
+  magick tile_hex_random.jpg -virtual-pixel tile -blur 0x10 -paint 3 \
           -shade 280x45 -auto-level  tile_hex_layered.jpg
 
-  convert -size 160x160  tile:tile_hex_layered.jpg  tiled_hex_layered.jpg
+  magick -size 160x160  tile:tile_hex_layered.jpg  tiled_hex_layered.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center>
   <A HREF="tile_hex_layered.jpg"
@@ -6557,9 +6557,9 @@ larger canvas (6 times larger) to produce the triple image hex pattern. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 24x24 xc: -draw "rectangle 3,11 20,12"  tile_line.gif
+  magick -size 24x24 xc: -draw "rectangle 3,11 20,12"  tile_line.gif
 
-  convert tile_line.gif   -gravity center\
+  magick tile_line.gif   -gravity center\
           \( +clone -rotate    0 -crop 24x18+0+0 -write mpr:r1 +delete \) \
           \( +clone -rotate  120 -crop 24x18+0+0 -write mpr:r2 +delete \) \
                     -rotate -120 -crop 24x18+0+0 -write mpr:r3 +repage \
@@ -6569,7 +6569,7 @@ larger canvas (6 times larger) to produce the triple image hex pattern. </P>
           -page +36+18 mpr:r3  -page +60+18 mpr:r1 \
           -flatten tile_hex_lines.jpg
 
-  convert -size 120x120  tile:tile_hex_lines.jpg  tiled_hex_lines.jpg
+  magick -size 120x120  tile:tile_hex_lines.jpg  tiled_hex_lines.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center>
   <A HREF="tile_line.gif"
@@ -6596,7 +6596,7 @@ mirrored.  This is not an easy task. </P>
 <A NAME="tile_diagonal"></A>
 <H3>Diagonal Mirror Tiling</H3>
 
-Here is one way to take any square image and convert it into 8 mirrored images
+Here is one way to take any square image and magick it into 8 mirrored images
 around a central point.  Specifically we are generating a complex '<B>p4m</B>'
 tiling pattern. </P>
 
@@ -6608,14 +6608,14 @@ and vertically.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 50x50 xc: +noise Random -virtual-pixel Tile -blur 0x5 \
+  magick -size 50x50 xc: +noise Random -virtual-pixel Tile -blur 0x5 \
           -auto-level -separate -background white \
           -compose ModulusAdd -flatten -channel R -combine +channel \
           -set colorspace HSB -colorspace RGB   tile_diag_source.jpg
 
-  convert tile_diag_source.jpg     \( +clone -transpose \) \
+  magick tile_diag_source.jpg     \( +clone -transpose \) \
           \( +clone -sparse-color voronoi '%w,0 white 0,%h black' \) \
-          -composite \
+          -magick composite \
           \( +clone -flop -chop 1x0 \) +append \
           \( +clone -flip -chop 0x1 \) -append \
           tile_diag_mirror.jpg
@@ -6652,9 +6652,9 @@ to get a 'clipped look' along the mirror lines, but a smoother transition.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 51x51 xc: +noise Random   \( +clone -transpose \) \
+  magick -size 51x51 xc: +noise Random   \( +clone -transpose \) \
           \( +clone -sparse-color voronoi '%w,0 white 0,%h black' \) \
-          -composite \
+          -magick composite \
           \( +clone -flop -chop 1x0 \) +append \
           \( +clone -flip -chop 0x1 \) -append \
           -chop 1x1 \
@@ -6671,7 +6671,7 @@ to get a 'clipped look' along the mirror lines, but a smoother transition.
 </TD></TR></TABLE></P>
 
 The first part is the generation of the 'tiling of the random data' the second
-half I convert the random data into a 'hues' mapping. </P>
+half I magick the random data into a 'hues' mapping. </P>
 
 I also added the extra pixel to the initial image which will be later choped
 as appropiate to generate a tiling image. </P>
@@ -6698,9 +6698,9 @@ image, to produce a smooth result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 50x50 xc: +noise Random   \( +clone -transpose \) \
+  magick -size 50x50 xc: +noise Random   \( +clone -transpose \) \
           \( +clone -sparse-color voronoi '%w,0 white 0,%h black' \) \
-          -composite \
+          -magick composite \
           \( +clone -rotate -90 \) +append \
           \( +clone -rotate 180 \) -append \
           \
@@ -6731,6 +6731,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/canvas/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/canvas/</CODE>
 </ADDRESS></BODY></HTML>
 

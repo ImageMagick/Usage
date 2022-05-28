@@ -178,7 +178,7 @@ EOF
 # Put it all together...
 eval "convert -size ${width}x${height} -background None mvg:<(draw_base) \
         \( mvg:<(draw_glass_shading) -background black -alpha shape \
-        \) -composite \
+        \) -magick composite \
         -draw @<(draw_glass_edges) \
         \
         -trim +repage \
@@ -201,6 +201,6 @@ exit 0
         \
         $(label_image) \
         -background none -gravity center -extent ${width}x${height} \
-        -composite -bordercolor $background -border 0 \
+        -magick composite -bordercolor $background -border 0 \
         "${2:-"show:"}"
 

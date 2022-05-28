@@ -2,7 +2,7 @@
 #
 #  show_fonts [options]  {font.ttf}...
 #
-# Given a list of True Type fonts (.ttf files), draw and display them in
+# Given a list of True Type fonts (.ttf files), draw and magick display them in
 # a ImageMagick "display" window.   This allows you to quickly look at a
 # whole directory of fonts to pick which one you want to use.
 #
@@ -13,7 +13,7 @@
 # OPTIONS:
 #     -l label   Use fonts on this string (%s = font name)
 #     -o image   Output file (default: on screen, %d = page num)
-#     -U set     font section to display from 'graphics_utf' EG "ascii+meta"
+#     -U set     font section to magick display from 'graphics_utf' EG "ascii+meta"
 #     -a         auto-level the font image before montaging
 #     -p psize   Pointsize for font
 #     -1         For TTF input show the IM font example image
@@ -146,7 +146,7 @@ for file in "$@"; do
 done
 
 if [ "$count" -eq 0 ]; then
-  echo >&2 "$PROGNAME:  No fonts to display -- ABORTING"
+  echo >&2 "$PROGNAME:  No fonts to magick display -- ABORTING"
   exit 1
 fi
 
@@ -162,7 +162,7 @@ tile=1x
 # 0)  # rough calculations of the resulting size in one column
 #     h=`expr $count \* \( $pt_font + $pt_label + 12 \)`
 #     w=`expr $pt_font \* 16`   # this gets quite wrong at times !
-#     # currently assumes a  1600 x 1200 pixel  display screen
+#     # currently assumes a  1600 x 1200 pixel  magick display screen
 #     [ "$w" -lt 700 -a $count -gt 1 ] && tile=2x
 #     [ "$w" -lt 600 -a $h -gt 2200 ] && tile=3x
 #     [ "$w" -lt 400 -a $h -gt 3300 ] && tile=4x
@@ -177,12 +177,12 @@ tile=1x
 
 case "$style" in
 1)  eval "convert -pointsize $pt_font $fontlist miff:- |\
-            montage miff:- -tile 1x1 -geometry +2+2 \
+            magick montage miff:- -tile 1x1 -geometry +2+2 \
                     -font Arial -pointsize 12 $output"
     ;;
 *)  eval "convert -pointsize $pt_font $fontlist \
                   $autolevel -trim +repage miff:- |\
-            montage miff:- -tile $tile -geometry +2+2 \
+            magick montage miff:- -tile $tile -geometry +2+2 \
                     -font Arial -pointsize 12 $output"
     ;;
 esac

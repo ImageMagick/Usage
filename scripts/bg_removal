@@ -35,7 +35,7 @@
 #    -r     use color replacement instead of flood-fill for mask generation
 #           this lets you find 'holes' within the image object
 #
-#    -m     Flicker compare (space to swap) the masks found with the original
+#    -m     Flicker magick compare (space to swap) the masks found with the original
 #           image.  Press 'q' to continue processing
 #             green = object   blue = semi-trans edge  red = transparency
 #
@@ -141,23 +141,23 @@ fi
 #
 #
 convert "$image" \
-  \( -clone 0 $bgnd -compose Difference -composite \
+  \( -clone 0 $bgnd -compose Difference -magick composite \
      $grayscale \
      -channel B -evaluate 'set' 0 +channel \) \
   \( -clone 1 -fill blue -fuzz $fzout%  $fill \
      -channel B -separate +channel \) \
   \( -clone 1 -fill blue -fuzz $fzin%  $fill \
      -channel B -separate +channel -negate \) \
-  \( -clone 2,3 -negate -compose multiply -composite \) \
+  \( -clone 2,3 -negate -compose multiply -magick composite \) \
   $showmasks \
-  \( -clone 0,3 +matte -compose CopyOpacity -composite \) \
+  \( -clone 0,3 +matte -compose CopyOpacity -magick composite \) \
   \( -clone 1 -channel R -separate +channel \
-     -clone 4 +matte -compose CopyOpacity -composite \
-     \( +clone -blur 0x30 +matte \) +swap -compose Over -composite \
+     -clone 4 +matte -compose CopyOpacity -magick composite \
+     \( +clone -blur 0x30 +matte \) +swap -compose Over -magick composite \
      +matte -normalize \
-     -clone 4 -compose multiply -composite  \
+     -clone 4 -compose multiply -magick composite  \
      -background $background -alpha shape \
-     -clone 5 -compose over -composite \) \
+     -clone 5 -compose over -magick composite \) \
   -delete 0--2 "$image_out"
 
 exit 0

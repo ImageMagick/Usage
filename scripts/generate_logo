@@ -55,7 +55,7 @@ esac
 
 
 # Curve object, in 100x100 box
-# Also generate a display of control lines
+# Also generate a magick display of control lines
 curve='M 12,27  C 7,37  18,50 18,60  S  0,80 10,94
        S 40,74 50,78  S 60,99 76,95  S 72,70 75,65
        S 95,55 95,42  S 69,37 66,32  S 67,2  53,7
@@ -96,12 +96,12 @@ case $testing in
         -draw "fill none stroke red stroke-width 1 \
                 path '$c_ctrls'" \
           \( logo: -resize x180 -gravity center -crop 180x180+0+0\! \
-            \) +swap -gravity SouthWest -composite \
+            \) +swap -gravity SouthWest -magick composite \
           \( -background None  -fill $f_color \
             -font $font -pointsize $f_size   -size 100x \
             -gravity center    caption:"$text" \
             -wave ${wave}x200 -rotate $rotate  -trim +repage \
-            \) -gravity SouthWest -geometry $geom  -composite \
+            \) -gravity SouthWest -geometry $geom  -magick composite \
           $file &
     exit
     ;;
@@ -110,8 +110,8 @@ case $testing in
         -draw "path '$curve'" \
           \( +clone -fx A +matte  -blur 0x15  -shade 130x0 -normalize \
             -sigmoidal-contrast 12,70% -evaluate Multiply .3 -roll +10+13 \
-            +clone  -compose Screen -composite \
-            \) -matte  -compose In  -composite \
+            +clone  -compose Screen -magick composite \
+            \) -matte  -compose In  -magick composite \
           -background white -flatten \
           $file &
     exit
@@ -121,8 +121,8 @@ case $testing in
         -draw "path '$curve'" \
           \( +clone  -fx A  +matte -blur 0x15  -shade 120x45  -normalize \
             -fx "`im_fx_curves -p  0,20  50,50  80,50  100,90 `" \
-            +clone  -compose Overlay -composite \
-            \) -matte  -compose In  -composite \
+            +clone  -compose Overlay -magick composite \
+            \) -matte  -compose In  -magick composite \
           -background white -flatten \
           $file &
     exit
@@ -137,18 +137,18 @@ convert -size 100x100 xc:none -fill $c_color \
         -draw "path '$curve'" \
         \( +clone  -fx A  +matte -blur 0x15  -shade 120x45  -normalize \
            -fx "`im_fx_curves -p  0,20  50,50  80,50  100,90 `" \
-           +clone  -compose Overlay -composite \
-           \) -matte  -compose In  -composite \
+           +clone  -compose Overlay -magick composite \
+           \) -matte  -compose In  -magick composite \
         \( +clone -fx A  +matte -blur 0x3  -shade 0x90 -normalize \
            -blur 0x1  -fx '1-(1-u)*.4' -roll -1-2 \
-           +clone  -compose Multiply -composite \) \
-        -matte  -compose In  -composite \
+           +clone  -compose Multiply -magick composite \) \
+        -matte  -compose In  -magick composite \
         \( -background None -fill $f_color \
            -font $font -pointsize $f_size   -size 100x \
            -gravity center    caption:"$text" \
            -wave ${wave}x200 -rotate $rotate  -trim +repage \
-           \) -gravity SouthWest -geometry $geom -compose over -composite \
-        $bgnd +swap +geometry -gravity SouthWest -composite \
+           \) -gravity SouthWest -geometry $geom -compose over -magick composite \
+        $bgnd +swap +geometry -gravity SouthWest -magick composite \
         $post $file
 
 expr "$file" : '.*:' >/dev/null && exit
@@ -162,7 +162,7 @@ chmod 644 $file
            -font $font -pointsize $f_size   -size 100x \
            -gravity center    caption:"$text" \
            -wave ${wave}x200 -rotate $rotate  -trim +repage \
-           \) -gravity SouthWest -geometry $geom -compose over -composite \
+           \) -gravity SouthWest -geometry $geom -compose over -magick composite \
         -resize 16x16  ico:- | convert ico:- favicon.ico
 chmod 644 favicon.ico
 

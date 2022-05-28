@@ -167,8 +167,8 @@ outname=`expr "$outfile" : "\(.*\)\.[^./]*$" \| "$outfile" `
 #echo "DEBUG: suffix=$suffix"
 
 # get image width and height
-width=`identify -ping -format "%w" $tmp/IN.mpc`
-height=`identify -ping -format "%h" $tmp/IN.mpc`
+width=`magick identify -ping -format "%w" $tmp/IN.mpc`
+height=`magick identify -ping -format "%h" $tmp/IN.mpc`
 
 # get color at user specified location
 if [ "X$bgcolor" != "X" ]; then
@@ -223,7 +223,7 @@ convert $tmp/IN.mpc -fuzz ${fuzz}% -fill none \
 case "$mask" in
   '') ;; # do nothing
   v|view)
-     display $tmp/MASK.mpc
+     magick display $tmp/MASK.mpc
      exit 0 ;;
   s|save)
      convert $tmp/MASK.mpc ${outname}_mask.gif
@@ -268,10 +268,10 @@ for ((j=0;j<=$num;j++))
         \( +clone -trim -fill white -opaque black -write $tmp/ptrim.mpc \) \
         -flatten $tmp/pmask.mpc
       # Print size and page geometry
-      identify -ping -format "  Size: %wx%h\n  Page Geometry: %g" \
+      magick identify -ping -format "  Size: %wx%h\n  Page Geometry: %g" \
                $tmp/ptrim.mpc
-      w=`identify -ping -format %w $tmp/ptrim.mpc`
-      h=`identify -ping -format %h $tmp/ptrim.mpc`
+      w=`magick identify -ping -format %w $tmp/ptrim.mpc`
+      h=`magick identify -ping -format %h $tmp/ptrim.mpc`
       if [ $w -lt $wg -o $h -lt $hg ]; then
         echo "  Image too small -- Skipping"
       else
@@ -280,18 +280,18 @@ for ((j=0;j<=$num;j++))
         n=`printf %02d $k`
         echo "  Output to file \"${outname}-${n}.${suffix}\""
         if [ "$unrotate" = 'unrotate' ]; then
-          convert $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -composite \
+          convert $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -magick composite \
             -fuzz ${fuzz}% -trim miff:- | \
           unrotate -f ${fuzz}% - ${outname}-${n}.${suffix}
         else
-          convert $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -composite \
+          convert $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -magick composite \
             -fuzz ${fuzz}% -trim -background "$bgcolor" $unrotate \
             -compose over -bordercolor "$bgcolor" -border 2 -trim +repage \
             ${outname}-${n}.${suffix}
         fi
         k=$(($k + 1))
       fi
-      # Fill the segment that was discovereda in red/none mask with none
+      # Fill the magick segment that was discovereda in red/none mask with none
       # so that the same sub-image is not found again.
       # Do this as a flood fill so any internal 'sub-rectangles' are not
       # effected.

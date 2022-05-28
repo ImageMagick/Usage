@@ -92,7 +92,7 @@ convert -background $page_bg_color -size 0x24 -gravity center \
 
 # ---------------------------------------------------------
 #
-# Do the montage given the images P, Q, and M (source, destination, mask)
+# Do the magick montage given the images P, Q, and M (source, destination, mask)
 #
 do_montage() {
 
@@ -123,7 +123,7 @@ do_montage() {
     else
       $IM convert -label $op  $Q  $P \
               -gravity center $SYNC \
-              -compose $op  -composite -compose Over \
+              -compose $op  -magick composite -compose Over \
               -bordercolor $page_bg_color -border 0 \
               -bordercolor blue           -border 1 \
               compose_op_$op.png
@@ -135,12 +135,12 @@ do_montage() {
     fi
   done
 
-  eval "montage -background $page_bg_color $list \
+  eval "magick montage -background $page_bg_color $list \
                 -tile 4x -geometry +4+4 \"$1\""
 
   # roll the top row to recenter it.
   if [ -z "$M" ]; then
-    mogrify -region 0x90+0+0 -roll +35+0 "$1"
+    magick mogrify -region 0x90+0+0 -roll +35+0 "$1"
   fi
 
   rm -f compose_op_*.png
@@ -160,7 +160,7 @@ Q=compose_Q.png
 convert -size 50x50 xc:none -fill gold -draw 'polyline 0,0 0,49 49,0' $P
 convert -size 64x64 xc:none -fill blue -draw 'polyline 0,0 63,63 63,0' $Q
 
-do_montage montage_triangle.png
+do_magick montage montage_triangle.png
 rm -f $P $Q
 montages="${montages:+$montages,}triangle"
 
@@ -171,7 +171,7 @@ Q=gradient_none_h.png
 convert -size 64x5 xc:black xc:none -size 64x54 gradient:black-none +swap \
         -append -fill gold -colorize 100 -write $P \
         -transverse -fill blue -colorize 100 $Q
-do_montage montage_gradient.png
+do_magick montage montage_gradient.png
 rm -f $P $Q
 montages="${montages:+$montages,}gradient"
 
@@ -179,7 +179,7 @@ P=blend_black_v.png
 Q=blend_black_h.png
 convert -size 64x5 xc:black xc:none -size 64x54 gradient:black-none +swap \
         -append -write $P -transverse $Q
-do_montage montage_blending.png
+do_magick montage montage_blending.png
 rm -f $P $Q
 montages="${montages:+$montages,}blending"
 
@@ -198,7 +198,7 @@ methods="$ops_math"
 P=gradient_grey_v.png
 Q=gradient_grey_h.png
 convert -size 64x64 gradient: -write $P -transverse  $Q
-do_montage montage_math.png
+do_magick montage montage_math.png
 montages="${montages:+$montages,}math"
 
 if [ "$MATH_BLEND" ]; then
@@ -208,8 +208,8 @@ if [ "$MATH_BLEND" ]; then
 P=gradient_rect_v.png
 Q=gradient_rect_h.png
 convert -size 64x64 xc:none -draw 'rectangle 20,0 43,63' \
-        gradient: -compose In -composite -write $P -transverse $Q
-do_montage montage_grad_rect.png
+        gradient: -compose In -magick composite -write $P -transverse $Q
+do_magick montage montage_grad_rect.png
 montages="${montages:+$montages,}grad_rect"
 
 # Alternative..
@@ -218,7 +218,7 @@ montages="${montages:+$montages,}grad_rect"
 P=gradient_trans_v.png
 Q=gradient_trans_h.png
 convert -size 64x64  gradient:black-none -write $P -transverse $Q
-do_montage montage_grad_trans.png
+do_magick montage montage_grad_trans.png
 montages="${montages:+$montages,}grad_trans"
 
 fi # if MATH_BLEND
@@ -238,6 +238,6 @@ tile=x1
 [ "$MATH" -a "$DUFF" ] && tile=3x
 eval "convert $tmpdir/montage_{$montages,null}.png"' +delete \
         -frame 3x3+0+2 miff:- |
-  montage - -tile $tile -mode Concatenate miff:- |
+  magick montage - -tile $tile -mode Concatenate miff:- |
     convert - -frame 3x3+2+0 "${1:-show:}"'
 

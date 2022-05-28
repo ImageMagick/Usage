@@ -7,7 +7,7 @@
 <meta name="description" content="Fourier Transforms in ImageMagick">
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/fourier/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/fourier/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -193,7 +193,7 @@ looks rather like a wave.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert holocaust_tn.gif -colorspace gray miff:- |\
+  magick holocaust_tn.gif -colorspace gray miff:- |\
     im_profile -s - image_profile.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/holocaust_tn.gif"
@@ -211,7 +211,7 @@ something more like a wave pattern, such as...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 20x150 gradient: -rotate 90 \
+  magick -size 20x150 gradient: -rotate 90 \
           -function sinusoid 3.5,0,.4   wave.gif
   im_profile -s wave.gif wave_profile.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -233,14 +233,14 @@ even closer to the one from the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x150 gradient: -rotate 90 \
+  magick -size 1x150 gradient: -rotate 90 \
           -function sinusoid 3.5,0,.25,.25     wave_1.png
-  convert -size 1x150 gradient: -rotate 90 \
+  magick -size 1x150 gradient: -rotate 90 \
           -function sinusoid 1.5,-90,.13,.15   wave_2.png
-  convert -size 1x150 gradient: -rotate 90 \
+  magick -size 1x150 gradient: -rotate 90 \
           -function sinusoid 0.6,-90,.07,.1    wave_3.png
 
-  convert wave_1.png wave_2.png wave_3.png \
+  magick wave_1.png wave_2.png wave_3.png \
           -evaluate-sequence add added_waves.png
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE>
@@ -271,7 +271,7 @@ for an alternative example to the above. </P>
 
 This '<I>wave superposition</I>' (addition of waves) is much closer, but still
 does not exactly match the image pattern. However, you can continue in this
-manner, adding more waves and adjusting them, so the resulting composite wave
+manner, adding more waves and adjusting them, so the resulting magick composite wave
 gets closer and closer to the actual profile of the original image.  Eventually
 by adding enough waves you can exactly reproduce the original profile of the
 image.  </P>
@@ -375,7 +375,7 @@ detail below in  <A HREf="#fft_ri" >FFT as Real-Imaginary Components</A>. </P>
 Direct numerical representation of the "<A
 HREF="http://en.wikipedia.org/wiki/Complex_number" >Complex Numbers</A>" is
 not very useful for image work. But by plotting the values onto
-a 2-dimensional plane, you can then convert the value into a <A
+a 2-dimensional plane, you can then magick the value into a <A
 HREF="http://en.wikipedia.org/wiki/Complex_number#Polar_form" >Polar
 Representation</A> consisting of 'Magnitude' (r) and 'Phase' (&theta;)
 components. </P>
@@ -425,18 +425,18 @@ FFT Images and its Inverse</A>. </P>
 
 Now, lets simply try a Fourier Transform round trip on the Lena image.  That
 is, we simply do the forward transform and immediately apply the inverse
-transform to get back the original image. Then we will compare the results to
+transform to get back the original image. Then we will magick compare the results to
 see the level of quality produced. </P>
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR2OUT OUT=lena_roundtrip_cmp.txt>
-  time convert lena.png -fft -ift lena_roundtrip.png
+  time magick lena.png -fft -ift lena_roundtrip.png
 
 <n>  echo -n "RMSE = "
-<n>  compare -metric RMSE lena.png lena_roundtrip.png null:
+<n>  magick compare -metric RMSE lena.png lena_roundtrip.png null:
 <n>  echo -n "PAE = "
-<n>  compare -metric PAE  lena.png lena_roundtrip.png null:
+<n>  magick compare -metric PAE  lena.png lena_roundtrip.png null:
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/lena.png"
      ><IMG SRC="../img_photos/lena.png"   WIDTH=128 HEIGHT=128
@@ -468,7 +468,7 @@ round trip.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena.png -fft    +depth +adjoin lena_fft_%d.png
+  magick lena.png -fft    +depth +adjoin lena_fft_%d.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR><TD ALIGN=center>
   <A HREF="../img_photos/lena.png"
@@ -549,7 +549,7 @@ The best way of saving intermediate images into a single file is to use the
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert lena.png -fft  +depth lena_fft.miff
+  magick lena.png -fft  +depth lena_fft.miff
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -560,7 +560,7 @@ HREF="../files/#write" >Writing Images</A>)...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert lena.png -fft  +depth \
+  magick lena.png -fft  +depth \
           \( -clone 0 -write lena_magnitude.png +delete \) \
           \( -clone 1 -write lena_phase.png +delete \) \
           null:
@@ -576,13 +576,13 @@ Note that in the above I used the special "<CODE><A HREF="../files/#null"
 >NULL:</A></CODE>" image format to junk the two images which are still
 preserved in memory for further processing. </P>
 
-And finally we again read in the two images again, so as to convert it back
+And finally we again read in the two images again, so as to magick it back
 into a normal 'spatial' image...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena_magnitude.png lena_phase.png -ift lena_restored.png
+  magick lena_magnitude.png lena_phase.png -ift lena_restored.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="lena_magnitude.png"
      ><IMG SRC="lena_magnitude.png"   WIDTH=128 HEIGHT=128
@@ -598,7 +598,7 @@ into a normal 'spatial' image...
 
 <!-- <CODE EXECUTE ASSERT>
   # check the colors come put correctly
-  [ `compare -metric PAE lena_roundtrip.png lena_restored.png null: 2>&1 |\
+  [ `magick compare -metric PAE lena_roundtrip.png lena_restored.png null: 2>&1 |\
         sed 's/ .*//'` != '0' ] &&  echo >&2 \
     "ASSERTION FAILURE: Saved vs In-Memory FFT roundtrip are different\!"
 </CODE> -->
@@ -623,10 +623,10 @@ just its phase component. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena_fft_0.png  -size 128x128 xc:'gray(50%)' \
+  magick lena_fft_0.png  -size 128x128 xc:'gray(50%)' \
                                                   -ift lena_magitude_only.png
 
-  convert -size 128x128 xc:gray1  lena_fft_1.png  -ift lena_phase_only.png
+  magick -size 128x128 xc:gray1  lena_fft_1.png  -ift lena_phase_only.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE WIDTH=60%>
 <TR><TD ALIGN=center>
@@ -674,7 +674,7 @@ This is done by applying a strong <A HREF="../transform/#evaluate_log"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena_fft_0.png -auto-level -evaluate log 10000 \
+  magick lena_fft_0.png -auto-level -evaluate log 10000 \
           lena_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="lena_fft_0.png"
@@ -706,9 +706,9 @@ a <I>log scaling factor</I> to use for the specific magnitude image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=lena_spectrum_auto.png>
-  scale=`convert lena_fft_0.png -auto-level \
+  scale=`magick lena_fft_0.png -auto-level \
           -format "%[fx:exp(log(mean)/log(0.5))]" info:`
-  convert lena_fft_0.png -auto-level \
+  magick lena_fft_0.png -auto-level \
           -evaluate log $scale    lena_spectrum_auto.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="lena_spectrum_auto.png"
@@ -726,7 +726,7 @@ produce an overly bright image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena_spectrum.png lena_fft_1.png -ift lena_roundtrip_fail.png
+  magick lena_spectrum.png lena_fft_1.png -ift lena_roundtrip_fail.png
 </CODE></PRE></TD></TR></TABLE></P>
 
 Basically as you have enhanced the 'magnitude' image, you have also enhanced
@@ -775,12 +775,12 @@ ImageMagick</A> to generate another 'round trip' conversion of an image.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI ERR2OUT OUT=lena_roundtrip_hdri_cmp.txt>
   # HDRI version of IM used
-  time convert lena.png -fft -ift lena_roundtrip_hdri.png
+  time magick lena.png -fft -ift lena_roundtrip_hdri.png
 
 <n>  echo -n "RMSE = "
-<n>  compare -metric RMSE lena.png lena_roundtrip_hdri.png null:
+<n>  magick compare -metric RMSE lena.png lena_roundtrip_hdri.png null:
 <n>  echo -n "PAE = "
-<n>  compare -metric PAE  lena.png lena_roundtrip_hdri.png null:
+<n>  magick compare -metric PAE  lena.png lena_roundtrip_hdri.png null:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="lena_roundtrip_hdri.png"
      ><IMG SRC="lena_roundtrip_hdri.png"   WIDTH=128 HEIGHT=128
@@ -795,7 +795,7 @@ ImageMagick</A> to generate another 'round trip' conversion of an image.
 </TD></TR></TABLE>
 </DIV></P>
 
-If you compare the results above with the previous non-HDRI comparison...
+If you magick compare the results above with the previous non-HDRI comparison...
 
 <DIV ALIGN=center>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -854,12 +854,12 @@ Real/Imaginary images.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI ERR2OUT OUT=lena_roundtrip_ri_cmp.txt>
   # HDRI version of IM used
-  time convert lena.png   +fft +ift   lena_roundtrip_ri.png
+  time magick lena.png   +fft +ift   lena_roundtrip_ri.png
 
 <n>  echo -n "RMSE = "
-<n>  compare -metric RMSE lena.png lena_roundtrip_ri.png null:
+<n>  magick compare -metric RMSE lena.png lena_roundtrip_ri.png null:
 <n>  echo -n "PAE = "
-<n>  compare -metric PAE  lena.png lena_roundtrip_ri.png null:
+<n>  magick compare -metric PAE  lena.png lena_roundtrip_ri.png null:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="lena_roundtrip_ri.png"
      ><IMG SRC="lena_roundtrip_ri.png"   WIDTH=128 HEIGHT=128
@@ -884,7 +884,7 @@ resulting in an image that looks 'dirty'.  For example...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # non-HDRI Q16 version of IM used  -- THIS IS BAD
-  convert lena.png   +fft +ift   lena_roundtrip_ri_bad.png
+  magick lena.png   +fft +ift   lena_roundtrip_ri_bad.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="lena_roundtrip_ri_bad.png"
      ><IMG SRC="lena_roundtrip_ri_bad.png"   WIDTH=128 HEIGHT=128
@@ -904,9 +904,9 @@ restore the final image.  For example, here is what happens if we substitute a
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI>
   # HDRI version of IM used
-  convert lena.png +fft -delete 1 \
+  magick lena.png +fft -delete 1 \
           -size 128x128 xc:black +ift lena_real_only.png
-  convert lena.png +fft -delete 0 \
+  magick lena.png +fft -delete 0 \
           -size 128x128 xc:black +ift lena_imaginary_only.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE WIDTH=60%>
@@ -950,8 +950,8 @@ First lets simply take a constant color image and get its magnitude.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x128 xc:gold constant.png
-  convert constant.png -fft +delete constant_magnitude.png
+  magick -size 128x128 xc:gold constant.png
+  magick constant.png -fft +delete constant_magnitude.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="constant.png"
      ><IMG SRC="constant.png"   WIDTH=128 HEIGHT=128
@@ -977,7 +977,7 @@ image...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert constant_magnitude.png -gravity center -extent 5x5 \
+  magick constant_magnitude.png -gravity center -extent 5x5 \
            -scale 2000% constant_dc_zoom.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="constant_dc_zoom.gif"
@@ -1021,8 +1021,8 @@ For example lets extract the DC pixel from the FFT of the "Lena" image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<c>  convert lena.png -fft +delete lena_magnitude.png
-  convert lena_magnitude.png -gravity center -extent 1x1 \
+<c>  magick lena.png -fft +delete lena_magnitude.png
+  magick lena_magnitude.png -gravity center -extent 1x1 \
           -scale 60x60   lena_dc_zoom.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/lena.png"
@@ -1053,7 +1053,7 @@ such as the more orange color 'tomato'...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena.png -fft \
+  magick lena.png -fft \
           \( -clone 0  -draw "fill tomato  color 64,64 point" \) \
           -swap 0 +delete -ift lena_dc_replace.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1084,9 +1084,9 @@ image with 4 cycles across the image </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x129 gradient: -chop 0x1 -rotate 90 -evaluate sine 4 \
+  magick -size 128x129 gradient: -chop 0x1 -rotate 90 -evaluate sine 4 \
           sine4.png
-  convert sine4.png -fft +delete \
+  magick sine4.png -fft +delete \
           -auto-level -evaluate log 100  sine4_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="sine4.png"
@@ -1139,7 +1139,7 @@ spaced 16 pixels to the left and right sides of the center dot.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x129 gradient: -chop 0x1 -rotate 90 -evaluate sine 16 \
+  magick -size 128x129 gradient: -chop 0x1 -rotate 90 -evaluate sine 16 \
           -write sine16.png -fft -delete 1 \
           -auto-level -evaluate log 100 sine16_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1187,7 +1187,7 @@ magnitudes (not the logarithmic spectrum).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert sine16.png -fft -delete 1  miff:- |\
+  magick sine16.png -fft -delete 1  miff:- |\
      im_profile - sine16_magnitude_pf.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="sine16_magnitude_pf.png"
@@ -1255,15 +1255,15 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x128  xc:black \
+  magick -size 128x128  xc:black \
           -draw 'fill gray(50%)  color 64,64 point' \
           -draw 'fill gray(50%)  color 50,68 point' \
           -draw 'fill gray(25%)  color 78,60 point' \
           generated_magnitude.png
-  convert generated_magnitude.png \
+  magick generated_magnitude.png \
           -auto-level -evaluate log 3  generated_spectrum.png
-  convert -size 128x128  xc:gray50  generated_phase.png
-  convert generated_magnitude.png generated_phase.png \
+  magick -size 128x128  xc:gray50  generated_phase.png
+  magick generated_magnitude.png generated_phase.png \
           -ift  generated_wave.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="generated_spectrum.png"
@@ -1341,9 +1341,9 @@ inside a black background.  </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH="80%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 8x16 xc:white -gravity center \
+  magick -size 8x16 xc:white -gravity center \
           -gravity center -background black -extent 128x128 rectangle.png
-  convert rectangle.png -fft +delete \
+  magick rectangle.png -fft +delete \
           -auto-level -evaluate log 100 rect_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rectangle.png"
@@ -1370,7 +1370,7 @@ also rotated in the same direction by 45 degrees. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rectangle.png -rotate 45 -gravity center -extent 128x128 \
+  magick rectangle.png -rotate 45 -gravity center -extent 128x128 \
           -write rect_rot45.png -fft -delete 1 \
           -auto-level -evaluate log 100 rect_rot45_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1391,7 +1391,7 @@ However if we now move the rectangle...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rectangle.png -rotate 45  -geometry +30+20 -extent 128x128 \
+  magick rectangle.png -rotate 45  -geometry +30+20 -extent 128x128 \
           -write rect_rot45off.png -fft -delete 1 \
           -auto-level -evaluate log 100 rect_rot45off_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1424,11 +1424,11 @@ with diameter of 24 (radius 12). </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x128 xc:black -fill white  \
+  magick -size 128x128 xc:black -fill white  \
           -draw "circle 64,64 64,70" -write circle6.png -fft -delete 1 \
           -auto-level -evaluate log 100 circle6_spectrum.png
 
-  convert -size 128x128 xc:black -fill white  \
+  magick -size 128x128 xc:black -fill white  \
           -draw "circle 64,64 64,76" -write circle12.png -fft -delete 1 \
           -auto-level -evaluate log 100 circle12_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1477,7 +1477,7 @@ circular pattern having sigmas of 8 and 16, respectively </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x128 xc:black -fill white \
+  magick -size 128x128 xc:black -fill white \
           -draw "point 64,64" -gaussian-blur 0x8 -auto-level \
           -write gaus8.png -fft -delete 1 \
           -auto-level -evaluate log 1000 gaus8_spectrum.png
@@ -1512,7 +1512,7 @@ circular pattern having sigmas of 8 and 16, respectively </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x128 xc:black -fill white \
+  magick -size 128x128 xc:black -fill white \
           -draw "point 64,64" -gaussian-blur 0x16 -auto-level \
           -write gaus16.png -fft -delete 1 \
           -auto-level -evaluate log 1000 gaus16_spectrum.png
@@ -1570,7 +1570,7 @@ pixels apart.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 16x8 xc:white -fill black \
+  magick -size 16x8 xc:white -fill black \
           -draw "line 0,0 15,0" -draw "line 0,0 0,7" \
           -write mpr:tile +delete \
           -size 128x128 tile:mpr:tile \
@@ -1643,11 +1643,11 @@ exponent of 1.1. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena.png -fft \
+  magick lena.png -fft \
           \( -clone 0 -evaluate pow 0.9 \) -delete 0 \
           +swap -ift lena_plus_contrast.png
 
-  convert lena.png -fft \
+  magick lena.png -fft \
           \( -clone 0 -evaluate pow 1.1 \) -delete 0 \
           +swap -ift lena_minus_contrast.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1708,17 +1708,17 @@ So lets try doing this with two sizes of circular filters, one of diameter 40
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 128x128 xc:black -fill white \
+  magick -size 128x128 xc:black -fill white \
           -draw "circle 64,64 44,64" circle_r20.png
-  convert lena.png -fft \
-       \( -clone 0 circle_r20.png -compose multiply -composite \) \
+  magick lena.png -fft \
+       \( -clone 0 circle_r20.png -compose multiply -magick composite \) \
        \( +clone -evaluate log 10000 -write lena_blur_r20_spec.png +delete \) \
        -swap 0 +delete -ift lena_blur_r20.png
 
-  convert -size 128x128 xc:black -fill white \
+  magick -size 128x128 xc:black -fill white \
           -draw "circle 64,64 50,64" circle_r14.png
-  convert lena.png -fft \
-       \( -clone 0 circle_r14.png -compose multiply -composite \) \
+  magick lena.png -fft \
+       \( -clone 0 circle_r14.png -compose multiply -magick composite \) \
        \( +clone -evaluate log 10000 -write lena_blur_r14_spec.png +delete \) \
        -swap 0 +delete -ift lena_blur_r14.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1778,15 +1778,15 @@ most of the sever 'ringing' effects.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circle_r20.png -blur 0x4 -auto-level gaussian_r20.png
-  convert lena.png -fft \
-       \( -clone 0 gaussian_r20.png -compose multiply -composite \) \
+  magick circle_r20.png -blur 0x4 -auto-level gaussian_r20.png
+  magick lena.png -fft \
+       \( -clone 0 gaussian_r20.png -compose multiply -magick composite \) \
        \( +clone -evaluate log 10000 -write lena_gblur_r20_spec.png +delete \) \
        -swap 0 +delete -ift lena_gblur_r20.png
 
-  convert circle_r14.png -blur 0x4 -auto-level gaussian_r14.png
-  convert lena.png -fft \
-       \( -clone 0 gaussian_r14.png -compose multiply -composite \) \
+  magick circle_r14.png -blur 0x4 -auto-level gaussian_r14.png
+  magick lena.png -fft \
+       \( -clone 0 gaussian_r14.png -compose multiply -magick composite \) \
        \( +clone -evaluate log 10000 -write lena_gblur_r14_spec.png +delete \) \
        -swap 0 +delete -ift lena_gblur_r14.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1865,16 +1865,16 @@ And then again using a purely gaussian curve. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circle_r14.png -negate circle_r14i.png
-  convert lena.png -fft \
-       \( -clone 0 circle_r14i.png -compose multiply -composite \) \
+  magick circle_r14.png -negate circle_r14i.png
+  magick lena.png -fft \
+       \( -clone 0 circle_r14i.png -compose multiply -magick composite \) \
        \( +clone -evaluate log 10000 -write lena_edge_r14_spec.png +delete \) \
        -delete 0 +swap -ift -normalize lena_edge_r14.png
 
-  convert -size 128x128 xc: -draw "point 64,64" -blur 0x14 \
+  magick -size 128x128 xc: -draw "point 64,64" -blur 0x14 \
           -auto-level   gaussian_s14i.png
-  convert lena.png -fft \
-       \( -clone 0 gaussian_s14i.png -compose multiply -composite \) \
+  magick lena.png -fft \
+       \( -clone 0 gaussian_s14i.png -compose multiply -magick composite \) \
        \( +clone -evaluate log 10000 -write lena_edge_s14_spec.png +delete \) \
        -delete 0 +swap -ift -normalize lena_edge_s14.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1929,11 +1929,11 @@ the normalization stretch) and then blend it with the original image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert lena.png -fft \
+  magick lena.png -fft \
        \( -size 128x128 xc: -draw "point 64,64" -blur 0x14 -auto-level \
-          -clone 0 -compose multiply -composite \) \
+          -clone 0 -compose multiply -magick composite \) \
        -delete 0 +swap -ift \
-       lena.png -compose blend -set option:compose:args 100x100 -composite \
+       lena.png -compose blend -set option:compose:args 100x100 -magick composite \
        lena_sharp14.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/lena.png"
@@ -1973,7 +1973,7 @@ magnitude and phase images. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown_orig.jpg -fft \
+  magick clown_orig.jpg -fft \
           \( +clone  -write clown_phase.png +delete \) +delete \
           -write clown_magnitude.png  -colorspace gray \
           -auto-level -evaluate log 100000  clown_spectrum.png
@@ -2018,14 +2018,14 @@ a difference image against the unedited version. Like this...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert clown_spectrum_edited.png clown_spectrum.png \
-          -compose difference -composite \
+  magick clown_spectrum_edited.png clown_spectrum.png \
+          -compose difference -magick composite \
           -threshold 0 -negate clown_spectrum_mask.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- This is the inverse of the above -- That is I am cheating :-)
 <CODE EXECUTE>
-  convert clown_spectrum_mask.png -negate -background red -alpha shape \
-          clown_spectrum.png +swap -composite  clown_spectrum_edited.png
+  magick clown_spectrum_mask.png -negate -background red -alpha shape \
+          clown_spectrum.png +swap -magick composite  clown_spectrum_edited.png
 </CODE> -->
   <A HREF="clown_spectrum_edited.png"
      ><IMG SRC="clown_spectrum_edited.png"   WIDTH=128 HEIGHT=128
@@ -2037,14 +2037,14 @@ a difference image against the unedited version. Like this...
 </DIV></P>
 
 Now we simply multiply the mask with the magnitude and use the result with the
-original phase image to transform back to the spatial domain. We display the
+original phase image to transform back to the spatial domain. We magick display the
 original image next to it for comparison </P>
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown_magnitude.png clown_spectrum_mask.png \
-          -compose multiply -composite \
+  magick clown_magnitude.png clown_spectrum_mask.png \
+          -compose multiply -magick composite \
           clown_phase.png -ift clown_filtered.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="clown_orig.jpg"
@@ -2066,7 +2066,7 @@ friendly to a FFT image, so lets blur the mask slightly...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown_spectrum_mask.png \
+  magick clown_spectrum_mask.png \
           -blur 0x5 -level 50x100%  clown_mask_blurred.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="clown_mask_blurred.png"
@@ -2081,8 +2081,8 @@ And filter the clown, this time re-generating the FFT images in memory.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown_orig.jpg -fft \
-          \( -clone 0 clown_mask_blurred.png -compose multiply -composite \) \
+  magick clown_orig.jpg -fft \
+          \( -clone 0 clown_mask_blurred.png -compose multiply -magick composite \) \
           -swap 0 +delete -ift clown_filtered_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="clown_filtered_2.png"
@@ -2101,8 +2101,8 @@ an image of the areas where noise was removed.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert clown_orig.jpg clown_filtered_2.png -compose difference \
-          -composite -normalize clown_noise.png
+  magick clown_orig.jpg clown_filtered_2.png -compose difference \
+          -magick composite -normalize clown_noise.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="clown_noise.png"
      ><IMG SRC="clown_noise.png"   WIDTH=128 HEIGHT=128
@@ -2119,7 +2119,7 @@ Again we extract a grey-scale spectrum image, just as we did before.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert twigs.jpg -fft +delete -colorspace gray \
+  magick twigs.jpg -fft +delete -colorspace gray \
           -auto-level -evaluate log 100000 twigs_spectrum.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="twigs.jpg"
@@ -2141,14 +2141,14 @@ color (it really doesn't matter which color is used)...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert twigs_spectrum_edited.png twigs_spectrum.png \
-          -compose difference -composite \
+  magick twigs_spectrum_edited.png twigs_spectrum.png \
+          -compose difference -magick composite \
           -threshold 0 -negate twigs_spectrum_mask.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- This is the inverse of the above -- That is I am cheating :-)
 <CODE EXECUTE>
-  convert twigs_spectrum_mask.png -negate -background blue -alpha shape \
-          twigs_spectrum.png +swap -composite  twigs_spectrum_edited.png
+  magick twigs_spectrum_mask.png -negate -background blue -alpha shape \
+          twigs_spectrum.png +swap -magick composite  twigs_spectrum_edited.png
 </CODE> -->
   <A HREF="twigs_spectrum_edited.png"
      ><IMG SRC="twigs_spectrum_edited.png"   WIDTH=256 HEIGHT=256
@@ -2165,8 +2165,8 @@ the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert twigs.jpg -fft \
-          \( -clone 0 twigs_spectrum_mask.png -compose multiply -composite \) \
+  magick twigs.jpg -fft \
+          \( -clone 0 twigs_spectrum_mask.png -compose multiply -magick composite \) \
           -swap 0 +delete  -ift twigs_filtered.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="twigs.jpg"
@@ -2184,7 +2184,7 @@ an image of the areas where noise was removed. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert twigs.jpg twigs_filtered.png -compose difference -composite \
+  magick twigs.jpg twigs_filtered.png -compose difference -magick composite \
           -normalize twigs_noise.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="twigs_noise.png"
@@ -2224,6 +2224,6 @@ with editing and formatting by
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/fourier/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/fourier/</CODE>
 </ADDRESS></BODY></HTML>
 

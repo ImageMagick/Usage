@@ -5,7 +5,7 @@
 <TITLE>Transformations -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/transform/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/transform/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -128,7 +128,7 @@ as a rectangular bevel highlight to an existing image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -raise 5  rose_raise.gif
+  magick rose:  -raise 5  rose_raise.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_raise.gif"
     ><IMG SRC="rose_raise.gif"
@@ -142,7 +142,7 @@ operator...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  +raise 5  rose_sunken.gif
+  magick rose:  +raise 5  rose_sunken.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_sunken.gif"
     ><IMG SRC="rose_sunken.gif"
@@ -186,7 +186,7 @@ the result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -fill none -stroke navy -strokewidth 11  \
+  magick rose: -fill none -stroke navy -strokewidth 11  \
           -draw 'rectangle 0,0 69,45'   inside_border.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="inside_border.jpg"
@@ -212,7 +212,7 @@ normal.  This is probably easier, though prehaps not as versatile.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -bordercolor green -shave 6x6 -border 6x6 inside_border2.jpg
+  magick rose: -bordercolor green -shave 6x6 -border 6x6 inside_border2.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="inside_border2.jpg"
      ><IMG SRC="inside_border2.jpg"
@@ -235,7 +235,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE REPLACE>
-  convert -size 80x40 xc:red xc:blue -append -spread 5 spread_interpolated.png
+  magick -size 80x40 xc:red xc:blue -append -spread 5 spread_interpolated.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="spread_interpolated.png"
      ><IMG SRC="spread_interpolated.png"     WIDTH=80 HEIGHT=80
@@ -255,7 +255,7 @@ Setting</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE REPLACE>
-  convert -size 80x80 xc: -virtual-pixel black -spread 10 spread_virtual.png
+  magick -size 80x80 xc: -virtual-pixel black -spread 10 spread_virtual.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="spread_virtual.png"
      ><IMG SRC="spread_virtual.png"     WIDTH=80 HEIGHT=80
@@ -280,7 +280,7 @@ As such this is a more traditonal random 'spread' of pixels...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE REPLACE>
-  convert rose: -interpolate nearest -virtual-pixel mirror \
+  magick rose: -interpolate nearest -virtual-pixel mirror \
                 -spread 5   spread_rose.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="spread_rose.png"
@@ -321,7 +321,7 @@ For example, here I spread pixels with the original prepended as a referance.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE REPLACE>
-  convert -size 40x40 xc:red xc:blue -append \
+  magick -size 40x40 xc:red xc:blue -append \
           \( +clone +spread 5 \) +append spread_bias.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="spread_bias.png"
@@ -344,7 +344,7 @@ diagonal mirror) distortion.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE REPLACE>
-  convert -size 40x40 xc:red xc:blue -append \
+  magick -size 40x40 xc:red xc:blue -append \
           \( +clone +spread 5 -transverse -spread 5 -transverse \) \
           +append spread_no_bias.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -371,7 +371,7 @@ A special operator to make an image circular with a soft blurry outline.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -background black -vignette 0x5  rose_vignette.gif
+  magick rose: -background black -vignette 0x5  rose_vignette.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_vignette.gif"
      ><IMG SRC="rose_vignette.gif"
@@ -386,7 +386,7 @@ largest ellipse posible, so you may want to DIY it.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -background black -vignette 0x0  rose_vignette_0.gif
+  magick rose: -background black -vignette 0x0  rose_vignette_0.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_vignette_0.gif"
      ><IMG SRC="rose_vignette_0.gif"
@@ -399,7 +399,7 @@ You can use it with transparency (and PNG format)...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -alpha Set -background none -vignette 0x3  rose_vignette.png
+  magick rose: -alpha Set -background none -vignette 0x3  rose_vignette.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_vignette.png"
      ><IMG SRC="rose_vignette.png"
@@ -415,7 +415,7 @@ more common Gaussian distribution to the vignette blurring.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -background black -vignette 5x65000  rose_vignette_linear.gif
+  magick rose: -background black -vignette 5x65000  rose_vignette_linear.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_vignette.gif"
      ><IMG SRC="rose_vignette.gif"
@@ -448,7 +448,7 @@ inside the Arc de Triumph, Paris</A>.  It is a very long staircase!.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert spiral_stairs_sm.jpg -thumbnail 120x120 \
+  magick spiral_stairs_sm.jpg -thumbnail 120x120 \
           -bordercolor white -background black  +polaroid  poloroid.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="poloroid.png"
@@ -486,7 +486,7 @@ image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert spiral_stairs_sm.jpg -thumbnail 120x120 \
+  magick spiral_stairs_sm.jpg -thumbnail 120x120 \
           -bordercolor AliceBlue -background SteelBlue4 -polaroid 5 \
           poloroid_5.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -506,7 +506,7 @@ wrapped to the width of the photo.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -caption '%c %f\n%wx%h' spiral_stairs_sm.jpg -thumbnail 120x120 \
+  magick -caption '%c %f\n%wx%h' spiral_stairs_sm.jpg -thumbnail 120x120 \
           -bordercolor Lavender  -background gray40  +polaroid \
           poloroid_captioned.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -523,7 +523,7 @@ The other standard text settings (as per "<CODE><A HREF="../text/#caption"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert spiral_stairs_sm.jpg -thumbnail 120x120 -font Candice -pointsize 18 \
+  magick spiral_stairs_sm.jpg -thumbnail 120x120 -font Candice -pointsize 18 \
           -bordercolor Snow -background black -fill dodgerblue -stroke navy \
           -gravity center  -set caption "Spiral Stairs\!"  -polaroid 10 \
           poloroid_controls.png
@@ -575,7 +575,7 @@ enlarge the text in quite the same way.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -caption 'Spiral Staircase, Arc de Triumph, Paris, April 2006' \
+  magick -caption 'Spiral Staircase, Arc de Triumph, Paris, April 2006' \
           spiral_stairs_sm.jpg  -thumbnail 240x240 \
           -bordercolor Lavender -border 5x5   -density 144  \
           -gravity center  -pointsize 8   -background black \
@@ -610,18 +610,18 @@ Other</A>.  </P>
 <H3>Oil Painting, blobs of color</H3>
 
 The "<CODE><A HREF="../option_link.cgi?paint" >-paint</A></CODE>" operator is
-designed to convert pictures into paintings made by applying thick 'blobs' of
+designed to magick pictures into paintings made by applying thick 'blobs' of
 paint to a canvas. The result is a merging of neighbourhood colors into larger
 single color areas. </P>
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -paint 1   rose_paint_1.gif
-  convert rose:  -paint 3   rose_paint_3.gif
-  convert rose:  -paint 5   rose_paint_5.gif
-  convert rose:  -paint 10  rose_paint_10.gif
-  convert rose:  -blur 0x3 -paint 10  rose_blur_paint_10.gif
+  magick rose:  -paint 1   rose_paint_1.gif
+  magick rose:  -paint 3   rose_paint_3.gif
+  magick rose:  -paint 5   rose_paint_5.gif
+  magick rose:  -paint 10  rose_paint_10.gif
+  magick rose:  -blur 0x3 -paint 10  rose_blur_paint_10.gif
 </CODE></PRE></TD></TR></TABLE>
    <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"
@@ -667,7 +667,7 @@ rectangular neighbourhood, and can produce a nicer result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -statistic Mode 10 rose_paint_mode.gif
+  magick rose: -statistic Mode 10 rose_paint_mode.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_paint_mode.gif"
      ><IMG SRC="rose_paint_mode.gif"
@@ -685,7 +685,7 @@ Here for example is an 'OpenIntensity' Morphology on the rose.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -morphology OpenI Disk rose_paint_open.gif
+  magick rose: -morphology OpenI Disk rose_paint_open.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_paint_open.gif"
      ><IMG SRC="rose_paint_open.gif"
@@ -697,7 +697,7 @@ And here I use 'CloseIntensity' with a slightly smaller 'Disk'.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -morphology CloseI Disk:2.5 rose_paint_close.gif
+  magick rose: -morphology CloseI Disk:2.5 rose_paint_close.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_paint_close.gif"
      ><IMG SRC="rose_paint_close.gif"
@@ -717,7 +717,7 @@ image. </P>
 
 The "<CODE><A HREF="../option_link.cgi?charcoal" >-charcoal</A></CODE>" operator
 is in some respects similar to edge detection transforms used by <A
-HREF="#vision">Computer Vision</A>.  Basically it tries to convert the major
+HREF="#vision">Computer Vision</A>.  Basically it tries to magick the major
 borders and edges of object in the image into pencil and charcoal shades. </P>
 
 The one argument is supposed to represent the thickness of the edge lines.
@@ -725,9 +725,9 @@ The one argument is supposed to represent the thickness of the edge lines.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -charcoal 1   rose_charcoal_1.gif
-  convert rose:  -charcoal 3   rose_charcoal_3.gif
-  convert rose:  -charcoal 5   rose_charcoal_5.gif
+  magick rose:  -charcoal 1   rose_charcoal_1.gif
+  magick rose:  -charcoal 3   rose_charcoal_3.gif
+  magick rose:  -charcoal 5   rose_charcoal_5.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"
@@ -789,12 +789,12 @@ Help me understand if you can.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -emboss 0x.5  rose_emboss_0x05.gif
-  convert rose:  -emboss 0x.9  rose_emboss_0x09.gif
-  convert rose:  -emboss 0x1   rose_emboss_0x10.gif
-  convert rose:  -emboss 0x1.1 rose_emboss_0x11.gif
-  convert rose:  -emboss 0x1.2 rose_emboss_0x12.gif
-  convert rose:  -emboss 0x2   rose_emboss_0x20.gif
+  magick rose:  -emboss 0x.5  rose_emboss_0x05.gif
+  magick rose:  -emboss 0x.9  rose_emboss_0x09.gif
+  magick rose:  -emboss 0x1   rose_emboss_0x10.gif
+  magick rose:  -emboss 0x1.1 rose_emboss_0x11.gif
+  magick rose:  -emboss 0x1.2 rose_emboss_0x12.gif
+  magick rose:  -emboss 0x2   rose_emboss_0x20.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"
@@ -826,12 +826,12 @@ images. As you saw above, color images can produce some weird effects.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace Gray  -emboss 0x.5  rose_g_emboss_0x05.gif
-  convert rose: -colorspace Gray  -emboss 0x.9  rose_g_emboss_0x09.gif
-  convert rose: -colorspace Gray  -emboss 0x1   rose_g_emboss_0x10.gif
-  convert rose: -colorspace Gray  -emboss 0x1.1 rose_g_emboss_0x11.gif
-  convert rose: -colorspace Gray  -emboss 0x1.2 rose_g_emboss_0x12.gif
-  convert rose: -colorspace Gray  -emboss 0x2   rose_g_emboss_0x20.gif
+  magick rose: -colorspace Gray  -emboss 0x.5  rose_g_emboss_0x05.gif
+  magick rose: -colorspace Gray  -emboss 0x.9  rose_g_emboss_0x09.gif
+  magick rose: -colorspace Gray  -emboss 0x1   rose_g_emboss_0x10.gif
+  magick rose: -colorspace Gray  -emboss 0x1.1 rose_g_emboss_0x11.gif
+  magick rose: -colorspace Gray  -emboss 0x1.2 rose_g_emboss_0x12.gif
+  magick rose: -colorspace Gray  -emboss 0x2   rose_g_emboss_0x20.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose_grey.gif"
      ><IMG SRC="../images/rose_grey.gif"
@@ -881,9 +881,9 @@ your fellow spy...
               <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -gravity center -size 50x40 label:"Watch\nthe\nPidgeon" message.gif
+  magick -gravity center -size 50x40 label:"Watch\nthe\nPidgeon" message.gif
 </CODE><CODE EXECUTE NOWARN OUT=message_size.txt
->  identify message.gif
+>  magick identify message.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="message.gif"
      ><IMG SRC="message.gif"       WIDTH=50  HEIGHT=40
@@ -897,7 +897,7 @@ your fellow spy...
 </TD></TR></TABLE></TD></TR></TABLE></P>
 
 Note that we will also need the size of the message image (36x43 pixels), thus
-the identify in the above. </P>
+the magick identify in the above. </P>
 
 Next the put it into some image with some offset.  The offset (and message
 size) used is the cryptographic 'key' for the hidden message.
@@ -906,7 +906,7 @@ size) used is the cryptographic 'key' for the hidden message.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite message.gif rose: -stegano +15+2  rose_message.png
+  magick composite message.gif rose: -stegano +15+2  rose_message.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_message.png"
      ><IMG SRC="rose_message.png"
@@ -922,7 +922,7 @@ We can the recover the message hidden in the image...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x40+15+2 stegano:rose_message.png message_recovered.gif
+  magick -size 50x40+15+2 stegano:rose_message.png message_recovered.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="message_recovered.gif"
      ><IMG SRC="message_recovered.gif"
@@ -941,7 +941,7 @@ original.
               <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=rose_diff_pae.txt>
-  compare -metric PAE rose:  rose_message.png   rose_difference.png
+  magick compare -metric PAE rose:  rose_message.png   rose_difference.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="rose_difference.png"
      ><IMG SRC="rose_difference.png"
@@ -972,7 +972,7 @@ Also if you had the wrong 'offset key' you will not get the message...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x40+14+2 stegano:rose_message.png message_bad.gif
+  magick -size 50x40+14+2 stegano:rose_message.png message_bad.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="message_bad.gif"
      ><IMG SRC="message_bad.gif"
@@ -1031,7 +1031,7 @@ HREF="pass_phrase.txt">pass_phrase.txt</A>".
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert message.gif    -encipher pass_phrase.txt  \
+  magick message.gif    -encipher pass_phrase.txt  \
           -depth 8 png24:message_hidden.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="message.gif"
@@ -1068,7 +1068,7 @@ exact original pass-phrase can restore the image data...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert message_hidden.png -decipher pass_phrase.txt message_restored.gif
+  magick message_hidden.png -decipher pass_phrase.txt message_restored.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="message_restored.gif"
      ><IMG SRC="message_restored.gif"
@@ -1097,9 +1097,9 @@ the normal way.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  echo "password" | convert message.gif -encipher - \
+  echo "password" | magick message.gif -encipher - \
                       -transpose  -depth 8   png24:message_obfuscate.png
-  echo "password" | convert message_obfuscate.png -transpose \
+  echo "password" | magick message_obfuscate.png -transpose \
                       -decipher -  message_restored_2.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="message.gif"
@@ -1137,10 +1137,10 @@ encrypt and later decrypt the "<CODE>message.gif</CODE>" image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  identify -format %# rose.gif |\
-    convert message.gif  -encipher - -depth 8    png24:message_signed.png
-  identify -format %# rose.gif |\
-    convert message_signed.png   -decipher -   message_restored_3.png
+  magick identify -format %# rose.gif |\
+    magick message.gif  -encipher - -depth 8    png24:message_signed.png
+  magick identify -format %# rose.gif |\
+    magick message_signed.png   -decipher -   message_restored_3.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="message.gif"
      ><IMG SRC="message.gif"       WIDTH=50  HEIGHT=40
@@ -1172,8 +1172,8 @@ passphrase.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert message.gif   -encipher rose.gif  -depth 8  png24:message_binary.png
-  convert message_binary.png   -decipher rose.gif   message_restored_4.png
+  magick message.gif   -encipher rose.gif  -depth 8  png24:message_binary.png
+  magick message_binary.png   -decipher rose.gif   message_restored_4.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="message.gif"
      ><IMG SRC="message.gif"       WIDTH=50  HEIGHT=40
@@ -1232,7 +1232,7 @@ hidden one.  </P>
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
-  The cipher was implemented using a self-synchronizing stream cipher
+  The cipher was implemented using a self-synchronizing magick stream cipher
   implemented from a block cipher. </P>
 
   This means that you can still decipher even a partial download of the image,
@@ -1249,7 +1249,7 @@ hidden one.  </P>
 <A NAME="pixelate"></A>
 <H3>Pixelate an Image</H3>
 
-Pixelating an image is basicaly used to convert an image into a set of large
+Pixelating an image is basicaly used to magick an image into a set of large
 colored 'pixels' that only shows a vague outline of the original image. </P>
 
 Both techniques involve shrinking the image (to generate fewer pixels), then
@@ -1262,9 +1262,9 @@ wil be used.  A single pixel sample, or a merged average color.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -sample 25%  -scale 70x46\!  rose_pixelate_sampled.gif
-  convert rose:  -scale  25%  -scale 70x46\!  rose_pixelate_scaled.gif
-  convert rose:  -resize 25%  -scale 70x46\!  rose_pixelate_resized.gif
+  magick rose:  -sample 25%  -scale 70x46\!  rose_pixelate_sampled.gif
+  magick rose:  -scale  25%  -scale 70x46\!  rose_pixelate_scaled.gif
+  magick rose:  -resize 25%  -scale 70x46\!  rose_pixelate_resized.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"       WIDTH=76  HEIGHT=46
@@ -1304,8 +1304,8 @@ HREF="../resize/#scale" >Scale</A> a small image, to enlarge the pixels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -crop 10x10+12+20 +resize  grid_input.png
-  convert grid_input.png  -scale  1000%  grid_scale.png
+  magick rose:  -crop 10x10+12+20 +resize  grid_input.png
+  magick grid_input.png  -scale  1000%  grid_scale.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="grid_input.png"
      ><IMG SRC="grid_input.png"       WIDTH=10  HEIGHT=10
@@ -1334,9 +1334,9 @@ leaving black areas as-is).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x10 xc: -draw 'rectangle 1,1 9,9' -write mpr:block +delete \
+  magick -size 10x10 xc: -draw 'rectangle 1,1 9,9' -write mpr:block +delete \
           grid_input.png -scale 1000% -size 101x101 tile:mpr:block \
-          +swap -compose screen -composite grid_blocks.png
+          +swap -compose screen -magick composite grid_blocks.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="grid_blocks.png"
      ><IMG SRC="grid_blocks.png"    WIDTH=101 HEIGHT=101
@@ -1361,10 +1361,10 @@ leaving white areas as-is).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x10 xc: -draw 'circle 5,5 1,3' -negate \
+  magick -size 10x10 xc: -draw 'circle 5,5 1,3' -negate \
                -write mpr:spot +delete \
           grid_input.png -scale 1000% -size 101x101 tile:mpr:spot \
-          +swap -compose multiply -composite grid_spots.png
+          +swap -compose multiply -magick composite grid_spots.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="grid_spots.png"
      ><IMG SRC="grid_spots.png"    WIDTH=101 HEIGHT=101
@@ -1391,11 +1391,11 @@ HREF="../morphology/#diamond" >Diamond Morphology Kernel</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x10 xc: -draw 'point 5,5' -morphology Erode:4 Diamond \
+  magick -size 10x10 xc: -draw 'point 5,5' -morphology Erode:4 Diamond \
           -background Navy -alpha shape -write mpr:diamond +delete \
           grid_input.png -scale 1000% -splice 1x1+0+0 \
           -size 101x101 -background none tile:mpr:diamond \
-          -alpha set -compose Over -composite grid_diamonds.png
+          -alpha set -compose Over -magick composite grid_diamonds.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="grid_diamonds.png"
      ><IMG SRC="grid_diamonds.png"    WIDTH=101 HEIGHT=101
@@ -1440,7 +1440,7 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -background SkyBlue \
+  magick rose: -background SkyBlue \
           -crop 10x0 +repage -splice 3x0 +append \
           -crop 0x10 +repage -splice 0x3 -append \
           grid_tile.png
@@ -1462,7 +1462,7 @@ new postion of a tile, from its old position.
 <TR VALIGN=middle><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -crop 10x10 \
+  magick rose: -crop 10x10 \
           -set page '+%[fx:page.x+3*page.x/10]+%[fx:page.y+3*page.y/10]' \
           -background skyblue -layers merge +repage  grid_tile_fx.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1503,10 +1503,10 @@ operator, so is applied to each of the three color channels separately.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert mask.gif -edge 1   mask_edge_1.gif
-  convert mask.gif -edge 2   mask_edge_2.gif
-  convert mask.gif -edge 3   mask_edge_3.gif
-  convert mask.gif -edge 10  mask_edge_10.gif
+  magick mask.gif -edge 1   mask_edge_1.gif
+  magick mask.gif -edge 2   mask_edge_2.gif
+  magick mask.gif -edge 3   mask_edge_3.gif
+  magick mask.gif -edge 10  mask_edge_10.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="mask.gif"
      ><IMG SRC="mask.gif"                    WIDTH=64  HEIGHT=64
@@ -1540,7 +1540,7 @@ the "<CODE><A HREF="../option_link.cgi?edge" >-edge</A></CODE>" operator will
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert piglet.gif  -colorspace Gray  -edge 1 -negate  piglet_edge.gif
+  magick piglet.gif  -colorspace Gray  -edge 1 -negate  piglet_edge.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/piglet.gif"
      ><IMG SRC="../images/piglet.gif"        WIDTH=100 HEIGHT=100
@@ -1559,7 +1559,7 @@ go inward and join together, removing the 'twin line' effect.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert piglet.gif -colorspace Gray \
+  magick piglet.gif -colorspace Gray \
                  -negate -edge 1 -negate    piglet_edge_neg.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="piglet_edge_neg.gif"
@@ -1576,7 +1576,7 @@ improves the look quite a bit.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert piglet_edge_neg.gif  -blur 0x.5  piglet_edge_blur.gif
+  magick piglet_edge_neg.gif  -blur 0x.5  piglet_edge_blur.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="piglet_edge_blur.gif"
      ><IMG SRC="piglet_edge_blur.gif"        WIDTH=100 HEIGHT=100
@@ -1589,8 +1589,8 @@ to show you its effects on photo-like images.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:                   -edge 1  rose_edge.gif
-  convert rose: -colorspace Gray  -edge 1  rose_edge_grey.gif
+  magick rose:                   -edge 1  rose_edge.gif
+  magick rose: -colorspace Gray  -edge 1  rose_edge_grey.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rose_edge.gif"
      ><IMG SRC="rose_edge.gif"
@@ -1618,10 +1618,10 @@ For example, here we apply it to the test images we used above..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert mask.gif           -canny 0x1+10%+30%  mask_canny.gif
-  convert piglet.gif         -canny 0x1+10%+30%  piglet_canny.gif
-  convert piglet.gif -negate -canny 0x1+10%+30%  piglet_canny_neg.gif
-  convert rose:              -canny 0x1+10%+30%  rose_canny.gif
+  magick mask.gif           -canny 0x1+10%+30%  mask_canny.gif
+  magick piglet.gif         -canny 0x1+10%+30%  piglet_canny.gif
+  magick piglet.gif -negate -canny 0x1+10%+30%  piglet_canny_neg.gif
+  magick rose:              -canny 0x1+10%+30%  rose_canny.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="mask.gif"
      ><IMG SRC="mask.gif"                    WIDTH=64  HEIGHT=64
@@ -1669,7 +1669,7 @@ character '<CODE>(</CODE>' ).
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x80 -gravity center -font WebDings label:')' voice.gif
+  magick -size 80x80 -gravity center -font WebDings label:')' voice.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="voice.gif"
      ><IMG SRC="voice.gif"       WIDTH=80  HEIGHT=80
@@ -1682,7 +1682,7 @@ And here is its edge detected image...
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert voice.gif -edge 1 -negate   voice_edge.gif
+  magick voice.gif -edge 1 -negate   voice_edge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="voice_edge.gif"
      ><IMG SRC="voice_edge.gif"       WIDTH=80  HEIGHT=80
@@ -1700,7 +1700,7 @@ image, but also has strong aliasing outside of the line.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert voice.gif -negate -edge 1 -negate   voice_edge_negate.gif
+  magick voice.gif -negate -edge 1 -negate   voice_edge_negate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="voice_edge_negate.gif"
      ><IMG SRC="voice_edge_negate.gif"       WIDTH=80  HEIGHT=80
@@ -1716,7 +1716,7 @@ image and one that has been offset (or jittered) to the right by 1 pixel.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert voice.gif \( +clone -roll +1+0 \) -compose difference -composite \
+  magick voice.gif \( +clone -roll +1+0 \) -compose difference -magick composite \
           -negate   voice_jitter_horiz.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="voice_jitter_horiz.gif"
@@ -1732,10 +1732,10 @@ image, we can get a very good anti-aliased outline of the shape.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert voice.gif \
-          \( -clone 0 -roll +1+0 -clone 0 -compose difference -composite \) \
-          \( -clone 0 -roll +0+1 -clone 0 -compose difference -composite \) \
-          -delete 0  -compose screen -composite -negate  voice_jitter_edge.gif
+  magick voice.gif \
+          \( -clone 0 -roll +1+0 -clone 0 -compose difference -magick composite \) \
+          \( -clone 0 -roll +0+1 -clone 0 -compose difference -magick composite \) \
+          -delete 0  -compose screen -magick composite -negate  voice_jitter_edge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="voice_jitter_edge.gif"
      ><IMG SRC="voice_jitter_edge.gif"       WIDTH=80  HEIGHT=80
@@ -1767,7 +1767,7 @@ transparency.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert +antialias -size 80x80 -gravity center \
+  magick +antialias -size 80x80 -gravity center \
           -font WebDings label:Y   heart.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart.gif"
@@ -1783,7 +1783,7 @@ edge around the outside of the bitmap shape.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart.gif -edge 1 -negate   heart_edge.gif
+  magick heart.gif -edge 1 -negate   heart_edge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_edge.gif"
      ><IMG SRC="heart_edge.gif"       WIDTH=80  HEIGHT=80
@@ -1797,7 +1797,7 @@ A negated edge generates an edge image but for the inside of the black area.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart.gif -negate -edge 1 -negate   heart_edge_negate.gif
+  magick heart.gif -negate -edge 1 -negate   heart_edge_negate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_edge_negate.gif"
      ><IMG SRC="heart_edge_negate.gif"       WIDTH=80  HEIGHT=80
@@ -1811,8 +1811,8 @@ shapes edge.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart.gif \( +clone -negate \) -edge 1 \
-          -compose add -composite  -negate  heart_edge_double.gif
+  magick heart.gif \( +clone -negate \) -edge 1 \
+          -compose add -magick composite  -negate  heart_edge_double.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_edge_double.gif"
      ><IMG SRC="heart_edge_double.gif"       WIDTH=80  HEIGHT=80
@@ -1831,7 +1831,7 @@ like it.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart.gif  -negate -morphology EdgeIn Diamond -negate heart_edgein.gif
+  magick heart.gif  -negate -morphology EdgeIn Diamond -negate heart_edgein.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_edgein.gif"
      ><IMG SRC="heart_edgein.gif"       WIDTH=80  HEIGHT=80
@@ -1848,7 +1848,7 @@ HREF="../filter/#filter" >Resampling Filters</A>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart.gif -resize 400% -resize 25% \
+  magick heart.gif -resize 400% -resize 25% \
           -solarize 50% -evaluate multiply 2 -negate heart_resize.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_resize.gif"
@@ -1864,7 +1864,7 @@ best, with a 3 pixel limit to speed things up.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert heart.gif -blur 3x.7 -solarize 50% -level 50%,0 heart_blur.gif
+  magick heart.gif -blur 3x.7 -solarize 50% -level 50%,0 heart_blur.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_blur.gif"
      ><IMG SRC="heart_blur.gif"       WIDTH=80  HEIGHT=80
@@ -1889,7 +1889,7 @@ You will be credited.</I> </P>
 <H3>Edging using a Raster to Vector Converter</H3>
 
 One of the most ideal solutions is to use a non-IM '<I>raster to vector</I>'
-conversion program to convert this bitmap shape into a vector outline.
+conversion program to magick this bitmap shape into a vector outline.
 Programs that can do this include: "<CODE>ScanFont</CODE>",
 "<CODE>CorelTrace</CODE>", "<CODE>Streamline</CODE>" by Abobe, and "<CODE><A
 HREF="http://vectormagic.com/home" >Vector Magic</A></CODE>". Most of these
@@ -1909,15 +1909,15 @@ in a 'pipeline'. </P>
 
 For best results it is a good idea to ensure we only feed it a basic bitmap
 image, which we can ensure by thresholding the input image, while we convert
-it to an image format autotrace understands.  I can then convert that image
+it to an image format autotrace understands.  I can then magick that image
 into a SVG vector image.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=heart_svg.gif ERR=/dev/null>
-  convert heart.gif -colorspace gray -threshold 50% heart_tmp.pbm
+  magick heart.gif -colorspace gray -threshold 50% heart_tmp.pbm
   autotrace -output-format svg -output-file heart.svg heart_tmp.pbm
-  convert heart.svg heart_svg.gif
+  magick heart.svg heart_svg.gif
   rm -f heart_tmp.pbm
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD>
@@ -1953,7 +1953,7 @@ As of IM v6.4.2-6 you can do the above sequence directly using the
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert autotrace:heart.gif  heart_traced.gif
+  magick autotrace:heart.gif  heart_traced.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="heart_traced.gif"
       ><IMG SRC="heart_traced.gif"
@@ -1969,7 +1969,7 @@ Handling</A>.  For example....
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=/dev/null>
-  convert heart.gif  heart_2.svg
+  magick heart.gif  heart_2.svg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1997,7 +1997,7 @@ For example...
 <TR><TD><PRE><CODE EXECUTE SCRIPT ERR=/dev/null>
   cat heart.svg |
     sed 's/"fill:#000000[^"]*"/"fill:none; stroke:black;"/' |
-      convert svg:- heart_outline.gif
+      magick svg:- heart_outline.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_outline.gif"
      ><IMG SRC="heart_outline.gif"       WIDTH=80  HEIGHT=80
@@ -2020,7 +2020,7 @@ a red fill, all nicly anti-aliased.
 <TR><TD><PRE><CODE EXECUTE SCRIPT ERR=/dev/null>
   cat heart.svg |
     sed 's/"fill:#000000;[^"]*"/"fill:red; stroke:black; stroke-width:5;"/' |
-        convert svg:- heart_outline_thick.gif
+        magick svg:- heart_outline_thick.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="heart_outline_thick.gif"
      ><IMG SRC="heart_outline_thick.gif"       WIDTH=80  HEIGHT=80
@@ -2081,7 +2081,7 @@ HREF="#canny" >Canny Edge Detector</A> is recommened.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shape_rectangle.gif -canny 0x1+10%+30% rectangle.gif
+  magick shape_rectangle.gif -canny 0x1+10%+30% rectangle.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/shape_rectangle.gif"
      ><IMG SRC="../images/shape_rectangle.gif"                    WIDTH=100 HEIGHT=100
@@ -2099,7 +2099,7 @@ Now lets apply the Hough Line Detector to this image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rectangle.gif -background black -stroke red \
+  magick rectangle.gif -background black -stroke red \
           -hough-lines 5x5+20   rectangle_lines.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rectangle_lines.gif"
@@ -2119,7 +2119,7 @@ processing.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE TXT2GIF>
-  convert rectangle.gif -background black -stroke red \
+  magick rectangle.gif -background black -stroke red \
           -hough-lines 5x5+20   rectangle_lines.mvg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -2159,7 +2159,7 @@ HREF="../basics/#define" >define</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rectangle.gif \
+  magick rectangle.gif \
           -define hough-lines:accumulator=true -hough-lines 5x5+20 \
           -delete 0 -contrast-stretch 0.1% rectangle_accumulator.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2208,7 +2208,7 @@ pixels in a small window will have roughly the same background color and
 roughly the same foreground color. </P>
 
 <PRE>For example.
-   convert input.png -lat 17 output.png
+   magick input.png -lat 17 output.png
 </PRE>
 
 In the above a 17 pixel square 'window' is used to determine the average color
@@ -2230,7 +2230,7 @@ less sensitive to small changes in pixel values.
 
 <PRE>
 The window does not need to be square.  for example...
-  convert input.png -lat 15x25 output.png
+  magick input.png -lat 15x25 output.png
 </PRE>
 
 You can also provide an offset which will be added to the calculated average
@@ -2239,7 +2239,7 @@ darker.  This can be used for example to reduce the effect of noise or the
 effect of small changes in pixel values. </P>
 
 <PRE>
-  convert input.png -lat 15x25+2%
+  magick input.png -lat 15x25+2%
 </PRE>
 
 These small changes normally occur when a scanner or digital camera is used to
@@ -2264,12 +2264,12 @@ In summary, each pixel is thresholded using the following logic:
 An alternative is to subtract a blurred copy of the original image
 using (Modulus) Subtraction, then thresholding.
 
-   convert rose: -colorspace gray -lat 10x10+0% x:
+   magick rose: -colorspace gray -lat 10x10+0% x:
 
 is roughly equivalent to...
 
-   convert rose: -colorspace gray \( +clone -blur 10x65535 \) \
-           -compose subtract -composite -threshold 50%  x:
+   magick rose: -colorspace gray \( +clone -blur 10x65535 \) \
+           -compose subtract -magick composite -threshold 50%  x:
 
 The special "-blur 10x65535"  is a linear averaging blur limiting itself to a
 10x10 window.
@@ -2280,11 +2280,11 @@ wrap the values that goes negative back round to a value greater than 50%.
 If you want to include an offset you can do so by also subtracting a solid
 color background image by using a -flatten...  for example
 
-   convert rose: -colorspace gray -lat 10x10+10% x:
+   magick rose: -colorspace gray -lat 10x10+10% x:
 
 is roughly equivalent to...
 
-   convert rose: -colorspace gray \( +clone -blur 10x65535 \) \
+   magick rose: -colorspace gray \( +clone -blur 10x65535 \) \
            -compose subtract -background gray10 -flatten -threshold 50%  x:
 
 </PRE>
@@ -2297,7 +2297,7 @@ The above was modified from initial notes provided by D Hobson
    -adaptive-sharpen
         Sharpen images only around the edges of the images
 
-   -segment cluster-threshold x smoothing-threshold
+   -magick segment cluster-threshold x smoothing-threshold
          Segmentation of the color space (not image objects)
          This can produce very verbose output.
          This applies the "fuzzy c-means algorithm" if you want to know more.
@@ -2306,7 +2306,7 @@ Also related is -despeckle. to remove single off color pixels.
 
 Generate a 3d stereogram of two images (one for each eye)
 This is also known as an anaglyph
-  composite left.jpg right.jpg -stereo anaglyph.jpg
+  magick composite left.jpg right.jpg -stereo anaglyph.jpg
 
 </PRE>
 
@@ -2357,7 +2357,7 @@ For our demonstrations we will need a 'height field' image so lets draw one.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -font Candice -pointsize 64 -background black -fill white \
+  magick -font Candice -pointsize 64 -background black -fill white \
           label:A  -trim +repage -bordercolor black -border 10x5 \
           shade_a_mask.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2388,11 +2388,11 @@ example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shade_a_mask.gif   -shade    0x45   shade_direction_0.gif
-  convert shade_a_mask.gif   -shade   45x45   shade_direction_45.gif
-  convert shade_a_mask.gif   -shade   90x45   shade_direction_90.gif
-  convert shade_a_mask.gif   -shade  135x45   shade_direction_135.gif
-  convert shade_a_mask.gif   -shade  180x45   shade_direction_180.gif
+  magick shade_a_mask.gif   -shade    0x45   shade_direction_0.gif
+  magick shade_a_mask.gif   -shade   45x45   shade_direction_45.gif
+  magick shade_a_mask.gif   -shade   90x45   shade_direction_90.gif
+  magick shade_a_mask.gif   -shade  135x45   shade_direction_135.gif
+  magick shade_a_mask.gif   -shade  180x45   shade_direction_180.gif
 </CODE></PRE></TD></TR></TABLE><TR><TD>
   <A HREF="shade_a_mask.gif"
      ><IMG SRC="shade_a_mask.gif"
@@ -2429,13 +2429,13 @@ during the day, so that '0' is dawn, and '90' is directly overhead.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shade_a_mask.gif   -shade  90x0    shade_elevation_0.gif
-  convert shade_a_mask.gif   -shade  90x15   shade_elevation_15.gif
-  convert shade_a_mask.gif   -shade  90x30   shade_elevation_30.gif
-  convert shade_a_mask.gif   -shade  90x45   shade_elevation_45.gif
-  convert shade_a_mask.gif   -shade  90x60   shade_elevation_60.gif
-  convert shade_a_mask.gif   -shade  90x75   shade_elevation_75.gif
-  convert shade_a_mask.gif   -shade  90x90   shade_elevation_90.gif
+  magick shade_a_mask.gif   -shade  90x0    shade_elevation_0.gif
+  magick shade_a_mask.gif   -shade  90x15   shade_elevation_15.gif
+  magick shade_a_mask.gif   -shade  90x30   shade_elevation_30.gif
+  magick shade_a_mask.gif   -shade  90x45   shade_elevation_45.gif
+  magick shade_a_mask.gif   -shade  90x60   shade_elevation_60.gif
+  magick shade_a_mask.gif   -shade  90x75   shade_elevation_75.gif
+  magick shade_a_mask.gif   -shade  90x90   shade_elevation_90.gif
 </CODE></PRE></TD></TR></TABLE><TR><TD>
   <A HREF="shade_elevation_0.gif"
      ><IMG SRC="shade_elevation_0.gif"
@@ -2497,7 +2497,7 @@ creates some beveled text...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 320x100 xc:black \
+  magick -size 320x100 xc:black \
           -font Candice -pointsize 72 -fill white \
           -draw "text 25,65 'Anthony'" \
           -shade 120x45  shade_anthony.jpg
@@ -2521,7 +2521,7 @@ command, to shade a flat solid color surface.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=shade_elevation_45.txt>
-  convert -size 50x50 xc:white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:white -draw 'circle 25,25 20,10' \
           -blur 0x2  -shade 0x45   -gravity center -crop 1x1+0+0 txt:-
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shade_elevation_45.txt"
@@ -2551,8 +2551,8 @@ mask image. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shade_direction_135.gif  shade_a_mask.gif \
-          -alpha Off -compose CopyOpacity -composite   shade_beveled.png
+  magick shade_direction_135.gif  shade_a_mask.gif \
+          -alpha Off -compose CopyOpacity -magick composite   shade_beveled.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shade_direction_135.gif"
      ><IMG SRC="shade_direction_135.gif"
@@ -2579,9 +2579,9 @@ the beveled edge, leaving the center of the image hollow.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shade_direction_135.gif \
+  magick shade_direction_135.gif \
           \( shade_elevation_90.gif -normalize -negate \) \
-          -alpha Off -compose CopyOpacity -composite   shade_beveled_edge.png
+          -alpha Off -compose CopyOpacity -magick composite   shade_beveled_edge.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shade_direction_135.gif"
      ><IMG SRC="shade_direction_135.gif"
@@ -2608,10 +2608,10 @@ the size of that mask slightly to produce a better masked beveled image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shade_direction_135.gif \
+  magick shade_direction_135.gif \
           \( shade_elevation_90.gif -normalize -negate \
-             shade_a_mask.gif -compose screen -composite \) \
-          -alpha Off -compose CopyOpacity -composite   shade_beveled_plus.png
+             shade_a_mask.gif -compose screen -magick composite \) \
+          -alpha Off -compose CopyOpacity -magick composite   shade_beveled_plus.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="shade_beveled_plus.png"
      ><IMG SRC="shade_beveled_plus.png"
@@ -2626,12 +2626,12 @@ generated from scratch.  For example.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -font Candice -pointsize 72 -background black -fill white \
+  magick -font Candice -pointsize 72 -background black -fill white \
           label:X  -trim +repage -bordercolor black -border 10x5 \
           \( -clone 0 -shade  135x45 \) \
           \( -clone 0 -shade  0x90  -normalize -negate \
-             -clone 0 -compose screen -composite \) \
-          -delete 0 -alpha Off -compose CopyOpacity -composite \
+             -clone 0 -compose screen -magick composite \) \
+          -delete 0 -alpha Off -compose CopyOpacity -magick composite \
           shade_beveled_X.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="shade_beveled_X.png"
@@ -2662,7 +2662,7 @@ image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 -gravity center -background None \
+  magick -size 100x100 -gravity center -background None \
           -font WebDings label:Y \
           -alpha Extract -blur 0x6 -shade 120x21 -alpha On \
           -normalize +level 15%  -fill Red -tint 100%    shade_heart.png
@@ -2686,14 +2686,14 @@ a nice rounded effect to the shade image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           shade_circle_mask.gif
-  convert shade_circle_mask.gif            -shade 120x45  shade_blur_0.gif
-  convert shade_circle_mask.gif -blur 0x1  -shade 120x45  shade_blur_1.gif
-  convert shade_circle_mask.gif -blur 0x2  -shade 120x45  shade_blur_2.gif
-  convert shade_circle_mask.gif -blur 0x3  -shade 120x45  shade_blur_3.gif
-  convert shade_circle_mask.gif -blur 0x4  -shade 120x45  shade_blur_4.gif
-  convert shade_circle_mask.gif -blur 0x5  -shade 120x45  shade_blur_5.gif
+  magick shade_circle_mask.gif            -shade 120x45  shade_blur_0.gif
+  magick shade_circle_mask.gif -blur 0x1  -shade 120x45  shade_blur_1.gif
+  magick shade_circle_mask.gif -blur 0x2  -shade 120x45  shade_blur_2.gif
+  magick shade_circle_mask.gif -blur 0x3  -shade 120x45  shade_blur_3.gif
+  magick shade_circle_mask.gif -blur 0x4  -shade 120x45  shade_blur_4.gif
+  magick shade_circle_mask.gif -blur 0x5  -shade 120x45  shade_blur_5.gif
 </CODE></PRE></TD></TR></TABLE><TR><TD>
   <A HREF="shade_circle_mask.gif"
      ><IMG SRC="shade_circle_mask.gif"      WIDTH=50  HEIGHT=50
@@ -2727,7 +2727,7 @@ black colors respectively.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shade_blur_3.gif   -normalize  shade_blur_3n.gif
+  magick shade_blur_3.gif   -normalize  shade_blur_3n.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shade_blur_3.gif"
      ><IMG SRC="shade_blur_3.gif"           WIDTH=50  HEIGHT=50
@@ -2747,8 +2747,8 @@ Lets finish off this shade image by directly masking it as well..
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shade_blur_3n.gif shade_circle_mask.gif \
-          -alpha Off -compose CopyOpacity -composite   shade_blur_3n_mask.png
+  magick shade_blur_3n.gif shade_circle_mask.gif \
+          -alpha Off -compose CopyOpacity -magick composite   shade_blur_3n_mask.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shade_blur_3n.gif"
      ><IMG SRC="shade_blur_3n.gif"           WIDTH=50  HEIGHT=50
@@ -2797,9 +2797,9 @@ the resulting color of a 'flat' part of the image.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=shade_30.txt>
-  convert -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           -blur 0x2  -shade 120x30           shade_30.png
-  convert shade_30.png   -gravity center -crop 1x1+0+0 txt:-
+  magick shade_30.png   -gravity center -crop 1x1+0+0 txt:-
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="shade_30.png"
      ><IMG SRC="shade_30.png"
@@ -2833,9 +2833,9 @@ example...
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=shade_30_norm.txt>
-  convert -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           -blur 0x2  -shade 120x30 -normalize   shade_30_norm.png
-  convert shade_30_norm.png   -gravity center -crop 1x1+0+0 txt:-
+  magick shade_30_norm.png   -gravity center -crop 1x1+0+0 txt:-
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="shade_30_norm.png"
      ><IMG SRC="shade_30_norm.png"
@@ -2858,9 +2858,9 @@ mid-tone grey level as well as a good strong highlighting effect.
                <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=shade_21_norm.txt>
-  convert -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           -blur 0x2  -shade 120x21.78 -normalize   shade_21_norm.png
-  convert shade_21_norm.png   -gravity center -crop 1x1+0+0 txt:-
+  magick shade_21_norm.png   -gravity center -crop 1x1+0+0 txt:-
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="shade_21_norm.png"
      ><IMG SRC="shade_21_norm.png"
@@ -2897,13 +2897,13 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           \( +clone -blur 0x2 -shade 120x21.78 -normalize  \) \
-          +swap -alpha Off -compose CopyOpacity -composite  shade_tint_0.png
-  convert shade_tint_0.png -fill grey50  -colorize 10%  shade_tint_10.png
-  convert shade_tint_0.png -fill grey50  -colorize 30%  shade_tint_30.png
-  convert shade_tint_0.png -fill grey50  -colorize 50%  shade_tint_50.png
-  convert shade_tint_0.png -fill grey50  -colorize 80%  shade_tint_80.png
+          +swap -alpha Off -compose CopyOpacity -magick composite  shade_tint_0.png
+  magick shade_tint_0.png -fill grey50  -colorize 10%  shade_tint_10.png
+  magick shade_tint_0.png -fill grey50  -colorize 30%  shade_tint_30.png
+  magick shade_tint_0.png -fill grey50  -colorize 50%  shade_tint_50.png
+  magick shade_tint_0.png -fill grey50  -colorize 80%  shade_tint_80.png
 </CODE></PRE></TD></TR></TABLE><TR><TD>
   <A HREF="shade_tint_0.png"
      ><IMG SRC="shade_tint_0.png"
@@ -2944,17 +2944,17 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           \( +clone -blur 0x2 -shade 120x21.78 -contrast-stretch 0% \) \
-          +swap -alpha Off -compose CopyOpacity -composite shade_sig_0.png
+          +swap -alpha Off -compose CopyOpacity -magick composite shade_sig_0.png
 
-  convert shade_sig_0.png  -sigmoidal-contrast 10x50%  shade_sig-10.png
-  convert shade_sig_0.png  -sigmoidal-contrast  5x50%  shade_sig-5.png
-  convert shade_sig_0.png  -sigmoidal-contrast  2x50%  shade_sig-2.png
+  magick shade_sig_0.png  -sigmoidal-contrast 10x50%  shade_sig-10.png
+  magick shade_sig_0.png  -sigmoidal-contrast  5x50%  shade_sig-5.png
+  magick shade_sig_0.png  -sigmoidal-contrast  2x50%  shade_sig-2.png
 
-  convert shade_sig_0.png  +sigmoidal-contrast  2x50%  shade_sig+2.png
-  convert shade_sig_0.png  +sigmoidal-contrast  5x50%  shade_sig+5.png
-  convert shade_sig_0.png  +sigmoidal-contrast 10x50%  shade_sig+10.png
+  magick shade_sig_0.png  +sigmoidal-contrast  2x50%  shade_sig+2.png
+  magick shade_sig_0.png  +sigmoidal-contrast  5x50%  shade_sig+5.png
+  magick shade_sig_0.png  +sigmoidal-contrast 10x50%  shade_sig+10.png
 </CODE></PRE></TD></TR></TABLE><TR><TD>
   <A HREF="shade_sig-10.png"
      ><IMG SRC="shade_sig-10.png"
@@ -2996,10 +2996,10 @@ controls...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
+  magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           \( +clone -blur 0x4 -shade 120x21.78 -contrast-stretch 0% \
              +sigmoidal-contrast 7x50% -fill grey50 -colorize 10%  \) \
-          +swap -alpha Off -compose CopyOpacity -composite shade_overlay.png
+          +swap -alpha Off -compose CopyOpacity -magick composite shade_overlay.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="shade_overlay.png"
      ><IMG SRC="shade_overlay.png"
@@ -3087,11 +3087,11 @@ The command is so generic in its abilities, that it can,
 <LI>move color values between images and channels.
 <LI>adjust image colors in just about any way imaginable
 <LI>translate, flip, mirror, rotate, scale, shear and generally distort images.
-<LI>merge or composite multiple images together.
+<LI>merge or magick composite multiple images together.
 <LI>tile image(s) in weird and wonderful ways.
 <LI>convolve or merge neighboring pixels together.
 <LI>generate image metrics or 'fingerprints'
-<LI>compare images in unusual ways.
+<LI>magick compare images in unusual ways.
 </UL></P>
 
 Of course many of these techniques are already part of IM, producing a faster
@@ -3107,8 +3107,8 @@ operator. </P>
 
 The operator is essentially allows you to perform free-form mathematical
 operations on one or more images.  For the official summary of the command see
-<A HREF="https://legacy.imagemagick.org/script/fx.php" >FX, The Special Effects
-Image Operator</A> on the <A HREF="https://legacy.imagemagick.org/" >ImageMagick
+<A HREF="https://imagemagick.org/script/fx.php" >FX, The Special Effects
+Image Operator</A> on the <A HREF="https://imagemagick.org/" >ImageMagick
 Web Site</A>. </P>
 
 <H3>FX Basic Usage</H3>
@@ -3151,7 +3151,7 @@ to be half-bright to form a 'navy blue' color instead.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  -size 64x64 xc:black -channel blue -fx '1/2' fx_navy.gif
+  magick -size 64x64 xc:black -channel blue -fx '1/2' fx_navy.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_navy.gif"
      ><IMG SRC="fx_navy.gif"    WIDTH=64 HEIGHT=64
@@ -3165,7 +3165,7 @@ channels to zero, so it becomes a black-red gradient.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  -size 64x64 gradient:black-white \
+  magick -size 64x64 gradient:black-white \
            -channel blue,green    -fx '0'    fx_red.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_red.gif"
@@ -3222,7 +3222,7 @@ multiply all pixel values by 50%.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -fx 'u*1.5'    fx_rose_brighten.gif
+  magick rose:  -fx 'u*1.5'    fx_rose_brighten.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_rose_brighten.gif"
      ><IMG SRC="fx_rose_brighten.gif"     WIDTH=70 HEIGHT=46
@@ -3232,7 +3232,7 @@ multiply all pixel values by 50%.
 In the above example, each of the individual red, green and blue values was
 multiplied by 1.5.  If the resulting value is outside the 0 to 1 range it,
 will be limited to the appropriate bound (1.0 in this case), unless you are
-using a specially built <A HREF="https://legacy.imagemagick.org/script/high-dynamic-range.php" target="_blank">HDRI version of ImageMagick</A>. </P>
+using a specially built <A HREF="https://imagemagick.org/script/high-dynamic-range.php" target="_blank">HDRI version of ImageMagick</A>. </P>
 
 Lots of other "<CODE><A HREF="../option_link.cgi?fx" >-fx</A></CODE>" formulas
 to recolor images are explored in <A HREF="../color_mods/#linear"
@@ -3250,8 +3250,8 @@ gradient we generated above.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 64x64 gradient:black-blue -rotate -90  fx_blue.gif
-  convert fx_red.gif  fx_blue.gif \
+  magick -size 64x64 gradient:black-blue -rotate -90  fx_blue.gif
+  magick fx_red.gif  fx_blue.gif \
           -channel B  -fx 'v'    fx_combine.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="fx_red.gif"
@@ -3299,7 +3299,7 @@ Gradient Image</A>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose: -channel G -fx 'sin(pi*i/w)' -separate   fx_sine_gradient.gif
+  magick rose: -channel G -fx 'sin(pi*i/w)' -separate   fx_sine_gradient.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_sine_gradient.gif"
      ><IMG SRC="fx_sine_gradient.gif"     WIDTH=70 HEIGHT=46
@@ -3313,7 +3313,7 @@ Or something more complex using both '<CODE>i,j</CODE>' position values.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x80 xc: -channel G -fx  'sin((i-w/2)*(j-h/2)/w)/2+.5'\
+  magick -size 80x80 xc: -channel G -fx  'sin((i-w/2)*(j-h/2)/w)/2+.5'\
           -separate fx_2d_gradient.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_2d_gradient.gif"
@@ -3346,7 +3346,7 @@ position of the original source.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose: -fx  'p{w-i-1,j}'  fx_rose_mirror.gif
+  magick rose: -fx  'p{w-i-1,j}'  fx_rose_mirror.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_rose_mirror.gif"
      ><IMG SRC="fx_rose_mirror.gif"     WIDTH=70 HEIGHT=46
@@ -3378,7 +3378,7 @@ generate a larger image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:   -size 120x80 xc: +swap  \
+  magick rose:   -size 120x80 xc: +swap  \
            -fx 'v.p{  (i+.5)*v.w/w-.5, (j+.5)*v.h/h-.5  }' \
            fx_scaled.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3390,7 +3390,7 @@ generate a larger image.
 Note how the pixel lookup is performed, it may seem complex but it is the
 proper way to scale (distort) an image.  Basically all the extra
 '<CODE>0.5</CODE>' values added to the expression is needed to correctly
-convert between <A HREF="../distorts/#control_coordinates" >Pixel
+magick between <A HREF="../distorts/#control_coordinates" >Pixel
 Coodinates</A> used for input coordinates '<CODE>i,j</CODE>' and location
 lookup '<CODE>v.p{...}</CODE>, while the more mathematically correct <A
 HREF="../distorts/#control_coordinates" >Image Coordinates</A> is needed for
@@ -3416,7 +3416,7 @@ rose image.  See if you can figure how it works.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( +clone -channel R -fx B \) \
+  magick rose: \( +clone -channel R -fx B \) \
           +swap -channel B -fx v.R     fx_rb_swap.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_rb_swap.gif"
@@ -3453,7 +3453,7 @@ setting all the alpha channel values to half.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose: -alpha set  -channel A  -fx '0.5'    fx_rose_trans.png
+  magick rose: -alpha set  -channel A  -fx '0.5'    fx_rose_trans.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_rose_trans.png"
      ><IMG SRC="fx_rose_trans.png"         WIDTH=70 HEIGHT=46
@@ -3485,7 +3485,7 @@ read.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:  -channel G \
+  magick -size 100x100 xc:  -channel G \
           -fx 'xx=i-w/2; yy=j-h/2; rr=hypot(xx,yy); (.5-rr/70)*1.2+.5' \
           -separate  fx_radial_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3537,7 +3537,7 @@ used to read the expression from a file.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-   echo "u*2" | convert rose:  -fx "@-"  fx_file.png
+   echo "u*2" | magick rose:  -fx "@-"  fx_file.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_file.png"
      ><IMG SRC="fx_file.png"                WIDTH=70 HEIGHT=46
@@ -3593,7 +3593,7 @@ The actual image result is ignored by using the '<CODE><A HREF="../files/#null"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=fx_debug.txt>
-  convert rose: -fx 'i==10&amp;&amp;j==10?debug(u):1; u' null:
+  magick rose: -fx 'i==10&amp;&amp;j==10?debug(u):1; u' null:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_debug.txt"
      ><IMG SRC="fx_debug.txt.gif"
@@ -3688,8 +3688,8 @@ HREF="https://www.imagemagick.org/subversion/ImageMagick/trunk/PerlMagick/demo/"
 <H3>FX Expressions as Format and Annotate Escapes</H3>
 
 As of IM version 6.2.10 you can now use  <A
-HREF="https://legacy.imagemagick.org/script/fx.php" >FX Expressions</A> within <A
-HREF="https://legacy.imagemagick.org/script/escape.php" >Image Property
+HREF="https://imagemagick.org/script/fx.php" >FX Expressions</A> within <A
+HREF="https://imagemagick.org/script/escape.php" >Image Property
 Escaped</A> strings such as used by "<CODE><A HREF="../option_link.cgi?format"
 >-format</A></CODE>" and "<CODE><A HREF="../option_link.cgi?annotate"
 >-annotate</A></CODE>" arguments.  </P>
@@ -3698,7 +3698,7 @@ The escape sequence '<CODE>%[fx:...]</CODE>' is replaced by a number as
 a floating point value, calculated once for each image in the current image
 sequence. </P>
 
-The <A HREF="https://legacy.imagemagick.org/script/fx.php" >FX Expression</A>
+The <A HREF="https://imagemagick.org/script/fx.php" >FX Expression</A>
 however is modified slightly during processing.  Specifically... </P>
 
 <UL>
@@ -3731,7 +3731,7 @@ each image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 150x25 xc:DarkRed xc:Green xc:Blue \
+  magick -size 150x25 xc:DarkRed xc:Green xc:Blue \
           -fill white -gravity center \
           -annotate 0 '%[fx:t] / %[fx:n] : %[fx:r],%[fx:g],%[fx:b]' \
           annotate_fx_%d.gif
@@ -3761,7 +3761,7 @@ argument.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=800% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 300x100 gradient:yellow-limegreen \
+  magick -size 300x100 gradient:yellow-limegreen \
           -gravity NorthWest  -annotate 0 '%[pixel:s.p{0,0}]' \
           -gravity Center     -annotate 0 '%[pixel:s.p{0,50}]' \
           -gravity SouthEast  -annotate 0 '%[pixel:s.p{0,99}]' \
@@ -3780,7 +3780,7 @@ HREF="../basics/#identify" >identify</A></CODE>" command.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=fx_math.txt>
-  identify -format '%[fx:atan(1)*4]' null:
+  magick identify -format '%[fx:atan(1)*4]' null:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_math.txt"
      ><IMG SRC="fx_math.txt.gif"
@@ -3798,7 +3798,7 @@ between -5 and 10 inclusive.  Here I use the "<CODE><A HREF="../files/#info:"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM OUT=fx_rand.txt>
-  convert xc: -format '%[fx:int(rand()*16)-5]' info:
+  magick xc: -format '%[fx:int(rand()*16)-5]' info:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_rand.txt"
      ><IMG SRC="fx_rand.txt.gif"
@@ -3809,7 +3809,7 @@ For more methods see <A HREF="../basics/#identify_alt" >Identify Alternatives:
 Text Output Options</A>. </P>
 
 Also see <A HREF="../thumbnails/#rounded_border" >Border with Rounded
-Corner</A> which used a <A HREF="https://legacy.imagemagick.org/script/fx.php" >FX
+Corner</A> which used a <A HREF="https://imagemagick.org/script/fx.php" >FX
 Expressions</A> to generate a draw string based on image width and height
 information.  </P>
 
@@ -3829,7 +3829,7 @@ files based on calculated values.  For an example, see the final example in
 
 All the above will essentially run the "<CODE><A
 HREF="../option_link.cgi?format" >-format</A></CODE>" and thus any containing
-<A HREF="https://legacy.imagemagick.org/script/fx.php" >FX Expression</A> one for
+<A HREF="https://imagemagick.org/script/fx.php" >FX Expression</A> one for
 each image in the current image sequence. </P>
 
 The "<CODE><A HREF="../option_link.cgi?print" >-print</A></CODE>" operator will
@@ -3848,7 +3848,7 @@ colors.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=fx_hues.txt>
-  convert xc:red xc:green xc:blue -colorspace HSL \
+  magick xc:red xc:green xc:blue -colorspace HSL \
           -format '%[fx: s.r ]\n' info:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_hues.txt"
@@ -3863,7 +3863,7 @@ color of '<CODE>gold</CODE>', '<CODE>yellow</CODE>', and '<CODE>khaki</CODE>'.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=pixel_math.txt>
-  convert xc: -format '%[pixel:(gold+yellow+khaki)/3]' info:
+  magick xc: -format '%[pixel:(gold+yellow+khaki)/3]' info:
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="pixel_math.txt"
      ><IMG SRC="pixel_math.txt.gif"
@@ -3877,7 +3877,7 @@ colors...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert xc:gold xc:yellow xc:khaki +append \
+  magick xc:gold xc:yellow xc:khaki +append \
           \( xc: -fx '(gold+yellow+khaki)/3' \) \
           -scale 90x30\! -append fx_hues.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3912,7 +3912,7 @@ will fail!
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: label:'%[pixel:p{12,26}]' -delete 0 label_fx_direct.gif
+  magick rose: label:'%[pixel:p{12,26}]' -delete 0 label_fx_direct.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="label_fx_direct.gif"
      ><IMG SRC="label_fx_direct.gif"
@@ -3930,7 +3930,7 @@ including those for image creation.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -set option:mylabel '%[pixel:u.p{12,26}]' -delete 0 \
+  magick rose:  -set option:mylabel '%[pixel:u.p{12,26}]' -delete 0 \
           label:'%[mylabel]'    label_fx_indirect.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="label_fx_indirect.gif"
@@ -4003,7 +4003,7 @@ You can find out what functions have been built into evaluate using
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -list evaluate
+  magick -list evaluate
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -4033,7 +4033,7 @@ values in an image to a 50% gray level is very simple and very fast, using
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -evaluate set 50%  rose_set_gray.gif
+  magick rose:  -evaluate set 50%  rose_set_gray.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_set_gray.gif"
      ><IMG SRC="rose_set_gray.gif"
@@ -4057,7 +4057,7 @@ perfect grey. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -evaluate divide 2 -evaluate add 25%  rose_de-constrast.gif
+  magick rose:  -evaluate divide 2 -evaluate add 25%  rose_de-constrast.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_de-constrast.gif"
      ><IMG SRC="rose_de-constrast.gif"
@@ -4089,7 +4089,7 @@ will be clipped, before the subtraction is made.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -evaluate multiply 2  -evaluate subtract 25% \
+  magick rose:  -evaluate multiply 2  -evaluate subtract 25% \
           rose_contrast.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_contrast.gif"
@@ -4113,7 +4113,7 @@ multiplying, effectively using the equivalent formula
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -evaluate subtract 12.5%  -evaluate multiply 2 \
+  magick rose:  -evaluate subtract 12.5%  -evaluate multiply 2 \
           rose_contrast2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_contrast2.gif"
@@ -4152,7 +4152,7 @@ HREF="../compose/#dissolve" >Dissolve</A> type operation.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -alpha set  -channel A -evaluate divide 2   rose_transparent.png
+  magick rose: -alpha set  -channel A -evaluate divide 2   rose_transparent.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_transparent.png"
      ><IMG SRC="rose_transparent.png"
@@ -4177,7 +4177,7 @@ a specific set of color ratios.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -channel R  -evaluate multiply .2 \
+  magick rose: -channel R  -evaluate multiply .2 \
                 -channel G  -evaluate multiply .5 \
                 -channel B  -evaluate multiply .3 \
                 +channel -separate \
@@ -4219,9 +4219,9 @@ root' gradient.  For example... </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 20x600  gradient: -rotate 90  gradient.png
-  convert gradient.png  -evaluate Pow  2   eval_pow_parabola.png
-  convert gradient.png  -evaluate Pow 0.5  eval_pow_sq_root.png
+  magick -size 20x600  gradient: -rotate 90  gradient.png
+  magick gradient.png  -evaluate Pow  2   eval_pow_parabola.png
+  magick gradient.png  -evaluate Pow 0.5  eval_pow_sq_root.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gradient.png"
      ><IMG SRC="gradient.png"      WIDTH=600   HEIGHT=20
@@ -4272,13 +4272,13 @@ pow 0.5</CODE>" or a 'square root' operation function.  Similarly
 2</CODE>"</P>
 
 By doing some special gradient manipulations, you can use this method to
-convert a linear gradient into a complex circular arc.
+magick a linear gradient into a complex circular arc.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 20x300  gradient: -rotate 90 \
+  magick -size 20x300  gradient: -rotate 90 \
           -evaluate Pow 2 -negate -evaluate Pow 0.5 \
           -flop \( +clone -flop \) +append  eval_circle_arc.png
 </CODE></PRE></TD></TR></TABLE>
@@ -4323,7 +4323,7 @@ For example...
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -evaluate Log 10  eval_log.png
+  magick gradient.png -evaluate Log 10  eval_log.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="eval_log.png"
      ><IMG SRC="eval_log.png"    WIDTH=600   HEIGHT=20
@@ -4379,8 +4379,8 @@ methods.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png  -evaluate sin 1  eval_sin_1.png
-  convert gradient.png  -evaluate cos 1  eval_cos_1.png
+  magick gradient.png  -evaluate sin 1  eval_sin_1.png
+  magick gradient.png  -evaluate cos 1  eval_cos_1.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="eval_sin_1.png"
      ><IMG SRC="eval_sin_1.png"    WIDTH=600   HEIGHT=20
@@ -4414,7 +4414,7 @@ image.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -evaluate cos 5  -negate  eval_cos_5.png
+  magick gradient.png -evaluate cos 5  -negate  eval_cos_5.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="eval_cos_5.png"
      ><IMG SRC="eval_cos_5.png"    WIDTH=600   HEIGHT=20
@@ -4431,7 +4431,7 @@ image.
 This is perfect for many tasks, from generating ripple or dispersion effects
 to generate ripple looking displacement curves. </P>
 
-By using a multiplier constant of '0.5' you can simply convert a linear
+By using a multiplier constant of '0.5' you can simply magick a linear
 gradient into a sine curve gradient, which still has the same slope as the
 original.  By negating the result you can ensure that the gradient also slopes
 correctly.
@@ -4440,7 +4440,7 @@ correctly.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -evaluate cos 0.5  -negate  eval_cos.5.png
+  magick gradient.png -evaluate cos 0.5  -negate  eval_cos.5.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="eval_cos.5.png"
      ><IMG SRC="eval_cos.5.png"    WIDTH=600   HEIGHT=20
@@ -4510,7 +4510,7 @@ make, black and white colors 'white', and make perfect grays, 'black'.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Polynomial 4,-4,1  func_parabola.png
+  magick gradient.png -function Polynomial 4,-4,1  func_parabola.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_parabola.png"
      ><IMG SRC="func_parabola.png"    WIDTH=600   HEIGHT=20
@@ -4534,7 +4534,7 @@ image to give it various shading effects.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Polynomial '-25, 53, -36, 8.3, 0.2' \
+  magick gradient.png -function Polynomial '-25, 53, -36, 8.3, 0.2' \
           func_quartic.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_quartic.png"
@@ -4557,7 +4557,7 @@ if you used a <A HREF="../color_mods/#level" >Level Operator</A>...
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Polynomial '4, -1.5' func_linear.png
+  magick gradient.png -function Polynomial '4, -1.5' func_linear.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_linear.png"
      ><IMG SRC="func_linear.png"    WIDTH=600   HEIGHT=20
@@ -4585,7 +4585,7 @@ case to a 33% gray value.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Polynomial 0.33 func_constant.png
+  magick gradient.png -function Polynomial 0.33 func_constant.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_constant.png"
      ><IMG SRC="func_constant.png"    WIDTH=600   HEIGHT=20
@@ -4611,7 +4611,7 @@ circular arc over a linear gradient.  The equivalent
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Polynomial -4,4,0 -evaluate Pow 0.5 \
+  magick gradient.png -function Polynomial -4,4,0 -evaluate Pow 0.5 \
           func_circle_arc.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_circle_arc.png"
@@ -4658,7 +4658,7 @@ By default it will generate a Sine Curve.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Sinusoid 1    func_sine.png
+  magick gradient.png -function Sinusoid 1    func_sine.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_sine.png"
      ><IMG SRC="func_sine.png"    WIDTH=600   HEIGHT=20
@@ -4673,14 +4673,14 @@ By default it will generate a Sine Curve.
 </TD></TR></TABLE></P>
 
 By adding a '<I>phase</I>' argument in degrees, you can specify the starting
-angle for the curve.  Allowing you convert the default sine curve into a
+angle for the curve.  Allowing you magick the default sine curve into a
 cosine. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Sinusoid 1,90   func_cosine.png
+  magick gradient.png -function Sinusoid 1,90   func_cosine.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_cosine.png"
      ><IMG SRC="func_cosine.png"    WIDTH=600   HEIGHT=20
@@ -4694,7 +4694,7 @@ cosine. </P>
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-By adjusting the 'frequency', and 'phase' I can directly convert a linear
+By adjusting the 'frequency', and 'phase' I can directly magick a linear
 gradient into a smooth sinusoidal gradient going from black to white (minimum
 to maximum along a Sine curve).  See <A HREF="#evaluate_cos" >Evaluate Cosine
 Method</A> for a less direct method.
@@ -4703,7 +4703,7 @@ Method</A> for a less direct method.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Sinusoid 0.5,-90 func_sine_grad.png
+  magick gradient.png -function Sinusoid 0.5,-90 func_sine_grad.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_sine_grad.png"
      ><IMG SRC="func_sine_grad.png"    WIDTH=600   HEIGHT=20
@@ -4727,7 +4727,7 @@ on white.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Sinusoid 5,90,.25,.75  func_sine_bias.png
+  magick gradient.png -function Sinusoid 5,90,.25,.75  func_sine_bias.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_sine_bias.png"
      ><IMG SRC="func_sine_bias.png"    WIDTH=600   HEIGHT=20
@@ -4769,7 +4769,7 @@ the function is centered so as to cover the whole color range from
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arcsin 1    func_arcsin.png
+  magick gradient.png -function Arcsin 1    func_arcsin.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arcsin.png"
      ><IMG SRC="func_arcsin.png"    WIDTH=600   HEIGHT=20
@@ -4789,7 +4789,7 @@ By halving the '<I>width</I>' of the resulting curve you get...
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arcsin 0.5    func_arcsin_width.png
+  magick gradient.png -function Arcsin 0.5    func_arcsin_width.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arcsin_width.png"
      ><IMG SRC="func_arcsin_width.png"    WIDTH=600   HEIGHT=20
@@ -4810,7 +4810,7 @@ input grey values.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arcsin 0.4,0.7 func_arcsin_center.png
+  magick gradient.png -function Arcsin 0.4,0.7 func_arcsin_center.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arcsin_center.png"
      ><IMG SRC="func_arcsin_center.png"    WIDTH=600   HEIGHT=20
@@ -4832,7 +4832,7 @@ range.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arcsin 0.5,0.5,0.5,0.5  func_arcsin_range.png
+  magick gradient.png -function Arcsin 0.5,0.5,0.5,0.5  func_arcsin_range.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arcsin_range.png"
      ><IMG SRC="func_arcsin_range.png"    WIDTH=600   HEIGHT=20
@@ -4858,7 +4858,7 @@ the slope of the function will be flipped, as a result of that negative value.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arcsin -1    func_arcsin_neg.png
+  magick gradient.png -function Arcsin -1    func_arcsin_neg.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arcsin_neg.png"
      ><IMG SRC="func_arcsin_neg.png"    WIDTH=600   HEIGHT=20
@@ -4899,7 +4899,7 @@ scaling) while making white and black a more gray value.  For example
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arctan 1 func_arctan.png
+  magick gradient.png -function Arctan 1 func_arctan.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arctan.png"
      ><IMG SRC="func_arctan.png"    WIDTH=600   HEIGHT=20
@@ -4924,7 +4924,7 @@ will become stronger (more compressed in the middle), by that amount.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arctan 10 func_arctan_10.png
+  magick gradient.png -function Arctan 10 func_arctan_10.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arctan_10.png"
      ><IMG SRC="func_arctan_10.png"    WIDTH=600   HEIGHT=20
@@ -4953,7 +4953,7 @@ values.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arctan 10,.7 func_arctan_center.png
+  magick gradient.png -function Arctan 10,.7 func_arctan_center.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arctan_center.png"
      ><IMG SRC="func_arctan_center.png"    WIDTH=600   HEIGHT=20
@@ -4976,7 +4976,7 @@ values.
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arctan 5,0.7,1.2 func_arctan_range.png
+  magick gradient.png -function Arctan 5,0.7,1.2 func_arctan_range.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arctan_range.png"
      ><IMG SRC="func_arctan_range.png"    WIDTH=600   HEIGHT=20
@@ -5008,7 +5008,7 @@ changing between the range limits of 0.5 and 1.0
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -function Arctan 15,0.7,0.5,0.75 func_arctan_typ.png
+  magick gradient.png -function Arctan 15,0.7,0.5,0.75 func_arctan_typ.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="func_arctan_typ.png"
      ><IMG SRC="func_arctan_typ.png"    WIDTH=600   HEIGHT=20
@@ -5077,8 +5077,8 @@ gradient...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 5x300 gradient: -rotate 90   math_linear.png
-  convert math_linear.png  -evaluate sine 12  math_sine.png
+  magick -size 5x300 gradient: -rotate 90   math_linear.png
+  magick math_linear.png  -evaluate sine 12  math_sine.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_linear.png math_linear_pf.gif
@@ -5099,8 +5099,8 @@ using a <A HREF="../compose/#multiply" >Multiply</A> alpha composition...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_sine.png  math_linear.png  \
-          -compose Multiply -composite  math_sine_2.png
+  magick math_sine.png  math_linear.png  \
+          -compose Multiply -magick composite  math_sine_2.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_sine_2.png   math_sine_2_pf.gif
@@ -5127,9 +5127,9 @@ two....
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  math_linear.png -negate -evaluate divide 2  math_bias.png
-  convert  math_sine_2.png  math_bias.png \
-          -compose Plus -composite  math_attenuated.png
+  magick math_linear.png -negate -evaluate divide 2  math_bias.png
+  magick math_sine_2.png  math_bias.png \
+          -compose Plus -magick composite  math_attenuated.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_bias.png   math_bias_pf.gif
@@ -5159,11 +5159,11 @@ gradient.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_linear.png  -evaluate cos 1 -negate  math_cosine_peak.png
-  convert math_sine.png  math_cosine_peak.png \
-          \( -clone 0,1 -compose multiply -composite \) \
+  magick math_linear.png  -evaluate cos 1 -negate  math_cosine_peak.png
+  magick math_sine.png  math_cosine_peak.png \
+          \( -clone 0,1 -compose multiply -magick composite \) \
           \( -clone  1  +level 50%,0 \
-             -clone  2  -compose plus -composite \) \
+             -clone  2  -compose plus -magick composite \) \
           -delete 0--2  math_cosine_atten.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
@@ -5193,9 +5193,9 @@ operation is the formula <CODE>Sc*Dc-.5*Sc+.5</CODE> or the arguments,
 <TR VALIGN=top><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_sine.png  math_cosine_peak.png \
+  magick math_sine.png  math_cosine_peak.png \
           -compose Mathematics -set option:compose:args 1,-.5,0,.5 \
-          -composite  math_attenuate.png
+          -magick composite  math_attenuate.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5215,8 +5215,8 @@ to merge the images.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_sine.png \( math_cosine_peak.png -function polynomial -.5,.5 \) \
-          -compose Exclusion -composite  math_poly_excl.png
+  magick math_sine.png \( math_cosine_peak.png -function polynomial -.5,.5 \) \
+          -compose Exclusion -magick composite  math_poly_excl.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5264,14 +5264,14 @@ offset as part of the multiply (as per <A HREF="#math_attenuate"
 solarize output, before it is converted into the gradients absolute value.
 </P>
 
-So lets convert one gradient into these three components.
+So lets magick one gradient into these three components.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  math_cosine_peak.png  -threshold 50% -negate  math_m_sign.png
-  convert  math_cosine_peak.png     -solarize 50%        math_m_bias.png
-  convert  math_m_bias.png          -level 50%,0         math_m_abs.png
+  magick math_cosine_peak.png  -threshold 50% -negate  math_m_sign.png
+  magick math_cosine_peak.png     -solarize 50%        math_m_bias.png
+  magick math_m_bias.png          -level 50%,0         math_m_abs.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_m_sign.png  math_m_sign_pf.gif
@@ -5315,12 +5315,12 @@ re-add the bias, and then negate the parts that should be made negative.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_sine.png   math_m_abs.png \
-          -compose Multiply -composite    math_m_1.png
-  convert math_m_1.png   math_m_bias.png \
-          -compose Plus -composite        math_m_2.png
-  convert math_m_2.png   math_m_sign.png \
-          -compose Difference -composite  math_multiply.png
+  magick math_sine.png   math_m_abs.png \
+          -compose Multiply -magick composite    math_m_1.png
+  magick math_m_1.png   math_m_bias.png \
+          -compose Plus -magick composite        math_m_2.png
+  magick math_m_2.png   math_m_sign.png \
+          -compose Difference -magick composite  math_multiply.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_m_1.png  math_m_1_pf.gif
@@ -5375,13 +5375,13 @@ Here it is again but all in the one command...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_sine.png  math_cosine_peak.png \
+  magick math_sine.png  math_cosine_peak.png \
           \( -clone  1  -threshold 50% -negate \) \
           \( -clone  1      -solarize 50%      \) \
           \( -clone  3      -level 50%,0       \) \
-          \( -clone 0,4 -compose multiply   -composite \
-             -clone  3  -compose plus       -composite \
-             -clone  2  -compose difference -composite \) \
+          \( -clone 0,4 -compose multiply   -magick composite \
+             -clone  3  -compose plus       -magick composite \
+             -clone  2  -compose difference -magick composite \) \
           -delete 0--2    math_multiply_2.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
@@ -5414,9 +5414,9 @@ the argument "<CODE>2,-1,-1,1</CODE>".
 <TR VALIGN=top><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_sine.png  math_cosine_peak.png \
+  magick math_sine.png  math_cosine_peak.png \
           -compose Mathematics -set option:compose:args 2,-1,-1,1 \
-          -composite  math_bias_multiply.png
+          -magick composite  math_bias_multiply.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5439,8 +5439,8 @@ will also generate the same zero baised multiply.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_sine.png  math_cosine_peak.png \
-          -compose exclusion -composite -negate  math_excl_neg.png
+  magick math_sine.png  math_cosine_peak.png \
+          -compose exclusion -magick composite -negate  math_excl_neg.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5467,11 +5467,11 @@ of 3 biased sinusoids, and a constant DC value.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert math_linear.png -function sinusoid 3.5,0,.25     wave_1.png
-  convert math_linear.png -function sinusoid 1.5,-90,.13   wave_2.png
-  convert math_linear.png -function sinusoid 0.6,-90,.07   wave_3.png
+  magick math_linear.png -function sinusoid 3.5,0,.25     wave_1.png
+  magick math_linear.png -function sinusoid 1.5,-90,.13   wave_2.png
+  magick math_linear.png -function sinusoid 0.6,-90,.07   wave_3.png
 
-  convert wave_1.png wave_2.png wave_3.png -background gray40 \
+  magick wave_1.png wave_2.png wave_3.png -background gray40 \
           -compose Mathematics -set option:compose:args 0,1,1,-.5 \
           -flatten  added_waves.png
 </CODE></PRE></TD></TR></TABLE>
@@ -5519,7 +5519,7 @@ For example....
 <TR><TD WIDTH=100% ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png  -evaluate sin 0.5 -normalize \
+  magick gradient.png  -evaluate sin 0.5 -normalize \
                         -evaluate cos  8  math_cos_var.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="math_cos_var.png"
@@ -5569,7 +5569,7 @@ that may provide useful.  If you have an interesting effect please contribute.
       resize an image down 10 then scale the image 10 to produce blocks
       of roughly averaged color.
       For example...
-         convert input.jpg -resize 10% -sample 1000% output.jpg
+         magick input.jpg -resize 10% -sample 1000% output.jpg
 
   De-skew slightly rotated images
 
@@ -5598,7 +5598,7 @@ that may provide useful.  If you have an interesting effect please contribute.
     look at scripts
        <A HREF="../scripts/divide_vert" >divide_vert</A>
        <A HREF="../scripts/segment_image" >segment_image</A>
-    for some simple scripts I wrote to segment well defined images into
+    for some simple scripts I wrote to magick segment well defined images into
     smaller parts.   I hope to get simple segmentation functions like this
     into the core library, to allow for things like automatic sub-division of
     GIF animations, and seperating images and diagrams from scanned documents.
@@ -5614,5 +5614,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/transform/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/transform/</CODE>
 </ADDRESS></BODY></HTML>

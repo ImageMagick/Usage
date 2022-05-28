@@ -23,29 +23,29 @@ convert -size 100x150 gradient: -rotate 90 \
 # Create a semi-transparent rectangle of the gradient and flop it left-right
 convert -size 150x100 xc:black \
         -draw 'fill grey50  rectangle  8,8  142,92' +matte \
-        test_gradient.png +swap -compose CopyOpacity -composite \
+        test_gradient.png +swap -compose CopyOpacity -magick composite \
         -flop   ${png_format}test_bgnd.png
 
 # Draw two overlaping circles and fill then with same (non-flopped) gradient.
 convert -size 150x100 xc:black \
         -draw 'fill white circle    40,50  40,12' \
         -draw 'fill white circle   110,50 110,12' +matte \
-        test_gradient.png +swap -compose CopyOpacity -composite \
+        test_gradient.png +swap -compose CopyOpacity -magick composite \
         test_fgnd.png
 
 # Create a rainbow gradient
 convert -size 12x100 xc:Lime -colorspace HSB \
-        gradient:gray66 -compose CopyRed -composite \
+        gradient:gray66 -compose CopyRed -magick composite \
         -colorspace sRGB -rotate 90  -compose Over \
         -bordercolor black -border 0x1 test_hue.png
 
 # Overlay the images and add some extra colors to result.
 #       -draw 'fill green rectangle 40,64 110,96' \
-convert test_bgnd.png  test_fgnd.png  -composite \
+convert test_bgnd.png  test_fgnd.png  -magick composite \
         -draw 'fill red   circle    25,80  25,98' \
         -draw 'fill green circle    75,80  75,98' \
         -draw 'fill blue  circle   125,80 125,98' \
-        test_hue.png -geometry +25+80 -composite \
+        test_hue.png -geometry +25+80 -magick composite \
         test.png
 
 
@@ -56,7 +56,7 @@ rm -f test_gradient.png test_bgnd.png test_fgnd.png test_hue.png
 # For stupid IE web clients that do not understand PNG transparency
 #convert test.png \
 #        \( +clone -fill "$page_bg_color"  -draw 'color 0,0 reset' \) \
-#        -compose Dst_Over -composite  $jpg_opt   test.jpg
+#        -compose Dst_Over -magick composite  $jpg_opt   test.jpg
 
 # set permissions
 chmod 644 test.png

@@ -5,7 +5,7 @@
 <TITLE>Layering -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/layers/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/layers/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -145,7 +145,7 @@ a 'font', are joined together.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_A.gif font_P.gif font_P.gif font_E.gif font_N.gif \
+  magick font_A.gif font_P.gif font_P.gif font_E.gif font_N.gif \
           font_D.gif font_E.gif font_D.gif +append  append_row.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="append_row.gif"
@@ -175,7 +175,7 @@ This is great for appending a label to an image, for example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -background LawnGreen label:Rose \
+  magick rose:  -background LawnGreen label:Rose \
           -background white  -append append_label.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="append_label.jpg"
@@ -199,7 +199,7 @@ image (so will a setting of either '<CODE>North</CODE>' or
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -background LawnGreen label:Rose \
+  magick rose:  -background LawnGreen label:Rose \
           -background white -gravity center -append \
           append_center.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -215,7 +215,7 @@ right side.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -background LawnGreen label:Rose \
+  magick rose:  -background LawnGreen label:Rose \
           -background white -gravity east -append \
           append_east.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -245,7 +245,7 @@ HREF="../option_link.cgi?append" >+append</A></CODE>" </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -background SkyBlue label:Rose \
+  magick rose:  -background SkyBlue label:Rose \
           -background White -gravity center -extent 200x \
           -append -trim +repage   append_center_old.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -265,10 +265,10 @@ case before IM v6).
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <!-- <CODE EXECUTE>
-  convert  $HOME/icons/dragons/dragon_long.xpm  dragon_long.gif
+  magick $HOME/icons/dragons/dragon_long.xpm  dragon_long.gif
 </CODE> -->
 <TR><TD><PRE><CODE EXECUTE>
-  convert font_{0,0,6,1,2}.gif +append  dragon_long.gif \
+  magick font_{0,0,6,1,2}.gif +append  dragon_long.gif \
           -background none   -append   append_multi.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="append_multi.gif"
@@ -288,7 +288,7 @@ in before the numbers.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon_long.gif  '(' font_{0,0,6,2,9}.gif +append ')' \
+  magick dragon_long.gif  '(' font_{0,0,6,2,9}.gif +append ')' \
           -background none   -append   append_parenthesis.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="append_parenthesis.gif"
@@ -328,7 +328,7 @@ either by rows, or by columns.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( font_1.gif font_2.gif font_3.gif +append \) \
+  magick \( font_1.gif font_2.gif font_3.gif +append \) \
           \( font_4.gif font_5.gif font_6.gif +append \) \
           \( font_7.gif font_8.gif font_9.gif +append \) \
           \( -size 32x32 xc:none  font_0.gif +append \) \
@@ -382,9 +382,9 @@ amount of overlap given in a single location.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert granite: rose: -gravity east -background none \
+  magick granite: rose: -gravity east -background none \
           \( -clone 1 -chop 30x0 \) \( -clone 0,2 +append \) \
-          -delete 0,2 +swap -composite append_overlap.gif
+          -delete 0,2 +swap -magick composite append_overlap.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="append_overlap.gif"
      ><IMG SRC="append_overlap.gif"
@@ -417,7 +417,7 @@ For example, lets use it to so the previous example more simply.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert granite: rose: -background none -gravity Center \
+  magick granite: rose: -background none -gravity Center \
           +smush -20 smush_overlap.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="smush_overlap.png"
@@ -437,7 +437,7 @@ as posible.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -background none -pointsize 72 \
+  magick -background none -pointsize 72 \
           -fill red label:A -fill blue label:V \
           +smush 0 smush_append.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -461,7 +461,7 @@ value to generate a gap, but can be negative to create an overlap.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -background none -pointsize 72 \
+  magick -background none -pointsize 72 \
           -fill red label:A -fill blue label:V \
           +smush -15 smush_offset.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -498,11 +498,11 @@ image at a time...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
-  convert -size 100x100 xc:skyblue composite.gif
-  composite -geometry  +5+10 balloon.gif composite.gif composite.gif
-  composite -geometry +35+30 medical.gif composite.gif composite.gif
-  composite -geometry +62+50 present.gif composite.gif composite.gif
-  composite -geometry +10+55 shading.gif composite.gif composite.gif
+  magick -size 100x100 xc:skyblue composite.gif
+  magick composite -geometry  +5+10 balloon.gif composite.gif composite.gif
+  magick composite -geometry +35+30 medical.gif composite.gif composite.gif
+  magick composite -geometry +62+50 present.gif composite.gif composite.gif
+  magick composite -geometry +10+55 shading.gif composite.gif composite.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="composite.gif"
      ><IMG SRC="composite.gif"   WIDTH=100 HEIGHT=100
@@ -530,11 +530,11 @@ You can also resize the overlaid image as well as position it using the
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
-  convert -size 100x100 xc:skyblue comp_resize.gif
-  composite -geometry 40x40+5+10  balloon.gif comp_resize.gif comp_resize.gif
-  composite -geometry      +35+30 medical.gif comp_resize.gif comp_resize.gif
-  composite -geometry 24x24+62+50 present.gif comp_resize.gif comp_resize.gif
-  composite -geometry 16x16+10+55 shading.gif comp_resize.gif comp_resize.gif
+  magick -size 100x100 xc:skyblue comp_resize.gif
+  magick composite -geometry 40x40+5+10  balloon.gif comp_resize.gif comp_resize.gif
+  magick composite -geometry      +35+30 medical.gif comp_resize.gif comp_resize.gif
+  magick composite -geometry 24x24+62+50 present.gif comp_resize.gif comp_resize.gif
+  magick composite -geometry 16x16+10+55 shading.gif comp_resize.gif comp_resize.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="comp_resize.gif"
      ><IMG SRC="comp_resize.gif"   WIDTH=100 HEIGHT=100
@@ -574,11 +574,11 @@ This allows you to do the same as the above, but all in one command.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:skyblue \
-          balloon.gif  -geometry  +5+10  -composite \
-          medical.gif  -geometry +35+30  -composite \
-          present.gif  -geometry +62+50  -composite \
-          shading.gif  -geometry +10+55  -composite \
+  magick -size 100x100 xc:skyblue \
+          balloon.gif  -geometry  +5+10  -magick composite \
+          medical.gif  -geometry +35+30  -magick composite \
+          present.gif  -geometry +62+50  -magick composite \
+          shading.gif  -geometry +10+55  -magick composite \
           compose.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose.gif"
@@ -601,11 +601,11 @@ current image sequence. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:skyblue \
-          balloon.gif  -geometry 40x40+5+10   -composite \
-          medical.gif  -geometry      +35+30  -composite \
-          present.gif  -geometry 24x24+62+50  -composite \
-          shading.gif  -geometry 16x16+10+55  -composite \
+  magick -size 100x100 xc:skyblue \
+          balloon.gif  -geometry 40x40+5+10   -magick composite \
+          medical.gif  -geometry      +35+30  -magick composite \
+          present.gif  -geometry 24x24+62+50  -magick composite \
+          shading.gif  -geometry 16x16+10+55  -magick composite \
           compose_geometry.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_geometry.gif"
@@ -624,11 +624,11 @@ Here is the more verbose recommendation...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:skyblue \
-          \( balloon.gif -resize 40x40 \) -geometry +5+10   -composite \
-          \( medical.gif               \) -geometry +35+30  -composite \
-          \( present.gif -resize 24x24 \) -geometry +62+50  -composite \
-          \( shading.gif -resize 16x16 \) -geometry +10+55  -composite \
+  magick -size 100x100 xc:skyblue \
+          \( balloon.gif -resize 40x40 \) -geometry +5+10   -magick composite \
+          \( medical.gif               \) -geometry +35+30  -magick composite \
+          \( present.gif -resize 24x24 \) -geometry +62+50  -magick composite \
+          \( shading.gif -resize 16x16 \) -geometry +10+55  -magick composite \
           compose_resize.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_resize.gif"
@@ -648,7 +648,7 @@ working canvas.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:skyblue \
+  magick -size 100x100 xc:skyblue \
           -draw "image over  5,10 0,0 'balloon.gif'" \
           -draw "image over 35,30 0,0 'medical.gif'" \
           -draw "image over 62,50 0,0 'present.gif'" \
@@ -666,7 +666,7 @@ You can of course also specify a resize for the overlaid image too..
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:skyblue \
+  magick -size 100x100 xc:skyblue \
           -draw "image over  5,10 40,40 'balloon.gif'" \
           -draw "image over 35,30  0,0  'medical.gif'" \
           -draw "image over 62,50 24,24 'present.gif'" \
@@ -725,7 +725,7 @@ I want to overlay onto that canvas.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:skyblue \
+  magick -size 100x100 xc:skyblue \
           -fill dodgerblue -draw 'circle 50,50 15,25' \
           -page +5+10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50 present.gif   -page +10+55 shading.gif  \
@@ -763,7 +763,7 @@ Canvas</A> size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page 100x100+5+10  balloon.gif   -page +35+30 medical.gif  \
+  magick -page 100x100+5+10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50        present.gif   -page +10+55 shading.gif  \
           -background dodgerblue  -layers flatten  flatten_page.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -802,7 +802,7 @@ canvas size, causing the later images not to appear completely on that canvas.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page 75x75+5+10  balloon.gif   -page +35+30 medical.gif  \
+  magick -page 75x75+5+10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50 present.gif   -page +10+55 shading.gif  \
           -background dodgerblue  -flatten  flatten_bounds.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -827,7 +827,7 @@ example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert balloon.gif \( +clone  -background navy  -shadow 80x3+5+5 \) +swap \
+  magick balloon.gif \( +clone  -background navy  -shadow 80x3+5+5 \) +swap \
           -background none   -flatten   flatten_shadow.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="flatten_shadow.png"
@@ -869,7 +869,7 @@ a specific size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert medical.gif -set page 64x64+20+20 \
+  magick medical.gif -set page 64x64+20+20 \
           -background SkyBlue   -flatten   flatten_padding.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="flatten_padding.gif"
@@ -891,7 +891,7 @@ not positioning the crop 'window'.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo:  -repage 100x100-190-60  -flatten  flatten_crop.gif
+  magick logo:  -repage 100x100-190-60  -flatten  flatten_crop.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="flatten_crop.gif"
      ><IMG SRC="flatten_crop.gif"    WIDTH=100 HEIGHT=100
@@ -934,7 +934,7 @@ to hold all the image layers.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page +5+10  balloon.gif   -page +35+30 medical.gif  \
+  magick -page +5+10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50 present.gif   -page +10+55 shading.gif  \
           -background dodgerblue  -layers mosaic  mosaic.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -977,7 +977,7 @@ will still clip images with negative offsets...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page -5-10  balloon.gif   -page +35+30 medical.gif  \
+  magick -page -5-10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50 present.gif   -page +10+55 shading.gif  \
           -background dodgerblue  -mosaic  mosaic_clip.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1017,7 +1017,7 @@ For example here is the same set of layer image we have used previously...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page +5+10  balloon.gif   -page +35+30 medical.gif  \
+  magick -page +5+10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50 present.gif   -page +10+55 shading.gif  \
           -background dodgerblue  -layers merge  +repage layers_merge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1039,7 +1039,7 @@ Lets try this again by giving one image a negative offset...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page -5-10  balloon.gif   -page +35+30 medical.gif  \
+  magick -page -5-10  balloon.gif   -page +35+30 medical.gif  \
           -page +62+50 present.gif   -page +10+55 shading.gif  \
           -background dodgerblue  -layers merge  +repage layers_merge_2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1133,7 +1133,7 @@ out' the canvas of the image with transparent pixels.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  -page 100x100+5+10 balloon.gif -layers coalesce  coalesce_canvas.gif
+  magick -page 100x100+5+10 balloon.gif -layers coalesce  coalesce_canvas.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="coalesce_canvas.gif"
      ><IMG SRC="coalesce_canvas.gif"
@@ -1148,10 +1148,10 @@ animation' handling by the operator.  </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-   convert -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
+   magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
            -page +62+50       present.gif   -page +10+55 shading.gif  \
            -set dispose None  -coalesce  miff:- |\
-     montage - -frame 4 -tile x1 -geometry +2+2 \
+     magick montage - -frame 4 -tile x1 -geometry +2+2 \
              -background none -bordercolor none  coalesce_none.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="coalesce_none.gif"
@@ -1184,10 +1184,10 @@ images!
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
+  magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
           -page +62+50       present.gif   -page +10+55 shading.gif  \
           -set dispose Background  -coalesce  miff:- |\
-    montage - -frame 4 -tile x1 -geometry +2+2 \
+    magick montage - -frame 4 -tile x1 -geometry +2+2 \
             -background none -bordercolor none  coalesce_bgnd.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="coalesce_bgnd.gif"
@@ -1236,7 +1236,7 @@ using a '<CODE><A HREF="../compose/#dstover" >DstOver</A></CODE>'...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
+  magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
           -page +62+50       present.gif   -page +10+55 shading.gif  \
           -background none  -compose DstOver  -flatten  flatten_dstover.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1260,7 +1260,7 @@ background order.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -repage +10+10 \
+  magick rose: -repage +10+10 \
           \( +clone -background black -shadow 60x3+5+5 \) \
           \( granite: -crop 100x80+0+0 +repage \) \
           -background none  -compose DstOver -layers merge layer_dstover.gif
@@ -1285,7 +1285,7 @@ Of course I could have just as easily <A HREF="../basics/#reverse"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -repage +10+10 \
+  magick rose: -repage +10+10 \
           \( +clone -background black -shadow 60x3+5+5 \) \
           \( granite: -crop 100x80+0+0 +repage \) \
           -reverse -layers merge layer_reverse.gif
@@ -1307,7 +1307,7 @@ symbol, for minimal effort.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 \
+  magick -size 60x60 \
           \( xc:none -fill blue   -draw 'circle 21,39 24,57' \) \
           \( xc:none -fill red    -draw 'circle 39,39 36,57' \) \
           \( xc:none -fill green  -draw 'circle 30,21 30,3'  \) \
@@ -1388,7 +1388,7 @@ images, on a <A HREF="../canvas/#tile" >Tiled Canvas</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page +5+5    holocaust_tn.gif \
+  magick -page +5+5    holocaust_tn.gif \
           -page +80+50  spiral_stairs_tn.gif \
           -page +40+105 chinese_chess_tn.gif \
           +page \
@@ -1417,7 +1417,7 @@ size) and arrange them in a circle.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert {balloon,castle,eye,eyeguy,ghost,hand_point,medical}.gif \
+  magick {balloon,castle,eye,eyeguy,ghost,hand_point,medical}.gif \
           {news,noseguy,paint_brush,pencil,present,recycle}.gif \
           {shading,skull,snowman,storm,terminal,tree}.gif \
           \
@@ -1432,7 +1432,7 @@ size) and arrange them in a circle.
 
 The key to the above example is the "<CODE><A HREF="../option_link.cgi?set"
 >-set</A> page</CODE>" operation that uses the normalized image index (the <A
-HREF="https://legacy.imagemagick.org/script/fx.php" >FX Expression</A>
+HREF="https://imagemagick.org/script/fx.php" >FX Expression</A>
 '<CODE>t/n</CODE>'&nbsp;) to create a value from 0.0 to not quite 1.0 for each
 individual image. This value is then mapped to position the image (by angle)
 in a circle of 80 pixels radius, using <A HREF="../transform/#fx_escapes" >FX
@@ -1477,7 +1477,7 @@ previous image. That is the previous image's position plus its width.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose: netscape: granite: \
+  magick rose: netscape: granite: \
           \
           +repage -set page '+%[fx:u[t-1]page.x+u[t-1].w]+0' \
           \
@@ -1526,7 +1526,7 @@ HREF="#append_overlap" >Overlapped Append</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-convert font_[0-9].gif \
+magick font_[0-9].gif \
         -set page '+%[fx:u[t-1]page.x+u[t-1].w-8]+%[fx:u[t-1]page.y+4]' \
         -background none -layers merge +repage append_offset.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -1565,12 +1565,12 @@ individually (keeping that aspect separate and simple). </P>
 
     # Add 70 to the previous images relative offset to add to each image
     #
-    center=`convert xc: -format "%[fx: $center +70 ]" info:`
+    center=`magick xc: -format "%[fx: $center +70 ]" info:`
 
     # read image, add fluff, and using centered padding/trim locate the
     # center of the image at the next location (relative to the last).
     #
-    convert -size 500x500 "$image" -thumbnail 240x240 \
+    magick -size 500x500 "$image" -thumbnail 240x240 \
             -set caption '%t' -bordercolor Lavender -background black \
             -pointsize 12  -density 96x96  +polaroid  -resize 30% \
             -gravity center -background None -extent 100x100 -trim \
@@ -1578,7 +1578,7 @@ individually (keeping that aspect separate and simple). </P>
 
   done |
     # read pipeline of positioned images, and merge together
-    convert -background skyblue   MIFF:-  -layers merge +repage \
+    magick -background skyblue   MIFF:-  -layers merge +repage \
             -bordercolor skyblue -border 3x3   overlapped_polaroids.jpg
 
 </CODE></PRE></TD></TR></TABLE>
@@ -1677,7 +1677,7 @@ Here is the result, using layered images
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert map_venice.jpg    -page +142+242 push_pin.png \
+  magick map_venice.jpg    -page +142+242 push_pin.png \
           -flatten  map_push_pin.jpg
 </CODE></PRE></TD></TR></TABLE>
    <A HREF="map_push_pin.jpg"
@@ -1719,13 +1719,13 @@ Lets read this text file, to create 'pins' in a loop.
 
       [ "X$x" = "X#" ] && continue   # skip comments in data
 
-      x=$(( x - pin_x ))    # convert x,y to pin image offsets
+      x=$(( x - pin_x ))    # magick x,y to pin image offsets
       y=$(( y - pin_y ))
 
-      # convert 'color' to settings for color modulate (hue only)
+      # magick 'color' to settings for color modulate (hue only)
       # assumes a pure 'red' color for the original push pin
       mod_args=$(
-         convert xc:$color -colorspace HSL txt: |
+         magick xc:$color -colorspace HSL txt: |
            tr -sc '0-9\012' ' ' |\
              awk 'NR==1 { depth=$3 }
                   NR==2 { hue=$3;
@@ -1733,11 +1733,11 @@ Lets read this text file, to create 'pins' in a loop.
                         }'; )
 
       # re-color and position the push pin
-      convert push_pin.png -repage +${x}+${y} -modulate $mod_args miff:-
+      magick push_pin.png -repage +${x}+${y} -modulate $mod_args miff:-
 
     done |\
       # read pipeline of positioned images, and merge together
-      convert  map_venice.jpg  MIFF:-  -flatten  map_venice_pins.jpg
+      magick map_venice.jpg  MIFF:-  -flatten  map_venice_pins.jpg
 
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="map_venice_pins.jpg"
@@ -1800,7 +1800,7 @@ Here is an example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \
+  magick \
     \( holocaust_tn.gif -frame 10x10+3+3 \
           -background none  -rotate 5 -repage +0+0 \) \
     \
@@ -1894,7 +1894,7 @@ blurry with depth.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert xc:none xc:none \
+  magick xc:none xc:none \
     \
     \( holocaust_tn.gif -frame 10x10+3+3 \
           -background none  -rotate 5 -repage +0+0 \) \
@@ -1996,7 +1996,7 @@ First lets again look at the simplier 'contant shadow' problem.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \
+  magick \
     \( holocaust_tn.gif -frame 10x10+3+3 \
           -background none  -rotate 5 -repage +0+0 \) \
     \( spiral_stairs_tn.gif -frame 10x10+3+3 \
@@ -2009,7 +2009,7 @@ First lets again look at the simplier 'contant shadow' problem.
     \( -clone 0--1 -dispose None -coalesce \
        -background black -shadow 70x2+4+7 \
        xc:none +insert null: +insert +insert xc:none \) \
-    -layers trim-bounds -compose Atop -layers composite \
+    -layers trim-bounds -compose Atop -layers magick composite \
     \
     -fuzz 10% -trim \
     -reverse -background none -compose Over -layers merge +repage \
@@ -2051,7 +2051,7 @@ Calculations</A>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \
+  magick \
     \( holocaust_tn.gif -frame 10x10+3+3 \
           -background none  -rotate 5 -repage +0+0 \) \
     \( spiral_stairs_tn.gif -frame 10x10+3+3 \
@@ -2069,7 +2069,7 @@ Calculations</A>.
        -set page '+%[fx:page.x+4*t]+%[fx:page.y+7*t]' \
             -background black -shadow 70x2+4+7 \
        xc:none +insert null: +insert +insert xc:none \) \
-    -layers trim-bounds -compose Atop -layers composite \
+    -layers trim-bounds -compose Atop -layers magick composite \
     \
     -fuzz 10% -trim \
     -reverse -background none -compose Over -layers merge +repage \
@@ -2110,17 +2110,17 @@ such images to match up at a very specific location.
 Here I have two images that highlight a specific point on each image.
 
 <!-- <CODE EXECUTE>
-  convert -size 100x64 xc:SkyBlue -fill None \
+  magick -size 100x64 xc:SkyBlue -fill None \
           -draw 'stroke Blue  rectangle 0,0 99,63   fill Black  point 59,26
              stroke DodgerBlue
              path "M 53,26 56,26 M 62,26 65,26 M 59,20 59,23 M 59,29 59,32"' \
           align_blue.png
-  convert -size 60x40 xc:LightPink -fill None \
+  magick -size 60x40 xc:LightPink -fill None \
           -draw 'stroke Tomato rectangle 0,0 59,39   fill Red point 35,14
              stroke Tomato
              path "M 31,10 33,12 M 37,16 39,18 M 31,18 33,16 M 37,12 39,10"' \
           -alpha set -channel A -evaluate set 65%  align_red.png
-  convert -size 60x40 xc:LightPink -stroke Tomato -fill LightPink \
+  magick -size 60x40 xc:LightPink -stroke Tomato -fill LightPink \
           -draw 'rectangle 0,0 59,39   fill Red point 35,14' \
 </CODE> -->
 <DIV ALIGN=center>
@@ -2146,8 +2146,8 @@ and 'compose' the two image on top of each other, producing an offset of
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert align_blue.png align_red.png -geometry +24+12 \
-          -composite align_composite.png
+  magick align_blue.png align_red.png -geometry +24+12 \
+          -magick composite align_composite.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="align_composite.png"
      ><IMG SRC="align_composite.png"    WIDTH=100 HEIGHT=64
@@ -2174,7 +2174,7 @@ will ensure they are positioned properly.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert align_blue.png \
+  magick align_blue.png \
           \( align_red.png -alpha set -virtual-pixel transparent \
              +distort SRT '35.5,14.5  1 75  59.5,26.5' \
           \) -flatten  align_rotate.png
@@ -2208,7 +2208,7 @@ composted together.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert align_blue.png \
+  magick align_blue.png \
           \( align_red.png -alpha set -virtual-pixel transparent \
              +distort SRT '35.5,14.5  1 75  59.5,26.5' \
           \) -background none -layers merge +repage  align_rotate_merge.png
@@ -2219,7 +2219,7 @@ composted together.
 </TD></TR></TABLE></P>
 
 As the result of the 'merge' the image will have a 'negative' offset (so as to
-preserve layer positions of the images). To display the results I needed to
+preserve layer positions of the images). To magick display the results I needed to
 junk that offset as many browsers do not handle negative offsets in images.
 I do this using "<CODE>+repage</CODE>" before saving the final image. If I was
 going to do further processing (without displaying the result on the web)
@@ -2237,7 +2237,7 @@ a more complex distortion such as <A HREF="../distorts/#perspective"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert align_blue.png \
+  magick align_blue.png \
           \( align_red.png -alpha set -virtual-pixel transparent \
              +distort Perspective '35.5,14.5  59.5,26.5
                        0,0 32,4    0,%h 14,36    %w,%h 72,53  ' \
@@ -2274,7 +2274,7 @@ the control points at this point, just apply the distortion...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert align_blue.png \
+  magick align_blue.png \
           \( align_red.png -alpha set -virtual-pixel transparent \
              +distort Perspective '0,0  10,12  0,%h 14,40
                                %w,0 68,6  %w,%h 63,48 ' \
@@ -2300,7 +2300,7 @@ Projection Distortion</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=align_persp_verbose.txt>
-  convert align_red.png  -define distort:viewport=1x1  -verbose \
+  magick align_red.png  -define distort:viewport=1x1  -verbose \
           +distort Perspective '0,0  10,12  0,%h 14,40
                                 %w,0 68,6  %w,%h 63,48 ' null:
 </CODE></PRE></TD></TR></TABLE>
@@ -2346,7 +2346,7 @@ coordinate. </P>
   bluex=59; bluey=26
   redx=35; redy=14
 
-  convert align_red.png  -verbose \
+  magick align_red.png  -verbose \
              +distort Perspective '0,0  10,12  0,%h 14,40
                                %w,0 68,6  %w,%h 63,48 ' null: 2>&1 |\
     tr -d "',"  |\
@@ -2391,7 +2391,7 @@ coordinates)...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert align_blue.png \
+  magick align_blue.png \
           \( align_red.png -alpha set -virtual-pixel transparent \
              +distort Perspective '0,0   31.408223,15.334305
                                    0,%h  35.408223,43.334305
@@ -2412,7 +2412,7 @@ to show they are perfectly aligned!
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert align_persp_shape.png -crop 19x19+50+17 +repage \
+  magick align_persp_shape.png -crop 19x19+50+17 +repage \
           -scale 500%   align_persp_shape_mag.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="align_persp_shape_mag.png"
@@ -2471,7 +2471,7 @@ HREF="../warping/#flip" >Flipped and Flopped</A> versions.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -flip rose: \( -clone 0--1 -flop \) \
+  magick rose: -flip rose: \( -clone 0--1 -flop \) \
           -evaluate-sequence mean  average.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="average.png"
@@ -2529,7 +2529,7 @@ HREF="#flatten" >Flatten Operator</A> with the equivelent compose method.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -flip rose: \( -clone 0--1 -flop \) \
+  magick rose: -flip rose: \( -clone 0--1 -flop \) \
           -evaluate-sequence max  max.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="max.png"
@@ -2541,7 +2541,7 @@ HREF="#flatten" >Flatten Operator</A> with the equivelent compose method.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -flip rose: \( -clone 0--1 -flop \) \
+  magick rose: -flip rose: \( -clone 0--1 -flop \) \
           -evaluate-sequence min  min.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="min.png"
@@ -2596,7 +2596,7 @@ intensities of the pixels.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -flip rose: \( -clone 0--1 -flop \) \
+  magick rose: -flip rose: \( -clone 0--1 -flop \) \
           -evaluate-sequence median  median.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="median.png"
@@ -2613,7 +2613,7 @@ images together.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert ... -evaluate-sequence add ...
+  magick ... -evaluate-sequence add ...
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2624,7 +2624,7 @@ together...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert ... -background black -compose plus -layers flatten ...
+  magick ... -background black -compose plus -layers flatten ...
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2654,7 +2654,7 @@ the starting background color you can then use <A HREF="../layering/#flatten"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  ...  \
+  magick ...  \
          -negate \( -clone 0 -negate \) -swap 0 +delete \
          -compose LinearBurn -background white -flatten \
          ...
@@ -2679,7 +2679,7 @@ Multiply, which does work as expected.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert ... -background white -compose multiply -layers flatten ...
+  magick ... -background white -compose multiply -layers flatten ...
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -2722,7 +2722,7 @@ For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: granite: null: -poly '1,1 2,1 -1.0,0' poly_rose.png
+  magick rose: granite: null: -poly '1,1 2,1 -1.0,0' poly_rose.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="poly_rose.png"
       ><IMG SRC="poly_rose.png"        WIDTH=70 HEIGHT=46
@@ -2768,5 +2768,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/layers/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/layers/</CODE>
 </ADDRESS></BODY></HTML>

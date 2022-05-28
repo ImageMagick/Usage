@@ -5,7 +5,7 @@
 <TITLE>Animation Modifications -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/anim_mods/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/anim_mods/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -171,11 +171,11 @@ Basics</A>.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif -gravity center \
+  magick canvas_prev.gif -gravity center \
           -fill black     -annotate +1+1 "Copyright" \
           -fill white     -annotate +0+0 "Copyright" \
           annotate.gif
-  gif_anim_montage annotate.gif annotate_frames.gif
+  gif_anim_magick montage annotate.gif annotate_frames.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="annotate.gif"
      ><IMG SRC="annotate.gif"          WIDTH=100 HEIGHT=100
@@ -220,9 +220,9 @@ For example, here we draw a fancy green circle near the top left corner of the
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif -fill LimeGreen -stroke SeaGreen \
+  magick canvas_prev.gif -fill LimeGreen -stroke SeaGreen \
           -draw 'circle 35,35 20,30'  draw_circle_fail.gif
-  gif_anim_montage draw_circle_fail.gif draw_circle_fail_frames.gif
+  gif_anim_magick montage draw_circle_fail.gif draw_circle_fail_frames.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="draw_circle_fail.gif"
      ><IMG SRC="draw_circle_fail.gif"          WIDTH=100 HEIGHT=100
@@ -247,10 +247,10 @@ for details.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif -coalesce \
+  magick canvas_prev.gif -coalesce \
           -fill LimeGreen -stroke SeaGreen -draw 'circle 35,35 20,30' \
           -layers Optimize  draw_circle.gif
-  gif_anim_montage draw_circle.gif draw_circle_frames.gif
+  gif_anim_magick montage draw_circle.gif draw_circle_frames.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="draw_circle.gif"
      ><IMG SRC="draw_circle.gif"          WIDTH=100 HEIGHT=100
@@ -310,7 +310,7 @@ destroy the animation, I also used semi-transparent colors.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif -coalesce -gravity center \
+  magick canvas_prev.gif -coalesce -gravity center \
           -font Ravie -pointsize 24 -fill '#FFF8' -stroke '#0008' \
           \( -clone 0 -annotate 0 'This'        \) -swap 0 +delete \
           \( -clone 1 -annotate 0 'This'        \) -swap 1 +delete \
@@ -318,7 +318,7 @@ destroy the animation, I also used semi-transparent colors.
           \( -clone 3 -annotate 0 'is'          \) -swap 3 +delete \
           \( -clone 4 -annotate 0 'Copy\nright' \) -swap 4 +delete \
           -layers OptimizeFrame   frame_mod.gif
-  gif_anim_montage frame_mod.gif frame_mod_frames.gif
+  gif_anim_magick montage frame_mod.gif frame_mod_frames.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="frame_mod.gif"
       ><IMG SRC="frame_mod.gif"          WIDTH=100 HEIGHT=100
@@ -389,8 +389,8 @@ expected for all animations.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=cropped_error.txt>
-  convert  canvas_prev.gif -crop 50x50+3+30  cropped.gif
-  gif_anim_montage cropped.gif cropped_frames.gif
+  magick canvas_prev.gif -crop 50x50+3+30  cropped.gif
+  gif_anim_magick montage cropped.gif cropped_frames.gif
 </CODE></PRE></TD></TR></TABLE>
 <DIV ALIGN=center>
    <A HREF="cropped_frames.gif"
@@ -418,7 +418,7 @@ As you can see this did not change the overall virtual canvas size! </P>
     >+repage</A></CODE>" to remove the crop offsets from a frame optimized GIF
     animation.  Doing do will also remove the needed frame offsets that the
     position the sub-frames on the virtual canvas, and which later frames
-    may rely on to animate correctly.
+    may rely on to magick animate correctly.
 </I></FONT></TD></TR></TABLE></P>
 
 The above "<CODE><A HREF="../option_link.cgi?crop" >-crop</A></CODE>"
@@ -486,8 +486,8 @@ information using the '<CODE>!</CODE>' flag...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  canvas_prev.gif -quiet -crop 50x50+3+30\!  crop_viewport.gif
-  gif_anim_montage crop_viewport.gif crop_viewport_frames.gif
+  magick canvas_prev.gif -quiet -crop 50x50+3+30\!  crop_viewport.gif
+  gif_anim_magick montage crop_viewport.gif crop_viewport_frames.gif
 </CODE></PRE></TD></TR></TABLE>
 <DIV ALIGN=center>
    <A HREF="crop_viewport_frames.gif"
@@ -546,7 +546,7 @@ As of IM v6.3.4-8  you can do this very easily using a
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  anim_bgnd.gif -layers TrimBounds anim_trim_bounds.gif
+  magick anim_bgnd.gif -layers TrimBounds anim_trim_bounds.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../anim_basics/anim_bgnd.gif"
      ><IMG SRC="../anim_basics/anim_bgnd.gif"    WIDTH=100 HEIGHT=100
@@ -566,7 +566,7 @@ report the size and offset of that layer...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=anim_trim_bounds.txt>
-  convert  anim_bgnd.gif -layers merge -format '%wx%h%X%Y' info:
+  magick anim_bgnd.gif -layers merge -format '%wx%h%X%Y' info:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -582,7 +582,7 @@ HREF="#crop_viewport" >Viewport Crop</A> the whole animation to this size.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  anim_bgnd.gif -crop 89x77+5+10! anim_trim_crop.gif
+  magick anim_bgnd.gif -crop 89x77+5+10! anim_trim_crop.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../anim_basics/anim_bgnd.gif"
      ><IMG SRC="../anim_basics/anim_bgnd.gif"    WIDTH=100 HEIGHT=100
@@ -618,11 +618,11 @@ pixels down and right, returning the first 'background' frame in its normal
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  canvas_prev.gif -repage 0x0+30+30\! \
+  magick canvas_prev.gif -repage 0x0+30+30\! \
            \( -clone 0 -repage +0+0 \) -swap 0,-1 +delete \
            repage_offset.gif
 </CODE><CODE EXECUTE NOWARN OUT=repage_offset.txt>
-  identify repage_offset.gif
+  magick identify repage_offset.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="repage_offset.gif"
       ><IMG SRC="repage_offset.gif"
@@ -658,7 +658,7 @@ either by adjusting the canvas size directly...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  repage_offset.gif -repage 130x130  repage_canvas.gif
+  magick repage_offset.gif -repage 130x130  repage_canvas.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="repage_canvas.gif"
       ><IMG SRC="repage_canvas.gif"            WIDTH=130 HEIGHT=130
@@ -674,7 +674,7 @@ which were now being placed 'out-of-bounds'...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  repage_offset.gif -layers TrimBounds repage_bounds.gif
+  magick repage_offset.gif -layers TrimBounds repage_bounds.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="repage_bounds.gif"
       ><IMG SRC="repage_bounds.gif"
@@ -700,7 +700,7 @@ which were now being placed 'out-of-bounds'...
     The PNG and MNG formats can handle negative offsets, but many web browsers
     and other programs may not understand such offsets, producing weird
     effects. One version of the "<CODE>Firefox</CODE>" web browser for example
-    produces extremely large images, when attempting to display a PNG with
+    produces extremely large images, when attempting to magick display a PNG with
     a negative offset.
 
 </I></FONT></TD></TR></TABLE></P>
@@ -723,7 +723,7 @@ For example here I make a 'hand draw k' animation become undrawn!
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce -reverse \
+  magick script_k.gif -coalesce -reverse \
           -quiet -layers OptimizePlus  -loop 0 reversed.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="reversed.gif"
@@ -758,7 +758,7 @@ Here I use the image <A HREF="../basics/#duplicate" >Duplicate Operator</A>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce   -duplicate 1,-2-1 \
+  magick script_k.gif -coalesce   -duplicate 1,-2-1 \
           -quiet -layers OptimizePlus  -loop 0 patrol_cycle.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="patrol_cycle.gif"
@@ -792,7 +792,7 @@ Operator</A> to generate duplicate frames.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce \( -clone -2-1 \) \
+  magick script_k.gif -coalesce \( -clone -2-1 \) \
           -quiet -layers OptimizePlus  -loop 0 patrol_cycle_2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="patrol_cycle_2.gif"
@@ -823,7 +823,7 @@ morph to generate the extra frames between the rose image and its flipped form.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -delay 20 rose: \( +clone -flip \)  -morph 5 \
+  magick -delay 20 rose: \( +clone -flip \)  -morph 5 \
           -duplicate 1,-2-1  rose_flip.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="rose_flip.gif"
@@ -843,7 +843,7 @@ to be different to the morphing images.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( +clone -flip \)  -morph 5 -set delay 10 \
+  magick rose: \( +clone -flip \)  -morph 5 -set delay 10 \
           \( -clone 0 -set delay 240 \) -swap 0 +delete \
           \( +clone   -set delay 240 \) +swap   +delete \
           -duplicate 1,-2-1 rose_flip_pause.gif
@@ -867,7 +867,7 @@ value.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( +clone -flip \)  -morph 5 \
+  magick rose: \( +clone -flip \)  -morph 5 \
           -set delay '%[fx:(t&gt;0&amp;&amp;t&lt;n-1)?10:240]' \
           -duplicate 1,-2-1    rose_flip_anim.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -900,7 +900,7 @@ aspect ratios.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: medical.gif -morph 10 \
+  magick rose: medical.gif -morph 10 \
           -layers TrimBounds -set dispose previous -coalesce \
           -background black -alpha remove \
           -set delay '%[fx:(t&gt;0&amp;&amp;t&lt;n-1)?10:60]' \
@@ -931,7 +931,7 @@ of the same image (aspect ratio preserved)...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( +clone -resize 10 \) -morph 10 \
+  magick rose: \( +clone -resize 10 \) -morph 10 \
           -layers TrimBounds -set dispose previous -coalesce \
           -background black -alpha remove \
           -set delay '%[fx:(t&gt;0&amp;&amp;t&lt;n-1)?10:60]' \
@@ -961,7 +961,7 @@ fun, wipe back again.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( -clone 0 -flip -crop 3x0 \) \
+  magick rose: \( -clone 0 -flip -crop 3x0 \) \
                 \( -clone 0 -crop 3x0 \) \
                 -set delay 10 -loop 0  wipe.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -977,7 +977,7 @@ all four directions...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 -delay 100 \
+  magick -size 100x60 -delay 100 \
       gradient:green-yellow gradient:blue-purple \
       gradient:orange-white gradient:red-black \
       -write mpr:stack -delete 0--1 \
@@ -1015,7 +1015,7 @@ For example here I translate the image by a calculated amount.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -duplicate 29  -virtual-pixel tile \
+  magick rose:  -duplicate 29  -virtual-pixel tile \
           -distort SRT '0,0 1, 0, %[fx:w*t/n],%[fx:h*t/n]' \
           -set delay 10 -loop 0     rose_diagonal_roll.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1031,7 +1031,7 @@ if the image index is 0 (the first image).
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -duplicate 29  -virtual-pixel Gray \
+  magick rose:  -duplicate 29  -virtual-pixel Gray \
           -distort SRT '%[fx:360*t/n]' \
           -set delay '%[fx:t==0?240:10]' -loop 0     rose_rotate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1096,7 +1096,7 @@ HREF="../option_link.cgi?annotate" >-annotate</A></CODE>" some text in it.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif \
+  magick canvas_prev.gif \
           \( -clone 0 -coalesce -gravity South -background white \
              -splice 0x18 -annotate 0 'Label First' \) \
           -swap -1,0 +delete   label_first.gif
@@ -1120,7 +1120,7 @@ before re-optimizing it.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif -coalesce \
+  magick canvas_prev.gif -coalesce \
           -gravity South -background white -splice 0x18 \
           -annotate 0 'A Better Label' \
           -layers Optimize labeled_anim.gif
@@ -1191,7 +1191,7 @@ and NOT the whole animation. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif \( -clone 0 -background LimeGreen -flatten \) \
+  magick script_k.gif \( -clone 0 -background LimeGreen -flatten \) \
           -swap 0,-1 +delete      script_k_flatten_0.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="script_k_flatten_0.gif"
@@ -1222,7 +1222,7 @@ do this using a '<CODE>Tomato</CODE>' background color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce   -background Tomato -alpha remove \
+  magick script_k.gif -coalesce   -background Tomato -alpha remove \
           -layers Optimize   script_k_alpha_rm.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="script_k_alpha_rm.gif"
@@ -1296,7 +1296,7 @@ For example here I overlay rose image over the whole animation.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert canvas_prev.gif -coalesce \
+  magick canvas_prev.gif -coalesce \
           -gravity NorthEast  -draw 'image over 5,5 0,0 "rose:"' \
           -layers Optimize   draw_over.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1320,7 +1320,7 @@ though it could have been any external image file...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce \
+  magick script_k.gif -coalesce \
               -draw 'image DstOver 0,0 0,0 "netscape:"' \
           -layers Optimize   script_k_netscape.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1341,7 +1341,7 @@ animation before coalescing.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif  -repage 100x100+20+20\!   -coalesce \
+  magick script_k.gif  -repage 100x100+20+20\!   -coalesce \
               -draw 'image DstOver 0,0 0,0 "granite:"' \
           -layers Optimize   script_k_granite.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1358,7 +1358,7 @@ Program Register</A> to provide you with a 'read source' for that image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 53x54 xc:SkyBlue -fill DodgerBlue \
+  magick -size 53x54 xc:SkyBlue -fill DodgerBlue \
           -draw 'circle 26,27 24,8' -write mpr:bgnd +delete \
           \
           script_k.gif -coalesce \
@@ -1400,15 +1400,15 @@ overlaying the original image over those shadow images...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce  coalesced_k.gif
+  magick script_k.gif -coalesce  coalesced_k.gif
 
-  convert coalesced_k.gif  -background black -shadow 100x3+2+5 \
+  magick coalesced_k.gif  -background black -shadow 100x3+2+5 \
           -background SkyBlue -alpha remove    shadows_k.gif
 
-  convert shadows_k.gif  null:  coalesced_k.gif \
+  magick shadows_k.gif  null:  coalesced_k.gif \
           -layers Composite          compose_shadow.gif
 
-  gif_anim_montage compose_shadow.gif compose_shadow_frames.gif
+  gif_anim_magick montage compose_shadow.gif compose_shadow_frames.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="coalesced_k.gif"
       ><IMG SRC="coalesced_k.gif"
@@ -1476,7 +1476,7 @@ background.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce -write mpr:images \
+  magick script_k.gif -coalesce -write mpr:images \
           -background black  -shadow 100x3+2+5 \
           -bordercolor Wheat -border 0 \
           null:    mpr:images    -layers Composite \
@@ -1516,7 +1516,7 @@ shadow animation...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shadows_k.gif  null:  coalesced_k.gif  \
+  magick shadows_k.gif  null:  coalesced_k.gif  \
           -geometry +0-10 -gravity South  -layers Composite \
           composite_south.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1538,7 +1538,7 @@ all the destination images is large enough to contain your final results.
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
   The resize capability of "<CODE><A HREF="../option_link.cgi?geometry"
-  >-geometry</A></CODE>" is not strictly part of the composite operation, it
+  >-geometry</A></CODE>" is not strictly part of the magick composite operation, it
   only resizes the last image of the current image sequence. As such it will
   not do what you expect if used with multi-image <A HREF="../#composite"
   >Layers Composition</A>.  See <A HREF="../resize/#geometry" >Resize
@@ -1673,7 +1673,7 @@ a static background...
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -size 100x100 plasma:fractal null: \( script_k.gif -coalesce \) \
+<r>  magick -size 100x100 plasma:fractal null: \( script_k.gif -coalesce \) \
               -gravity Center   -layers Composite \
           -layers Optimize   composite_background.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1741,9 +1741,9 @@ starting point for generating any other type of glitter.  The
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -size 100x100 xc: +noise Random -separate \
+<r>  magick -size 100x100 xc: +noise Random -separate \
           null: \( xc: +noise Random -separate -threshold 30% -negate \) \
-              -compose CopyOpacity -layers composite \
+              -compose CopyOpacity -layers magick composite \
           -set dispose background -set delay 20 -loop 0   glitter_overlay.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="glitter_overlay.gif"
@@ -1762,7 +1762,7 @@ Just a plain color...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert glitter_overlay.gif \
+  magick glitter_overlay.gif \
           -compose Screen -bordercolor GoldenRod -border 0x0  glitter_gold.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="glitter_gold.gif"
@@ -1780,9 +1780,9 @@ slightly randomised coloring to the glitter pattern.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert glitter_overlay.gif null: -size 100x100 \
+<r>  magick glitter_overlay.gif null: -size 100x100 \
           plasma:red-firebrick plasma:red-firebrick  plasma:red-firebrick \
-          -compose Screen -layers composite    glitter_plasma.gif
+          -compose Screen -layers magick composite    glitter_plasma.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="glitter_plasma.gif"
      ><IMG SRC="glitter_plasma.gif"      WIDTH=100 HEIGHT=100
@@ -1802,10 +1802,10 @@ HREF="../compose/#dstin" >DstIn</A>)
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 -fill white -background none -font Candice \
+  magick -size 100x100 -fill white -background none -font Candice \
           -gravity center -pointsize 90 label:A   glitter_mask_trans.gif
-  convert glitter_plasma.gif null: glitter_mask_trans.gif -matte \
-          -compose DstIn -layers composite        glitter_masked_trans.gif
+  magick glitter_plasma.gif null: glitter_mask_trans.gif -matte \
+          -compose DstIn -layers magick composite        glitter_masked_trans.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="glitter_mask_trans.gif"
      ><IMG SRC="glitter_mask_trans.gif"      WIDTH=100 HEIGHT=100
@@ -1822,10 +1822,10 @@ HREF="../compose/#copyopacity" >CopyOpacity</A>)
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 -fill white -background black -font Candice \
+  magick -size 100x100 -fill white -background black -font Candice \
           -gravity center -pointsize 90 label:A    glitter_mask.gif
-  convert glitter_plasma.gif null: glitter_mask.gif +matte \
-          -compose CopyOpacity -layers composite   glitter_masked.gif
+  magick glitter_plasma.gif null: glitter_mask.gif +matte \
+          -compose CopyOpacity -layers magick composite   glitter_masked.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="glitter_mask.gif"
      ><IMG SRC="glitter_mask.gif"      WIDTH=100 HEIGHT=100
@@ -1845,11 +1845,11 @@ However in our case I'll underlay a background, and overlay an border.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert glitter_masked.gif -size 100x100 \
-          null: gradient:gold1-gold4 -compose DstOver -layers composite \
+  magick glitter_masked.gif -size 100x100 \
+          null: gradient:gold1-gold4 -compose DstOver -layers magick composite \
           null: \( -fill none -background none -stroke white -strokewidth 2 \
                    -font Candice -gravity center -pointsize 90 label:A \) \
-              -compose over -layers composite      glittered_letter.gif
+              -compose over -layers magick composite      glittered_letter.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="glittered_letter.gif"
      ><IMG SRC="glittered_letter.gif"      WIDTH=100 HEIGHT=100
@@ -1866,7 +1866,7 @@ of a smooth border around the glittered region. </P>
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
     While I may have used GIF format images in the above to allow me to
-    display individual steps of the process, in practice you would either
+    magick display individual steps of the process, in practice you would either
     combine all the steps into a single command, or use a better intermediate
     image file format such as MIFF. That is done to avoid the inherent
     problems of the GIF format, until we have finished.
@@ -1878,7 +1878,7 @@ of a smooth border around the glittered region. </P>
 
 As mentioned there are a lot of pre-prepared animated glitter tile images
 available on the WWW (do a search for "glitter tiles"). One source is a <A
-HREF="https://legacy.imagemagick.org/MagickStudio/scripts/MagickStudio.cgi" >IM
+HREF="https://imagemagick.org/MagickStudio/scripts/MagickStudio.cgi" >IM
 Studio</A> user, <I><A HREF="forum_link.cgi?u=143" >scri8e</A></I> and his web
 site <A HREF="http://www.scri8e.com/stars" >Moons Stars</A>. Be warned however
 that I find most glitter tiles to be rather horrible looking, or too fast.</P>
@@ -1902,7 +1902,7 @@ giving our wizard a cloak of invisibility ;-)
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.gif -matte -fuzz 33% -transparent blue logo_holed.gif
+  magick logo.gif -matte -fuzz 33% -transparent blue logo_holed.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/logo.gif"
      ><IMG SRC="../images/logo.gif"      WIDTH=180 HEIGHT=180
@@ -1932,7 +1932,7 @@ to ensure that you can cover it completely.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert glitter_blue.gif -virtual-pixel tile \
+  magick glitter_blue.gif -virtual-pixel tile \
           -set option:distort:viewport 180x180 -distort SRT 0 \
           glitter_blue_tiled.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1949,8 +1949,8 @@ glitter under the 'holey' image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo_holed.gif null: glitter_blue_tiled.gif \
-          -compose DstOver -layers composite \
+  magick logo_holed.gif null: glitter_blue_tiled.gif \
+          -compose DstOver -layers magick composite \
           -loop 0 -layers Optimize logo_glittered.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="logo_glittered.gif"
@@ -1967,11 +1967,11 @@ parts.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.gif -matte -fuzz 10% -fill none \
+  magick logo.gif -matte -fuzz 10% -fill none \
           -draw 'matte 120,150 floodfill  matte 150,120 floodfill' \
           null: \( glitter_blue.gif -virtual-pixel tile \
             -set option:distort:viewport 300x300 -distort SRT 0 \) \
-          -compose DstOver -layers composite \
+          -compose DstOver -layers magick composite \
           -loop 0 -layers Optimize logo_glitter_cloak.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="logo_glitter_cloak.gif"
@@ -2172,7 +2172,7 @@ For example this goes really bad...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -resize 20x20 script_k_direct.gif
+  magick script_k.gif -resize 20x20 script_k_direct.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="../images/script_k.gif"
       ><IMG SRC="../images/script_k.gif"
@@ -2202,7 +2202,7 @@ before attempting to resize it.  For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce  -resize 20x20  script_k_direct2.gif
+  magick script_k.gif -coalesce  -resize 20x20  script_k_direct2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="../images/script_k.gif"
       ><IMG SRC="../images/script_k.gif"
@@ -2245,7 +2245,7 @@ appropriate for this web page.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce \
+  magick script_k.gif -coalesce \
           -bordercolor LightSteelBlue -border 0 \
           -resize 20x20  -layers Optimize   script_k_thumbnail.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2295,7 +2295,7 @@ animation and allow you to easily re-optimize the animation at the new size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert script_k.gif -coalesce  -sample 20x20  script_k_sample.gif
+  magick script_k.gif -coalesce  -sample 20x20  script_k_sample.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="../images/script_k.gif"
       ><IMG SRC="../images/script_k.gif"
@@ -2510,7 +2510,7 @@ two animated images on the command line.  So lets just try that...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-    convert script_o.gif script_k.gif   script_ok_try1.gif
+    magick script_o.gif script_k.gif   script_ok_try1.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="script_ok_try1.gif"
       ><IMG SRC="script_ok_try1.gif"
@@ -2542,7 +2542,7 @@ clipped.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-    convert -page 90x54 script_o.gif \
+    magick -page 90x54 script_o.gif \
             \( script_k.gif -repage +37+0\! \)   script_ok_try2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="script_ok_try2.gif"
@@ -2573,7 +2573,7 @@ need to adjust its delay, instead of removing. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-    convert -page 90x54 script_o.gif \( +clone -set delay 20 \) -delete -2 \
+    magick -page 90x54 script_o.gif \( +clone -set delay 20 \) -delete -2 \
             \( script_k.gif -delete 0 -repage +37+0\! \)     script_ok.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="script_ok.gif"
@@ -2597,7 +2597,7 @@ make an animation look very bad. </P>
 
 Suppose you want both animations to be appended side-by-side, but have both
 parts of the animation animating at the same time.  This is not so easy, as
-you need to append (or composite together) each pair frames in the the two
+you need to append (or magick composite together) each pair frames in the the two
 animations together, so the animation also works together.. </P>
 
 The real problem to doing this is the IM command line only works with a single
@@ -2671,7 +2671,7 @@ Forums</A>, though the actual problem he gave was far, far, worse. </P>
      ALIGN=right VSPACE=0 HSPACE=0 BORDER=0 ALT="[right]"
 >
 
-Now browsers usually animate each of the separate GIF images, without any
+Now browsers usually magick animate each of the separate GIF images, without any
 synchronization. As such the two animations may become out-of-sync with each
 other, producing a 'cat' that appears to have been part of a chainsaw
 massacre.   You may be able to see this effect to the right where I placed two
@@ -2701,7 +2701,7 @@ animation that could very easily be lost during this processing.
 
   # Append the separated frames them together
   for i in `seq -f '%03g' 1 11`; do \
-    convert bag_left_$i.gif bag_right_$i.gif +append bag_append_$i.gif; \
+    magick bag_left_$i.gif bag_right_$i.gif +append bag_append_$i.gif; \
   done
 
   # Rebuild the animation (using one of the ".anim" files)
@@ -2749,7 +2749,7 @@ I then overlay other coalesced animation with an appropriate offset.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert bag_left.gif -repage 97x92 -coalesce \
+  magick bag_left.gif -repage 97x92 -coalesce \
           null: \( bag_right.gif -coalesce \) \
           -geometry +50+0 -layers Composite    bag_append.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2780,7 +2780,7 @@ avoid the need for an offset.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert bag_left.gif'[0]' -coalesce \( bag_right.gif'[0]' -coalesce \) \
+  magick bag_left.gif'[0]' -coalesce \( bag_right.gif'[0]' -coalesce \) \
           +append -channel A -evaluate set 0 +channel \
           bag_left.gif -coalesce -delete 0 \
           null: \( bag_right.gif -coalesce \) \
@@ -2812,7 +2812,7 @@ to produce a wider film strip.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert \( bag_left.gif  -coalesce -append \) \
+  magick \( bag_left.gif  -coalesce -append \) \
           \( bag_right.gif -coalesce -append \) \
           +append  -crop x92 +repage \
           -set delay 30     bag_dbl_append.gif
@@ -2852,7 +2852,7 @@ so I'll use it as an example... </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert \( neon_h.gif -coalesce -append \) \
+  magick \( neon_h.gif -coalesce -append \) \
           \( neon_e.gif -coalesce -append \) \
           \( neon_l.gif -coalesce -append \) \
           \( neon_l.gif -coalesce -append \) \
@@ -2886,7 +2886,7 @@ the number of loops in the resulting animation.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert neon_h.gif'[0]' neon_e.gif'[0]' neon_l.gif'[0]' neon_l.gif'[0]' \
+  magick neon_h.gif'[0]' neon_e.gif'[0]' neon_l.gif'[0]' neon_l.gif'[0]' \
           +append \( +clone \) -append \
           \( neon_o.gif -coalesce -append \)    +append \
           \( +clone \) -append \( +clone \) -append \( +clone \) -append \
@@ -2950,9 +2950,9 @@ highlighting the areas of change.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert    bag.gif   -coalesce  -set delay 0 \
+  magick   bag.gif   -coalesce  -set delay 0 \
           -bordercolor red -border 0 +matte    null: \
-          -duplicate 1,1--2 -compose difference -layers composite \
+          -duplicate 1,1--2 -compose difference -layers magick composite \
           +delete -compose plus -background black -flatten \
           -separate -flatten -threshold 0 bag_areas.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -2977,9 +2977,9 @@ Crops of the Animation</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert bag.gif -coalesce  -crop 97x39+0+0\!   bag_cat.gif
-  convert bag.gif -coalesce  -crop 50x54+0+39\!  bag_bear.gif
-  convert bag.gif -coalesce  -crop 47x54+50+39\! bag_wing.gif
+  magick bag.gif -coalesce  -crop 97x39+0+0\!   bag_cat.gif
+  magick bag.gif -coalesce  -crop 50x54+0+39\!  bag_bear.gif
+  magick bag.gif -coalesce  -crop 47x54+50+39\! bag_wing.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <TABLE><TR><TD COLSPAN=2 ALIGN=center>
       <A HREF="bag_cat.gif"
@@ -3005,7 +3005,7 @@ about six or more areas, though you will not gain much from optimization doing
 this. All it would really do is complicate your web page, and create more
 files for the user to download. </P>
 
-Now unlike the larger animation, these smaller areas will animate quite
+Now unlike the larger animation, these smaller areas will magick animate quite
 independently from each other.  We can even also change the timings of these
 simple sub-animations without adversely affecting the result so as to
 completely de-synchronize them from the other sub-animations.  The result is
@@ -3018,7 +3018,7 @@ these animations. </P>
 
 Also the first two frames of the 'cat' are also exactly the same.  However
 unlike the 'bear' and 'wing' you can't just remove one of them, as each frame
-contains time delays to allow the 'bear' and 'wing' to animate without the cat
+contains time delays to allow the 'bear' and 'wing' to magick animate without the cat
 being present. </P>
 
 To correctly remove these duplicate frames, you need to use the "<CODE><A
@@ -3035,11 +3035,11 @@ the page, just as they should be displayed.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert bag_cat.gif -layers RemoveDups \
+  magick bag_cat.gif -layers RemoveDups \
                            -quiet  -layers Optimize  bag_cat_opt.gif
-  convert bag_bear.gif -delete 2--1 -set delay 47 \
+  magick bag_bear.gif -delete 2--1 -set delay 47 \
                                    -layers Optimize  bag_bear_opt.gif
-  convert bag_wing.gif -delete 2--1 -set delay 33 \
+  magick bag_wing.gif -delete 2--1 -set delay 33 \
                                    -layers Optimize  bag_wing_opt.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD> &nbsp;
   <TABLE CELLSPACING=0 CELLPADDING=0><TR><TD COLSPAN=2 ALIGN=center>
@@ -3143,7 +3143,7 @@ For example suppose you have two animations of three frame with time delays of
 
 Both animations are 30 time units long already so that is not a problem.
 
-Now convert the above to the time index when each frame should appear...
+Now magick the above to the time index when each frame should appear...
 and show the overall time line at which frames appear...
    0        10    20   |__ NOTE that both animations
    0   5    10         |   end or loop at 30
@@ -3247,5 +3247,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/anim_mods/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/anim_mods/</CODE>
 </ADDRESS></BODY></HTML>

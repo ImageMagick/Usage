@@ -76,9 +76,9 @@ fi
 while read URL BIG THUMB; do
   $BROWSER -remote "openurl($URL)"
   sleep  $LOADTIME
-  import -window "$BROWSERID" $BIG
+  magick import -window "$BROWSERID" $BIG
   if test "$CROP" != ""; then
-    mogrify -crop $CROP "$BIG"
+    magick mogrify -crop $CROP "$BIG"
   fi
   convert -size "$THUMBSIZE" "$BIG" -resize "$THUMBSIZE" "$THUMB"
 done

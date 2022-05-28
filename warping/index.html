@@ -5,7 +5,7 @@
 <TITLE>Warping -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/warping/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/warping/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -107,7 +107,7 @@ upside-down.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -flip  flip.gif
+  magick koala.gif  -flip  flip.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="flip.gif"
      ><IMG SRC="flip.gif"              WIDTH=75  HEIGHT=75
@@ -122,7 +122,7 @@ can generate a mirror image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -flop  flop.gif
+  magick koala.gif  -flop  flop.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="flop.gif"
      ><IMG SRC="flop.gif"              WIDTH=75  HEIGHT=75
@@ -156,7 +156,7 @@ mirrors the image along the image top-left to bottom-right diagonal.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -transpose  transpose.gif
+  magick koala.gif  -transpose  transpose.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="transpose.gif"
      ><IMG SRC="transpose.gif"              WIDTH=75  HEIGHT=75
@@ -171,7 +171,7 @@ mirrors the image along the image bottom-left to top-right diagonal.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -transverse  transverse.gif
+  magick koala.gif  -transverse  transverse.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="transverse.gif"
      ><IMG SRC="transverse.gif"              WIDTH=75  HEIGHT=75
@@ -202,11 +202,11 @@ of the image, including the original image itself.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -rotate   0  rotate_0.gif
-  convert koala.gif  -rotate  90  rotate_90.gif
-  convert koala.gif  -rotate 180  rotate_180.gif
-  convert koala.gif  -rotate -90  rotate-90.gif
-  convert koala.gif  -rotate 360  rotate_360.gif
+  magick koala.gif  -rotate   0  rotate_0.gif
+  magick koala.gif  -rotate  90  rotate_90.gif
+  magick koala.gif  -rotate 180  rotate_180.gif
+  magick koala.gif  -rotate -90  rotate-90.gif
+  magick koala.gif  -rotate 360  rotate_360.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rotate_0.gif"
      ><IMG SRC="rotate_0.gif"             WIDTH=75  HEIGHT=75
@@ -268,7 +268,7 @@ image horizontally (like a TV that is out of sync).  The amount of the roll
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -roll +0+20  roll_horiz.gif
+  magick koala.gif  -roll +0+20  roll_horiz.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="roll_horiz.gif"
      ><IMG SRC="roll_horiz.gif"                WIDTH=75  HEIGHT=75
@@ -282,7 +282,7 @@ Of course you can also roll the image sideways...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -roll +30+0  roll_vert.gif
+  magick koala.gif  -roll +30+0  roll_vert.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="roll_vert.gif"
      ><IMG SRC="roll_vert.gif"         WIDTH=75  HEIGHT=75
@@ -297,7 +297,7 @@ direction.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -roll +0-20  roll-horiz.gif
+  magick koala.gif  -roll +0-20  roll-horiz.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="roll-horiz.gif"
      ><IMG SRC="roll-horiz.gif"                WIDTH=75  HEIGHT=75
@@ -324,7 +324,7 @@ if no operation was performed at all.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -roll +25+0 -rotate 90  -flop \
+  magick koala.gif -roll +25+0 -rotate 90  -flop \
           -roll +0-25  -flip  -rotate 90    original.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -334,7 +334,7 @@ if no operation was performed at all.
 </TD></TR></TABLE></P>
 
 <!-- <CODE EXECUTE ASSERT>
-  [ `compare -metric PAE koala.gif original.gif null: 2>&1 |\
+  [ `magick compare -metric PAE koala.gif original.gif null: 2>&1 |\
         sed 's/ .*//'` != '0' ] && echo >&2 \
     "ASSERTION FAILURE: Simple Distorts distorted image when it shouldn't\!"
 </CODE> -->
@@ -367,7 +367,7 @@ image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -rotate 30 rotate.jpg
+  magick koala.gif -rotate 30 rotate.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="rotate.jpg"
@@ -391,7 +391,7 @@ setting.  Allowing you to specify the color to fill into the corners.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -background lightskyblue -rotate 30 rotate_color.png
+  magick koala.gif -background lightskyblue -rotate 30 rotate_color.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="rotate_color.png"
@@ -409,7 +409,7 @@ that can handle transparency.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -alpha set -background none -rotate 30 rotate_trans.png
+  magick koala.gif -alpha set -background none -rotate 30 rotate_trans.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="rotate_trans.png"
@@ -445,8 +445,8 @@ method) to restore the image back to its original size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert koala.gif -alpha set \( +clone -background none -rotate 30 \) \
-            -gravity center  -compose Src -composite   rotate_resized.png
+    magick koala.gif -alpha set \( +clone -background none -rotate 30 \) \
+            -gravity center  -compose Src -magick composite   rotate_resized.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
     <A HREF="rotate_resized.png"
@@ -493,7 +493,7 @@ HREF="../distorts/#srt" >SRT Distortion</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -virtual-pixel background -background lightskyblue \
+  magick koala.gif -virtual-pixel background -background lightskyblue \
           -distort SRT 30 +repage rotate_srt.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -509,7 +509,7 @@ Or using the '+' version of the distort operator to adjust the cavas size.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR VALIGN=top><TD><PRE><CODE EXECUTE>
-  convert koala.gif -virtual-pixel background -background lightskyblue \
+  magick koala.gif -virtual-pixel background -background lightskyblue \
           +distort SRT 30 +repage rotate_srt2.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -564,12 +564,12 @@ However shear is more complex in that it is really a double operation.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -background Blue  -shear 20      shear_rot.gif
-  convert koala.gif -background Blue  -shear 20x0    shear_x.gif
-  convert koala.gif -background Blue  -shear 0x50    shear_y.gif
-  convert koala.gif -background Blue  -shear 20x50   shear_xy.gif
-  convert koala.gif -background Blue  -shear 20x0  -shear 0x50   shear_xy2.gif
-  convert koala.gif -background Blue  -shear 0x50  -shear 20x0   shear_yx.gif
+  magick koala.gif -background Blue  -shear 20      shear_rot.gif
+  magick koala.gif -background Blue  -shear 20x0    shear_x.gif
+  magick koala.gif -background Blue  -shear 0x50    shear_y.gif
+  magick koala.gif -background Blue  -shear 20x50   shear_xy.gif
+  magick koala.gif -background Blue  -shear 20x0  -shear 0x50   shear_xy2.gif
+  magick koala.gif -background Blue  -shear 0x50  -shear 20x0   shear_yx.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shear_rot.gif"
      ><IMG SRC="shear_rot.gif"
@@ -612,7 +612,7 @@ color setting is of course used as the color for the extra space added.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -background none  -shear 30  shear_trans.png
+  magick koala.gif  -background none  -shear 30  shear_trans.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="shear_trans.png"
      ><IMG SRC="shear_trans.png"
@@ -690,25 +690,25 @@ isometric cube.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Create some square images for the cube
-  convert logo: -resize 256x256^ -gravity center -extent 256x256 top.jpg
-  convert ../img_photos/pagoda_sm.jpg           -resize 256x256 left.jpg
-  convert ../img_photos/mandrill_orig.png       -resize 256x256 right.jpg
+  magick logo: -resize 256x256^ -gravity center -extent 256x256 top.jpg
+  magick ../img_photos/pagoda_sm.jpg           -resize 256x256 left.jpg
+  magick ../img_photos/mandrill_orig.png       -resize 256x256 right.jpg
 
   # top image shear.
-  convert top.jpg -resize  260x301! -alpha set -background none \
+  magick top.jpg -resize  260x301! -alpha set -background none \
           -shear 0x30 -rotate -60 -gravity center -crop 520x301+0+0 \
           top_shear.png
 
   # left image shear
-  convert left.jpg  -resize  260x301! -alpha set -background none \
+  magick left.jpg  -resize  260x301! -alpha set -background none \
           -shear 0x30  left_shear.png
 
   # right image shear
-  convert right.jpg  -resize  260x301! -alpha set -background none \
+  magick right.jpg  -resize  260x301! -alpha set -background none \
           -shear 0x-30  right_shear.png
 
   # combine them.
-  convert left_shear.png right_shear.png +append \
+  magick left_shear.png right_shear.png +append \
           \( top_shear.png -repage +0-149 \) \
           -background none -layers merge +repage \
           -resize 30%  isometric_shears.png
@@ -764,7 +764,7 @@ second is the <I>wavelength</I> of the sine function in pixels.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -background Blue  -wave 10x64  wave.jpg
+  magick koala.gif -background Blue  -wave 10x64  wave.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="wave.jpg"
@@ -784,7 +784,7 @@ the width of the image, you can make the image into an arc.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -background Blue  -wave 20x150  arched.jpg
+  magick koala.gif -background Blue  -wave 20x150  arched.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="arched.jpg"
@@ -807,7 +807,7 @@ to remove the unused space the "<A HREF="../option_link.cgi?wave"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -background Blue  -wave -20x150  \
+  magick koala.gif -background Blue  -wave -20x150  \
           -gravity South -chop 0x20 arched_2.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -825,7 +825,7 @@ space added to the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -alpha set -background none  -wave 10x75  wave_trans.png
+  magick koala.gif -alpha set -background none  -wave 10x75  wave_trans.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="wave_trans.png"
@@ -843,7 +843,7 @@ before and after you apply the wave.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -rotate -90 -background Blue  -wave -10x75 \
+  magick koala.gif  -rotate -90 -background Blue  -wave -10x75 \
                      -rotate +90  wave_y.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -873,7 +873,7 @@ an image offset using "<A HREF="../option_link.cgi?splice"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif  -splice 19x0+0+0 -background Blue  -wave 10x75 \
+  magick koala.gif  -splice 19x0+0+0 -background Blue  -wave 10x75 \
                      -chop   19x0+0+0     wave_offset.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -932,7 +932,7 @@ For example this is a typical image implosion...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -implode .6 implode.gif
+  magick koala.gif -implode .6 implode.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="implode.gif"
@@ -948,7 +948,7 @@ the circle, into oblivion.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -implode 5 implode_big.gif
+  magick koala.gif -implode 5 implode_big.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="implode_big.gif"
@@ -975,9 +975,9 @@ setting.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -gravity center -crop 46x46+0+0 +repage \
+  magick rose: -gravity center -crop 46x46+0+0 +repage \
                                               -implode 3   implode_rose.gif
-  convert rose: -gravity center -crop 44x44+0+0 +repage \
+  magick rose: -gravity center -crop 44x44+0+0 +repage \
                 -bordercolor white -border 1  -implode 3   implode_rose_2.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1005,7 +1005,7 @@ For example here I implode simple box image using this setting...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 94x94 xc:red -bordercolor white -border 3 \
+  magick -size 94x94 xc:red -bordercolor white -border 3 \
           -virtual-pixel tile     -implode 4   implode_tiled_box.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1032,7 +1032,7 @@ produce a much better result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 94x94 xc:red -bordercolor white -border 3 \
+  magick -size 94x94 xc:red -bordercolor white -border 3 \
           -virtual-pixel tile  -resize 400%  -implode 4 -resize 25% \
           implode_tiled_ss.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -1057,7 +1057,7 @@ it again, you can also warp the edges of an image, inward toward the center.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -bordercolor blue -border 20x20 \
+  magick koala.gif -bordercolor blue -border 20x20 \
           -implode .5   -shave 18x18  implode_border.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1074,7 +1074,7 @@ transparency...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -bordercolor none -border 20x20 \
+  magick koala.gif -bordercolor none -border 20x20 \
           -implode .5   -shave 18x18  implode_border_trans.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1097,7 +1097,7 @@ mid-radius pixels out toward the edge, rather than a true explosion.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -implode -2 explode.jpg
+  magick koala.gif -implode -2 explode.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="explode.jpg"
@@ -1113,7 +1113,7 @@ image into a circle two-thirds the size of the smallest image dimension.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -implode -30 explode_big.jpg
+  magick koala.gif -implode -30 explode_big.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="explode_big.jpg"
@@ -1127,7 +1127,7 @@ And here is a '<A HREF="..distorts/#super_sample" >Super-Sampled</A>', version.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -resize 400% -implode -30 \
+  magick koala.gif -resize 400% -implode -30 \
           -resize 25% explode_big_ss.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1159,7 +1159,7 @@ of degrees you give it as an argument.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -swirl 180 swirl.jpg
+  magick koala.gif -swirl 180 swirl.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="swirl.jpg"
@@ -1176,7 +1176,7 @@ give the look of a whirlpool sucking the image up to oblivion.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert koala.gif -bordercolor white -border 20x20 \
+  magick koala.gif -bordercolor white -border 20x20 \
           -swirl 180 -implode .3  -shave 20x20   whirlpool.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1382,5 +1382,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/warping/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/warping/</CODE>
 </ADDRESS></BODY></HTML>

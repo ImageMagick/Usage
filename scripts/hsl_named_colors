@@ -73,8 +73,8 @@
     hue=`echo $hsl | awk '{print $1/65536*360}'`
 
     # determine X,Y coordinates of this color in chart
-    x=`identify -format "%[fx:int( $sat*cos($hue*pi/180)     + 110 )]" xc:`
-    y=`identify -format "%[fx:int( $sat*sin($hue*pi/180)/2.2 +$lum )]" xc:`
+    x=`magick identify -format "%[fx:int( $sat*cos($hue*pi/180)     + 110 )]" xc:`
+    y=`magick identify -format "%[fx:int( $sat*sin($hue*pi/180)/2.2 +$lum )]" xc:`
 
     # For Debugging
     # output the color and final position
@@ -92,11 +92,11 @@
           \( xc:none -draw 'line 0,40 0,70' \
                      -draw 'line 0,125 0,180' \
                      -draw 'line 0,210 0,240' \
-          \) -alpha set -compose DstIn -composite miff:-
+          \) -alpha set -compose DstIn -magick composite miff:-
 
 ) |
-# Just a montage of all color in alphabetical order
-#montage MIFF:- +repage -background none -geometry +2+2 show:; exit
+# Just a magick montage of all color in alphabetical order
+#magick montage MIFF:- +repage -background none -geometry +2+2 show:; exit
 
 # read positioned color spots, and merge together
 convert -background Gray45   MIFF:-  -layers merge +repage \

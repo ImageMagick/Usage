@@ -156,7 +156,7 @@ fi
 while [ $# -ne 0 ]; do
   img2="$1"; shift
   if [ "$img1" = "$img2" ]; then
-    echo "WARNING: skipping compare of same image \"$img1\""
+    echo "WARNING: skipping magick compare of same image \"$img1\""
     continue
   fi
 
@@ -195,17 +195,17 @@ while [ $# -ne 0 ]; do
             \( -clone 0 -alpha extract -virtual-pixel black \
               -morphology erode Square:$radius \
             \) \
-            -delete 0 -compose multiply -composite -compose over \
+            -delete 0 -compose multiply -magick composite -compose over \
             $tmpdir/entropy.miff
 
     # convert -size 200x200 radial-gradient: \
     #         -gravity center -crop 128x128+0+0 +repage \
     #         -auto-level -gamma 3  $tmpdir/entropy.miff \
-    #         -compose multiply -composite -compose over \
+    #         -compose multiply -magick composite -compose over \
     #         -auto-level $tmpdir/entropy.miff
 
     if [ "$ENTROPY" ]; then
-      #display ephemeral:$tmpdir/entropy.miff $img2 &
+      #magick display ephemeral:$tmpdir/entropy.miff $img2 &
       flicker_cmp $img2 ephemeral:$tmpdir/entropy.miff &
       # wait for flicker to finish reading image
       while [ -f $tmpdir/entropy.miff ]; do usleep 100; done
@@ -224,10 +224,10 @@ while [ $# -ne 0 ]; do
     # ex,ey = a high entropy center coordinate
     read -r ex ey dist < <(
       convert $tmpdir/entropy.miff \
-              \( +clone -threshold -1 xc:black -gravity center -composite \
+              \( +clone -threshold -1 xc:black -gravity center -magick composite \
                 -virtual-pixel white -morphology Distance Euclidean:2 \
                 -auto-level \
-              \) -compose multiply -composite -compose over \
+              \) -compose multiply -magick composite -compose over \
               -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
       awk 'NR==1 { next; }
@@ -247,7 +247,7 @@ while [ $# -ne 0 ]; do
     if [ "$DISTRIBUTE" ]; then
       convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
             -auto-level $tmpdir/distance.miff
-      display -remote ephemeral:$tmpdir/distance.miff 2>/dev/null &
+      magick display -remote ephemeral:$tmpdir/distance.miff 2>/dev/null &
       while [ -f $tmpdir/distance.miff ]; do usleep 200; done
     fi
 
@@ -310,7 +310,7 @@ while [ $# -ne 0 ]; do
       convert "$img2" -crop "$crop" +repage   -write $tmpdir/subimage.miff \
               "$img1" +swap   -background black -alpha remove -alpha off \
               miff:- |
-        compare -subimage-search - miff:- |
+        magick compare -subimage-search - miff:- |
           convert - -write $tmpdir/results-%d.miff -depth 16 txt:- |
             tr -cs '0-9\n' ' ' |
               awk 'NR==1 { min=1e8; next; }
@@ -321,7 +321,7 @@ while [ $# -ne 0 ]; do
 
       #cat $tmpdir/result.txt
 
-      # compare input and output images
+      # magick compare input and output images
       # convert "$img1" $tmpdir/subimage.miff $tmpdir/results-?.miff \
       #         -background none +append -scale 100% x:
 
@@ -409,7 +409,7 @@ while [ $# -ne 0 ]; do
         # Output a merged image
         convert "$img1" -page $offset "$img2" \
                 -background none -layers merge +repage "$output_image"
-        display "$output_image" & # display it when found
+        magick display "$output_image" & # magick display it when found
 
         img1="$output_image"  # WARNING: assuming its one 'perfect match'
         break;
@@ -431,7 +431,7 @@ while [ $# -ne 0 ]; do
     #
     read -r ex ey dist < <(
       convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
-              $tmpdir/entropy.miff -compose multiply -composite \
+              $tmpdir/entropy.miff -compose multiply -magick composite \
               -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
         awk 'NR==1 { next; }
@@ -457,7 +457,7 @@ while [ $# -ne 0 ]; do
     if [ "$DISTRIBUTE" ]; then
       convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
             -auto-level $tmpdir/distance.miff
-      display -remote ephemeral:$tmpdir/distance.miff &
+      magick display -remote ephemeral:$tmpdir/distance.miff &
       while [ -f $tmpdir/distance.miff ]; do usleep 200; done
     fi
 

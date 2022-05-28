@@ -40,9 +40,9 @@ trap "exit 2" 1 2 3 15
  echo "morphing `basename $prev_image` to `basename $next_image`"
 
 # Do you complex image transition here
-# The last delay is minimum display time
+# The last delay is minimum magick display time
 # The extra frame is to prevent a 'flash' of the first frame
-# just before the 'static' display is set.
+# just before the 'static' magick display is set.
 convert -delay 20 "$prev_image" "$next_image" -morph 10 \
         \( +clone -set delay 300 \) +swap +delete \
         \( +clone -set delay 0 \) -loop 0 $temp
@@ -51,14 +51,14 @@ convert -delay 20 "$prev_image" "$next_image" -morph 10 \
  echo "animating transition"
 
 # feed transition to the animation
-animate -remote ephemeral:$temp &
+magick animate -remote ephemeral:$temp &
 
 # wait for 'ephemeral:' file to have been read
 while [ -f $temp ]; do sleep .1; done
 
 # Wait for transition time period to complete.
 # Must be longer than transition time shorter than overall time.
-# The transition animate must not reach the final frame or a flash
+# The transition magick animate must not reach the final frame or a flash
 # of the first (original image) frame will become visible!
 sleep 5
 
@@ -66,7 +66,7 @@ sleep 5
  echo "setting static display"
 
 # replace the transition image with a loop of the new image
-animate -delay 100 -remote "$next_image" &
+magick animate -delay 100 -remote "$next_image" &
 
 echo -n $next_image > last_image
 

@@ -5,7 +5,7 @@
 <TITLE>Thumbnails -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/thumbnails/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/thumbnails/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -189,7 +189,7 @@ For example, this converts JPG images into GIF thumbnails in a
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
   mkdir thumbs
-  mogrify  -format gif -path thumbs -thumbnail 100x100 *.jpg
+  magick mogrify  -format gif -path thumbs -thumbnail 100x100 *.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -320,9 +320,9 @@ You can also remove the profiles from your images with the IM commands...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert input.jpg  -strip output.jpg
+  magick input.jpg  -strip output.jpg
 
-  mogrify -strip  *.jpg
+  magick mogrify -strip  *.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -344,9 +344,9 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -define jpeg:size=240x180 image.jpg -thumbnail 120x90 thumbs/image.gif
+  magick -define jpeg:size=240x180 image.jpg -thumbnail 120x90 thumbs/image.gif
 
-  mogrify -path thumbs -format gif -define jpeg:size=240x180 -thumbnail 120x90 '*.jpg'
+  magick mogrify -path thumbs -format gif -define jpeg:size=240x180 -thumbnail 120x90 '*.jpg'
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -414,7 +414,7 @@ As such the recommended way of resizing ANY input image format is now... </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -define jpeg:size=240x180 input.img'[120x90]' \
+  magick -define jpeg:size=240x180 input.img'[120x90]' \
           -strip  output_thumbnail.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -429,7 +429,7 @@ Well on with the practical IM thumbnail examples... </P>
 <A NAME="height"></A>
 <H3>Generate Thumbnails in General (specific height)</H3> </P>
 
-Lets convert a <A HREF="../img_photos/hatching_orig.jpg" >large sample JPEG image</A> to a
+Lets magick a <A HREF="../img_photos/hatching_orig.jpg" >large sample JPEG image</A> to a
 GIF thumbnail 90 pixels high with the width automatically adjusted (within
 the 250 pixel width limit) to preserve the aspect ratio of the image.
 
@@ -437,7 +437,7 @@ the 250 pixel width limit) to preserve the aspect ratio of the image.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=500x180  hatching_orig.jpg  -auto-orient \
+  magick -define jpeg:size=500x180  hatching_orig.jpg  -auto-orient \
           -thumbnail 250x90   -unsharp 0x.5  thumbnail.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="thumbnail.gif"
@@ -503,7 +503,7 @@ containing a huge number of images.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  mogrify  -format gif -define jpeg:size=500x180 -auto-orient \
+  magick mogrify  -format gif -define jpeg:size=500x180 -auto-orient \
                 -thumbnail 250x90 -unsharp 0x.5  '*.jpg'
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -562,7 +562,7 @@ you need to add a "<CODE>&gt;</CODE>" to the geometry string.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=200x200 hatching_orig.jpg \
+  magick -define jpeg:size=200x200 hatching_orig.jpg \
           -thumbnail '100x100>' rectangle.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rectangle.gif"
@@ -595,7 +595,7 @@ using the <A HREF="../crop/#extent" >Extent Operator</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
+  magick -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
           -background skyblue -gravity center -extent 100x100 pad_extent.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="pad_extent.gif"
@@ -611,7 +611,7 @@ As of IM version 6.2.5, you can also use a <A HREF="../crop/#crop_viewport"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
+  magick -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
           -gravity center  -crop 120x120+0+0\! \
           -background skyblue  -flatten    pad_view.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -634,8 +634,8 @@ size, in this case the 128x128 "<CODE>granite:</CODE>" built-in image. </P>
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
-          granite: +swap -gravity center -composite pad_compose.gif
+  magick -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
+          granite: +swap -gravity center -magick composite pad_compose.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="pad_compose.gif"
      ><IMG SRC="pad_compose.gif"     WIDTH=128  HEIGHT=128
@@ -672,7 +672,7 @@ the image that overflows the desired size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=200x200 hatching_orig.jpg  -thumbnail 100x100^ \
+  magick -define jpeg:size=200x200 hatching_orig.jpg  -thumbnail 100x100^ \
           -gravity center -extent 100x100  cut_to_fit.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="cut_to_fit.gif"
@@ -717,7 +717,7 @@ For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=200x200 hatching_orig.jpg  -thumbnail 10000@ \
+  magick -define jpeg:size=200x200 hatching_orig.jpg  -thumbnail 10000@ \
           -gravity center -background skyblue -extent 100x100  area_fit.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="area_fit.gif"
@@ -776,9 +776,9 @@ create a larger background canvas using a rotated copy of the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( +clone -rotate 90 +clone -mosaic +level-colors white \) \
-          +swap -gravity center -composite    square_padded.gif
+          +swap -gravity center -magick composite    square_padded.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="square_padded.gif"
      ><IMG SRC="square_padded.gif"     WIDTH=120  HEIGHT=120
@@ -793,11 +793,11 @@ a smaller canvas.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( +clone +level-colors white \
              \( +clone -rotate 90 +level-colors black \) \
-             -composite -bordercolor white -border 1 -trim +repage \) \
-          +swap -compose Src -gravity center -composite \
+             -magick composite -bordercolor white -border 1 -trim +repage \) \
+          +swap -compose Src -gravity center -magick composite \
           square_cropped.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="square_cropped.gif"
@@ -817,7 +817,7 @@ External (padding) square...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif  -virtual-pixel white -set option:distort:viewport \
+  magick thumbnail.gif  -virtual-pixel white -set option:distort:viewport \
      "%[fx:max(w,h)]x%[fx:max(w,h)]-%[fx:max((h-w)/2,0)]-%[fx:max((w-h)/2,0)]" \
      -filter point -distort SRT 0  +repage  square_external.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -834,7 +834,7 @@ Internal (cropped) square...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif   -set option:distort:viewport \
+  magick thumbnail.gif   -set option:distort:viewport \
      "%[fx:min(w,h)]x%[fx:min(w,h)]+%[fx:max((w-h)/2,0)]+%[fx:max((h-w)/2,0)]" \
      -filter point -distort SRT 0  +repage  square_internal.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -854,8 +854,8 @@ strings or profiles) the image may have.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -set option:size '%[fx:min(w,h)]x%[fx:min(w,h)]' \
-          xc:none +swap -gravity center -composite square_internal_2.gif
+  magick thumbnail.gif -set option:size '%[fx:min(w,h)]x%[fx:min(w,h)]' \
+          xc:none +swap -gravity center -magick composite square_internal_2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="square_internal_2.gif"
      ><IMG SRC="square_internal_2.gif"     WIDTH=90  HEIGHT=90
@@ -913,7 +913,7 @@ half the cases manually create my own 'zoomed in on subject' thumbnail. </P>
 I read in the JPEG image, and crop it down the main subject of the image
 effectively 'zooming in' on the subject of the photo, and removing bulk of the
 background context of the image.  This is then smoothed and thumbnailed,
-either using a "<CODE>convert -thumbnail</CODE>", or more often in the same
+either using a "<CODE>magick -thumbnail</CODE>", or more often in the same
 graphic program I am viewing and cropping the images with (usually
 "<CODE>XV</CODE>", see below).  </P>
 
@@ -978,7 +978,7 @@ HREF="https://antofthy.gitlab.io/info/art/" >Tomb of Castle
 Artworks</A>.  </P>
 
 For a quick example and starting point for generating such links look at the
-examples of using the <A HREF="../basics/#identify" >identify command</A>.
+examples of using the <A HREF="../basics/#identify" >magick identify command</A>.
 </P>
 
 <A NAME="favicon"></A>
@@ -991,7 +991,7 @@ multi-resolution image format and can be created as follows. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image.png -alpha off -resize 256x256 \
+  magick image.png -alpha off -resize 256x256 \
           -define icon:auto-resize="256,128,96,64,48,32,16" \
           favicon.ico
 </CODE></PRE></TD></TR></TABLE>
@@ -1015,7 +1015,7 @@ Here is an example of manually resizing images for an ICO file format.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert image.png  -background white \
+  magick image.png  -background white \
           \( -clone 0 -resize 16x16 -extent 16x16 \) \
           \( -clone 0 -resize 32x32 -extent 32x32 \) \
           \( -clone 0 -resize 48x48 -extent 48x48 \) \
@@ -1075,13 +1075,13 @@ limited to 80x60 pixels so are a little on the "small" size (unless you hack
 
 IM understands the "<CODE>xv</CODE>" thumbnail format (which is based on the
 "<CODE>NetPBM</CODE>" image format), so you can generate all the thumbnails
-quickly using XV, then convert the XV thumbnails of the JPEG images, into GIF
+quickly using XV, then magick the XV thumbnails of the JPEG images, into GIF
 images for further processing...
 
 <PRE>
    xv -vsmap &               # generate thumbs with the "Update" button
    rm .xvpics/*.gif          # delete XV thumbs of existing "gif" thumbnails
-   mogrify -format gif .xvpics/*.jpg
+   magick mogrify -format gif .xvpics/*.jpg
    mv .xvpics/*.gif .        # move the new "gif" thumbnails to original dir
 </PRE>
 
@@ -1129,7 +1129,7 @@ For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           -background Lavender -fill navy -font Candice -pointsize 24 \
           label:Hatching   -gravity South -append \
           labeled.gif
@@ -1150,14 +1150,14 @@ around the text to ensure it always remains readable.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -define jpeg:size=400x400  hatching_orig.jpg  -resize '120x200>' \
+  magick -define jpeg:size=400x400  hatching_orig.jpg  -resize '120x200>' \
       \( +clone -sample 1x1\! -alpha transparent -sample 1000x200\! \
          -font SheerBeauty -pointsize 72 -gravity Center \
          -strokewidth 8 -stroke black  -fill black  -annotate 0,0 '%c' \
          -channel RGBA -blur 0x8 \
          -strokewidth 1 -stroke white  -fill white  -annotate 0,0 '%c' \
          -fuzz 1% -trim +repage -resize 115x \
-      \) -gravity North -composite           -strip annotated.gif
+      \) -gravity North -magick composite           -strip annotated.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="annotated.gif"
@@ -1195,7 +1195,7 @@ effective thumbnail transformation.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif  -raise 8   raised_button.gif
+  magick thumbnail.gif  -raise 8   raised_button.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="raised_button.gif"
      ><IMG SRC="raised_button.gif"
@@ -1211,7 +1211,7 @@ highlighting effect.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif  +raise 8   sunken_button.gif
+  magick thumbnail.gif  +raise 8   sunken_button.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="sunken_button.gif"
      ><IMG SRC="sunken_button.gif"
@@ -1228,10 +1228,10 @@ raised button.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -fill gray50 -colorize 100% \
+  magick thumbnail.gif -fill gray50 -colorize 100% \
           -raise 8 -normalize -blur 0x8  bubble_overlay.png
-  convert thumbnail.gif bubble_overlay.png \
-          -compose hardlight -composite  bubble_button.png
+  magick thumbnail.gif bubble_overlay.png \
+          -compose hardlight -magick composite  bubble_button.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
      ><IMG SRC="thumbnail.gif"
@@ -1264,7 +1264,7 @@ around an images.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           -bordercolor black -border 3   -bordercolor white -border 2 \
           \( -background black -fill white -pointsize 24 \
              label:Hatching   -trim +repage \
@@ -1290,7 +1290,7 @@ In a similar way the "<CODE><A HREF="../option_link.cgi?frame"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif   -mattecolor peru  -frame 9x9+3+3  framed.gif
+  magick thumbnail.gif   -mattecolor peru  -frame 9x9+3+3  framed.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="framed.gif"
      ><IMG SRC="framed.gif"
@@ -1304,7 +1304,7 @@ HREF="../crop/#frame" >Frame, adding a 3D-like border</A>. </P>
 <A NAME="montage"></A>
 <H3>Montage Framing</H3> </P>
 
-The montage command provides a much easier way of doing all the above, and
+The magick montage command provides a much easier way of doing all the above, and
 much more.  It cannot only generate thumbnails (or whole pages of
 thumbnails), but it can label the thumbnails to include information like
 filenames, disk size, and dimensions, or an user specified string.  </P>
@@ -1315,7 +1315,7 @@ filenames, disk size, and dimensions, or an user specified string.  </P>
 Here is a simple use of "<CODE>montage</CODE>" to generate a framed thumbnail.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage -define jpeg:size=240x200  -label '%c'  hatching_orig.jpg \
+  magick montage -define jpeg:size=240x200  -label '%c'  hatching_orig.jpg \
           -frame 6  -geometry '120x100>'  montage_simple.gif
 </CODE></PRE></TD></TR></TABLE>
 
@@ -1337,7 +1337,7 @@ thumbnail generation.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage -define jpeg:size=400x180  -label '%c' hatching_orig.jpg \
+  magick montage -define jpeg:size=400x180  -label '%c' hatching_orig.jpg \
           -thumbnail '200x90>' -geometry '130x100>'  -mattecolor peru \
           -frame 6  -bordercolor skyblue  -font LokiCola  -pointsize 18 \
           montage_fancy.gif
@@ -1367,7 +1367,7 @@ provides a simple means to add a blurry edge around an image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set \
+  magick thumbnail.gif -alpha set \
           -background none  -vignette 0x4  vignette.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="vignette.png"
@@ -1385,7 +1385,7 @@ a true transparent 'Feathering' of an image's edges.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -virtual-pixel transparent -channel A \
+  magick thumbnail.gif -alpha set -virtual-pixel transparent -channel A \
           -morphology Distance Euclidean:1,10\! +channel feathered.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="feathered.png"
@@ -1417,7 +1417,7 @@ corners of the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -virtual-pixel transparent \
+  magick thumbnail.gif -alpha set -virtual-pixel transparent \
           -channel A -blur 0x8  -level 50%,100% +channel  soft_edge.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="soft_edge.png"
@@ -1450,7 +1450,7 @@ image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -virtual-pixel transparent -channel A \
+  magick thumbnail.gif -alpha set -virtual-pixel transparent -channel A \
           -blur 0x8  -threshold 50% +channel rounded_corner_blur.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rounded_corner_blur.gif"
@@ -1478,7 +1478,7 @@ HREF="../blur/#radial-blur" >Radial Blur</A> on just the alpha channel.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -virtual-pixel transparent \
+  magick thumbnail.gif -alpha set -virtual-pixel transparent \
           -channel A -radial-blur 0x45 +channel  radial_blur_edge.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="radial_blur_edge.png"
@@ -1495,7 +1495,7 @@ a circular like Vignette edge.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -virtual-pixel transparent \
+  magick thumbnail.gif -alpha set -virtual-pixel transparent \
           -channel A -radial-blur 0x100 +channel  radial_blur_vignette.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="radial_blur_vignette.png"
@@ -1527,12 +1527,12 @@ that multiplys a full image mask to generate the appropriate result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
      \( +clone  -alpha extract \
         -draw 'fill black polygon 0,0 0,15 15,0 fill white circle 15,15 15,0' \
-        \( +clone -flip \) -compose Multiply -composite \
-        \( +clone -flop \) -compose Multiply -composite \
-     \) -alpha off -compose CopyOpacity -composite  rounded_corners.png
+        \( +clone -flip \) -compose Multiply -magick composite \
+        \( +clone -flop \) -compose Multiply -magick composite \
+     \) -alpha off -compose CopyOpacity -magick composite  rounded_corners.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rounded_corners.png"
      ><IMG SRC="rounded_corners.png"
@@ -1556,13 +1556,13 @@ shape from each corner.  This will work with much larger images.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set  -compose DstOut \
+  magick thumbnail.gif -alpha set  -compose DstOut \
       \( -size 20x15 xc:none -draw "polygon 0,0  0,14 19,0" \
          -write mpr:triangle  +delete \) \
-      \( mpr:triangle             \) -gravity northwest -composite \
-      \( mpr:triangle -flip       \) -gravity southwest -composite \
-      \( mpr:triangle -flop       \) -gravity northeast -composite \
-      \( mpr:triangle -rotate 180 \) -gravity southeast -composite \
+      \( mpr:triangle             \) -gravity northwest -magick composite \
+      \( mpr:triangle -flip       \) -gravity southwest -magick composite \
+      \( mpr:triangle -flop       \) -gravity northeast -magick composite \
+      \( mpr:triangle -rotate 180 \) -gravity southeast -magick composite \
       corner_cutoff.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="corner_cutoff.png"
@@ -1584,7 +1584,7 @@ making them transparent.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
     \( +clone -crop 16x16+0+0  -fill white -colorize 100% \
        -draw 'fill black circle 15,15 15,0' \
        -background Red  -alpha shape \
@@ -1621,10 +1621,10 @@ to get the best result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set \
+  magick thumbnail.gif -alpha set \
     \( +clone -distort DePolar 0 \
        -virtual-pixel HorizontalTile -background None -distort Polar 0 \) \
-    -compose Dst_In -composite -trim +repage circle_masked.png
+    -compose Dst_In -magick composite -trim +repage circle_masked.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="circle_masked.png"
      ><IMG SRC="circle_masked.png"
@@ -1647,10 +1647,10 @@ newspaper)...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( +clone -alpha extract -virtual-pixel black \
              -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 \) \
-          -alpha off -compose Copy_Opacity -composite torn_paper.png
+          -alpha off -compose Copy_Opacity -magick composite torn_paper.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="torn_paper.png"
      ><IMG SRC="torn_paper.png"
@@ -1664,11 +1664,11 @@ corner.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert thumbnail.gif -bordercolor linen -border 8x8 \
+  magick thumbnail.gif -bordercolor linen -border 8x8 \
           -background Linen  -gravity SouthEast -splice 10x10+0+0 \
           \( +clone -alpha extract -virtual-pixel black \
              -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 \) \
-          -alpha off -compose Copy_Opacity -composite \
+          -alpha off -compose Copy_Opacity -magick composite \
           -gravity SouthEast -chop 10x10   torn_paper_corner.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="torn_paper_corner.png"
@@ -1697,7 +1697,7 @@ For example here an I add a semi-transparent colored shadow, to the thumbnail.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set \
+  magick thumbnail.gif -alpha set \
           \( +clone -background navy -shadow 60x0+4+4 \) +swap \
           -background none -mosaic   shadow_hard.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1713,7 +1713,7 @@ But you can just as easily create soft fuzzy shadows, too.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -page +4+4 thumbnail.gif -alpha set \
+  magick -page +4+4 thumbnail.gif -alpha set \
           \( +clone -background navy -shadow 60x4+4+4 \) +swap \
           -background none -mosaic     shadow_soft.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1730,7 +1730,7 @@ which GIF cannot handle.  (Yes I am repeating myself but it is important).
 If you do plan to use GIF or JPG format you will need to use a more
 appropriate "<CODE><A HREF="../option_link.cgi?background"
 >-background</A></CODE>" color for the web page or larger canvas on which you
-plan to display your thumbnail, as these formats do not handle
+plan to magick display your thumbnail, as these formats do not handle
 semi-transparent colors. </P>
 
 Warning, while the above works for individual thumbnails, it will generally
@@ -1756,7 +1756,7 @@ thickness. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set \
+  magick thumbnail.gif -alpha set \
           \( +clone -fill DarkSlateGrey -colorize 100% -repage +0+1 \) \
           \( +clone -repage +1+2 \) \
           \( +clone -repage +1+3 \) \
@@ -1793,7 +1793,7 @@ table. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           -bordercolor white  -border 6 \
           -bordercolor grey60 -border 1 \
           -background  none   -rotate 6 \
@@ -1816,7 +1816,7 @@ operator.   For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert thumbnail.gif -bordercolor snow -background black +polaroid \
+  magick thumbnail.gif -bordercolor snow -background black +polaroid \
           poloroid_operator.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -1840,7 +1840,7 @@ You can even add a "<CODE><A HREF="../option_link.cgi?caption"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -caption '%c' hatching_orig.jpg -thumbnail '120x120>' \
+  magick -caption '%c' hatching_orig.jpg -thumbnail '120x120>' \
           -font Ravie -gravity center -bordercolor Lavender \
           -background navy  -polaroid -0     poloroid_caption.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1865,14 +1865,14 @@ them up to produce a nice looking pile of photos.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
      -bordercolor white  -border 6 \
      -bordercolor grey60 -border 1 \
      -bordercolor none  -background  none \
-     \( -clone 0 -rotate `convert null: -format '%[fx:rand()*30-15]' info:` \) \
-     \( -clone 0 -rotate `convert null: -format '%[fx:rand()*30-15]' info:` \) \
-     \( -clone 0 -rotate `convert null: -format '%[fx:rand()*30-15]' info:` \) \
-     \( -clone 0 -rotate `convert null: -format '%[fx:rand()*30-15]' info:` \) \
+     \( -clone 0 -rotate `magick null: -format '%[fx:rand()*30-15]' info:` \) \
+     \( -clone 0 -rotate `magick null: -format '%[fx:rand()*30-15]' info:` \) \
+     \( -clone 0 -rotate `magick null: -format '%[fx:rand()*30-15]' info:` \) \
+     \( -clone 0 -rotate `magick null: -format '%[fx:rand()*30-15]' info:` \) \
      -delete 0  -border 100x80  -gravity center \
      -crop 200x160+0+0  +repage  -flatten  -trim +repage \
      -background black \( +clone -shadow 60x4+4+4 \) +swap \
@@ -1889,7 +1889,7 @@ them up to produce a nice looking pile of photos.
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
-  The  "&nbsp;<CODE>`convert ...`</CODE>&nbsp;" embedded command in the above
+  The  "&nbsp;<CODE>`magick ...`</CODE>&nbsp;" embedded command in the above
   example generates a random floating point number from -15 to +15. For more
   infomation on using IM as a mathematical calculator see <A
   HREF="../transform/#fx_escapes" >FX Expressions</A>.
@@ -1915,7 +1915,7 @@ background color on which the image will be displayed.  The
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           -bordercolor white  -border 6 \
           -bordercolor grey60 -border 1 \
           -background  none   -rotate -9 \
@@ -1944,14 +1944,14 @@ overlaying images onto a rotating canvas to create a photo spread.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 150x150 xc:none -background none \
+  magick -size 150x150 xc:none -background none \
           -fill white -stroke grey60 \
           -draw "rectangle 0,0 130,100" thumbnail.gif \
-                -geometry +5+5 -composite -rotate -10 \
+                -geometry +5+5 -magick composite -rotate -10 \
           -draw "rectangle 0,0 130,100" thumbnail.gif \
-                -geometry +5+5 -composite -rotate -10 \
+                -geometry +5+5 -magick composite -rotate -10 \
           -draw "rectangle 0,0 130,100" thumbnail.gif \
-                -geometry +5+5 -composite -rotate +10 \
+                -geometry +5+5 -magick composite -rotate +10 \
           -trim +repage -background LightSteelBlue -flatten \
           poloroid_spread.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2013,10 +2013,10 @@ original image on top, we get a very nice looking frame.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( -clone 0 -resize 130% +level 20%x100% \) \
           \( -clone 0 -bordercolor black -border 1x1 \) \
-          -delete 0 -gravity center -composite  self_bordered.gif
+          -delete 0 -gravity center -magick composite  self_bordered.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="self_bordered.gif"
      ><IMG SRC="self_bordered.gif"
@@ -2047,11 +2047,11 @@ the generated frame.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( -clone 0 -resize 140x110\! \) \
           \( -clone 0 -bordercolor black -border 1x1 \
                       -mattecolor '#8884' -frame 9x9+0+9 \) \
-          -delete 0 -composite  self_framed.gif
+          -delete 0 -magick composite  self_framed.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="self_framed.gif"
      ><IMG SRC="self_framed.gif"
@@ -2067,12 +2067,12 @@ blurred image to generate the extenal frame. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \( +clone \
+  magick thumbnail.gif \( +clone \
              -set option:distort:viewport 150x120-15-15 \
              -virtual-pixel Edge    -distort SRT 0  +repage \
              -blur 0x3 +level 20%,100% \) \
           \( -clone 0 -bordercolor white -border 1 \) \
-          -delete 0 -gravity center -compose over -composite \
+          -delete 0 -gravity center -compose over -magick composite \
           self_blurred_edge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="self_blurred_edge.gif"
@@ -2098,12 +2098,12 @@ use the dither to produce a cloth-like effect. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \( +clone  -blur 0x3 \
+  magick thumbnail.gif \( +clone  -blur 0x3 \
              -set option:distort:viewport '%[fx:w+30]x%[fx:h+30]-15-15' \
              -virtual-pixel Dither  -distort SRT 0  +repage \
              -blur 0x0.8  +level 20%,100% \) \
           \( -clone 0 -bordercolor white -border 1 \) \
-          -delete 0 -gravity center -compose over -composite \
+          -delete 0 -gravity center -compose over -magick composite \
           self_blurred_dither.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="self_blurred_dither.gif"
@@ -2122,13 +2122,13 @@ which turned out to work very well for this specific image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif  \( +clone \
+  magick thumbnail.gif  \( +clone \
              -set option:distort:viewport '%[fx:w+30]x%[fx:h+30]-15-15' \
              -virtual-pixel Mirror -distort SRT 0 +repage \
              -alpha set -virtual-pixel transparent \
                  -channel A -blur 0x8 +channel \
              -background Black -flatten \) \
-          +swap -gravity center -compose over -composite \
+          +swap -gravity center -compose over -magick composite \
           self_mirror.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="self_mirror.gif"
@@ -2152,7 +2152,7 @@ the contents. </P>
 <A NAME="self_frame_inside"></A>
 <H3>Self Framing (Internal)</H3>
 
-Rather than enlarging the image to add the new border, we can convert parts of
+Rather than enlarging the image to add the new border, we can magick parts of
 the image itself into a border. </P>
 
 We have already seen some techniques of adding a frame, inside the image
@@ -2169,14 +2169,14 @@ part of the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \( +clone -blur 0x3 +level 20%,100% \) \
+  magick thumbnail.gif \( +clone -blur 0x3 +level 20%,100% \) \
           \( +clone -gamma 0 -shave 10x10 \
              -bordercolor white -border 10x10 \) \
-          -composite \
+          -magick composite \
           \( +clone -gamma 0 -shave 10x10 \
              -bordercolor white -border 1x1 \
              -bordercolor black -border 9x9 \) \
-          -compose screen -composite \
+          -compose screen -magick composite \
           self_blurred_border.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="self_blurred_border.gif"
@@ -2196,9 +2196,9 @@ using transparent frame, before overlaying that over the original image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \( +clone -shave 10x10 \
+  magick thumbnail.gif \( +clone -shave 10x10 \
             -alpha set -mattecolor '#AAA6' -frame 10x10+3+4 \
-          \) -composite  inside_frame_trans.gif
+          \) -magick composite  inside_frame_trans.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="inside_frame_trans.gif"
      ><IMG SRC="inside_frame_trans.gif"
@@ -2221,10 +2221,10 @@ preserve primary colors.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( +clone -shave 10x10 -fill gray50 -colorize 100% \
             -mattecolor gray50 -frame 10x10+3+4 \
-          \) -compose VividLight -composite  inside_frame_light.gif
+          \) -compose VividLight -magick composite  inside_frame_light.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="inside_frame_light.gif"
      ><IMG SRC="inside_frame_light.gif"
@@ -2240,10 +2240,10 @@ enhance primary colors, with a blurred frame lighting mask.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( +clone -shave 10x10 -fill gray50 -colorize 100% \
             -mattecolor gray50 -frame 10x10+3+4 -blur 0x2 \
-          \) -compose HardLight -composite  inside_frame_blur.gif
+          \) -compose HardLight -magick composite  inside_frame_blur.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="inside_frame_blur.gif"
      ><IMG SRC="inside_frame_blur.gif"
@@ -2279,7 +2279,7 @@ of possible sources for fancy shapes that could be used for picture framing.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 120x140 -gravity center -font WebDings label:Y \
+  magick -size 120x140 -gravity center -font WebDings label:Y \
           -negate -channel A -combine +channel -fill LightCoral -colorize 100% \
           -background none -fill none -stroke firebrick -strokewidth 3 label:Y \
           -flatten +gravity -chop 0x10+0+0 -shave 0x10 +repage border_heart.png
@@ -2300,7 +2300,7 @@ HREF="../blur/#shadow" >Shadow Effect</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert border_heart.png  \( +clone -background black -shadow 60x3+3+3 \) \
+  magick border_heart.png  \( +clone -background black -shadow 60x3+3+3 \) \
           -background none -compose DstOver -flatten   border_overlay.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="border_overlay.png"
@@ -2317,8 +2317,8 @@ center, underneath the frame by using a '<CODE><A HREF="../compose/dstover"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert border_overlay.png  thumbnail.gif \
-          -gravity center -compose DstOver -composite   border_overlaid.jpg
+  magick border_overlay.png  thumbnail.gif \
+          -gravity center -compose DstOver -magick composite   border_overlaid.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="border_overlaid.jpg"
      ><IMG SRC="border_overlaid.jpg"      WIDTH=120  HEIGHT=110
@@ -2331,8 +2331,8 @@ such as this <A HREF="../images/autumn_leaves.png" >Autumn Leaves Image</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert thumbnail.gif  autumn_leaves.png +swap \
-            -gravity center -compose DstOver -composite \
+    magick thumbnail.gif  autumn_leaves.png +swap \
+            -gravity center -compose DstOver -magick composite \
             border_leaves.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
@@ -2372,8 +2372,8 @@ Masking</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert thumbnail.gif  -gravity center -extent 90x90 \
-            badge_overlay.png -composite     badge.png
+    magick thumbnail.gif  -gravity center -extent 90x90 \
+            badge_overlay.png -magick composite     badge.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
       ><IMG SRC="thumbnail.gif"             WIDTH=120  HEIGHT=90
@@ -2427,7 +2427,7 @@ about setting the background.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 120x100 xc:none -fill none -stroke black -strokewidth 3 \
+  magick -size 120x100 xc:none -fill none -stroke black -strokewidth 3 \
           -draw 'ellipse 60,50 30,45 0,360  ellipse 60,50 55,30 0,360' \
           -strokewidth 3  -draw 'ellipse 60,50 57,47 0,360' \
           -channel RGBA  -blur 2x1    border_ellipse.png
@@ -2451,9 +2451,9 @@ coloring.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert border_ellipse.png \
+  magick border_ellipse.png \
           \( -size 120x100 plasma:Tomato-FireBrick -alpha set -blur 0x1 \) \
-          -compose SrcIn -composite     border_ellipse_red.png
+          -compose SrcIn -magick composite     border_ellipse_red.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="border_ellipse_red.png"
      ><IMG SRC="border_ellipse_red.png"       WIDTH=120  HEIGHT=100
@@ -2469,7 +2469,7 @@ define these two areas.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 120x100  xc:none -fill black \
+  magick -size 120x100  xc:none -fill black \
           -draw 'ellipse 60,50 30,45 0,360  ellipse 60,50 55,30 0,360' \
           border_ellipse_mask.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2493,9 +2493,9 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set  -gravity center -extent 120x100 \
-          border_ellipse_mask.png  -compose DstIn -composite \
-          border_ellipse_red.png   -compose Over  -composite \
+  magick thumbnail.gif -alpha set  -gravity center -extent 120x100 \
+          border_ellipse_mask.png  -compose DstIn -magick composite \
+          border_ellipse_red.png   -compose Over  -magick composite \
           border_mask_paint.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
@@ -2532,9 +2532,9 @@ For example pre-define the outside as a DodgerBlue color...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert border_ellipse_mask.png -alpha extract -negate \
+  magick border_ellipse_mask.png -alpha extract -negate \
           -background DodgerBlue -alpha shape \
-          border_ellipse_red.png   -compose Over -composite \
+          border_ellipse_red.png   -compose Over -magick composite \
           border_ellipse_overlay.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="border_ellipse_overlay.png"
@@ -2549,9 +2549,9 @@ background image under the previously generated double masked image...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert border_double_masked.png \
+  magick border_double_masked.png \
           \( -size 120x100 plasma:Green-Green -blur 0x1 \) \
-          +swap  -compose Over  -composite     border_background.png
+          +swap  -compose Over  -magick composite     border_background.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="border_background.png"
      ><IMG SRC="border_background.png"       WIDTH=120  HEIGHT=100
@@ -2609,7 +2609,7 @@ Graphics File</A> that can be directly used by draw in later commands.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE TXT2GIF>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] 15,15'\
           info: > rounded_corner.mvg
 </CODE></PRE></TD></TR></TABLE>
@@ -2642,10 +2642,10 @@ right.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -border 3 -alpha transparent \
+  magick thumbnail.gif -border 3 -alpha transparent \
           -background none -fill white -stroke none -strokewidth 0 \
           -draw "@rounded_corner.mvg"    rounded_corner_mask.png
-  convert thumbnail.gif -border 3 -alpha transparent \
+  magick thumbnail.gif -border 3 -alpha transparent \
           -background none -fill none -stroke black -strokewidth 3 \
           -draw "@rounded_corner.mvg"    rounded_corner_overlay.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2668,9 +2668,9 @@ So lets apply it using the <A HREF="#double" >Double Masking</A> technique...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -bordercolor none -border 3  \
-          rounded_corner_mask.png -compose DstIn -composite \
-          rounded_corner_overlay.png -compose Over -composite \
+  magick thumbnail.gif -alpha set -bordercolor none -border 3  \
+          rounded_corner_mask.png -compose DstIn -magick composite \
+          rounded_corner_overlay.png -compose Over -magick composite \
           rounded_border.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2690,17 +2690,17 @@ size given.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
       -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] 15,15' \
       -write info:tmp.mvg \
       -alpha set -bordercolor none -border 3 \
       \( +clone -alpha transparent -background none \
          -fill white -stroke none -strokewidth 0 -draw @tmp.mvg \) \
-      -compose DstIn -composite \
+      -compose DstIn -magick composite \
       \( +clone -alpha transparent -background none \
          -fill none -stroke black -strokewidth 3 -draw @tmp.mvg \
          -fill none -stroke white -strokewidth 1 -draw @tmp.mvg \) \
-      -compose Over -composite               rounded_border_in_one.png
+      -compose Over -magick composite               rounded_border_in_one.png
   rm -f tmp.mvg      # Cleanup of temporary file
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2727,9 +2727,9 @@ and Masking</A>. Idealy the two images would have been developed together.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -gravity center -extent 90x90 \
-          badge_mask.png -compose DstIn -composite \
-          badge_shading.png -compose Over -composite \
+  magick thumbnail.gif -alpha set -gravity center -extent 90x90 \
+          badge_mask.png -compose DstIn -magick composite \
+          badge_shading.png -compose Over -magick composite \
           badge_trans_bg.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
@@ -2782,18 +2782,18 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 120x90 xc:none -fill black -stroke black -strokewidth 0 \
+  magick -size 120x90 xc:none -fill black -stroke black -strokewidth 0 \
           -draw 'ellipse 45,45 55,37 0,360' \
           -channel RGBA -negate -blur 0x3  +channel \
           \( granite: -auto-level -blur 0,0.7 \) \
-          -compose ATop -composite border_paint.png
+          -compose ATop -magick composite border_paint.png
 
-  convert -size 120x90 xc:none -fill black -stroke black -strokewidth 5 \
+  magick -size 120x90 xc:none -fill black -stroke black -strokewidth 5 \
           -draw 'ellipse 59,45 56,40 0,360' border_mask.png
 
-  convert thumbnail.gif -alpha set \
-          border_paint.png -compose Over  -composite \
-          border_mask.png  -compose DstIn -composite \
+  magick thumbnail.gif -alpha set \
+          border_paint.png -compose Over  -magick composite \
+          border_mask.png  -compose DstIn -magick composite \
           border_paint_mask.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
@@ -2862,7 +2862,7 @@ extract those two images for a smaller 64x64 pixel images (using a special
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE IMAGE="curl_overlay.png">
-  convert -size 64x64 xc: miff:- | pagecurl -e 0.3 -i "pagecurl" - null:
+  magick -size 64x64 xc: miff:- | pagecurl -e 0.3 -i "pagecurl" - null:
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
   <A HREF="pagecurl_overlay.png"
@@ -2884,10 +2884,10 @@ just junked using the special "<CODE><A HREF="../files/#null"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE IMAGE="curl_overlay.png">
-  convert thumbnail.gif -alpha set -gravity SouthEast \
+  magick thumbnail.gif -alpha set -gravity SouthEast \
           -define compose:outside-overlay=false \
-          pagecurl_overlay.png -composite \
-          pagecurl_mask.png  -compose DstIn -composite \
+          pagecurl_overlay.png -magick composite \
+          pagecurl_mask.png  -compose DstIn -magick composite \
           pagecurl_thumbnail.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
@@ -2920,7 +2920,7 @@ size.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
   pagecurl -e 0.5 -i /tmp/pagecurl  {<I>one image</I>} null:
-  mogrify {<I>mogrify -format and -path options</I>} -alpha set \
+  magick mogrify {<I>magick mogrify -format and -path options</I>} -alpha set \
           -draw 'image Over 0,0 0,0 "/tmp/pagecurl_overlay.png"' \
           -draw 'image DstIn 0,0 0,0 "/tmp/pagecurl_mask.png"' \
           {<I>all images to be pagecurled</I>}...
@@ -2970,7 +2970,7 @@ masks, must be composted onto each of the corners of the expanded image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif   -alpha set  -compose Copy \
+  magick thumbnail.gif   -alpha set  -compose Copy \
           -bordercolor Black  -border 2 \
           -bordercolor Sienna -border 3 \
           -bordercolor Black  -border 1 \
@@ -2980,15 +2980,15 @@ masks, must be composted onto each of the corners of the expanded image.
           -bordercolor Black  -border 1 \
           \
           -compose Over \
-          \( fancy_add.gif             \) -gravity NorthWest -composite \
-          \( fancy_add.gif -flip       \) -gravity SouthWest -composite \
-          \( fancy_add.gif       -flop \) -gravity NorthEast -composite \
-          \( fancy_add.gif -flip -flop \) -gravity SouthEast -composite \
+          \( fancy_add.gif             \) -gravity NorthWest -magick composite \
+          \( fancy_add.gif -flip       \) -gravity SouthWest -magick composite \
+          \( fancy_add.gif       -flop \) -gravity NorthEast -magick composite \
+          \( fancy_add.gif -flip -flop \) -gravity SouthEast -magick composite \
           -compose DstOut \
-          \( fancy_sub.gif             \) -gravity NorthWest -composite \
-          \( fancy_sub.gif -flip       \) -gravity SouthWest -composite \
-          \( fancy_sub.gif       -flop \) -gravity NorthEast -composite \
-          \( fancy_sub.gif -flip -flop \) -gravity SouthEast -composite \
+          \( fancy_sub.gif             \) -gravity NorthWest -magick composite \
+          \( fancy_sub.gif -flip       \) -gravity SouthWest -magick composite \
+          \( fancy_sub.gif       -flop \) -gravity NorthEast -magick composite \
+          \( fancy_sub.gif -flip -flop \) -gravity SouthEast -magick composite \
           fancy_border.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -3037,16 +3037,16 @@ The same badge image processing seen previously in
 
 <!-- <CODE EXECUTE>
   # get transparency mask, as a shaped image
-  convert badge_mask.png badge_shading.png -composite \
+  magick badge_mask.png badge_shading.png -magick composite \
           -evaluate set 0  badge_shape.png
   # get transparency mask, as a gray scale image.
-  convert badge_mask.png badge_shading.png -composite \
+  magick badge_mask.png badge_shading.png -magick composite \
           -alpha extract  badge_graymask.png
 
   # generate the paint overlay,
   # However we need to extract all fully transparent colors from shade image
-  convert badge_mask.png -channel A -negate -threshold 0 +channel \
-          badge_shading.png +swap -channel A -compose Screen -composite \
+  magick badge_mask.png -channel A -negate -threshold 0 +channel \
+          badge_shading.png +swap -channel A -compose Screen -magick composite \
           badge_paint.png
 
 </CODE>
@@ -3055,8 +3055,8 @@ The same badge image processing seen previously in
   # as -compose Plus is a communicative composition.
   # BUT it produces a negated image!
 
-  convert badge_mask.png -channel A -negate -threshold 0 +channel \
-          badge_shading.png -channel A -compose Screen -composite \
+  magick badge_mask.png -channel A -negate -threshold 0 +channel \
+          badge_shading.png -channel A -compose Screen -magick composite \
           badge_paint.png
 
 -->
@@ -3065,8 +3065,8 @@ the final transparency of the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -gravity center -extent 90x90 \
-          badge_paint.png -composite badge_shape.png -compose DstIn -composite \
+  magick thumbnail.gif -alpha set -gravity center -extent 90x90 \
+          badge_paint.png -magick composite badge_shape.png -compose DstIn -magick composite \
           badge_paint_mask.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
@@ -3144,10 +3144,10 @@ gray color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert thumbnail.gif -alpha off -fill white -colorize 100% \
+  magick thumbnail.gif -alpha off -fill white -colorize 100% \
      -draw 'fill black polygon 0,0 0,15 15,0 fill white circle 15,15 15,0' \
-     \( +clone -flip \) -compose Multiply -composite \
-     \( +clone -flop \) -compose Multiply -composite \
+     \( +clone -flip \) -compose Multiply -magick composite \
+     \( +clone -flop \) -compose Multiply -magick composite \
      -background Gray50 -alpha Shape    thumbnail_mask.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -3164,12 +3164,12 @@ a lighting overlay, for this shape.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert thumbnail_mask.png -bordercolor None -border 1x1 \
+  magick thumbnail_mask.png -bordercolor None -border 1x1 \
           -alpha Extract -blur 0x10  -shade 130x30 -alpha On \
           -background gray50 -alpha background -auto-level \
           -function polynomial  3.5,-5.05,2.05,0.3 \
           \( +clone -alpha extract  -blur 0x2 \) \
-          -channel RGB -compose multiply -composite \
+          -channel RGB -compose multiply -magick composite \
           +channel +compose -chop 1x1 \
           thumbnail_lighting.png
 </CODE></PRE></TD></TR></TABLE>
@@ -3186,9 +3186,9 @@ it to any thumbnail image of the right size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert thumbnail.gif -alpha Set thumbnail_lighting.png \
-          \( -clone 0,1 -alpha Opaque -compose Hardlight -composite \) \
-          -delete 0 -compose In -composite \
+  magick thumbnail.gif -alpha Set thumbnail_lighting.png \
+          \( -clone 0,1 -alpha Opaque -compose Hardlight -magick composite \) \
+          -delete 0 -compose In -magick composite \
           glass_bubble.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -3247,16 +3247,16 @@ desired result.
 <TR><TD><PRE><CODE EXECUTE>
   # merge "mask 'n' paint" images with a gray image,
   # to create a "lighting mask"
-  convert -size 90x90 xc:gray50 -alpha set \
-          badge_mask.png -compose DstIn -composite \
-          badge_shading.png -compose Over -composite \
+  magick -size 90x90 xc:gray50 -alpha set \
+          badge_mask.png -compose DstIn -magick composite \
+          badge_shading.png -compose Over -magick composite \
           badge_lighting.png
 
   # Apply the single "lighting mask"
-  convert thumbnail.gif -alpha set -gravity center -extent 90x90 \
+  magick thumbnail.gif -alpha set -gravity center -extent 90x90 \
           badge_lighting.png \
-          \( -clone 0,1 -alpha Opaque -compose Hardlight -composite \) \
-          -delete 0 -compose In -composite \
+          \( -clone 0,1 -alpha Opaque -compose Hardlight -magick composite \) \
+          -delete 0 -compose In -magick composite \
           badge_final.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="thumbnail.gif"
@@ -3466,7 +3466,7 @@ to tile an image that is being read in.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( -size 90x14  tile:bamboo.gif -transpose \) \
           \( -size 90x14  tile:bamboo.gif -transpose \) -swap 0,1 +append \
           \( -size 148x14 tile:bamboo.gif \) \
@@ -3496,7 +3496,7 @@ HREF="../canvas/#tile-offset" >Tile Offset</A> for each edge of the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif \
+  magick thumbnail.gif \
           \( -size 90x14  -tile-offset +50+0 tile:bamboo.gif -transpose \) \
           \( -size 90x14  -tile-offset +0+0  tile:bamboo.gif -transpose \) \
           -swap 0,1 +append \
@@ -3539,15 +3539,15 @@ extra space into which the longer frame pieces are overlaid.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -bordercolor none -border 34 \
+  magick thumbnail.gif -alpha set -bordercolor none -border 34 \
           \( -size 144x14 -tile-offset +30+0 tile:bamboo.gif -transpose \) \
-          -geometry +20+10 -composite \
+          -geometry +20+10 -magick composite \
           \( -size 144x14 -tile-offset +45+0 tile:bamboo.gif -transpose \) \
-          -geometry +154+0 -composite \
+          -geometry +154+0 -magick composite \
           \( -size 178x14 -tile-offset +60+0 tile:bamboo.gif \) \
-          -geometry +0+20 -composite \
+          -geometry +0+20 -magick composite \
           \( -size 178x14 -tile-offset +0+0  tile:bamboo.gif \) \
-          -geometry +10+124 -composite \
+          -geometry +10+124 -magick composite \
           frame_overlaid.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="frame_overlaid.gif"
@@ -3584,7 +3584,7 @@ which of the areas to be framed.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif -alpha set -bordercolor none \
+  magick thumbnail.gif -alpha set -bordercolor none \
           -compose Dst_Out -frame 15x15+15  frame_template.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -3616,7 +3616,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert frame_template.gif \
+  magick frame_template.gif \
           -tile blackthin_top.gif -draw 'color 1,0 floodfill' \
           frame_top_filled.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -3633,7 +3633,7 @@ ensure that the highlights and shaodws of the internal detail remain correct.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert frame_template.gif \
+  magick frame_template.gif \
           -tile blackthin_top.gif   -draw 'color 1,0 floodfill' \
           -tile-offset +0+105 -tile blackthin_btm.gif \
                                        -draw 'color 15,105 floodfill' \
@@ -3642,7 +3642,7 @@ ensure that the highlights and shaodws of the internal detail remain correct.
           -tile-offset +0+135 -tile blackthin_btm.gif \
                                        -draw 'color 15,135 floodfill' \
           -transpose \
-          -gravity center thumbnail.gif -composite frame_filled.gif
+          -gravity center thumbnail.gif -magick composite frame_filled.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="frame_filled.gif"
@@ -3658,7 +3658,7 @@ was found. Here is the full example using the <A HREF="../files/#mpr" >In Memory
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert thumbnail.gif                -write mpr:image    +delete \
+  magick thumbnail.gif                -write mpr:image    +delete \
           goldthin_top.png             -write mpr:edge_top +delete \
           goldthin_btm.png -rotate 180 -write mpr:edge_btm +delete \
           \
@@ -3672,7 +3672,7 @@ was found. Here is the full example using the <A HREF="../files/#mpr" >In Memory
           -transverse -draw 'color 1,0 floodfill' \
           -transpose  -draw 'color 1,0 floodfill' \
           \
-          mpr:image -gravity center -composite    frame_gold.png
+          mpr:image -gravity center -magick composite    frame_gold.png
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
   <A HREF="frame_gold.png"
@@ -3720,14 +3720,14 @@ frame template (generated) is used to mask those images, as we did above.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT RANDOM IMAGE=framed_script.png>
   image=thumbnail.gif
-     image_w=`convert $image -format %w info:`
-     image_h=`convert $image -format %h info:`
+     image_w=`magick $image -format %w info:`
+     image_h=`magick $image -format %h info:`
 
   top=goldthin_top.png
   btm=goldthin_btm.png
 
-     width=`convert $top -format %h info:`
-     length=`convert $top -format %w info:`
+     width=`magick $top -format %h info:`
+     length=`magick $top -format %w info:`
 
   # Size of the new image ( using BASH integer maths)
   new_size=$(($image_w+$width*2))x$(($image_h+$width*2))
@@ -3741,16 +3741,16 @@ frame template (generated) is used to mask those images, as we did above.
   btm="( $btm -roll +$(($RANDOM % $length))+0 )"
 
   # Frame the image in a single IM command....
-  convert -page +$width+$width  $image  +page -alpha set \
+  magick -page +$width+$width  $image  +page -alpha set \
     \( +clone -compose Dst -bordercolor none -frame ${width}x$width+$width \
        -fill none -draw "matte 0,0 replace" \
           -flip   -draw "matte 0,0 replace"   -flip \) \
     \( $top $btm -append -background none -splice 0x${image_h}+0+$width \
        -write mpr:horz +delete -size $new_size tile:mpr:horz +size \
-       -clone 1  -compose DstOut -composite \) \
+       -clone 1  -compose DstOut -magick composite \) \
     \( $lft $rht +append -background none -splice ${image_w}x0+$width+0 \
        -write mpr:vert +delete -size $new_size tile:mpr:vert +size \
-       -clone 1  -compose DstIn -composite \) \
+       -clone 1  -compose DstIn -magick composite \) \
     -delete 1  -compose Over  -mosaic   framed_script.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="framed_script.png"
@@ -3796,5 +3796,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/thumbnails/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/thumbnails/</CODE>
 </ADDRESS></BODY></HTML>

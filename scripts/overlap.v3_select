@@ -107,7 +107,7 @@ while [ $# -ne 0 ]; do
   # That is points along edges and boundaries of color areas.
 
   convert $img2  \
-          \( -clone 0 -segment 1 -median 3 \
+          \( -clone 0 -magick segment 1 -median 3 \
              -morphology Edge Diamond \
              -morphology thinning:2 Skeleton \
              -channel RGB -separate +channel \
@@ -117,7 +117,7 @@ while [ $# -ne 0 ]; do
           \( -clone 0 -alpha extract -virtual-pixel black \
              -morphology erode Square:$edge_radius \
           \) \
-          -delete 0 -compose multiply -composite -compose over \
+          -delete 0 -compose multiply -magick composite -compose over \
           $tmpdir/acceptable.miff
 
   # DEBUG: checking 'entropy' results...
@@ -134,7 +134,7 @@ while [ $# -ne 0 ]; do
             \( +clone -threshold -1 \
                -fill black -draw 'rectangle 0,0 1,1' -roll -1-1 \
                -virtual-pixel white -morphology Distance Euclidean:2 \
-            \) -compose multiply -composite -compose over \
+            \) -compose multiply -magick composite -compose over \
             -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
         awk 'NR==1 { min=1e8; next; }
@@ -152,7 +152,7 @@ while [ $# -ne 0 ]; do
   dist=1000000   # first point has no minimum distances to neighbour
 
   cp $tmpdir/distribute.miff $tmpdir/distance.miff
-  display ephemeral:$tmpdir/distance.miff &
+  magick display ephemeral:$tmpdir/distance.miff &
   while [ -f $tmpdir/distance.miff ]; do
     usleep 100
   done
@@ -171,14 +171,14 @@ while [ $# -ne 0 ]; do
     read -r x y dist < <(
       convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
               \( +clone -auto-level -write $tmpdir/distance.miff +delete \) \
-              $tmpdir/acceptable.miff -compose multiply -composite \
+              $tmpdir/acceptable.miff -compose multiply -magick composite \
               -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
         awk 'NR==1 { next; }
              $3 > max { x=$1; y=$2; max=$3; }
              END { print x,y,max; }'
       )
-    display -remote ephemeral:$tmpdir/distance.miff
+    magick display -remote ephemeral:$tmpdir/distance.miff
     while [ -f $tmpdir/distance.miff ]; do
      usleep 100
     done
@@ -209,7 +209,7 @@ while [ $# -ne 0 ]; do
               -background grey -alpha remove -alpha off \
               \( +clone -crop "$size$offset" +repage \) \
               +swap +delete miff:- |\
-      compare -subimage-search - miff:- | \
+      magick compare -subimage-search - miff:- | \
       convert - +swap +delete +depth txt:- | \
       tail -n+2 | tr -cs '0-9\n' ' ' | sort -rn -t\  -k3 | tail -n-1 `
 
@@ -232,7 +232,7 @@ while [ $# -ne 0 ]; do
       # Output a merged img
       convert "$img1" -page "+$x+$y" "$img2" \
               -background none -layers merge +repage "$output_image"
-      display "$output_image" & # display it when found
+      magick display "$output_image" & # magick display it when found
 
       # Abort loop to next match if we are no longer getting bad
       # area matching.

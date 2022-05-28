@@ -3,7 +3,7 @@
 # kernel2image [option] {kernel_string} [output_file]
 #
 # Given a kernel definition, extract the kernel from IM and create an image or
-# montage of the kernels that IM generates.
+# magick montage of the kernels that IM generates.
 #
 # By default the raw images are generated from the kernel (with 'nan' values
 # being made transparent) are written to the file specified. If multiple
@@ -12,7 +12,7 @@
 #
 # The other options, expecially the first option listed will enlarge and
 # 'pretty' up the kernel image to make it easier to see, and to mark the
-# (usally central) "origin" of the kernel.  It also provides a montage of
+# (usally central) "origin" of the kernel.  It also provides a magick montage of
 # single or multiple kernels (with or without shadow), on a background
 # appropriate for IM Examples.  See example commands below.
 #
@@ -35,7 +35,7 @@
 #                    %[number]    kernel number of a multi-kernel list
 #                    %[name]      builtin kernel name + rotation
 #                    %[geometry]  kernels geometry (size and origin)
-#   -mg            Add Geometry to the montage label as a extra line
+#   -mg            Add Geometry to the magick montage label as a extra line
 #
 #   -bc {color}    Color of Background Page  (default: "LightSteelBlue")
 #   -gc {color}    Color of Inter-Pixel Gaps (default: "None")
@@ -70,7 +70,7 @@
 #   ConvexHull Thickening Kernels (12), in an array, without labels
 #       kernel2image -20.2 -mt x2 -ml ''  ConvexHull
 #
-#   Gaussian Convolution Kernel (image result normalized, no montage shadow)
+#   Gaussian Convolution Kernel (image result normalized, no magick montage shadow)
 #       kernel2image -10.1 -mn -mg -n  Gaussian:4x1
 #
 #   Gaussian Convolution Kernel again, but no gamma adjust
@@ -84,7 +84,7 @@
 #       kernel2image -20.2 -ml '' -n FreiChen:10
 #
 #   Side-by-side Comparison of a LOG and DOG Convolution Kernels
-#   With user defined montage labeling to simplify things.
+#   With user defined magick montage labeling to simplify things.
 #       kernel2image -10.1 -n -mn -ml '%[name]\n%[geometry]' \
 #                    'Log:5,2 ; Dog:5,1.8,2.4'
 #
@@ -302,9 +302,9 @@ while true; do
 
   # Adjust red channel (kernel values) into a greyscale image
   # and use the green channel as a alpha transparency Mask.
-  # Also set the special purpose meta-data strings for montage labeling.
+  # Also set the special purpose meta-data strings for magick montage labeling.
   convert ppm:- -channel RG -separate +channel \
-          -compose CopyOpacity -composite -compose Over \
+          -compose CopyOpacity -magick composite -compose Over \
           -gamma "$gamma_adjust" \
           +level-colors "$kernel_colors" \
           -bordercolor  "$nan_color" -border 0 \
@@ -350,7 +350,7 @@ done | #cat; exit 0
 
 # ----------  output all kernel images as requested -----------
 if [ "$montage" ]; then
-  montage -  -set label "$montage_label" \
+  magick montage -  -set label "$montage_label" \
           -geometry +5+5  $montage_shadow \
           -tile "$montage_tile" -background "$page_bg_color" \
           "$output_image"

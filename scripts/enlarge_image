@@ -5,7 +5,7 @@
 # Given a image (generally small) enlarge it by scaling the image by the
 # given amount with posible inter-pixel gaps.
 #
-# Other options include generating a montage (with or with shadow effects)
+# Other options include generating a magick montage (with or with shadow effects)
 # adding a label, modifying the default colors around the pixels, or marking
 # a pixel with a circle
 #
@@ -162,7 +162,7 @@ fi | #convert - show:; exit 0   # for debugging
 
 # ----------  output all kernel images as requested -----------
 if [ "$montage" ]; then
-  montage miff:- -geometry +5+5  $montage_shadow \
+  magick montage miff:- -geometry +5+5  $montage_shadow \
           -tile "$montage_tile" -background "$page_bg_color" \
           "$output_image"
 else

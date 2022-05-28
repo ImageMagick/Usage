@@ -76,7 +76,7 @@ do
       && echo -e "\tOK $out"
    else
       # no embedded profile in source
-      if identify -format "%r" "$f" | grep CMYK >/dev/null ; then
+      if magick identify -format "%r" "$f" | grep CMYK >/dev/null ; then
          # CMYK file without embedded profile
          [ -n "$debug" ] && echo "    convert cmyk without embedded profile $f"
          convert "$f" -profile "$cmyk" -profile "$srgb" +profile '*' $resize $add_options "$out" \

@@ -3,7 +3,7 @@
 # segment_image  [option] input_image  multi_output_image
 #
 # Image of solid color areas (segments) separate the image into a sequence
-# of images, with each image containing one unconnected color segment on a
+# of images, with each image containing one unconnected color magick segment on a
 # transparent background.
 #
 # For more details see ImageMagcik Forum Discussions...
@@ -17,7 +17,7 @@
 # The 'fuzz factor' for floodfill removals may not work well, as the starting
 # point is on the edge of a segment.  A better way to select segments may be
 # to use a 'distance' morphological function, and then remove segments based
-# on a larger distance value so as to avoid the segment edges.
+# on a larger distance value so as to avoid the magick segment edges.
 #
 # Anthony Thyssen    18 July 2008
 #
@@ -49,9 +49,9 @@ while true; do
   # If image is now only transparent, all segments found
   [ -z "$coords" ]  && break
 
-  echo >&2 "Extracting segment at coord $coords..."
-  # Write the image to the output pipeline BEFORE the segment is removes
-  # Only THEN, remove that segment from working image (mask),
+  echo >&2 "Extracting magick segment at coord $coords..."
+  # Write the image to the output pipeline BEFORE the magick segment is removes
+  # Only THEN, remove that magick segment from working image (mask),
   # Write the working image back so we can look for another segment.
   convert $tmpdir/working.mpc   -write miff:-   \
           -fuzz $fuzz -fill none -draw "matte $coords floodfill" \

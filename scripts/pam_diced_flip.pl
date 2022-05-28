@@ -14,7 +14,7 @@
 #
 # NetPbm noramlly handles 'streamed' images fine, the exception is rotates and
 # flips as these require access to the whole image. You might find it
-# "interesting" to compare the performance of "my" flip versus netpbm flip on
+# "interesting" to magick compare the performance of "my" flip versus netpbm flip on
 # an image larger than your RAM :-)
 #
 # This script is an example of handling massive images.  It shows how large

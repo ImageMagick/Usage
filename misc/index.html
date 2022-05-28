@@ -5,7 +5,7 @@
 <TITLE>Miscellaneous -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/misc/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/misc/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -209,12 +209,12 @@ looks like the "Nearest" result, but much smaller.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for method in  integer nearest blend average average9 average16 ; do
-    convert \( xc:red xc:blue +append \) \
+    magick \( xc:red xc:blue +append \) \
             \( xc:yellow xc:cyan +append \) -append \
             -bordercolor black -border 1 \
             -filter point -interpolate $method \
             +distort SRT 20,0 ip_color_${method}.jpg
-    convert xc: -bordercolor black -border 2 \
+    magick xc: -bordercolor black -border 2 \
             -filter point -interpolate $method \
             +distort SRT 16,0 ip_pixel_${method}.jpg
   done
@@ -325,7 +325,7 @@ with resize. </P>
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap  -fx 'v.p{i/(w-1),j/(h-1)}' \
           interpolate_bilinear.jpg
@@ -338,7 +338,7 @@ with resize. </P>
 <!--
   #Distort equivelent -- two point affine of pixel centers
   # This is a bit more complex and harder to explain!
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -filter point -interpolate bilinear \
           -define distort:viewport=100x100 \
@@ -350,7 +350,7 @@ with resize. </P>
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:white xc:black +append \) \
+  magick \( xc:white xc:black +append \) \
           \( xc:black xc:white +append \) -append \
           -size 100x100 xc: +swap -fx 'v.p{i/(w-1),j/(h-1)}' \
           interpolate_saddle.jpg
@@ -377,7 +377,7 @@ diagonally opposite corners.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:blue xc:navy +append \) \
+  magick \( xc:blue xc:navy +append \) \
           \( xc:navy xc:black +append \) -append \
           -size 100x100 xc: +swap -fx 'v.p{i/(w-1),j/(h-1)}' \
           interpolate_45linear.jpg
@@ -422,7 +422,7 @@ For example lets use the same set of corner colors we used above.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap   -interpolate Mesh \
           -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh.jpg
@@ -442,7 +442,7 @@ However if we reverse the yellow and cyan colors..
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:cyan xc:yellow +append \) -append \
           -size 100x100 xc: +swap   -interpolate Mesh \
           -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh2.jpg
@@ -473,7 +473,7 @@ this edge.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:black xc:black +append \) \
+  magick \( xc:black xc:black +append \) \
           \( xc:white xc:black +append \) -append \
           -size 100x100 xc: +swap    -interpolate Mesh \
           -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh3.jpg
@@ -490,7 +490,7 @@ interpolation also produces a reasonably consistent gradient.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:blue xc:navy +append \) \
+  magick \( xc:blue xc:navy +append \) \
           \( xc:black xc:black +append \) -append \
           -size 100x100 xc: +swap    -interpolate Mesh \
           -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_tri-mesh4.jpg
@@ -534,7 +534,7 @@ And here is the interpolated colors for our standard four colors.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap   -interpolate Catrom \
           -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_catrom.jpg
@@ -557,15 +557,15 @@ are controled by the <A HREF="#virtual" >Virtual Pixel</A> setting.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap -interpolate Catrom -virtual-pixel edge \
           -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_catrom_edge.jpg
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap -interpolate Catrom -virtual-pixel White \
           -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_catrom_white.jpg
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap -interpolate Catrom -virtual-pixel Black \
           -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_catrom_black.jpg
@@ -655,7 +655,7 @@ However this is a very blurry, Gaussian-like, interpolation.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap   -interpolate spline \
           -fx 'v.p{i/(w-1),j/(h-1)}'    interpolate_spline.jpg
@@ -687,15 +687,15 @@ surrounding pixels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap -interpolate Spline -virtual-pixel edge \
           -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_spline_edge.jpg
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap -interpolate Spline -virtual-pixel White \
           -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_spline_white.jpg
-  convert \( xc:red xc:blue +append \) \
+  magick \( xc:red xc:blue +append \) \
           \( xc:yellow xc:cyan +append \) -append \
           -size 100x100 xc: +swap -interpolate Spline -virtual-pixel Black \
           -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}'   interpolate_spline_black.jpg
@@ -740,7 +740,7 @@ surrounding pixels.
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for method in   bilinear mesh catrom spline  ; do
     for vpixel in   white black  ; do
-      convert \( xc:red xc:blue +append \) \
+      magick \( xc:red xc:blue +append \) \
               \( xc:yellow xc:cyan +append \) -append \
          -size 100x100 xc: +swap -interpolate $method -virtual-pixel $vpixel \
          -fx 'v.p{3*i/(w-1)-1, 3*j/(h-1)-1}' ip_area_${method}_$vpixel.jpg
@@ -810,10 +810,10 @@ then enlarging the view so you can see the anti-aliasing pixels generated.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 10x20 xc: -draw 'line 4,0 4,20' \
+  magick -size 10x20 xc: -draw 'line 4,0 4,20' \
           -scale 50x100 ip_line_none.gif
   for method in integer nearest bilinear mesh catrom spline;  do
-    convert -size 10x20 xc: -draw 'line 5,0 5,20' \
+    magick -size 10x20 xc: -draw 'line 5,0 5,20' \
             -interpolate $method -filter point -distort SRT 17 \
             -scale 50x100 ip_line_${method}.gif
   done
@@ -913,10 +913,10 @@ distorted, compared to that of a single line of pixels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert -size 10x20 xc: -draw 'rectangle 0,0 4,19' \
+  magick -size 10x20 xc: -draw 'rectangle 0,0 4,19' \
           -scale 50x100 ip_edge_none.gif
   for method in  integer nearest bilinear mesh catrom spline; do
-    convert -size 10x20 xc: -draw 'rectangle 0,0 4,19' \
+    magick -size 10x20 xc: -draw 'rectangle 0,0 4,19' \
             -interpolate $method -filter point  -distort SRT -17 \
             -scale 50x100 ip_edge_${method}.gif
   done
@@ -1001,7 +1001,7 @@ accessing a pixel outside the normal bounds of the image. </P>
 
 For example, here we use the <A HREF="../transform/#fx" >FX DIY Operator</A>
 "<CODE><A HREF="../option_link.cgi?fx" >-fx</A></CODE>" to 'lookup' and
-display all the pixels in and surrounding the small image so we can see what
+magick display all the pixels in and surrounding the small image so we can see what
 the <B>default</B> "<CODE><A HREF="../option_link.cgi?virtual-pixel"
 >-virtual-pixel</A></CODE>" setting returned.
 
@@ -1009,7 +1009,7 @@ the <B>default</B> "<CODE><A HREF="../option_link.cgi?virtual-pixel"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:  tree.gif \
+  magick -size 70x70 xc:  tree.gif \
                   -fx 'v.p[-19,-19]'  virtual_default.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="virtual_default.gif"
@@ -1035,7 +1035,7 @@ surrounding the source image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Edge -filter point   -distort SRT 0 \
           +repage  virtual_edge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1044,7 +1044,7 @@ surrounding the source image.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`compare -metric PAE virtual_{default,edge}.gif null: 2>&1 |
+  [ "`magick compare -metric PAE virtual_{default,edge}.gif null: 2>&1 |
         sed 's/ .*//'`" != '0' ] && echo >&2 \
     "ASSERTION FAILURE: Default Virtual Pixel setting is NOT 'edge'\!"
 </CODE> -->
@@ -1075,7 +1075,7 @@ of the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Tile  -filter point  -distort SRT 0 \
           +repage virtual_tile.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1098,7 +1098,7 @@ HREF="../canvas/#tile_mod" >Modifying Tile Images</A>.  </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Mirror -filter point   -distort SRT 0 \
           +repage virtual_mirror.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1138,7 +1138,7 @@ pixels outside the real image bounds.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif -alpha set  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif -alpha set  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Transparent  -filter point  -distort SRT 0 \
           +repage virtual_trans.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1159,7 +1159,7 @@ For example here I mistakenly turn off transparency...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Transparent -filter point  -distort SRT 0 \
           +repage virtual_trans2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1187,7 +1187,7 @@ color for any pixel that falls out of bounds.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel White -filter point  -distort SRT 0 \
           +repage virtual_white.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1199,7 +1199,7 @@ color for any pixel that falls out of bounds.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Gray -filter point  -distort SRT 0 \
           +repage virtual_gray.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1211,7 +1211,7 @@ color for any pixel that falls out of bounds.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -alpha off  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Black -filter point  -distort SRT 0 \
           +repage virtual_black.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1231,7 +1231,7 @@ HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" setting.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Background -background coral \
           -filter point -distort SRT 0     +repage virtual_bgnd.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1256,7 +1256,7 @@ from the current "<CODE><A HREF="../option_link.cgi?background"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel HorizontalTile  -background coral \
           -filter point -distort SRT 0     +repage virtual_horizontal.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1279,7 +1279,7 @@ pixels across the other parts of the virtual canvas space.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel HorizontalTileEdge  -background coral \
           -filter point -distort SRT 0     +repage virtual_horizontal_edge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1306,7 +1306,7 @@ current "<CODE><A HREF="../option_link.cgi?background"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel VerticalTile  -background coral \
           -filter point -distort SRT 0     +repage virtual_vertical.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1324,7 +1324,7 @@ replicates the side edge pixels across the rest of the virtual canvas space.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel VerticalTileEdge  -background coral \
           -filter point -distort SRT 0     +repage virtual_vertical_edge.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1343,7 +1343,7 @@ with the background color (which may be transparent).
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel CheckerTile  -background coral \
           -filter point -distort SRT 0     +repage virtual_checker.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1360,7 +1360,7 @@ interleaved checkerboard pattern of the two images.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 96x96 tile:balloon.gif \
+  magick -size 96x96 tile:balloon.gif \
           \( tree.gif -alpha set  -set option:distort:viewport 96x96 \
              -virtual-pixel CheckerTile  -background none \
              -filter point -distort SRT 0 \) \
@@ -1386,7 +1386,7 @@ HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" settings.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 70x70-19-19 \
+  magick tree.gif  -set option:distort:viewport 70x70-19-19 \
           -virtual-pixel Random -filter point   -distort SRT 0 \
           +repage virtual_random.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1432,7 +1432,7 @@ HREF="#random" >random</A></CODE>'. </P>
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif  -set option:distort:viewport 120x120-44-44 \
+  magick tree.gif  -set option:distort:viewport 120x120-44-44 \
           -virtual-pixel Dither -filter point  -distort SRT 0 \
           +repage virtual_dither.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1473,7 +1473,7 @@ effect the pixels returned all the way out to infinity.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tree.gif -mattecolor DodgerBlue   -virtual-pixel dither \
+  magick tree.gif -mattecolor DodgerBlue   -virtual-pixel dither \
           -set option:distort:viewport  150x100-50-50 \
           -distort perspective '0,0 9,0  31,0 38,0  0,31 0,18  31,31, 40,18' \
           perspective_dither.gif
@@ -1531,7 +1531,7 @@ various operators. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+  magick -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
           -virtual-pixel edge   -blur 0x8     vp_blur.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="vp_blur.png"
@@ -1543,7 +1543,7 @@ various operators. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+    magick -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
             -virtual-pixel mirror  -blur 0x8  vp_blur_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="vp_blur_2.png"
@@ -1561,7 +1561,7 @@ may be desired.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+  magick -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
           -virtual-pixel tile  -blur 0x8  vp_blur_3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="vp_blur_3.png"
@@ -1577,7 +1577,7 @@ has some very interesting effects and posibilities.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+  magick -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
           -virtual-pixel background  -background blue \
           -blur 0x8     vp_blur_4.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1590,7 +1590,7 @@ has some very interesting effects and posibilities.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+  magick -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
           -virtual-pixel transparent  -channel RGBA  -blur 0x8 \
           -background red  -flatten       vp_blur_5.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1612,7 +1612,7 @@ identical.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
+  magick -size 70x70 xc:lightblue  -fill black -draw 'circle 35,65 25,55' \
           -virtual-pixel background   -background blue \
           -gaussian 0x8     vp_gaussian.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1629,7 +1629,7 @@ interesting border effects...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:lightblue \
+  magick -size 70x70 xc:lightblue \
      -virtual-pixel background  -background blue \
      -radial-blur 0x30    vp_radial.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1663,7 +1663,7 @@ Note that "<CODE><A HREF="../option_link.cgi?motion-blur"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:none  -virtual-pixel edge \
+  magick -size 70x70 xc:none  -virtual-pixel edge \
      -fill yellow  -stroke red  -strokewidth 3 -draw 'circle 45,55 35,45' \
      -channel RGBA -motion-blur 0x12+65  vp_motion.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1676,7 +1676,7 @@ Note that "<CODE><A HREF="../option_link.cgi?motion-blur"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:none  -virtual-pixel transparent  \
+  magick -size 70x70 xc:none  -virtual-pixel transparent  \
      -fill yellow  -stroke red  -strokewidth 3  -draw 'circle 45,55 35,45' \
      -channel RGBA -motion-blur 0x12+65  vp_motion_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1689,7 +1689,7 @@ Note that "<CODE><A HREF="../option_link.cgi?motion-blur"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:none  -virtual-pixel background -background blue \
+  magick -size 70x70 xc:none  -virtual-pixel background -background blue \
      -fill yellow  -stroke red  -strokewidth 3  -draw 'circle 45,55 35,45' \
      -channel RGBA -motion-blur 0x12+65  vp_motion_3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1711,7 +1711,7 @@ implosions using various "<A HREF="../option_link.cgi?virtual-pixel"
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for v in edge tile mirror dither random gray; do
     for i in 2 5 10 50 500; do \
-      convert koala.gif -virtual-pixel $v \
+      magick koala.gif -virtual-pixel $v \
               -implode $i  implode_${v}_${i}.gif
     done
   done
@@ -1874,14 +1874,14 @@ HREF="../canvas/#plasma_fractal" >Plasma Image</A> for these experiments. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -size 80x80 plasma:fractal -normalize   spot_start.gif
-  #convert -size 80x80 xc: +noise Random  \
+<r>  magick -size 80x80 plasma:fractal -normalize   spot_start.gif
+  #magick -size 80x80 xc: +noise Random  \
   #        -virtual-pixel tile  -blur 0x5  -normalize  spot_start.gif
 </CODE><!--
 --><CODE EXECUTE SCRIPT>
   for n in 2 3 4 5; do
     for v in  edge mirror tile white black; do
-      convert spot_start.gif -virtual-pixel $v -blur 0x10 \
+      magick spot_start.gif -virtual-pixel $v -blur 0x10 \
               +dither -colors $n  spot${n}_${v}.gif
     done
   done
@@ -2002,7 +2002,7 @@ Quantization and ColorSpace</A>)
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for s in   RGB YIQ HSL XYZ OHTA; do
     for v in   edge mirror tile white black; do
-      convert spot_start.gif -virtual-pixel $v -blur 0x10 \
+      magick spot_start.gif -virtual-pixel $v -blur 0x10 \
               +dither -quantize $s -colors 5 spot_${s}_${v}.gif
     done
   done
@@ -2126,7 +2126,7 @@ so that the rotation should be quite clear.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert -font ArialB -pointsize 24 -gravity center \
+    magick -font ArialB -pointsize 24 -gravity center \
             -size 55x55 xc:white -annotate 0x0+0+0 'Text' \
             annotate_source.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2185,7 +2185,7 @@ command, and both should work in exactly the same way. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  -size 20x10 xc:blue   -background blue \
+  magick rose:  -size 20x10 xc:blue   -background blue \
           \( -clone 0  -crop 40x0 +repage +clone -insert 1 +append \) \
           -swap 0,-1 +delete +repage \
           \( -clone 0  -crop 0x30 +repage +clone -insert 1 -append \) \
@@ -2230,7 +2230,7 @@ completely ignores the  "<CODE><A HREF="../option_link.cgi?background"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert star.gif -bordercolor LimeGreen   -background Gold \
+  magick star.gif -bordercolor LimeGreen   -background Gold \
                    -border 10       star_border.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="star_border.gif"
@@ -2239,7 +2239,7 @@ completely ignores the  "<CODE><A HREF="../option_link.cgi?background"
 </TD></TR></TABLE></P>
 
 <!-- <CODE EXECUTE ASSERT>
-  identify -verbose star_border.gif | grep Alpha: >/dev/null && echo >&2 \
+  magick identify -verbose star_border.gif | grep Alpha: >/dev/null && echo >&2 \
     "ASSERTION FAILURE: Border did not flatten image transparency\!"
 </CODE> -->
 
@@ -2255,7 +2255,7 @@ minimal settings from the user.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    montage star.gif  -frame 6  -geometry '64x64+5+5&gt;' star_montage.gif
+    magick montage star.gif  -frame 6  -geometry '64x64+5+5&gt;' star_montage.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
    <A HREF="star_montage.gif"
       ><IMG SRC="star_montage.gif"
@@ -2277,9 +2277,9 @@ preserve the transparency.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert star.gif  -bordercolor LimeGreen \
+  magick star.gif  -bordercolor LimeGreen \
           -compose Copy  -border 10   star_border_copy.gif
-  montage star.gif  -bordercolor LimeGreen \
+  magick montage star.gif  -bordercolor LimeGreen \
           -compose Copy -background None    -frame 6 \
           -geometry '64x64+0+0&gt;'   star_montage_copy.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -2296,7 +2296,7 @@ For more information on preserving an images transparent background, while
 adding a "<CODE><A HREF="../option_link.cgi?border" >-border</A></CODE>" or
 "<CODE><A HREF="../option_link.cgi?splice" >-frame</A></CODE>", see <A
 HREF="../crop/#border" >adding borders</A>.  and for "<CODE>montage</CODE>",
-see <A HREF="../montage/#bg" >montage background and transparency handling
+see <A HREF="../montage/#bg" >magick montage background and transparency handling
 examples</A>. </P>
 
 
@@ -2314,7 +2314,7 @@ irrelevent.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage star.gif -background Gold -alpha remove \
+  magick montage star.gif -background Gold -alpha remove \
           -frame 6  -geometry '64x64+5+5&gt;' -size 16x16 \
           -bordercolor LimeGreen  -background SeaGreen \
           star_montage_texture.gif
@@ -2342,7 +2342,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif news.gif  storm.gif  +append  list_test_01.gif
+  magick eye.gif news.gif  storm.gif  +append  list_test_01.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_01.gif"
       ><IMG SRC="list_test_01.gif"
@@ -2352,7 +2352,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( \) eye.gif news.gif  storm.gif  +append  list_test_02.gif
+  magick \( \) eye.gif news.gif  storm.gif  +append  list_test_02.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_02.gif"
       ><IMG SRC="list_test_02.gif"
@@ -2362,7 +2362,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif news.gif  storm.gif \( \) +append  list_test_03.gif
+  magick eye.gif news.gif  storm.gif \( \) +append  list_test_03.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_03.gif"
       ><IMG SRC="list_test_03.gif"
@@ -2372,7 +2372,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( eye.gif news.gif  storm.gif \) +append  list_test_04.gif
+  magick \( eye.gif news.gif  storm.gif \) +append  list_test_04.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_04.gif"
       ><IMG SRC="list_test_04.gif"
@@ -2382,7 +2382,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( eye.gif news.gif  storm.gif  +append \) list_test_05.gif
+  magick \( eye.gif news.gif  storm.gif  +append \) list_test_05.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_05.gif"
       ><IMG SRC="list_test_05.gif"
@@ -2392,7 +2392,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif \( news.gif storm.gif +append \) +append list_test_06.gif
+  magick eye.gif \( news.gif storm.gif +append \) +append list_test_06.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_06.gif"
       ><IMG SRC="list_test_06.gif"
@@ -2402,7 +2402,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( eye.gif news.gif +append \) storm.gif +append  list_test_07.gif
+  magick \( eye.gif news.gif +append \) storm.gif +append  list_test_07.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_07.gif"
       ><IMG SRC="list_test_07.gif"
@@ -2412,7 +2412,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( storm.gif -flop \) \( news.gif -flop \) \( eye.gif -flop \) \
+  magick \( storm.gif -flop \) \( news.gif -flop \) \( eye.gif -flop \) \
           +append -flop  list_test_08.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_08.gif"
@@ -2423,7 +2423,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert \( eye.gif -rotate 90 \) \( news.gif  -rotate 90 \) \
+  magick \( eye.gif -rotate 90 \) \( news.gif  -rotate 90 \) \
           \( storm.gif -rotate 90 \) -append  -rotate -90   list_test_09.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_09.gif"
@@ -2434,7 +2434,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif tree.gif news.gif storm.gif   -delete 1 \
+  magick eye.gif tree.gif news.gif storm.gif   -delete 1 \
           +append list_test_10.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_10.gif"
@@ -2445,7 +2445,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif tree.gif news.gif storm.gif  -delete -3 \
+  magick eye.gif tree.gif news.gif storm.gif  -delete -3 \
           +append list_test_11.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_11.gif"
@@ -2456,7 +2456,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif news.gif storm.gif tree.gif   +delete \
+  magick eye.gif news.gif storm.gif tree.gif   +delete \
           +append list_test_12.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_12.gif"
@@ -2467,7 +2467,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert news.gif storm.gif eye.gif  +insert  +append list_test_13.gif
+  magick news.gif storm.gif eye.gif  +insert  +append list_test_13.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
    <A HREF="list_test_13.gif"
@@ -2478,7 +2478,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif storm.gif news.gif  -insert 1  +append list_test_14.gif
+  magick eye.gif storm.gif news.gif  -insert 1  +append list_test_14.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
    <A HREF="list_test_14.gif"
@@ -2489,7 +2489,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert news.gif eye.gif storm.gif   -swap 0,1  +append list_test_15.gif
+  magick news.gif eye.gif storm.gif   -swap 0,1  +append list_test_15.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_15.gif"
       ><IMG SRC="list_test_15.gif"
@@ -2499,7 +2499,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert storm.gif news.gif eye.gif   -swap 0  +append list_test_16.gif
+  magick storm.gif news.gif eye.gif   -swap 0  +append list_test_16.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_16.gif"
       ><IMG SRC="list_test_16.gif"
@@ -2509,7 +2509,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif storm.gif news.gif   +swap  +append list_test_17.gif
+  magick eye.gif storm.gif news.gif   +swap  +append list_test_17.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_17.gif"
       ><IMG SRC="list_test_17.gif"
@@ -2519,7 +2519,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif storm.gif news.gif   \( -clone 1 \) \
+  magick eye.gif storm.gif news.gif   \( -clone 1 \) \
           -delete 1   +append list_test_18.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="list_test_18.gif"
@@ -2530,7 +2530,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif -negate \( +clone -negate \) news.gif  storm.gif \
+  magick eye.gif -negate \( +clone -negate \) news.gif  storm.gif \
           -delete 0   +append list_test_19.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2542,7 +2542,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert storm.gif news.gif eye.gif \( -clone 2,1,0 \) \
+  magick storm.gif news.gif eye.gif \( -clone 2,1,0 \) \
           -delete 2,1,0   +append  list_test_20.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2554,7 +2554,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert storm.gif news.gif eye.gif \( -clone 2-0 \) \
+  magick storm.gif news.gif eye.gif \( -clone 2-0 \) \
           -delete 0-2   +append  list_test_21.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2566,7 +2566,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert {balloon,medical,present,shading}.gif  -delete 0--1 \
+  magick {balloon,medical,present,shading}.gif  -delete 0--1 \
           {eye,news,storm}.gif   +append  list_test_22.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2578,7 +2578,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert balloon.gif -delete 0,0,0,0,0,0,0,0,0 \
+  magick balloon.gif -delete 0,0,0,0,0,0,0,0,0 \
           eye.gif news.gif  storm.gif  +append  list_test_23.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2590,7 +2590,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif balloon.gif news.gif storm.gif \
+  magick eye.gif balloon.gif news.gif storm.gif \
           -delete 1,1,1,1,1   +append  list_test_24.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2602,7 +2602,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert {balloon,medical,present,shading}.gif {eye,news,storm}.gif \
+  magick {balloon,medical,present,shading}.gif {eye,news,storm}.gif \
           -delete 0--4   +append   list_test_25.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2614,7 +2614,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert eye.gif news.gif storm.gif \
+  magick eye.gif news.gif storm.gif \
           -delete 0--4   +append   list_test_26.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -2626,7 +2626,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert storm.gif news.gif eye.gif -reverse +append  list_test_27.gif
+  magick storm.gif news.gif eye.gif -reverse +append  list_test_27.gif
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
    <A HREF="list_test_27.gif"
@@ -2639,7 +2639,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 
 <!-- <CODE EXECUTE ASSERT>
   for i in `seq -f %02.f 2 27`; do
-    [ `compare -metric PAE list_test_$i.gif list_test_01.gif null: 2>&1 |
+    [ `magick compare -metric PAE list_test_$i.gif list_test_01.gif null: 2>&1 |
            sed 's/ .*//'` != '0' ] && echo >&2 \
       "ASSERTION FAILURE: Sequence Command Test $i failed\!"
   done
@@ -2654,5 +2654,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/misc/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/misc/</CODE>
 </ADDRESS></BODY></HTML>

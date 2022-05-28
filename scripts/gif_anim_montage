@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-#  gif_anim_montage [options] animation.gif  [output_image]
+#  gif_anim_magick montage [options] animation.gif  [output_image]
 #
 # Convert a GIF animation into a strip showing each sub-frame of the
 # animation with a black border, positioned in the larger canvas context
@@ -44,10 +44,10 @@ montage_opts=""
 method=1
 background=none
 
-# Figure out the montage label to use
+# Figure out the magick montage label to use
 # Does IM understand %T as the frame time delay?
 label='%s: %D\n%wx%h%O'
-case `identify -format %T rose:` in
+case `magick identify -format %T rose:` in
 0) label="%D, %Tcs\n%wx%h%O"
 esac
 
@@ -93,7 +93,7 @@ case "$method" in
     convert "$input" -set background none -alpha on -set label "$label" \
             -compose Copy -bordercolor $border -border $thickness \
             -set dispose Background -coalesce  miff:- |\
-      montage - -frame 4 -geometry '+1+1' $tile \
+      magick montage - -frame 4 -geometry '+1+1' $tile \
               -bordercolor none -pointsize $pointsize \
               $montage_opts "$output"
     ;;
@@ -105,11 +105,11 @@ case "$method" in
             \( mpr:a -bordercolor none -mattecolor $border -frame $thickness \
             \) -layers Composite \
             miff:- | \
-      montage - -frame 4 -geometry '+1+1' $tile \
+      magick montage - -frame 4 -geometry '+1+1' $tile \
               -bordercolor none -pointsize $pointsize \
               $montage_opts  "$output"
     ;;
- 3) # convert only method  -- no montage labels :-(
+ 3) # convert only method  -- no magick montage labels :-(
     convert -dispose Background  "$input" \
             -compose Copy -bordercolor $border -border $thickness \
             -compose Over -coalesce  -bordercolor none   -frame 4x4+1+1 \

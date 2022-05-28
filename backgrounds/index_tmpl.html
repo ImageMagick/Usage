@@ -3,7 +3,7 @@
 <TITLE>Backgrounds -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/backgrounds/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/backgrounds/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../w_images/pngfix.js"></script>
 <![endif]><![endif]-->
@@ -28,7 +28,7 @@ page.  </P>
 
 The table starts with the method used to generate the initial 'random' image
 used to generate all the other images shown. Just insert the various image
-'transform' into the command, to convert the raw image into something similar
+'transform' into the command, to magick the raw image into something similar
 to that shown.  From there you can adjust the various setting yourself to
 produce exactly the type of background image you want. </P>
 
@@ -49,8 +49,8 @@ Plasma Fractal <FONT SIZE=-1><I>(non-tiling canvas image)</I></FONT>
 </TD></TR><TR><TD>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -size 120x120  plasma:fractal fractal.png
-  convert fractal.png   <I>{..transform..}</I> \
+  magick -size 120x120  plasma:fractal fractal.png
+  magick fractal.png   <I>{..transform..}</I> \
            -shave 20x20 +repage  -auto_level  <I>{result}</I>
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
 <TD>
@@ -64,8 +64,8 @@ Random Noise <FONT SIZE=-1><I>(tilable background image)</I></FONT>
 </TD></TR><TR><TD>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -size 80x80 xc: +noise Random noise.png
-  convert noise.png -virtual-pixel tile  <I>{..transform..}</I> \
+  magick -size 80x80 xc: +noise Random noise.png
+  magick noise.png -virtual-pixel tile  <I>{..transform..}</I> \
           -auto_level  <I>{result}</I>
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
 <TD></TD><TD>
@@ -79,10 +79,10 @@ Random Hex Tile <FONT SIZE=-1><I>(hex tile background image)</I></FONT>
 </TD></TR><TR><TD>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE>
-  convert -size 50x80 xc: +noise Random -write mpr:rand \
+  magick -size 50x80 xc: +noise Random -write mpr:rand \
            -extent 100x80   -page +50-40 mpr:rand \
            -page +50+40 mpr:rand -flatten  hextile.png
-  convert hextile.png -virtual-pixel tile  <I>{..transform..}</I> \
+  magick hextile.png -virtual-pixel tile  <I>{..transform..}</I> \
           -auto_level    <I>{result}</I>
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
 <TD></TD><TD></TD><TD>
@@ -145,6 +145,6 @@ Author: <A HREF="http://www.ict.griffith.edu.au/anthony/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/backgrounds/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/backgrounds/</CODE>
 </ADDRESS></BODY></HTML>
 

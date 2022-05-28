@@ -5,7 +5,7 @@
 <TITLE>Quantization -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/quantize/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/quantize/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -149,7 +149,7 @@ resulting image stored in a specific image file formats. </P>
 <H2>Color Reduction Introduction</H2>
 
 Color reduction is a very important aspect of ImageMagick.  For example to
-convert a JPEG or PNG image containing millions of colors, into a GIF image
+magick a JPEG or PNG image containing millions of colors, into a GIF image
 containing a maximum of 256 color, you really have to be able to reduce colors
 in an efficient and effective way.  Often during an image format conversion,
 this happens automatically behind the scenes, but there are other times when
@@ -207,10 +207,10 @@ Here is an example of each of these four methods...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png +dither    -colors 32          color_quantize.gif
-  convert colorwheel.png +dither -remap colortable.gif  color_predefined.gif
-  convert colorwheel.png +dither   -posterize 3         color_uniform.gif
-  convert colorwheel.png \
+  magick colorwheel.png +dither    -colors 32          color_quantize.gif
+  magick colorwheel.png +dither -remap colortable.gif  color_predefined.gif
+  magick colorwheel.png +dither   -posterize 3         color_uniform.gif
+  magick colorwheel.png \
                   -separate -threshold 50% -combine     color_threshold.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/colorwheel.png"
@@ -382,10 +382,10 @@ which basically all does exactly the same thing.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  identify -verbose  image.png
-  convert  image.png miff:- | identify -verbose -
-  convert  image.png  -verbose -identify null:
-  convert  image.png  -verbose info:
+  magick identify -verbose  image.png
+  magick image.png miff:- | magick identify -verbose -
+  magick image.png  -verbose -magick identify null:
+  magick image.png  -verbose info:
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -409,7 +409,7 @@ included in the result.  </P>
               <TD WIDTH=80% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tree_histogram.txt>
-  convert  tree.gif  -format %c  -depth 8  histogram:info:-
+  magick tree.gif  -format %c  -depth 8  histogram:info:-
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="../images/tree.gif"
       ><IMG SRC="../images/tree.gif"
@@ -432,7 +432,7 @@ included in the result.  </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=95% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  tree.gif histogram:- | identify -depth 8 -format %c -
+  magick tree.gif histogram:- | magick identify -depth 8 -format %c -
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 </I></FONT></TD></TR></TABLE>
@@ -441,11 +441,11 @@ The problem with these methods is that you are given a plain text output
 of the colors, which you will need to parse for your own needs. </P>
 
 However as of IM v6.2.8-8, the "<CODE><A HREF="../option_link.cgi?unique-colors"
->-unique-colors</A></CODE>" operator will convert an image into a smaller one
+>-unique-colors</A></CODE>" operator will magick an image into a smaller one
 containing just one pixel per unique color found in the original image, all in
 a single row. </P>
 
-This means you can convert an image into a simpler color table image, listing
+This means you can magick an image into a simpler color table image, listing
 each color present.  The width of the image returns the number of colors, and
 if you need to actually list the colors you can output it to a "<CODE><A
 HREF="../files/#txt" >txt:</A></CODE>" image format. </P>
@@ -456,8 +456,8 @@ For example here is the color table for the tree image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=tree_colors.txt>
-  convert tree.gif -unique-colors -scale 1000%  tree_colors.gif
-  convert tree.gif -unique-colors -depth 16  txt:-
+  magick tree.gif -unique-colors -scale 1000%  tree_colors.gif
+  magick tree.gif -unique-colors -depth 16  txt:-
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tree_colors.gif"
      ><IMG SRC="tree_colors.gif"
@@ -486,12 +486,12 @@ a <A HREF="../forum_link.cgi?f=1&t=19538&p=76915" >IM Forum Discussion</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT OUT=unique_color_histogram.png>
-  convert rose: -colors 256 -format %c histogram:info:- |
+  magick rose: -colors 256 -format %c histogram:info:- |
     sed 's/:.*#/ #/' |
       while read count color colorname; do
-        convert -size 1x$count xc:$color miff:-
+        magick -size 1x$count xc:$color miff:-
       done |
-        convert - -alpha set -gravity south -background none +append \
+        magick - -alpha set -gravity south -background none +append \
                 unique_color_histogram.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
@@ -541,7 +541,7 @@ string that can be used directly IM without change.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=rose_average.txt>
-  convert rose: -scale 1x1\! -format '%[pixel:s]' info:-
+  magick rose: -scale 1x1\! -format '%[pixel:s]' info:-
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -563,7 +563,7 @@ values at the bit depth wanted.  For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=rose_fx_rgb.txt>
-  convert rose: -scale 1x1\! \
+  magick rose: -scale 1x1\! \
      -format '%[fx:int(255*r+.5)],%[fx:int(255*g+.5)],%[fx:int(255*b+.5)]' info:-
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -586,7 +586,7 @@ For example you can get the average red channel colour by getting the
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=rose_red_mean.txt>
-  convert rose: -channel R -separate -format '%[mean]' info:
+  magick rose: -channel R -separate -format '%[mean]' info:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -606,7 +606,7 @@ Escape</A> such as "<CODE>%[pixel:...]</CODE>" or "<CODE>%[fx:...]</CODE>"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=rose_pixel.txt>
-  convert rose: -format '%[pixel:p{40,30}]' info:-
+  magick rose: -format '%[pixel:p{40,30}]' info:-
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -624,7 +624,7 @@ example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=rose_pixel_crop.txt>
-  convert rose: -crop 1x1+40+30 -depth 8 txt:-
+  magick rose: -crop 1x1+40+30 -depth 8 txt:-
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -646,7 +646,7 @@ sun in the 'tree' image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=tree_sun_pixels.txt>
-  convert tree.gif -fill black +opaque yellow \
+  magick tree.gif -fill black +opaque yellow \
                    -fill white -opaque yellow \
                    -print "yellow sun pixels = %[fx:w*h*mean]\n"   null:
 </CODE></PRE></TD></TR></TABLE>
@@ -686,14 +686,14 @@ specify 'near' colors as well. </P>
 <A NAME="compare"></A>
 <H3>Comparing Two Colors</H3>
 
-So you have two specific colors and you want to compare them.
+So you have two specific colors and you want to magick compare them.
 
 You can use "<B><CODE>compare</CODE></B>" get the RMSE (on standard error)...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_navy.txt>
-  compare -metric RMSE xc:Navy xc:blue null:
+  magick compare -metric RMSE xc:Navy xc:blue null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -713,7 +713,7 @@ comparing 'fully-transparent black'  vs  'fully-transparent white'.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_transparency.txt>
-  compare -metric RMSE xc:'#0000' xc:'#FFF0' null:
+  magick compare -metric RMSE xc:'#0000' xc:'#FFF0' null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -737,8 +737,8 @@ close. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_blue-navy.txt>
-  compare -fuzz 20% -metric AE xc:Navy xc:Blue null:
-  compare -fuzz 30% -metric AE xc:Navy xc:Blue null:
+  magick compare -fuzz 20% -metric AE xc:Navy xc:Blue null:
+  magick compare -fuzz 30% -metric AE xc:Navy xc:Blue null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -757,7 +757,7 @@ the 'FUZZ' metric.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_blue-navy_fuzz.txt>
-  compare -metric FUZZ xc:Navy xc:Blue null:
+  magick compare -metric FUZZ xc:Navy xc:Blue null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -781,7 +781,7 @@ equivelent (producing a value of 0 or no error pixels)...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_fuzz_trans.txt>
-  compare -metric FUZZ xc:'#0000' xc:'#FFF0' null:
+  magick compare -metric FUZZ xc:'#0000' xc:'#FFF0' null:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -800,7 +800,7 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=fuzz_navy.txt>
-  convert xc:Navy  -fuzz 20% -fill Blue -opaque Blue txt:
+  magick xc:Navy  -fuzz 20% -fill Blue -opaque Blue txt:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -816,7 +816,7 @@ As '<CODE>Navy</CODE>' did not change to '<CODE>Blue</CODE>' it is more than
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=fuzz_navy2.txt>
-  convert xc:Navy  -fuzz 30% -fill Blue -opaque Blue txt:
+  magick xc:Navy  -fuzz 30% -fill Blue -opaque Blue txt:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -839,8 +839,8 @@ To do this in a script use something like...
   color1="red"
   color2="#e00"
 
-  color2=`convert xc:"$color2" -format '%[pixel:s]' info:`
-  result=`convert  xc:"$color1" -alpha set -channel RGBA -fuzz $fuzz \
+  color2=`magick xc:"$color2" -format '%[pixel:s]' info:`
+  result=`magick xc:"$color1" -alpha set -channel RGBA -fuzz $fuzz \
             -fill $color2 -opaque $color2 -format '%[pixel:s]' info:`
   if [ "$result" = "$color2" ]; then
     echo "Colors match according to Fuzz Factor"
@@ -874,9 +874,9 @@ colors, using various <A HREF="#dither" >dither methods</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png  -dither None       -colors 64  colors_64_no.gif
-  convert colorwheel.png  -dither Riemersma  -colors 64  colors_64_rm.gif
-  convert colorwheel.png  -dither FloydSteinberg \
+  magick colorwheel.png  -dither None       -colors 64  colors_64_no.gif
+  magick colorwheel.png  -dither Riemersma  -colors 64  colors_64_rm.gif
+  magick colorwheel.png  -dither FloydSteinberg \
                                              -colors 64  colors_64_fs.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/colorwheel.png"
@@ -914,10 +914,10 @@ small number of colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo: -resize 40% -crop 100x100+105+50\! -normalize  logo.png
-  convert logo.png  +dither             -colors 8  colors_8_no.gif
-  convert logo.png  -dither Riemersma   -colors 8  colors_8_rm.gif
-  convert logo.png  -dither FloydSteinberg \
+  magick logo: -resize 40% -crop 100x100+105+50\! -normalize  logo.png
+  magick logo.png  +dither             -colors 8  colors_8_no.gif
+  magick logo.png  -dither Riemersma   -colors 8  colors_8_rm.gif
+  magick logo.png  -dither FloydSteinberg \
                                         -colors 8  colors_8_fs.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo.png"
@@ -941,9 +941,9 @@ image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  +dither             -colors 16 colors_16_no.gif
-  convert rose:  -dither Riemersma   -colors 16 colors_16_rm.gif
-  convert rose:  -dither FloydSteinberg \
+  magick rose:  +dither             -colors 16 colors_16_no.gif
+  magick rose:  -dither Riemersma   -colors 16 colors_16_rm.gif
+  magick rose:  -dither FloydSteinberg \
                                      -colors 16 colors_16_fs.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
@@ -977,7 +977,7 @@ photograph to produce a reasonable result.  </P>
   ASIDE: As a reference the "<CODE><A HREF="http://www.lcdf.org/gifsicle/"
   >Gifsicle</A></CODE>" program lists a number of other color quantization
   methods (using it "<CODE>--color-method</CODE>" option). I have no idea as
-  to how well these color quantization methods compare to IM.  If you find a
+  to how well these color quantization methods magick compare to IM.  If you find a
   good reference to different methods of color quantization, please mail me.
 
 </I></FONT></TD></TR></TABLE></P>
@@ -985,14 +985,14 @@ photograph to produce a reasonable result.  </P>
 <!-- <CODE EXECUTE ASSERT>
   colors=256   # number of colors for test
 
-  generate=`convert -size 100x$colors gradient:blue-red -format %k info:`
-  # convert -size 100x$colors gradient:blue-red -format '%c' histogram:info:
+  generate=`magick -size 100x$colors gradient:blue-red -format %k info:`
+  # magick -size 100x$colors gradient:blue-red -format '%c' histogram:info:
 
-  quantize=`convert -size 100x$colors gradient:blue-red +dither \
+  quantize=`magick -size 100x$colors gradient:blue-red +dither \
             -colors $colors -format %k info:`
-  dither_rm=`convert -size 100x$colors gradient:blue-red \
+  dither_rm=`magick -size 100x$colors gradient:blue-red \
              -dither Riemersma -colors $colors -format %k info:`
-  dither_fs=`convert -size 100x$colors gradient:blue-red \
+  dither_fs=`magick -size 100x$colors gradient:blue-red \
              -dither FloydSteinberg -colors $colors -format %k info:`
 
   if [ "$dither_rm" -ne "$colors" ] ||
@@ -1014,7 +1014,7 @@ EOF
 The process of selecting the limited number of colors to use in an image is
 called Color Quantization, and is a very complex process involving a number of
 factors. A full technical description of it is given on the ImageMagick web
-site <A HREF="https://legacy.imagemagick.org/script/quantize.php" >Color
+site <A HREF="https://imagemagick.org/script/quantize.php" >Color
 Reduction Algorithm</A>. However I'll try to example some of the more
 important aspects of this here. </P>
 
@@ -1029,12 +1029,12 @@ color images to a single common color.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 4x1 xc:blue -draw 'fill red   point 0,0' \
+  magick -size 4x1 xc:blue -draw 'fill red   point 0,0' \
                                                 -scale 20 colors_rb.gif
-  convert -size 4x1 xc:red   -draw 'fill blue point 3,0' \
+  magick -size 4x1 xc:red   -draw 'fill blue point 3,0' \
                                                 -scale 20 colors_br.gif
-  convert colors_rb.gif  -colors 1  colors_rb2.gif
-  convert colors_br.gif  -colors 1  colors_br2.gif
+  magick colors_rb.gif  -colors 1  colors_rb2.gif
+  magick colors_br.gif  -colors 1  colors_br2.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="colors_rb.gif"
      ><IMG SRC="colors_rb.gif"    WIDTH=80 HEIGHT=20
@@ -1058,8 +1058,8 @@ but the amount of each color in the image. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 20x640  gradient: -rotate 90  gradient.png
-  convert gradient.png   +dither  -colors 5   colors_gradient.gif
+  magick -size 20x640  gradient: -rotate 90  gradient.png
+  magick gradient.png   +dither  -colors 5   colors_gradient.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="colors_gradient.gif"
      ><IMG SRC="colors_gradient.gif"    WIDTH=640 HEIGHT=20
@@ -1096,7 +1096,7 @@ different 'color distances'.
               XYZ LAB LUV  \
               HSL HSB HWB  \
               YIQ YUV OHTA ; do \
-     convert colorwheel.png   -quantize $S   +dither -colors 16 \
+     magick colorwheel.png   -quantize $S   +dither -colors 16 \
              -fill black -gravity SouthWest -annotate +2+2 $S \
              colors_space_$S.gif; \
   done
@@ -1154,7 +1154,7 @@ images and icons, but is actually a bad color space for general picture-like
 photos. </P>
 
 The CMY color space is exactly the same as sRGB color space as the color
-channels are simply negated to convert between sRGB and CMY colorspaces.  As
+channels are simply negated to magick between sRGB and CMY colorspaces.  As
 such the quantization colors end up with roughly the same solution.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -1353,12 +1353,12 @@ pattern so that you can see just how transparent the image is.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert xc:red xc:yellow xc:green1 xc:cyan xc:blue \
+  magick xc:red xc:yellow xc:green1 xc:cyan xc:blue \
           +append -filter Cubic -resize 100x100\!  -size 100x100 \
-          gradient: +matte -compose CopyOpacity -composite alpha_gradient.png
-  convert alpha_gradient.png  +dither  -colors 256  alpha_colors_256.png
-  convert alpha_gradient.png  +dither  -colors 64   alpha_colors_64.png
-  convert alpha_gradient.png  +dither  -colors 15   alpha_colors_15.png
+          gradient: +matte -compose CopyOpacity -magick composite alpha_gradient.png
+  magick alpha_gradient.png  +dither  -colors 256  alpha_colors_256.png
+  magick alpha_gradient.png  +dither  -colors 64   alpha_colors_64.png
+  magick alpha_gradient.png  +dither  -colors 15   alpha_colors_15.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
@@ -1418,7 +1418,7 @@ for a more normal situation.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_gradient.png  +dither  -colors 15 \
+  magick alpha_gradient.png  +dither  -colors 15 \
           -channel A -contrast-stretch 10%  alpha_colors_15n.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
@@ -1453,7 +1453,7 @@ HREF="../option_link.cgi?quantize" >-quantize</A></CODE>" color space setting of
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_gradient.png -quantize transparent \
+  magick alpha_gradient.png -quantize transparent \
                             +dither  -colors 15   alpha_colors_15qt.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
@@ -1509,25 +1509,25 @@ image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_gradient.png \
+  magick alpha_gradient.png \
           -channel A   -threshold 50%       alpha_dither_threshold.gif
-  convert alpha_gradient.png \
+  magick alpha_gradient.png \
           -channel A -ordered-dither checks alpha_dither_checks.gif
-  convert alpha_gradient.png \
+  magick alpha_gradient.png \
           -channel A -ordered-dither o8x8   alpha_dither_ordered.gif
-  convert alpha_gradient.png \
+  magick alpha_gradient.png \
           -channel A -ordered-dither h8x8a  alpha_dither_halftone.gif
 
-  convert alpha_gradient.png -channel RGBA -separate \
+  magick alpha_gradient.png -channel RGBA -separate \
           \( +clone -monochrome \) \
           +swap +delete -combine alpha_dither_monochrome.gif
-  convert alpha_gradient.png -channel RGBA -separate \
+  magick alpha_gradient.png -channel RGBA -separate \
           \( +clone -dither FloydSteinberg -monochrome \) \
           +swap +delete -combine alpha_dither_monochrome_fs.gif
-  convert alpha_gradient.png -channel RGBA -separate \
+  magick alpha_gradient.png -channel RGBA -separate \
           \( +clone -remap pattern:gray50 \) \
           +swap +delete -combine  alpha_dither_map.gif
-  convert alpha_gradient.png -channel RGBA -separate \
+  magick alpha_gradient.png -channel RGBA -separate \
           \( +clone -dither FloydSteinberg -remap pattern:gray50 \) \
           +swap +delete -combine  alpha_dither_map_fs.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -1615,7 +1615,7 @@ implemented in your version of IM using...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=dithers.txt>
-  convert -list dither
+  magick -list dither
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1630,8 +1630,8 @@ For example here is the color wheel dithered using different dithering methods.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png -dither Riemersma      -colors 16 dither_riemersma.gif
-  convert colorwheel.png -dither FloydSteinberg -colors 16 dither_floyd.gif
+  magick colorwheel.png -dither Riemersma      -colors 16 dither_riemersma.gif
+  magick colorwheel.png -dither FloydSteinberg -colors 16 dither_floyd.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="dither_riemersma.gif"
      ><IMG SRC="dither_riemersma.gif"    WIDTH=128 HEIGHT=128
@@ -1680,8 +1680,8 @@ magnified so you can see the individual colored pixel assigned.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=/dev/null>
-  convert -size 10x10 xc:'#999999' -scale 80x80  dither_not.gif
-  convert -size 10x10 xc:'#999999' \
+  magick -size 10x10 xc:'#999999' -scale 80x80  dither_not.gif
+  magick -size 10x10 xc:'#999999' \
           -remap colortable.gif   -scale 80x80  dither.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="dither_not.gif"
@@ -1694,7 +1694,7 @@ magnified so you can see the individual colored pixel assigned.
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that dither actually generated a three color dither pattern.
-  [ `identify -format %k dither.gif` -ne 3 ] && echo >&2 \
+  [ `magick identify -format %k dither.gif` -ne 3 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Map did not produce a 3 color pattern\!"
 </CODE> -->
 
@@ -1704,15 +1704,15 @@ colors that were in the given color table. </P>
 
 <!-- <CODE EXECUTE>
   # get the average color of the undithered and the dithered image
-  convert dither_not.gif -filter box -resize 1x1\! -depth 8 txt: |\
+  magick dither_not.gif -filter box -resize 1x1\! -depth 8 txt: |\
      tail -1 | sed 's/.*#/#/; s/ .*//;' > dither_not_avg.txt
-  convert dither.gif -filter box -resize 1x1\! -depth 8 txt: |\
+  magick dither.gif -filter box -resize 1x1\! -depth 8 txt: |\
      tail -1 | sed 's/.*#/#/; s/ .*//;' > dither_avg.txt
 </CODE> -->
 <!-- <CODE EXECUTE ASSERT>
   # Compare color with original image.  (result should be about 277)
-  [ `convert dither_not.gif dither.gif -filter box -resize 1x1\! miff:- |\
-     compare -metric PAE - null: 2>&1 | sed 's/ .*//'` -gt 300 ] && echo >&2 \
+  [ `magick dither_not.gif dither.gif -filter box -resize 1x1\! miff:- |\
+     magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'` -gt 300 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Average larger than expected\!"
 </CODE> -->
 
@@ -1747,7 +1747,7 @@ bottom.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=/dev/null>
-  convert -size 10x10 xc:'#999999'  -dither FloydSteinberg \
+  magick -size 10x10 xc:'#999999'  -dither FloydSteinberg \
           -remap colortable.gif   -scale 80x80  dither_fs.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="dither_not.gif"
@@ -1760,7 +1760,7 @@ bottom.
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that dither actually generated a three color dither pattern.
-  [ `identify -format %k dither_fs.gif` -ne 3 ] && echo >&2 \
+  [ `magick identify -format %k dither_fs.gif` -ne 3 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Map did not produce a 3 color pattern\!"
 </CODE> -->
 
@@ -1790,9 +1790,9 @@ by the  Hilbert Curve Dither.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=/dev/null>
-  convert -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
+  magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
           -remap colortable.gif   -scale 80x80   dither_modified.gif
-  compare dither.gif dither_modified.gif dither_difference.gif
+  magick compare dither.gif dither_modified.gif dither_difference.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR><TD ALIGN=center>
   <A HREF="dither.gif"
@@ -1835,23 +1835,23 @@ one side of the change.
 
 <!--
 <TR><TD><PRE><CODE DO_NOT_EXECUTE RANDOM OUT=/dev/null>
-  convert -size 10x10 xc:'#999999' ppm:- |\
+  magick -size 10x10 xc:'#999999' ppm:- |\
     pnmremap -mapfile=colormap.gif -fs 2>/dev/null | \
-      convert - -scale 80x80   dither_fs.gif
-  convert -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' ppm:- |\
+      magick - -scale 80x80   dither_fs.gif
+  magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' ppm:- |\
     pnmremap -mapfile=colormap.gif -fs 2>/dev/null | \
-      convert - -scale 80x80   dither_fs_modified.gif
-  compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
+      magick - -scale 80x80   dither_fs_modified.gif
+  magick compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
 </CODE></PRE></TD></TR></TABLE>
 -->
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
+  magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
           -dither FloydSteinberg -remap colortable.gif \
           -scale 80x80   dither_fs_modified.gif
-  compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
+  magick compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR><TD ALIGN=center>
   <A HREF="dither_fs.gif"
@@ -1892,11 +1892,11 @@ region  so you can see this changing pattern more clearly.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=/dev/null>
-  convert -size 80x80 xc:'#999999' \
+  magick -size 80x80 xc:'#999999' \
           \( +clone -draw 'fill #C28 point 2,2' \) \
           \( +clone -draw 'fill #28C point 2,2' \) \
           -remap colortable.gif  -set delay 50 -loop 0   dither_anim.gif
-  convert dither_anim.gif -crop 10x10+40+40 +repage \
+  magick dither_anim.gif -crop 10x10+40+40 +repage \
                               -scale 80x80     dither_anim_magnify.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="dither_anim.gif"
@@ -1970,7 +1970,7 @@ dither.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 xc:SkyBlue \
+  magick -size 100x60 xc:SkyBlue \
           -fill DodgerBlue -draw 'circle 50,70 15,35' \
           -fill RoyalBlue  -draw 'circle 50,70 30,45' \
           -blur 0x5  -colors 64     speckle_gradient.gif
@@ -1989,7 +1989,7 @@ But if we add a patch of pure white to the above...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 xc:SkyBlue \
+  magick -size 100x60 xc:SkyBlue \
           -fill DodgerBlue -draw 'circle 50,70 15,35' \
           -fill RoyalBlue  -draw 'circle 50,70 30,45' -blur 0x5 \
           -fill white -draw 'rectangle 40,40 60,55' \
@@ -2012,7 +2012,7 @@ clearly...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert speckle_problem.gif -crop 15x15+75+0 +repage \
+  magick speckle_problem.gif -crop 15x15+75+0 +repage \
           -scale 90x90    speckle_prob_mag.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="speckle_prob_mag.gif"
@@ -2021,7 +2021,7 @@ clearly...
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that magnification shows at least two colors
-  [ `identify -format %k speckle_prob_mag.gif` -eq 1 ] && echo >&2 \
+  [ `magick identify -format %k speckle_prob_mag.gif` -eq 1 ] && echo >&2 \
   "ASSERTION FAILURE: No E-Dither Speckle was found"
 </CODE> -->
 
@@ -2042,7 +2042,7 @@ accumulation of error, the more spread out those white pixels are and the
 more, out-of-place, they appear.  </P>
 
 <B>The best solution</B> is to switch to some other image format that does not
-have a limited color table.  For example convert your GIF format image to PNG.
+have a limited color table.  For example magick your GIF format image to PNG.
 This will avoid the need for color quantization (reduction) and hence the need
 to dither the reduced colors. </P>
 
@@ -2072,7 +2072,7 @@ its look.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 xc:SkyBlue \
+  magick -size 100x60 xc:SkyBlue \
           -fill DodgerBlue -draw 'circle 50,70 15,35' \
           -fill RoyalBlue  -draw 'circle 50,70 30,45' -blur 0x5 \
           -fill white -draw 'circle 50,45 40,40' \
@@ -2090,7 +2090,7 @@ And a magnification of the same area as before.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert speckle_fixed.gif -crop 15x15+85+0 +repage \
+  magick speckle_fixed.gif -crop 15x15+85+0 +repage \
           -scale 90x90    speckle_fix_mag.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="speckle_fix_mag.gif"
@@ -2099,7 +2099,7 @@ And a magnification of the same area as before.
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that magnification shows at least two colors
-  [ `identify -format %k speckle_fix_mag.gif` -eq 1 ] && echo >&2 \
+  [ `magick identify -format %k speckle_fix_mag.gif` -eq 1 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Speckle found in 'Fixed image'"
 </CODE> -->
 
@@ -2128,7 +2128,7 @@ needed, then overlay the white box and its additional color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 xc:SkyBlue \
+  magick -size 100x60 xc:SkyBlue \
           -fill DodgerBlue -draw 'circle 50,70 15,35' \
           -fill RoyalBlue  -draw 'circle 50,70 30,45' -blur 0x5 \
           -colors 63 \
@@ -2139,7 +2139,7 @@ needed, then overlay the white box and its additional color.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
-  colors=`identify -format %k speckle_perfect.gif`
+  colors=`magick identify -format %k speckle_perfect.gif`
   [ "$colors" -lt 10 ] && echo >&2 \
   "ASSERTION FAILURE: 64 Color Image saved with too few colors ($colors)"
 </CODE> -->
@@ -2174,13 +2174,13 @@ filter', such as "<CODE><A HREF="../option_link.cgi?median"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert speckle_problem.gif -median 1 speckle_median.gif
+  magick speckle_problem.gif -median 1 speckle_median.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="speckle_median.gif"
      ><IMG SRC="speckle_median.gif"      WIDTH=100  HEIGHT=60
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
-<!-- convert speckle_problem.gif -despeckle -despeckle speckle_despeckle.gif
+<!-- magick speckle_problem.gif -despeckle -despeckle speckle_despeckle.gif
 ->
 
 Note however that the dithering between the various color 'zones' was adversely
@@ -2215,7 +2215,7 @@ Here is a typical example.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png  -monochrome     monochrome.gif
+  magick logo.png  -monochrome     monochrome.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="monochrome.gif"
      ><IMG SRC="monochrome.gif"      WIDTH=100  HEIGHT=100
@@ -2232,7 +2232,7 @@ We can see this by asking IM to dither a gradient image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 15x640 gradient: -rotate 90 \
+  magick -size 15x640 gradient: -rotate 90 \
                    -monochrome     monochrome_gradient.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="monochrome_gradient.gif"
@@ -2240,10 +2240,10 @@ We can see this by asking IM to dither a gradient image.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
-  convert monochrome_gradient.gif -crop 1x1+0+0 +repage txt: |\
+  magick monochrome_gradient.gif -crop 1x1+0+0 +repage txt: |\
          tail -n 1 | grep -q -v black && echo >&2 \
   "ASSERTION FAILURE: Monochrome did not generate black."
-  convert monochrome_gradient.gif -flop -crop 1x1+0+0 +repage txt: |\
+  magick monochrome_gradient.gif -flop -crop 1x1+0+0 +repage txt: |\
          tail -n 1 | grep -q -v white && echo >&2 \
   "ASSERTION FAILURE: Monochrome did not generate white."
 </CODE> -->
@@ -2262,8 +2262,8 @@ a pure black and white colormap (supplied by a built-in pattern image).
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png  -remap pattern:gray50  mono_remap.gif
-  convert -size 15x640 gradient: -rotate 90 \
+  magick logo.png  -remap pattern:gray50  mono_remap.gif
+  magick -size 15x640 gradient: -rotate 90 \
                    -remap pattern:gray50     mono_remap_gradient.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="mono_remap.gif"
@@ -2286,10 +2286,10 @@ other threshold range you like.  </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert xc:gray20  xc:white  +append   ctrl_colors.gif
-  convert logo.png -colorspace Gray \
+  magick xc:gray20  xc:white  +append   ctrl_colors.gif
+  magick logo.png -colorspace Gray \
           -remap ctrl_colors.gif  -normalize  mono_remap_ctrl.gif
-  convert -size 15x640 gradient: -rotate 90 \
+  magick -size 15x640 gradient: -rotate 90 \
           -remap ctrl_colors.gif  -normalize  mono_remap_grad_ctrl.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="mono_remap_ctrl.gif"
@@ -2303,7 +2303,7 @@ other threshold range you like.  </P>
 </DIV></P>
 
 What "<CODE><A HREF="../option_link.cgi?monochrome" >-monochrome</A></CODE>"
-actually does is to first convert the given image first into a grey scale
+actually does is to first magick the given image first into a grey scale
 image, after that it performs a two color '<A HREF="#colors" >Color
 Quantization</A>', to decide the threshold colors to dither the image with.
 This is what the next section of examples will explore. </P>
@@ -2333,7 +2333,7 @@ HREF="../option_link.cgi?colors" >-colors</A></CODE>" operator.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png   -colors 2 -colorspace gray  -normalize \
+  magick logo.png   -colors 2 -colorspace gray  -normalize \
                                                  colors_monochrome.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="colors_monochrome.gif"
@@ -2343,7 +2343,7 @@ HREF="../option_link.cgi?colors" >-colors</A></CODE>" operator.
 
 However the result will not be the same as using  "<CODE><A
 HREF="../option_link.cgi?monochrome" >-monochrome</A></CODE>", as we didn't
-convert the image to grey-scale first. </P>
+magick the image to grey-scale first. </P>
 
 Instead the image was dithered directly between the two non-grey color values
 chosen.
@@ -2362,10 +2362,10 @@ are not the same.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 20x640 gradient:red-blue -rotate 90    gradient_rb.png
-  convert gradient_rb.png   -colors 2 -colorspace gray \
+  magick -size 20x640 gradient:red-blue -rotate 90    gradient_rb.png
+  magick gradient_rb.png   -colors 2 -colorspace gray \
                                 -normalize        colors_threshold.gif
-  convert gradient_rb.png       -monochrome       mono_threshold.gif
+  magick gradient_rb.png       -monochrome       mono_threshold.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gradient_rb.png"
      ><IMG SRC="gradient_rb.png"          WIDTH=640  HEIGHT=20
@@ -2404,7 +2404,7 @@ the internal operation of the "<CODE><A HREF="../option_link.cgi?monochrome"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png -colorspace gray   -colors 2  -normalize \
+  magick logo.png -colorspace gray   -colors 2  -normalize \
                                                  monochrome_equivelent.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="monochrome_equivelent.gif"
@@ -2421,7 +2421,7 @@ HREF="../option_link.cgi?threshold" >-threshold</A></CODE>" setting.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png  -colorspace gray  +dither  -colors 2  -normalize \
+  magick logo.png  -colorspace gray  +dither  -colors 2  -normalize \
            threshold_two_grays.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="threshold_two_grays.gif"
@@ -2450,7 +2450,7 @@ processing, you can threshold an image based on the best color separation
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png  +dither  -colors 2  -colorspace gray -normalize \
+  magick logo.png  +dither  -colors 2  -colorspace gray -normalize \
            threshold_two_color.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="threshold_two_color.gif"
@@ -2501,9 +2501,9 @@ off dithering using the "<CODE><A HREF="../option_link.cgi?dither"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png  -dither None       -remap colortable.gif  remap_logo_no.gif
-  convert logo.png  -dither Riemersma  -remap colortable.gif  remap_logo_rm.gif
-  convert logo.png  -dither FloydSteinberg \
+  magick logo.png  -dither None       -remap colortable.gif  remap_logo_no.gif
+  magick logo.png  -dither Riemersma  -remap colortable.gif  remap_logo_rm.gif
+  magick logo.png  -dither FloydSteinberg \
                                        -remap colortable.gif  remap_logo_fs.gif
 </CODE></PRE></TD></TR></TABLE>
  <A HREF="logo.png"
@@ -2538,11 +2538,11 @@ HREF="http://www.ict.griffith.edu.au/anthony/icons/docs/colors.html" >AIcons Col
 Selection</A> for details). </P>
 
 <!-- <CODE EXECUTE>
-  convert remap_logo_no.gif -unique-colors \
+  magick remap_logo_no.gif -unique-colors \
           -format "%w colors" info: > remap_logo_count_no.txt
-  convert remap_logo_rm.gif -unique-colors \
+  magick remap_logo_rm.gif -unique-colors \
           -format "%w colors" info: > remap_logo_count_rm.txt
-  convert remap_logo_fs.gif -unique-colors \
+  magick remap_logo_fs.gif -unique-colors \
           -format "%w colors" info: > remap_logo_count_fs.txt
 </CODE> -->
 
@@ -2633,13 +2633,13 @@ Guide, Dithering</A>. </P>
 
 To help with this IM provided a built-in colormap image of this special table
 of 216 colors, called "<CODE>netscape:</CODE>".  So lets look at how our test
-image would look on of an old web browser display using these colors.
+image would look on of an old web browser magick display using these colors.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png         -remap netscape:  remap_netscape.gif
-  convert logo.png +dither -remap netscape:  remap_netscape_nd.gif
+  magick logo.png         -remap netscape:  remap_netscape.gif
+  magick logo.png +dither -remap netscape:  remap_netscape_nd.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo.png"
      ><IMG SRC="logo.png"                 WIDTH=100 HEIGHT=100
@@ -2679,7 +2679,7 @@ they will work well.  This is particularly important for symbols and
 navigation images. </P>
 
 Of course today, thanks to the demands by game and web users, you can be
-pretty well assured that most users have a modern computer display that does
+pretty well assured that most users have a modern computer magick display that does
 not have those old color limitations, however the use of this "web safe
 palette" is still around, as it does have other benefits, such an image
 compression.  </P>
@@ -2751,7 +2751,7 @@ Here is one way to get IM to generate this color map...
 <TR><TD WIDTH=100% ALIGN=justify >
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 16x16 xc: -channel R -fx '(i%8)/7' \
+  magick -size 16x16 xc: -channel R -fx '(i%8)/7' \
                           -channel G -fx '(j%8)/7' \
                           -channel B -fx '((i>>3&1)|(j>>2&2))/3' \
           -scale 600% colormap_332.png
@@ -2805,7 +2805,7 @@ need a 8 bit color table.  As such I won't mention it further. </P>
 
 At this time IM does not do gamma corrected color maps directly. </P>
 
-Instead what you should do is convert your image (assuming you have Q16 or
+Instead what you should do is magick your image (assuming you have Q16 or
 better compile time <A HREF="../basics/#quality" >quality</A> version of IM),
 from the sRGB or whatever gamma level the image has to a linear RGB model,
 before doing your dithering. </P>
@@ -2834,9 +2834,9 @@ channels in the image, dithering the image using an error correction dither.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert netscape: -scale 50%  +dither  -posterize 2   posterize_2_ns.gif
-  convert netscape: -scale 50%  +dither  -posterize 3   posterize_3_ns.gif
-  convert netscape: -scale 50%  +dither  -posterize 6   posterize_6_ns.gif
+  magick netscape: -scale 50%  +dither  -posterize 2   posterize_2_ns.gif
+  magick netscape: -scale 50%  +dither  -posterize 3   posterize_3_ns.gif
+  magick netscape: -scale 50%  +dither  -posterize 6   posterize_6_ns.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/netscape.gif"
      ><IMG SRC="../images/netscape.gif"             WIDTH=108  HEIGHT=72
@@ -2880,8 +2880,8 @@ distribution of posterized gray levels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  #convert -size 20x640  gradient: -rotate 90  gradient.png
-  convert gradient.png  +dither  -posterize 5   posterize_gradient.gif
+  #magick -size 20x640  gradient: -rotate 90  gradient.png
+  magick gradient.png  +dither  -posterize 5   posterize_gradient.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="posterize_gradient.gif"
      ><IMG SRC="posterize_gradient.gif"    WIDTH=640   HEIGHT=20
@@ -2893,9 +2893,9 @@ For example lets posterize the IM logo image at various levels...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png  +dither -posterize 2  posterize_logo.gif
-  convert logo.png          -posterize 2  posterize_logo_dither.gif
-  convert logo.png          -posterize 6  posterize_6_logo.gif
+  magick logo.png  +dither -posterize 2  posterize_logo.gif
+  magick logo.png          -posterize 2  posterize_logo_dither.gif
+  magick logo.png          -posterize 6  posterize_6_logo.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo.png"
      ><IMG SRC="logo.png"                   WIDTH=100 HEIGHT=100
@@ -2918,9 +2918,9 @@ As a better test lets poserize the shaded "<A HREF="../images/colorwheel.png"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png  +dither  -posterize 2   posterize_2_cw.gif
-  convert colorwheel.png  +dither  -posterize 3   posterize_3_cw.gif
-  convert colorwheel.png  +dither  -posterize 6   posterize_6_cw.gif
+  magick colorwheel.png  +dither  -posterize 2   posterize_2_cw.gif
+  magick colorwheel.png  +dither  -posterize 3   posterize_3_cw.gif
+  magick colorwheel.png  +dither  -posterize 6   posterize_6_cw.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/colorwheel.png"
      ><IMG SRC="../images/colorwheel.png"           WIDTH=128  HEIGHT=128
@@ -2942,9 +2942,9 @@ And here is the same thing with dithering enabled...
 <!--
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png  -posterize 2   posterize_2_dither.gif
-  convert colorwheel.png  -posterize 3   posterize_3_dither.gif
-  convert colorwheel.png  -posterize 6   posterize_6_dither.gif
+  magick colorwheel.png  -posterize 2   posterize_2_dither.gif
+  magick colorwheel.png  -posterize 3   posterize_3_dither.gif
+  magick colorwheel.png  -posterize 6   posterize_6_dither.gif
 </CODE></PRE></TD></TR></TABLE>
 -->
   <A HREF="../images/colorwheel.png"
@@ -2977,9 +2977,9 @@ with the dithered "<CODE><A HREF="../option_link.cgi?posterize"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png  -ordered-dither o8x8,2   posterize_2_od.gif
-  convert colorwheel.png  -ordered-dither o8x8,3   posterize_3_od.gif
-  convert colorwheel.png  -ordered-dither o8x8,6   posterize_6_od.gif
+  magick colorwheel.png  -ordered-dither o8x8,2   posterize_2_od.gif
+  magick colorwheel.png  -ordered-dither o8x8,3   posterize_3_od.gif
+  magick colorwheel.png  -ordered-dither o8x8,6   posterize_6_od.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/colorwheel.png"
      ><IMG SRC="../images/colorwheel.png"           WIDTH=128  HEIGHT=128
@@ -3021,11 +3021,11 @@ black, while anything larger becomes white. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png     -threshold   -1   threshold_0.gif
-  convert logo.png     -threshold  25%   threshold_25.gif
-  convert logo.png     -threshold  50%   threshold_50.gif
-  convert logo.png     -threshold  75%   threshold_75.gif
-  convert logo.png     -threshold 100%   threshold_100.gif
+  magick logo.png     -threshold   -1   threshold_0.gif
+  magick logo.png     -threshold  25%   threshold_25.gif
+  magick logo.png     -threshold  50%   threshold_50.gif
+  magick logo.png     -threshold  75%   threshold_75.gif
+  magick logo.png     -threshold 100%   threshold_100.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="threshold_0.gif"
      ><IMG SRC="threshold_0.gif"       WIDTH=100 HEIGHT=100
@@ -3044,7 +3044,7 @@ black, while anything larger becomes white. </P>
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-As you can see a value of '<CODE>-1</CODE>' will convert all colors white,
+As you can see a value of '<CODE>-1</CODE>' will magick all colors white,
 while '<CODE>100%</CODE>' converts all colors to black.  A '<CODE>50%</CODE>'
 is of course the most common value used. </P>
 
@@ -3057,7 +3057,7 @@ you will only get a solid white image!
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png  -threshold   0    threshold_black.gif
+  magick logo.png  -threshold   0    threshold_black.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="threshold_black.gif"
      ><IMG SRC="threshold_black.gif"       WIDTH=100 HEIGHT=100
@@ -3067,7 +3067,7 @@ you will only get a solid white image!
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 
-If you actually want to convert all non-pure white colors to black, then
+If you actually want to magick all non-pure white colors to black, then
 I recommend that you threshold the <A HREF="../color_mods/#negated"
 >negated</A> image instead of trying to work out the right threshold value to
 use (one less than IM's current 'MaxRGB'), a value that is dependant on your
@@ -3076,7 +3076,7 @@ specific IM's compile time in <A HREF="../basics/#quality" >Quality, or
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png  -negate -threshold 0 -negate threshold_white.gif
+  magick logo.png  -negate -threshold 0 -negate threshold_white.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="threshold_white.gif"
      ><IMG SRC="threshold_white.gif"       WIDTH=100 HEIGHT=100
@@ -3098,7 +3098,7 @@ HREF="../option_link.cgi?posterize" >-posterize</A></CODE>" operation.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  logo.png  -channel R -threshold 50% \
+  magick logo.png  -channel R -threshold 50% \
                      -channel G -threshold 50% \
                      -channel B -threshold 50%   threshold_posterize.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3134,7 +3134,7 @@ then mapped (using "<CODE><A HREF="../option_link.cgi?normalize"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE_ALREADY_DONE>
-  convert  logo.png  +dither  -colors 2  -colorspace gray -normalize \
+  magick logo.png  +dither  -colors 2  -colorspace gray -normalize \
              threshold_two_color.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="threshold_two_color.gif"
@@ -3168,7 +3168,7 @@ of the image using a random dither.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert  logo.png  -random-threshold  0x100%  random_posterize.gif
+  magick logo.png  -random-threshold  0x100%  random_posterize.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_posterize.gif"
      ><IMG SRC="random_posterize.gif"       WIDTH=100 HEIGHT=100
@@ -3186,7 +3186,7 @@ colors.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert  logo.png  -colorspace Gray -random-threshold  0x100% \
+  magick logo.png  -colorspace Gray -random-threshold  0x100% \
                                                    random_greyscale.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_greyscale.gif"
@@ -3201,7 +3201,7 @@ Here is the correct way to generate a proper random dithered bitmap image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert logo.png  -colorspace Gray -channel B \
+  magick logo.png  -colorspace Gray -channel B \
           -random-threshold 0x100%    -separate   random_monochome.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_monochome.gif"
@@ -3223,7 +3223,7 @@ generated in the special "<CODE><A HREF="../option_link.cgi?channels"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert  logo.png  -channel All -random-threshold 0x100% random_all.gif
+  magick logo.png  -channel All -random-threshold 0x100% random_all.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_all.gif"
      ><IMG SRC="random_all.gif"       WIDTH=100 HEIGHT=100
@@ -3242,14 +3242,14 @@ produces.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  #convert -size 20x640  gradient: -rotate 90  gradient.png
-  convert gradient.png  -channel All \
+  #magick -size 20x640  gradient: -rotate 90  gradient.png
+  magick gradient.png  -channel All \
                         -random-threshold 0x100%  random_grad_0x100.gif
-  convert gradient.png  -channel All \
+  magick gradient.png  -channel All \
                         -random-threshold 10x90%  random_grad_10x90.gif
-  convert gradient.png  -channel All \
+  magick gradient.png  -channel All \
                         -random-threshold 25x75%  random_grad_25x75.gif
-  convert gradient.png  -channel All \
+  magick gradient.png  -channel All \
                         -random-threshold 50x50%  random_grad_50x50.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="random_grad_0x100.gif"
@@ -3286,7 +3286,7 @@ probably the best result for most cases.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert  logo.png  -channel All -random-threshold 30x80%  random_30x80.gif
+  magick logo.png  -channel All -random-threshold 30x80%  random_30x80.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="random_30x80.gif"
      ><IMG SRC="random_30x80.gif"       WIDTH=100 HEIGHT=100
@@ -3377,10 +3377,10 @@ provides.  Remember the argument reflects the tile size of the ordered dither.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png    -ordered-dither o2x2    logo_o2x2.gif
-  convert logo.png    -ordered-dither o3x3    logo_o3x3.gif
-  convert logo.png    -ordered-dither o4x4    logo_o4x4.gif
-  convert logo.png    -ordered-dither o8x8    logo_o8x8.gif
+  magick logo.png    -ordered-dither o2x2    logo_o2x2.gif
+  magick logo.png    -ordered-dither o3x3    logo_o3x3.gif
+  magick logo.png    -ordered-dither o4x4    logo_o4x4.gif
+  magick logo.png    -ordered-dither o8x8    logo_o8x8.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo_o2x2.gif"
      ><IMG SRC="logo_o2x2.gif"       WIDTH=100 HEIGHT=100
@@ -3428,7 +3428,7 @@ certain levels.  </P>
 
 </I></FONT></TD></TR></TABLE></P>
 
-Of course you need to convert the image to grey-scale first to produce a
+Of course you need to magick the image to grey-scale first to produce a
 proper bitmap of all the channels in the image, however as the process is not
 random you don't need to post-process the image as you need to for the <A
 HREF="../option_link.cgi?random-threshold" >-random-threshold</A></CODE>"
@@ -3437,10 +3437,10 @@ operator simplifying things enormously.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png -colorspace Gray  -ordered-dither o2x2  logo_bw_o2x2.gif
-  convert logo.png -colorspace Gray  -ordered-dither o3x3  logo_bw_o3x3.gif
-  convert logo.png -colorspace Gray  -ordered-dither o4x4  logo_bw_o4x4.gif
-  convert logo.png -colorspace Gray  -ordered-dither o8x8  logo_bw_o8x8.gif
+  magick logo.png -colorspace Gray  -ordered-dither o2x2  logo_bw_o2x2.gif
+  magick logo.png -colorspace Gray  -ordered-dither o3x3  logo_bw_o3x3.gif
+  magick logo.png -colorspace Gray  -ordered-dither o4x4  logo_bw_o4x4.gif
+  magick logo.png -colorspace Gray  -ordered-dither o8x8  logo_bw_o8x8.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo_bw_o2x2.gif"
      ><IMG SRC="logo_bw_o2x2.gif"       WIDTH=100 HEIGHT=100
@@ -3465,13 +3465,13 @@ clearly what they look like.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Threshold Non-Dither / Minimal Checkerboard Dither
-  convert gradient.png   -ordered-dither threshold  od_threshold.gif
-  convert gradient.png   -ordered-dither checks     od_checks.gif
+  magick gradient.png   -ordered-dither threshold  od_threshold.gif
+  magick gradient.png   -ordered-dither checks     od_checks.gif
   # Diffused Pixel Dither
-  convert gradient.png   -ordered-dither o2x2       od_o2x2.gif
-  convert gradient.png   -ordered-dither o3x3       od_o3x3.gif
-  convert gradient.png   -ordered-dither o4x4       od_o4x4.gif
-  convert gradient.png   -ordered-dither o8x8       od_o8x8.gif
+  magick gradient.png   -ordered-dither o2x2       od_o2x2.gif
+  magick gradient.png   -ordered-dither o3x3       od_o3x3.gif
+  magick gradient.png   -ordered-dither o4x4       od_o4x4.gif
+  magick gradient.png   -ordered-dither o8x8       od_o8x8.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="od_threshold.gif"
      ><IMG SRC="od_threshold.gif"         WIDTH=640 HEIGHT=20
@@ -3546,13 +3546,13 @@ printed magazines. </P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Halftone Screen (45 degree angle)
-  convert logo.png   -ordered-dither h4x4a    logo_h4x4a.gif
-  convert logo.png   -ordered-dither h6x6a    logo_h6x6a.gif
-  convert logo.png   -ordered-dither h8x8a    logo_h8x8a.gif
+  magick logo.png   -ordered-dither h4x4a    logo_h4x4a.gif
+  magick logo.png   -ordered-dither h6x6a    logo_h6x6a.gif
+  magick logo.png   -ordered-dither h8x8a    logo_h8x8a.gif
   # Halftone Screen (orthogonal)
-  convert logo.png   -ordered-dither h4x4o    logo_h4x4o.gif
-  convert logo.png   -ordered-dither h6x6o    logo_h6x6o.gif
-  convert logo.png   -ordered-dither h8x8o    logo_h8x8o.gif
+  magick logo.png   -ordered-dither h4x4o    logo_h4x4o.gif
+  magick logo.png   -ordered-dither h6x6o    logo_h6x6o.gif
+  magick logo.png   -ordered-dither h8x8o    logo_h8x8o.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo_h4x4a.gif"
      ><IMG SRC="logo_h4x4a.gif"           WIDTH=100 HEIGHT=100
@@ -3583,13 +3583,13 @@ image.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Halftone Screen (45 degree angle)
-  convert logo.png -colorspace Gray  -ordered-dither h4x4a logo_bw_h4x4a.gif
-  convert logo.png -colorspace Gray  -ordered-dither h6x6a logo_bw_h6x6a.gif
-  convert logo.png -colorspace Gray  -ordered-dither h8x8a logo_bw_h8x8a.gif
+  magick logo.png -colorspace Gray  -ordered-dither h4x4a logo_bw_h4x4a.gif
+  magick logo.png -colorspace Gray  -ordered-dither h6x6a logo_bw_h6x6a.gif
+  magick logo.png -colorspace Gray  -ordered-dither h8x8a logo_bw_h8x8a.gif
   # Halftone Screen (orthogonal)
-  convert logo.png -colorspace Gray  -ordered-dither h4x4o logo_bw_h4x4o.gif
-  convert logo.png -colorspace Gray  -ordered-dither h6x6o logo_bw_h6x6o.gif
-  convert logo.png -colorspace Gray  -ordered-dither h8x8o logo_bw_h8x8o.gif
+  magick logo.png -colorspace Gray  -ordered-dither h4x4o logo_bw_h4x4o.gif
+  magick logo.png -colorspace Gray  -ordered-dither h6x6o logo_bw_h6x6o.gif
+  magick logo.png -colorspace Gray  -ordered-dither h8x8o logo_bw_h8x8o.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo_bw_h4x4a.gif"
      ><IMG SRC="logo_bw_h4x4a.gif"           WIDTH=100 HEIGHT=100
@@ -3620,17 +3620,17 @@ each other as the grey-level changes.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Halftone Screen (45 degree angle)
-  convert gradient.png   -ordered-dither h4x4a      od_h4x4a.gif
-  convert gradient.png   -ordered-dither h6x6a      od_h6x6a.gif
-  convert gradient.png   -ordered-dither h8x8a      od_h8x8a.gif
+  magick gradient.png   -ordered-dither h4x4a      od_h4x4a.gif
+  magick gradient.png   -ordered-dither h6x6a      od_h6x6a.gif
+  magick gradient.png   -ordered-dither h8x8a      od_h8x8a.gif
   # Halftone Screen (orthogonal)
-  convert gradient.png   -ordered-dither h4x4o      od_h4x4o.gif
-  convert gradient.png   -ordered-dither h6x6o      od_h6x6o.gif
-  convert gradient.png   -ordered-dither h8x8o      od_h8x8o.gif
-  convert gradient.png   -ordered-dither h16x16o    od_h16x16o.gif
+  magick gradient.png   -ordered-dither h4x4o      od_h4x4o.gif
+  magick gradient.png   -ordered-dither h6x6o      od_h6x6o.gif
+  magick gradient.png   -ordered-dither h8x8o      od_h8x8o.gif
+  magick gradient.png   -ordered-dither h16x16o    od_h16x16o.gif
   # Circle Halftones (black and white)
-  convert gradient.png   -ordered-dither c7x7b      od_c7x7b.gif
-  convert gradient.png   -ordered-dither c7x7w      od_c7x7w.gif
+  magick gradient.png   -ordered-dither c7x7b      od_c7x7b.gif
+  magick gradient.png   -ordered-dither c7x7w      od_c7x7w.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="od_h4x4a.gif"
      ><IMG SRC="od_h4x4a.gif"             WIDTH=640 HEIGHT=20
@@ -3705,7 +3705,7 @@ that can be used.
 <TR VALIGN=center><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png  -set option:distort:viewport '%wx%h+0+0' \
+  magick colorwheel.png  -set option:distort:viewport '%wx%h+0+0' \
           -colorspace CMYK -separate null: \
           \( -size 2x2 xc: \( +clone -negate \) \
                 +append \( +clone -negate \) -append \) \
@@ -3714,7 +3714,7 @@ that can be used.
           \( +clone -distort SRT 30 \) +swap \
           \( +clone -distort SRT 45 \) +swap \
           \( +clone -distort SRT 0 \)  +swap +delete \
-          -compose Overlay -layers composite \
+          -compose Overlay -layers magick composite \
           -set colorspace CMYK -combine -colorspace RGB \
           offset_colorwheel.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3739,7 +3739,7 @@ more blurry 'screen pattern'.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert parrots_med.png  -set option:distort:viewport '%wx%h+0+0' \
+  magick parrots_med.png  -set option:distort:viewport '%wx%h+0+0' \
           -colorspace CMYK -separate null: \
           \( -size 2x2 xc: \( +clone -negate \) \
                 +append \( +clone -negate \) -append \) \
@@ -3748,7 +3748,7 @@ more blurry 'screen pattern'.
           \( +clone -distort SRT 2,30 \) +swap \
           \( +clone -distort SRT 2,45 \) +swap \
           \( +clone -distort SRT 2,0  -blur 0x0.7 \) +swap +delete \
-          -compose Overlay -layers composite \
+          -compose Overlay -layers magick composite \
           -set colorspace CMYK -combine -colorspace RGB \
           offset_parrots.png
 </CODE></PRE></TD></TR></TABLE>
@@ -3814,7 +3814,7 @@ operator can use.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tmaps_list.txt>
-  identify -list threshold
+  magick identify -list threshold
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -3865,7 +3865,7 @@ Here is a gradient dithered using this personal threshold map.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png   -ordered-dither diag      od_diag.gif
+  magick gradient.png   -ordered-dither diag      od_diag.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="od_diag.gif"
      ><IMG SRC="od_diag.gif"              WIDTH=640 HEIGHT=20
@@ -3878,11 +3878,11 @@ channel of a simple shadowed image, a purpose for which I designed it.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x60 xc:none -font Candice -pointsize 50 \
+  magick -size 70x60 xc:none -font Candice -pointsize 50 \
           -fill black -annotate +10+45 'A' -channel RGBA  -blur 0x5 \
           -fill white -stroke black -draw "text 5,40 'A'"   shadow.png
 
-  convert shadow.png  -channel A  -ordered-dither diag   shadow_diag.gif
+  magick shadow.png  -channel A  -ordered-dither diag   shadow_diag.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shadow.png"
      ><IMG SRC="shadow.png"               WIDTH=70 HEIGHT=60
@@ -3939,11 +3939,11 @@ non-dithering ordered dither threshold map, showing just the colors used.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png   -ordered-dither threshold,6  od_threshold_6.gif
-  convert gradient.png   -ordered-dither checks,6     od_checks_6.gif
-  convert gradient.png   -ordered-dither o2x2,6       od_o2x2_6.gif
-  convert gradient.png   -ordered-dither o4x4,6       od_o4x4_6.gif
-  convert gradient.png   -ordered-dither o8x8,6       od_o8x8_6.gif
+  magick gradient.png   -ordered-dither threshold,6  od_threshold_6.gif
+  magick gradient.png   -ordered-dither checks,6     od_checks_6.gif
+  magick gradient.png   -ordered-dither o2x2,6       od_o2x2_6.gif
+  magick gradient.png   -ordered-dither o4x4,6       od_o4x4_6.gif
+  magick gradient.png   -ordered-dither o8x8,6       od_o8x8_6.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="od_threshold_6.gif"
      ><IMG SRC="od_threshold_6.gif"       WIDTH=640 HEIGHT=20
@@ -3980,7 +3980,7 @@ levels or red and green, 4 of blue) which defines a total of 256 colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png   -ordered-dither o8x8,8,8,4   od_o8x8_884.gif
+  magick gradient.png   -ordered-dither o8x8,8,8,4   od_o8x8_884.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="od_o8x8_884.gif"
      ><IMG SRC="od_o8x8_884.gif"          WIDTH=640 HEIGHT=20
@@ -3991,19 +3991,19 @@ Because of the different number of color levels per channel, the above image
 does not contain just pure grey colors, but includes some bluish and yellowish
 pixels which cancels each other out to produce extra levels of greys. </P>
 
-Now compare the <A HREF="#ordered-dither" >O-dithered</A> version against
+Now magick compare the <A HREF="#ordered-dither" >O-dithered</A> version against
 error correction dithered version using a posterization levels of 2, and 6,
 and a "332 colormap" (8 levels of red and green, 4 of blue).
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png  -ordered-dither o8x8        logo_o8x8_2.gif
-  convert logo.png  -posterize 2                logo_posterize_2.gif
-  convert logo.png  -ordered-dither o8x8,6      logo_o8x8_6.gif
-  convert logo.png  -posterize 6                logo_posterize_6.gif
-  convert logo.png  -ordered-dither o8x8,8,8,4  logo_o8x8_332.gif
-  convert logo.png  -remap colormap_332.png     logo_remap_332.gif
+  magick logo.png  -ordered-dither o8x8        logo_o8x8_2.gif
+  magick logo.png  -posterize 2                logo_posterize_2.gif
+  magick logo.png  -ordered-dither o8x8,6      logo_o8x8_6.gif
+  magick logo.png  -posterize 6                logo_posterize_6.gif
+  magick logo.png  -ordered-dither o8x8,8,8,4  logo_o8x8_332.gif
+  magick logo.png  -remap colormap_332.png     logo_remap_332.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="logo_o8x8_2.gif"
      ><IMG SRC="logo_o8x8_2.gif"           WIDTH=100 HEIGHT=100
@@ -4049,7 +4049,7 @@ we just generated.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=/dev/null OUT=logo_color_6.txt>
-  convert logo.png -ordered-dither o8x8,6 -format %k info:
+  magick logo.png -ordered-dither o8x8,6 -format %k info:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -4071,7 +4071,7 @@ color table better, so as to produce a better <A HREF="#ordered-dither"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=/dev/null OUT=logo_color_13.txt>
-  convert logo.png -ordered-dither o8x8,13 -format %k info:
+  magick logo.png -ordered-dither o8x8,13 -format %k info:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -4090,7 +4090,7 @@ a lot better that the results of a simple standard uniform colormap.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert logo.png -ordered-dither o8x8,13    logo_o8x8_13.gif
+  magick logo.png -ordered-dither o8x8,13    logo_o8x8_13.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="logo_o8x8_13.gif"
      ><IMG SRC="logo_o8x8_13.gif"        WIDTH=100   HEIGHT=100
@@ -4155,10 +4155,10 @@ multi-image GIF file (not a GIF animation)...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 2x2 xc:black \
+  magick -size 2x2 xc:black \
           \( +clone -draw 'fill white line 0,0 1,0' \) \
           xc:white     dpat_hlines2x2.gif
-  montage dpat_hlines2x2.gif    -tile x1 -background none -frame 2 \
+  magick montage dpat_hlines2x2.gif    -tile x1 -background none -frame 2 \
           -filter box  -geometry 32x32+5+0    dpat_hlines2x2_imgs.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="dpat_hlines2x2.gif"
@@ -4178,7 +4178,7 @@ image set.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png   dpat_hlines2x2.gif \
+  magick gradient.png   dpat_hlines2x2.gif \
           -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1]' dgrad_hlines2x2.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="dgrad_hlines2x2.gif"
@@ -4211,7 +4211,7 @@ Lets try this dither pattern set again but using a simple shadowed image...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shadow.png dpat_hlines2x2.gif  -channel A \
+  magick shadow.png dpat_hlines2x2.gif  -channel A \
           -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1].g' \
           shadow_dpat_hlines2x2.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -4229,7 +4229,7 @@ Lets try this dither pattern set again but using a simple shadowed image...
 <H3>DIY Ordered Dither Threshold Maps</H3>
 
 The above DIY dither pattern is about as simple a dither pattern as you can
-get, and as such we can convert it directly into a XML threshold map, so that
+get, and as such we can magick it directly into a XML threshold map, so that
 the fast built-in "<CODE><A HREF="../option_link.cgi?ordered-dither"
 >-ordered-dither</A></CODE>" operator can make use of it. </P>
 
@@ -4271,8 +4271,8 @@ So lets try it out...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png  -ordered-dither hlines2x2  od_hlines2x2.gif
-  convert shadow.png  -channel A \
+  magick gradient.png  -ordered-dither hlines2x2  od_hlines2x2.gif
+  magick shadow.png  -channel A \
           -ordered-dither hlines2x2   shadow_hlines2x2.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="od_hlines2x2.gif"
@@ -4316,8 +4316,8 @@ And here is the results of changing the threshold map.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png  -ordered-dither hlines2x2a  od_hlines2x2a.gif
-  convert shadow.png -channel A \
+  magick gradient.png  -ordered-dither hlines2x2a  od_hlines2x2a.gif
+  magick shadow.png -channel A \
           -ordered-dither hlines2x2a  shadow_hlines2x2a.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="od_hlines2x2a.gif"
@@ -4351,12 +4351,12 @@ This was the result.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage dpat_hlines.gif   -filter box   -geometry 60x20+2+0 \
+  magick montage dpat_hlines.gif   -filter box   -geometry 60x20+2+0 \
           -tile x1 -background none  -frame 2   dpat_hlines_images.gif
-  convert gradient.png  dpat_hlines.gif  \
+  magick gradient.png  dpat_hlines.gif  \
           -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1]' \
           dgrad_dpat_hlines.gif
-  convert shadow.png dpat_hlines.gif  -channel A \
+  magick shadow.png dpat_hlines.gif  -channel A \
           -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1].g' \
           shadow_dpat_hlines.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -4387,12 +4387,12 @@ Here is another example of using this dither pattern...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 120x55 xc:white  -draw 'fill #777 ellipse 50,43 30,5 0,360' \
+  magick -size 120x55 xc:white  -draw 'fill #777 ellipse 50,43 30,5 0,360' \
           -motion-blur 0x15+180   -blur 0x2      sphere_shadow.png
-  convert sphere_shadow.png dpat_hlines.gif \
+  magick sphere_shadow.png dpat_hlines.gif \
           -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1]' \
           sphere_shadow_dither.gif
-  convert sphere_shadow_dither.gif   -fill red  -stroke firebrick \
+  magick sphere_shadow_dither.gif   -fill red  -stroke firebrick \
           -draw 'circle 35,25 35,5'     sphere_shadow_hlines.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="sphere_shadow.png"
@@ -4409,7 +4409,7 @@ Here is another example of using this dither pattern...
 </DIV></P>
   
 
-The next step is to convert this set of dither patterns into single threshold
+The next step is to magick this set of dither patterns into single threshold
 map image, rather than a set of multiple images.  This is achieved by using
 some fancy image manipulations to merge all the images together.
 
@@ -4417,7 +4417,7 @@ some fancy image manipulations to merge all the images together.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x10 gradient: -flip -crop 1x1 +repage -delete 0,-1 \
+  magick -size 1x10 gradient: -flip -crop 1x1 +repage -delete 0,-1 \
           -scale 12x4\! null: \( dpat_hlines.gif -delete 0 \) \
           +matte -compose CopyOpacity -layers Composite \
           -reverse -compose Over -flatten +matte dmap_hlines.png
@@ -4427,7 +4427,7 @@ some fancy image manipulations to merge all the images together.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE>
-  convert dmap_hlines.png -scale 120x40 dmap_hlines_mag.png
+  magick dmap_hlines.png -scale 120x40 dmap_hlines_mag.png
 </CODE> -->
 
 The value '<CODE>10</CODE>' is one more than the number of images in the
@@ -4457,7 +4457,7 @@ image (or map).
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png dmap_hlines.png \
+  magick gradient.png dmap_hlines.png \
           -virtual-pixel tile  -fx 'u>=v'   dgrad_dmap_hlines.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="dmap_hlines.png"
@@ -4492,7 +4492,7 @@ worked out in the examples on the page <A
 HREF="../bugs/ordered-dither/#posterize" >Posterized Ordered Dither</A> before
 being incorporated into the IM core functions. </P>
 
-Now that we have a merged threshold image, we next need to convert the above
+Now that we have a merged threshold image, we next need to magick the above
 image into a XML threshold map, that IM can directly read, and the "<CODE><A
 HREF="../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>" operator
 can use.  </P>
@@ -4510,7 +4510,7 @@ threshold image contains.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE >
-  convert dmap_hlines.png pgm:- | pnmdepth 9 | pnmnoraw > dmap_hlines.pgm
+  magick dmap_hlines.png pgm:- | pnmdepth 9 | pnmnoraw > dmap_hlines.pgm
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -4546,7 +4546,7 @@ And here is an example of using this threshold map.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert shadow.png  -channel A  -ordered-dither hlines   shadow_hlines.gif
+  magick shadow.png  -channel A  -ordered-dither hlines   shadow_hlines.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shadow.png"
      ><IMG SRC="shadow.png"               WIDTH=70 HEIGHT=60
@@ -4582,10 +4582,10 @@ pattern for each pixel in the original image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage dpat_symbols.gif   -geometry +5+0 \
+  magick montage dpat_symbols.gif   -geometry +5+0 \
           -tile x1 -background none -mattecolor blue  -frame 3 \
           dpat_syms_images.gif
-  convert eyes.gif -alpha off -colorspace sRGB -grayscale Average \
+  magick eyes.gif -alpha off -colorspace sRGB -grayscale Average \
           +matte -scale 1600% -negate  \
           dpat_symbols.gif -virtual-pixel tile -fx 'u[floor(15.9999*u)+1]' \
           eyes_syms.gif
@@ -4626,9 +4626,9 @@ war games.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  montage dpat_map.gif   -geometry +5+0 -tile x1  -background none  \
+  magick montage dpat_map.gif   -geometry +5+0 -tile x1  -background none  \
           dpat_map_images.gif
-  convert -seed 100 \
+  magick -seed 100 \
           -size 200x200 plasma:'gray(50%)-gray(50%)' -blur 0x15 \
           -channel G -auto-level +channel -set colorspace sRGB \
           dpat_map.gif -virtual-pixel tile  -fx 'u[floor(5.999*u.g)+1]' \
@@ -4713,6 +4713,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/quantize/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/quantize/</CODE>
 </ADDRESS></BODY></HTML>
 

@@ -98,7 +98,7 @@ offset=`convert "$tmp/in.mpc" \
 
 size=`convert "$tmp/edges.mpc" -format '%wx%h' info:`
 
-#display "$tmp/edges.mpc"
+#magick display "$tmp/edges.mpc"
 
 # Fast shepards Method to diffuse colors (good for image up to 256 pixels)
 convert "$tmp/edges.mpc" \
@@ -113,10 +113,10 @@ convert "$tmp/edges.mpc" \
         -background None -compose DstOver -layers merge \
         -alpha opaque "$tmp/diffuse.mpc"
 
-#display "$tmp/diffuse.mpc"
+#magick display "$tmp/diffuse.mpc"
 
 # Compose the fill colors under the hole and output the result
 convert "$tmp/in.mpc" "$tmp/diffuse.mpc" \
-        -compose DstOver -geometry "$offset" -composite \
+        -compose DstOver -geometry "$offset" -magick composite \
         -alpha off "$out"
 

@@ -147,11 +147,11 @@ fi
 # if no starting offset given, see if mask has one
 if [ "X$INIT_OFFSET" = 'X' ]; then
   # first lets see if mask has a page offset
-  OFFSET=`identify -format %O $tmp2`
+  OFFSET=`magick identify -format %O $tmp2`
   # If no page offset, look for a offset comment (of the right format)
   # This is depreciated method of saving the images offset
   if  [ "X$OFFSET" = 'X+0+0' ]; then
-    OFFSET=`identify -format %c $tmp2 | grep '^[-+][0-9][0-9]*[-+][0-9][0-9]*$'`
+    OFFSET=`magick identify -format %c $tmp2 | grep '^[-+][0-9][0-9]*[-+][0-9][0-9]*$'`
   fi
 else
   OFFSET="$INIT_OFFSET"
@@ -166,7 +166,7 @@ if [ -z "$PRESERVE" ]; then
   # Trim the mask and adjust offset due to trim (assumes mask is greyscale!)
   offset_add `convert $tmp2 +repage \
               -bordercolor black -border 1x1 -repage -1-1 \
-              -trim -format %O -identify +repage $tmp2`
+              -trim -format %O -magick identify +repage $tmp2`
 
   if [ "X$MASK_SIZE" != 'X' ]; then
     # Center the mask on an image of the size given
@@ -175,7 +175,7 @@ if [ -z "$PRESERVE" ]; then
             -background black -flatten  $tmp1
 
     # adjust mask offset after trimming the mask.
-    set -$- -- `identify -format "%w %h " $tmp1 $tmp2`
+    set -$- -- `magick identify -format "%w %h " $tmp1 $tmp2`
     offset_add "`expr \( $3 - $1 \) / 2` `expr \( $4 - $2 \) / 2`"
     mv $tmp1 $tmp2    # replace original mask input with new one
     PRESERVE=true     # do not resize mask or image again from this point
@@ -197,16 +197,16 @@ if [ ! -s $tmp1 ]; then
 fi
 
 # Cut out the Source image at the current offset (add outline)
-crop=`identify -format %wx%h$offset $tmp2`
+crop=`magick identify -format %wx%h$offset $tmp2`
 if [ "$OUTLINE" ]; then
   convert $tmp1 -crop $crop\! -background none -flatten +repage \
           \( $tmp2 -edge 1 -blur 0x.5 -normalize -negate \) \
-          -compose multiply -composite \
-          \( $tmp2 +matte \) -compose CopyOpacity -composite \
+          -compose multiply -magick composite \
+          \( $tmp2 +matte \) -compose CopyOpacity -magick composite \
           $tmp1
 else
   convert $tmp1 -crop $crop\! -background none -flatten +repage \
-          \( $tmp2 +matte \) -compose CopyOpacity -composite \
+          \( $tmp2 +matte \) -compose CopyOpacity -magick composite \
           $tmp1
 fi
 
@@ -216,12 +216,12 @@ if [ "$ROTATE" ]; then
     # Trimmed rotate, adjust offset as a result of rotate
     convert $tmp1 -matte -background none -rotate "$ROTATE" \
             -bordercolor none -border 1x1 -trim +repage  $tmp1
-    set -$- -- `identify -format "%w %h " $tmp1 $tmp2`
+    set -$- -- `magick identify -format "%w %h " $tmp1 $tmp2`
     offset_add "`expr \( $3 - $1 \) / 2` `expr \( $4 - $2 \) / 2`"
   else
     # Rotate but preserve original masked size (no offset adjust needed)
     convert $tmp1 -matte \( +clone -background none -rotate "$ROTATE" \) \
-            -gravity center  -compose Src -composite   $tmp1
+            -gravity center  -compose Src -magick composite   $tmp1
   fi
 fi
 
@@ -240,8 +240,8 @@ if [ "$HIGHLIGHT" ]; then
              -blur $shade_blur -shade $shade_angle -normalize \
              -contrast-stretch 0% -fill grey50 -colorize $shade_contrast \
              +sigmoidal-contrast $shade_surface \
-             +clone -compose Overlay -composite \
-          \) -compose In -composite $tmp1
+             +clone -compose Overlay -magick composite \
+          \) -compose In -magick composite $tmp1
 fi
 
 if [ "$THICKNESS" ]; then

@@ -5,7 +5,7 @@
 <TITLE>Color Basics and Channels -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/color_basics/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/color_basics/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -122,7 +122,7 @@ light, we actually sense the light using both red and green sensors.  If our
 color sensors were strictly pure red and green detectors, we would not see any
 yellow colors at all. Rainbows would in fact show 'gaps' in it. </P>
 
-That means a TV or computer display is actually fooling us into seeing yellow
+That means a TV or computer magick display is actually fooling us into seeing yellow
 by the monitor emitting just the right mix of red and green light, rather than
 actual yellow light.  Our color sensors see the same intensity as it would for
 a pure yellow light, and as a result we see yellow, even though in reality we
@@ -194,7 +194,7 @@ For example here are the red, green, and blue components of a rose image.
   <BR>Blue
 </TD></TR></TABLE></P>
 
-Note how the 'Red' image is much brighter to display a rose, than the other
+Note how the 'Red' image is much brighter to magick display a rose, than the other
 two color components. But all three images are bright for the white patch near
 the bottom. </P>
 
@@ -242,7 +242,7 @@ Here I generate an ink masks is needed to generate a rose image using
 just cyan, magenta and yellow inks (assuming the inks are 'linear')
 
 <!-- <CODE EXECUTE>
-  convert rose: -colorspace CMY -separate separate_CMY_%d.gif
+  magick rose: -colorspace CMY -separate separate_CMY_%d.gif
 </CODE> -->
 <TABLE CELLSPACING=0 CELLPADDING=0 ALIGN=center>
 <TR VALIGN=center><TD ALIGN=center>
@@ -274,7 +274,7 @@ remove more of the red.  In other words a cyan mask is the exact negative of
 the mount of red light we want the paper to reflect. </P>
 
 In fact all three of the above channel images are the exact negative of what
-was generated for RGB color-space. </P> So really to convert a RGB image to
+was generated for RGB color-space. </P> So really to magick a RGB image to
 a CMK image all that you need to do is <A HREF="../color_mods/#negate" >Negate
 the Image</A> and then declare the image to be in CMY color-space. </P>
 
@@ -450,7 +450,7 @@ gray values...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:'gray(100%)-gray(0)' \
+  magick -size 100x100 gradient:'gray(100%)-gray(0)' \
           -set colorspace sRGB gradient.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient.gif"
@@ -518,7 +518,7 @@ So lets apply it and see the result of a 'gamma corrected image'..
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:'gray(100%)-gray(0)' -gamma 2.2 \
+  magick -size 100x100 gradient:'gray(100%)-gray(0)' -gamma 2.2 \
           -set colorspace sRGB gradient_gamma.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_gamma.gif"
@@ -575,7 +575,7 @@ However HDMI TV's should come out perfect. </P>
 The image was created using...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 45x256 gradient: -size 10x256 pattern:gray50 \
+  magick -size 45x256 gradient: -size 10x256 pattern:gray50 \
           -duplicate 1,0 +append -set colorspace sRGB -colorspace RGB \
           monitor_sRGB.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -585,7 +585,7 @@ The image was created using...
 </TD></TR></TABLE></P>
 
 Here are some similar images with differnent 'gamma' levels so you can see how
-close your monitor is to a correct '2.2' gamma display for human perception.
+close your monitor is to a correct '2.2' gamma magick display for human perception.
 
 
 <DIV ALIGN=center>
@@ -593,7 +593,7 @@ close your monitor is to a correct '2.2' gamma display for human perception.
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for gamma in 1.6 1.8 2.0 2.2 2.4
   do
-    convert -size 45x256 gradient: -size 10x256 pattern:gray50 \
+    magick -size 45x256 gradient: -size 10x256 pattern:gray50 \
             -duplicate 1,0 +append -gamma $gamma monitor_g$gamma.png
   done
 </CODE></PRE></TD></TR></TABLE>
@@ -633,7 +633,7 @@ closely matches that of sRGB colorspace. </P>
 
 When I wrote this my old screen (provided by work) was extremely poor.  It has
 a Gamma setting of about 1.8, and actually has a different Gamma at the top of
-the display (darker) than that at the bottom of the display (lighter).
+the magick display (darker) than that at the bottom of the magick display (lighter).
 Something that has caused me problems when comparing images at different
 locations on the screen, as the same image looks different, when placed in
 different positions vertically! </P>
@@ -656,7 +656,7 @@ So lets save our linear gradient in a sRGB corrected colorspace.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:'gray(100%)-gray(0)' \
+  magick -size 100x100 gradient:'gray(100%)-gray(0)' \
           -set colorspace RGB -colorspace sRGB    gradient_sRGB.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_sRGB.gif"
@@ -674,7 +674,7 @@ So lets save our linear gradient in a sRGB corrected colorspace.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -size 100x100 gradient:white-black gradient_sRGB.gif
+  magick -size 100x100 gradient:white-black gradient_sRGB.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
 
@@ -700,7 +700,7 @@ So lets save our linear gradient in a sRGB corrected colorspace.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -size 100x100 gradient: -set colorspace sRGB \
+  magick -size 100x100 gradient: -set colorspace sRGB \
           -colorspace RGB gradient_sRGB.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
@@ -739,7 +739,7 @@ are typically not regarded as being in sRGB colorspace. As such when working
 with such file formats it is typically a good idea to use "<CODE>-set
 colorspace ...</CODE>" to ensure the colorspace is as you are expecting. </P>
 
-And here are all three images together so you can compare them.
+And here are all three images together so you can magick compare them.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 ALIGN=center>
 <TR><TD ALIGN=center>
   <A HREF="gradient.gif"
@@ -796,7 +796,7 @@ First lets do thus using the default sRGB input channel.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 40x80 xc:red xc:lime +append \
+  magick -size 40x80 xc:red xc:lime +append \
           -blur 0x20 blur_sRGB.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="blur_sRGB.png"
@@ -815,7 +815,7 @@ Here I blur the same image again but using a linear RGB colorspace.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 40x80 xc:red xc:lime +append \
+  magick -size 40x80 xc:red xc:lime +append \
           -colorspace RGB -blur 0x20 -colorspace sRGB blur_RGB.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="blur_RGB.png"
@@ -860,7 +860,7 @@ in the intermedite colors generated.
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for colorspace in RGB LUV LAB
   do
-    convert -size 80x40 xc:red xc:blue -append \
+    magick -size 80x40 xc:red xc:blue -append \
             -colorspace $colorspace -blur 0x30 -colorspace sRGB \
             colorspace_$colorspace.png
   done
@@ -901,7 +901,7 @@ HREF="../draw/#colorspace" >Drawing with Gamma and Colorspace Correction</A>
 <H2>Color Specification</H2>
 
 Colors in IM can be specified in many ways. The best guide on this is on the
-Official IM Website <A HREF="https://legacy.imagemagick.org/script/color.php"
+Official IM Website <A HREF="https://imagemagick.org/script/color.php"
 >Color Names</A>. </P>
 
 <A NAME="color_names"></A>
@@ -1060,7 +1060,7 @@ All the above 'named' colors are in sRGB colorspace, which is the colorspace
 they were defined in.  But sometimes you want to define a color in a different
 colorspace. For example, in HSL, or CYMK, or even as a XYZ color.  Imagemagick
 can do this and you can see the details of these specifications in <A
-HREF="https://legacy.imagemagick.org/script/color.php#models" >ImageMagick Color
+HREF="https://imagemagick.org/script/color.php#models" >ImageMagick Color
 Names</A>. </P>
 
 <I>Future: Examples of using other colorspaces (still in development)</I></P>
@@ -1102,12 +1102,12 @@ transparency.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50    xc:'#00FF00FF'   color_hex_1.png
-  convert -size 50x50    xc:'#00FF00C0'   color_hex_2.png
-  convert -size 50x50    xc:'#00FF0090'   color_hex_3.png
-  convert -size 50x50    xc:'#00FF0060'   color_hex_4.png
-  convert -size 50x50    xc:'#00FF0030'   color_hex_5.png
-  convert -size 50x50    xc:'#00FF0000'   color_hex_6.png
+  magick -size 50x50    xc:'#00FF00FF'   color_hex_1.png
+  magick -size 50x50    xc:'#00FF00C0'   color_hex_2.png
+  magick -size 50x50    xc:'#00FF0090'   color_hex_3.png
+  magick -size 50x50    xc:'#00FF0060'   color_hex_4.png
+  magick -size 50x50    xc:'#00FF0030'   color_hex_5.png
+  magick -size 50x50    xc:'#00FF0000'   color_hex_6.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
@@ -1132,12 +1132,12 @@ transparency.
 </TD></TR></TABLE>
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
-  opaque=`convert color_hex_1.png -fx A -verbose info: | \
+  opaque=`magick color_hex_1.png -fx A -verbose info: | \
       sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*white.*/\1/p;'`; \
   [ "$opaque" != "2500" ] && echo >&2 \
     "ASSERTION FAILURE: Hex Color '#00FF00FF' is not opaque."
 
-  trans=`convert color_hex_6.png -fx A -verbose info: | \
+  trans=`magick color_hex_6.png -fx A -verbose info: | \
       sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*none.*/\1/p;'`; \
   [ "$trans" != "2500" ] && echo >&2 \
     "ASSERTION FAILURE: Hex Color '#00FF0000' is not transparent."
@@ -1167,12 +1167,12 @@ specified as a decimal fraction between 0.0 (transparent) to 1.0 (opaque).
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50   xc:'rgba(255,0,0, 1.0)'   color_rgba_1.png
-  convert -size 50x50   xc:'rgba(255,0,0, 0.8)'   color_rgba_2.png
-  convert -size 50x50   xc:'rgba(255,0,0, 0.6)'   color_rgba_3.png
-  convert -size 50x50   xc:'rgba(255,0,0, 0.4)'   color_rgba_4.png
-  convert -size 50x50   xc:'rgba(255,0,0, 0.2)'   color_rgba_5.png
-  convert -size 50x50   xc:'rgba(255,0,0, 0.0)'   color_rgba_6.png
+  magick -size 50x50   xc:'rgba(255,0,0, 1.0)'   color_rgba_1.png
+  magick -size 50x50   xc:'rgba(255,0,0, 0.8)'   color_rgba_2.png
+  magick -size 50x50   xc:'rgba(255,0,0, 0.6)'   color_rgba_3.png
+  magick -size 50x50   xc:'rgba(255,0,0, 0.4)'   color_rgba_4.png
+  magick -size 50x50   xc:'rgba(255,0,0, 0.2)'   color_rgba_5.png
+  magick -size 50x50   xc:'rgba(255,0,0, 0.0)'   color_rgba_6.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
@@ -1221,16 +1221,16 @@ can actually set the colors transparency.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50   xc:RoyalBlue                   color_name_1.png
-  convert -size 50x50   xc:RoyalBlue -alpha set \
+  magick -size 50x50   xc:RoyalBlue                   color_name_1.png
+  magick -size 50x50   xc:RoyalBlue -alpha set \
                         -channel A -evaluate set 80%   color_name_2.png
-  convert -size 50x50   xc:RoyalBlue -alpha set \
+  magick -size 50x50   xc:RoyalBlue -alpha set \
                         -channel A -evaluate set 60%   color_name_3.png
-  convert -size 50x50   xc:RoyalBlue -alpha set \
+  magick -size 50x50   xc:RoyalBlue -alpha set \
                         -channel A -evaluate set 40%   color_name_4.png
-  convert -size 50x50   xc:RoyalBlue -alpha set \
+  magick -size 50x50   xc:RoyalBlue -alpha set \
                         -channel A -evaluate set 20%   color_name_5.png
-  convert -size 50x50   xc:RoyalBlue -alpha set \
+  magick -size 50x50   xc:RoyalBlue -alpha set \
                         -channel A -evaluate set  0    color_name_6.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
@@ -1268,7 +1268,7 @@ transparent starting canvas for this to work correctly. For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 50x50 xc:none \
+  magick -size 50x50 xc:none \
           -draw "fill Tomato fill-opacity 0.5 rectangle 0,0 49,49" \
           color_name_draw.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1368,7 +1368,7 @@ data.  </P>
 
 The "<CODE><A HREF="../option_link.cgi?set" >-set</A> colorspace</CODE>"
 (Added IM v6.4.3-7) will change just the in-memory 'colorspace' setting.  That
-is it can convert a RGB image into a HSL image but without changing or
+is it can magick a RGB image into a HSL image but without changing or
 modifying the actual pixel data that the image is using.  The most typical use
 of this is when you are manually <A HREF="#combine" >Combining
 Channel Data</A> to set what is the final colorspace of the combined image.
@@ -1391,9 +1391,9 @@ extract the current contents of each channel as a gray-scale image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -channel R -separate separate_red.gif
-  convert rose: -channel G -separate separate_green.gif
-  convert rose: -channel B -separate separate_blue.gif
+  magick rose: -channel R -separate separate_red.gif
+  magick rose: -channel G -separate separate_green.gif
+  magick rose: -channel B -separate separate_blue.gif
 </CODE></PRE></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
@@ -1449,7 +1449,7 @@ is to create three images, which I output below.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -separate separate_RGB_%d.gif
+  magick rose: -separate separate_RGB_%d.gif
 </CODE></PRE></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
@@ -1467,14 +1467,14 @@ is to create three images, which I output below.
 </DIV></P>
 
 And here we use the "<A HREF="../option_link.cgi?colorspace"
-><CODE>-colorspace</CODE></A>" operator to convert the way IM is storing the
+><CODE>-colorspace</CODE></A>" operator to magick the way IM is storing the
 color data of the image into a <A HREF="#cmyk" >CMYK color representation</A>.
 Then we extract the four color channels involved.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace CMYK -separate separate_CMYK_%d.gif
+  magick rose: -colorspace CMYK -separate separate_CMYK_%d.gif
 </CODE></PRE></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
@@ -1518,14 +1518,14 @@ the rose image, using a number of different representations.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace Gray                      channel_gray.gif
-  convert rose: -grayscale Rec709Luma                 channel_luma709.gif
-  convert rose: -grayscale Rec601Luma                 channel_luma601.gif
-  convert rose: -colorspace HSI  -channel B -separate channel_average.gif
-  convert rose: -colorspace HSL  -channel B -separate channel_lightness.gif
-  convert rose: -colorspace HSB  -channel B -separate channel_brilliance.gif
-  convert rose: -colorspace CMYK -channel K -negate -separate channel_black.gif
-  convert rose: -colorspace LAB  -channel R -separate channel_lab_light.gif
+  magick rose: -colorspace Gray                      channel_gray.gif
+  magick rose: -grayscale Rec709Luma                 channel_luma709.gif
+  magick rose: -grayscale Rec601Luma                 channel_luma601.gif
+  magick rose: -colorspace HSI  -channel B -separate channel_average.gif
+  magick rose: -colorspace HSL  -channel B -separate channel_lightness.gif
+  magick rose: -colorspace HSB  -channel B -separate channel_brilliance.gif
+  magick rose: -colorspace CMYK -channel K -negate -separate channel_black.gif
+  magick rose: -colorspace LAB  -channel R -separate channel_lab_light.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
 <TD ALIGN=center>
@@ -1605,9 +1605,9 @@ HREF="../transform/#fx" >FX DIY Operator</A>.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose: -fx R channel_red.gif
-  convert  rose: -fx G channel_green.gif
-  convert  rose: -fx B channel_blue.gif
+  magick rose: -fx R channel_red.gif
+  magick rose: -fx G channel_green.gif
+  magick rose: -fx B channel_blue.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"
@@ -1647,7 +1647,7 @@ exactly the reverse of "<A HREF="../option_link.cgi?separate"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  separate_red.gif separate_green.gif separate_blue.gif \
+  magick separate_red.gif separate_green.gif separate_blue.gif \
            -combine -set colorspace sRGB rose_combined.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="separate_red.gif"
@@ -1676,7 +1676,7 @@ re-combine.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -separate -swap 0,2 -combine rose_rb_swap.gif
+  magick rose: -separate -swap 0,2 -combine rose_rb_swap.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_rb_swap.gif"
      ><IMG SRC="rose_rb_swap.gif"
@@ -1709,7 +1709,7 @@ will be set from the current "<A HREF="../option_link.cgi?background"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  separate_red.gif separate_blue.gif -background black \
+  magick separate_red.gif separate_blue.gif -background black \
            -channel blue,red  -combine    rose_red_blue.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="separate_red.gif"
@@ -1745,7 +1745,7 @@ operator to map the pixel data back to normal RGB data.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert separate_HSB_?.gif  -set colorspace HSB  -combine  \
+  magick separate_HSB_?.gif  -set colorspace HSB  -combine  \
           -colorspace sRGB  rose_HSB_combined.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_HSB_combined.gif"
@@ -1760,7 +1760,7 @@ due to the need for a fourth color channel.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert separate_CMYK_?.gif  -set colorspace CMYK  -combine  \
+  magick separate_CMYK_?.gif  -set colorspace CMYK  -combine  \
           -colorspace sRGB  rose_CMYK_combined.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_CMYK_combined.gif"
@@ -1777,10 +1777,10 @@ HREF="../compose/#channel" >Channel Copied</A> into that pre-prepared image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert separate_HSB_0.gif -colorspace HSB \
-          separate_HSB_0.gif -compose CopyRed   -composite \
-          separate_HSB_1.gif -compose CopyGreen -composite \
-          separate_HSB_2.gif -compose CopyBlue  -composite \
+  magick separate_HSB_0.gif -colorspace HSB \
+          separate_HSB_0.gif -compose CopyRed   -magick composite \
+          separate_HSB_1.gif -compose CopyGreen -magick composite \
+          separate_HSB_2.gif -compose CopyBlue  -magick composite \
           -colorspace sRGB   rose_HSB_combined_alt.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_HSB_combined_alt.gif"
@@ -1816,7 +1816,7 @@ image again. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace Lab -separate \
+  magick rose: -colorspace Lab -separate \
           \( -clone 0 -negate \) -swap 0 +delete \
           -combine -set colorspace Lab \
           -colorspace sRGB   rose_light_neg.gif
@@ -1850,7 +1850,7 @@ luminance channel in order to negate it.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace Lab \
+  magick rose: -colorspace Lab \
           -channel R   -negate   +channel \
           -colorspace sRGB rose_light_neg2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1883,7 +1883,7 @@ the unwanted channel...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace HSL \
+  magick rose: -colorspace HSL \
           -channel G  -evaluate set 0  +channel \
           -colorspace sRGB rose_grey.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1984,7 +1984,7 @@ colorspace.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace HSB -separate separate_HSB_%d.gif
+  magick rose: -colorspace HSB -separate separate_HSB_%d.gif
 </CODE></PRE></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
@@ -2007,7 +2007,7 @@ Lightness).
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace HSL -separate separate_HSL_%d.gif
+  magick rose: -colorspace HSL -separate separate_HSL_%d.gif
 </CODE></PRE></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
@@ -2062,13 +2062,13 @@ generate perfect '<CODE>HSL</CODE>' color wheel.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x300 gradient: -rotate 90 \
+  magick -size 100x300 gradient: -rotate 90 \
           -distort Arc '360 -90.1 50' +repage \
           -gravity center -crop 100x100+0+0 +repage  angular.png
-  convert -size 100x100 xc:white                     solid.png
-  convert -size 100x100 radial-gradient: -negate     radial.png
+  magick -size 100x100 xc:white                     solid.png
+  magick -size 100x100 radial-gradient: -negate     radial.png
 
-  convert angular.png solid.png radial.png \
+  magick angular.png solid.png radial.png \
           -combine -set colorspace HSL \
           -colorspace sRGB colorwheel_HSL.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2110,7 +2110,7 @@ generate perfect '<CODE>HSL</CODE>' color wheel.
 
   On the other hand the resulting image while generated in linear RGB
   colorspace, is being saved as sRGB colorspace to ensure that browsers
-  and other image display programs, display the gradient in a way
+  and other image magick display programs, magick display the gradient in a way
   that works well visually.
 </I></FONT></TD></TR></TABLE></P>
 
@@ -2144,16 +2144,16 @@ four of these 'hex-cone' colorspaces.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert angular.png solid.png radial.png \
+  magick angular.png solid.png radial.png \
           -combine -set colorspace HSL \
           -colorspace sRGB colorwheel_HSL.png
-  convert angular.png solid.png radial.png \
+  magick angular.png solid.png radial.png \
           -combine -set colorspace HSB \
           -colorspace sRGB colorwheel_HSB.png
-  convert angular.png solid.png radial.png \
+  magick angular.png solid.png radial.png \
           -combine -set colorspace HCL \
           -colorspace sRGB colorwheel_HCL.png
-  convert angular.png solid.png radial.png \
+  magick angular.png solid.png radial.png \
           -combine -set colorspace HCLp \
           -colorspace sRGB colorwheel_HCLp.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2206,19 +2206,19 @@ colorspaces at a 50% intensity.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:black \
+  magick -size 100x100 xc:black \
           -fill white  -draw 'circle 49.5,49.5 40,4' \
           -fill black  -draw 'circle 49.5,49.5 40,30' \
           -alpha copy -channel A -morphology dilate diamond anulus.png
-  convert hue_angular.png -size 100x100 xc:white xc:gray50 \
+  magick hue_angular.png -size 100x100 xc:white xc:gray50 \
           -combine -set colorspace HSL -colorspace RGB \
-          anulus.png -alpha off -compose Multiply -composite \
-          anulus.png -alpha on  -compose DstIn -composite \
+          anulus.png -alpha off -compose Multiply -magick composite \
+          anulus.png -alpha on  -compose DstIn -magick composite \
           -colorspace sRGB hues_HSL.png
-  convert hue_angular.png -size 100x100 xc:white xc:gray50 \
+  magick hue_angular.png -size 100x100 xc:white xc:gray50 \
           -combine -set colorspace HCL -colorspace RGB \
-          anulus.png -alpha off -compose Multiply -composite \
-          anulus.png -alpha on  -compose DstIn -composite \
+          anulus.png -alpha off -compose Multiply -magick composite \
+          anulus.png -alpha on  -compose DstIn -magick composite \
           -colorspace sRGB hues_HCL.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE VALIGN=top>
@@ -2272,7 +2272,7 @@ two colorspaces actually are.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( -clone 0 -colorspace LAB -separate +append \) \
+  magick rose: \( -clone 0 -colorspace LAB -separate +append \) \
                 \( -clone 0 -colorspace LUV -separate +append \) \
           -delete 0 -append -set colorspace sRGB separate_lab_luv.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2320,10 +2320,10 @@ equivalent '<CODE>HCL</CODE>' colorspace shown above.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert radial.png solid.png angular.png \
+  magick radial.png solid.png angular.png \
           -combine -set colorspace LCHab \
           -colorspace sRGB colorwheel_LCHab.png
-  convert radial.png solid.png angular.png \
+  magick radial.png solid.png angular.png \
           -combine -set colorspace LCHuv \
           -colorspace sRGB colorwheel_LCHuv.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2383,7 +2383,7 @@ You would have to be very careful, with many image processing operators in
 this colorspace as it has an 'offset' to allow it to handle negative numbers.
 And while some operators like resize and distort can be used directly on this
 colorspace, it is probably a better idea to use a HDRI version of ImageMagick,
-and convert to linear RGB (with negatives), for more general image processing.
+and magick to linear RGB (with negatives), for more general image processing.
 
 <I>Examples and more information on using this colorspace would be good</I>
 
@@ -2436,7 +2436,7 @@ you would use a command like this...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert balloon.gif  -fill white -opaque blue   balloon_white.gif
+  magick balloon.gif  -fill white -opaque blue   balloon_white.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
   <A HREF="../images/balloon.gif"
@@ -2454,7 +2454,7 @@ Basically any color that was 'blue' has been replaced with the current
 
 However as of IM v6.2.7, this operator is limited by the "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting.  As such, to
-convert a color (say blue) to transparency, you will need to specify
+magick a color (say blue) to transparency, you will need to specify
 a "<CODE><A HREF="../option_link.cgi?channel" >-channel</A></CODE>" to include
 the alpha channel to make colors transparent.  You will also need to ensure
 the image has a 'matte' or <A HREF="../basics/#alpha" >alpha channel</A>
@@ -2464,7 +2464,7 @@ enabled, to hold the transparency information.  </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert balloon.gif   -alpha set  -channel RGBA \
+  magick balloon.gif   -alpha set  -channel RGBA \
                         -fill none -opaque blue   balloon_none.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
@@ -2486,7 +2486,7 @@ HREF="../option_link.cgi?transparent" >-transparent</A></CODE>".
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert balloon.gif  -transparent blue   balloon_trans.gif
+  magick balloon.gif  -transparent blue   balloon_trans.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
   <A HREF="../images/balloon.gif"
@@ -2508,7 +2508,7 @@ with white, leaving just the pure black borders of the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert balloon.gif  -fill white +opaque black   balloon_borders.gif
+  magick balloon.gif  -fill white +opaque black   balloon_borders.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
   <A HREF="../images/balloon.gif"
@@ -2541,10 +2541,10 @@ This may not seem like much, but when you combine it with a <A HREF="#fuzz"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert balloon.gif \
+  magick balloon.gif \
           \( +clone -matte -transparent black \
              -fill white  -colorize 100% \) \
-          -composite    balloon_mask_non-black.gif
+          -magick composite    balloon_mask_non-black.gif
 
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
@@ -2601,7 +2601,7 @@ specific color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -fill red -draw 'color 0,0 replace' present_blue.gif
+  magick present.gif -fill red -draw 'color 0,0 replace' present_blue.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
   <A HREF="../images/present.gif"
@@ -2629,7 +2629,7 @@ was also made transparent just as they became red in the above...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -matte -fill none \
+  magick present.gif -matte -fill none \
                       -draw 'color 0,0 replace' present_none.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
@@ -2659,7 +2659,7 @@ course.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -matte -fill '#00000080' \
+  magick present.gif -matte -fill '#00000080' \
             -draw 'matte 0,0 replace' present_semi.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
@@ -2684,7 +2684,7 @@ For example..
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -tile pattern:right30 \
+  magick present.gif -tile pattern:right30 \
                 -draw 'color 0,0 replace' present_tile.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
@@ -2718,7 +2718,7 @@ the color that you are trying to replace.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -fill red -draw 'color 0,0 floodfill' present_fill.gif
+  magick present.gif -fill red -draw 'color 0,0 floodfill' present_fill.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <NOBR>
   <A HREF="../images/present.gif"
@@ -2742,7 +2742,7 @@ from all directions, then remove that extra space when finished.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -bordercolor white -border 1x1 \
+  magick present.gif -bordercolor white -border 1x1 \
           -fill red     -draw 'color 0,0 floodfill' \
           -shave 1x1               present_bgnd.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2787,7 +2787,7 @@ For example, add a border of known color to flood fill from edges...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -bordercolor white -border 1x1 \
+  magick present.gif -bordercolor white -border 1x1 \
           -fill red    -floodfill +0+0 white \
           -shave 1x1              present_floodfill.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2812,7 +2812,7 @@ You can also floodfill with a tile pattern.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert present.gif -bordercolor white -border 1x1 \
+  magick present.gif -bordercolor white -border 1x1 \
                 -tile pattern:left30   -floodfill +0+0 white \
                 -shave 1x1           present_pattern.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2838,7 +2838,7 @@ For example, here I try to fill white disks with various colors...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert disks.gif \
+  magick disks.gif \
           -fill Red   -floodfill +30+50 white \
           -fill Green -floodfill +60+60 white \
           -fill Blue  -floodfill +10+40 white \
@@ -2878,7 +2878,7 @@ to make it a red cow.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cow.gif -fill red -opaque black  cow_replace_red.gif
+  magick cow.gif -fill red -opaque black  cow_replace_red.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/cow.gif"
      ><IMG SRC="../images/cow.gif"   WIDTH=100 HEIGHT=100
@@ -2904,13 +2904,13 @@ the difference between these colors is less than the fuzz factor setting. The
 larger the 'fuzz factor' and more 'near' colors will match and be replaced.
 </P>
 
-So lets try that on our cow image so as to convert not only pure-black but
+So lets try that on our cow image so as to magick not only pure-black but
 also near-black colors to red.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cow.gif -fuzz 40%  -fill red -opaque black  cow_replace_fuzz.gif
+  magick cow.gif -fuzz 40%  -fill red -opaque black  cow_replace_fuzz.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/cow.gif"
      ><IMG SRC="../images/cow.gif"   WIDTH=100 HEIGHT=100
@@ -2984,7 +2984,7 @@ that represents approximately the distance from '<CODE>blue</CODE> to
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png \
+  magick colorwheel.png \
           -fuzz 30000 -fill white -opaque blue \
           opaque_blue.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3001,7 +3001,7 @@ turning the unmatched colors to white.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png \
+  magick colorwheel.png \
           -fuzz 30000 -fill white +opaque blue \
           opaque_blue_not.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3020,10 +3020,10 @@ match...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png \
+  magick colorwheel.png \
           \( +clone  -fuzz 30000 -transparent blue \
              -channel RGB +level-colors white +channel \) \
-          -composite   opaque_blue_inv.png
+          -magick composite   opaque_blue_inv.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_blue_inv.png"
      ><IMG SRC="opaque_blue_inv.png"
@@ -3040,7 +3040,7 @@ fully-transparent.  They remain present, just transparent!
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png -fuzz 30000 -transparent blue \
+  magick colorwheel.png -fuzz 30000 -transparent blue \
           -channel A -negate +channel   opaque_blue_inv_alpha.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_blue_inv_alpha.png"
@@ -3058,7 +3058,7 @@ and posibly removing the negated transparency.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png \
+  magick colorwheel.png \
           -fuzz 25000 -transparent blue -transparent red -transparent lime \
           -channel A -negate +channel \
           -background white -alpha remove   opaque_multi_inv.png
@@ -3099,7 +3099,7 @@ and posibly removing the negated transparency.
 <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
   It is likely that better and more realistic color distances can be defined
   using a 'perceptual' colorspace, such as '<CODE>LAB</CODE>', or
-  '<CODE>LUV</CODE>'.  Just convert images into that colorspace before
+  '<CODE>LUV</CODE>'.  Just magick images into that colorspace before
   performing fuzzy color matching.  This will make colors like pure-blue and
   black much closer, and yellow and white closer, than they are in
   '<CODE>sRGB</CODE>' or 'linear-<CODE>RGB</CODE>' colorpsaces.
@@ -3127,7 +3127,7 @@ of the RGB color cube.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png -fuzz 90% -fill white -opaque white  opaque_w90.jpg
+  magick colorwheel.png -fuzz 90% -fill white -opaque white  opaque_w90.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_w90.jpg"
      ><IMG SRC="opaque_w90.jpg"
@@ -3143,7 +3143,7 @@ not within a 10% sphere of black.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png -fuzz 10% -fill white +opaque black  opaque_k10.jpg
+  magick colorwheel.png -fuzz 10% -fill white +opaque black  opaque_k10.jpg
 </CODE></PRE></TD></TR></TABLE></P>
 
 As you can see 10% sphere of colors near the black is much more uniform, than
@@ -3182,11 +3182,11 @@ factor percentage around the blue colors...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png -fuzz 10% -fill white -opaque blue opaque_b10.jpg
-  convert colorwheel.png -fuzz 25% -fill white -opaque blue opaque_b25.jpg
-  convert colorwheel.png -fuzz 57% -fill white -opaque blue opaque_b57.jpg
-  convert colorwheel.png -fuzz 81% -fill white -opaque blue opaque_b81.jpg
-  convert colorwheel.png -fuzz 95% -fill white -opaque blue opaque_b95.jpg
+  magick colorwheel.png -fuzz 10% -fill white -opaque blue opaque_b10.jpg
+  magick colorwheel.png -fuzz 25% -fill white -opaque blue opaque_b25.jpg
+  magick colorwheel.png -fuzz 57% -fill white -opaque blue opaque_b57.jpg
+  magick colorwheel.png -fuzz 81% -fill white -opaque blue opaque_b81.jpg
+  magick colorwheel.png -fuzz 95% -fill white -opaque blue opaque_b95.jpg
 </CODE></PRE></TD></TR></TABLE><NOBR>
   <A HREF="opaque_b10.jpg"
      ><IMG SRC="opaque_b10.jpg"
@@ -3218,18 +3218,18 @@ either using multiple small "<CODE><A HREF="../option_link.cgi?fuzz"
 >-fuzz</A></CODE>" factored matches or a smaller 'inverted match', than
 a single large value. </P>
 
-Here we compare the colors in the image with another color, the 'near-perfect
+Here we magick compare the colors in the image with another color, the 'near-perfect
 gray' color, changing similar colors to that same gray color, as the 'fuzz
 factor' increases.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert colorwheel.png -fuzz 25% -fill gray50 -opaque gray50 opaque_g25.jpg
-  convert colorwheel.png -fuzz 30% -fill gray50 -opaque gray50 opaque_g30.jpg
-  convert colorwheel.png -fuzz 35% -fill gray50 -opaque gray50 opaque_g35.jpg
-  convert colorwheel.png -fuzz 45% -fill gray50 -opaque gray50 opaque_g45.jpg
-  convert colorwheel.png -fuzz 51% -fill gray50 -opaque gray50 opaque_g51.jpg
+  magick colorwheel.png -fuzz 25% -fill gray50 -opaque gray50 opaque_g25.jpg
+  magick colorwheel.png -fuzz 30% -fill gray50 -opaque gray50 opaque_g30.jpg
+  magick colorwheel.png -fuzz 35% -fill gray50 -opaque gray50 opaque_g35.jpg
+  magick colorwheel.png -fuzz 45% -fill gray50 -opaque gray50 opaque_g45.jpg
+  magick colorwheel.png -fuzz 51% -fill gray50 -opaque gray50 opaque_g51.jpg
 </CODE></PRE></TD></TR></TABLE><NOBR>
   <A HREF="opaque_g25.jpg"
      ><IMG SRC="opaque_g25.jpg"
@@ -3296,15 +3296,15 @@ however the <A HREF="#fuzz" >Fuzz Factor</A> remains a constant 20%.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
-          -compose CopyOpacity -composite  trans_gradient.png
-  convert trans_gradient.png -channel RGBA \
+  magick -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
+          -compose CopyOpacity -magick composite  trans_gradient.png
+  magick trans_gradient.png -channel RGBA \
           -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,1.0)' fuzz_trans_100.png
-  convert trans_gradient.png -channel RGBA \
+  magick trans_gradient.png -channel RGBA \
           -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,.75)' fuzz_trans_75.png
-  convert trans_gradient.png -channel RGBA \
+  magick trans_gradient.png -channel RGBA \
           -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,.40)' fuzz_trans_40.png
-  convert trans_gradient.png -channel RGBA \
+  magick trans_gradient.png -channel RGBA \
           -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,0.0)' fuzz_trans_00.png
 </CODE><BR></PRE></TD></TR></TABLE>
 <TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
@@ -3367,7 +3367,7 @@ almost-all semi-transparent colors. For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert trans_gradient.png -channel RGBA \
+  magick trans_gradient.png -channel RGBA \
           -fuzz 95% -fill Gray50 -opaque None \
           -alpha off  fuzz_trans.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3426,22 +3426,22 @@ Color maths (get the average of two or more colors)....
 
   * use -resize to merge the colors
 
-      convert -size 2x1 xc:'#000000' -fill '#DDDDDD' \
+      magick -size 2x1 xc:'#000000' -fill '#DDDDDD' \
               -draw 'point 0,0'  -resize 1x1  txt:-
 
   * Use -average on them!
 
-      convert -size 1x1 xc:'#000000' xc:'#DDDDDD' \
+      magick -size 1x1 xc:'#000000' xc:'#DDDDDD' \
               -average  txt:-
 
     Or for a lot of colors you can use the 'Box' resize filter
-      convert rose: -filter Box -resize 1x1\! txt:
+      magick rose: -filter Box -resize 1x1\! txt:
       # ImageMagick pixel enumeration: 1,1,255,RGB
       0,0: (145, 89, 80) #915950
 
   * Use -fx to apply whatever formula you want
 
-      convert -size 1x1 xc:'#000000' xc:'#DDDDDD' \
+      magick -size 1x1 xc:'#000000' xc:'#DDDDDD' \
               -fx '(u+v)/2'  txt:-
 
   With an ImageMagick API the results can be more directly retrieved from the
@@ -3457,6 +3457,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/color_basics/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/color_basics/</CODE>
 </ADDRESS></BODY></HTML>
 

@@ -88,7 +88,7 @@ fuzz=`echo "$fuzz" | tr -cd '0-9'`  # $remove any '%' leaving just numbers
 # If it wasn't for this we would not need any temporary files at all.
 
 # Read input image, once only as it may be pipelines, and save a MPC copy of it.
-height=`convert "$input" -format '%h' -identify $tmpdir/original.mpc`
+height=`convert "$input" -format '%h' -magick identify $tmpdir/original.mpc`
 
 if [ "X$bg_color" = 'X' ]; then
   bgcolor=`convert $tmpdir/original.mpc -format "%[pixel:u.p{$coords}]" info:`

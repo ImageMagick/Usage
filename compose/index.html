@@ -5,7 +5,7 @@
 <TITLE>Compose -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/compose/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/compose/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -195,9 +195,9 @@ ImageMagick...
 <CENTER>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  composite {<I>overlay</I>} {<I>background</I>} [{<I>mask</I>}] [-compose {<I>method</I>}]   {<I>result</I>}
+  magick composite {<I>overlay</I>} {<I>background</I>} [{<I>mask</I>}] [-compose {<I>method</I>}]   {<I>result</I>}
 
-  convert  {<I>background</I>} {<I>overlay</I>} [{<I>mask</I>}] [-compose {<I>method</I>}] -composite   {<I>result</I>}
+  magick {<I>background</I>} {<I>overlay</I>} [{<I>mask</I>}] [-compose {<I>method</I>}] -magick composite   {<I>result</I>}
 </CODE></PRE></TD></TR></TABLE>
 </CENTER></P>
 
@@ -237,7 +237,7 @@ re-positioned relative to the fixed <I>background</I> image (usually using
 "<CODE><A HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" and
 "<CODE><A HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" settings).
 However, both the <I>overlay</I> image and any meta-data it contains, is
-deleted when the composite operation is finished. </P>
+deleted when the magick composite operation is finished. </P>
 
 Sometimes a third <I>mask</I> image is added to the command.  This image is
 used to define and control what parts of the <I>background</I> image will be
@@ -509,7 +509,7 @@ background image will keep its 'shape' but the colors of the source image will
 sit 'on top' of the background. </P>
 
 However remember the image order is reversed when using the "<CODE><A
-HREF="../option_link.cgi?composite" >convert -composite</A></CODE>" operator.
+HREF="../option_link.cgi?composite" >magick -composite</A></CODE>" operator.
 </P>
 
 These 12 methods define not only which of the two images are
@@ -575,9 +575,9 @@ example of overlaying a single letter image over a background image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -background none  -fill white \
+  magick -background none  -fill white \
           -font Ravie  -pointsize 36   label:A   label_A_white.png
-  composite -gravity center label_A_white.png   rose:   compose_over.gif
+  magick composite -gravity center label_A_white.png   rose:   compose_over.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_A_white.png"
      ><IMG SRC="label_A_white.png"
@@ -601,8 +601,8 @@ Note the reversal of the image order.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:   label_A_white.png \
-          -geometry +5-15   -composite   convert_over.gif
+  magick rose:   label_A_white.png \
+          -geometry +5-15   -magick composite   convert_over.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="convert_over.gif"
      ><IMG SRC="convert_over.gif"
@@ -637,9 +637,9 @@ expanding the image size.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -background none  -fill black \
+  magick -background none  -fill black \
           -font Ravie  -pointsize 36   label:A   label_A_black.png
-  composite -compose Dst_Over  -geometry +5+5 \
+  magick composite -compose Dst_Over  -geometry +5+5 \
           label_A_black.png  label_A_white.png   compose_under.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_A_black.png"
@@ -666,7 +666,7 @@ pattern underneath the shadowed letter we just created.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite  -compose Dst_Over -tile pattern:checkerboard \
+  magick composite  -compose Dst_Over -tile pattern:checkerboard \
              compose_under.png   compose_under_tiled.jpg
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD>
@@ -706,7 +706,7 @@ needing to know just how big the rose image is.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  composite -compose Src  -size 100x100  plasma:tomato-dodgerblue \
+  magick composite -compose Src  -size 100x100  plasma:tomato-dodgerblue \
             rose:   compose_crop.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="compose_crop.gif"
@@ -732,7 +732,7 @@ alpha channel).
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Src -gravity South \
+  magick composite -compose Src -gravity South \
             hand_point.gif   rose:   -alpha set   compose_expand.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="../images/hand_point.gif"
@@ -768,7 +768,7 @@ by the 'Duff-Porter' algorithm.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Copy -gravity South \
+  magick composite -compose Copy -gravity South \
             hand_point.gif   rose:   -alpha set   compose_copy.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_copy.gif"
@@ -801,9 +801,9 @@ It is 'on' by default but you can turn it off by setting it's value to
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  hand_point.gif -alpha set -gravity South \
+  magick rose:  hand_point.gif -alpha set -gravity South \
           -define compose:outside-overlay=false \
-          -compose Src -composite    compose_copy_src.gif
+          -compose Src -magick composite    compose_copy_src.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_copy_src.gif"
      ><IMG SRC="compose_copy_src.gif"
@@ -858,7 +858,7 @@ frame of the result.  The frame, and only the frame, is the result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   -alpha set  -mattecolor Gold  -bordercolor none \
+  magick rose:   -alpha set  -mattecolor Gold  -bordercolor none \
           -compose Dst   -frame 7x7+3+2   compose_frame_dst.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_frame_dst.gif"
@@ -893,7 +893,7 @@ from the rose image. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Dst_In  -gravity center \
+  magick composite -compose Dst_In  -gravity center \
             label_A_white.png  rose: -alpha Set  compose_mask.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_mask.png"
@@ -933,7 +933,7 @@ ignored. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Dst_Out  -gravity center \
+  magick composite -compose Dst_Out  -gravity center \
             label_A_white.png  rose: -alpha Set  compose_erase.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_erase.png"
@@ -955,7 +955,7 @@ the same (to the pixel) as the original '<CODE>rose:</CODE>' image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Plus  compose_mask.png  compose_erase.png \
+  magick composite -compose Plus  compose_mask.png  compose_erase.png \
             compose_rejoin.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_rejoin.png"
@@ -964,19 +964,19 @@ the same (to the pixel) as the original '<CODE>rose:</CODE>' image.
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
   # check the colors come put correctly
-  [ `compare -metric PAE rose: -alpha Set compose_rejoin.png null: 2>&1 |\
+  [ `magick compare -metric PAE rose: -alpha Set compose_rejoin.png null: 2>&1 |\
         sed 's/ .*//'` != '0' ] &&  echo >&2 \
     "ASSERTION FAILURE: Compose IN & OUT do not reform original image\!"
   # Test the alpha channel comes out as a single value
-  [ `convert compose_mask.png  compose_erase.png \
+  [ `magick compose_mask.png  compose_erase.png \
           -channel A,Sync -evaluate multiply .5 \
-          -compose Plus -composite  -alpha extract -unique-colors \
+          -compose Plus -magick composite  -alpha extract -unique-colors \
           -format %k info:` != '1' ] &&  echo >&2 \
     "ASSERTION FAILURE: Compose IN & OUT does not generate a single color\!"
   # And that it is an addition!  (single point test only)
-  [ `convert compose_mask.png  compose_erase.png -crop 1x1+50+29 \
+  [ `magick compose_mask.png  compose_erase.png -crop 1x1+50+29 \
           -channel A,Sync -evaluate add -1 \
-          -compose Plus -composite -alpha extract \
+          -compose Plus -magick composite -alpha extract \
           -depth 16 txt:- | grep FFFDFFFDFFFD | wc -l` != '1' ] &&  echo >&2 \
     "ASSERTION FAILURE: Compose IN & OUT alpha did not 'plus' perfectly\!"
 
@@ -986,11 +986,11 @@ the same (to the pixel) as the original '<CODE>rose:</CODE>' image.
 # But    -alpha Extract    extracts the alpha channel
 
 # Single point test (verbose)
-  convert compose_mask.png  compose_erase.png -depth 16 -crop 1x1+50+29 \
+  magick compose_mask.png  compose_erase.png -depth 16 -crop 1x1+50+29 \
       -print "---Original Colors---\n"  -write txt:- \
       -channel A,Sync -evaluate add -1 \
       -print "---Alpha Decremented---\n"  -write txt:- \
-      -compose Plus -composite \
+      -compose Plus -magick composite \
       -print "--Plus Composition...\n"  -write txt:- \
       -print "--Result should be:  unchanged color,  and alpha-2\n" \
       -print "That is alpha value of 65533 and a hex color of  #...FFFD\n" \
@@ -1020,9 +1020,9 @@ draw by overlaying two circles.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:none -fill white -draw 'circle 35,35 35,5' \
+  magick -size 70x70 xc:none -fill white -draw 'circle 35,35 35,5' \
           \( -size 70x70 xc:none -fill black -draw 'circle 28,30 35,5' \) \
-          -alpha Set -compose Dst_Out  -composite   moon_crescent.png
+          -alpha Set -compose Dst_Out  -magick composite   moon_crescent.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="moon_crescent.png"
      ><IMG SRC="moon_crescent.png"     WIDTH=70  HEIGHT=70
@@ -1072,13 +1072,13 @@ limit it to the circle.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:none \
+  magick -size 70x70 xc:none \
             -fill red -draw 'circle 35,35 10,30'  red_circle.png
 
-  convert -size 70x70 xc:none -draw 'circle 35,35 35,20' \
+  magick -size 70x70 xc:none -draw 'circle 35,35 35,20' \
           -negate  -channel A -blur 0x8    red_highlight.png
 
-  composite -compose ATop -geometry -13-17 red_highlight.png \
+  magick composite -compose ATop -geometry -13-17 red_highlight.png \
             red_circle.png red_ball.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="red_circle.png"
@@ -1114,8 +1114,8 @@ achieves this result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  moon_crescent.png -fx 0 -channel A -blur 0x7 \
-           red_ball.png  +swap -compose ATop -composite  red_ball2.png
+  magick moon_crescent.png -fx 0 -channel A -blur 0x7 \
+           red_ball.png  +swap -compose ATop -magick composite  red_ball2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="red_ball2.png"
      ><IMG SRC="red_ball2.png"     WIDTH=70  HEIGHT=70
@@ -1146,7 +1146,7 @@ use.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Clear null:  rose: -alpha Set compose_clear.png
+  magick composite -compose Clear null:  rose: -alpha Set compose_clear.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_clear.png"
      ><IMG SRC="compose_clear.png"
@@ -1164,7 +1164,7 @@ the operator will clear the image to black, due to the mathematics involved.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Clear null:  rose: -alpha Off compose_black.png
+  magick composite -compose Clear null:  rose: -alpha Off compose_black.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_black.png"
      ><IMG SRC="compose_black.png"
@@ -1180,9 +1180,9 @@ not.  For example:
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  hand_point.gif -alpha Set -gravity South \
+  magick rose:  hand_point.gif -alpha Set -gravity South \
           -define compose:outside-overlay=false \
-          -compose Clear -composite   compose_clear_limited.gif
+          -compose Clear -magick composite   compose_clear_limited.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_clear_limited.gif"
      ><IMG SRC="compose_clear_limited.gif"
@@ -1200,10 +1200,10 @@ It overlays two images then clears the overlapped area to transparency.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 \
+  magick -size 60x60 \
           \( xc:none -fill blue   -draw 'circle 21,39 24,57' \) \
           \( xc:none -fill red    -draw 'circle 39,39 36,57' \) \
-          -compose Xor   -composite   compose_xor_2.png
+          -compose Xor   -magick composite   compose_xor_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_xor_2.png"
      ><IMG SRC="compose_xor_2.png"
@@ -1217,9 +1217,9 @@ result.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60  compose_xor_2.png  \
+  magick -size 60x60  compose_xor_2.png  \
           \( xc:none -fill green  -draw 'circle 30,21 30,3'  \) \
-          -compose Xor   -composite   compose_xor_3.png
+          -compose Xor   -magick composite   compose_xor_3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="compose_xor_3.png"
      ><IMG SRC="compose_xor_3.png"
@@ -1266,9 +1266,9 @@ is produced by composing two gradient images as in the following...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 64x64 gradient:             gradient_src.png
-  convert -size 64x64 gradient: -rotate 90  gradient_dst.png
-  composite gradient_src.png -compose Multiply gradient_dst.png \
+  magick -size 64x64 gradient:             gradient_src.png
+  magick -size 64x64 gradient: -rotate 90  gradient_dst.png
+  magick composite gradient_src.png -compose Multiply gradient_dst.png \
             gradient_result.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
@@ -1320,8 +1320,8 @@ can be very useful. </P>
 
   for method in $methods; do
     [ "X$method" = 'X-none-' ] && continue
-    convert gradient_dst.png gradient_src.png \
-            -compose $method  -composite -compose Over \
+    magick gradient_dst.png gradient_src.png \
+            -compose $method  -magick composite -compose Over \
             -bordercolor blue -border 1 \
             -background LightSteelBlue -pointsize 12 -font Arial \
             -size 66x \( label:"Dest $utf_arrow" \) -append \
@@ -1360,8 +1360,8 @@ compose method a '<I>Burn</I>' style of composition. (See <A HREF="#light"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert label:Rose label_white.gif
-  composite -compose Multiply -gravity center \
+  magick label:Rose label_white.gif
+  magick composite -compose Multiply -gravity center \
             label_white.gif  rose:  compose_multiply.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_white.gif"
@@ -1437,8 +1437,8 @@ background, then onto other images...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -background black -fill white label:Rose label_black.gif
-  composite -compose Screen -gravity center \
+  magick -background black -fill white label:Rose label_black.gif
+  magick composite -compose Screen -gravity center \
             label_black.gif  rose:  compose_screen.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_black.gif"
@@ -1474,7 +1474,7 @@ For example...
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose Bumpmap -gravity SouthEast -geometry +3+3 \
+  magick composite -compose Bumpmap -gravity SouthEast -geometry +3+3 \
             hand_point.gif   cyclops.gif   -alpha Set   compose_bumpmap.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="compose_bumpmap.gif"
@@ -1566,7 +1566,7 @@ to remove the edge coloring or other shading effects.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert text_scan.png -normalize text_scan_norm.png
+  magick text_scan.png -normalize text_scan_norm.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="text_scan_norm.png"
      ><IMG SRC="text_scan_norm.png"
@@ -1580,8 +1580,8 @@ image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert text_scan.png \( +clone -blur 0x20 \) \
-          -compose Divide_Src -composite  text_scan_divide.png
+  magick text_scan.png \( +clone -blur 0x20 \) \
+          -compose Divide_Src -magick composite  text_scan_divide.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="text_scan_divide.png"
      ><IMG SRC="text_scan_divide.png"
@@ -1654,16 +1654,16 @@ the individual channel has color.  For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 xc:none -fill red \
+  magick -size 60x60 xc:none -fill red \
           -draw 'circle 30,21 30,3'   compose_R.png
-  convert -size 60x60 xc:none -fill lime \
+  magick -size 60x60 xc:none -fill lime \
           -draw 'circle 39,39 36,57'  compose_G.png
-  convert -size 60x60 xc:none -fill blue \
+  magick -size 60x60 xc:none -fill blue \
           -draw 'circle 21,39 24,57'  compose_B.png
-  composite -compose plus  compose_R.png compose_G.png  compose_plus_RG.png
-  composite -compose plus  compose_R.png compose_B.png  compose_plus_RB.png
-  composite -compose plus  compose_G.png compose_B.png  compose_plus_GB.png
-  composite -compose plus  compose_R.png compose_plus_GB.png \
+  magick composite -compose plus  compose_R.png compose_G.png  compose_plus_RG.png
+  magick composite -compose plus  compose_R.png compose_B.png  compose_plus_RB.png
+  magick composite -compose plus  compose_G.png compose_B.png  compose_plus_GB.png
+  magick composite -compose plus  compose_R.png compose_plus_GB.png \
             compose_plus_RGB.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="compose_R.png"
@@ -1795,7 +1795,7 @@ HREF="#plus" >Plus</A></CODE>' operation above.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite compose_plus_RGB.png  -compose minus_dst  compose_R.png \
+  magick composite compose_plus_RGB.png  -compose minus_dst  compose_R.png \
             compose_minus.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="compose_minus.png"
@@ -1844,8 +1844,8 @@ wrap to form a second gradient.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 gradient:    gradient.png
-  composite  gradient.png gradient.png -compose ModulusAdd  compose_add.png
+  magick -size 60x60 gradient:    gradient.png
+  magick composite  gradient.png gradient.png -compose ModulusAdd  compose_add.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center><NOBR>
   <A HREF="compose_add.png"
      ><IMG SRC="compose_add.png"     WIDTH=60 HEIGHT=60
@@ -1859,7 +1859,7 @@ gradients such as.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite gradient.png \( gradient.png -rotate -90 \) \
+  magick composite gradient.png \( gradient.png -rotate -90 \) \
             -compose ModulusAdd   gradient_diagonal.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="gradient_diagonal.png"
@@ -1874,7 +1874,7 @@ gradients.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png \( +clone +clone +clone +clone \) \
+  magick gradient.png \( +clone +clone +clone +clone \) \
           -background gray50 -compose ModulusAdd -flatten  gradient_venetian.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="gradient_venetian.png"
@@ -1906,7 +1906,7 @@ instead of black, in seemingly uncontrolled ways.
 <TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -compose subtract  compose_plus_RGB.png  compose_R.png \
+  magick composite -compose subtract  compose_plus_RGB.png  compose_R.png \
             compose_subtract.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
     <A HREF="compose_subtract.png"
@@ -1935,7 +1935,7 @@ The '<CODE>black</CODE>' and
 any colors which are the same will produce black. Basically a simple form of
 image comparison.  </P>
 
-The more common use of this composite method is for comparing two images of
+The more common use of this magick composite method is for comparing two images of
 the same size to see how they differ, and even produce a percentage of that
 difference. </P>
 
@@ -1956,8 +1956,8 @@ For example lets negate half the rose image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 2x1 pattern:gray50  -scale 70x50\! black_n_white.gif
-  composite black_n_white.gif   rose: \
+  magick -size 2x1 pattern:gray50  -scale 70x50\! black_n_white.gif
+  magick composite black_n_white.gif   rose: \
             -gravity center -compose difference   compose_negate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
     <A HREF="black_n_white.gif"
@@ -2041,8 +2041,8 @@ original image get a soft glow about them.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert flower_sm.jpg \( +clone -blur 0x3 \) \
-          -compose Lighten -composite  flower_softglow.jpg
+  magick flower_sm.jpg \( +clone -blur 0x3 \) \
+          -compose Lighten -magick composite  flower_softglow.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/flower_sm.jpg"
      ><IMG SRC="../img_photos/flower_sm.jpg"
@@ -2068,11 +2068,11 @@ use lighten to compose thme together.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:red-black -rotate 90  red_gradient.png
-  convert -size 100x100 gradient:blue-black            blue_gradient.png
+  magick -size 100x100 gradient:red-black -rotate 90  red_gradient.png
+  magick -size 100x100 gradient:blue-black            blue_gradient.png
 
-  convert red_gradient.png blue_gradient.png \
-          -compose Lighten -composite   lighten_by_value.png
+  magick red_gradient.png blue_gradient.png \
+          -compose Lighten -magick composite   lighten_by_value.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="red_gradient.png"
      ><IMG SRC="red_gradient.png"          WIDTH=100 HEIGHT=100
@@ -2135,7 +2135,7 @@ always produce good results. </P>
 <FONT SIZE=3>(select color by intensity)</FONT></H3>
 
 As on IM v6.6.9-5, a '<CODE>Lighten_Intensity</CODE>' and
-'<CODE>Darken_Intensity</CODE>' variant was added.  This will compare the
+'<CODE>Darken_Intensity</CODE>' variant was added.  This will magick compare the
 intensity of the pixels in the two images, than select the pixel values based
 on that result. </P>
 
@@ -2149,8 +2149,8 @@ gradient.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert red_gradient.png blue_gradient.png \
-          -compose Lighten_Intensity -composite   lighten_intensity.png
+  magick red_gradient.png blue_gradient.png \
+          -compose Lighten_Intensity -magick composite   lighten_intensity.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="red_gradient.png"
      ><IMG SRC="red_gradient.png"          WIDTH=100 HEIGHT=100
@@ -2216,7 +2216,7 @@ selected.  The selection however will still be purely based on just the
 un-weighted color intensity. </P>
 
 This means that you can more easilly create a 'shape mask' of the selection,
-based on the intensity of colors in the two images.  You compare the images
+based on the intensity of colors in the two images.  You magick compare the images
 based on color intensity, but only care about the alpha channel value in the
 result. </P>
 
@@ -2230,8 +2230,8 @@ image had the lighter color for that pixel position.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert red_gradient.png -alpha transparent    blue_gradient.png \
-          -compose Lighten_Intensity -composite \
+  magick red_gradient.png -alpha transparent    blue_gradient.png \
+          -compose Lighten_Intensity -magick composite \
           -alpha extract    lighten_intensity_mask.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="lighten_intensity_mask.png"
@@ -2242,7 +2242,7 @@ image had the lighter color for that pixel position.
 Note the alpha values in the two images do not have to be just 'on' and 'off',
 but could be set to some 'referance' value.  That means you could have a whole
 sequence of images, each with a different alpha channel value. You can then
-use this compose method to compare all the images together, and get a map
+use this compose method to magick compare all the images together, and get a map
 which image contained the lightest (or darkest) pixel at each location within
 the image.  </P>
 
@@ -2275,11 +2275,11 @@ This is not easy, and the following is is one such solution...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert red_gradient.png blue_gradient.png \
+  magick red_gradient.png blue_gradient.png \
           \( -clone 0--1 -colorspace Gray \
-             \( -clone 0--1 -compose Lighten -composite \) \
-             -delete 1 -compose Difference -composite -threshold 0 \
-          \) -compose Src -composite     intensity_lightened.png
+             \( -clone 0--1 -compose Lighten -magick composite \) \
+             -delete 1 -compose Difference -magick composite -threshold 0 \
+          \) -compose Src -magick composite     intensity_lightened.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="intensity_lightened.png"
        ><IMG SRC="intensity_lightened.png"   WIDTH=100 HEIGHT=100
@@ -2307,10 +2307,10 @@ find the '<I>Union</I>' (Boolean '<I>Or</I>') of two (or more) groups
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 64x64 xc: -draw 'circle 22,32 5,32'  -negate circle_left.gif
-  convert -size 64x64 xc: -draw 'circle 41,32 58,32' -negate circle_right.gif
-  convert circle_left.gif circle_right.gif \
-          -compose Lighten -composite    circle_union.gif
+  magick -size 64x64 xc: -draw 'circle 22,32 5,32'  -negate circle_left.gif
+  magick -size 64x64 xc: -draw 'circle 41,32 58,32' -negate circle_right.gif
+  magick circle_left.gif circle_right.gif \
+          -compose Lighten -magick composite    circle_union.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="circle_left.gif"
      ><IMG SRC="circle_left.gif"   WIDTH=64 HEIGHT=64
@@ -2331,8 +2331,8 @@ The '<CODE><A HREF="#darken" >Darken</A></CODE>' compose method produces an
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circle_left.gif circle_right.gif \
-          -compose Darken -composite    circle_intersection.gif
+  magick circle_left.gif circle_right.gif \
+          -compose Darken -magick composite    circle_intersection.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="circle_left.gif"
      ><IMG SRC="circle_left.gif"   WIDTH=64 HEIGHT=64
@@ -2353,8 +2353,8 @@ produces an '<I>Exclusive OR</I>', (Boolean '<I>XOR</I>') of the two sets.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circle_left.gif circle_right.gif \
-          -compose Difference -composite    circle_disjunction.gif
+  magick circle_left.gif circle_right.gif \
+          -compose Difference -magick composite    circle_disjunction.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="circle_left.gif"
      ><IMG SRC="circle_left.gif"   WIDTH=64 HEIGHT=64
@@ -2380,8 +2380,8 @@ the '<I>Relative Complement</I>' of two sets of pixels.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert circle_left.gif circle_right.gif \
-          -compose Minus_Src -composite    circle_complement.gif
+  magick circle_left.gif circle_right.gif \
+          -compose Minus_Src -magick composite    circle_complement.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="circle_left.gif"
      ><IMG SRC="circle_left.gif"   WIDTH=64 HEIGHT=64
@@ -2426,11 +2426,11 @@ together.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 64x64 xc:none -draw 'rectangle 20,0 43,63' \
-          gradient: -compose In -composite    alpha_src.png
-  convert alpha_src.png -transverse     alpha_dst.png
-  convert alpha_dst.png  alpha_src.png \
-          -compose Multiply -composite  alpha_result.png
+  magick -size 64x64 xc:none -draw 'rectangle 20,0 43,63' \
+          gradient: -compose In -magick composite    alpha_src.png
+  magick alpha_src.png -transverse     alpha_dst.png
+  magick alpha_dst.png  alpha_src.png \
+          -compose Multiply -magick composite  alpha_result.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
 <TD ALIGN=center>
@@ -2506,10 +2506,10 @@ HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 64x64 gradient:black-none   alpha_grad_src.png
-  convert alpha_grad_src.png -transverse   alpha_grad_dst.png
-  convert alpha_grad_dst.png  alpha_grad_src.png \
-          -compose Multiply -composite  alpha_grad_result.png
+  magick -size 64x64 gradient:black-none   alpha_grad_src.png
+  magick alpha_grad_src.png -transverse   alpha_grad_dst.png
+  magick alpha_grad_dst.png  alpha_grad_src.png \
+          -compose Multiply -magick composite  alpha_grad_result.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
 <TD ALIGN=center>
@@ -2567,8 +2567,8 @@ mathematical function to each channel, separately. </P>
 <TR VALIGN=middle><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert alpha_grad_dst.png  alpha_grad_src.png \
-          -channel RGBA  -compose Multiply -composite  alpha_grad_nosync.png
+  magick alpha_grad_dst.png  alpha_grad_src.png \
+          -channel RGBA  -compose Multiply -magick composite  alpha_grad_nosync.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
     <A HREF="alpha_grad_nosync.png"
        ><IMG SRC="alpha_grad_nosync.png"
@@ -2667,11 +2667,11 @@ effects that are present in the destination. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 64x64 gradient:yellow-blue gradient_yell-blue.jpg
-  convert -size 64x64 gradient: -rotate 90 gradient_grey.jpg
+  magick -size 64x64 gradient:yellow-blue gradient_yell-blue.jpg
+  magick -size 64x64 gradient: -rotate 90 gradient_grey.jpg
 
-  convert gradient_grey.jpg   gradient_yell-blue.jpg \
-          -compose Overlay  -composite   compose_overlay_gradients.jpg
+  magick gradient_grey.jpg   gradient_yell-blue.jpg \
+          -compose Overlay  -magick composite   compose_overlay_gradients.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
 <TD ALIGN=center>
@@ -2706,8 +2706,8 @@ This method, unlike '<CODE><A HREF="#multiply" >Multiply</A></CODE>' or
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient_yell-blue.jpg  gradient_grey.jpg \
-          -compose Overlay   -composite   compose_overlay_gradients2.jpg
+  magick gradient_yell-blue.jpg  gradient_grey.jpg \
+          -compose Overlay   -magick composite   compose_overlay_gradients2.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
 <TD ALIGN=center>
@@ -2746,11 +2746,11 @@ then tint the result with the original image to restore the original colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 64x64  xc:dodgerblue \
+  magick -size 64x64  xc:dodgerblue \
           -draw 'fill skyblue   circle 32,32 7,27'  circle_blue.jpg
-  convert circle_blue.jpg -shade 120x30 -auto-level circle_shaded.jpg
-  convert circle_shaded.jpg  circle_blue.jpg \
-            -compose Overlay -composite   circle_shaded_tinted.jpg
+  magick circle_blue.jpg -shade 120x30 -auto-level circle_shaded.jpg
+  magick circle_shaded.jpg  circle_blue.jpg \
+            -compose Overlay -magick composite   circle_shaded_tinted.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
 <TD ALIGN=center>
@@ -2822,7 +2822,7 @@ Logo Generation</A>. </P>
 <FONT SIZE=3>(add texture or highlight/shadow to an image)</FONT></H3>
 
 This is the same as '<CODE><A HREF="#overlay" >Overlay</A></CODE>' except the
-source and destination images are swapped.  If you compare the gradient images
+source and destination images are swapped.  If you magick compare the gradient images
 of these two operators you can see that the gradient is diagonally transposed,
 showing the swap of the source and destination inputs.  </P>
 
@@ -2855,10 +2855,10 @@ image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -fill gray50 -colorize 100% \
+  magick rose: -fill gray50 -colorize 100% \
           -raise 4 -normalize -blur 0x4  lighting_effect.png
-  convert rose: lighting_effect.png \
-          -compose hardlight -composite  compose_hardlight.png
+  magick rose: lighting_effect.png \
+          -compose hardlight -magick composite  compose_hardlight.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
 <TD ALIGN=center>
@@ -2892,8 +2892,8 @@ Here is an example of direct adding lighting 'texture' to an image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \( granite: -blur 0x.5 -normalize \) \
-          -compose hardlight -composite compose_texture.png
+  magick rose: \( granite: -blur 0x.5 -normalize \) \
+          -compose hardlight -magick composite compose_texture.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="compose_texture.png"
        ><IMG SRC="compose_texture.png"
@@ -2910,9 +2910,9 @@ To combat this you may like to mute the contrast of an overlaid texture.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: \
+  magick rose: \
           \( granite: -blur 0x.5 -normalize  +level 30,70%  \) \
-          -compose hardlight -composite compose_texture_muted.png
+          -compose hardlight -magick composite compose_texture_muted.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="compose_texture_muted.png"
        ><IMG SRC="compose_texture_muted.png"
@@ -2977,8 +2977,8 @@ For example here is the '<CODE>Soft_Light</CODE>' texture mapping.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   \( granite: -blur 0x.5 -normalize \) \
-          -compose softlight -composite compose_softlight.jpg
+  magick rose:   \( granite: -blur 0x.5 -normalize \) \
+          -compose softlight -magick composite compose_softlight.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="compose_softlight.jpg"
        ><IMG SRC="compose_softlight.jpg"
@@ -3003,8 +3003,8 @@ and a perfect-gray color overlays.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x3 gradient: -sample 70x46\! grayscale_3.gif
-  composite grayscale_3.gif  rose: -compose softlight  compose_softlight_2.gif
+  magick -size 1x3 gradient: -sample 70x46\! grayscale_3.gif
+  magick composite grayscale_3.gif  rose: -compose softlight  compose_softlight_2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
     <A HREF="grayscale_3.gif"
        ><IMG SRC="grayscale_3.gif"
@@ -3195,7 +3195,7 @@ a more diffuse 'softer' light source. </P>
 <H3>Linear_Dodge
 <FONT SIZE=3>(Photoshop 'Add' Compose)</FONT></H3>
 
-If you compare the gradient image (right) for '<B><Code>Linear
+If you magick compare the gradient image (right) for '<B><Code>Linear
 Dodge</CODE></B>' with that of '<CODE><A HREF="#plus" >Plus</A></CODE>' you
 will find that for two opaque images they have the exact same effect.
 
@@ -3208,8 +3208,8 @@ That is, for images with no transparency, these two commands with images
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  A  B   -compose    Plus     -composite   R
-  convert  A  B   -compose LinearDodge -composite   R
+  magick A  B   -compose    Plus     -magick composite   R
+  magick A  B   -compose LinearDodge -magick composite   R
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -3264,10 +3264,10 @@ subtract image '<CODE>B</CODE> produce the same resulting image
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  A  B               -compose  minus_src  -composite  R
-  convert  B  A               -compose  minus_dst  -composite  R
-  convert  A \( B -negate \)  -compose linear_burn -composite  R
-  convert  B -negate  A       -compose linear_burn -composite  R
+  magick A  B               -compose  minus_src  -magick composite  R
+  magick B  A               -compose  minus_dst  -magick composite  R
+  magick A \( B -negate \)  -compose linear_burn -magick composite  R
+  magick B -negate  A       -compose linear_burn -magick composite  R
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
 
@@ -3282,8 +3282,8 @@ from the one on the left.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert circle_left.gif \( circle_right.gif -negate \) \
-         -compose LinearBurn -composite   circle_subtract.gif
+  magick circle_left.gif \( circle_right.gif -negate \) \
+         -compose LinearBurn -magick composite   circle_subtract.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="circle_left.gif"
      ><IMG SRC="circle_left.gif"   WIDTH=64 HEIGHT=64
@@ -3360,9 +3360,9 @@ resulting image '<CODE>R</CODE>'... Assuming all the images are the same size.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=90% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  N \( D -negate \)  -compose ColorDodge -composite  R
-  convert  N    D             -compose DivideSrc  -composite  R
-  convert  D    N             -compose DivideDst  -composite  R
+  magick N \( D -negate \)  -compose ColorDodge -magick composite  R
+  magick N    D             -compose DivideSrc  -magick composite  R
+  magick D    N             -compose DivideDst  -magick composite  R
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
 
@@ -3399,7 +3399,7 @@ a division of images. Note the final negation in the command.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=90% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  N -negate D   -compose ColorBurn -composite  -negate  R
+  magick N -negate D   -compose ColorBurn -magick composite  -negate  R
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
 
@@ -3480,11 +3480,11 @@ to produce a nice mottled looking blue moon.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 70x70 xc:black -fill white -draw 'circle 35,35 35,5' \
+  magick -size 70x70 xc:black -fill white -draw 'circle 35,35 35,5' \
                                -fill black -draw 'circle 28,30 35,5' \
           moon_mask.gif
-<r>  convert -size 70x70 plasma:white-dodgerblue  moon_mask.gif \
-          -alpha Off  -compose CopyOpacity   -composite  moon_gradient.png
+<r>  magick -size 70x70 plasma:white-dodgerblue  moon_mask.gif \
+          -alpha Off  -compose CopyOpacity   -magick composite  moon_gradient.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="moon_mask.gif"
      ><IMG SRC="moon_mask.gif"     WIDTH=70  HEIGHT=70
@@ -3617,14 +3617,14 @@ is overlaid on top of the the background, according to the percentages given.
 </P>
 
 <DL><DD><PRE><NOBR>
-<B>    composite -dissolve {<I>percent</I>} overlay  bgnd  result
+<B>    magick composite -dissolve {<I>percent</I>} overlay  bgnd  result
 <BR>
-<BR>   composite -dissolve {<I>src_percent</I>}x{<I>dst_percent</I>} overlay  bgnd  result
+<BR>   magick composite -dissolve {<I>src_percent</I>}x{<I>dst_percent</I>} overlay  bgnd  result
 <BR>
-<BR>  convert bgnd  overlay   -compose dissolve \
+<BR>  magick bgnd  overlay   -compose dissolve \
 <BR> &nbsp;
      &nbsp; -define compose:args={<I>src_percent</I>},{<I>dst_percent</I>} \
-<BR> &nbsp; &nbsp; -composite   result
+<BR> &nbsp; &nbsp; -magick composite   result
 </B></NOBR></PRE></DL>
 
 Providing two arguments (new to IM v6), allows you to exactly define how much
@@ -3649,7 +3649,7 @@ Here is a table of results with various dissolve arguments...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  composite -dissolve {<I>argument</I>}  -gravity South \
+  magick composite -dissolve {<I>argument</I>}  -gravity South \
             star.gif   dragon_sm.gif -alpha Set   {<I>result</I>}
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center><NOBR>
@@ -3692,7 +3692,7 @@ arguments) will produce different results. </P>
     As such it is probably a good idea to tell IM to give all images an alpha
     channel using the <NOBR>"<CODE><A HREF="../option_link.cgi?alpha"
     >-alpha</A> Set</CODE>"</NOBR> operator before applying the
-    '<CODE>dissolve</CODE>' composite method.
+    '<CODE>dissolve</CODE>' magick composite method.
 
 </I></FONT></TD></TR></TABLE></P>
 
@@ -3705,10 +3705,10 @@ opaque.  For example:
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon_sm.gif star.gif -alpha on \
+  magick dragon_sm.gif star.gif -alpha on \
           -compose dissolve -define compose:args='50,50' \
-          -gravity South  -composite     dissolve_50_50.png
-  composite -compose Dst_Over -tile pattern:checkerboard \
+          -gravity South  -magick composite     dissolve_50_50.png
+  magick composite -compose Dst_Over -tile pattern:checkerboard \
             dissolve_50_50.png   dissolve_50_50_bg.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="dissolve_50_50_bg.png"
@@ -3773,14 +3773,14 @@ is associative (arguments are swappable), while "<CODE><A
 HREF="../option_link.cgi?dissolve" >-dissolve</A></CODE>" is not.  </P>
 
 <DL><DD><PRE><NOBR>
-<B>    composite -blend {<I>percent</I>} overlay  bgnd  result
+<B>    magick composite -blend {<I>percent</I>} overlay  bgnd  result
 <BR>
-<BR>   composite -blend {<I>src_percent</I>}x{<I>dst_percent</I>} overlay  bgnd  result
+<BR>   magick composite -blend {<I>src_percent</I>}x{<I>dst_percent</I>} overlay  bgnd  result
 <BR>
-<BR>   convert bgnd  overlay   -compose blend \
+<BR>   magick bgnd  overlay   -compose blend \
 <BR> &nbsp;
      &nbsp; -define compose:args={<I>src_percent</I>},{<I>dst_percent</I>} \
-<BR> &nbsp; &nbsp; -composite   result
+<BR> &nbsp; &nbsp; -magick composite   result
 </B></NOBR></PRE></DL>
 
 If only a single percentage value is given, it is used as the dissolve
@@ -3799,7 +3799,7 @@ Here is a table of results with various dissolve arguments...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  composite -blend {<I>argument</I>}  -gravity South \
+  magick composite -blend {<I>argument</I>}  -gravity South \
             compose_R.png compose_plus_GB.png  -alpha Set  {<I>result</I>}
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center><NOBR>
@@ -3890,12 +3890,12 @@ For example.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon_sm.gif star.gif -alpha on \
+  magick dragon_sm.gif star.gif -alpha on \
           -compose dissolve  -define compose:args=50 \
-          -gravity South  -composite     dissolve_50.png
-  convert dragon_sm.gif star.gif -alpha on \
+          -gravity South  -magick composite     dissolve_50.png
+  magick dragon_sm.gif star.gif -alpha on \
           -compose blend  -define compose:args=50 \
-          -gravity South  -composite     blend_50.png
+          -gravity South  -magick composite     blend_50.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE WIDTH=60%>
 <TR><TD ALIGN=center>
@@ -3927,12 +3927,12 @@ cover each other.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert dragon_sm.gif rose: -crop 70x46+0+0 +repage -alpha on \
+  magick dragon_sm.gif rose: -crop 70x46+0+0 +repage -alpha on \
           -compose dissolve  -define compose:args=50 \
-          -gravity South  -composite     dissolve_50_opaque.png
-  convert dragon_sm.gif rose: -crop 70x46+0+0 +repage -alpha on \
+          -gravity South  -magick composite     dissolve_50_opaque.png
+  magick dragon_sm.gif rose: -crop 70x46+0+0 +repage -alpha on \
           -compose blend  -define compose:args=50 \
-          -gravity South  -composite     blend_50_opaque.png
+          -gravity South  -magick composite     blend_50_opaque.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE WIDTH=60%>
 <TR><TD ALIGN=center>
@@ -3948,7 +3948,7 @@ cover each other.
 </TD></TR></TABLE>
 </DIV></P>
 
-If you were to compare these two images, you will find they are exactly the
+If you were to magick compare these two images, you will find they are exactly the
 same. </P>
 
 In summery, a <A HREF="#dissolve" >Dissolve</A> (over with just overlay image
@@ -3994,11 +3994,11 @@ by blending it with a pure black image of the same size.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -blend   0 rose: -size 70x46 xc:black -alpha Set blend_dark_0.jpg
-  composite -blend  50 rose: -size 70x46 xc:black -alpha Set blend_dark_50.jpg
-  composite -blend 100 rose: -size 70x46 xc:black -alpha Set blend_dark_100.jpg
-  composite -blend 150 rose: -size 70x46 xc:black -alpha Set blend_dark_150.jpg
-  composite -blend 200 rose: -size 70x46 xc:black -alpha Set blend_dark_200.jpg
+  magick composite -blend   0 rose: -size 70x46 xc:black -alpha Set blend_dark_0.jpg
+  magick composite -blend  50 rose: -size 70x46 xc:black -alpha Set blend_dark_50.jpg
+  magick composite -blend 100 rose: -size 70x46 xc:black -alpha Set blend_dark_100.jpg
+  magick composite -blend 150 rose: -size 70x46 xc:black -alpha Set blend_dark_150.jpg
+  magick composite -blend 200 rose: -size 70x46 xc:black -alpha Set blend_dark_200.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_dark_0.jpg"
@@ -4034,12 +4034,12 @@ Similarly blending with a pure gray image lets you adjust any images contrast.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite -blend   0 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_0.jpg
-  composite -blend  50 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_50.jpg
-  composite -blend  80 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_80.jpg
-  composite -blend 100 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_100.jpg
-  composite -blend 120 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_120.jpg
-  composite -blend 150 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_150.jpg
+  magick composite -blend   0 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_0.jpg
+  magick composite -blend  50 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_50.jpg
+  magick composite -blend  80 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_80.jpg
+  magick composite -blend 100 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_100.jpg
+  magick composite -blend 120 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_120.jpg
+  magick composite -blend 150 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_150.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_gray_0.jpg"
@@ -4075,12 +4075,12 @@ control the saturation of colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -type grayscale  rose_gray.png
-  composite -blend   0 rose: rose_gray.png -alpha Set blend_color_0.jpg
-  composite -blend  50 rose: rose_gray.png -alpha Set blend_color_50.jpg
-  composite -blend 100 rose: rose_gray.png -alpha Set blend_color_100.jpg
-  composite -blend 150 rose: rose_gray.png -alpha Set blend_color_150.jpg
-  composite -blend 200 rose: rose_gray.png -alpha Set blend_color_200.jpg
+  magick rose: -type grayscale  rose_gray.png
+  magick composite -blend   0 rose: rose_gray.png -alpha Set blend_color_0.jpg
+  magick composite -blend  50 rose: rose_gray.png -alpha Set blend_color_50.jpg
+  magick composite -blend 100 rose: rose_gray.png -alpha Set blend_color_100.jpg
+  magick composite -blend 150 rose: rose_gray.png -alpha Set blend_color_150.jpg
+  magick composite -blend 200 rose: rose_gray.png -alpha Set blend_color_200.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_color_0.jpg"
@@ -4114,12 +4114,12 @@ blurred form.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -blur 0x5  rose_blurred.png
-  composite  -blend   0  rose: rose_blurred.png -alpha Set blend_blur_0.jpg
-  composite  -blend  50  rose: rose_blurred.png -alpha Set blend_blur_50.jpg
-  composite  -blend 100  rose: rose_blurred.png -alpha Set blend_blur_100.jpg
-  composite  -blend 150  rose: rose_blurred.png -alpha Set blend_blur_150.jpg
-  composite  -blend 200  rose: rose_blurred.png -alpha Set blend_blur_200.jpg
+  magick rose: -blur 0x5  rose_blurred.png
+  magick composite  -blend   0  rose: rose_blurred.png -alpha Set blend_blur_0.jpg
+  magick composite  -blend  50  rose: rose_blurred.png -alpha Set blend_blur_50.jpg
+  magick composite  -blend 100  rose: rose_blurred.png -alpha Set blend_blur_100.jpg
+  magick composite  -blend 150  rose: rose_blurred.png -alpha Set blend_blur_150.jpg
+  magick composite  -blend 200  rose: rose_blurred.png -alpha Set blend_blur_200.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_blur_0.jpg"
@@ -4151,17 +4151,17 @@ blurred form.
 <H2>Watermark Option - Compose '<CODE>Modulate</CODE>'</H2>
 
 The "<CODE><A HREF="../option_link.cgi?watermark" >-watermark</A></CODE>"
-composite option or the "<CODE>modulate</CODE>" compose method, is meant to
+magick composite option or the "<CODE>modulate</CODE>" compose method, is meant to
 <i>dis-color</i> images in HSB space for copyright purposes.
 </P>
 
 <DL><DD><PRE><NOBR>
-<B>    composite -watermark {<I>brightness</I>}[x{<I>saturation</I>}] overlay  bgnd  result
+<B>    magick composite -watermark {<I>brightness</I>}[x{<I>saturation</I>}] overlay  bgnd  result
 <BR>
-<BR>   convert bgnd  overlay   -compose modulate \
+<BR>   magick bgnd  overlay   -compose modulate \
 <BR> &nbsp;
      &nbsp; -define compose:args={<I>brigthness</I>}[,{<I>saturation</I>}] \
-<BR> &nbsp; &nbsp; -composite   result
+<BR> &nbsp; &nbsp; -magick composite   result
 </B></NOBR></PRE></DL>
 
 The 'overlay' image is an alpha masked black and white image, which is used to
@@ -4181,7 +4181,7 @@ Here is a table of results with various arguments...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  composite -watermark {<I>argument</I>}  -gravity South \
+  magick composite -watermark {<I>argument</I>}  -gravity South \
             sphinx.gif  cyclops.gif   {<I>result</I>}
 </CODE></PRE></TD></TR></TABLE>
 </TD><TD ALIGN=center><NOBR>
@@ -4240,7 +4240,7 @@ final size of the resulting image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite tile_water.jpg   tile_aqua.jpg  moon_mask.gif   mask_over.jpg
+  magick composite tile_water.jpg   tile_aqua.jpg  moon_mask.gif   mask_over.jpg
 </CODE></PRE></TD></TR></TABLE>
     <A HREF="../images/tile_water.jpg"
        ><IMG SRC="../images/tile_water.jpg"
@@ -4286,9 +4286,9 @@ relative to the background image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tile_aqua.jpg   tile_water.jpg \
+  magick tile_aqua.jpg   tile_water.jpg \
           \( -background black -splice 10x25+0+0 moon_mask.gif \) \
-          -composite   mask_offset.jpg
+          -magick composite   mask_offset.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="mask_offset.jpg"
        ><IMG SRC="mask_offset.jpg"
@@ -4316,8 +4316,8 @@ as the background image so as to blend the two images together, producing a
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert tile_aqua.jpg  tile_water.jpg  -size 94x94  gradient: \
-          -composite   water_shallows.jpg
+  magick tile_aqua.jpg  tile_water.jpg  -size 94x94  gradient: \
+          -magick composite   water_shallows.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="water_shallows.jpg"
        ><IMG SRC="water_shallows.jpg"
@@ -4330,9 +4330,9 @@ See <A HREF="../photos/#overlap" >Overlapping Photos</A>. </P>
 <A NAME="mask_trans"></A>
 <H3>Compose Mask and Transparency</H3>
 
-You may think from the above that using a three image composite mask is very
+You may think from the above that using a three image magick composite mask is very
 much like using the '<CODE><A HREF="copyopacity" >Copy_Opacity</A></CODE>' to
-set a transparency of the overlay image, then composite that over your
+set a transparency of the overlay image, then magick composite that over your
 background.  And for images without any transparency (such as the above) you
 would be right.  But that is not the whole story. </P>
 
@@ -4359,12 +4359,12 @@ a mask limiting the area in which the destination image is changed.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 xc:none -fill red  -draw 'circle 35,21 35,3'  m_src.png
-  convert -size 60x60 xc:none -fill blue -draw 'circle 21,39 24,57' m_bgnd.png
-  convert -size 60x60 xc:   -draw 'polygon 0,59 59,0, 0,0'          m_mask.png
+  magick -size 60x60 xc:none -fill red  -draw 'circle 35,21 35,3'  m_src.png
+  magick -size 60x60 xc:none -fill blue -draw 'circle 21,39 24,57' m_bgnd.png
+  magick -size 60x60 xc:   -draw 'polygon 0,59 59,0, 0,0'          m_mask.png
 
-  composite m_src.png  m_bgnd.png                   m_over.png
-  composite m_src.png  m_bgnd.png   m_mask.png      m_over_masked.png
+  magick composite m_src.png  m_bgnd.png                   m_over.png
+  magick composite m_src.png  m_bgnd.png   m_mask.png      m_over_masked.png
 </CODE></PRE></TD></TR></TABLE>
     <A HREF="m_src.png"
        ><IMG SRC="m_src.png"     WIDTH=60 HEIGHT=60
@@ -4408,7 +4408,7 @@ masked area in the destination with the contents of the source image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite  m_src.png  m_bgnd.png  m_mask.png  -compose Src  m_src_masked.png
+  magick composite  m_src.png  m_bgnd.png  m_mask.png  -compose Src  m_src_masked.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="m_src_masked.png"
        ><IMG SRC="m_src_masked.png"           WIDTH=60  HEIGHT=60
@@ -4429,7 +4429,7 @@ of something being obscured by foreground objects in the destination. </PRE>
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
 <TD ALIGN=justify><FONT SIZE=-1><I>
-    The above was a major long term bug involving composite masking when you
+    The above was a major long term bug involving magick composite masking when you
     involved source or overlay images with transparency, and or attempted to
     use other alpha compositions other than the  '<CODE><A HREF="#over"
     >Over</A></CODE>' compose method. See <A HREF="../bugs/composite_mask/"
@@ -4453,14 +4453,14 @@ For example here we tile a 'color star' over a netscape color map image...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  composite  -tile star.gif   netscape:   tile.gif
+  magick composite  -tile star.gif   netscape:   tile.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="tile.gif"
        ><IMG SRC="tile.gif"
              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-One common use of composite tiling is to tile a semi-transparent copyright or
+One common use of magick composite tiling is to tile a semi-transparent copyright or
 some other notice over images before publishing them on the net.  For examples
 of this see the last examples of <A HREF="../annotating/#wmark_text"
 >Watermarking with Text</A>. </P>
@@ -4478,8 +4478,8 @@ HREF="#dstover" >Dst_Over</A></CODE>' instead.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -background none -pointsize 36 label:'Tile Under'  png:- |\
-  composite -tile bg.gif  -   -compose Dst_Over   tile_under.gif
+  magick -background none -pointsize 36 label:'Tile Under'  png:- |\
+  magick composite -tile bg.gif  -   -compose Dst_Over   tile_under.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="tile_under.gif"
        ><IMG SRC="tile_under.gif"
@@ -4504,10 +4504,10 @@ example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -gravity center -pointsize 32 -font Corsiva \
+  magick -gravity center -pointsize 32 -font Corsiva \
           label:'Tile White\nBackgrounds' -bordercolor white -border 5 \
           \( -clone 0 -tile tile_aqua.jpg -draw "color 0,0 reset" \) \
-          -compose Multiply -composite  tile_convert.gif
+          -compose Multiply -magick composite  tile_convert.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="tile_convert.gif"
        ><IMG SRC="tile_convert.gif"
@@ -4531,7 +4531,7 @@ for one reason or another. </P>
 <H3>Mathematics
 <FONT SIZE=3>(User Defined Mathematical Compose Method)</FONT></H3>
 
-This composite method takes 4 numerical values to allow the user to define
+This magick composite method takes 4 numerical values to allow the user to define
 many different <A HREF="#maths" >Mathematical Compose Methods</A>. </P>
 
 The four arguments, "<CODE>A</CODE>", "<CODE>B</CODE>", "<CODE>C</CODE>", and
@@ -4548,8 +4548,8 @@ For example, we could generate the equivelent of a '<CODE><A HREF="#multiply"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient_dst.png gradient_src.png \
-          -compose Mathematics -define compose:args='1,0,0,0' -composite \
+  magick gradient_dst.png gradient_src.png \
+          -compose Mathematics -define compose:args='1,0,0,0' -magick composite \
           mathematics_multiply.png
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top>
@@ -4585,8 +4585,8 @@ other composition methods, such as... </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient_dst.png gradient_src.png \
-          -compose Mathematics -define compose:args='-1,1,1,0' -composite \
+  magick gradient_dst.png gradient_src.png \
+          -compose Mathematics -define compose:args='-1,1,1,0' -magick composite \
           mathematics_screen.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="mathematics_screen.png"
@@ -4601,8 +4601,8 @@ defined using the arguments "<CODE>0,2,1,-1</CODE>"...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient_dst.png gradient_src.png \
-          -compose Mathematics -define compose:args='0,2,1,-1' -composite \
+  magick gradient_dst.png gradient_src.png \
+          -compose Mathematics -define compose:args='0,2,1,-1' -magick composite \
           mathematics_linearlight.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="mathematics_linearlight.png"
@@ -4640,9 +4640,9 @@ alternative to <A HREF="#linearlight" >LinearLight</A></CODE>...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient_dst.png gradient_src.png \
+  magick gradient_dst.png gradient_src.png \
           -compose Mathematics -define compose:args='0,1,1,-0.5' \
-          -composite  mathematics_linearlight_2.png
+          -magick composite  mathematics_linearlight_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="mathematics_linearlight_2.png"
        ><IMG SRC="mathematics_linearlight_2.png"
@@ -4659,9 +4659,9 @@ Or another variant that can be used for 'Lighting Effects'...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gradient_dst.png gradient_src.png \
+  magick gradient_dst.png gradient_src.png \
           -compose Mathematics -define compose:args='0,1,.5,-.25' \
-          -composite mathematics_linearlight_3.png
+          -magick composite mathematics_linearlight_3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="mathematics_linearlight_3.png"
        ><IMG SRC="mathematics_linearlight_3.png"
@@ -4701,8 +4701,8 @@ was exactly the problem presented by <I>Jesper Eije</I>...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert overlay_figure.gif   overlay_bgnd.gif  \
-          -compose ChangeMask  -composite  overlay_removed.png
+  magick overlay_figure.gif   overlay_bgnd.gif  \
+          -compose ChangeMask  -magick composite  overlay_removed.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/overlay_figure.gif"
      ><IMG SRC="../images/overlay_figure.gif"   WIDTH=100 HEIGHT=125
@@ -4736,8 +4736,8 @@ replaced or modified by the overlaid image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert overlay_bgnd.gif  overlay_figure.gif \
-          -compose ChangeMask  -composite  overlay_changed.png
+  magick overlay_bgnd.gif  overlay_figure.gif \
+          -compose ChangeMask  -magick composite  overlay_changed.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="overlay_changed.png"
        ><IMG SRC="overlay_changed.png"
@@ -4761,7 +4761,7 @@ As such you can negate the alpha channel, to get the unchanged colors.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert overlay_figure.gif overlay_bgnd.gif -compose ChangeMask  -composite \
+  magick overlay_figure.gif overlay_bgnd.gif -compose ChangeMask  -magick composite \
           -channel A -negate      overlay_unchanged.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
     <A HREF="overlay_unchanged.png"
@@ -4838,6 +4838,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/compose/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/compose/</CODE>
 </ADDRESS></BODY></HTML>
 

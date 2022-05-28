@@ -9,7 +9,7 @@
 #
 # The point of this is that IM can take as much time as it likes to generate
 # the next 'transtion animation'. When it is ready it can then
-# animate the transition being displayed, leaving the display with the next
+# magick animate the transition being displayed, leaving the magick display with the next
 # image.
 #
 # The next image can be any image, randomly selected or otherwise.  The script
@@ -56,7 +56,7 @@ prev_image="${files[$prev_index]}"
 
 
 # Launch the animation sub-process
-animate -loop 0 -delay 100 "$prev_image" &
+magick animate -loop 0 -delay 100 "$prev_image" &
 animate_pid=$!
 
 
@@ -87,9 +87,9 @@ while :; do
     echo "morphing $prev_image ($prev_index) -> $next_image ($next_index)"
 
   # Do you complex image transition here
-  # The final delay is minimum display time
+  # The final delay is minimum magick display time
   # The extra frame is to prevent a 'flash' of the first frame
-  # just before the 'static' display is set.
+  # just before the 'static' magick display is set.
   convert -delay 20 "$prev_image" "$next_image" -morph 10 \
           \( +clone -set delay 1000 \) +swap +delete \
           -loop 0 $temp
@@ -103,13 +103,13 @@ while :; do
 
   [ "$DEBUG" ] &&
     echo "doing transition"
-  animate -loop 0 -remote ephemeral:$temp &
+  magick animate -loop 0 -remote ephemeral:$temp &
   while [ -f $temp ]; do sleep .1; done  # wait for file to finish
 
   # Wait for transition time period to complete.
   # Must be longer than transition time, but shorter than overall time.
   #
-  # The transition animate must not reach the final frame or a flash
+  # The transition magick animate must not reach the final frame or a flash
   # of the first (original image) frame will become visible! (a bug)
   sleep 10
 
@@ -119,7 +119,7 @@ while :; do
   # replace the animation with the new image and long 1 sec delay
   [ "$DEBUG" ] &&
     echo "replacing transition with static image"
-  animate -loop 0 -delay 100 -remote "$next_image" &
+  magick animate -loop 0 -delay 100 -remote "$next_image" &
 
   # Has the animation been killed! if so exit
   kill -0 $animate_pid || exit 0

@@ -33,7 +33,7 @@ Usage() {                              # output the script comments as docs
 
 im_func=$1
 output=$2
-[ $# -ne 2 ] && output="show:"  # if not given, display it direct
+[ $# -ne 2 ] && output="show:"  # if not given, magick display it direct
 shift; shift;
 
 #im_func='-sigmoidal-contrast 8x50%'
@@ -86,7 +86,7 @@ grange="`expr $size_w - 1`"    # 0 to $grange values input
           -depth 16 -endian MSB gray:-
 
 ) | gnuplot |
-  #convert - -write info:fd:2 miff:- | display -; exit  # DEBUGGING
+  #convert - -write info:fd:2 miff:- | magick display -; exit  # DEBUGGING
   convert -background $page_bg_color -bordercolor $page_bg_color \
           label:"0                ½                1" \
           -resize 120x -border 1x0 -unsharp 0x.5 \
@@ -101,7 +101,7 @@ grange="`expr $size_w - 1`"    # 0 to $grange values input
           \( mpr:label -rotate -90 \) +swap \
           -background $page_bg_color +append \
           -gravity NorthEast -splice 2x2  "$output"
-          #-identify show: ; exit
+          #-magick identify show: ; exit
 
 [ -f "$output" ] && chmod 644 "$output"
 

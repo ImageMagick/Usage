@@ -5,7 +5,7 @@
 <TITLE>Color Modifications -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/color_mods/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/color_mods/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -200,13 +200,13 @@ Gray scale images can be very useful for many uses, such as, furthering the
 processing of the original image or for use in background compositions.
 
 The best method of converting an image to gray-scale is to just ask IM to
-convert the image into a gray-scale <A HREF="../color_basics/#colorspace"
+magick the image into a gray-scale <A HREF="../color_basics/#colorspace"
 >Color Space</A> representation for the image.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -colorspace Gray   gray_colorspace.png
+  magick test.png  -colorspace Gray   gray_colorspace.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -231,7 +231,7 @@ formula with the dedicated "<CODE><A HREF="../option_link.cgi?grayscale"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -grayscale rec709luma  gray_grayscale.png
+  magick test.png  -grayscale rec709luma  gray_grayscale.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_grayscale.png"
      ><IMG SRC="gray_grayscale.png"   WIDTH=150 HEIGHT=100
@@ -251,7 +251,7 @@ Here for example is the other common greyscaling formula
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -grayscale rec601luma  gray_grayscale_601.png
+  magick test.png  -grayscale rec601luma  gray_grayscale_601.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_grayscale_601.png"
      ><IMG SRC="gray_grayscale_601.png"   WIDTH=150 HEIGHT=100
@@ -274,7 +274,7 @@ color saturation levels to zero.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -modulate 100,0  gray_modulate.png
+  magick test.png  -modulate 100,0  gray_modulate.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_modulate.png"
      ><IMG SRC="gray_modulate.png"   WIDTH=150 HEIGHT=100
@@ -304,7 +304,7 @@ gray-scale.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -fx '(r+g+b)/3' gray_fx_average.png
+  magick test.png -fx '(r+g+b)/3' gray_fx_average.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_fx_average.png"
      ><IMG SRC="gray_fx_average.png"   WIDTH=150 HEIGHT=100
@@ -332,7 +332,7 @@ channel, too.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -separate \
+  magick test.png -separate \
           -background black -compose plus -flatten   gray_added.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_added.png"
@@ -349,7 +349,7 @@ use...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -fx '0.3*r+0.6*g+0.1*b' gray_diy.png
+  magick test.png -fx '0.3*r+0.6*g+0.1*b' gray_diy.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_diy.png"
      ><IMG SRC="gray_diy.png"   WIDTH=150 HEIGHT=100
@@ -365,7 +365,7 @@ HREF="../option_link.cgi?fx" >-fx</A></CODE>" operator.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -fx intensity  gray_intensity.png
+  magick test.png  -fx intensity  gray_intensity.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_intensity.png"
      ><IMG SRC="gray_intensity.png"   WIDTH=150 HEIGHT=100
@@ -385,7 +385,7 @@ color channels) that is used by the HSB colorspace. </P>
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -intensity brightness -fx intensity  gray_brightness.png
+  magick test.png  -intensity brightness -fx intensity  gray_brightness.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_brightness.png"
      ><IMG SRC="gray_brightness.png"   WIDTH=150 HEIGHT=100
@@ -410,7 +410,7 @@ attempt to preserve the transparency channel of the original image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -channel R -evaluate multiply .2 \
+  magick test.png -channel R -evaluate multiply .2 \
                    -channel G -evaluate multiply .5 \
                    -channel B -evaluate multiply .3 \
                    +channel -separate -compose add -flatten gray_253.png
@@ -448,7 +448,7 @@ directly averaging the three RGB channels equally.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -separate -average  gray_average.png
+  magick test.png -separate -average  gray_average.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_average.png"
      ><IMG SRC="gray_average.png"   WIDTH=150 HEIGHT=100
@@ -466,7 +466,7 @@ which will let you specify the weighting of the three color channels.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=gray_recolor.png>
-  convert test.png -recolor '.2 .5 .3
+  magick test.png -recolor '.2 .5 .3
                              .2 .5 .3
                              .2 .5 .3'   gray_recolor.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -491,7 +491,7 @@ the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -type GrayScaleMatte  gray_type.png
+  magick test.png  -type GrayScaleMatte  gray_type.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_type.png"
      ><IMG SRC="gray_type.png"   WIDTH=150 HEIGHT=100
@@ -601,8 +601,8 @@ are swapped, and the same reversal appearing in the negated 'test' image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -negate  test_negate.png
-  convert  rose:     -negate  rose_negate.gif
+  magick test.png  -negate  test_negate.png
+  magick rose:     -negate  rose_negate.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0>
 <TR><TD ALIGN=middle>
@@ -635,7 +635,7 @@ not the case, you would get a very silly result like this...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png -channel RGBA  -negate  negate_rgba.png
+  magick test.png -channel RGBA  -negate  negate_rgba.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -659,7 +659,7 @@ This may not seem very useful, but at times it is vitality important.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png -channel green  -negate  negate_green.png
+  magick test.png -channel green  -negate  negate_green.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -678,7 +678,7 @@ other out.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  negate_green.png  -channel green  -negate  negate_restore.png
+  magick negate_green.png  -channel green  -negate  negate_restore.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="negate_green.png"
      ><IMG SRC="negate_green.png"   WIDTH=150 HEIGHT=100
@@ -725,8 +725,8 @@ inward.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -level 25%,75%  test_level.png
-  convert  rose:     -level 25%      rose_level.gif
+  magick test.png  -level 25%,75%  test_level.png
+  magick rose:     -level 25%      rose_level.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0>
 <TR><TD ALIGN=middle>
@@ -766,8 +766,8 @@ we can make a very light, or a very dark rose image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -level 0,75%     rose_level_light.gif
-  convert  rose:  -level 25%,100%  rose_level_dark.gif
+  magick rose:  -level 0,75%     rose_level_light.gif
+  magick rose:  -level 25%,100%  rose_level_dark.gif
 </CODE></PRE></TD></TR></TABLE>
   <IMG SRC="gp_level_lt.gif" ALIGN=middle HSPACE=5 BORDER=0 ALT="[IM Graph]">
 <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
@@ -807,7 +807,7 @@ image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -level -25%  rose_decontrast.gif
+  magick rose:  -level -25%  rose_decontrast.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_decontrast.gif"
      ><IMG SRC="rose_decontrast.gif"     WIDTH=70 HEIGHT=46
@@ -834,7 +834,7 @@ operator to negate an image (as previously shown above, just by swapping the
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -level 100%,0  rose_level_neg.gif
+  magick rose:  -level 100%,0  rose_level_neg.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_level_neg.gif"
      ><IMG SRC="rose_level_neg.gif"     WIDTH=70 HEIGHT=46
@@ -859,7 +859,7 @@ on a grayscale gradient. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -level 50%,50%  rose_level_thres.gif
+  magick rose:  -level 50%,50%  rose_level_thres.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="rose_level_thres.gif"
      ><IMG SRC="rose_level_thres.gif"     WIDTH=70 HEIGHT=46
@@ -933,8 +933,8 @@ methods of specifying the 'reversed' form.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png   +level 25%    test_level_plus.png
-  convert  rose:      -level 25%\!  rose_level_plus.gif
+  magick test.png   +level 25%    test_level_plus.png
+  magick rose:      -level 25%\!  rose_level_plus.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0>
 <TR><TD ALIGN=middle>
@@ -960,7 +960,7 @@ methods of specifying the 'reversed' form.
 </TD></TR></TABLE>
 </DIV></P>
 
-If you compare the above "<CODE>+level&nbsp;25%</CODE>" operation with the use
+If you magick compare the above "<CODE>+level&nbsp;25%</CODE>" operation with the use
 of an a negative de-contrasting, "<CODE>-level&nbsp;-25%</CODE>" operator we
 showed previously, you will see that are not the same. The 'plus' version
 produces a much stronger de-contrasted image (it is greyer), but does so by
@@ -988,7 +988,7 @@ as to restore the image close to its original appearance.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  +level 20%  -level 20%  test_level_undo.png
+  magick test.png  +level 20%  -level 20%  test_level_undo.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -1023,7 +1023,7 @@ values in an image to the same gray-scale level.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  +level 30%,30%  test_level_const.png
+  magick test.png  +level 30%,30%  test_level_const.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -1037,7 +1037,7 @@ values in an image to the same gray-scale level.
 </DIV></P>
 
 By specifying levels according to the values of specific colors for each
-individual channel, you can effectively convert a greyscale gradient into
+individual channel, you can effectively magick a greyscale gradient into
 a specific color gradient.  However this is rather difficult to calculate and
 do.  As such a "<CODE><A HREF="../option_link.cgi?level-colors"
 >-level-colors</A></CODE>" operator has also been provided that will let you
@@ -1067,8 +1067,8 @@ the mid-tones of the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -level 0%,100%,2.0   rose_level_gamma_light.gif
-  convert  rose:  -level 0%,100%,0.5   rose_level_gamma_dark.gif
+  magick rose:  -level 0%,100%,2.0   rose_level_gamma_light.gif
+  magick rose:  -level 0%,100%,0.5   rose_level_gamma_dark.gif
 </CODE></PRE></TD></TR></TABLE>
   <IMG SRC="gp_level_glt.gif" ALIGN=middle HSPACE=5 BORDER=0 ALT="[IM Graph]">
 <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
@@ -1104,7 +1104,7 @@ levels of the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -channel B +level 25%,100%,.6 test_blue_tint.png
+  magick test.png  -channel B +level 25%,100%,.6 test_blue_tint.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"     WIDTH=150 HEIGHT=100
@@ -1144,7 +1144,7 @@ individual RGB channel.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -gamma 0.8,1.3,1.0  gamma_channel.gif
+  magick rose:  -gamma 0.8,1.3,1.0  gamma_channel.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gamma_channel.gif"
      ><IMG SRC="gamma_channel.gif"     WIDTH=70 HEIGHT=46
@@ -1196,7 +1196,7 @@ And while this works, it is not particularly useful, as it is prone to fail
 for colors that have common values in some channel.  For example, the colors
 '<CODE>DodgerBlue</CODE>' and '<CODE>White</CODE>' have the same color values
 in the blue channel. As such, "<CODE>-level-colors DodgerBlue,White</CODE>"
-may not always convert those colors to black and white. </P>
+may not always magick those colors to black and white. </P>
 
 The better technique in that case is to extract a greyscale image of the
 channel with the highest differences (such as red) and level or normalize that
@@ -1217,7 +1217,7 @@ For example lets map '<CODE>black</CODE>' and '<CODE>white</CODE>' to
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  +level-colors green,gold   levelc_grn-gold.png
+  magick test.png  +level-colors green,gold   levelc_grn-gold.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -1241,14 +1241,14 @@ default either to '<CODE>black</CODE>' or '<CODE>white</CODE>' as appropriate.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  +level-colors ,DodgerBlue   levelc_dodger.png
-  convert test.png  +level-colors ,Gold         levelc_gold.png
-  convert test.png  +level-colors ,Lime         levelc_lime.png
-  convert test.png  +level-colors ,Red          levelc_red.png
+  magick test.png  +level-colors ,DodgerBlue   levelc_dodger.png
+  magick test.png  +level-colors ,Gold         levelc_gold.png
+  magick test.png  +level-colors ,Lime         levelc_lime.png
+  magick test.png  +level-colors ,Red          levelc_red.png
 
-  convert test.png  +level-colors Navy,         levelc_navy.png
-  convert test.png  +level-colors DarkGreen,    levelc_darkgreen.png
-  convert test.png  +level-colors Firebrick,    levelc_firebrick.png
+  magick test.png  +level-colors Navy,         levelc_navy.png
+  magick test.png  +level-colors DarkGreen,    levelc_darkgreen.png
+  magick test.png  +level-colors Firebrick,    levelc_firebrick.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="levelc_dodger.png"
      ><IMG SRC="levelc_dodger.png"   WIDTH=150 HEIGHT=100
@@ -1274,14 +1274,14 @@ default either to '<CODE>black</CODE>' or '<CODE>white</CODE>' as appropriate.
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=0 ALT="[IM Output]"></A>
 </DIV></P>
 
-This makes it easy to convert grayscale images into a gradient for any color
+This makes it easy to magick grayscale images into a gradient for any color
 you like.  For example here I remap a black and white gradient to a red and
 white gradient, (note the ',' in the argument)...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert cow.gif   +level-colors red,   cow_red.gif
+  magick cow.gif   +level-colors red,   cow_red.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/cow.gif"
      ><IMG SRC="../images/cow.gif"   WIDTH=100 HEIGHT=100
@@ -1322,7 +1322,7 @@ HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting limitations).
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  +level-colors dodgerblue  levelc_blue.png
+  magick test.png  +level-colors dodgerblue  levelc_blue.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="levelc_blue.png"
      ><IMG SRC="levelc_blue.png"     WIDTH=150 HEIGHT=100
@@ -1342,7 +1342,7 @@ Channel</A> to fully-opaque, using either "<CODE>-alpha opaque</CODE>" or
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png -channel ALL +level-colors dodgerblue levelc_blue2.png
+  magick test.png -channel ALL +level-colors dodgerblue levelc_blue2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="levelc_blue2.png"
      ><IMG SRC="levelc_blue2.png"     WIDTH=150 HEIGHT=100
@@ -1358,9 +1358,9 @@ image, rather than a gray-scale image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: +level-colors             navy,lemonchiffon  levelc_faded.gif
-  convert rose: +level-colors        firebrick,yellow        levelc_fire.gif
-  convert rose: +level-colors 'rgb(102,75,25)',lemonchiffon  levelc_tan.gif
+  magick rose: +level-colors             navy,lemonchiffon  levelc_faded.gif
+  magick rose: +level-colors        firebrick,yellow        levelc_fire.gif
+  magick rose: +level-colors 'rgb(102,75,25)',lemonchiffon  levelc_tan.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.png"
      ><IMG SRC="../images/rose.png"   WIDTH=70 HEIGHT=46
@@ -1463,7 +1463,7 @@ have been rolled into the floating point constants, to speed up the function.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -fx '(1/(1+exp(10*(.5-u)))-0.006693)*1.013567' \
+  magick test.png  -fx '(1/(1+exp(10*(.5-u)))-0.006693)*1.013567' \
               sigmoidal.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
@@ -1486,7 +1486,7 @@ Lucky for us IM v6.2.1 had this complex function built in as a new operator
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert test.png  -sigmoidal-contrast 10,50% test_sigmoidal.png
+    magick test.png  -sigmoidal-contrast 10,50% test_sigmoidal.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="test_sigmoidal.png"
       ><IMG SRC="test_sigmoidal.png"
@@ -1502,7 +1502,7 @@ with the same arguments restores our original image (almost exactly).
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert test_sigmoidal.png +sigmoidal-contrast 10,50% \
+    magick test_sigmoidal.png +sigmoidal-contrast 10,50% \
                                              test_sigmoidal_inv.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="test_sigmoidal_inv.png"
@@ -1516,7 +1516,7 @@ And here we apply it to the rose image...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert  rose:  -sigmoidal-contrast 10,50%  rose_sigmoidal.gif
+    magick rose:  -sigmoidal-contrast 10,50%  rose_sigmoidal.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="rose_sigmoidal.gif"
       ><IMG SRC="rose_sigmoidal.gif"     WIDTH=70 HEIGHT=46
@@ -1551,12 +1551,12 @@ Under Construction
    'channel setting' is used only the gray-scale intensity of the image is
    thresholded producing a black and white image.
 
-   convert rose: -threshold 45%  x:
+   magick rose: -threshold 45%  x:
 
    You can force normal channel behaviour, where each channel is thresholded
    individually buy using "-channel All"
 
-   convert rose: -channel All -threshold 45%  x:
+   magick rose: -channel All -threshold 45%  x:
 
 <A NAME="black-threshold"></A>-black-threshold
 <A NAME="white-threshold"></A>-white-threshold
@@ -1565,8 +1565,8 @@ Under Construction
 
    For example, here anything that is darker than 30% is set to black.
 
-   convert rose: -black-threshold 30%  x:
-   convert rose: -white-threshold 50%  x:
+   magick rose: -black-threshold 30%  x:
+   magick rose: -white-threshold 50%  x:
 
    These operators however do not seem to be channel effected, so may only be
    suitable for gray-scale images!
@@ -1603,7 +1603,7 @@ example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: histogram:histogram.gif
+  magick rose: histogram:histogram.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="histogram.gif"
      ><IMG SRC="histogram.gif"
@@ -1659,11 +1659,11 @@ the image's histogram (by compressing it).
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert chinese_chess.jpg -contrast -contrast -contrast -contrast \
+  magick chinese_chess.jpg -contrast -contrast -contrast -contrast \
           chinese_contrast.png
 
-  convert chinese_chess.jpg     histogram:chinese_chess_hist.gif
-  convert chinese_contrast.png  histogram:chinese_contrast_hist.gif
+  magick chinese_chess.jpg     histogram:chinese_chess_hist.gif
+  magick chinese_contrast.png  histogram:chinese_contrast_hist.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/chinese_chess.jpg"
      ><IMG SRC="../img_photos/chinese_chess.jpg"   WIDTH=256 HEIGHT=196
@@ -1827,8 +1827,8 @@ range.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 150x100 gradient:gray70-gray30 gray_range.jpg
-  convert gray_range.jpg  -normalize  normalize_gray.jpg
+  magick -size 150x100 gradient:gray70-gray30 gray_range.jpg
+  magick gray_range.jpg  -normalize  normalize_gray.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gray_range.jpg"
      ><IMG SRC="gray_range.jpg"   WIDTH=150 HEIGHT=100
@@ -1883,9 +1883,9 @@ normalization test image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient:gray70-gray30 \
+  magick -size 100x100 gradient:gray70-gray30 \
           -size  50x100 gradient:blue-navy  +append  color_range.jpg
-  convert color_range.jpg -normalize  normalize.jpg
+  magick color_range.jpg -normalize  normalize.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="color_range.jpg"
      ><IMG SRC="color_range.jpg"   WIDTH=150 HEIGHT=100
@@ -1896,7 +1896,7 @@ normalization test image.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`identify -format '%[fx:saturation]' normalize.jpg`" != 0 ] && echo >&2 \
+  [ "`magick identify -format '%[fx:saturation]' normalize.jpg`" != 0 ] && echo >&2 \
     "ASSERTION FAILURE: Normalize channels were not tied together."
 </CODE> -->
 
@@ -1918,7 +1918,7 @@ channel, you can just use the '<CODE>all</CODE>' channel setting.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert color_range.jpg -channel all  -normalize   normalize_all.jpg
+  magick color_range.jpg -channel all  -normalize   normalize_all.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="normalize_all.jpg"
      ><IMG SRC="normalize_all.jpg"   WIDTH=150 HEIGHT=100
@@ -1935,7 +1935,7 @@ Alternatively, you can normalize each channel as a separate image using the
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert color_range.jpg -separate -normalize -combine normalize_sep.jpg
+  magick color_range.jpg -separate -normalize -combine normalize_sep.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="normalize_sep.jpg"
      ><IMG SRC="normalize_sep.jpg"   WIDTH=150 HEIGHT=100
@@ -1983,7 +1983,7 @@ the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gray_range.jpg  -contrast-stretch 15%  stretch_gray.jpg
+  magick gray_range.jpg  -contrast-stretch 15%  stretch_gray.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gray_range.jpg"
      ><IMG SRC="gray_range.jpg"   WIDTH=150 HEIGHT=100
@@ -2008,7 +2008,7 @@ of the image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gray_range.jpg  -contrast-stretch 90%x0%  stretch_black.jpg
+  magick gray_range.jpg  -contrast-stretch 90%x0%  stretch_black.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="stretch_black.jpg"
      ><IMG SRC="stretch_black.jpg"   WIDTH=150 HEIGHT=100
@@ -2103,7 +2103,7 @@ As an example, lets take a gradient of 100 pixels and look at its histogram.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=grad_hist.txt>
-  convert -size 1x100 gradient: \
+  magick -size 1x100 gradient: \
           -depth 8 -format "%c" histogram:info:
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=grad_hist_mod.txt>
@@ -2127,7 +2127,7 @@ Now lets do the same after using "<CODE>-contrast-stretch 10x10%</CODE>"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=grad_cs_hist.txt>
-  convert -size 1x100 gradient:   -contrast-stretch 10x10%  \
+  magick -size 1x100 gradient:   -contrast-stretch 10x10%  \
           -depth 8 -format "%c" histogram:info:
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=grad_cs_hist_mod.txt>
@@ -2148,7 +2148,7 @@ And now "<CODE>-linear-stretch 10x10%</CODE>".
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=grad_ls_hist.txt>
-  convert -size 1x100 gradient:   -linear-stretch 10x10%  \
+  magick -size 1x100 gradient:   -linear-stretch 10x10%  \
           -depth 8 -format "%c" histogram:info:
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=grad_ls_hist_mod.txt>
@@ -2184,7 +2184,7 @@ down 10% to graylevel 230.  </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=grad_lv_hist.txt>
-  convert -size 1x100 gradient:   +level 10x90%  \
+  magick -size 1x100 gradient:   +level 10x90%  \
           -depth 8 -format "%c" histogram:info:
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=grad_lv_hist_mod.txt>
@@ -2206,7 +2206,7 @@ de-contrasted gradient </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=grad_cs0_hist.txt>
-  convert -size 1x100 gradient: -level 10x90%  -contrast-stretch 0x0  \
+  magick -size 1x100 gradient: -level 10x90%  -contrast-stretch 0x0  \
           -depth 8 -format "%c" histogram:info:
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=grad_cs0_hist_mod.txt>
@@ -2227,7 +2227,7 @@ And now "<CODE>-linear-stretch 0x0</CODE>"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=grad_ls0_hist.txt>
-  convert -size 1x100 gradient: -level 10x90%  -linear-stretch 10x10% \
+  magick -size 1x100 gradient: -level 10x90%  -linear-stretch 10x10% \
           -depth 8 -format "%c" histogram:info:
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=grad_ls0_hist_mod.txt>
@@ -2267,12 +2267,12 @@ With "<CODE>-linear-stretch</CODE>", all the channels will be processed in a
 common way, thus assuring that no color shifts of the channels relative to
 each other will be produced.  </P>
 
-So lets get a verbose identify and the histogram of a real image.
+So lets get a verbose magick identify and the histogram of a real image.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=info_port.txt>
-  convert port.png  -verbose -identify +verbose  histogram:port_hist.gif
+  magick port.png  -verbose -magick identify +verbose  histogram:port_hist.gif
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=info_port_mod.txt>
   sed '2,/blue: 8-bit/ d; /Image statistics:/,$ d;
@@ -2306,7 +2306,7 @@ HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert port.png -contrast-stretch 1x1% \
+  magick port.png -contrast-stretch 1x1% \
           -write histogram:port_cs1_hist.gif   port_cs1.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="port_cs1.png"
@@ -2324,7 +2324,7 @@ same but with "<CODE>-channel RGB</CODE>".  </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert port.png  -channel RGB  -contrast-stretch 1x1% \
+  magick port.png  -channel RGB  -contrast-stretch 1x1% \
           -write histogram:port_cs1rgb_hist.gif    port_cs1rgb.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="port_cs1rgb.png"
@@ -2345,7 +2345,7 @@ Now let's apply "<CODE>-linear-stretch</CODE>" without a
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert port.png   -linear-stretch 1x1% \
+  magick port.png   -linear-stretch 1x1% \
           -write histogram:port_ls1_hist.gif \
           port_ls1.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2364,7 +2364,7 @@ the same, but with "<CODE>-channel RGB</CODE>".
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert port.png  -channel RGB  -linear-stretch 1x1% \
+  magick port.png  -channel RGB  -linear-stretch 1x1% \
           -write histogram:port_ls1rgb_hist.gif    port_ls1rgb.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="port_ls1rgb.png"
@@ -2415,7 +2415,7 @@ independently.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert zelda.png  -write histogram:zelda_hist.gif \
+  magick zelda.png  -write histogram:zelda_hist.gif \
           -equalize  -write histogram:zelda_equal_hist.gif \
           zelda_equal.png
 </CODE></PRE></TD></TR></TABLE>
@@ -2437,16 +2437,16 @@ independently.
 </DIV></P>
 
 You may note that the histogram does not look very uniform. But if we convert
-the resulting image to grayscale and display its histogram, its histogram looks
+the resulting image to grayscale and magick display its histogram, its histogram looks
 a bit more uniform in comparison to the original image's grayscale histogram
 </P>
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert zelda.png  -colorspace gray   histogram:zelda_ghist.gif
+  magick zelda.png  -colorspace gray   histogram:zelda_ghist.gif
 
-  convert zelda_equal.png  -colorspace gray \
+  magick zelda_equal.png  -colorspace gray \
           histogram:zelda_equal_ghist.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="zelda_ghist.gif"
@@ -2476,7 +2476,7 @@ distribution, while appling the same change to all color channels equally.
 <TR><TD><PRE><CODE EXECUTE>
   redist -s uniform zelda.png  zelda_uniform.png
 
-  convert zelda_uniform.png   histogram:zelda_uniform_hist.gif
+  magick zelda_uniform.png   histogram:zelda_uniform_hist.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/zelda.png"
      ><IMG SRC="../img_photos/zelda.png"   WIDTH=128 HEIGHT=128
@@ -2511,9 +2511,9 @@ leveled out (flat, or uniform) than that of IM equalize. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert zelda.png  -colorspace gray   histogram:zelda_ghist.gif
+  magick zelda.png  -colorspace gray   histogram:zelda_ghist.gif
 
-  convert zelda_uniform.png  -colorspace gray \
+  magick zelda_uniform.png  -colorspace gray \
           histogram:zelda_uniform_ghist.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="zelda_ghist.gif"
@@ -2546,7 +2546,7 @@ Here is the same image, but transformed so its histogram has a Gaussian
   redist -s gaussian 60,60,60  zelda.png \
          zelda_gaussian.png
 
-  convert zelda_gaussian.png -colorspace gray \
+  magick zelda_gaussian.png -colorspace gray \
           histogram:zelda_gaussian_ghist.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/zelda.png"
@@ -2600,7 +2600,7 @@ desired curve.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=zelda_hist_graph.gif >
-  convert zelda.png -colorspace gray \
+  magick zelda.png -colorspace gray \
          -depth 8 -format "%c" histogram:info:- |\
     tr -cs '0-9\012' ' ' |\
       awk '# collect the histogram data.
@@ -2613,7 +2613,7 @@ desired curve.
   # get the maximum count for any one histogram 'bin'
   max_count=`sort -n zelda_hist_data.txt | tail -n 1`
 
-  # convert histogram into a profile graph of the data
+  # magick histogram into a profile graph of the data
   echo "P2 256 1 $max_count" | cat - zelda_hist_data.txt |\
     im_profile -s - zelda_hist_graph.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -2635,7 +2635,7 @@ each bin. </P>
 
 So that we can look at the results, I also process the histogram counts into a
 gradient image (via the <A HREF="../formats/#netpbm" >NetPBM, PGM text
-grayscale</A> image file format, and display it as a line graph using the
+grayscale</A> image file format, and magick display it as a line graph using the
 "<CODE><A HREF="../scripts/im_profile" >im_profile</A></CODE>" script.
 Essentially this is just a different way of generating a histogram image,
 though this time directly from a numerical data file. </P>
@@ -2657,7 +2657,7 @@ a Gaussian distribution with a mean value of 153 (60% gray) and sigma width of
                 }
               }' /dev/null  > gaussian_hist_data.txt
 
-   # convert gaussian data into a profile graph
+   # magick gaussian data into a profile graph
    echo "P2 256 1 65535" | cat - gaussian_hist_data.txt |\
      im_profile -s -b - gaussian_hist_graph.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -2683,7 +2683,7 @@ So lets repeat the process, but computing and saving the 'cumulative' counts.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=zelda_cumhist_graph.gif >
-  convert zelda.png -colorspace gray \
+  magick zelda.png -colorspace gray \
          -depth 8 -format "%c" histogram:info:- |\
     tr -cs '0-9\012' ' ' |\
       awk '# Collect the cumulative histogram for an image
@@ -2730,7 +2730,7 @@ So lets repeat the process, but computing and saving the 'cumulative' counts.
 </TD></TR></TABLE>
 </DIV></P>
 
-Now what we need to do is convert the image's cumulative histogram
+Now what we need to do is magick the image's cumulative histogram
 into the gaussian cumulative histogram.  To do this, each gray value in the
 input image is used to find its 'normalized' cumulative value.  This is then
 mapped to the same cumulative value in the gaussian distribution and then
@@ -2765,12 +2765,12 @@ to redistribute the image's histogram.
                   print 65535*k/255;
                 }
               }' |\
-      convert pgm:- gaussian_clut.png
+      magick pgm:- gaussian_clut.png
 
-  convert zelda.png   gaussian_clut.png -clut   zelda_redist.png
+  magick zelda.png   gaussian_clut.png -clut   zelda_redist.png
 </CODE></PRE></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=zelda_redist_graph.gif>
-  convert zelda_redist.png  -colorspace gray \
+  magick zelda_redist.png  -colorspace gray \
          -depth 8 -format "%c" histogram:info:- |\
   tr -cs '0-9\012' ' ' |\
   awk '# collect the histogram data.
@@ -2783,8 +2783,8 @@ to redistribute the image's histogram.
             }
           } ' |\
   im_profile -s  -  png:- |\
-  convert gaussian_hist_graph.gif -crop 150x75+0+0 \
-          png:- +swap -compose multiply -composite \
+  magick gaussian_hist_graph.gif -crop 150x75+0+0 \
+          png:- +swap -compose multiply -magick composite \
           zelda_redist_graph.gif
 </CODE>-->
   <A HREF="../img_photos/zelda.png"
@@ -2813,7 +2813,7 @@ Here it is all in one rather long and complex command...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=zelda_gaussian_redist.png >
-  convert zelda.png -colorspace gray \
+  magick zelda.png -colorspace gray \
          -depth 8 -format "%c" histogram:info:- |\
     tr -cs '0-9\012' ' ' |\
       awk '# AWK to generate gaussian distribution graph
@@ -2843,7 +2843,7 @@ Here it is all in one rather long and complex command...
                    print 65535*k/255;
                  }
                 }' |\
-        convert zelda.png   pgm:-  -clut   zelda_gaussian_redist.png
+        magick zelda.png   pgm:-  -clut   zelda_gaussian_redist.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/zelda.png"
      ><IMG SRC="../img_photos/zelda.png"   WIDTH=128 HEIGHT=128
@@ -2870,7 +2870,7 @@ Just some final words on the above technique. </P>
     identical to the input image's cumulative histogram.  </P>
 
     In other words, for an equalization of the histogram, you can simply
-    convert the image's cumulative histogram into a CLUT and apply it to the
+    magick the image's cumulative histogram into a CLUT and apply it to the
     image directly.  </P>
 
 <LI>Most Image processing packages, including ImageMagick at this time, apply
@@ -2881,7 +2881,7 @@ Just some final words on the above technique. </P>
     rounded off, during the process.  </P>
 
     However with ImageMagick, we generate an intermediate CLUT (containing
-    those same round off errors), and then convert the original un-rounded
+    those same round off errors), and then magick the original un-rounded
     image values though the prepared CLUT using a linear interpolation of the
     values.  As a result of this interpolation, the color values of the new
     image is more accurate, as they have not been rounded off or 'bin'ed
@@ -2921,7 +2921,7 @@ HREF="../transform/#fx" >DIY Operator</A>. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -size 1x1 xc:Yellow \
+  magick test.png  -size 1x1 xc:Yellow \
           -fx 'u*v.p{0,0}'    fx_linear_white.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
@@ -2935,7 +2935,7 @@ HREF="../transform/#fx" >DIY Operator</A>. </P>
 
 By getting "<CODE><A HREF="../option_link.cgi?fx" >-fx</A></CODE>" to read the
 color from a second '<CODE>v</CODE>' image makes it easy to change the color,
-without needing to convert colors to RGB values for use in the mathematics.
+without needing to magick colors to RGB values for use in the mathematics.
 </P>
 
 If you were using a fancy graphical image processing package like "<CODE><A
@@ -2975,7 +2975,7 @@ side of the gray scale, leaving white unchanged. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -size 1x1 xc:'rgb(204,153,51)'  \
+  magick test.png  -size 1x1 xc:'rgb(204,153,51)'  \
           -fx '1-(1-v.p{0,0})*(1-u)'   fx_linear_black.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
@@ -3005,7 +3005,7 @@ specific colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -size 1x2  gradient:gold-firebrick \
+  magick test.png  -size 1x2  gradient:gold-firebrick \
           -fx 'v.p{0,0}*u+v.p{0,1}*(1-u)'   fx_linear_color.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
@@ -3044,7 +3044,7 @@ even direct use of color names is possible.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png   -fx "yellow*u+green*(1-u)"  fx_linear.png
+  magick test.png   -fx "yellow*u+green*(1-u)"  fx_linear.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_linear.png"
      ><IMG SRC="fx_linear.png"
@@ -3077,7 +3077,7 @@ side, resulting in the image being a more '<CODE>firebrick</CODE>' color.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -size 1x2  gradient:gold-firebrick \
+  magick test.png -size 1x2  gradient:gold-firebrick \
           -fx 'v.p{0,1}+(v.p{0,0}-v.p{0,1})*u^4'  fx_non-linear.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
@@ -3114,7 +3114,7 @@ the formula.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -channel B  -fx '.25+(1-.25)*u^2'  fx_quadratic.png
+  magick test.png  -channel B  -fx '.25+(1-.25)*u^2'  fx_quadratic.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3142,7 +3142,7 @@ control of the tinting process.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -channel B  -fx '.3*exp(-u*4.9)+u'  fx_expotential.png
+  magick test.png  -channel B  -fx '.3*exp(-u*4.9)+u'  fx_expotential.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3276,14 +3276,14 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png    -fx "`cat fx_funct.txt`"     fx_funct_curve.png
+  magick test.png    -fx "`cat fx_funct.txt`"     fx_funct_curve.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="fx_funct_curve.png"
      ><IMG SRC="fx_funct_curve.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-To make it easier for users to convert control points into a histogram
+To make it easier for users to magick control points into a histogram
 adjustment function, I have created a shell script called "<CODE><A
 HREF="../scripts/im_fx_curves" ><B>im_fx_curves</B></A></CODE>" to call
 "<CODE>gnuplot</CODE>", and output a nicer looking polynomial equation of the
@@ -3359,7 +3359,7 @@ For example lets apply those curves to our test image...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -function Polynomial `cat coefficients.txt`  test_curves.png
+  magick test.png  -function Polynomial `cat coefficients.txt`  test_curves.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="test_curves.png"
      ><IMG SRC="test_curves.png"
@@ -3403,7 +3403,7 @@ completely.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -fill white -colorize 50%  colorize_lighten.png
+  magick test.png  -fill white -colorize 50%  colorize_lighten.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3419,7 +3419,7 @@ Similarly we can use a '<CODE>black</CODE>' fill color to darken an image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -fill black -colorize 50%  colorize_darken.png
+  magick test.png  -fill black -colorize 50%  colorize_darken.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3437,7 +3437,7 @@ the RGB color spectrum.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  -fill gray50 -colorize 40%  colorize_grayer.png
+  magick test.png  -fill gray50 -colorize 40%  colorize_grayer.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3483,7 +3483,7 @@ For example...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -alpha off \
+  magick test.png -alpha off \
           -fill blue -colorize 100% \
           -alpha on  colorize_shape.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3500,7 +3500,7 @@ the given color...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png -fill blue -colorize 100% colorize_blank.png
+  magick test.png -fill blue -colorize 100% colorize_blank.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="colorize_blank.png"
      ><IMG SRC="colorize_blank.png"   WIDTH=150 HEIGHT=100
@@ -3539,7 +3539,7 @@ of that color. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -fill red  -tint 40 tint_red.png
+  magick test.png  -fill red  -tint 40 tint_red.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3609,7 +3609,7 @@ color will brighten the mid-tones.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -fill white  -tint 130 tint_lighter.png
+  magick test.png  -fill white  -tint 130 tint_lighter.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3625,7 +3625,7 @@ While a value less than 100 will darken colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  test.png  -fill white  -tint 70 tint_darker.png
+  magick test.png  -fill white  -tint 70 tint_darker.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/test.png"
      ><IMG SRC="../images/test.png"   WIDTH=150 HEIGHT=100
@@ -3672,7 +3672,7 @@ mid-tones to a special brown color.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   -sepia-tone 65%     sepia-tone.jpg
+  magick rose:   -sepia-tone 65%     sepia-tone.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="sepia-tone.jpg"
      ><IMG SRC="sepia-tone.jpg"          WIDTH=70 HEIGHT=46
@@ -3695,10 +3695,10 @@ Which color you should use on the exact effect you are looking for.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert rose: -colorspace gray -sigmoidal-contrast 10,40%  rose_grey.jpg
+  magick rose: -colorspace gray -sigmoidal-contrast 10,40%  rose_grey.jpg
   for color in      goldenrod  gold  khaki  wheat
   do
-    convert rose_grey.jpg  -fill $color   -tint 100    sepia_$color.jpg
+    magick rose_grey.jpg  -fill $color   -tint 100    sepia_$color.jpg
   done
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rose_grey.jpg"
@@ -3726,7 +3726,7 @@ so as to reduce its effect can also produce a better 'faded' effect.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:  \( +clone -sepia-tone 60% \) -average  sepia-tone_blended.jpg
+  magick rose:  \( +clone -sepia-tone 60% \) -average  sepia-tone_blended.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="sepia-tone_blended.jpg"
      ><IMG SRC="sepia-tone_blended.jpg"          WIDTH=70 HEIGHT=46
@@ -3767,10 +3767,10 @@ above.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
-  convert rose: -colorspace gray -sigmoidal-contrast 10,40%  rose_grey.jpg
+  magick rose: -colorspace gray -sigmoidal-contrast 10,40%  rose_grey.jpg
   for color in      blue  darkcyan  goldenrod  firebrick
   do
-    convert rose_grey.jpg   -fill $color   -tint 100    duotone_$color.jpg
+    magick rose_grey.jpg   -fill $color   -tint 100    duotone_$color.jpg
   done
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="rose_grey.jpg"
@@ -3809,11 +3809,11 @@ typically left black, which is why it is usally called <I>duo</I>-tone.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x1 xc:Black xc:Chocolate xc:LemonChiffon \
+  magick -size 1x1 xc:Black xc:Chocolate xc:LemonChiffon \
                                    +append     duotone_clut.gif
-  convert -size 20x256 gradient: -rotate 90   duotone_clut.gif \
+  magick -size 20x256 gradient: -rotate 90   duotone_clut.gif \
           -interpolate Bicubic -clut       duotone_gradient.gif
-  convert rose_grey.jpg   duotone_clut.gif \
+  magick rose_grey.jpg   duotone_clut.gif \
           -interpolate Bicubic -clut       rose_duotone.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="duotone_clut.gif"
@@ -3868,16 +3868,16 @@ HREF="../transform/#evaluate"
 to modify the image.  That is, to <A HREF="#tint" >Tint</A> the image in a
 similar what that the <A HREF="#colorize" >Colorize Operator</A> does. </P>
 
-For example, here I convert an image's gray-scale brightness level into a
+For example, here I magick an image's gray-scale brightness level into a
 semi-transparent overlay of the specific color wanted.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png  \( +clone -colorspace gray \
+  magick test.png  \( +clone -colorspace gray \
                -function polynomial -4,4,0 -background Gold -alpha shape \) \
-          -composite   tint_diy_compose.png
+          -magick composite   tint_diy_compose.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tint_diy_compose.png"
      ><IMG SRC="tint_diy_compose.png"       WIDTH=150   HEIGHT=100
@@ -3911,8 +3911,8 @@ to tint the original image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png \( +clone +matte -fill gold -colorize 100% \) \
-          -compose overlay -composite  tint_overlay.png
+  magick test.png \( +clone +matte -fill gold -colorize 100% \) \
+          -compose overlay -magick composite  tint_overlay.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tint_overlay.png"
      ><IMG SRC="tint_overlay.png"   WIDTH=150 HEIGHT=100
@@ -3927,10 +3927,10 @@ fix this problem.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png \
+  magick test.png \
           \( +clone +matte -fill gold -colorize 100% \
-             +clone +swap -compose overlay -composite \) \
-          -compose SrcIn -composite  tint_overlay_fixed.png
+             +clone +swap -compose overlay -magick composite \) \
+          -compose SrcIn -magick composite  tint_overlay_fixed.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tint_overlay_fixed.png"
      ><IMG SRC="tint_overlay_fixed.png"   WIDTH=150 HEIGHT=100
@@ -3955,10 +3955,10 @@ tile pattern.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert test.png \
+  magick test.png \
           \( -size 150x100 tile:tile_disks.jpg \
-             +clone +swap -compose overlay -composite \) \
-          -compose SrcIn -composite  tint_overlay_pattern.png
+             +clone +swap -compose overlay -magick composite \) \
+          -compose SrcIn -magick composite  tint_overlay_pattern.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="tint_overlay_pattern.png"
      ><IMG SRC="tint_overlay_pattern.png"   WIDTH=150 HEIGHT=100
@@ -4004,7 +4004,7 @@ that 100 will make no change to an image.  For example..
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert  rose:  -modulate 100,100,100  mod_noop.gif
+  magick rose:  -modulate 100,100,100  mod_noop.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="mod_noop.gif"
      ><IMG SRC="mod_noop.gif"     WIDTH=70 HEIGHT=46
@@ -4017,12 +4017,12 @@ brightness.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   -modulate 0     mod_bright_0.gif
-  convert rose:   -modulate 50    mod_bright_50.gif
-  convert rose:   -modulate 80    mod_bright_80.gif
-  convert rose:   -modulate 100   mod_bright_100.gif
-  convert rose:   -modulate 150   mod_bright_150.gif
-  convert rose:   -modulate 200   mod_bright_200.gif
+  magick rose:   -modulate 0     mod_bright_0.gif
+  magick rose:   -modulate 50    mod_bright_50.gif
+  magick rose:   -modulate 80    mod_bright_80.gif
+  magick rose:   -modulate 100   mod_bright_100.gif
+  magick rose:   -modulate 150   mod_bright_150.gif
+  magick rose:   -modulate 200   mod_bright_200.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="mod_bright_0.gif"
      ><IMG SRC="mod_bright_0.gif"        WIDTH=70 HEIGHT=46
@@ -4054,12 +4054,12 @@ amount of color that is present in the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   -modulate 100,0     mod_sat_0.gif
-  convert rose:   -modulate 100,20    mod_sat_20.gif
-  convert rose:   -modulate 100,70    mod_sat_70.gif
-  convert rose:   -modulate 100,100   mod_sat_100.gif
-  convert rose:   -modulate 100,150   mod_sat_150.gif
-  convert rose:   -modulate 100,200   mod_sat_200.gif
+  magick rose:   -modulate 100,0     mod_sat_0.gif
+  magick rose:   -modulate 100,20    mod_sat_20.gif
+  magick rose:   -modulate 100,70    mod_sat_70.gif
+  magick rose:   -modulate 100,100   mod_sat_100.gif
+  magick rose:   -modulate 100,150   mod_sat_150.gif
+  magick rose:   -modulate 100,200   mod_sat_200.gif
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="mod_sat_0.gif"
      ><IMG SRC="mod_sat_0.gif"        WIDTH=70 HEIGHT=46
@@ -4121,13 +4121,13 @@ For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   -modulate 100,100,0      mod_hue_0.gif
-  convert rose:   -modulate 100,100,33.3   mod_hue_33.gif
-  convert rose:   -modulate 100,100,66.6   mod_hue_66.gif
-  convert rose:   -modulate 100,100,100    mod_hue_100.gif
-  convert rose:   -modulate 100,100,133.3  mod_hue_133.gif
-  convert rose:   -modulate 100,100,166.6  mod_hue_166.gif
-  convert rose:   -modulate 100,100,200    mod_hue_200.gif
+  magick rose:   -modulate 100,100,0      mod_hue_0.gif
+  magick rose:   -modulate 100,100,33.3   mod_hue_33.gif
+  magick rose:   -modulate 100,100,66.6   mod_hue_66.gif
+  magick rose:   -modulate 100,100,100    mod_hue_100.gif
+  magick rose:   -modulate 100,100,133.3  mod_hue_133.gif
+  magick rose:   -modulate 100,100,166.6  mod_hue_166.gif
+  magick rose:   -modulate 100,100,200    mod_hue_200.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=top><TD ALIGN=center>
   <A HREF="mod_hue_0.gif"
@@ -4202,8 +4202,8 @@ later reuse. </P>
 <A NAME="modulate_diy"></A>
 <H4>Modulate DIY</H4>
 
-You can if really want to "Do It Yourself". You basically convert the image
-into the appropriate color space, modify the values, and convert back.
+You can if really want to "Do It Yourself". You basically magick the image
+into the appropriate color space, modify the values, and magick back.
 Remember that in HSL <A HREF="../color_basics/#colorspace" >Color Space</A>,
 the Green channel holds the Saturation value, and the Blue channel holds the
 Luminance value. </P>
@@ -4215,7 +4215,7 @@ colorspace...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace HSL \
+  magick rose: -colorspace HSL \
           -channel B -evaluate multiply 0.80 \
           -channel G -evaluate multiply 1.20 \
           +channel -colorspace sRGB   modulate_channel.png
@@ -4253,7 +4253,7 @@ in JPEG) due to its lossy compression algorithm.  For example...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert wedding_party_sm.jpg  -modulate 85  modulate_off-white.png
+  magick wedding_party_sm.jpg  -modulate 85  modulate_off-white.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../img_photos/wedding_party_sm.jpg"
      ><IMG SRC="../img_photos/wedding_party_sm.jpg"        WIDTH=121 HEIGHT=90
@@ -4306,7 +4306,7 @@ Operational Control</A> of '<CODE>modulate:colorspace</CODE>' with one of the
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert wedding_party_sm.jpg \
+  magick wedding_party_sm.jpg \
           -define modulate:colorspace=HSB -modulate 85 \
           modulate_HSB.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4333,8 +4333,8 @@ and a specified HSB colorspace, for comparison.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:          -modulate 150        mod_bright_HSL.gif
-  convert rose: -define modulate:colorspace=HSB \
+  magick rose:          -modulate 150        mod_bright_HSL.gif
+  magick rose: -define modulate:colorspace=HSB \
                          -modulate 150        mod_bright_HSB.gif
 </CODE></PRE></TD></TR></TABLE>
 <TABLE WIDTH=50%>
@@ -4414,7 +4414,7 @@ for the '<B><CODE>HSL</CODE></B>' colorspace above.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=mod_lch_0.gif>
   for i in   0 25 50 75 100 125 150 175;  do
-    convert rose:  -define modulate:colorspace=LCHab \
+    magick rose:  -define modulate:colorspace=LCHab \
                             -modulate 100,100,$i     mod_lch_$i.gif
   done
 </CODE></PRE></TD></TR></TABLE>
@@ -4553,7 +4553,7 @@ For example...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix ' 1 0 0
+  magick rose: -color-matrix ' 1 0 0
                                 0 1 0
                                 0 0 1 '   matrix_noop.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4580,7 +4580,7 @@ example here I swap the red and blue channel values.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix ' 0 0 1
+  magick rose: -color-matrix ' 0 0 1
                                 0 1 0
                                 1 0 0 '  matrix_red_blue_swap.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4597,7 +4597,7 @@ or separate out the 'red channel' (Also see <A HREF="../color_basics/#separate"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix ' 1 0 0
+  magick rose: -color-matrix ' 1 0 0
                                 1 0 0
                                 1 0 0 '  matrix_red_channel.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4606,14 +4606,14 @@ or separate out the 'red channel' (Also see <A HREF="../color_basics/#separate"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-or convert the image to gray-scale image using a 2/5/3 greyscale ratio
+or magick the image to gray-scale image using a 2/5/3 greyscale ratio
 (See <A HREF="#grayscale" >Converting Color to Gray-Scale</A>)...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix ' .2 .5 .3
+  magick rose: -color-matrix ' .2 .5 .3
                                 .2 .5 .3
                                 .2 .5 .3 '  matrix_grayscale.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4656,7 +4656,7 @@ For example invert (negate) the image.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix '6x3: -1  0  0 0 0 1
+  magick rose: -color-matrix '6x3: -1  0  0 0 0 1
                                      0 -1  0 0 0 1
                                      0  0 -1 0 0 1'  matrix_negate.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4671,7 +4671,7 @@ Set all red channel values to maximum (using the 'constant')...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix '6x1: 0,0,0,0,0,1'  matrix_red_max.png
+  magick rose: -color-matrix '6x1: 0,0,0,0,0,1'  matrix_red_max.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="matrix_red_max.png"
      ><IMG SRC="matrix_red_max.png"    WIDTH=70 HEIGHT=46
@@ -4700,7 +4700,7 @@ values are effected, though they are still re-calculated internally. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=matrix_sepia.png>
-  convert rose: -color-matrix ' 0.393 0.769 0.189
+  magick rose: -color-matrix ' 0.393 0.769 0.189
                                 0.349 0.686 0.168
                                 0.272 0.534 0.131  ' matrix_sepia.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4717,7 +4717,7 @@ Velvia</A>...
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix '  1.2 -0.1 -0.1
+  magick rose: -color-matrix '  1.2 -0.1 -0.1
                                 -0.1  1.2 -0.1
                                 -0.1 -0.1  1.2 ' matrix_vivid.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4737,7 +4737,7 @@ color saturation by 20%, but it is similar to it. </P>
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose: -color-matrix \
+  magick rose: -color-matrix \
             '6x3:  1.438 -0.122 -0.016  0 0 -0.03
                   -0.062  1.378 -0.016  0 0  0.05
                   -0.062 -0.122 1.483   0 0 -0.02 ' matrix_polaroid.png
@@ -4785,7 +4785,7 @@ chemical film is over exposed.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   -solarize 90%     solarize.jpg
+  magick rose:   -solarize 90%     solarize.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="solarize.jpg"
      ><IMG SRC="solarize.jpg"
@@ -4804,7 +4804,7 @@ For example here is a faked "<CODE><A HREF="../option_link.cgi?solarize"
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   -fx  '.9>u ? u : 1-u'     solarize_fx.jpg
+  magick rose:   -fx  '.9>u ? u : 1-u'     solarize_fx.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="solarize_fx.jpg"
      ><IMG SRC="solarize_fx.jpg"
@@ -4823,10 +4823,10 @@ to maximum brightness to generate a 'filament' effect.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 10x300 gradient: -rotate 90 \
+  magick -size 10x300 gradient: -rotate 90 \
                          -sigmoidal-contrast 50x70%   fuzzy_thres.png
-  convert fuzzy_thres.png  -solarize 50%   fuzzy_spike.png
-  convert fuzzy_spike.png  -level 0,50%    filament.png
+  magick fuzzy_thres.png  -solarize 50%   fuzzy_spike.png
+  magick fuzzy_spike.png  -level 0,50%    filament.png
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s fuzzy_thres.png fuzzy_thres_pf.gif
@@ -4901,7 +4901,7 @@ sometimes called channel cross-talk. </P>
 
 A common requirement of an image processing tool is the ability to replace the
 whole range of colors, from a pre-prepared table of colors.  This allows you
-to convert images of one set of colors (generally gray-scale) into completely
+to magick images of one set of colors (generally gray-scale) into completely
 different set of colors, just by looking up its replacement color from a
 special image. </P>
 
@@ -4918,12 +4918,12 @@ grayscale with a dark-blue to off-white gradient of colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<r>  convert -size 100x100 plasma:fractal -virtual-pixel edge -blur 0x5 \
+<r>  magick -size 100x100 plasma:fractal -virtual-pixel edge -blur 0x5 \
           -shade 140x45  -normalize \
           -size 1x100 xc:black -size 9x100 gradient: \
           +append  gray_image.jpg
-  convert -size 10x100  gradient:navy-snow       gradient_ice-sea.png
-  convert gray_image.jpg  gradient_ice-sea.png -clut  gray_recolored.jpg
+  magick -size 10x100  gradient:navy-snow       gradient_ice-sea.png
+  magick gray_image.jpg  gradient_ice-sea.png -clut  gray_recolored.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gray_image.jpg"
      ><IMG SRC="gray_image.jpg"   WIDTH=110 HEIGHT=100
@@ -4963,7 +4963,7 @@ above.
 <TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gray_image.jpg  gradient_ice-sea.png \
+  magick gray_image.jpg  gradient_ice-sea.png \
           -fx 'v.p{0,u*v.h}'  gray_recolored_fx.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="gray_recolored_fx.jpg"
@@ -4982,11 +4982,11 @@ LUT, with a very limited number of colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x6 gradient:navy-snow  gradient_levels.png
-  convert gray_image.jpg  gradient_levels.png  -clut  gray_levels.jpg
+  magick -size 1x6 gradient:navy-snow  gradient_levels.png
+  magick gray_image.jpg  gradient_levels.png  -clut  gray_levels.jpg
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
-  convert gradient_levels.png -scale 16x100\! gradient_levels_mag.png
+  magick gradient_levels.png -scale 16x100\! gradient_levels_mag.png
 -->
   <A HREF="gray_image.jpg"
      ><IMG SRC="gray_image.jpg"   WIDTH=110 HEIGHT=100
@@ -5001,7 +5001,7 @@ LUT, with a very limited number of colors.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-I enlarged the gradient image for the web page display above, otherwise it
+I enlarged the gradient image for the web page magick display above, otherwise it
 would be too small to see properly. The LUT is in actual fact only 6 pixels in
 size.  However if you look at the result you will see that the Color Lookup
 Operator smooths out those 6 colors into a smooth gradient. </P>
@@ -5021,19 +5021,19 @@ various type of interpolated smoothing of the LUT colors.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert gray_image.jpg  gradient_levels.png \
+  magick gray_image.jpg  gradient_levels.png \
           -interpolate Integer         -clut  gray_levels_integer.jpg
-  convert gray_image.jpg  gradient_levels.png \
+  magick gray_image.jpg  gradient_levels.png \
           -interpolate NearestNeighbor -clut  gray_levels_nearest.jpg
-  convert gray_image.jpg  gradient_levels.png \
+  magick gray_image.jpg  gradient_levels.png \
           -interpolate Average         -clut  gray_levels_average.jpg
-  convert gray_image.jpg  gradient_levels.png \
+  magick gray_image.jpg  gradient_levels.png \
           -interpolate Blend           -clut  gray_levels_blend.jpg
-  convert gray_image.jpg  gradient_levels.png \
+  magick gray_image.jpg  gradient_levels.png \
           -interpolate BiLinear        -clut  gray_levels_bilinear.jpg
-  convert gray_image.jpg  gradient_levels.png \
+  magick gray_image.jpg  gradient_levels.png \
           -interpolate Catrom          -clut  gray_levels_catrom.jpg
-  convert gray_image.jpg  gradient_levels.png \
+  magick gray_image.jpg  gradient_levels.png \
           -interpolate Spline          -clut  gray_levels_spline.jpg
 </CODE></PRE></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0><TR VALIGN=top><TD ALIGN=center>
@@ -5126,9 +5126,9 @@ before using it on the image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x33 gradient:wheat-brown gradient:Brown-LawnGreen \
+  magick -size 1x33 gradient:wheat-brown gradient:Brown-LawnGreen \
           gradient:DodgerBlue-Navy   -append  gradient_planet.png
-  convert gray_image.jpg \
+  magick gray_image.jpg \
           \( gradient_planet.png -flip \) -clut   gray_planet.jpg
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="gray_image.jpg"
@@ -5185,9 +5185,9 @@ previously.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 1x512 gradient: -rotate 90 +matte \
+  magick -size 1x512 gradient: -rotate 90 +matte \
           -fx '3.5u^3 - 5.05u^2 + 2.05u + 0.3' \
-          -size 512x1 xc:DodgerBlue -compose Overlay -composite \
+          -size 512x1 xc:DodgerBlue -compose Overlay -magick composite \
           aqua_gradient.png
 </CODE></PRE></TD></TR></TABLE>
    <A HREF="aqua_gradient.png"
@@ -5216,11 +5216,11 @@ quickly at the minimal cost of storing a very small image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -font Candice -pointsize 72 -background None label:A \
+  magick -font Candice -pointsize 72 -background None label:A \
           -trim +repage  aqua_mask.png
-  convert aqua_mask.png -alpha Extract -blur 0x6 -shade 120x21 \
+  magick aqua_mask.png -alpha Extract -blur 0x6 -shade 120x21 \
           -alpha On -normalize  aqua_shade.png
-  convert aqua_shade.png  aqua_gradient.png -clut aqua_font.png
+  magick aqua_shade.png  aqua_gradient.png -clut aqua_font.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="aqua_mask.png"
      ><IMG SRC="aqua_mask.png"
@@ -5276,12 +5276,12 @@ and white replacement at the bottom.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:  -draw 'polygon 50,10 10,80 90,80' \
+  magick -size 100x100 xc:  -draw 'polygon 50,10 10,80 90,80' \
           -blur 0x10  blurred_shape.jpg
-  convert -size 1x5 xc:none \
+  magick -size 1x5 xc:none \
           -draw 'fill red    point 0,2' \
           -draw 'fill yellow rectangle 0,0 0,1'   gradient_border.png
-  convert blurred_shape.jpg -alpha off    gradient_border.png \
+  magick blurred_shape.jpg -alpha off    gradient_border.png \
           -channel RGBA  -interpolate integer -clut  clut_shape.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="blurred_shape.jpg"
@@ -5311,12 +5311,12 @@ adjustment gradient (with no alpha channel enabled). </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 xc:none -draw 'polygon 50,10 10,80 90,80' \
-          tile_disks.jpg -compose In -composite shape_triangle.gif
-  convert shape_triangle.gif -channel A -blur 0x10 +channel shape_blurred.png
-  convert -size 1x50 gradient: xc:black -append -flip \
+  magick -size 100x100 xc:none -draw 'polygon 50,10 10,80 90,80' \
+          tile_disks.jpg -compose In -magick composite shape_triangle.gif
+  magick shape_triangle.gif -channel A -blur 0x10 +channel shape_blurred.png
+  magick -size 1x50 gradient: xc:black -append -flip \
           -sigmoidal-contrast 6x0%  feather_histogram.jpg
-  convert shape_blurred.png \( feather_histogram.jpg -alpha off \) \
+  magick shape_blurred.png \( feather_histogram.jpg -alpha off \) \
           -channel A    -clut    shape_feathered.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="shape_triangle.gif"
@@ -5384,7 +5384,7 @@ you can see the individual pixels...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert   hald:3    hald_3.png
+  magick  hald:3    hald_3.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="hald_3_lg.png"
      ><IMG SRC="hald_3_lg.png"   WIDTH=189 HEIGHT=189
@@ -5431,7 +5431,7 @@ image, using the  "<CODE><A HREF="../option_link.cgi?hald-clut"
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert rose:   hald_3.png -hald-clut   rose_hald_noop.png
+  magick rose:   hald_3.png -hald-clut   rose_hald_noop.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.png"
      ><IMG SRC="../images/rose.png"   WIDTH=70 HEIGHT=46
@@ -5446,7 +5446,7 @@ image, using the  "<CODE><A HREF="../option_link.cgi?hald-clut"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ `compare -metric PAE rose: rose_hald_noop.png null: 2>&1 |
+  [ `magick compare -metric PAE rose: rose_hald_noop.png null: 2>&1 |
                sed 's/ .*//'` != '0' ] && echo >&2 \
     "ASSERTION FAILURE: Noop Hald CLUT made a chnage to the image\!"
 </CODE> -->
@@ -5461,8 +5461,8 @@ colors.  For example here I create a blended-sepia-tone color scheme...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert hald_3.png \( +clone -sepia-tone 60% \) -average hald_sepia.png
-  convert rose.png   hald_sepia.png -hald-clut   rose_hald_sepia.png
+  magick hald_3.png \( +clone -sepia-tone 60% \) -average hald_sepia.png
+  magick rose.png   hald_sepia.png -hald-clut   rose_hald_sepia.png
 </CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/rose.png"
      ><IMG SRC="../images/rose.png"   WIDTH=70 HEIGHT=46
@@ -5607,6 +5607,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/color_mods/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/color_mods/</CODE>
 </ADDRESS></BODY></HTML>
 

@@ -5,7 +5,7 @@
 <TITLE>API &amp; Scripting -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/api/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/api/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -76,7 +76,7 @@ is only one method by which you can use, modify and control images with the
 core library of ImageMagick functions (MagickCore). It is basically the
 'shell' API interface.  There are lots of other Application Programming
 Interfaces (API's) which you can use more directly from many programming
-languages, see <A HREF="https://legacy.imagemagick.org/script/api.php"
+languages, see <A HREF="https://imagemagick.org/script/api.php"
 >ImageMagick APIs</A>. </P>
 
 Here I look at ways of improving your IM scripting and programming,
@@ -144,7 +144,7 @@ as fast. You can however save lot ot time and re-processing by... <UL>
     intermedite images to disk.  See <A HREF="../scripts/enlarge_image"
     >enlarge_image</A> for a pipelined script example with one step piping the
     image(s) into the next (sometimes optional) step in the sequence.
-<LI>Use a loop to process each image individually, before piping a stream of
+<LI>Use a loop to process each image individually, before piping a magick stream of
     image results into a final 'merge them all' step.  I have many scripts
     like this...  See <A HREF="../layers/#layer_prog" >Programmed Prossition
     of Layered Images</A> for one such script.
@@ -215,9 +215,9 @@ server...
   system("exec 2>&amp;1; pwd");
   system("exec 2>&amp;1; type convert");
   system("exec 2>&amp;1; locate */convert");
-  system("exec 2>&amp;1; convert -version");
-  system("exec 2>&amp;1; convert -list type"); &lt;!-- before IM v6.3.5-7 --&gt;
-  system("exec 2>&amp;1; convert -list font");
+  system("exec 2>&amp;1; magick -version");
+  system("exec 2>&amp;1; magick -list type"); &lt;!-- before IM v6.3.5-7 --&gt;
+  system("exec 2>&amp;1; magick -list font");
   print("------ENVIRONMENT VARIABLES-------\n");
   system("exec 2>&amp;1; env");
 ?&gt;
@@ -264,9 +264,9 @@ and installation process, for PHP scripts being used on different ISP hosts),
 &lt;?php
   $im_path="/opt/php5extras/ImageMagick/bin"
   header('Content-Type: text/plain');
-  system("exec 2>&1; $im_path/convert -version");
-  system("exec 2>&1; $im_path/convert -list type");
-  system("exec 2>&1; $im_path/convert -list font");
+  system("exec 2>&1; $im_path/magick -version");
+  system("exec 2>&1; $im_path/magick -list type");
+  system("exec 2>&1; $im_path/magick -list font");
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -277,7 +277,7 @@ down on the job during its installation, and you need to report the error, and
 have them fix the web servers "<CODE>LD_LIBRARY_PATH</CODE>" environment
 variable setting, or re-install ImageMagick.  </P>
 
-Rather than set the location of the convert command, you can also adjust the
+Rather than set the location of the magick command, you can also adjust the
 PATH environment variable with a line such as this at the top. However this
 method is often 'denied' by default by typical PHP system configuration...
 
@@ -299,12 +299,12 @@ back to the web user...
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header( 'Content-Type: image/jpeg' );
-  passthru("convert rose:  jpg:-");
+  passthru("magick rose:  jpg:-");
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
-If you need to set the convert command location you can use...
+If you need to set the magick command location you can use...
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -312,7 +312,7 @@ If you need to set the convert command location you can use...
 &lt;?php
   header( 'Content-Type: image/jpeg' );
   $convert="/opt/php5extras/ImageMagick/bin/convert"
-  passthru("$convert rose:  jpg:-");
+  passthru("$magick rose:  jpg:-");
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -327,7 +327,7 @@ or if the you have library problems you can try something like...
   $convert="/opt/php5extras/ImageMagick/bin/convert";
   $libs="LD_LIBRARY_PATH=\'" .  $_ENV["LD_LIBRARY_PATH"] .
                ":/opt/php5extras/ImageMagick/bin/convert\'";
-  system("$libs $convert rose:  jpg:-");
+  system("$libs $magick rose:  jpg:-");
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -352,7 +352,7 @@ create a label with that font...
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header('Content-Type: image/gif');
-  passthru("convert -pointsize 72 -font Utopia-Italic label:'Font Test' gif:-");
+  passthru("magick -pointsize 72 -font Utopia-Italic label:'Font Test' gif:-");
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -365,9 +365,9 @@ Here we have a fairly typical ImageMagick command...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  convert -background none -fill red -gravity center \
+  magick -background none -fill red -gravity center \
           -font Candice -size 140x92 caption:"A Rose by any Name" \
-          \( rose: -negate -resize 200% \) +swap -composite    output.gif
+          \( rose: -negate -resize 200% \) +swap -magick composite    output.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -385,7 +385,7 @@ When converting to PHP it will become something like...
   $size="140x96";
   $string="A Rose by any Name";
 
-  passthru( "convert -background none -fill '$color' -gravity center" .
+  passthru( "magick -background none -fill '$color' -gravity center" .
             " -font Candice -size '$size' caption:'$string'" .
             " \\( '$image' -negate -resize '$scale' \\) +swap -composite" .
             " gif:-" );
@@ -496,7 +496,7 @@ For any sort of web programming work, an understanding of security and how
 hackers can use specially crafted arguemnts to subvert called commands, is
 vital.  Not just for PHP, but for Shell, and ImageMagick. </P>
 
-IM requires particular care as it can for example read and convert a password
+IM requires particular care as it can for example read and magick a password
 file into an image to be returned.
 
 Again... It is far better to be overly restrictive, than open an unforseen
@@ -552,7 +552,7 @@ Try one of these methods...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
-exec("/usr/local/bin/convert -version",$out,$returnval);
+exec("/usr/local/bin/magick -version",$out,$returnval);
 print_r($out[0]);
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
@@ -564,7 +564,7 @@ or
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
-exec("/usr/local/bin/convert -list",$out,$returnval);
+exec("/usr/local/bin/magick -list",$out,$returnval);
 print_r($out);
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
@@ -576,7 +576,7 @@ or use shell_exec as follows
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
-$IM_version=shell_exec("/usr/local/bin/convert -version");
+$IM_version=shell_exec("/usr/local/bin/magick -version");
 echo $IM_version
 ?&gt;
 </CODE></PRE></TD></TR></TABLE>
@@ -590,7 +590,7 @@ To include STDERR output...
 &lt;?php
 $array=array();
 echo "&lt;pre&gt;";
-exec("convert read_test.png write_test.png 2&gt;&amp;1", $array);
+exec("magick read_test.png write_test.png 2&gt;&amp;1", $array);
 echo "&lt;br&gt;".print_r($array)."&lt;br&gt;";
 echo "&lt;/pre&gt;";
 ?&gt;
@@ -747,7 +747,7 @@ pages.  A solution that is full of problems, such as resource limitations and
 garbage collection, making it a very bad programming technique. </P>
 
 This technique looked at in both the <A
-HREF="https://legacy.imagemagick.org/script/index.php#books" >ImageMagick
+HREF="https://imagemagick.org/script/index.php#books" >ImageMagick
 Books</A>, though the ImageMagick it actually uses is becomming a little
 dated.  </P>
 
@@ -756,7 +756,7 @@ dated.  </P>
 <A NAME="perlmagick"></A>
 <H3>Perl Magick Scripts</H3>
 
-The <A HREF="https://legacy.imagemagick.org/script/perl-magick.php"
+The <A HREF="https://imagemagick.org/script/perl-magick.php"
 >PerlMagick</A> API is a good way of conveting "<CODE>convert</CODE>" commands
 into a script that can also handle databases, large numbers of images, or more
 complex image processing, that is otherwise posible.
@@ -795,12 +795,12 @@ are a few things you need to remember. </P>
     photos. </P>
 
 <LI>Check for image errors (as shown on the  <A
-    HREF="https://legacy.imagemagick.org/script/perl-magick.php" >PerlMagick</A>
+    HREF="https://imagemagick.org/script/perl-magick.php" >PerlMagick</A>
     page) after every major process, especially when reading images.
 
 </UL></P>
 
-To convert a command line into perl, you would basically do the exact same
+To magick a command line into perl, you would basically do the exact same
 operations, in the exact same sequence.  However as images are generally not
 deleted, and multiple image sequences are common, the use of parenthesis, and
 extra cloning operations in "<CODE>convert</CODE>" commands are usally not
@@ -920,7 +920,7 @@ more useful. </P>
 
     Use a "trap" shell command to remove them on file exit or interrupt.
     You can of course re-use a single temporary files multiple times, so you
-    don't need very many, especially with IM v6 convert commands. </P>
+    don't need very many, especially with IM v6 magick commands. </P>
 
     Again see the "<A HREF="../scripts/jigsaw" >jigsaw</A>" script, and search
     for "trap". </P>
@@ -952,7 +952,7 @@ more useful. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-    IM_VERSION=`convert -list configure | \
+    IM_VERSION=`magick -list configure | \
          sed '/^LIB_VERSION_NUMBER /!d;
               s//,/;  s/,/,0/g;
               s/,0*\([0-9][0-9]\)/\1/g'`
@@ -1002,7 +1002,7 @@ more useful. </P>
     then font_list="type";
     else font_list="font";
     fi
-    avail_fonts=`convert -list $font_list | cut -d\  -f1 |\
+    avail_fonts=`magick -list $font_list | cut -d\  -f1 |\
                     egrep -v '^($|----|Path:|Name$)'`
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1037,7 +1037,7 @@ more useful. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-    convert -list distort | grep 'Arc' &gt;/dev/null 2&gt;&amp;1
+    magick -list distort | grep 'Arc' &gt;/dev/null 2&gt;&amp;1
     if [ "$?" -ne 0 ];  then
       echo &gt;&amp;2 "Arc distortion method not available."
       echo &gt;&amp;2 "Sorry your installed ImageMagick is too old -- ABORTING"
@@ -1123,7 +1123,7 @@ more useful. </P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   # Check Dependencies to scripts correct working
-  DEPENDENCIES="sed awk grep tr bc convert identify"  # adjust to suit
+  DEPENDENCIES="sed awk grep tr bc magick identify"  # adjust to suit
 
   for i in $DEPENDENCIES; do
     type $i &gt;/dev/null 2&gt;&amp;1 ||
@@ -1145,7 +1145,7 @@ more useful. </P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
   angle=-20
-  sine=`convert xc: -format "%[fx:sin( $angle *pi/180)]" info:`
+  sine=`magick xc: -format "%[fx:sin( $angle *pi/180)]" info:`
   echo $sine
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1172,10 +1172,10 @@ more useful. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-    gif_anim_montage animation.miff show:
+    gif_anim_magick montage animation.miff show:
 </CODE></PRE></TD></TR></TABLE>
 </DIV>
-    to display the result of the script on my display screen, rather than save
+    to magick display the result of the script on my magick display screen, rather than save
     it to a file. In fact in many of my scripts if the output is missing it
     defaults to use "show:". </P>
 
@@ -1224,7 +1224,7 @@ about with regard to the above. </P>
 <DD><I>
   I was wondering; sometimes I see in your examples you're invoking Convert
   more then once to obtain the desired result.  In general, I would expect
-  that invoking convert more then once isn't needed; it should all be possible
+  that invoking magick more then once isn't needed; it should all be possible
   in 1 invocation (but the command would be more complex then). Do you agree
   with this statement? </I></P>
 </DL>
@@ -1237,7 +1237,7 @@ However IMv6 should allow you to do all your processing in one single command.
 But sadly even that is not always possible. </P>
 
 I use multiple commands for a number possible reasons.  Typically in the
-example pages, I do it so I can display the intermediate image result, so as
+example pages, I do it so I can magick display the intermediate image result, so as
 to better demonstrate the intermediate processing stages that are involved.
 Later in the same example area I may repeat the process but using a single
 command, with perhaps a little more complexity. </P>
@@ -1275,7 +1275,7 @@ For example process image replacing the source image.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert  /tmp/image1.png ..operations..  /tmp/image1.png </P>
+  magick /tmp/image1.png ..operations..  /tmp/image1.png </P>
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1643,7 +1643,7 @@ To upgrade an existing installation I generally do this (as root).
 </DIV></P>
 
 If you want to go further I recommend you look at the <A
-HREF="https://legacy.imagemagick.org/script/advanced-unix-installation.php"
+HREF="https://imagemagick.org/script/advanced-unix-installation.php"
 >Advanced Unix Source Installation Guide</A> from the IM web site. </P>
 
 <BR>
@@ -1815,7 +1815,7 @@ Now if I type
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  convert -version
+  magick -version
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1886,7 +1886,7 @@ Now if I type...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=hdri_version.txt >
-  hdri convert -version
+  hdri magick -version
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1905,7 +1905,7 @@ silently revert to using the system version.  The above 'version' check is an
 important test to make sure that I am actually using my personal version, and
 not the system version. </P>
 
-You can also check exactly which convert command the script is trying to
+You can also check exactly which magick command the script is trying to
 execute using the 'which'.
 
 <DIV ALIGN=center>
@@ -1917,7 +1917,7 @@ execute using the 'which'.
 
 That is the script is flexiable enough that you don't actually need to run
 "<CODE>convert</CODE>" but can run any command, such as ImageMagick Shell
-Scripts, so that that script uses the HDRI convert instead of the normal system
+Scripts, so that that script uses the HDRI magick instead of the normal system
 convert. </P>
 
 <DIV ALIGN=center>
@@ -1937,6 +1937,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/api/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/api/</CODE>
 </ADDRESS></BODY></HTML>
 

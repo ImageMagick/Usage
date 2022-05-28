@@ -5,7 +5,7 @@
 <TITLE>Anti-Aliasing -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/antialiasing/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/antialiasing/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -52,10 +52,10 @@ a small part of the image so you can see what is happening.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-   convert -size 80x80 xc:none \
+   magick -size 80x80 xc:none \
             -fill white  -draw "circle 40,40 15,20" \
             -fill black  -draw "line 5,30 78,2"    drawn.png
-    convert drawn.png -crop 10x10+50+5 +repage -scale 80x80  drawn_mag.png
+    magick drawn.png -crop 10x10+50+5 +repage -scale 80x80  drawn_mag.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="drawn.png"
       ><IMG SRC="drawn.png"  WIDTH=80 HEIGHT=80
@@ -85,10 +85,10 @@ HREF="../option_link.cgi?antialias" >+antialias</A></CODE>".
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-   convert -size 80x80 xc:none +antialias \
+   magick -size 80x80 xc:none +antialias \
             -fill white  -draw "circle 40,40 15,20" \
             -fill black  -draw "line 5,30 78,2"    drawn_jaggies.png
-    convert drawn_jaggies.png -crop 10x10+50+5 +repage -scale 80x80 \
+    magick drawn_jaggies.png -crop 10x10+50+5 +repage -scale 80x80 \
             drawn_jaggies_mag.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="drawn_jaggies.png"
@@ -188,7 +188,7 @@ anti-aliasing colors to give the circle a smooth appearance.
 </TD></TR><TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 15x15 xc: -fill none -stroke black \
+  magick -size 15x15 xc: -fill none -stroke black \
           -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_antialiased.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -204,7 +204,7 @@ are not a nice thin 'bitmap' line.
 </TD></TR><TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 15x15 xc: -fill none -stroke black +antialias \
+  magick -size 15x15 xc: -fill none -stroke black +antialias \
           -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_aliased.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -221,7 +221,7 @@ defaults to 1 pixel wide, to something smaller, such as 0.5 pixels wide.
 </TD></TR><TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 15x15 xc: -fill none -stroke black +antialias \
+  magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.5   -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_thin_stroke.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -239,7 +239,7 @@ radii.
 </TD></TR><TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 15x15 xc: -fill none -stroke black +antialias \
+  magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0  -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_zero_stroke.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -255,7 +255,7 @@ actual pixel location.
 </TD></TR><TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 15x15 xc: -fill none -stroke black +antialias \
+  magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.4  -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_perfect.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -279,7 +279,7 @@ not only has gaps at the top, but is also too thick at the bottom! Yuck!
 </TD></TR><TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 15x15 xc: -fill none -stroke black +antialias \
+  magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.47  -draw 'translate 7,7.3 circle 0,0 5,0' \
           -scale 500%  circle_bad_stroke.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -384,15 +384,15 @@ try to fill it with a pattern...
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
 <!-- <CODE EXECUTE>
-   convert $HOME/icons/desc/cl-bgnd/display/weave-purple.gif tile_weave.gif
+   magick $HOME/icons/desc/cl-bgnd/display/weave-purple.gif tile_weave.gif
 </CODE> -->
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert -size 60x60 xc:lightblue -strokewidth 2 \
+    magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill none -stroke red -draw "circle 30,30 5,30" \
             -tile tile_weave.gif  -draw "color 30,30 floodfill" \
             tile_fill_1.gif
-    convert tile_fill_1.gif -crop 10x10+35+4 +repage -scale 80x80 \
+    magick tile_fill_1.gif -crop 10x10+35+4 +repage -scale 80x80 \
             tile_fill_1_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
@@ -416,11 +416,11 @@ the area fully, but at least it will not look quite so bad.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert -size 60x60 xc:lightblue -strokewidth 2 \
+    magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill black -stroke red  -draw "circle 30,30 5,30" \
             -tile tile_weave.gif  -draw "color 30,30 floodfill" \
             tile_fill_2.gif
-    convert tile_fill_2.gif -crop 10x10+35+4 +repage -scale 60x60 \
+    magick tile_fill_2.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_2_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
@@ -442,11 +442,11 @@ pixels.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert -size 60x60 xc:lightblue -strokewidth 2 \
+    magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill none -stroke red  -draw "circle 30,30 5,30" \
             -fuzz 35% -tile tile_weave.gif -draw "color 30,30 floodfill" \
             tile_fill_3.gif
-    convert tile_fill_3.gif -crop 10x10+35+4 +repage -scale 60x60 \
+    magick tile_fill_3.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_3_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
@@ -482,11 +482,11 @@ steps.  Create a colored circle,  fill it, then draw the border.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert -size 60x60 xc:lightblue -fill black -draw "circle 30,30 5,30" \
+    magick -size 60x60 xc:lightblue -fill black -draw "circle 30,30 5,30" \
             -tile tile_weave.gif -draw "color 30,30 floodfill" +tile \
             -fill none -stroke red  -strokewidth 2 -draw "circle 30,30 5,30" \
             tile_fill_4.gif
-    convert tile_fill_4.gif -crop 10x10+35+4 +repage -scale 60x60 \
+    magick tile_fill_4.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_4_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
@@ -510,10 +510,10 @@ specifying the fill pattern for the original draw operation.
 <TR><TD WIDTH=100% ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert -size 60x60 xc:lightblue -strokewidth 2 \
+    magick -size 60x60 xc:lightblue -strokewidth 2 \
             -tile tile_weave.gif -stroke red -draw "circle 30,30 5,30" \
             tile_fill_5.gif
-    convert tile_fill_5.gif -crop 10x10+35+4 +repage -scale 60x60 \
+    magick tile_fill_5.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_5_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
 </TD><TD><NOBR>
@@ -550,7 +550,7 @@ anti-aliasing can be used.
 A simple way to smooth edges is to use a small amount of blur after reading in
 a B&W image or an image with a tiny pallette size.
 
-EG:   convert image.xbm  -blur 0x.3  smoothed_image.png
+EG:   magick image.xbm  -blur 0x.3  smoothed_image.png
 
 </PRE>
 
@@ -563,6 +563,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/antialiasing/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/antialiasing/</CODE>
 </ADDRESS></BODY></HTML>
 

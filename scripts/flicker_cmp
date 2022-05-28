@@ -2,8 +2,8 @@
 #
 # flicker_cmp [options] image1 image2 ...
 #
-# Generate and display an animation of the images given with 1/2 second delay
-# so that you can see and compare the very slight differences between the two
+# Generate and magick display an animation of the images given with 1/2 second delay
+# so that you can see and magick compare the very slight differences between the two
 # images.  A label is added to the image so you know which image is which.
 #
 # Additional options allow you to resize scale a specific area of interest
@@ -117,9 +117,9 @@ for img in "$@"; do
   convert $jpeg "$img" -set label "$label" \
           -background $color $resize miff:-
 done |
-  montage - -geometry +0+0 -tile 1x1 -background $color miff:- |
+  magick montage - -geometry +0+0 -tile 1x1 -background $color miff:- |
     if [ "X$output" = "X" ]; then
-      animate -delay "$delay" -dispose background -loop 0 -
+      magick animate -delay "$delay" -dispose background -loop 0 -
     else
       convert - -delay "$delay" -dispose background -loop 0 "$output"
     fi

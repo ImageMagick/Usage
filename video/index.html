@@ -5,7 +5,7 @@
 <TITLE>Video Handling -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/video/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/video/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
 <H1>ImageMagick v6 Examples -- <BR>
@@ -46,8 +46,8 @@ to help us mutually explore IM video conversion techniques. </P>
 
 <!-- <CODE EXECUTE>
     ls -Hl plane.avi | awk '{printf "%d", $5}'        > plane_avi_size.txt
-    convert -quiet plane.avi +append -format %k info: > plane_avi_ncolors.txt
-    identify -quiet -format %n plane.avi              > plane_avi_frames.txt
+    magick -quiet plane.avi +append -format %k info: > plane_avi_ncolors.txt
+    magick identify -quiet -format %n plane.avi              > plane_avi_frames.txt
 </CODE> -->
 However while the AVI itself is quite small, the uncompressed video
 is a massive
@@ -74,7 +74,7 @@ errors, which can be ignored by using a "<CODE><A HREF="../option_link.cgi?quiet
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -quiet -delay 1 plane.avi plane.gif
+  magick -quiet -delay 1 plane.avi plane.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plane.gif"
       ><IMG SRC="plane.gif"      WIDTH=160  HEIGHT=120
@@ -92,7 +92,7 @@ per frame limit. </P>
     ls -l plane.gif | awk '{printf "%d", $5}'  > plane_size.txt
     giftrans -L plane.gif 2>&1 | \
                   grep -c "Local Color Table:" > plane_ctables.txt
-    convert -quiet plane.gif -append -format %k info: > plane_ncolors.txt
+    magick -quiet plane.gif -append -format %k info: > plane_ncolors.txt
 </CODE> -->
 However the animation file is
    <A HREF="plane_size.txt"
@@ -143,13 +143,13 @@ Table</A> for all the frames of the video.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -quiet -delay 1 plane.avi  +map   plane_cgc.gif
+  magick -quiet -delay 1 plane.avi  +map   plane_cgc.gif
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     giftrans -L plane_cgc.gif 2>&1 |\
                      grep -c "Local Color Table:"  > plane_cgc_ctables.txt
     ls -l plane_cgc.gif | awk '{printf "%d", $5}'  > plane_cgc_size.txt
-    convert plane_cgc.gif -append -format %k info: > plane_cgc_ncolors.txt
+    magick plane_cgc.gif -append -format %k info: > plane_cgc_ncolors.txt
 </CODE> -->
 This naturally results in
    <A HREF="plane_cgc_ctables.txt"
@@ -210,7 +210,7 @@ video formats.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -quiet -delay 1 plane.avi -map colormap_332.png plane_ugc.gif
+  magick -quiet -delay 1 plane.avi -map colormap_332.png plane_ugc.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="plane_ugc.gif"
       ><IMG SRC="plane_ugc.gif"      WIDTH=160  HEIGHT=120
@@ -249,7 +249,7 @@ We could just turn off the color dithering to remove the 'dither noise'...
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -quiet -delay 1 plane.avi \
+  magick -quiet -delay 1 plane.avi \
           +dither -map colormap_332.png plane_ugc_nd.gif
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
@@ -294,14 +294,14 @@ HREF="../quantize/#332_colormap" >'332' colormap</A>.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -quiet -delay 1 plane.avi \
+  magick -quiet -delay 1 plane.avi \
           -ordered-dither o8x8,8,8,4 +map plane_od.gif
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     giftrans -L plane_od.gif 2>&1 |\
                     grep -c "Local Color Table:" > plane_od_ctables.txt
     ls -l plane_od.gif | awk '{printf "%d", $5}' > plane_od_size.txt
-    convert plane_od.gif -append -format %k info: > plane_od_ncolors.txt
+    magick plane_od.gif -append -format %k info: > plane_od_ncolors.txt
 </CODE> -->
 Which has
    <A HREF="plane_od_ctables.txt"
@@ -361,7 +361,7 @@ animation to the limited GIF format.  And here is the command I use...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=plane_od2_find.txt>
-    convert -quiet plane.avi -ordered-dither o8x8,23 -append -format %k info:
+    magick -quiet plane.avi -ordered-dither o8x8,23 -append -format %k info:
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -381,14 +381,14 @@ I can then apply the discovered 'color level' choice to the plane animation.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -quiet -delay 1 plane.avi \
+  magick -quiet -delay 1 plane.avi \
           -ordered-dither o8x8,23 +map plane_od2.gif
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     giftrans -L plane_od2.gif 2>&1 |\
                     grep -c "Local Color Table:" > plane_od2_ctables.txt
     ls -l plane_od2.gif | awk '{printf "%d", $5}' > plane_od2_size.txt
-    convert plane_od2.gif -append -format %k info: > plane_od2_ncolors.txt
+    magick plane_od2.gif -append -format %k info: > plane_od2_ncolors.txt
 </CODE> -->
 Which has
    <A HREF="plane_od2_ctables.txt"
@@ -447,11 +447,11 @@ animation.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert plane_od2.gif  -layers OptimizeTransparency +map plane_opt.gif
+  magick plane_od2.gif  -layers OptimizeTransparency +map plane_opt.gif
 </CODE></PRE></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     ls -l plane_opt.gif | awk '{printf "%d", $5}' > plane_opt_size.txt
-    convert plane_opt.gif -append -format %k info: > plane_opt_ncolors.txt
+    magick plane_opt.gif -append -format %k info: > plane_opt_ncolors.txt
 </CODE> -->
 The result is
    <A HREF="plane_opt_size.txt"
@@ -557,7 +557,7 @@ result we works so hard to achieve before.  Which is disappointing. </P>
 
 Not all images are from digital cameras.  It is very common to extract images
 from a digital video feed from a non-CCD video camera.  These images are
-interlaced for direct display on a TV, resulting in every second line being a
+interlaced for direct magick display on a TV, resulting in every second line being a
 different frame of the image (interlacing). </P>
 
 For two frames where things aren't moving, the interlacing is usually not very
@@ -576,7 +576,7 @@ image.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert video_frame.png  -crop 100x100+200+470 +repage  interlaced.png
+    magick video_frame.png  -crop 100x100+200+470 +repage  interlaced.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="interlaced.png"
       ><IMG SRC="interlaced.png"
@@ -610,7 +610,7 @@ filter.  This was contributed by Wolfgang for IM Examples.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert interlaced.png  -fx "floor(j/2)==j/2 ? u : 1"  deinterlace_1.png
+  magick interlaced.png  -fx "floor(j/2)==j/2 ? u : 1"  deinterlace_1.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="deinterlace_1.png"
       ><IMG SRC="deinterlace_1.png"       WIDTH=100 HEIGHT=100
@@ -632,8 +632,8 @@ white lines, or use '<CODE><A HREF="../compose/#multiply"
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 pattern:Horizontal2 \
-          interlaced.png -compose Multiply -composite  deinterlace_2.png
+  magick -size 100x100 pattern:Horizontal2 \
+          interlaced.png -compose Multiply -magick composite  deinterlace_2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="deinterlace_2.png"
       ><IMG SRC="deinterlace_2.png"       WIDTH=100 HEIGHT=100
@@ -652,7 +652,7 @@ duplicating the previous line.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert interlaced.png  -fx "u.p{i,j-j%2}"  deinterlace_3.png
+    magick interlaced.png  -fx "u.p{i,j-j%2}"  deinterlace_3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="deinterlace_3.png"
       ><IMG SRC="deinterlace_3.png"       WIDTH=100 HEIGHT=100
@@ -668,7 +668,7 @@ line.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert interlaced.png -sample 100%x50% \
+    magick interlaced.png -sample 100%x50% \
                            -sample 100%x200%  deinterlace_4.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="deinterlace_4.png"
@@ -684,7 +684,7 @@ vertically smooth the half-frame image as part of the resize expansion.
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert interlaced.png -sample 100%x50% \
+    magick interlaced.png -sample 100%x50% \
                            -resize 100%x200%  deinterlace_5.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="deinterlace_5.png"
@@ -703,7 +703,7 @@ the '<CODE>sampling:offset</CODE> (as of IM v6.8.4-7)
 
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-    convert interlaced.png -define sample:offset=75 \
+    magick interlaced.png -define sample:offset=75 \
             -sample 100%x50%  -resize 100%x200%    deinterlace_6.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="deinterlace_6.png"
@@ -725,5 +725,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/video/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/video/</CODE>
 </ADDRESS></BODY></HTML>

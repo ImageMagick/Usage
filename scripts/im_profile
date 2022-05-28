@@ -86,7 +86,7 @@ if [ $# -eq 1 ]; then
   output="$1"                     # output image filename (or special format)
   shift
 else
-  output="show:"  # if not given, display it direct
+  output="show:"  # if not given, magick display it direct
 fi
 
 # Test if gnuplot is new enough
@@ -148,12 +148,12 @@ grange="`expr $gsize_w - 1`"    # 0 to $grange values input
 } |
   #cat; exit;  # DEBUGGING
   gnuplot |
-  convert - -write info:fd:2 miff:- | display -; exit  # DEBUGGING
+  convert - -write info:fd:2 miff:- | magick display -; exit  # DEBUGGING
   convert "$input"  -resize ${gsize_w}x1\! -scale ${gsize_w}x${rsize_h}\! \
     \( - -trim +repage \) +swap -size ${gsize_w}x1 xc:black +size +swap \
     -append  -bordercolor black -border 1x1 \
     "$output"
-    #-identify show: ; exit
+    #-magick identify show: ; exit
 
 [ -f "$output" ] && chmod 644 "$output"
 

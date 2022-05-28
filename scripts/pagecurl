@@ -378,7 +378,7 @@ convert -size ${ww}x${hh} xc:none \
         -draw "polygon $x1,$y1 $x3,$y3 $x4,$y4" $tmp2
 
 # Cut out an elliptical shape from trianglar overlay
-convert $tmp2 $tmp3 -geometry $offsets -compose DstOut -composite $tmp2
+convert $tmp2 $tmp3 -geometry $offsets -compose DstOut -magick composite $tmp2
 
 # At this point the ellipse mask in no longer needed!
 
@@ -405,7 +405,7 @@ if [ "$mode" != "plain" ]; then
   convert -size ${ww}x${hh} xc: -sparse-color Barycentric \
           "$x3,$y3 white $x4,$y4 black" \
           $process \
-          $tmp2 +swap -compose In -composite $tmp2
+          $tmp2 +swap -compose In -magick composite $tmp2
 fi
 
 # FUTURE add a offset shadow to to the overlay image.
@@ -426,8 +426,8 @@ if [ "X$prefix" != "X" ]; then
 fi
 
 # Do a "paint 'n' mask" of the original image, outputing the final image
-convert $tmp1 $tmp2 -composite \
-        $tmp3 -compose DstIn -composite \
+convert $tmp1 $tmp2 -magick composite \
+        $tmp3 -compose DstIn -magick composite \
         -compose over -bordercolor $bgcolor -border 0 \
         "$outfile"
 
