@@ -334,13 +334,13 @@ location in a variable or a constant. So every batch file should start with
 lines like
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   SETLOCAL EnableDelayedExpansion
   SET IMCONV="%PROGRAMFILES%\ImageMagick\Convert"
   ...
   %IMCONV% -size 128x128 xc:white test.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The code assumes that IM was installed in a folder named "ImageMagick" below
@@ -360,11 +360,11 @@ HREF="#debugging">Editing, Debugging and Runtime Error Testing</A>. The
 equivalent VB-Script code would be something like
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   Set wsh = WScript.CreateObject("WScript.Shell")
   IMconv = wsh.ExpandEnvironmentStrings("%PROGRAMFILES%") & "\ImageMagick\Convert"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 For reasons of simplicity, we will not use this code everytime in the
@@ -389,32 +389,32 @@ For example trying to create a label of German umlauts such as
 simply use the following in Linux...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick label:&auml;&ouml;&uuml; test.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 But this would not create the desired string under windows. You can however
 read and UTF-8 coded string from a textfile:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick label:umlauts.txt test.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 and you can even create this textfile by the use of "<CODE>echo</CODE>, if you
 switch the codepage to UTF-8 in advance: </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   CHCP 65001
   ECHO &auml;&ouml;&uuml; > umlauts.txt
   magick label:umlauts.txt test.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 But if you want to process the output of a DOS command, for example when
@@ -434,13 +434,13 @@ Files\GnuWin32</CODE>.  Then dump the output of the DOS command to a text file
 in your script and magick that file to UTF-8 in the following: </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   CHCP 1252
   DIR /B &auml;&ouml;&uuml;.jpg > temp.txt
   "C:\Program Files\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8 temp.txt > title.txt
   magick label:@title.txt &auml;&ouml;&uuml;.jpg -append &auml;&ouml;&uuml;_labelled.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The parameters tell Iconv to transcode from ISO-8859-1 (codepage 1252) to
@@ -532,19 +532,19 @@ Quite extraordinarily for Windows programs, IM allows images to be written to
 processing tasks. The operation
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick -size 128x128 xc:white gif:- | magick - test.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 is equivalent to
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick -size 128x128 xc:white test.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In the first command of the pipe, the minus operator tells IM to write the
@@ -554,10 +554,10 @@ allows to avoid the explicit use temporary files. It is especially useful if
 some command does not offer certain operations, for example trimming:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick montage -tile 2x2 -geometry 400x300+60+60 1.png 2.png 3.png 4.png miff:- | magick - -trim montage.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 As a consequence of this feature, textual output is usually written to
@@ -565,10 +565,10 @@ As a consequence of this feature, textual output is usually written to
 the textual output of Compare to a text file, you would have to write
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick compare -metric PSNR 1.png 2.png dif_1_2.png 2>result.txt
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 So you have to redirect <I>stderr</I> ("2>") to the text file, not <I>stdout</I> ("1>" or just ">").
@@ -834,7 +834,7 @@ following modifications:
 For example, following the above rules, this UNIX shell script...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   #!/bin/sh
   # Create a negated rose image and overlay a comment
@@ -842,13 +842,13 @@ For example, following the above rules, this UNIX shell script...
           -font Candice -size 140x92 caption:'A Rose by any Name' \
           \( rose: -negate -resize 200% \) +swap -magick composite \
           output.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 will become something like this as a Windows DOS batch file...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   @ECHO OFF
   :: Create a negated rose image and overlay a comment
@@ -857,7 +857,7 @@ will become something like this as a Windows DOS batch file...
           -size 140x92   caption:"A Rose by any Name"  ^
           ( rose: -negate -resize 200%% ) +swap -magick composite  ^
           C:\where\to\save\output.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 I have written a basic Linux shell to DOS batch file converter by the use of
@@ -870,7 +870,7 @@ The SED script <CODE>cim.txt</CODE> that performs the needed manipulations
 looks like this (when stripped of any comments):
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   s/'/\"/g
   s/%/%%/g
@@ -881,7 +881,7 @@ looks like this (when stripped of any comments):
   s/\(.:.*\.[a-z,A-Z]*\)[ ]/\"\1\" /g
   s/\\[ ]*$/^/
   s/^[ ][ ]//
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 You can download the fully commented version file <A
@@ -891,21 +891,21 @@ If you place the SED script <CODE>cim.txt</CODE> in the same folder as the
 Linux shell script which is to be converted, you invoke the conversion by:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   %programfiles%\GnuWin32\bin\SED -f  cim.txt linux.scr &gt; windows.bat
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 You can also invoke the conversion via SendTo or Drag &amp; Drop by use of the
 following batch file:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 SET SP=%programfiles%\GnuWin32\bin
 %SP%\SED -f %SP%\cim.txt "%~1"&gt; "%~dpn1.bat"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This batch file assumes that you have placed the SED script
@@ -932,11 +932,11 @@ name and the directory path. You can test this by dropping a file onto the
 following batch file:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 ECHO Filename: %1
 PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Due to the <CODE>PAUSE</CODE> statement, the DOS box will stay open until the
@@ -955,11 +955,11 @@ trouble. Let us perform a simple conversion from any other format to JPEG. The
 most basic code would be:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 magick %1 %1.jpg
 PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This will produce a JPEG file (with standard quality and resolution) in the
@@ -968,11 +968,11 @@ works on any filename, whether it contains spaces or not. If you want to get
 rid of the original extension, things become a little trickier:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 magick %1 "%~dpn1.jpg"
 PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The above batch file manipulates the filename by use of the <CODE>~</CODE>
@@ -999,11 +999,11 @@ If you just want to test your code without actually invoking IM, you should
 write:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 ECHO magick %1 "%~dpn1.jpg"
 PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 which will just show the result of your string manipulation.</P>
@@ -1020,10 +1020,10 @@ the current directory by 50%, you could type the following line into a DOS
 box: </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR %a in (*.jpg) DO magick %a -resize 50% small_%a
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Please note that the percent sign is <B>not</B> doubled. If you however place
@@ -1031,10 +1031,10 @@ this command in a batch file you will have to replace it by </P>
 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR %%a in (*.jpg) DO magick %%a -resize 50%% small_%%a
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Again, it is convenient to invoke this bulk operation by Drag &amp; Drop or
@@ -1044,14 +1044,14 @@ file which is possibly located in another directory (such as
 the current directory in the first step:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   %~d1
   CD "%~p1"
   MD small
   FOR %%a in (*.jpg) DO magick %%a -resize 50%% small\%%a
   PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In this batch file we
@@ -1077,12 +1077,12 @@ the follow-up steps a little easier, as the references to filenames become
 a little easier and shorter. We could however as well have written:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   MD "%~dp1small"
   FOR %%a in ("%~dp1*.jpg") DO magick "%%a" -resize 50%% "%%~dpasmall\%%~nxa"
   PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This might make things a little shorter, but also a lot trickier. Please note
@@ -1100,8 +1100,8 @@ One of them is that you basically perform only one single command after
 "(", ")" and thereby perform a simple sequence of commands:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   @ECHO OFF
   :: Lighten darker areas of all images in a directory
   %~d1
@@ -1113,7 +1113,7 @@ One of them is that you basically perform only one single command after
     DEL %%a.miff
   )
   PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This batch file will process all images found in the directory passed as the
@@ -1129,13 +1129,13 @@ block. If you need such behaviour, you have to call another batch file by the
 <CODE>FOR</CODE> loop:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   %~d1
   CD %~p1
   MD small
   FOR %%a in (*.jpg) DO CALL "%~dp0process" "%%~fa"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Where "<CODE>process.bat</CODE>" is the batch file which does the actual work
@@ -1150,12 +1150,12 @@ parantheses in the above example:</P>
 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick %%1 -blur 30 -negate %%1.miff
   magick composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
   DEL %%1.miff
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The use of a separate batch file, however, offers all the (limited)
@@ -1167,8 +1167,8 @@ create the second <CODE>process.bat</CODE> script (using <CODE>ECHO</CODE>),
 call it from the main loop, then deleted it when the job is finished:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   ECHO magick %%1 -blur 30 -negate %%1.miff &gt;%~dp0process.bat
   ECHO magick composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1 &gt;&gt;%~dp0process.bat
   ECHO DEL %%1.miff &gt;&gt;%~dp0process.bat
@@ -1177,7 +1177,7 @@ call it from the main loop, then deleted it when the job is finished:</P>
   MD small
   FOR %%a in (*.jpg) DO CALL "%~dp0process" "%%~fa"
   DEL %~dp0process.bat
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 When using the <CODE>ECHO</CODE> command, we have to escape any special DOS
@@ -1198,10 +1198,10 @@ sub-directories under the current directory. In order to magick all TIFF
 files in the subdirectory tree to JPEG you thus simply type:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /R %%a IN (*.tif) DO imconv "%%~a" "%%~dpna.jpg"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 When using the "<CODE>/R</CODE>" flag, you are always looping through the
@@ -1220,13 +1220,13 @@ low-quality JPEG files named <CODE>IDX_0001.jpg, IDX_0002.jpg,
 IDX_0003.jpg</CODE> and so on. First we establish the loop: </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   DEL IDX_????.JPG
   SET COUNT=0
   FOR /F "delims=" %%a in ('DIR /S /B /AD ^|FIND /I "Porsche" ^|SORT') DO CALL c.bat "%%a"
   DEL title.txt
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The first line cleans up any results from previous searches. In the second
@@ -1246,8 +1246,8 @@ delete a temporary file that is created by the batch file <CODE>C.BAT</CODE>.
 We now come to the actual work:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   CHCP 1252
   DIR %1\*.jpg&gt;nul || GOTO :EOF
 
@@ -1262,7 +1262,7 @@ We now come to the actual work:</P>
 
   magick montage -geometry 210x140+0+5 -tile 6x -title @title.txt %1\*.jpg -quality 30%% %TFILE%
   jhead -cl %1 %TFILE%
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In the first line we switch the codepage to Western European Latin
@@ -1304,8 +1304,8 @@ We can combine the two batch files, placing the code of the "working
 batch" into the <CODE>FOR</CODE> loop:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   SETLOCAL EnableDelayedExpansion
   SET ICONV="%PROGRAMFILES%\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8
   CHCP 1252
@@ -1325,7 +1325,7 @@ batch" into the <CODE>FOR</CODE> loop:</P>
   )
   DEL temp.txt
   DEL title.txt
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Basically, two modifications have to be applied to the initial code:
@@ -1347,8 +1347,8 @@ delayed expansion. This can be done when calling the command processor via
 following REG file:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor]
@@ -1356,7 +1356,7 @@ Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\Microsoft\Command Processor]
 "DelayedExpansion"="1"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 However, the dummy-proof version is setting this option in the batch itself by
@@ -1381,17 +1381,17 @@ which caused a circular shift of the command line parameters.  In newer
 versions, the command line parameters can be treated in a For loop:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   FOR %%i in (%*) DO ...
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This allows us to Montage an arbitrary number of images passed by Drag &amp; Drop:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   @ECHO OFF
   SETLOCAL EnableDelayedExpansion
   %~d1
@@ -1410,7 +1410,7 @@ This allows us to Montage an arbitrary number of images passed by Drag &amp; Dro
   %MONTAGE%
   DEL Files.txt
   DEL FSorted.txt
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The above code assumes that the files handed over as command line parameters
@@ -1438,8 +1438,8 @@ handed over to the batch file. A possible script-based solution is to process
 all image files in the directory when just one file is handed to the batch:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
  %~d1 & IF EXIST %1\* (CD %1) ELSE CD %~p1
  IF "%2"=="" (
  SET PATTERN=*.jpg
@@ -1447,7 +1447,7 @@ all image files in the directory when just one file is handed to the batch:
  SET PATTERN=%*
  )
  FOR %%v IN (%PATTERN%) DO (...)
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In the first line we check whether the second command line parameter is
@@ -1478,7 +1478,7 @@ To get a rough idea on what IM's overlay methods really are about, you could
 use the following batch file:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   @ECHO OFF
   :: compose two gradients using all compose methods available
@@ -1487,9 +1487,9 @@ use the following batch file:</P>
   magick compose_src.png -rotate 90 compose_dst.png
   FOR /F %%A in ('magick -list compose') DO ^
      magick composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
-</CODE></PRE></TD></TR>
+</samp></pre></TD></TR>
 </TABLE></P>
-<TABLE  CELLSPACING=0 CELLPADDING=0 WIDTH=80%>
+<TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
 <TR VALIGN=middle><TD ALIGN=middle>
   <A HREF="../images/compose_src.png"
      ><IMG SRC="../images/compose_src.png"      WIDTH=80 HEIGHT=80
@@ -1549,7 +1549,7 @@ the same gradient technique as above to generate the surfaces of a cube as
 spanned by the three coordinates of the colour space:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 magick -size 256x256 gradient: gy.miff
 magick gy.miff -rotate 90 gx.miff
@@ -1575,7 +1575,7 @@ magick top.miff w.miff -append topx.miff
 
 magick composite -geometry +0+299 GB.miff  topx.miff colorspace_%1.png
 DEL *.miff
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE  CELLSPACING=0 CELLPADDING=0>
 <TR><TD ALIGN=middle>
   <A HREF="../images/colorspace_RGB.png"
@@ -1603,22 +1603,22 @@ We now want to call this batch file (saved as "<CODE>cspace.bat</CODE>") from
 another batch file that provides the names of the colour spaces:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F %%A in ('magick -list colorspace') DO CALL cspace %%A
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 We can also filter the output of the <CODE>-list</CODE> option by piping it in
 DOS:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -list colorspace | FIND "RGB" &gt;&gt;clist.txt
   FOR /F %%A in (clist.txt) DO CALL cspace %%A
   DEL clist.txt
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In this example, we filter those lines from the output that contain "RGB" and
@@ -1627,10 +1627,10 @@ input for the <CODE>FOR /F</CODE> command. We can also do this in one run,
 avoiding the temporary file:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F %%A in ('magick -list colorspace ^| FIND "RGB"') DO CALL cspace %%A
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In this case, the pipe symbol "<CODE>|</CODE>" has to be escaped, because it
@@ -1648,11 +1648,11 @@ a color depth of 8 bit) by a technique explained on <A
 HREF="http://www.fmwconcepts.com/imagemagick/" >Fred Weinhaus' website</A>:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F %%a in ('magick identify -format "%%[fx:log(mean)/log(0.5)]" %1') DO ^
   magick %1 -gamma %%a "%~dpn1"_c.%~x1
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This batch file is handed a fully qualified filename as the command line
@@ -1690,12 +1690,12 @@ information embedded in a photograph and write it into the top left corner of
 the image:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F "tokens=1,2" %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize 18 -fill white -gravity northwest ^
     -annotate +0+0 "%%i %%j" "%~dpn1"_dated%~x1
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -1727,12 +1727,12 @@ named consecutive, IE. "<CODE>%x, %y</CODE>". We can however change the rather
 unconventional formatting of the date by the following code: </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize 18 -fill white -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 We now defined the colon ('<CODE>:</CODE>') as an additional delimiter,
@@ -1751,10 +1751,10 @@ is to have the command format the data, so that you can set multiple
 variables.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F %%L IN ('magick identify -format "Width=%%w\nHeight=%%h" %1') DO set %%L
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This results in setting both the DOS variables '<CODE>Width</CODE>' and
@@ -1782,14 +1782,14 @@ the font size date-time string in the above example corresponding to the
 dimensions of the photograph: </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F %%i IN ('magick identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
 
   FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize %psize% -fill white -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In the first line we evaluate the smaller dimension of the photograph by
@@ -1804,12 +1804,12 @@ And here we calculate a random angle between as an integer between
 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F %%x IN ('magick null: -format "%%[fx:int(rand()*31)-15]" info:') DO SET angle=%%x
   magick %1 -thumbnail x90 -matte ^
             -background none -rotate %angle%   "%~dpn1"_rotated.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The <A HREF="../transform/#fx_escapes" >FX Expressions</A> cannot only
@@ -1830,7 +1830,7 @@ following example, we roughly calculate the width of the time-date string by
 use of the <CODE>SET</CODE> command:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   :: Determine the font height
   FOR /F %%i IN ('magick identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
@@ -1847,7 +1847,7 @@ use of the <CODE>SET</CODE> command:</P>
   FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize %psize% -fill %fcolor% -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This sample batch file chooses the color of the date-time string corresponding
@@ -1875,7 +1875,7 @@ environment variables, we can make the color cube example from above somewhat
 more flexible and its various calculations more transparent:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick -size 256x256 gradient: gy.gif
   magick gy.gif -rotate 90 gx.gif
@@ -1906,7 +1906,7 @@ more flexible and its various calculations more transparent:</P>
   magick composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
   DEL *.miff
   DEL *.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 
@@ -1946,8 +1946,8 @@ running the script. So if you intend to share your batch scripts with others,
 you should first of all check whether Convert is accessible: </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   @ECHO OFF
   magick -version 1&gt;nul: 2&gt;nul:
   IF NOT %errorlevel%==0 GOTO NoMagick:
@@ -1957,7 +1957,7 @@ you should first of all check whether Convert is accessible: </P>
   :NoMagick
   ECHO ImageMagick (convert.exe) not found.
   PAUSE
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In the first line, we question the ImageMagick version, supressing the
@@ -1973,15 +1973,15 @@ problem: You can determine whether IM's programm path is part of the
 environment variable PATH:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   @ECHO OFF
   PATH | FIND /I "ImageMagick"
   IF NOT %errorlevel%==0 GOTO NoPath:
   ...
   :NoPath
   ...
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 If Find (called with the case-insensitive option /I) cannot find the string,
@@ -1989,8 +1989,8 @@ it sets the ERRORLEVEL. In a more sophisticated approach, you can check the
 Registry entry instead, no longer relying on PATH:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   @ECHO OFF
   FOR /F "tokens=1,2,*" %%A in ^
   ('reg  query "HKCM\Software\ImageMagick\Current" ^| FIND "BinPath"') DO ^
@@ -2000,7 +2000,7 @@ Registry entry instead, no longer relying on PATH:</P>
   ...
   :NoMagick
   ...
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 With this code, we query IM's Registry key <CODE>Current</CODE> and search for
@@ -2021,8 +2021,8 @@ Distortion Method</A> was first implemented in version 6.3.5-9 (in September
 test whether the installed version of IM is newer than that:</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   @ECHO OFF
   SETLOCAL EnableDelayedExpansion
   SET MINVERSION=7.5.3-0
@@ -2034,7 +2034,7 @@ test whether the installed version of IM is newer than that:</P>
   ECHO Yours is %VERSION%.
   PAUSE
   Goto :EOF
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <CODE>SETLOCAL</CODE> restricts any changes to environment variables to the
@@ -2056,8 +2056,8 @@ various ways to calculate the average brightness of a (large) image file, say
 a digital photograph:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    IF "%1"=="" GOTO :EOF
    ECHO %TIME%
    Identify -verbose %1 | FIND "mean" & ECHO %TIME%
@@ -2066,7 +2066,7 @@ a digital photograph:
    Convert %TEMP%\%1  -format %%[fx:mean] info: & ECHO %TIME%
    Convert %TEMP%\%1 -resize 1x1! -format %%[fx:mean] info: & ECHO %TIME%
    DEL %TEMP%\%1
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The image is handed to the script as the single command line parameter, which
@@ -2096,13 +2096,13 @@ seconds by the FOR command and then use IM's fx operator to perform the
 subtraction, allowing for 60 seconds overflow
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    FOR /F "tokens=1,2,* delims=:" %%a in ("%TIME%") DO SET START=%%c
         ... some command(s)...
         FOR /F "tokens=1,2,* delims=:" %%a in ("%TIME%") DO SET STOP=%%c
    Convert null: -format "%%[fx:(%STOP%-%START%&lt;0.0)?%STOP%-%START%+60.0:%STOP%-%START%]" info:
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This will however only work on Windows versions where the decimal separator is
@@ -2116,11 +2116,11 @@ which can be done in integer arithmetics, as well as computing any differences
 later on. The basic code is
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    for /f "tokens=1-4 delims=:., " %%a in ("%TIME%") do ^
         set /a  Start100S=1%%a * 360000 + 1%%b * 6000 + 1%%c * 100 + 1%%d - 36610100
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The "1" inserted before each part of the split time code prevents numbers with
@@ -2242,8 +2242,8 @@ This dependency was found by means of the <A HREF="http://lensfun.berlios.de/"
 lens. So here is our VBScript:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   SetLocale(1033)          ' US, i.e. decimal point
   const strConv = "IMCONV" ' name of the IM Convert program
   const strAdd = "_pt"    ' string attached to the filename
@@ -2267,7 +2267,7 @@ lens. So here is our VBScript:
     &amp;  """ -virtual-pixel black -filter point -distort Barrel   ""0.0 " _
     &amp; b &amp; " 0.0 "" """ &amp; strFileOut &amp; """"
   wsh.run command,7,true
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In the first line we set the locale to US English (1033), which (beside other
@@ -2308,13 +2308,13 @@ This first VBScript doesn't do anything that could not have be done by means
 a batch file like
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    SETLOCAL EnableDelayedExpansion
    FOR /F %%i in ('magick identify -format "%%[EXIF:FocalLength]" %1') DO SET FL=%%i
    FOR /F %%i IN ('Convert null: -format "%%[fx:0.000005142*(%FL%)^3 - 0.000380839 * (%FL%)^2 + 0.009606325 * %FL% - 0.075316854]" info:') DO SET B=%%i
    Convert %1 -distort barrel "0.0 !B! 0.0" "%~dpn1_pt%~x1"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 but the VBS code is more straightforward, easier to modify and can easily be
@@ -2332,8 +2332,8 @@ combine the selected images to an index print via IM's Montage. The basic code
 would be:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   Dim wsh
   Set wsh = CreateObject("Wscript.Shell")
   '
@@ -2345,7 +2345,7 @@ would be:
   IndexFile= Left(WScript.Arguments(1),InStrRev(WScript.Arguments(1),"\")) &amp; "index.jpg"
   Command = "magick montage -geometry 210x140+0+5 -tile 6x " &amp; strInputfiles &amp; " -quality 80% """ &amp; IndexFile &amp; """"
   wsh.run command, 7, true
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The script first concatenates the filenames handed to the script via Drag
@@ -2355,8 +2355,8 @@ parameters. For larger scripts it is convenient to store the filenames in an
 array:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   Dim FName()
   Dim wsh
   Set wsh = CreateObject("Wscript.Shell")
@@ -2366,7 +2366,7 @@ array:
   FOR i = 0 TO NArgs - 1
     FName(i) = """" & WScript.Arguments(i) & """"
   NEXT
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 First we define a dynamic array via <CODE>Dim FName()</CODE> and then
@@ -2385,8 +2385,8 @@ given, all images in the parent directory are processed. In order to process
 all GIFs within a folder, we could do something along the lines of:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   Dim fs, folder
   Set fs = CreateObject("Scripting.FileSystemObject")
   If WScript.Arguments.Count <> 1 Then WScript.Quit(1)
@@ -2396,7 +2396,7 @@ all GIFs within a folder, we could do something along the lines of:
      If instr(file,"gif") <> 0 THEN FN = FN &amp; File &amp; vbLF
   NEXT
   MsgBox FN
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Here we use the FileSystem Object to determine the name of the parent folder.
@@ -2408,8 +2408,8 @@ Drop or SendTo will pass them to the script in random order. This can be
 achieved by a bubble sort:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   for i = 0 to NArgs - 1
     for j = i + 1 to NArgs - 1
       if FName(i) &gt; FName(j) then
@@ -2419,7 +2419,7 @@ achieved by a bubble sort:
       end if
     next
   next
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <A HREF="../img_photos/clip.jpg"
@@ -2473,8 +2473,8 @@ control the ordering of the frames:
 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   strTxtFile="ordering.txt"
   PDir = fs.getParentFolderName(FName(0)) &amp; "\"
   Wsh.CurrentDirectory = PDir
@@ -2487,7 +2487,7 @@ control the ordering of the frames:
   else
     bCtrlFile = False
   end if
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <A HREF="../img_photos/wm.jpg"
@@ -2546,8 +2546,8 @@ a command environment. For example, if we want to trim the white borders of
 the index print genrated by the script above, the code would have to be:
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   Dim wsh
   Set wsh = CreateObject("Wscript.Shell")
   '
@@ -2559,7 +2559,7 @@ the index print genrated by the script above, the code would have to be:
   IndexFile= Left(WScript.Arguments(1),InStrRev(WScript.Arguments(1),"\")) &amp; "index.jpg"
   Command = "cmd /c magick montage -geometry 210x140+0+5 -tile 6x " &amp; strInputfiles &amp; " miff:- | magick - -trim """ &amp; IndexFile &amp; """"
   wsh.run command, 7, true
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Here we call the command processor cmd with the option /c in order to close

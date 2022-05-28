@@ -276,7 +276,7 @@ to its new location.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_rotated_direct.gif ERR=/dev/null>
   # Rotate by 17 degrees -- get the Sine and Cosine of this angle
   sin=`magick xc: -format "%[fx:sin( 17 *pi/180)]" info:`
@@ -291,7 +291,7 @@ to its new location.
                         printf( "%d,%d: %s\n", nx, ny, $3 );
               }' s=$sin c=$cos - |\
       magick -background black  txt:-   koala_rotated_direct.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_rotated_direct.gif"
      ><IMG SRC="koala_rotated_direct.gif"   WIDTH=75 HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -372,7 +372,7 @@ operator to look up the nearest pixel to that location in the source image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_rotated_fx.gif>
   # Rotate by 17 degrees -- get the Sine and Cosine of this angle
   sin=`magick xc: -format "%[fx:sin( 17 *pi/180)]" info:`
@@ -386,7 +386,7 @@ operator to look up the nearest pixel to that location in the source image.
                yy = -$sin*ii +$cos*jj + $cy;
                v.p{xx,yy}" \
           koala_rotated_fx.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_rotated_fx.gif"
      ><IMG SRC="koala_rotated_fx.gif"   WIDTH=75 HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -447,11 +447,11 @@ but you also get severe aliasing effects.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -virtual-pixel Black  -interpolate NearestNeighbor \
           -filter point    -distort SRT 17    koala_rotated_srt.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_rotated_srt.gif"
      ><IMG SRC="koala_rotated_srt.gif"   WIDTH=75 HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -544,11 +544,11 @@ so as to produce a better, more correct, color from the lookup.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -virtual-pixel Black  -interpolate Mesh \
           -filter point    -distort SRT 17    koala_rotated_mesh.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_rotated_mesh.gif"
      ><IMG SRC="koala_rotated_mesh.gif"   WIDTH=75 HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -641,16 +641,16 @@ that was generated. </P>
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 94x94 xc:red -bordercolor white -border 3 \
           -virtual-pixel tile                -implode 4 \
           implode_tiled_box.gif
   magick -size 94x94 xc:red -bordercolor white -border 3 \
           -virtual-pixel tile  -resize 400%  -implode 4 -resize 25% \
           implode_tiled_ss.gif
-</CODE></PRE></TD></TR></TABLE>
-<TABLE CELLSPACING=0 CELLPADDING=5 WIDTH=80%><TR valign="top">
+</samp></pre></TD></TR></TABLE>
+<TABLE CELLSPACING=0 CELLPADDING=5 width="90%"><TR valign="top">
 <TD ALIGN=center>
   <A HREF="implode_tiled_box.gif"
      ><IMG SRC="implode_tiled_box.gif"        WIDTH=100  HEIGHT=100
@@ -817,8 +817,8 @@ an extreme infinitely tiled perspective image.  See <A HREF="#horizon" >Viewing
 Distant Horizons</A> below for details, of this distortion.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   # input image:  special checkerboard with a gold outline.
   magick -size 90x90 pattern:checkerboard -normalize -fill none \
           -stroke gold -strokewidth 3 -draw 'rectangle 0,0 89,89' \
@@ -843,7 +843,7 @@ Distant Horizons</A> below for details, of this distortion.
   magick checks.png       -virtual-pixel tile -mattecolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           horizon_tile.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5><TR valign="top">
 <TD ALIGN=center><FONT SIZE=-1>
   <A HREF="checks.png"
@@ -955,10 +955,10 @@ distortion methods it has available on your IM version using "<CODE><A
 HREF="../option_link.cgi?list" >-list</A> Distort</CODE>".
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -list distort
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The "<CODE><A HREF="../option_link.cgi?distort" >-distort</A></CODE>" operator
@@ -968,11 +968,11 @@ list of floating point values, that is used to control the specific distortion
 method. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick ... -distort  {<I>method</I>} <!--
        --> "{<I>list_of_floating_point_values</I>}" ...
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The number floating point values given is however highly dependant on the
@@ -1242,14 +1242,14 @@ image so you can see what parts 'hit a pixel' and which didn't.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick \( xc:red   xc:white xc:black +append \) \
           \( xc:blue  xc:lime  xc:white +append \) \
           \( xc:black xc:red   xc:blue  +append \) -append \
           -filter Box -define filter:support=0.4 \
           +distort SRT 30,0  bad_box_distort.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="bad_box_distort.png"
       ><IMG SRC="bad_box_distort.png"
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1268,15 +1268,15 @@ Interpolation</A> (just return the background color, which was set to 'gray').
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick \( xc:red   xc:white xc:black +append \) \
           \( xc:blue  xc:lime  xc:white +append \) \
           \( xc:black xc:red   xc:blue  +append \) -append \
           -filter Box -define filter:support=0.4 \
           -interpolate background -background Gray \
           +distort SRT 30,0   bad_box_distort_gray.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="bad_box_distort_gray.png"
       ><IMG SRC="bad_box_distort_gray.png"
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1353,10 +1353,10 @@ what is going wrong, and as part of the implementation process for new
 distortions. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=distort_verbose.txt>
   magick koala.gif -verbose -distort SRT 0 +verbose  koala_noop.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD>
   <A HREF="../images/koala.gif"
      ><IMG SRC="../images/koala.gif"       WIDTH=75  HEIGHT=75
@@ -1364,7 +1364,7 @@ distortions. </P>
 </TD><TD>
 <IMG SRC="../img_www/right.gif" ALIGN=middle WIDTH=20 HEIGHT=20 ALT="==>">
 </TD><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="distort_verbose.txt"
      ><IMG SRC="distort_verbose.txt.gif"
@@ -1437,10 +1437,10 @@ above).
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif -filter point -distort SRT 0  koala_noop_perfect.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_noop_perfect.gif"
      ><IMG SRC="koala_noop_perfect.gif"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1455,11 +1455,11 @@ any floating-point errors that distort may produce.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif   -filter point  -interpolate nearest \
           -distort SRT 0  koala_noop_perfect_2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_noop_perfect_2.gif"
      ><IMG SRC="koala_noop_perfect_2.gif"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1518,11 +1518,11 @@ un-distorted image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -define distort:viewport=44x44+15+0 \
           -filter point -distort SRT 0  +repage koala_viewport.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_viewport.gif"
      ><IMG SRC="koala_viewport.gif"   WIDTH=44  HEIGHT=44
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1536,11 +1536,11 @@ distorted image, and showing the effects the <A HREF="../misc/#virtual-pixel"
 >Virtual Pixel</A> setting has on the infinite space surrounding the
 original source image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -define distort:viewport=125x125-25-25 \
           -filter point -distort SRT 0  +repage koala_viewport_2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_viewport_2.gif"
      ><IMG SRC="koala_viewport_2.gif"   WIDTH=125  HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1567,11 +1567,11 @@ no-op distort work pretty much exactly like the <A HREF="../crop/#extent"
 For this image '<CODE><A HREF="../misc/#white" >White</A></CODE>' Virtual
 Pixel setting would probably be a better choice.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -define distort:viewport=125x125-25-25 \
           -virtual-pixel White -distort SRT 0  +repage koala_viewport_3.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_viewport_3.gif"
      ><IMG SRC="koala_viewport_3.gif"   WIDTH=125  HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1594,11 +1594,11 @@ generate tiled, image of any size and in different styles.  You can even use
 distort to distort those tiled images, such as exampled in <A
 HREF="#affine_tile" >Affine Tiling</A> below.  </P>
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -define distort:viewport=125x125-25-25 \
           -virtual-pixel Mirror -distort SRT 0  +repage koala_viewport_4.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_viewport_4.gif"
      ><IMG SRC="koala_viewport_4.gif"   WIDTH=125  HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1629,7 +1629,7 @@ so I placed the viewport expression in variables so as to make it easier to
 read, code, and debug, though it is really just a constant (fixed) expression.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=viewport_square.gif>
   size='%[fx: w>h ? h : w ]'
   offset_x='%[fx: w>h ? (w-h)/2 : 0 ]'
@@ -1638,7 +1638,7 @@ read, code, and debug, though it is really just a constant (fixed) expression.
 
   magick worldmap_sm.jpg  -set option:distort:viewport "$viewport" \
           -filter point -distort SRT 0  +repage   viewport_square.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/worldmap_sm.jpg"
      ><IMG SRC="../img_photos/worldmap_sm.jpg"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1665,12 +1665,12 @@ on the images orientation.  </P>
 This is an alternative form using "min()" and "max()" functions, instead of
 image orientation tests.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick worldmap_sm.jpg  -set option:distort:viewport \
     "%[fx:min(w,h)]x%[fx:min(w,h)]+%[fx:max((w-h)/2,0)]+%[fx:max((h-w)/2,0)]" \
     -filter point -distort SRT 0  +repage  viewport_square_2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="viewport_square_2.gif"
      ><IMG SRC="viewport_square_2.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1734,12 +1734,12 @@ that you can easily "<CODE><A HREF="../option_link.cgi?resize"
 
 For example, we 'zoom' in on the head of the koala.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif -set option:distort:scale 2.5 \
           -set option:distort:viewport 44x44+15+0 \
           -distort SRT 0  +repage koala_zoom.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_zoom.gif"
      ><IMG SRC="koala_zoom.gif"   WIDTH=110  HEIGHT=110
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1756,11 +1756,11 @@ produce a higher quality result. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif -filter point -set option:distort:scale 10 \
           -distort SRT 0  -scale 10%   koala_super.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_super.gif"
      ><IMG SRC="koala_super.gif"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1793,10 +1793,10 @@ very minor blurring. </P>
 Here is a repeat the results of the above 'no-op' distort...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif    -distort SRT 0    koala_noop.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD>
   <A HREF="../images/koala.gif"
      ><IMG SRC="../images/koala.gif"       WIDTH=75  HEIGHT=75
@@ -1883,11 +1883,11 @@ Operator</A>, but without any image size increase.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -background skyblue  -virtual-pixel background \
           -distort ScaleRotateTranslate -110 koala_srt_rotate.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_srt_rotate.png"
      ><IMG SRC="koala_srt_rotate.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1904,11 +1904,11 @@ HREF="../warping/#rotate" >Rotate Operator</A>.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -background skyblue  -virtual-pixel background \
           +distort ScaleRotateTranslate -110 +repage koala_srt_rotate2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_srt_rotate2.png"
      ><IMG SRC="koala_srt_rotate2.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1929,11 +1929,11 @@ Lets shrink it by 30% as well, but use a transparent background.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -matte -virtual-pixel transparent \
           +distort ScaleRotateTranslate '.7,-110' +repage koala_srt_scale.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_srt_scale.png"
      ><IMG SRC="koala_srt_scale.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -1951,12 +1951,12 @@ distort the X and Y scales different.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -background skyblue -virtual-pixel background \
           -distort ScaleRotateTranslate '28,24  .4,.8  -110' \
           koala_srt_center.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_srt_center.png"
      ><IMG SRC="koala_srt_center.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1967,12 +1967,12 @@ image, and set background to a matching white background.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -virtual-pixel white \
           -distort ScaleRotateTranslate '28,24  .4,.8  -110  37.5,60' \
           koala_srt_trans.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_srt_trans.png"
      ><IMG SRC="koala_srt_trans.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2009,8 +2009,8 @@ original image.  These points represent control points by which the object can
 then be animated in simple terms.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 80x80 xc:skyblue -fill yellow -stroke black \
           -draw 'path "M 15,75 20,45 25,75 Z  M 10,55 30,55" ' \
           spaceship.gif
@@ -2023,7 +2023,7 @@ then be animated in simple terms.
           \( -clone 0  -distort SRT '20,60    0.3   75  72,11' \) \
           \( -clone 0  -distort SRT '20,60    0.1   80  100,8' \) \
           -set delay 50  -loop 0  spaceship_launch.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="spaceship.gif"
      ><IMG SRC="spaceship.gif"   WIDTH=80  HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -2050,10 +2050,10 @@ Rotate image without changing size...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -virtual-pixel black -distort SRT '20'  rotate_normal.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rotate_normal.png"
      ><IMG SRC="rotate_normal.png"      WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2063,10 +2063,10 @@ Or rotate so as not to clip any of the rotated image...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -virtual-pixel black +distort SRT '20'  rotate_noclip.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rotate_noclip.png"
      ><IMG SRC="rotate_noclip.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2092,7 +2092,7 @@ as possible.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   angle=20
   ratio=`magick rose: -format \
@@ -2102,7 +2102,7 @@ as possible.
   crop="$crop+%[fx:ceil((w-w*$ratio)/2)]+%[fx:ceil((h-h*$ratio)/2)]"
   magick rose: -set option:distort:viewport "$crop" \
           +distort SRT $angle +repage   rotate_internal.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rotate_internal.png"
      ><IMG SRC="rotate_internal.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2117,13 +2117,13 @@ larger so as to 'fill' the original images bounds.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   angle=20
   magick rose: -distort SRT \
      "%[fx:aa=$angle*pi/180;(w*abs(sin(aa))+h*abs(cos(aa)))/min(w,h)], $angle" \
      rotate_correction.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rotate_correction.png"
      ><IMG SRC="rotate_correction.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2211,11 +2211,11 @@ which results in a simple 'translation' of the image location.
           koala_arrow.png
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -virtual-pixel white \
           -distort Affine '28,24 45,40'   koala_one_point.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="koala_arrow.png"
      ><IMG SRC="koala_arrow.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2242,11 +2242,11 @@ are moved to this new position.
           koala_lines.png
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  -virtual-pixel white \
           -distort Affine '30,11 15,15  48,29 60,15'   koala_two_point.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_lines.png"
      ><IMG SRC="koala_lines.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2333,13 +2333,13 @@ to the same size (without preserving the aspect ratio).
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick rose: -set option:rw %w -set option:rh %h +delete \
            logo: -alpha set -virtual-pixel transparent \
            +distort Affine '0,0 0,0     %w,0 %[rw],0   0,%h  0,%[rh]' \
            +repage logo_sized_as_rose.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="logo_sized_as_rose.png"
      ><IMG SRC="logo_sized_as_rose.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2398,10 +2398,10 @@ Text Arguments</A>). </P>
 
 For example you can specify a distortion like this...
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick input.png  -distort Perspective '@file_of_coords.txt' output.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The filename can be just a '<CODE>@-</CODE>' to mean read the file from
@@ -2413,7 +2413,7 @@ either comma or white-space separated, that means the coordinate pairs can be
 cleanly ordered as one pair of coordinates per line in the form...
 
 <DIV ALIGN=center>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE>
    X<sub>1</sub>   Y<sub>1</sub>   I<sub>1</sub>   J<sub>1</sub>
    X<sub>2</sub>   Y<sub>2</sub>   I<sub>2</sub>   J<sub>2</sub>
@@ -2479,7 +2479,7 @@ two lines, we can translate, rotate, scale and shear that text image, to fit
 the new location of those lines.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   magick -background lightblue -fill Gray -font Candice \
       -size 100x100 -gravity center label:Affine\! \
@@ -2498,7 +2498,7 @@ the new location of those lines.
           -distort Affine ' 3.5,60.5  30.5,50.5
                            32.5,60.5  60.5,80.5
                             3.5,30.5  30.5,5.5' label_axis_distort_affine.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="label_axis.png"
      ><IMG SRC="label_axis.png"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2617,14 +2617,14 @@ coefficients, rather than the movement of control points.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_affine_proj.png>
    angle=-20
    tan=`magick xc: -format "%[fx:tan( $angle *pi/180)]" info:`
    magick koala.gif -matte -virtual-pixel Transparent \
            +distort AffineProjection "1,$tan,0,1,0,0" +repage \
            koala_affine_proj.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_affine_proj.png"
      ><IMG SRC="koala_affine_proj.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -2650,8 +2650,8 @@ far, also provides interesting ways to generate various tiling patterns, based
 on a distorted image. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png    -matte    -virtual-pixel tile \
           -distort  ScaleRotateTranslate  '20,20  .5  30' \
           checks_srt_tile.png
@@ -2661,7 +2661,7 @@ on a distorted image. </P>
   magick checks.png    -matte    -virtual-pixel tile \
           -distort  AffineProjection  '0.9,0.3,-0.2,0.7,20,15' \
           checks_amatrix_tile.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="checks.png"
      ><IMG SRC="checks.png"                WIDTH=90 HEIGHT=90
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -2687,12 +2687,12 @@ useful way of tiling whole sequence of images such as <A
 HREF="../anim_mods/#glitter_tiles" >Animated Glitter Tiles</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick glitter_blue.gif -virtual-pixel tile \
           -filter point -set option:distort:viewport 100x100 -distort SRT 0 \
           glitter_blue_tiled.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/glitter_blue.gif"
      ><IMG SRC="../images/glitter_blue.gif"                WIDTH=48 HEIGHT=48
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -2734,7 +2734,7 @@ corners of three (preferably square) images to these control points.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=isometric_cube.png>
   magick \
      \( lena_orig.png -alpha set -virtual-pixel transparent \
@@ -2746,7 +2746,7 @@ corners of three (preferably square) images to these control points.
      \
      -background none -compose plus -layers merge +repage \
      -bordercolor black -compose over -border 5x2     isometric_cube.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="isometric_cube.png"
      ><IMG SRC="isometric_cube.png"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2801,12 +2801,12 @@ stand upright.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -background None -virtual-pixel Transparent -fill DodgerBlue \
           -pointsize 72 -font Ravie  label:A   -trim +repage \
           -gravity South -chop 0x5  standing_shape.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="standing_shape.png"
      ><IMG SRC="standing_shape.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2820,15 +2820,15 @@ Here is the command to generate the 3-D shadow from this 'standing shape'
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick standing_shape.png   -flip +distort SRT '0,0 1,-1 0' \
           \( +clone -background Black -shadow 60x5+0+0 \
              -virtual-pixel Transparent \
              +distort Affine '0,0 0,0  100,0 100,0  0,100 100,50' \
           \) +swap -background white -layers merge \
           -fuzz 2% -trim +repage   standing_shadow.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="standing_shadow.jpg"
      ><IMG SRC="standing_shadow.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2879,8 +2879,8 @@ Shear' position that we used above.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick standing_shape.png   -flip +distort SRT '0,0 1,-1 0' \
           \( +clone   -virtual-pixel Transparent -mattecolor None \
              +distort Perspective \
@@ -2890,7 +2890,7 @@ Shear' position that we used above.
                 '0,0 0,0  100,0 100,0   45,-100 -100,-50   60,-100 0,-50' \
           \) +swap -background white -layers merge \
           -fuzz 2% -trim +repage     standing_shadow_var.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="standing_shadow_var.jpg"
      ><IMG SRC="standing_shadow_var.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2961,10 +2961,10 @@ HREF="../basics/#arg_geometry" >Geometry Argument</A> as <A HREF="../resize/"
 >Resize</A> does, including the slight discrepancy in scaling factors for the
 two dimensions, making this a direct resize alternative.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick logo:  -distort Resize 150x  logo_resized.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="logo_resized.png"
      ><IMG SRC="logo_resized.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3004,12 +3004,12 @@ The following is the equivalent operations that the above <A HREF="#resize"
 >Distort Resize</A> performed internally.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTED>
   magick logo:  -alpha set -virtual-pixel transparent \
           +distort Affine '0,0 0,0   %w,0 150,0   0,%h 0,113' \
           -alpha off  -crop 150x113+0+0 +repage   distort_resize.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The values '<CODE>150</CODE>' and '<CODE>113</CODE>' (used in two places) is
@@ -3034,14 +3034,14 @@ effects of <A HREF="../misc/#virtual" >Virtual Pixels</A> from any possible
 existing transparency in the image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE EXECUTED>
   magick logo: -alpha set -virtual-pixel transparent \
           \( +clone -alpha extract -alpha opaque \) \
           +distort Affine '0,0 0,0   %w,0 150,0   0,%h 0,113' \
           -alpha off -crop 150x113+0+0 +repage \
           -compose CopyOpacity -magick composite      distort_resize_trans.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This does two distorts: first to distort the image and then to distort the
@@ -3073,15 +3073,15 @@ to which I those points transformed to in the final image (blue), so as to
 'straighten' or 'rectify' the face of the building.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick building.jpg \
           -draw 'fill none stroke red polygon 7,40 4,124, 85,122, 85,2' \
           building_before.jpg
   magick building.jpg \
           -draw 'fill none stroke blue polygon 4,30 4,123, 100,123, 100,30' \
           building_after.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/building.jpg"
      ><IMG SRC="../img_photos/building.jpg"
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -3099,13 +3099,13 @@ into the '<CODE>perspective</CODE>' method of "<A
 HREF="../option_link.cgi?distort" ><CODE>-distort</CODE></A>".
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick building.jpg -matte -virtual-pixel transparent \
          -distort Perspective \
               '7,40 4,30   4,124 4,123   85,122 100,123   85,2 100,30' \
           building_pers.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/building.jpg"
      ><IMG SRC="../img_photos/building.jpg"
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -3129,13 +3129,13 @@ coordinates of each mapping pair.  This lets us see just how much of the
 image is degraded by the distortion.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick building_pers.png  -matte -virtual-pixel transparent \
          -distort Perspective \
               '4,30 7,40   4,123 4,124   100,123 85,122   100,30 85,2' \
           building_pers_rev.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/building.jpg"
      ><IMG SRC="../img_photos/building.jpg"
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -3160,15 +3160,15 @@ checkerboard test image we created above, which we distort then reverse the
 distortion.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png        -matte    -virtual-pixel transparent \
           -distort Perspective '0,0,0,0  0,90,0,90  90,0,90,25  90,90,90,65' \
           checks_pers.png
   magick checks_pers.png   -matte    -virtual-pixel transparent \
           -distort Perspective '0,0,0,0  0,90,0,90  90,25,90,0  90,65,90,90' \
           checks_pers_rev.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="checks.png"
      ><IMG SRC="checks.png"               WIDTH=90 HEIGHT=90
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=0 ALT="[IM Output]"></A>
@@ -3224,13 +3224,13 @@ You can produce some very unusual effects using <A HREF="#perspective"
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png -mattecolor DodgerBlue \
           -virtual-pixel background -background Green \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           checks_horizon.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="checks_horizon.png"
      ><IMG SRC="checks_horizon.png"        WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3267,12 +3267,12 @@ tiled plane.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png  -virtual-pixel tile -mattecolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           horizon_tile.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="horizon_tile.png"
      ><IMG SRC="horizon_tile.png"   WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3301,12 +3301,12 @@ HREF="../misc/#random" >Random Virtual Pixel Setting</A>...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick checks.png  -virtual-pixel random -mattecolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           horizon_random.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="horizon_random.png"
      ><IMG SRC="horizon_random.png"   WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3330,7 +3330,7 @@ distorted image. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 90x90 pattern:gray50 -matte \
        -virtual-pixel random -mattecolor none \
@@ -3338,7 +3338,7 @@ distorted image. </P>
        -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
        +repage -size 120x50 gradient:dodgerblue-tomato \
        -compose DstOver -magick composite    sunset_horizon.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="sunset_horizon.png"
      ><IMG SRC="sunset_horizon.png"   WIDTH=120  HEIGHT=120
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3359,13 +3359,13 @@ height and slope of the horizon. </P>
 
 Here is a more traditional test of a tiled perspective distortion.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pattern:checkerboard -scale 120x120 -normalize \
           -virtual-pixel tile  -distort Perspective \
              '0,0 10,61   119,0 60,60   0,119 5,114   119,119 125,110' \
           checkered_plain.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="checkered_plain.gif"
      ><IMG SRC="checkered_plain.gif"   WIDTH=120  HEIGHT=120
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3410,8 +3410,8 @@ that two edge control points are lined with each other, to form the spine of a
 box.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   # Generate a Spine Image
   magick -size 200x40 xc:skyblue \
     -pointsize 20 -gravity north -annotate +5+0 'IM Examples' \
@@ -3439,7 +3439,7 @@ box.
     \
     -background black -compose plus -layers merge  +repage \
     -bordercolor black -compose over -border 15x2    box_set.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="box_spine.jpg"
      ><IMG SRC="box_spine.jpg"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3588,14 +3588,14 @@ equivalent to a '<CODE>Affine Projection</CODE>' </P>
 
 For example...
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -alpha set -virtual-pixel transparent \
           -distort Perspective-Projection \
              '1.40, 0.25, 3.0    0.15, 1.30, 0.0    0.007, 0.009' \
           perspective_projection_rose.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="perspective_projection_rose.png"
      ><IMG SRC="perspective_projection_rose.png"    WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -3625,18 +3625,18 @@ mapping Perspective_Projection matrix.  </P>
 For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=perspective_verbose.txt>
   magick rose: -matte -virtual-pixel transparent -verbose \
           -distort Perspective "0,0,3,0 0,46,10,46 70,0,70,7 70,46,60,40" \
           +verbose perspective_rose.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="perspective_rose.png"
      ><IMG SRC="perspective_rose.png"    WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="perspective_verbose.txt"
      ><IMG SRC="perspective_verbose.txt.gif"
@@ -3647,7 +3647,7 @@ The first section <I>Perspective Projection</I> can be used to map source
 coordinates into destination coordinates.  The formula is as above. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD><CODE>
 &nbsp; i = ( 1.430099*x +0.246650*y +3 )/( 0.006757*x + 0.009448*y +1 ) &nbsp;<BR>
 &nbsp; j = ( 0.147296*x +1.434591*y +0 )/( 0.006757*x + 0.009448*y +1 ) &nbsp;
@@ -3664,7 +3664,7 @@ On the other hand the second FX equivalent section uses a different set of
 Mapping</A> an image distortion actually needs to apply. Namely...
 
 <DIV ALIGN=center>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD><CODE>
 &nbsp; x = ( 0.711858*i -0.108326*j -2.135575 )/(-0.004119*i -0.005877*j +1 ) &nbsp;<BR>
 &nbsp; y = (-0.073090*i +0.699571*j +0.219269 )/(-0.004119*i -0.005877*j +1 ) &nbsp;
@@ -3705,14 +3705,14 @@ And here I mark that coordinate using a circle on both the input and output
 images..
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -fill none -stroke black \
           -draw 'circle 39,20 39,24'    rose_marked.png
 
   magick perspective_rose.png -fill none -stroke black \
           -draw 'circle 43.7,23.6 43.7,26.6'  perspective_rose_marked.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="rose_marked.png"
      ><IMG SRC="rose_marked.png"     WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3742,8 +3742,8 @@ For example lets take a special test image of a mandrill that has had a
 grid overlaid on it, and distort it with perspective and bilinear.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mandrill_grid.jpg -matte -virtual-pixel black \
        -distort Perspective \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
@@ -3752,7 +3752,7 @@ grid overlaid on it, and distort it with perspective and bilinear.
        -distort BilinearForward \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_blin.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE><TR>
 <TD ALIGN=center>
   <A HREF="../img_photos/mandrill_grid.jpg"
@@ -3814,15 +3814,15 @@ Here is another comparison between '<CODE><A HREF="#perspective"
 rose image...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <c>  magick rose: -matte -virtual-pixel transparent \
           -distort Perspective "0,0,3,0 0,46,10,46 70,0,70,7 70,46,60,40" \
           perspective_rose.png
   magick rose: -matte -virtual-pixel transparent -interpolate Spline \
           -distort BilinearForward "0,0,3,0 0,46,10,46 70,0,70,7 70,46,60,40" \
           bilinear_rose.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE><TR>
 <TD ALIGN=center>
   <A HREF="../images/rose.png"
@@ -3898,13 +3898,13 @@ distortion (such as we did using the '<CODE><A HREF="#perspective"
 image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mandrill_blin.jpg -matte -virtual-pixel black \
        -distort BilinearForward \
               '26,0 0,0   114,23 128,0   128,100 128,128  0,123 0,128' \
        mandrill_blin_back.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="mandrill_blin.jpg"
      ><IMG SRC="mandrill_blin.jpg"    WIDTH=128 HEIGHT=128
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3927,13 +3927,13 @@ been implemented as a '<CODE>BilinearReverse</CODE>' distortion.  </P>
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mandrill_blin.jpg -matte -virtual-pixel black \
        -distort BilinearReverse \
               '26,0 0,0   114,23 128,0   128,100 128,128  0,123 0,128' \
        mandrill_blin_rev.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="mandrill_blin.jpg"
      ><IMG SRC="mandrill_blin.jpg"    WIDTH=128 HEIGHT=128
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3982,13 +3982,13 @@ For example here I try to use a '<CODE><A HREF="#bilinear_reverse"
 a '<CODE><A HREF="#bilinear_forward" >BilinearForward</A></CODE>' distortion.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mandrill_grid.jpg -matte -virtual-pixel black \
        -distort BilinearReverse \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_blin_rev2.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/mandrill_grid.jpg"
      ><IMG SRC="../img_photos/mandrill_grid.jpg"    WIDTH=128 HEIGHT=128
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4016,13 +4016,13 @@ result.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png  -virtual-pixel tile  -mattecolor DodgerBlue \
           -distort BilinearReverse \
                '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           bilinear_rev_tile.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bilinear_rev_tile.png"
      ><IMG SRC="bilinear_rev_tile.png"   WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4039,13 +4039,13 @@ go rather crazy...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png  -virtual-pixel tile  -mattecolor DodgerBlue \
           -interpolate Spline  -distort BilinearForward \
                '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           bilinear_fwd_tile.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bilinear_fwd_tile.png"
      ><IMG SRC="bilinear_fwd_tile.png"   WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4102,19 +4102,19 @@ equivalent, you will see this complexity.  For example using the checks image
 we created previously...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=bilinear_verbose.txt>
   magick checks.png -matte -virtual-pixel transparent -mattecolor none \
       -interpolate Spline -verbose -distort BilinearForward \
                    '0,0,0,0  0,90,0,90  90,0,60,30  90,90,90,90' \
       +verbose bilinear_checks.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bilinear_checks.png"
      ><IMG SRC="bilinear_checks.png"    WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="bilinear_verbose.txt"
      ><IMG SRC="bilinear_verbose.txt.gif"
@@ -4130,19 +4130,19 @@ Distortion</A> is much simpler, as you can directly apply the simpler
 polynomial equation, to reverse the previous distortion...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=bilinear_rev_verbose.txt>
   magick bilinear_checks.png  -virtual-pixel transparent \
       -verbose -distort BilinearReverse \
                    '0,0,0,0  0,90,0,90  60,30,90,0  90,90,90,90' \
       +verbose bilinear_checks_rev.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bilinear_checks_rev.png"
      ><IMG SRC="bilinear_checks_rev.png"    WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="bilinear_rev_verbose.txt"
      ><IMG SRC="bilinear_rev_verbose.txt.gif"
@@ -4275,13 +4275,13 @@ now has 4 terms per axis, with 4 constants, so you now need at least
 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mandrill_grid.jpg -matte -virtual-pixel black \
        -distort Polynomial \
               '1.5   0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_poly_1.5.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/mandrill_grid.jpg"
      ><IMG SRC="../img_photos/mandrill_grid.jpg"    WIDTH=128 HEIGHT=128
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4338,8 +4338,8 @@ I then requested IM to generate a cubic polynomial to 'best-fit' the input
 coordinates.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   # warp image
   magick grid16.png -virtual-pixel gray \
           -distort polynomial "3 $(cat grid16_control_points.txt)" \
@@ -4353,7 +4353,7 @@ coordinates.
   magick grid16_polynomial.png -virtual-pixel gray \
           -distort polynomial "3 $(cat grid16_cp_inverse.txt)" \
           grid16_restored.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/grid16.png"
      ><IMG SRC="../images/grid16.png"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -4471,10 +4471,10 @@ For example '<CODE>Arc</CODE>' an image over an angle of 60 degrees...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -virtual-pixel White -distort Arc 60  arc_rose.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="arc_rose.jpg"
        ><IMG SRC="arc_rose.jpg"
              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4500,10 +4500,10 @@ rotate the image around the circle.  For example rotate it by 90 degrees.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -virtual-pixel White -distort Arc '60 90'  arc_rose_rot.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="arc_rose_rot.jpg"
        ><IMG SRC="arc_rose_rot.jpg"
              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4522,10 +4522,10 @@ smaller and tighter.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -virtual-pixel White -distort Arc 120  arc_rose_3.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="arc_rose_3.jpg"
        ><IMG SRC="arc_rose_3.jpg"
              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4539,8 +4539,8 @@ will hit the center of the distortion, and beyond, which results in
 the lower part of the source image disappearing into oblivion.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -virtual-pixel White -distort Arc 60   arc_rose_1.jpg
   magick rose: -virtual-pixel White -distort Arc 90   arc_rose_2.jpg
   magick rose: -virtual-pixel White -distort Arc 120  arc_rose_3.jpg
@@ -4548,7 +4548,7 @@ the lower part of the source image disappearing into oblivion.
   magick rose: -virtual-pixel White -distort Arc 240  arc_rose_5.jpg
   magick rose: -virtual-pixel White -distort Arc 300  arc_rose_6.jpg
   magick rose: -virtual-pixel White -distort Arc 360  arc_rose_7.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="arc_rose_1.jpg"
      ><IMG SRC="arc_rose_1.jpg"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -4583,8 +4583,8 @@ HREF="../misc/#virtual-pixel" >Virtual Pixel</A> background color, so you can
 see the boundary of the original image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel Background  -background SkyBlue \
           -distort Arc 60     arc_circle_1.jpg
@@ -4600,7 +4600,7 @@ see the boundary of the original image.
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel Background  -background SkyBlue \
           -distort Arc 360    arc_circle_5.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="arc_circle_1.jpg"
      ><IMG SRC="arc_circle_1.jpg"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4633,12 +4633,12 @@ such as <A HREF="../misc/#tile" >Tile</A>.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel Tile -background SkyBlue \
           -distort Arc 360   arc_circle_tile.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_circle_tile.jpg"
      ><IMG SRC="arc_circle_tile.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4656,12 +4656,12 @@ current background color, producing a perfect circle of text.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel HorizontalTile -background SkyBlue \
           -distort Arc 360   arc_circle.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_circle.jpg"
      ><IMG SRC="arc_circle.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4675,12 +4675,12 @@ method.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel Background -background SkyBlue \
           -rotate 180 -distort Arc '270 180'  arc_flip.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="arc_flip.jpg"
        ><IMG SRC="arc_flip.jpg"
              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4694,12 +4694,12 @@ anti-aliasing effects.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel HorizontalTile -background SkyBlue \
           -distort Arc '360 0 50'  arc_radius.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="arc_radius.jpg"
        ><IMG SRC="arc_radius.jpg"
              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4716,12 +4716,12 @@ can get complete control of the width of the ring, or its 'radial height'.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel HorizontalTile -background SkyBlue \
           -distort Arc '360 0 45 30'   arc_inner.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_inner.jpg"
      ><IMG SRC="arc_inner.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4737,12 +4737,12 @@ other words the original image aspect ratio will no longer be preserved.
 You can even force it to completely fill the inside of the circle, wrapping
 the bottom edge of the input image at the center, or 'pole' of the distrotion.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -font Candice -pointsize 20 label:' Around the World ' \
           -virtual-pixel HorizontalTile -background SkyBlue \
           -distort Arc '360 0 45 0'   arc_fill.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_fill.jpg"
      ><IMG SRC="arc_fill.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4759,12 +4759,12 @@ produces...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 210x30 pattern:checkerboard -matte \
           -virtual-pixel HorizontalTile -background SkyBlue \
           -distort Arc 360   arc_checks.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_checks.png"
      ><IMG SRC="arc_checks.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4777,11 +4777,11 @@ By using the default <A HREF="../misc/#virtual-pixel" >Virtual Pixel</A>
 setting of '<CODE><A HREF="../misc/#edge" >Edge</A></CODE>' you can produce a
 more interesting effect.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 210x30 pattern:checkerboard  -virtual-pixel Edge \
           -distort Arc 360   arc_checks_edge.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_checks_edge.png"
      ><IMG SRC="arc_checks_edge.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4794,11 +4794,11 @@ Of course a '<CODE><A HREF="../misc/#edge" >Tile</A></CODE>' setting generated
 interesting 'radial' effects too, allowing you to generate a circular
 checkerboard pattern.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 210x30 pattern:checkerboard  -virtual-pixel Tile \
           -distort Arc 360   arc_checks_tile.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_checks_tile.png"
      ><IMG SRC="arc_checks_tile.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4813,33 +4813,33 @@ up with?
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 90x1 pattern:gray50 -scale 900x100 -normalize \
           -virtual-pixel Tile  -set option:distort:viewport 100x100-50-50 \
           -distort Arc 360  +repage  arc_radii.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="arc_radii.gif"
      ><IMG SRC="arc_radii.gif"          WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 400x100 pattern:hs_diagcross \
           -virtual-pixel Tile  -set option:distort:viewport 100x100-50-50 \
           -distort Arc '360 0 80 0' +repage  arc_cross.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="arc_cross.gif"
      ><IMG SRC="arc_cross.gif"          WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 360x80 xc: -draw "fill none stroke black line 0,5 360,80" \
           -virtual-pixel White  -distort Arc '360 0 50 0'  arc_spiral.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="arc_spiral.gif"
      ><IMG SRC="arc_spiral.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4848,12 +4848,12 @@ up with?
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick tree.gif -set option:distort:viewport 120x60-60-60 \
           -virtual-pixel Dither  +distort Arc '180 0 25 0' \
           +repage arc_rays.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="arc_rays.gif"
      ><IMG SRC="arc_rays.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4895,13 +4895,13 @@ For an example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick logo: -resize x150 -gravity NorthEast -crop 100x100+10+0! \
           \( -background none label:'IM Examples' \
              -virtual-pixel Background +distort Arc '270 50 20' \
              -repage +75+21\! \)  -flatten  arc_overlay.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="arc_overlay.jpg"
      ><IMG SRC="arc_overlay.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4961,11 +4961,11 @@ defaults. Of course you should specify a  <A HREF="../misc/#virtual-pixel"
 >HorizontalTile</A></CODE>' when producing a full circle polar mapping...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick worldmap_sm.jpg -virtual-pixel HorizontalTile  \
           -background Black   -distort Polar 0   polar_arctic.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/worldmap_sm.jpg"
      ><IMG SRC="../img_photos/worldmap_sm.jpg"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4987,12 +4987,12 @@ larger output radius, to make more visible, and asked IM to 'fit' the output
 image to this size by using the 'plus' form of the <A HREF="#distort" >Distort
 Operator</A>.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick worldmap_md.jpg -rotate 180 -crop 100%x25%+0+0 +repage \
           -virtual-pixel HorizontalTile -background Black \
           +distort Polar 80 +repage  polar_antarctica.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="polar_antarctica.jpg"
      ><IMG SRC="polar_antarctica.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5039,11 +5039,11 @@ also be used to generate 'arcs'.
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick worldmap_sm.jpg -virtual-pixel Black -background Black \
           +distort Polar  '60,20 0,0 -60,60' +repage  polar_arc.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/worldmap_sm.jpg"
      ><IMG SRC="../img_photos/worldmap_sm.jpg"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5071,11 +5071,11 @@ repeated patterns.  For example, this is exactly the same as the last example,
 just with a '<CODE><A HREF="../misc/#horizontal_tile"
 >HorizontalTileEdge</A></CODE>' setting...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick worldmap_sm.jpg -virtual-pixel HorizontalTile -background Black \
           +distort Polar  '60,20 0,0 -60,60' +repage  polar_arc_tiled.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="polar_arc_tiled.jpg"
      ><IMG SRC="polar_arc_tiled.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5105,10 +5105,10 @@ input image. </P>
 For example, lets reverse the previous 'diskworld' back into a Cartesian Map.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick polar_arctic.jpg  -distort DePolar 0  world_restored.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="polar_arctic.jpg"
      ><IMG SRC="polar_arctic.jpg"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5148,10 +5148,10 @@ expected.
 
 For example.
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick polar_arctic.jpg  +distort DePolar 0  world_restored_2.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="polar_arctic.jpg"
      ><IMG SRC="polar_arctic.jpg"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5179,14 +5179,14 @@ a flower image, de-polar, then restore it using the special
 '<I>Radius_Max</I>' value of '<CODE>0</CODE>' (radius = nearest edge).
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg -virtual-pixel Black \
           -distort DePolar 0  flower_depolar.jpg
   magick flower_depolar.jpg \
           -virtual-pixel HorizontalTile -background black \
           -distort  Polar  0  flower_circle.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="flower_sm.jpg"
      ><IMG SRC="flower_sm.jpg"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5213,14 +5213,14 @@ special '<I>Radius_Max</I>' value of '<CODE>-1</CODE>', will ask IM to
 calculate an use the furthest corner from the 'center point', as the radius.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg  -virtual-pixel Black \
           -distort DePolar -1  flower_depolar-1.jpg
   magick flower_depolar-1.jpg \
           -virtual-pixel HorizontalTile -background black \
           -distort  Polar  -1  flower_restored.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="flower_sm.jpg"
      ><IMG SRC="flower_sm.jpg"
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5250,13 +5250,13 @@ image, though you may get some clipping of the corners...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg -virtual-pixel Black -distort DePolar -1 \
           -roll +15+0 \
           -virtual-pixel HorizontalTile -background Black \
           -distort  Polar  -1  flower_polar_rotate.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_polar_rotate.jpg"
      ><IMG SRC="flower_polar_rotate.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5278,13 +5278,13 @@ For example here I take the checker-board test image, and just run it though
 a normal Depolar-Polar cycle without making any changes.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png   -virtual-pixel Transparent \
           -distort DePolar -1   checks_depolar.png
   magick checks_depolar.png  -virtual-pixel HorizontalTile -background None \
           -distort  Polar  -1   checks_cycled.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="checks.png"
      ><IMG SRC="checks.png"      WIDTH=90 HEIGHT=90
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5314,15 +5314,15 @@ command...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png -virtual-pixel Background -background None \
           -set option:distort:scale 4  -distort DePolar -1 \
           -noop \
           -virtual-pixel HorizontalTile -background None \
           -set option:distort:scale .25 -distort  Polar  -1 \
           checks_cycled_ss.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="checks_cycled_ss.png"
      ><IMG SRC="checks_cycled_ss.png"   WIDTH=90 HEIGHT=90
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5348,15 +5348,15 @@ times larger.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg   -virtual-pixel Black \
           -set option:distort:scale 4   -distort DePolar -1 \
           -roll +60+0   \
           -virtual-pixel HorizontalTile -background Black \
           -set option:distort:scale .25 -distort Polar -1 \
           flower_polar_rotate_ss.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_polar_rotate_ss.jpg"
      ><IMG SRC="flower_polar_rotate_ss.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5373,15 +5373,15 @@ Or you can apply simple linear blurring of the intermediate image (such
 achieved by squeezing and enlarging the image again).
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg -virtual-pixel Black \
           -set option:distort:scale 4   -distort DePolar -1 \
           -scale 10%x100%\! -filter Gaussian -resize 1000%x100%\! +filter \
           -virtual-pixel HorizontalTile -background Black \
           -set option:distort:scale .25 -distort Polar -1 \
           flower_angular_blur.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_angular_blur.jpg"
      ><IMG SRC="flower_angular_blur.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5409,15 +5409,15 @@ extends the edges of the image into the undefined virtual canvas space.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg -virtual-pixel Edge \
           -set option:distort:scale 4   -distort DePolar -1 \
           -scale 10%x100%\! -filter Gaussian -resize 1000%x100%\! +filter \
           -virtual-pixel HorizontalTileEdge -background Black \
           -set option:distort:scale .25 -distort Polar -1 \
           flower_angular_blur_edge.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_angular_blur_edge.jpg"
      ><IMG SRC="flower_angular_blur_edge.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5437,15 +5437,15 @@ the center of the image...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg   -virtual-pixel Black \
           -set option:distort:scale 4   -distort DePolar -1 \
           -virtual-pixel Edge   -motion-blur 0x28-90 \
           -virtual-pixel HorizontalTile -background Black \
           -set option:distort:scale .25 -distort Polar -1 \
           flower_radial_blur.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_radial_blur.jpg"
      ><IMG SRC="flower_radial_blur.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5459,11 +5459,11 @@ the middle of the flower.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg  flower_radial_blur.jpg \
           -compose Lighten -magick composite   flower_radial_blur_lighten.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_radial_blur_lighten.jpg"
      ><IMG SRC="flower_radial_blur_lighten.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5558,12 +5558,12 @@ Here is an example from the original web site, using the supplied coefficients
 for the camera that was used to take the photo.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick barrel_distorted.jpg -virtual-pixel black \
           -distort Barrel "0.0 0.0 -0.075 1.1" \
           barrel_distorted_fixed.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/barrel_distorted.jpg"
      ><IMG SRC="../img_photos/barrel_distorted.jpg"   WIDTH=300  HEIGHT=225
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5584,8 +5584,8 @@ values add up greater than <CODE>1.0</CODE> so the resulting distorted image
 will be smaller.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png -virtual-pixel gray \
           -distort Barrel "0.2 0.0 0.0 1.0"   barrel_checks_A.png
   magick checks.png -virtual-pixel gray \
@@ -5594,7 +5594,7 @@ will be smaller.
           -distort Barrel "0.0 0.0 0.2 1.0"   barrel_checks_C.png
   magick checks.png -virtual-pixel gray \
           -distort Barrel "0.0 0.0 0.0 1.2"   barrel_checks_D.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="barrel_checks_A.png"
      ><IMG SRC="barrel_checks_A.png"   WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5614,8 +5614,8 @@ effect using a larger '<I>D</I>' value (to shrink the image) so you can
 see the results better.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick checks.png -virtual-pixel gray \
           -distort Barrel "-0.2 0.0 0.0 1.3"   barrel_checks-A.png
   magick checks.png -virtual-pixel gray \
@@ -5624,7 +5624,7 @@ see the results better.
           -distort Barrel "0.0 0.0 -0.2 1.3"   barrel_checks-C.png
   magick checks.png -virtual-pixel gray \
           -distort Barrel "0.0 0.0 0.0 1.3"    barrel_checks-D.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="barrel_checks-A.png"
      ><IMG SRC="barrel_checks-A.png"   WIDTH=90  HEIGHT=90
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5699,12 +5699,12 @@ vertically in the middle.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -matte -virtual-pixel transparent \
           -distort Barrel "0.0 0.0 0.0 1.0   0.0 0.0 0.5 0.5" \
           barrel_bulge.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="barrel_bulge.png"
      ><IMG SRC="barrel_bulge.png"   WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -5715,12 +5715,12 @@ middle.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -matte -virtual-pixel transparent \
           -distort Barrel "0.0 0.0 0.0 1.0   0.0 0.0 -0.5 1.9" \
           barrel_pinch.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="barrel_pinch.png"
      ><IMG SRC="barrel_pinch.png"   WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -5731,12 +5731,12 @@ your squeezing the image between your fingers, making it bulge out the sides.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -matte -virtual-pixel transparent \
           -distort Barrel "0.0 0.0 0.5 0.5   0.0 0.0 -0.5 1.9" \
           barrel_pinch_2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="barrel_pinch_2.png"
      ><IMG SRC="barrel_pinch_2.png"   WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -5782,12 +5782,12 @@ form of distortion.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -matte -virtual-pixel transparent \
           -distort BarrelInverse "0.0 0.0 -0.5 1.5   0.0 0.0 0.3 0.5" \
           barrel_inv_pinch.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="barrel_inv_pinch.png"
      ><IMG SRC="barrel_inv_pinch.png"   WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -5861,11 +5861,11 @@ Here for example I project a P90 photo onto a plane to make the image look
 more 'normal' and make straight lines straight again.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick p90_orig.jpg -virtual-pixel Gray \
           +distort Cylinder2Plane 90.467  p90_plane.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="p90_plane.png"
      ><IMG SRC="p90_plane.png"
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5909,13 +5909,13 @@ well as an animation that slowly pans around those 360 degrees. </I> </P>
 
 <!--
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mars_panorama_sm.jpg \
           -define distort:viewport=100x100 \
           +distort Cylinder2Plane  '360  %[fx:w*3/4],%[h/2]  90' \
           mars_cube_face.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="mars_pano_orig.jpg"
      ><IMG SRC="../img_photos/p90_sm.png"  WIDTH=800  HEIGHT=200
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5940,11 +5940,11 @@ projection, and takes the parameters...
 For example, this un-does the previous P.90 camera example.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick p90_plane.png -virtual-pixel Black \
           +distort Plane2Cylinder 90.467  p90_restored.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="p90_restored.png"
      ><IMG SRC="p90_restored.png"
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5957,8 +5957,8 @@ Here I use this distortion to generate an animation of a 'film-strip' complete
 with film sprocket edge holes. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 12x12 xc: -draw 'circle 6,6 6,2' -negate \
           -duplicate 5 +append +duplicate \
           rose: +swap -background black -append \
@@ -5968,7 +5968,7 @@ with film sprocket edge holes. </P>
           -distort Plane2cylinder 115 \
           -bordercolor Skyblue -border 0x3 -set delay 5 \
           film_strip_anim.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="film_strip_anim.gif"
      ><IMG SRC="film_strip_anim.gif"
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -6027,12 +6027,12 @@ by pulling on his ears (at '<CODE>30,11</CODE>' and '<CODE>48,29</CODE>')...
           koala_ears.png
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif -virtual-pixel Black \
           -distort Shepards '30,11 20,11  48,29 58,29' \
           koala_ear_pull.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="koala_ears.png"
      ><IMG SRC="koala_ears.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6061,13 +6061,13 @@ That is this distortion generates a 'localized' distortion. </P>
 Lets expand our view (using a <A HREF="#distort_viewport" >Distortion
 Viewport</A>) so we can see this better...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif -virtual-pixel Black \
           -set option:distort:viewport 115x115-20-20 \
           -distort Shepards '30,11 15,11  48,29 58,29' \
           +repage koala_ear_pull_2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_ear_pull_2.png"
      ><IMG SRC="koala_ear_pull_2.png"   WIDTH=115  HEIGHT=115
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6082,14 +6082,14 @@ stretched 'head' of the koala. </P>
 To avoid this effect it is more typical to also 'pin' the corners and
 possibility some of the edges of the image, so that they don't move.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_ear_pull_3.png>
   magick koala.gif -virtual-pixel Black \
           -set option:distort:viewport 115x115-20-20 \
           -distort Shepards '30,11 15,11  48,29 58,29
               0,0 0,0  0,74 0,74   74,0 74,0  74,74 74,74' \
           +repage koala_ear_pull_3.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_ear_pull_3.png"
      ><IMG SRC="koala_ear_pull_3.png"   WIDTH=115  HEIGHT=115
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6101,13 +6101,13 @@ this case) can be useful.  For example lets just move the koala's nose (at
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_move_nose.png>
   magick koala.gif -virtual-pixel Black \
           -distort Shepards '28,24 37,37
               0,0 0,0  0,74 0,74   74,0 74,0  74,74 74,74' \
           +repage koala_move_nose.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_move_nose.png"
      ><IMG SRC="koala_move_nose.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6136,7 +6136,7 @@ parts of the image we don't want to move (green line).
      koala_head.png
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_head_move.png>
   magick koala.gif -virtual-pixel Black -distort Shepards \
             '19,8, 29,8   19,27 29,27   26,34 36,34
@@ -6144,7 +6144,7 @@ parts of the image we don't want to move (green line).
              13,20 13,20  17,28 17,28  25,36 25,36
                  35,39 35,39   46,40 46,40   50,43 50,43 ' \
           +repage koala_head_move.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="koala_head.png"
      ><IMG SRC="koala_head.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6199,7 +6199,7 @@ the distorted image.
      koala_head_2.png
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_head_move_2.png>
   magick koala.gif -virtual-pixel Black -distort Shepards \
             '15,15, 25,15   19,27 29,27   26,34 36,34
@@ -6208,7 +6208,7 @@ the distorted image.
                 25,47 25,47 45,51 45,51   55,45 55,45
                 5,70 5,70  15,60 15,60   55,60 55,60   70,70 70,70' \
           +repage koala_head_move_2.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="koala_head_2.png"
      ><IMG SRC="koala_head_2.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6233,8 +6233,8 @@ and <A HREF="#bilinear_forward" >BilinearForward</A>, along side the <A
 HREF="#shepards" >Shepards Distortion</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <c>  magick mandrill_grid.jpg -matte -virtual-pixel black \
        -distort Perspective \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
@@ -6247,7 +6247,7 @@ HREF="#shepards" >Shepards Distortion</A>.
        -distort Shepards \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_shep.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE><TR>
 <TD ALIGN=center>
   <A HREF="../img_photos/mandrill_grid.jpg"
@@ -6299,12 +6299,12 @@ apart.
           koala_push.png
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif -virtual-pixel Black \
           -distort Shepards '30,11 40,11  48,29 38,29' \
           koala_ear_push.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="koala_push.png"
      ><IMG SRC="koala_push.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6332,8 +6332,8 @@ For example, here is a repeat of the 'koala ear pulling' example, with
 different power levels applied to distortion weights.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif -virtual-pixel Black -define shepards:power=0.5 \
           -distort Shepards '30,11 20,11  48,29 58,29' \
           koala_ear_pull_pow0.5.png
@@ -6349,7 +6349,7 @@ different power levels applied to distortion weights.
   magick koala.gif -virtual-pixel Black -define shepards:power=8.0 \
           -distort Shepards '30,11 20,11  48,29 58,29' \
           koala_ear_pull_pow8.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE><TR valign="top">
 <TD ALIGN=center>
   <A HREF="koala_ears.png"
@@ -6405,14 +6405,14 @@ effect in a very efficent manner. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_move_nose.png>
   magick koala.gif -virtual-pixel Black -define shepards:power=25 \
           -distort Shepards '28,24 35,35 \
                       28,24 20,10   28,24 50,10 \
                       28,24 20,60   28,24 50,60 \
                       28,24 10,35   28,24 60,35'  koala_hexagonal.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_hexagonal.png"
      ><IMG SRC="koala_hexagonal.png"   WIDTH=75  HEIGHT=75
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>

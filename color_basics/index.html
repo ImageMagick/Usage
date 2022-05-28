@@ -448,11 +448,11 @@ However real life is never quite so simple. It never is! </P>
 For example lets generate and save an image with a simple a linear sequence of
 gray values...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient:'gray(100%)-gray(0)' \
           -set colorspace sRGB gradient.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="gradient.gif"
      ><IMG SRC="gradient.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -516,11 +516,11 @@ directly modify the image values using the <A HREF="../transform/#evaluate_pow"
 
 So lets apply it and see the result of a 'gamma corrected image'..
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient:'gray(100%)-gray(0)' -gamma 2.2 \
           -set colorspace sRGB gradient_gamma.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_gamma.gif"
      ><IMG SRC="gradient_gamma.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -573,12 +573,12 @@ Most computer monitors fail this test!</P>
 However HDMI TV's should come out perfect. </P>
 
 The image was created using...
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 45x256 gradient: -size 10x256 pattern:gray50 \
           -duplicate 1,0 +append -set colorspace sRGB -colorspace RGB \
           monitor_sRGB.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="monitor_sRGB.png"
      ><IMG SRC="monitor_sRGB.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -589,15 +589,15 @@ close your monitor is to a correct '2.2' gamma magick display for human percepti
 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for gamma in 1.6 1.8 2.0 2.2 2.4
   do
     magick -size 45x256 gradient: -size 10x256 pattern:gray50 \
             -duplicate 1,0 +append -gamma $gamma monitor_g$gamma.png
   done
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=80% ALIGN=center>
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="90%" ALIGN=center>
 <TR><TD ALIGN=center>
   <A HREF="monitor_g1.6.png"
      ><IMG SRC="monitor_g1.6.png"
@@ -654,11 +654,11 @@ response of the human eye, specifically with very dark shades of color. </P>
 
 So lets save our linear gradient in a sRGB corrected colorspace.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient:'gray(100%)-gray(0)' \
           -set colorspace RGB -colorspace sRGB    gradient_sRGB.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="gradient_sRGB.gif"
      ><IMG SRC="gradient_sRGB.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -672,10 +672,10 @@ So lets save our linear gradient in a sRGB corrected colorspace.
   As of IM v6.7.7 the above is simplified to just
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient:white-black gradient_sRGB.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV>
 
   This is because the linear gradient will always be generated in a linear
@@ -698,11 +698,11 @@ So lets save our linear gradient in a sRGB corrected colorspace.
   of IM the two colorspace names needed to be swapped. For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient: -set colorspace sRGB \
           -colorspace RGB gradient_sRGB.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV>
 
   This colorspace handling weirdness was considered a long time IMv6 bug,
@@ -794,11 +794,11 @@ We take two colors using different color channels and blur them together
 so that within the channel the color is blurring to zero (a low color value).
 First lets do thus using the default sRGB input channel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 40x80 xc:red xc:lime +append \
           -blur 0x20 blur_sRGB.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="blur_sRGB.png"
      ><IMG SRC="blur_sRGB.png"              WIDTH=80  HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -813,11 +813,11 @@ appear darker than they should be in sRGB colorspace. </P>
 
 Here I blur the same image again but using a linear RGB colorspace.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 40x80 xc:red xc:lime +append \
           -colorspace RGB -blur 0x20 -colorspace sRGB blur_RGB.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="blur_RGB.png"
      ><IMG SRC="blur_RGB.png"              WIDTH=80  HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -856,7 +856,7 @@ I picked these colors as they appear to show the greatest difference,
 in the intermedite colors generated.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for colorspace in RGB LUV LAB
   do
@@ -864,7 +864,7 @@ in the intermedite colors generated.
             -colorspace $colorspace -blur 0x30 -colorspace sRGB \
             colorspace_$colorspace.png
   done
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 ALIGN=center>
 <TR><TD ALIGN=center>
   <A HREF="colorspace_RGB.png"
@@ -996,7 +996,7 @@ The most notable conflicts are in four specific colors.  Here is a table of
 the known color name conflicts. Remember the SVG color is what IM will use by
 default. </P>
 
-<TABLE BORDER=1 CELLSPACING=4 ALIGN=center>
+<table class="table table-sm table-hover" CELLSPACING=4 ALIGN=center>
 <TR><TH>Conflict<BR>Color Name
                   <TH COLSPAN=2>SVG Result<BR>(IM default)
                   <TH COLSPAN=2>X11 Result<BR>for Name
@@ -1100,16 +1100,16 @@ background pattern so that you can see that pattern though the image
 transparency.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 50x50    xc:'#00FF00FF'   color_hex_1.png
   magick -size 50x50    xc:'#00FF00C0'   color_hex_2.png
   magick -size 50x50    xc:'#00FF0090'   color_hex_3.png
   magick -size 50x50    xc:'#00FF0060'   color_hex_4.png
   magick -size 50x50    xc:'#00FF0030'   color_hex_5.png
   magick -size 50x50    xc:'#00FF0000'   color_hex_6.png
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+</samp></pre></TD></TR></TABLE>
+<table class="table table-sm table-hover" width="90%" CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="color_hex_1.png"
      ><IMG SRC="color_hex_1.png"       WIDTH=50 HEIGHT=50
@@ -1165,16 +1165,16 @@ function.  Where RGB values goes from 0 to 255, and the alpha channel is
 specified as a decimal fraction between 0.0 (transparent) to 1.0 (opaque).
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 50x50   xc:'rgba(255,0,0, 1.0)'   color_rgba_1.png
   magick -size 50x50   xc:'rgba(255,0,0, 0.8)'   color_rgba_2.png
   magick -size 50x50   xc:'rgba(255,0,0, 0.6)'   color_rgba_3.png
   magick -size 50x50   xc:'rgba(255,0,0, 0.4)'   color_rgba_4.png
   magick -size 50x50   xc:'rgba(255,0,0, 0.2)'   color_rgba_5.png
   magick -size 50x50   xc:'rgba(255,0,0, 0.0)'   color_rgba_6.png
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+</samp></pre></TD></TR></TABLE>
+<table class="table table-sm table-hover" width="90%" CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="color_rgba_1.png"
      ><IMG SRC="color_rgba_1.png"       WIDTH=50 HEIGHT=50
@@ -1219,8 +1219,8 @@ must <A HREF="../masking/#alpha_set" >Set the Alpha Channel</A>, before you
 can actually set the colors transparency.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 50x50   xc:RoyalBlue                   color_name_1.png
   magick -size 50x50   xc:RoyalBlue -alpha set \
                         -channel A -evaluate set 80%   color_name_2.png
@@ -1232,8 +1232,8 @@ can actually set the colors transparency.
                         -channel A -evaluate set 20%   color_name_5.png
   magick -size 50x50   xc:RoyalBlue -alpha set \
                         -channel A -evaluate set  0    color_name_6.png
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+</samp></pre></TD></TR></TABLE>
+<table class="table table-sm table-hover" width="90%" CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="color_name_1.png"
      ><IMG SRC="color_name_1.png"       WIDTH=50 HEIGHT=50
@@ -1266,13 +1266,13 @@ transparent starting canvas for this to work correctly. For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 50x50 xc:none \
           -draw "fill Tomato fill-opacity 0.5 rectangle 0,0 49,49" \
           color_name_draw.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
-<TABLE BORDER=1 CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+</samp></pre></TD></TR></TABLE></TD><TD>
+<table class="table table-sm table-hover" CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="color_name_draw.png"
      ><IMG SRC="color_name_draw.png"       WIDTH=50 HEIGHT=50
@@ -1389,12 +1389,12 @@ The easiest way separating out the individual color channels is to use the
 extract the current contents of each channel as a gray-scale image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -channel R -separate separate_red.gif
   magick rose: -channel G -separate separate_green.gif
   magick rose: -channel B -separate separate_blue.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1447,10 +1447,10 @@ For example as the default  "<A HREF="../option_link.cgi?channel"
 is to create three images, which I output below.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -separate separate_RGB_%d.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1472,10 +1472,10 @@ color data of the image into a <A HREF="#cmyk" >CMYK color representation</A>.
 Then we extract the four color channels involved.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -colorspace CMYK -separate separate_CMYK_%d.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1516,8 +1516,8 @@ For example here we extract the images grayscale brightness or intensity from
 the rose image, using a number of different representations.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -colorspace Gray                      channel_gray.gif
   magick rose: -grayscale Rec709Luma                 channel_luma709.gif
   magick rose: -grayscale Rec601Luma                 channel_luma601.gif
@@ -1526,7 +1526,7 @@ the rose image, using a number of different representations.
   magick rose: -colorspace HSB  -channel B -separate channel_brilliance.gif
   magick rose: -colorspace CMYK -channel K -negate -separate channel_black.gif
   magick rose: -colorspace LAB  -channel R -separate channel_lab_light.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE><TR valign="top">
 <TD ALIGN=center>
   <A HREF="channel_gray.gif"
@@ -1603,12 +1603,12 @@ Operator</A> generates.  A simple, but slow, method is to use the <A
 HREF="../transform/#fx" >FX DIY Operator</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -fx R channel_red.gif
   magick rose: -fx G channel_green.gif
   magick rose: -fx B channel_blue.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"
            ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1645,11 +1645,11 @@ exactly the reverse of "<A HREF="../option_link.cgi?separate"
 ><CODE>-separate</CODE></A>".
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick separate_red.gif separate_green.gif separate_blue.gif \
            -combine -set colorspace sRGB rose_combined.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="separate_red.gif"
      ><IMG SRC="separate_red.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1674,10 +1674,10 @@ re-combine.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -separate -swap 0,2 -combine rose_rb_swap.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_rb_swap.gif"
      ><IMG SRC="rose_rb_swap.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1707,11 +1707,11 @@ will be set from the current "<A HREF="../option_link.cgi?background"
 ><CODE>-background</CODE></A>" setting values.  For Example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick separate_red.gif separate_blue.gif -background black \
            -channel blue,red  -combine    rose_red_blue.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="separate_red.gif"
      ><IMG SRC="separate_red.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1743,11 +1743,11 @@ operator to map the pixel data back to normal RGB data.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick separate_HSB_?.gif  -set colorspace HSB  -combine  \
           -colorspace sRGB  rose_HSB_combined.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_HSB_combined.gif"
      ><IMG SRC="rose_HSB_combined.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1758,11 +1758,11 @@ due to the need for a fourth color channel.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick separate_CMYK_?.gif  -set colorspace CMYK  -combine  \
           -colorspace sRGB  rose_CMYK_combined.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_CMYK_combined.gif"
      ><IMG SRC="rose_CMYK_combined.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1775,14 +1775,14 @@ HREF="../compose/#channel" >Channel Copied</A> into that pre-prepared image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick separate_HSB_0.gif -colorspace HSB \
           separate_HSB_0.gif -compose CopyRed   -magick composite \
           separate_HSB_1.gif -compose CopyGreen -magick composite \
           separate_HSB_2.gif -compose CopyBlue  -magick composite \
           -colorspace sRGB   rose_HSB_combined_alt.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_HSB_combined_alt.gif"
      ><IMG SRC="rose_HSB_combined_alt.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1814,13 +1814,13 @@ image again. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -colorspace Lab -separate \
           \( -clone 0 -negate \) -swap 0 +delete \
           -combine -set colorspace Lab \
           -colorspace sRGB   rose_light_neg.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_light_neg.gif"
      ><IMG SRC="rose_light_neg.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1848,12 +1848,12 @@ luminance channel in order to negate it.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -colorspace Lab \
           -channel R   -negate   +channel \
           -colorspace sRGB rose_light_neg2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_light_neg2.gif"
      ><IMG SRC="rose_light_neg2.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1881,12 +1881,12 @@ the unwanted channel...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -colorspace HSL \
           -channel G  -evaluate set 0  +channel \
           -colorspace sRGB rose_grey.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_grey.gif"
      ><IMG SRC="rose_grey.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1895,8 +1895,8 @@ the unwanted channel...
 However there are many not so obvious ways you can do this...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 
   # Evaluate (fast and direct)
     -channel G -evaluate set 0 +channel
@@ -1927,7 +1927,7 @@ However there are many not so obvious ways you can do this...
   # (0 = leave alone;   100% set from fill (black) )
     -fill black -colorize 0,100%,0
 
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <I>Can you think of another ways or zeroing (or maximizing) a color channel
@@ -1982,10 +1982,10 @@ For example lets <A HREF="#separate" >Separate</A> the channels of the builtin
 colorspace.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -colorspace HSB -separate separate_HSB_%d.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2005,10 +2005,10 @@ Or a similar but not quite the same '<CODE>HSL</CODE>' (Hue, Saturation,
 Lightness).
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -colorspace HSL -separate separate_HSL_%d.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
  <A HREF="../images/rose.gif"
     ><IMG SRC="../images/rose.gif"
           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2060,8 +2060,8 @@ of images which are hard to generate in other ways. For example here we
 generate perfect '<CODE>HSL</CODE>' color wheel.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x300 gradient: -rotate 90 \
           -distort Arc '360 -90.1 50' +repage \
           -gravity center -crop 100x100+0+0 +repage  angular.png
@@ -2071,7 +2071,7 @@ generate perfect '<CODE>HSL</CODE>' color wheel.
   magick angular.png solid.png radial.png \
           -combine -set colorspace HSL \
           -colorspace sRGB colorwheel_HSL.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="angular.png"
@@ -2142,8 +2142,8 @@ system.  HSB, HCL and HCLp (perceptual HCL) .   Here are colorwheels of all
 four of these 'hex-cone' colorspaces.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick angular.png solid.png radial.png \
           -combine -set colorspace HSL \
           -colorspace sRGB colorwheel_HSL.png
@@ -2156,7 +2156,7 @@ four of these 'hex-cone' colorspaces.
   magick angular.png solid.png radial.png \
           -combine -set colorspace HCLp \
           -colorspace sRGB colorwheel_HCLp.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="colorwheel_HSL.png"
@@ -2204,8 +2204,8 @@ For example, here is a comparison of the saturated hues between HSL and HCL
 colorspaces at a 50% intensity.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:black \
           -fill white  -draw 'circle 49.5,49.5 40,4' \
           -fill black  -draw 'circle 49.5,49.5 40,30' \
@@ -2220,7 +2220,7 @@ colorspaces at a 50% intensity.
           anulus.png -alpha off -compose Multiply -magick composite \
           anulus.png -alpha on  -compose DstIn -magick composite \
           -colorspace sRGB hues_HCL.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="hues_HSL.png"
@@ -2270,12 +2270,12 @@ when processing image.  Here we separate the channels for the colorspaces
 two colorspaces actually are.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( -clone 0 -colorspace LAB -separate +append \) \
                 \( -clone 0 -colorspace LUV -separate +append \) \
           -delete 0 -append -set colorspace sRGB separate_lab_luv.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0><TR VALIGN=center>
 <TD>
   <A HREF="../images/rose.gif"
@@ -2318,15 +2318,15 @@ However note that the order of the channels is the reverse of the
 equivalent '<CODE>HCL</CODE>' colorspace shown above.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick radial.png solid.png angular.png \
           -combine -set colorspace LCHab \
           -colorspace sRGB colorwheel_LCHab.png
   magick radial.png solid.png angular.png \
           -combine -set colorspace LCHuv \
           -colorspace sRGB colorwheel_LCHuv.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="radial.png"
@@ -2434,10 +2434,10 @@ you would use a command like this...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick balloon.gif  -fill white -opaque blue   balloon_white.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
@@ -2462,11 +2462,11 @@ enabled, to hold the transparency information.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick balloon.gif   -alpha set  -channel RGBA \
                         -fill none -opaque blue   balloon_none.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
@@ -2484,10 +2484,10 @@ HREF="../option_link.cgi?transparent" >-transparent</A></CODE>".
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick balloon.gif  -transparent blue   balloon_trans.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
@@ -2506,10 +2506,10 @@ with white, leaving just the pure black borders of the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick balloon.gif  -fill white +opaque black   balloon_borders.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
@@ -2539,14 +2539,14 @@ This may not seem like much, but when you combine it with a <A HREF="#fuzz"
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick balloon.gif \
           \( +clone -matte -transparent black \
              -fill white  -colorize 100% \) \
           -magick composite    balloon_mask_non-black.gif
 
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
@@ -2599,10 +2599,10 @@ specific color.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -fill red -draw 'color 0,0 replace' present_blue.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2627,11 +2627,11 @@ was also made transparent just as they became red in the above...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -matte -fill none \
                       -draw 'color 0,0 replace' present_none.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2657,11 +2657,11 @@ course.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -matte -fill '#00000080' \
             -draw 'matte 0,0 replace' present_semi.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2682,11 +2682,11 @@ For example..
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -tile pattern:right30 \
                 -draw 'color 0,0 replace' present_tile.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2716,10 +2716,10 @@ the color that you are trying to replace.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -fill red -draw 'color 0,0 floodfill' present_fill.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2740,12 +2740,12 @@ from all directions, then remove that extra space when finished.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -bordercolor white -border 1x1 \
           -fill red     -draw 'color 0,0 floodfill' \
           -shave 1x1               present_bgnd.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2785,12 +2785,12 @@ For example, add a border of known color to flood fill from edges...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -bordercolor white -border 1x1 \
           -fill red    -floodfill +0+0 white \
           -shave 1x1              present_floodfill.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2810,12 +2810,12 @@ You can also floodfill with a tile pattern.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick present.gif -bordercolor white -border 1x1 \
                 -tile pattern:left30   -floodfill +0+0 white \
                 -shave 1x1           present_pattern.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
@@ -2836,14 +2836,14 @@ For example, here I try to fill white disks with various colors...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick disks.gif \
           -fill Red   -floodfill +30+50 white \
           -fill Green -floodfill +60+60 white \
           -fill Blue  -floodfill +10+40 white \
           floodfill_hit_miss.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="floodfill_hit_miss.gif"
      ><IMG SRC="floodfill_hit_miss.gif"    WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2876,10 +2876,10 @@ For example here I take what looks like a simple black and white 'cow' and try
 to make it a red cow.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick cow.gif -fill red -opaque black  cow_replace_red.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/cow.gif"
      ><IMG SRC="../images/cow.gif"   WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -2908,10 +2908,10 @@ So lets try that on our cow image so as to magick not only pure-black but
 also near-black colors to red.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick cow.gif -fuzz 40%  -fill red -opaque black  cow_replace_fuzz.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/cow.gif"
      ><IMG SRC="../images/cow.gif"   WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -2982,12 +2982,12 @@ IM Q16) of '<CODE>blue</CODE>' to white.  With my Q16 ImageMagick programs,
 that represents approximately the distance from '<CODE>blue</CODE> to
 '<CODE>navy</CODE>' (half dark blue),
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png \
           -fuzz 30000 -fill white -opaque blue \
           opaque_blue.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_blue.jpg"
      ><IMG SRC="opaque_blue.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2999,12 +2999,12 @@ that represents approximately the distance from '<CODE>blue</CODE> to
 To make this easier to understand here I invert the matched colors
 turning the unmatched colors to white.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png \
           -fuzz 30000 -fill white +opaque blue \
           opaque_blue_not.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_blue_not.png"
      ><IMG SRC="opaque_blue_not.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3018,13 +3018,13 @@ If your IM is older than version 6.3.7-10 when the 'plus' form of the
 added, you can use this masking method to invert the result of the color
 match...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png \
           \( +clone  -fuzz 30000 -transparent blue \
              -channel RGB +level-colors white +channel \) \
           -magick composite   opaque_blue_inv.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_blue_inv.png"
      ><IMG SRC="opaque_blue_inv.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3038,11 +3038,11 @@ that all the original colors, are left as is. That is, you create a negated
 mask from the color selection, so as to make all non-selected colors
 fully-transparent.  They remain present, just transparent!
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png -fuzz 30000 -transparent blue \
           -channel A -negate +channel   opaque_blue_inv_alpha.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_blue_inv_alpha.png"
      ><IMG SRC="opaque_blue_inv_alpha.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3056,13 +3056,13 @@ generate a '<I>not multiple colors</I>' technique. All that you need to do is
 add more colors to the list being made transparent, before negating the mask,
 and posibly removing the negated transparency.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png \
           -fuzz 25000 -transparent blue -transparent red -transparent lime \
           -channel A -negate +channel \
           -background white -alpha remove   opaque_multi_inv.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_multi_inv.png"
      ><IMG SRC="opaque_multi_inv.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3125,10 +3125,10 @@ white.  This should result in only the last 10% colors near
 '<CODE>black</CODE>' to be left on the image, as black is on the opposite side
 of the RGB color cube.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png -fuzz 90% -fill white -opaque white  opaque_w90.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_w90.jpg"
      ><IMG SRC="opaque_w90.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3141,10 +3141,10 @@ Note that this 90% represents a sphere of colors around 'white' in the RGB
 color cube.  However this is is not the same as replacing the colors that are
 not within a 10% sphere of black.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png -fuzz 10% -fill white +opaque black  opaque_k10.jpg
-</CODE></PRE></TD></TR></TABLE></P>
+</samp></pre></TD></TR></TABLE></P>
 
 As you can see 10% sphere of colors near the black is much more uniform, than
 selecting a 90% sphere of the colors around white. </P>
@@ -3180,14 +3180,14 @@ To demonstrate the color distances more, lets use a progressively larger fuzz
 factor percentage around the blue colors...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png -fuzz 10% -fill white -opaque blue opaque_b10.jpg
   magick colorwheel.png -fuzz 25% -fill white -opaque blue opaque_b25.jpg
   magick colorwheel.png -fuzz 57% -fill white -opaque blue opaque_b57.jpg
   magick colorwheel.png -fuzz 81% -fill white -opaque blue opaque_b81.jpg
   magick colorwheel.png -fuzz 95% -fill white -opaque blue opaque_b95.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="opaque_b10.jpg"
      ><IMG SRC="opaque_b10.jpg"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -3223,14 +3223,14 @@ gray' color, changing similar colors to that same gray color, as the 'fuzz
 factor' increases.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick colorwheel.png -fuzz 25% -fill gray50 -opaque gray50 opaque_g25.jpg
   magick colorwheel.png -fuzz 30% -fill gray50 -opaque gray50 opaque_g30.jpg
   magick colorwheel.png -fuzz 35% -fill gray50 -opaque gray50 opaque_g35.jpg
   magick colorwheel.png -fuzz 45% -fill gray50 -opaque gray50 opaque_g45.jpg
   magick colorwheel.png -fuzz 51% -fill gray50 -opaque gray50 opaque_g51.jpg
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="opaque_g25.jpg"
      ><IMG SRC="opaque_g25.jpg"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -3294,8 +3294,8 @@ I make the color being match more transparent until it is fully-transparent,
 however the <A HREF="#fuzz" >Fuzz Factor</A> remains a constant 20%.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
           -compose CopyOpacity -magick composite  trans_gradient.png
   magick trans_gradient.png -channel RGBA \
@@ -3307,7 +3307,7 @@ however the <A HREF="#fuzz" >Fuzz Factor</A> remains a constant 20%.
   magick trans_gradient.png -channel RGBA \
           -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,0.0)' fuzz_trans_00.png
 </CODE><BR></PRE></TD></TR></TABLE>
-<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
+<table class="table table-sm table-hover" width="90%" CELLPADDING=10 BACKGROUND="../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="trans_gradient.png"
      ><IMG SRC="trans_gradient.png"     WIDTH=100  HEIGHT=100
@@ -3365,12 +3365,12 @@ This also means that a large <A HREF="#fuzz" >Fuzz Factor</A> with
 a fully-transparent color (like 'none'), can be used to match all, or
 almost-all semi-transparent colors. For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=0 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick trans_gradient.png -channel RGBA \
           -fuzz 95% -fill Gray50 -opaque None \
           -alpha off  fuzz_trans.jpg
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="fuzz_trans.jpg"
      ><IMG SRC="fuzz_trans.jpg"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>

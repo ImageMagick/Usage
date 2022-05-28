@@ -182,21 +182,21 @@ you can see the details of the kernel being defined and used (displayed images
 have been enlarged).
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=pixel_spread.gif ERR=spread_kernel.txt>
   magick xc: -bordercolor black -border 5x5 pixel.gif
   magick pixel.gif -define morphology:showkernel=1 \
           -morphology Convolve '3x3: 0.0, 0.5, 0.0
                                      0.5, 1.0, 0.5
                                      0.0, 0.5, 0.0'  pixel_spread.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <!--<CODE EXECUTE>
   kernel2image -10.1 -n -mn -g 1 -ml '' \
                '3: 0,1,0  1,2,1  0,1,0'  kernel_spread.gif
   magick pixel.gif -scale 800% pixel_mag.gif
   magick pixel_spread.gif -scale 800% pixel_spread_mag.gif
 </CODE>-->
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="spread_kernel.txt"
      ><IMG SRC="spread_kernel.txt.gif"
@@ -247,17 +247,17 @@ the overall result. </P>
 The syntax of a convolution operation is...
 
 <DIV ALIGN=center>
-<PRE><CODE DO_NOT_EXECUTE><B>
+<pre class="bg-light text-dark mx-4"><samp><B>
   -morphology Convolve {<I>convolution_kernel</I>}
-</B></CODE></PRE>
+</B></samp></pre>
 </DIV></P>
 
 But you can also use an older, more direct operator...
 
 <DIV ALIGN=center>
-<PRE><CODE DO_NOT_EXECUTE><B>
+<pre class="bg-light text-dark mx-4"><samp><B>
   -convolve {<I>convolution_kernel</I>}
-</B></CODE></PRE>
+</B></samp></pre>
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -368,13 +368,13 @@ The above example works well for a mostly black image such as a single pixel,
 but if you were to apply this to a real image, you will have a problem...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <c>  magick logo: -resize 50% -crop 80x80+150+60 +repage  face.png
 <z>  magick face.png \
           -morphology Convolve '3x3: 0.0,0.5,0.0  0.5,1.0,0.5   0.0,0.5,0.0' \
           face_spread.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -413,15 +413,15 @@ For example here is manually 'normalized' result, and the kernel definition...
                '3: 0,1,0  1,2,1  0,1,0'  kernel_spread_norm.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE IMAGE=face_spread_norm.png
                                           ERR=kernel_spread_norm.txt>
 magick face.png  -define morphology:showkernel=1 \
         -morphology Convolve \
                 '3x3: 0.0,.1667,0.0  .1667,.3333,.1667   0.0,.1667,0.0' \
         face_spread_norm.png
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
 <A HREF="kernel_spread_norm.txt"
     ><IMG SRC="kernel_spread_norm.txt.gif"
@@ -471,12 +471,12 @@ the kernel, and thus adjust the brightness of the overall result.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 magick face.png  -define convolve:scale=0.33333 \
         -morphology Convolve '3x3: 0.0,0.5,0.0  0.5,1.0,0.5  0.0,0.5,0.0' \
         face_spread_scale.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 <A HREF="face_spread_scale.png"
     ><IMG SRC="face_spread_scale.png"      WIDTH=80 HEIGHT=80
           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -497,12 +497,12 @@ special '<CODE>!</CODE>' normalization flag. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 magick face.png  -define convolve:scale=\! \
         -morphology Convolve  '3x3: 0,1,0  1,2,1  0,1,0' \
         face_spread_normalize.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
 <A HREF="face_spread_normalize.png"
     ><IMG SRC="face_spread_normalize.png"      WIDTH=80 HEIGHT=80
           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -535,12 +535,12 @@ the calculated size, so as to produce a darker result.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png  -define convolve:scale=50%\! \
           -morphology Convolve  '3x3: 0,1,0  1,2,1  0,1,0' \
           face_spread_norm_half.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_spread_norm_half.png"
      ><IMG SRC="face_spread_norm_half.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -714,16 +714,16 @@ understand when fractions are involved. </P>
 Example use of kernel scaling define...
 
 <DIV ALIGN=left STYLE="margin-left:50">
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   -define convolve:scale='!50%,100%'  -morphology Convolve Laplacian:2 &nbsp;
-</CODE></PRE></TD></TR></TABLE></DIV></P>
+</samp></pre></TD></TR></TABLE></DIV></P>
 
 Will generate the requested '<CODE><A HREF="#laplacian_2"
 >Laplacian:2</A></CODE>' kernel...
 
 <DIV ALIGN=center STYLE="margin-left:20%;margin-right:50%">
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC"
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8"
        STYLE="border-width:1">
 <TR><TH>  0  <TH> -1  <TH>  0
 <TR><TH> -1  <TH>  4  <TH> -1
@@ -733,7 +733,7 @@ Will generate the requested '<CODE><A HREF="#laplacian_2"
 Normalizes it ('!' flag)
 
 <DIV ALIGN=center STYLE="margin-left:20%;margin-right:50%">
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC"
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8"
        STYLE="border-width:1">
 <TR><TH>   0   <TH> -0.25 <TH>   0
 <TR><TH> -0.25 <TH>   1   <TH> -0.25
@@ -742,7 +742,7 @@ Normalizes it ('!' flag)
 
 Scale by 50%
 <DIV ALIGN=center STYLE="margin-left:20%;margin-right:50%">
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC"
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8"
        STYLE="border-width:1">
 <TR><TH>    0   <TH> -0.125 <TH>    0
 <TR><TH> -0.125 <TH>   0.5  <TH> -0.125
@@ -751,7 +751,7 @@ Scale by 50%
 
 Add an Unity kernel (add 100% to origin value)
 <DIV ALIGN=center STYLE="margin-left:20%;margin-right:50%">
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC"
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8"
        STYLE="border-width:1">
 <TR><TH>    0   <TH> -0.125 <TH>    0
 <TR><TH> -0.125 <TH>   1.5  <TH> -0.125
@@ -767,10 +767,10 @@ make both values percentages.  If not present both values are just simple
 direct multipliers.  For example all these scaling options are equivalent
 
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
      50,100%     50%,100    %50,100      .5,1      0.5,1.0  &nbsp;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </BLOCKQUOTE></P>
 
 The same goes for the two normalization flags.  They can appear anywhere in
@@ -811,10 +811,10 @@ However by using the IM setting "<CODE><A HREF="../option_link.cgi?bias"
 The settings to use for non-HDRI version of IM is...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
      -define convolve:scale=50%\!  -bias 50%
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The first setting scales the output to half the size you would normally get
@@ -866,10 +866,10 @@ is specified, and as a result each pixel is replace by itself without change.
 For example here is a no-op <A HREF="#convolve" >Convolution</A>...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve Unity  face_unity.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -889,10 +889,10 @@ an image, such as make an image brighter or darker.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve Unity:0.5  face_dimmed.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_dimmed.png"
      ><IMG SRC="face_dimmed.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -938,11 +938,11 @@ For example, here I use a smaller '<CODE><A HREF="../morphology/#octagon"
 a circlular areas surrounding each pixel.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png  -define convolve:scale=! \
           -morphology Convolve Octagon:2  face_mean.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -986,8 +986,8 @@ edge angles effect the slope thickness and linearity of the slope depends on
 the shape of the 'flat' or averaging kernel.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 80x80 xc: -draw 'polygon 15,15 15,65 60,15' shape.png
   magick shape.png \
           -define convolve:scale=! -morphology Convolve Square:5 \
@@ -995,7 +995,7 @@ the shape of the 'flat' or averaging kernel.
   magick shape.png \
           -define convolve:scale=! -morphology Convolve Disk:5 \
           shape_mean_disk.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="shape.png"
      ><IMG SRC="shape.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1037,12 +1037,12 @@ of a small '<CODE>Gaussian</CODE>' kernel (they can get very large very
 quickly)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=kernel_gaussian.txt>
   magick xc:  -define morphology:showkernel=1 \
                -morphology Convolve:0 Gaussian:0x0.8  null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_gaussian.txt"
      ><IMG SRC="kernel_gaussian.txt.gif"
@@ -1066,10 +1066,10 @@ toward the edges and the corners (a value of about .000000194).  </P>
 Here is typical Gaussian blur using a convolution...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png   -morphology Convolve Gaussian:0x2  face_gaussian.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -1086,10 +1086,10 @@ Here is typical Gaussian blur using a convolution...
 The kernels syntax is straight forward...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Gaussian:[{<I>radius</I>}]x{<I>sigma</I>}
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 These arguments are in fact exactly the same as that used by the "<CODE><A
@@ -1152,17 +1152,17 @@ a small '<CODE>Blur</CODE>' kernel.
 </CODE>-->
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=kernel_blur.txt>
   magick xc:  -define morphology:showkernel=1 \
                -morphology Convolve:0 Blur:0x0.8  null:
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="kernel_blur_profile.gif"
      ><IMG SRC="kernel_blur_profile.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_blur.txt"
      ><IMG SRC="kernel_blur.txt.gif"
@@ -1181,10 +1181,10 @@ the 'Gaussian Bell Curve' that this kernel represents. </P>
 
 Here is an example of using this kernel to horizontally blur an image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve Blur:0x4  face_blur.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_blur.png"
      ><IMG SRC="face_blur.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1194,10 +1194,10 @@ The kernel's syntax is exactly like that of '<CODE><A HREF="#gaussian"
 >Gaussian</A></CODE>' but with an extra optional rotation angle.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Blur:[{<I>radius</I>}]x{<I>sigma</I>}[,{<I>angle</I>}]
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 As before the second value '<I>sigma</I>' is required, and if set to zero you
@@ -1210,10 +1210,10 @@ will get the linear equivelent of a  '<CODE><A HREF="#unity"
 The '<I>angle</I>' allows you rotate the kernel by 90 degrees allowing you to
 blur an image vertically.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve Blur:0x4,90  face_blur_vert.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_blur_vert.png"
      ><IMG SRC="face_blur_vert.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1243,12 +1243,12 @@ HREF="#blur" >Blur</A></CODE>' kernel, but is actually only a half a blur
 kernel.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=kernel_comet.txt>
   magick xc:  -define morphology:showkernel=1 \
                -morphology Convolve:0 Comet:0x1.0  null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_comet.txt"
      ><IMG SRC="kernel_comet.txt.gif"
@@ -1266,10 +1266,10 @@ a comet, or the trail left by a meteor, or falling star.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve Comet:0x5  face_comet.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_comet.png"
      ><IMG SRC="face_comet.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1284,10 +1284,10 @@ multiple of 90 degrees about its 'origin'.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve comet:0x5+90  face_comet_vert.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_comet_vert.png"
      ><IMG SRC="face_comet_vert.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1321,10 +1321,10 @@ equivalent to "<CODE>-morphology Convolve Gaussian:0x2</CODE>" operation.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png    -gaussian-blur 0x2      face_gaussian-blur.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_gaussian-blur.png"
      ><IMG SRC="face_gaussian-blur.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1336,11 +1336,11 @@ either)...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve Blur:0x2 \
                    -morphology Convolve Blur:0x2+90  face_blur_x2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_blur_x2.png"
      ><IMG SRC="face_blur_x2.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1350,10 +1350,10 @@ Rather than specifying two separate convolutions, you can give both kernels
 as a kernel list.   For example
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NO_EXECUTE>
   magick face.png -morphology Convolve 'Blur:0x2;Blur:0x2+90' face_blur_x2.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 IM will by default 're-iterate' the result of the first convolve kernel with
@@ -1367,10 +1367,10 @@ using a '<CODE>&gt;</CODE>' to do a list of 90 degree rotations (two kernels
 in this case).  For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -morphology Convolve 'Blur:0x2&gt;' face_blur_x2.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
@@ -1379,10 +1379,10 @@ in this case).  For example...
 All the above examples are equivalent to each other, and is how the "<CODE><A
 HREF="../option_link.cgi?blur" >-blur</A></CODE>" operator works.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png    -blur 0x2      face_blurred.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_blurred.png"
      ><IMG SRC="face_blurred.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1418,13 +1418,13 @@ You can soften the impact of any sort of blur by blending it with some of the
 original image.  Especially when applying a very strong blur.  For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png  -morphology Convolve Gaussian:0x3  face_strong_blur.png
   magick face.png  face_strong_blur.png \
           -compose Blend -define compose:args=60,40% -magick composite \
           face_soft_blur.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -1449,11 +1449,11 @@ However you can do the same thing directly by <A HREF="#identity_addition"
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale=60,40% \
           -morphology Convolve 'Gaussian:0x3' face_soft_blur2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_soft_blur2.png"
      ><IMG SRC="face_soft_blur2.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1476,12 +1476,12 @@ the <A HREF="../compose/#blend" >Blend Composition</A> afterwards. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \( +clone -blur 0x3 \) \
           -compose Blend -define compose:args=60 -magick composite \
           face_soft_blur3.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_soft_blur3.png"
      ><IMG SRC="face_soft_blur3.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1516,11 +1516,11 @@ how it came to get such an unfortunate name.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale=-100,200% \
           -morphology Convolve 'Gaussian:0x2' face_unsharp.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_unsharp.png"
      ><IMG SRC="face_unsharp.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1543,12 +1543,12 @@ a separate step.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \( +clone -blur 0x2 \) \
           -compose Blend -define compose:args=-100,200 -magick composite \
           face_unsharp_fast.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_unsharp_fast.png"
      ><IMG SRC="face_unsharp_fast.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1566,12 +1566,12 @@ the image, causing some aliasing and color distortions.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \( +clone -blur 0x2 \) \
           -compose Blend -define compose:args=-200 -magick composite \
           face_unsharp_200.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_unsharp_200.png"
      ><IMG SRC="face_unsharp_200.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1650,14 +1650,14 @@ For example here I apply a discrete '<CODE><A HREF="#sobel" >Sobel</A></CODE>'
 edge detector on an image containing some basic shapes...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 80x80 xc:black \
           -fill white -draw 'rectangle 15,15 65,65' \
           -fill black -draw 'circle 40,40 40,20'       shapes.gif
   magick shapes.gif  -define convolve:scale='!' \
           -morphology Convolve Sobel  shapes_sobel.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="shapes.gif"
      ><IMG SRC="shapes.gif"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -1677,11 +1677,11 @@ To get the 'negative' slopes you will need to negate the kernel, by using the
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shapes.gif  -define convolve:scale='-1!' \
           -morphology Convolve Sobel  shapes_sobel_neg.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shapes_sobel_neg.gif"
      ><IMG SRC="shapes_sobel_neg.gif"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -1699,11 +1699,11 @@ results remain 'unclipped' by the 'black' and 'white' limits of the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shapes.gif  -define convolve:scale='50%!' -bias 50% \
           -morphology Convolve Sobel  shapes_sobel_bias.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shapes_sobel_bias.gif"
      ><IMG SRC="shapes_sobel_bias.gif"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -1714,12 +1714,12 @@ value of the results with a little trickiness..
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shapes.gif  -define convolve:scale='50%!' -bias 50% \
           -morphology Convolve Sobel  -solarize 50% -level 50,0% \
           shapes_sobel_abs.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shapes_sobel_abs.gif"
      ><IMG SRC="shapes_sobel_abs.gif"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -1755,10 +1755,10 @@ intermediate image results, making things easier to handle.  </P>
 <H4>LoG: Laplacian Of Gaussians</H4>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    LoG:{<I>radius</I>},{<I>sigma</I>}
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The '<CODE>LoG</CODE>' or "Laplacian of a Gaussian" is one of the best edge
@@ -1778,10 +1778,10 @@ edges. </P>
 And here is its effect.. showing how it highlights the edges of the image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -bias 50% -morphology Convolve LoG:0x2  face_log.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -1817,10 +1817,10 @@ This kernel is also ideal for <A HREF="#sharpen" >Sharpening Images</A>. </P>
 <H4>DoG: Difference of Gaussians</H4>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    DoG:{<I>radius</I>},{<I>sigma1</I>}[,{<I>sigma2</I>}]
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This will generate a '<CODE>DoG</CODE>' or "Difference of Gaussians" kernel in
@@ -1875,10 +1875,10 @@ equivelent 'DoG'.  If you know please Mail Me at the address in the footer.</I>
 
 The applied results are also the very similar.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR VALIGN=bottom><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR VALIGN=bottom><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -bias 50% -morphology Convolve DoG:0,1.8,2.4  face_dog.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_dog.png"
      ><IMG SRC="face_dog.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1903,10 +1903,10 @@ Gaussian low pass (blur) filter kernel. </P>
 The following, therefore, produces a high pass filtered image with 
 filter value of sigma2=2 </P>
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR VALIGN=bottom><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR VALIGN=bottom><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -bias 50% -morphology Convolve DoG:0,0,2  face_dog_unity.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_dog_unity.png"
      ><IMG SRC="face_dog_unity.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1927,17 +1927,17 @@ For example radius=1 (for a 3x3 kernel) and a sigma of 1 will generate...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_isotropic.txt>
   magick face.png  -define morphology:showkernel=1 -bias 50% \
           -morphology Convolve DoG:1,0,1  face_laplacian_isotropic.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_isotropic.png"
      ><IMG SRC="face_laplacian_isotropic.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_isotropic.txt"
      ><IMG SRC="kernel_laplacian_isotropic.txt.gif"
@@ -1955,13 +1955,13 @@ For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \
           \( -clone 0 -blur 0x1.8 \) \( -clone 0 -blur 0x2.4 \) -delete 0 \
           -compose Mathematics -define compose:args=0,-4,4,0.5 -magick composite \
           face_diff_of_blurs.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_diff_blurs.png"
      ><IMG SRC="face_diff_of_blurs.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1995,10 +1995,10 @@ directly. </P>
 <H4>Discrete Laplacian Kernels</H4>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Laplacian:{<I>type</I>}
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 There have been many forms of small "Laplacian Kernel" that have been
@@ -2041,19 +2041,19 @@ normalized kernel with a <A HREF="#kernel_bias" >Output Bias</A>.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_0.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
           -morphology Convolve:0 Laplacian:0 null:
   magick face.png -define convolve:scale='!' -bias 50% \
           -morphology Convolve Laplacian:0   face_laplacian_0.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_0.png"
      ><IMG SRC="face_laplacian_0.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_0.txt"
      ><IMG SRC="kernel_laplacian_0.txt.gif"
@@ -2071,12 +2071,12 @@ So lets repeat the above without a bias, so as to only keep the brigher
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='!' \
           -morphology Convolve Laplacian:0 \
           -auto-level face_laplacian_positives.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_laplacian_positives.png"
      ><IMG SRC="face_laplacian_positives.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2091,12 +2091,12 @@ than positive edges), and seemd to work better on our test image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='-1!' \
           -morphology Convolve Laplacian:0 \
           -auto-level face_laplacian_negatives.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_laplacian_negatives.png"
      ><IMG SRC="face_laplacian_negatives.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2119,12 +2119,12 @@ biased results and rescaling the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='!' -bias 50% \
           -morphology Convolve Laplacian:0 -solarize 50% -negate \
           -auto-level face_laplacian_solarize.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_laplacian_solarize.png"
      ><IMG SRC="face_laplacian_solarize.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2139,19 +2139,19 @@ The 4 neighbour Laplacian. Also very commonly used.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_1.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:1 null:
   magick face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:1   face_laplacian_1.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_1.png"
      ><IMG SRC="face_laplacian_1.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_1.txt"
      ><IMG SRC="kernel_laplacian_1.txt.gif"
@@ -2169,19 +2169,19 @@ laplacian. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_2.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:2 null:
   magick face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:2   face_laplacian_2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_2.png"
      ><IMG SRC="face_laplacian_2.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_2.txt"
      ><IMG SRC="kernel_laplacian_2.txt.gif"
@@ -2196,19 +2196,19 @@ laplacian. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_3.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:3 null:
   magick face.png -define convolve:scale='400%!' -bias 50% \
           -morphology Convolve Laplacian:3    face_laplacian_3.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_3.png"
      ><IMG SRC="face_laplacian_3.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_3.txt"
      ><IMG SRC="kernel_laplacian_3.txt.gif"
@@ -2226,19 +2226,19 @@ above) to see make any result visible. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_5.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:5 null:
   magick face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:5   face_laplacian_5.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_5.png"
      ><IMG SRC="face_laplacian_5.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_5.txt"
      ><IMG SRC="kernel_laplacian_5.txt.gif"
@@ -2257,19 +2257,19 @@ detail. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_7.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:7 null:
   magick face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:7   face_laplacian_7.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_7.png"
      ><IMG SRC="face_laplacian_7.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_7.txt"
      ><IMG SRC="kernel_laplacian_7.txt.gif"
@@ -2284,19 +2284,19 @@ A Discrete 5x5 LoG (Sigma approximatally 1.4)
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_15.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:15 null:
   magick face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:15   face_laplacian_15.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_15.png"
      ><IMG SRC="face_laplacian_15.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_15.txt"
      ><IMG SRC="kernel_laplacian_15.txt.gif"
@@ -2311,19 +2311,19 @@ A Discrete 9x9 LoG (Sigma approximatally 1.4)
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_19.txt>
   magick xc: -define morphology:showkernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:19 null:
   magick face.png -define convolve:scale='!' -bias 50% \
                    -morphology Convolve Laplacian:19   face_laplacian_19.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_19.png"
      ><IMG SRC="face_laplacian_19.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="kernel_laplacian_19.txt"
      ><IMG SRC="kernel_laplacian_19.txt.gif"
@@ -2351,11 +2351,11 @@ it was provided. </P>
 
 For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='100,100%' \
           -morphology Convolve 'Log:0x2' face_sharpen.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sharpen.png"
      ><IMG SRC="face_sharpen.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2383,11 +2383,11 @@ make direct use of a <A HREF="#identity_addition" >Blended Kernel</A>
 
 For example less sharp...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50,100%' \
           -morphology Convolve 'Log:0x2' face_sharpen_50.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sharpen_50.png"
      ><IMG SRC="face_sharpen_50.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2398,11 +2398,11 @@ For example less sharp...
 
 Or more sharp...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='150,100%' \
           -morphology Convolve 'Log:0x2' face_sharpen_150.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sharpen_150.png"
      ><IMG SRC="face_sharpen_150.png"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2464,10 +2464,10 @@ So lets have a look at some of the 'named' directional kernels. </P>
           -morphology Convolve:0 Sobel null:
 </CODE>-->
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Sobel:{<I>angle</I>} &nbsp;
-</CODE></PRE></TD></TR>
+</samp></pre></TD></TR>
 <TR><TD>
   <A HREF="kernel_sobel.txt"
      ><IMG SRC="kernel_sobel.txt.gif"
@@ -2488,11 +2488,11 @@ operation.  The result is essentually a X-derivative (slope) of the image.
   kernel2image -15.1 -n -mn -g 1 -ml 'Sobel' Sobel kernel_sobel.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=pixel_spread.gif ERR=spread_kernel.txt>
   magick -size 60x60 xc:black xc:white +append slope_positive.gif
   magick slope_positive.gif -morphology Convolve Sobel slope_sobel.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="slope_positive.gif"
      ><IMG SRC="slope_positive.gif"  WIDTH=120 HEIGHT=60
            ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -2529,12 +2529,12 @@ does have one, so I also added a <A HREf="#bias" >Bias Setting</A> so you can
 see it. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=pixel_spread.gif ERR=spread_kernel.txt>
   magick -size 40x60 xc:black xc:white xc:black +append slope_both.gif
   magick slope_both.gif -define convolve:scale='50%!' -bias 50% \
                          -morphology Convolve Sobel slope_sobel_bias.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="slope_both.gif"
      ><IMG SRC="slope_both.gif"  WIDTH=120 HEIGHT=60
            ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -2574,11 +2574,11 @@ Here is the result of using default '<CODE>Sobel</CODE>' kernel, on the face
 image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50%!' -bias 50% \
                    -morphology Convolve Sobel  face_sobel.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -2608,11 +2608,11 @@ of all 45 degree rotated derivative results.</P>
 
 Here it is again, but rotated 90 degrees (top to bottom).
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50%!' -bias 50% \
           -morphology Convolve Sobel:90   face_sobel_90.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_90.png"
      ><IMG SRC="face_sobel_90.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2628,8 +2628,8 @@ gradient magnitude.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick face.png   -define convolve:scale='!' \
            \( -clone 0 -morphology Convolve Sobel:0 \) \
            \( -clone 0 -morphology Convolve Sobel:90 \) \
@@ -2637,7 +2637,7 @@ gradient magnitude.
            \( -clone 0 -morphology Convolve Sobel:270 \) \
            -delete 0 -background Black -compose Lighten -flatten \
            face_sobel_maximum.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_maximum.png"
      ><IMG SRC="face_sobel_maximum.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2650,12 +2650,12 @@ rotations of the '<CODE><A HREF="#sobel" >Sobel</A></CODE>' kernel.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick face.png   -define convolve:scale='!' \
            -define morphology:compose=Lighten \
            -morphology Convolve  'Sobel:&gt;'   face_sobel_maximum_2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_maximum_2.png"
      ><IMG SRC="face_sobel_maximum_2.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2674,14 +2674,14 @@ processing.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick face.png   -define convolve:scale='50%!' -bias 50% \
            \( -clone 0 -morphology Convolve Sobel:0 \) \
            \( -clone 0 -morphology Convolve Sobel:90 \) \
            -delete 0 -solarize 50% -level 50,0% \
            -compose Lighten -magick composite      face_sobel_maximum_3.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_maximum_3.png"
      ><IMG SRC="face_sobel_maximum_3.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2696,15 +2696,15 @@ Theorem</A>).
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick face.png   -define convolve:scale='50%!' -bias 50% \
            \( -clone 0 -morphology Convolve Sobel:0 \) \
            \( -clone 0 -morphology Convolve Sobel:90 \) \
            -delete 0 -solarize 50% -level 50,0% \
            +level 0,70% -gamma 0.5 -compose plus -magick composite  -gamma 2 \
            -auto-level face_sobel_magnitude.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_magnitude.png"
      ><IMG SRC="face_sobel_magnitude.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2732,8 +2732,8 @@ Instead of the magnitude you can extract the direction of the slope from the
 two edge detection results.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 30x600 xc:'#0F0' -colorspace HSB \
           gradient: -compose CopyRed -magick composite \
           -colorspace RGB -rotate 90  rainbow.jpg
@@ -2745,7 +2745,7 @@ two edge detection results.
       \( -clone 0,1 -fx 'u&gt;0.48&amp;&amp;u&lt;0.52&amp;&amp;v&gt;0.48&amp;&amp;v&lt;0.52 ? 0.0 : 1.0' \) \
       -delete 0,1 -alpha off -compose CopyOpacity -magick composite \
       face_sobel_direction.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="shapes.gif"
      ><IMG SRC="shapes.gif"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2773,8 +2773,8 @@ needed by a factor of three.  It then uses HSB colorspace to create direction
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -colorspace Gray    -channel G \
           -define convolve:scale='50%!' -bias 50% \
           \( -clone 0 -morphology Convolve Sobel:0 \) \
@@ -2786,7 +2786,7 @@ needed by a factor of three.  It then uses HSB colorspace to create direction
           -delete 0,1 -separate +channel \
           -set colorspace HSB -combine -colorspace RGB \
           face_sobel_magnitude_n_direction.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_magnitude_n_direction.png"
      ><IMG SRC="face_sobel_magnitude_n_direction.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2804,10 +2804,10 @@ needed by a factor of three.  It then uses HSB colorspace to create direction
           -morphology Convolve:0 Roberts null:
 </CODE>-->
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Roberts:{<I>angle</I>} &nbsp;
-</CODE></PRE></TD></TR>
+</samp></pre></TD></TR>
 <TR><TD>
   <A HREF="kernel_roberts.txt"
      ><IMG SRC="kernel_roberts.txt.gif"
@@ -2830,11 +2830,11 @@ the kernel in 45 degree increments. </P>
 For example here is a 45 degree result, more commonly known as
 a 'Roberts-Cross' kernel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50%!' -bias 50% \
                    -morphology Convolve Roberts:45  face_roberts.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_roberts.png"
      ><IMG SRC="face_roberts.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2847,11 +2847,11 @@ directions, rather than just 4.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick face.png -define morphology:compose=Lighten \
            -morphology Convolve  'Roberts:@'   face_roberts_maximum.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_roberts_maximum.png"
      ><IMG SRC="face_roberts_maximum.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2880,10 +2880,10 @@ adding them together, you get a much smaller sharper edge detection with only
           -morphology Convolve:0 Prewitt null:
 </CODE>-->
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Prewitt:{<I>angle</I>} &nbsp;
-</CODE></PRE></TD></TR>
+</samp></pre></TD></TR>
 <TR><TD>
   <A HREF="kernel_prewitt.txt"
      ><IMG SRC="kernel_prewitt.txt.gif"
@@ -2898,11 +2898,11 @@ The '<CODE>Prewitt</CODE>' kernel is very similar to a '<CODE><A HREF="#sobel"
 >Sobel</A></CODE>', though much looser on the exact direction of the
 specific edge detection.  The result is thus a little more fuzzy.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50%!' -bias 50% \
                    -morphology Convolve Prewitt  face_prewitt.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_prewitt.png"
      ><IMG SRC="face_prewitt.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2917,10 +2917,10 @@ specific edge detection.  The result is thus a little more fuzzy.
           -morphology Convolve:0 Compass null:
 </CODE>-->
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Compass:{<I>angle</I>} &nbsp;
-</CODE></PRE></TD></TR>
+</samp></pre></TD></TR>
 <TR><TD>
   <A HREF="kernel_compass.txt"
      ><IMG SRC="kernel_compass.txt.gif"
@@ -2934,11 +2934,11 @@ specific edge detection.  The result is thus a little more fuzzy.
 This is the 'Prewitt Compass' kernel which supposedly a stronger directional
 sense than '<CODE><A HREF="#sobel" >Sobel</A></CODE>'.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50%!' -bias 50% \
                    -morphology Convolve Compass  face_compass.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_compass.png"
      ><IMG SRC="face_compass.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2952,10 +2952,10 @@ sense than '<CODE><A HREF="#sobel" >Sobel</A></CODE>'.
           -morphology Convolve:0 Kirsch null:
 </CODE>-->
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Kirsch:{<I>angle</I>} &nbsp;
-</CODE></PRE></TD></TR>
+</samp></pre></TD></TR>
 <TR><TD>
   <A HREF="kernel_kirsch.txt"
      ><IMG SRC="kernel_kirsch.txt.gif"
@@ -2968,11 +2968,11 @@ sense than '<CODE><A HREF="#sobel" >Sobel</A></CODE>'.
 
 This is another strong direction sensing edge detector.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50%!' -bias 50% \
                    -morphology Convolve Kirsch  face_kirsch.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_kirsch.png"
      ><IMG SRC="face_kirsch.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2993,10 +2993,10 @@ replaced by a Square Root of 2.
           -morphology Convolve:0 Frei-Chen null:
 </CODE>-->
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    Frei-Chen:[{<I>type</I>},][{<I>angle</I>}] &nbsp;
-</CODE></PRE></TD></TR>
+</samp></pre></TD></TR>
 <TR><TD>
   <A HREF="kernel_freichen.txt"
      ><IMG SRC="kernel_freichen.txt.gif"
@@ -3010,11 +3010,11 @@ replaced by a Square Root of 2.
 The kernel above is the default unweighted kernel that is the heart of the
 '<CODE>Frei-Chen</CODE>' kernel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png -define convolve:scale='50%!' -bias 50% \
                    -morphology Convolve Frei-Chen  face_freichen.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_freichen.png"
      ><IMG SRC="face_freichen.png"         WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3036,7 +3036,7 @@ provided, one like the above for orthogonal use, the other for diagonal use.
           -morphology Convolve:0 Frei-Chen:2 null:
 </CODE>-->
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD ALIGN=center>Frei-Chen:1</TD></TR>
 <TR><TD>
   <A HREF="kernel_freichen1.txt"
@@ -3146,13 +3146,13 @@ image.
                    1,1,0'    kernel_lshape.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  SCRIPT IMAGE=convolve_shape.gif>
   magick pixel.gif  \
           -morphology Convolve '3: 1,0,0
                                    1,0,0
                                    1,1,0'   convolve_shape.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
      ><IMG SRC="pixel.gif"  WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3174,13 +3174,13 @@ Now lets repeat this example but using '<CODE><A HREF="#correlate"
 >Correlate</A></CODE>' instead.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  SCRIPT IMAGE=correlate_shape.gif>
   magick pixel.gif  \
           -morphology Correlate '3: 1,0,0
                                     1,0,0
                                     1,1,0'  correlate_shape.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
      ><IMG SRC="pixel.gif"  WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3263,13 +3263,13 @@ kernel and attempt to search the image that we created with the convolution
 method example above, we get...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=correlate.gif>
   magick convolve_shape.gif  -define convolve:scale='1!' \
           -morphology Correlate '3: 1,0,0
                                     1,0,0
                                     1,1,0' correlate.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="convolve_shape.gif"
      ><IMG SRC="convolve_shape_mag.gif"    WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3281,7 +3281,7 @@ method example above, we get...
   <A HREF="correlate.gif"
      ><IMG SRC="correlate_mag.gif"      WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=80%>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="90%">
 <TR><TD ALIGN=Justify><FONT SIZE=-1><I>
    ASIDE: note that the 'black' areas in the above kernel image, represent
    a value of zero.  Their are no negative values in this kernel, only
@@ -3322,7 +3322,7 @@ match the background should make the resulting pixel less bright.
 </CODE>-->
 </CODE>
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=correlate_pattern.gif>
   magick convolve_shape.gif -define convolve:scale='1^'  \
           -morphology Correlate '4x5+2+2:  0 -1  0  0
@@ -3330,7 +3330,7 @@ match the background should make the resulting pixel less bright.
                                           -1 +1 -1  0
                                           -1 +1 +1 -1
                                            0 -1 -1  0 '  correlate_pattern.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="convolve_shape.gif"
      ><IMG SRC="convolve_shape_mag.gif"    WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3342,7 +3342,7 @@ match the background should make the resulting pixel less bright.
   <A HREF="correlate_pattern.gif"
      ><IMG SRC="correlate_pattern_mag.gif"       WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=80%>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="90%">
 <TR><TD ALIGN=Justify><FONT SIZE=-1><I>
    ASIDE: To make the kernel image clearer, I generated the kernel image so
    that positive (foreground) values are white, negative (background) values
@@ -3372,7 +3372,7 @@ For example, here I apply the 'L' shape search to a test image containing
 both positive and negative 'L' shapes. (images shown have been magnified)
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=correlate_bias.gif>
   magick test_morphology.gif  -bias 50% -define convolve:scale='50%^' \
           -morphology Correlate '4x5+2+2:  0 -1  0  0
@@ -3380,7 +3380,7 @@ both positive and negative 'L' shapes. (images shown have been magnified)
                                           -1  1 -1  0
                                           -1  1  1 -1
                                            0 -1 -1  0 '  correlate_bias.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="test_mag.gif"
      ><IMG SRC="test_mag.gif"            WIDTH=208  HEIGHT=136
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3425,11 +3425,11 @@ by darker colored pixels.  Other '<CODE><A HREF="../morphology/#peaks"
   kernel2image -15.2 -m  Peaks:1.9  kernel_peaks.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick correlate_bias.gif  -morphology hitandmiss peaks:1.9 \
           -auto-level  correlate_peaks.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="correlate_bias.gif"
      ><IMG SRC="correlate_bias_mag.gif"              WIDTH=208  HEIGHT=136
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3468,7 +3468,7 @@ If you magick compare the kernel image as I represented it to kernels that are u
 by the <A HREF="../morphology/#hitmiss" >Hit-And-Miss Morphology
 Method</A>, you will find they actually represent the same thing. </P>
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5>
 <TR><TH>
     <TH>'<CODE><A HREF="../morphology/#hitmiss" >HitAndMiss</A></CODE>'
     <TH>'<CODE><A HREF="#correlate" >Correlate</A></CODE>'
@@ -3564,11 +3564,11 @@ enlargement of individual pixels before and after (generated using the <A
 HREF="../scripts/enlarge_image" >Enlarge Image Script</A>)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick area.gif  -define convolve:scale=\! \
           -morphology Convolve Ring:1.5     neighbour.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="area_enlarged.png"
      ><IMG SRC="area_enlarged.png"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -3594,11 +3594,11 @@ HREf="../formats/#pbmplus" >PbmPlus File Format</A>, you can magick the above
 grey levels, into actual numbers if that is what you want.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=neighbour.txt>
   magick neighbour.gif +depth +level 0,8 pgm: | pnmnoraw | tail -n +4
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="neighbour.txt"
      ><IMG SRC="neighbour.txt.gif"
@@ -3617,11 +3617,11 @@ a large negative center is to negatively scale a standard <A HREF="#laplacian"
 >Descrete Laplacian Kernel</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick area.gif  -define convolve:scale=-1\! \
           -morphology Convolve Laplacian:0 -clamp  neigh_edge.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="area_enlarged.png"
      ><IMG SRC="area_enlarged.png"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -3688,12 +3688,12 @@ neighbourhood count of 8.  </P>
 That makes the 'Game of Life' Convolution kernel equivalent to..
 
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
     '3: 1,  1,  1    &nbsp;
         1, 10,  1
         1,  1,  1'
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </BLOCKQUOTE></P>
 
 The result of this will be a count of the 8 neighbours around each pixel (is
@@ -3715,13 +3715,13 @@ resulting neighbour count 'grey-level', generated by the above kernel, into
 the appropriate 'life and death' result according to the 'Life Rules'.</P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 21x1 xc:black -fill white \
           -draw 'point 3,0  point 12,0  point 13,0' \
           life_clut.gif
   enlarge_image -25.3 -ml 'Life Rules'  life_clut.gif  life_clut_enlarged.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="life_clut_enlarged.png"
      ><IMG SRC="life_clut_enlarged.png"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -3766,8 +3766,8 @@ see how the pattern changes from one generation to the next, and to check that
 it is working as expected.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 15x15 xc:black -fill white \
           -draw 'line  3,2 3,4  line 10,10 12,10  point 10,11  point 11,12' \
           life_gen_000.gif
@@ -3787,7 +3787,7 @@ it is working as expected.
                            -morphology Convolve '3:1,1,1 1,10,1 1,1,1' \
           life_clut.gif -interpolate integer -clut \
           life_gen_004.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="life_gen_000.gif"
      ><IMG SRC="life_gen_000_mag.gif"   WIDTH=90 HEIGHT=90
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3832,7 +3832,7 @@ pattern. The actual size of the image being used is shown to the right, but
 I scale the resulting animation for better viewing. <BR CLEAR=all HEIGHT=1>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  SCRIPT IMAGE=glider_gun_anim.gif>
   magick glider_gun.gif life_pattern.gif
   for i in `seq 59`; do
@@ -3843,7 +3843,7 @@ I scale the resulting animation for better viewing. <BR CLEAR=all HEIGHT=1>
   done | magick - -scale 500% \
                  -set delay 10 -layers Optimize -loop 0  glider_gun_anim.gif
   magick glider_gun.gif -scale 500% life_pattern.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="life_pattern.gif"
      ><IMG SRC="life_pattern.gif"   WIDTH=250 HEIGHT=180
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>

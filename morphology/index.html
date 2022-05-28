@@ -348,11 +348,11 @@ operator is a very complex, as it provides the user with a lot of controls
 over its actions. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   -morphology {<I>method</I>}[:{<I>iterations</I>}] <!--
                   -->  {<I>kernel</I>}[:[<I>k_args</I>}]
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Note that you need to provide at least two items, the morphology
@@ -460,13 +460,13 @@ Here is the result of a  using '<CODE>Dilate</CODE>' with the minimal
 it more visible.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick xc: -bordercolor black -border 5x5 pixel.gif
   magick pixel.gif -scale 800% pixel_mag.gif
   magick pixel.gif -morphology Dilate Diamond \
                     -scale 800% k_diamond.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
      ><IMG SRC="pixel_mag.gif"               WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -499,10 +499,10 @@ The optional <I>k_arg</I> for this kernel can take two values, like
 this...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
      Diamond[:{<I>radius</I>}[,{<I>scale</I>}]]
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 For all the shape kernels the most important argument is <I>radius</I> and as
@@ -514,12 +514,12 @@ As such the final '<CODE>Diamond</CODE>' kernel is a square (2 times
 using a larger <I>radius</I> to generate a large kernel. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for r in 1 2 3 4; do
     magick pixel.gif -morphology Dilate Diamond:$r -scale 800% k_diamond:$r.gif
   done
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE><TR valign="top">
 <TD ALIGN=center>
   <A HREF="k_diamond_1.gif"
@@ -570,10 +570,10 @@ However it is not the most minimal kernel (see '<CODE><A HREF="#diamond"
 By default the '<CODE>Square</CODE>' kernel uses a 3x3 pixel neighbourhood
 around the 'center'.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif  -morphology Dilate Square -scale 800% k_square.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_square.gif"
      ><IMG SRC="k_square.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -588,12 +588,12 @@ shown for the <A HREF="#diamond" >Diamond Kernel</A> above, with the first
 argument <I>radius</I> being the most important.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for r in 1 2 3 4; do
     magick pixel.gif  -morphology Dilate Square:$r -scale 800% k_square:$r.gif
   done
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 <TABLE><TR valign="top">
 <TD ALIGN=center>
   <A HREF="k_square_1.gif"
@@ -876,10 +876,10 @@ However it does not just take one radius, it can take two radii and is defined
 in the same way as <A HREF="#disk" >Disk Kernels</A>...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
      Ring[:{<I>radius1</I>}[,{<I>radius2</I>}[,{<I>scale</I>}]]]
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 What it does it turn 'on' any pixel that falls between the two radii,
@@ -1073,10 +1073,10 @@ You are not restricted to just the built-in kernels, but can also specify your
 own kernel, and giving the exact values you want the kernel to use... </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    "[{<I>geometry</I>}:] {<I>value</I>}, {<I>value</I>}, {<I>value</I>},....."
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The '<I>geometry</I>' specification is basically exactly like the argument of
@@ -1112,12 +1112,12 @@ morphological neighbourhood. </P>
 For example here is a specification for a square kernel of width 3, that can
 be used for convolution blurring of the single pixel image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif   -morphology Convolve \
             "3:  0.3,0.6,0.3   0.6,1.0,0.6   0.3,0.6,0.3" \
                                          -scale 800%  k_user_3.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_user_3.gif"
      ><IMG SRC="k_user_3.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1140,12 +1140,12 @@ as to separate the the individual rows of the rectangular kernel definition.
 And here I defined a 5&times;3 rectangular area, but use the special 'nan'
 (not a number) values to cut off the corners to make an oval shaped kernel...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif   -morphology Dilate \
             "5x3: nan,1,1,1,nan   1,1,1,1,1   nan,1,1,1,nan " \
                                     -scale 800%   k_user_5x3.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_user_5x3.gif"
      ><IMG SRC="k_user_5x3.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1160,11 +1160,11 @@ the parts that is not part of the kernel.  Note that the origin of this kernel
 is not even part of its own neighbourhood, it can be located anywhere inside
 the rectangular bounds of the kernel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif   -morphology Dilate \
             "2x3+1+1:   1,-   1,-   1,1   "  -scale 800% k_lman.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_lspace.gif"
      ><IMG SRC="k_lman.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1187,8 +1187,8 @@ SRC="../images/flag.gif" ALIGN=bottom>&nbsp;) into an user kernel data file
 to dilate an image with a couple of pixels in it.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 80x80 xc:black -fill white \
           -draw 'point 20,15 point 55,30 point 40,60'  points_pixels.gif
   image2kernel -qgm flag.gif flag_kernel.dat
@@ -1196,7 +1196,7 @@ to dilate an image with a couple of pixels in it.
   magick points_pixels.gif \
              -morphology Dilate @flag_kernel.dat \
            flagged_points.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="points_pixels.gif"
      ><IMG SRC="points_pixels.gif"            WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1239,10 +1239,10 @@ computational cost of using a larger kernel. </P>
 For example, here is a dialtion of a single pixel using a
 '<CODE>Diamond:3</CODE>' kernel...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif  -morphology Dilate Diamond:3 -scale 800% k_diamond_x3.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_diamond:3.gif"
      ><IMG SRC="k_diamond:3.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1254,12 +1254,12 @@ For example, here is a dialtion of a single pixel using a
 But you can also achieve the same result by using a smaller
 '<CODE>Diamond</CODE>' kernel (radius 1) three times...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif  -morphology Dilate Diamond \
                      -morphology Dilate Diamond \
                      -morphology Dilate Diamond  -scale 800% k_diamond_x3.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_diamond_x3.gif"
      ><IMG SRC="k_diamond_x3.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1292,10 +1292,10 @@ Because repeating a morphological operation is very common, rather than
 repeating the operation multiple times, you can just ask IM to loop or iterate
 the operation, that many times.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif   -morphology Dilate:3 Diamond -scale 800%  k_diamond_3.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_diamond_3.gif"
      ><IMG SRC="k_diamond_3.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1320,10 +1320,10 @@ not a 'concave' shape) will produce a very unusual results.
 For example, this is not that same as going from '<CODE>Plus</CODE>' (radius
 2) to a double size '<CODE>Plus:4</CODE>' kernel...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif   -morphology Dilate:2 Plus  -scale 800%  k_plus_2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="k_plus_2.gif"
      ><IMG SRC="k_plus_2.gif"            WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1376,19 +1376,19 @@ and no more changes can be made to the image.  Remember an iteration limit of
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT
      IMAGE=iterate_infinite.gif ERR=verbose_iterate.txt>
   MAGICK_THREAD_LIMIT=1 \
     magick pixel.gif -verbose  -morphology Dilate:-1 Octagon \
             +verbose  -scale 800% iterate_infinite.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ROWSPAN=2>
   <A HREF="iterate_infinite.gif"
      ><IMG SRC="iterate_infinite.gif"  WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="verbose_iterate.txt"
      ><IMG SRC="verbose_iterate.txt.gif"
@@ -1421,12 +1421,12 @@ goes to make up its processing. </P>
 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT ERR=verbose_compound.txt>
   MAGICK_THREAD_LIMIT=1 \
     magick man.gif   -verbose -morphology Smooth:2 Diamond +verbose   null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="verbose_compound.txt"
      ><IMG SRC="verbose_compound.txt.gif"
@@ -1528,12 +1528,12 @@ If you like to actually see the values that was used to define a particular
 kernel that was generated, you can define a special setting...
 
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NOT_AN_EXECUTABLE>
     -define morphology:showkernel=1   &nbsp;
     -define convolve:showkernel=1   &nbsp;
     -define showkernel=1   &nbsp;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </BLOCKQUOTE></P>
 
 Any of the above defines causes IM to output (to 'standard error') all the
@@ -1545,11 +1545,11 @@ For example, here is the actual values of the built-in '<CODE><A HREF="#disk"
 >Disk</A></CODE>' kernel...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_disk.txt>
   magick xc: -define showkernel=1 -morphology Dilate:0 Disk null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_disk.txt"
      ><IMG SRC="k_disk.txt.gif"
@@ -1571,11 +1571,11 @@ Here is another example. This time of a '<CODE><A HREF="../convolve/#comet"
 >Comet</A></CODE>' convolution kernel.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_comet.txt>
   magick xc:  -define showkernel=1 -morphology Dilate:0 Comet:0x2  null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_comet.txt"
      ><IMG SRC="k_comet.txt.gif"
@@ -1598,12 +1598,12 @@ HREF="../option_link.cgi?precision" >-precision</A></CODE>" to limit the
 number of significant digits from the default of 6 to 3.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_precision.txt>
   magick xc:  -define showkernel=1 -precision 3 \
           -morphology Dilate:0 Comet:0x2  null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_precision.txt"
      ><IMG SRC="k_precision.txt.gif"
@@ -1648,10 +1648,10 @@ example pages.  </P>
 For example here is how I generated the "<CODE><A HREF="#octagon"
 >Octagon</A></CODE>" kernel image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   kernel2image -10.1  -m "Octagon"  kernel_octagon.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="kernel_octagon.gif"
      ><IMG SRC="kernel_octagon.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
@@ -1671,10 +1671,10 @@ shadow effects. </P>
 And here I generate a 'kernel image' of the 'L' shaped user defined kernel,
 I used above.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   kernel2image -20.2 -ml 'L-Shape'  "3: 1,-,-  1,-,-  1,1,- " kernel_lman.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="kernel_lman.gif"
      ><IMG SRC="kernel_lman.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
@@ -1694,11 +1694,11 @@ image (&nbsp;<IMG SRC="../images/flag.gif" ALIGN=bottom>&nbsp;), then use
 "<CODE><A HREF="../scripts/kernel2image" >kernel2image</A></CODE>" to convert
 that data back into an enlarged 'kernel image' for display.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    image2kernel -qgm flag.gif  flag_kernel.dat
    kernel2image -6.1 -m  -ml "Flag"  @flag_kernel.dat  kernel_flag.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="kernel_flag.gif"
      ><IMG SRC="kernel_flag.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
@@ -1725,13 +1725,13 @@ For example here I define a special kernel list containing a list that
 can be used for 'pattern matching' corner pixels.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NOT_AN_EXECUTABLE>
      3: 0,0,- 0,1,1 -,1,-  ;     &nbsp;
      3: -,0,0 1,1,1 -,1,-  ;
      3: -,1,- 1,1,0 -,0,0  ;
      3: -,1,- 0,1,1 0,0,-  ;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Extra semicolons ('<CODE>;</CODE>') do not matter, as long as at least one is
@@ -1741,15 +1741,15 @@ newlines), in any kernel specification. </P>
 Here is a <A HREF="#showkernel" >Show Kernel Output</A> of this definition.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT ERR=k_multi.txt>
   magick xc: -define showkernel=1 -morphology Dilate:0 \
              ' 3: 0,0,- 0,1,1 -,1,-  ;
                3: -,1,- 1,1,0 -,0,0  ;
                3: -,0,0 1,1,1 -,1,-  ;
                3: -,1,- 0,1,1 0,0,-  ; '   null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_multi.txt"
      ><IMG SRC="k_multi.txt.gif"
@@ -1762,14 +1762,14 @@ using the special "<CODE><A HREF="../scripts/kernel2image"
 >kernel2image</A></CODE>" script.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=kernel_multi.gif>
    kernel2image -20.2 -ml '' -mt x1 \
              ' 3: 0,0,- 0,1,1 -,1,-  ;
                3: -,1,- 1,1,0 -,0,0  ;
                3: -,0,0 1,1,0 -,1,-  ;
                3: -,1,- 0,1,1 0,0,-  ; '  kernel_multi.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="kernel_multi.gif"
      ><IMG SRC="kernel_multi.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
@@ -1809,10 +1809,10 @@ user-defined kernels.  The three special flags are...
 For example that same kernel above be specified more simply as...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NOT_AN_EXECUTABLE>
     ' 3&gt;:  0,0,-  0,1,1  -,1,- '
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This defines one kernel, which the '<CODE>&gt;</CODE>' flag then tells IM to
@@ -1821,11 +1821,11 @@ expand into a 90 degree rotated list. </P>
 And here is an image of the resulting multi-kernel list
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    kernel2image -20.2 -ml '' -mt x1 \
                 '3&gt;: 0,0,- 0,1,1 -,1,- '  kernel_rotated_list.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="kernel_rotated_list.gif"
      ><IMG SRC="kernel_rotated_list.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
@@ -1835,11 +1835,11 @@ And here I rotate a 3x3 kernel in a 'cyclic' 45 degree rotation, expanding it
 to a list of 8 kernels.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    kernel2image -20.2 -ml '' -mt x1 \
                 '3@: -,1,- -,0,- 1,1,1 '  kernel_rotated_list2.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="kernel_rotated_list2.gif"
      ><IMG SRC="kernel_rotated_list2.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
@@ -1851,10 +1851,10 @@ a symmetrical '<CODE><A HREF="../convolve/#blur" >Blur</A></CODE>' kernel and
 expand it into a 90 degree rotated list using a '<CODE>&gt;</CODE>' flag.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    kernel2image -12.1 -n -ml ''   "Blur:0x1&gt;"  blur_kernels.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="blur_kernels.gif"
      ><IMG SRC="blur_kernels.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
@@ -1884,10 +1884,10 @@ know how it should merge the results generated by multiple kernels.  This can
 be controlled by the use of a global <A HREF="../basics/#define" >Define</A>...
 
 <BLOCKQUOTE>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NOT_AN_EXECUTABLE>
     -define morphology:compose={<I>compose_method</I>}   &nbsp;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </BLOCKQUOTE></P>
 
 The default for most morphology methods is a setting of '<CODE>None</CODE>'.
@@ -1905,11 +1905,11 @@ get the following.
    kernel2image -12.1 -n -ml '' "Blur:0x1+90" blur_kernel2.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif  -morphology Convolve "Blur:0x1&gt;" \
           -auto-level  blur_re-iterate.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
      ><IMG SRC="pixel_mag.gif"               WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1935,12 +1935,12 @@ sequence. </P>
 This is equivalent to doing the two steps like this.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif -morphology Convolve "Blur:0x1" -auto-level blur_1.gif
   magick blur_1.gif -morphology Convolve "Blur:0x1+90" \
           -auto-level blur_re-iterate.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
      ><IMG SRC="pixel_mag.gif"               WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1981,12 +1981,12 @@ HREF="../compose/#set_theory" >Union</A> of the separate results, we would
 get..
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NO_EXECUTE>
   magick pixel.gif  -define morphology:compose=Lighten \
                      -morphology Convolve "Blur:0x1&gt;" \
           -auto-level blur_union.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
      ><IMG SRC="pixel_mag.gif"               WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2007,13 +2007,13 @@ get..
 That was equivalent to doing...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif -morphology Convolve "Blur:0x1"  -auto-level blur_1.gif
   magick pixel.gif -morphology Convolve "Blur:0x1+90" -auto-level blur_2.gif
   magick blur_1.gif blur_2.gif -compose Lighten -magick composite \
           -auto-level blur_union.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
      ><IMG SRC="pixel_mag.gif"               WIDTH=88 HEIGHT=88
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2062,12 +2062,12 @@ the <A HREF="#verbose" >Verbose Output of Changes</A>.
 For example here the verbose output of re-iterating with each kernel...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_re-iterate.txt>
   magick pixel.gif  -define morphology:compose=None \
           -verbose -morphology Convolve "Blur:0x1&gt;" +verbose  null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="blur_re-iterate.txt"
      ><IMG SRC="blur_re-iterate.txt.gif"
@@ -2080,12 +2080,12 @@ And here is the verbose output of a <A HREf="../compose/#set_theory"
 kernel result....
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_union.txt>
   magick pixel.gif  -define morphology:compose=Lighten \
           -verbose -morphology Convolve "Blur:0x1&gt;" +verbose  null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="blur_union.txt"
      ><IMG SRC="blur_union.txt.gif"
@@ -2150,10 +2150,10 @@ For example here is a simple binary 'man-like' shape that has been eroded
 using a '<CODE><A HREF="#octagon" >Octagon</A></CODE>' kernel.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Erode Octagon  erode_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2184,10 +2184,10 @@ It expands the white shapes, making a shape bigger according to the kernel
 'erode' the black areas of the image. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Dilate Octagon  dilate_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2216,11 +2216,11 @@ the morphological method, you will actually perform the other form of the
 operator.   For example here I perform an erosion by using '<CODE>Dilate</CODE>'
 on the <A HREF="../color_mods/#negate" >Negated Images</A>.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -negate \
              -morphology Dilate Octagon   -negate dilate_man_neg.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="dilate_man_neg.gif"
      ><IMG SRC="dilate_man_neg.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2238,10 +2238,10 @@ using much larger '<CODE><A HREF="#disk" >Disk</A></CODE>'
 kernel.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Open Disk  open_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2268,11 +2268,11 @@ In actual real terms, what it does is to '<CODE><A HREF="#erode"
 it again using the same kernel that was provided
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif         -morphology Erode  Disk  open_erode.gif
   magick open_erode.gif  -morphology Dilate Disk  open_man_2.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -2291,10 +2291,10 @@ opened, with the same kernel will result in no further change to the shape.
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick open_man.gif  -morphology Open Disk  open_man_twice.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2324,10 +2324,10 @@ a '<CODE>Erode:2</CODE>, followed by an '<CODE>Dilate:2</CODE>' to the image.
 This has the general effect of making the effective 'neighbourhood' defined by
 the kernel larger.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Open:2  Disk  open_man_x2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="open_man_x2.gif"
      ><IMG SRC="open_man_x2.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2353,10 +2353,10 @@ any 'holes' or 'gaps' about the size of the kernel 'Structure Element'. That
 is 'close' parts of the background that are about that size. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif    -morphology Close Disk   close_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2383,11 +2383,11 @@ first larger, then smaller.  This is the opposite order of what '<CODE><A
 HREF="#open" >Open</A></CODE>' does.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif           -morphology Dilate Disk  close_dilate.gif
   magick close_dilate.gif  -morphology Erode  Disk  close_man_2.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -2422,10 +2422,10 @@ methods are duals.  You can reproduce the effect of the other 'dual' by <A
 HREF="../color_mods/#negate" >Negating</A> the image before and after the
 operation.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -negate -morphology Close Disk -negate   close_man_neg.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="close_man_neg.gif"
      ><IMG SRC="close_man_neg.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2446,10 +2446,10 @@ or 'gaps' about the size of the kernel 'Structure Element'. </P>
 Here we smooth the image using a mid-range '<CODE><A HREF="#octagon"
 >Octagon:3</A></CODE>' kernel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif  -morphology Smooth  Octagon:3  smooth_man.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="smooth_man.gif"
      ><IMG SRC="smooth_man.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2553,11 +2553,11 @@ HREF="#dilate" >Dilate</A></CODE>' Morphology (expand bright areas), on the
 built-in "<CODE>rose:</CODE>" image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -morphology Dilate          Octagon:3  rose_dilate.gif
   magick rose: -morphology DilateIntensity Octagon:3  rose_dilate_intensity.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/rose.gif"
      ><IMG SRC="../images/rose.gif"    WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2586,10 +2586,10 @@ on the built-in rose image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -morphology ErodeI Octagon:3 rose_erode_intensity.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_erode_intensity.gif"
      ><IMG SRC="rose_erode_intensity.gif"    WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2597,10 +2597,10 @@ on the built-in rose image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <c>  magick rose: -morphology DilateI Octagon:3 rose_dilate_intensity.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_dilate_intensity.gif"
      ><IMG SRC="rose_dilate_intensity.gif"    WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2608,10 +2608,10 @@ on the built-in rose image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -morphology OpenI Octagon:3 rose_open_intensity.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_open_intensity.gif"
      ><IMG SRC="rose_open_intensity.gif"    WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2619,10 +2619,10 @@ on the built-in rose image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -morphology CloseI Octagon:3 rose_close_intensity.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_close_intensity.gif"
      ><IMG SRC="rose_close_intensity.gif"    WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2712,10 +2712,10 @@ removes from the original.  As a result the pixels that are closest to the
 edge, but which were part of the original shape is returned.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology EdgeIn Octagon  edgein_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2749,10 +2749,10 @@ HREF="#dilate" >Dilation</A> of that image.  As a result the background pixels
 immediately next to the shape is returned.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology EdgeOut Octagon  edgeout_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2780,10 +2780,10 @@ Gradient</I>', which can be described as either the addition of the last two
 HREF="#erode" >Eroded</A> shape from its <A HREF="#dilate" >Dilated</A> shape.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Edge Octagon  edge_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2812,10 +2812,10 @@ a '<CODE>Edge</CODE>' which 6 pixels thick (kernel size is 7 pixels thick) </P>
 Here for example is the '<CODE>Edge</CODE>' outline of the shape using the
 minimal '<CODE><A HREF="#diamond" >Diamond</A></CODE>' kernel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   magick man.gif  -morphology Edge Diamond  man_outline.gif
-</CODE></PRE></TD></TR></TABLE></P>
+</samp></pre></TD></TR></TABLE></P>
 
 The edge is two pixels thick as it contains the pixels that lie on either side
 of the actual 'pixel edge' of the original shape.  The only way to make this
@@ -2842,10 +2842,10 @@ Hat</I>', returns the pixels that were removed by a <A HREF="#open"
 the points, and the connecting bridged between shapes.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology TopHat Disk  tophat_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2880,10 +2880,10 @@ adds to the image.  That is the the pixels that were used to fill in the
 'holes', 'gaps', and 'bridges'.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology BottomHat Disk  bottomhat_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2927,11 +2927,11 @@ of the original 'man figure' image, without modifying the color channels.
   kernel2image -10.1 -m "Diamond:3"   kernel_diamond_3.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick figure.gif -channel A  -morphology Erode Diamond:3 \
           +channel   figure_erode.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/figure.gif"
      ><IMG SRC="../images/figure.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
@@ -3024,13 +3024,13 @@ a special morphological test image  (enlarged for viewing individual pixels).
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   for method in  erode dilate open close; do
     magick test_morphology.gif \
              -morphology $method  '2x3+1+1: 1,-  1,-  1,1 '  test_$method.gif
   done
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="test_mag.gif"
      ><IMG SRC="test_mag.gif"      WIDTH=156  HEIGHT=102
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Text]"></A>
@@ -3133,10 +3133,10 @@ pixel immediately to its right.
   kernel2image -30.2 -m "2x1:1,0"    kernel_right.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Hit-and-Miss '2x1:1,0'  hmt_right.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3172,10 +3172,10 @@ For example if I use a structured element like...
   kernel2image -30.2 -m "3x1:1,-,0"    kernel_right2.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Hit-and-Miss '3x1:1,-,0'  hmt_right2.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3210,10 +3210,10 @@ fall inside the shape but which form a North-West facing corner.
   kernel2image -30.2 -m "3:0,0,- 0,1,1 -,1,-"    kernel_nw_corner.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology HMT "3:0,0,- 0,1,1 -,1,-" hmt_nw_corner.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3237,10 +3237,10 @@ the shape.
 </CODE>-->
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif  -morphology HMT "3>:0,0,- 0,1,1 -,1,-" hmt_corners.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="kernel_hmt_corners.gif"
      ><IMG SRC="kernel_hmt_corners.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -3294,10 +3294,10 @@ HREF="#linejunctions" >LineJunctions</A></CODE>' kernel set, which is designed
 specifically for this purpose.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lines.gif -morphology HMT LineJunctions hmt_junctions.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="lines.gif"
      ><IMG SRC="lines.gif"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3318,14 +3318,14 @@ a '<CODE><A HREF="#ring" >Ring</A></CODE>'.  For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lines.gif \( +clone \
              -morphology HMT LineJunctions \
              -morphology Dilate Ring \
              -background red -alpha shape \
           \) -magick composite              hmt_junctions_rings.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="hmt_junctions_rings.gif"
      ><IMG SRC="hmt_junctions_rings.gif"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3345,14 +3345,14 @@ used to find the free ends of all the lines in the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lines.gif \( +clone \
              -morphology HMT LineEnds \
              -morphology Dilate Ring \
              -background red -alpha shape \
           \) -magick composite                  hmt_lineends_rings.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="hmt_lineends_rings.gif"
      ><IMG SRC="hmt_lineends_rings.gif"      WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3406,10 +3406,10 @@ the right edge of the shape.
   kernel2image -30.2 -m "3x1+2+0:1,0,0"    kernel_right_out.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Thicken '3x1+2+0:1,0,0'  thick_right.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3432,10 +3432,10 @@ original boundary. </P>
 You can <A HREF="#iteration" >Iterate</A> this '<CODE>Thicken</CODE>' method
 a few times to continue the sequence.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Thicken:4 '3x1+2+0:1,0,0'  thick_right2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="thick_right2.gif"
      ><IMG SRC="thick_right2.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -3469,11 +3469,11 @@ So the better rule is set origin to 'Do Not Care'. </P>
 
 </I></FONT>
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -define morphology:compose=Lighten \
                   -morphology HitAndMiss 'Unity ; 3x1+2+0:1,0,0' hmt_thicken.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3501,12 +3501,12 @@ kernel, allows you to do this </P>
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 80x80 xc:black -fill none -stroke white \
           +antialias   -draw 'line 10,20 70,60'     man_line.gif
   magick man_line.gif   -morphology Thicken ConvexHull  thick_line.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_line.gif"
      ><IMG SRC="man_line.gif"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3526,12 +3526,12 @@ a '<I>Octagonal Convex Hull</I>'.  That is it will try to fill in all the gaps
 between the extremes until it produces a 'octagonal shaped' object. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -morphology Close Diamond \
                   -morphology Thicken:-1 ConvexHull \
                   -morphology Close Diamond       man_hull_full.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"              WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3570,13 +3570,13 @@ HREF="../compose/#darken" >Darken Composition</A>) and the edge of the convex
 hull and the original shape.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_hull_full.gif \
               -morphology EdgeIn Diamond man_convex_edge.gif
   magick man.gif man_convex_edge.gif \
           -compose Darken -magick composite man_extremities.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_convex_edge.gif"
      ><IMG SRC="man_convex_edge.gif"              WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3609,11 +3609,11 @@ For example, lets repeat the corner-find example from above but with
 a 50% grey version of the shape.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -evaluate multiply 0.5   man_grey.gif
   magick man_grey.gif  -morphology Thicken Corners  thick_corners.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_grey.gif"
      ><IMG SRC="man_grey.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3648,10 +3648,10 @@ For example lets remove any pixel that is 4 pixels in from the right edge.
   kernel2image -20.2 -m "5x1+0+0:1,1,1,1,0"    kernel_right_in.gif
 </CODE>-->
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -morphology Thinning '5x1+0+0:1,1,1,1,0' thin_right.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3686,11 +3686,11 @@ has no matching pixel to remove from the shape. </P>
 
 </I></FONT>
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -define morphology:compose=MinusSrc \
           -morphology HMT 'Unity ; 5x1+0+0:1,1,1,1,0' hmt_thinning.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3748,10 +3748,10 @@ So lets produce a '<I>Thinned Skeleton</I>' by '<CODE><A HREF="#thinning"
 the center lines are left.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif  -morphology Thinning:-1 Skeleton  man_raw_thinned.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3780,12 +3780,12 @@ give the kernels something to work with.  I will also only erode and thin the
 'Red' and 'Green' channels, so as to leave original shape in blue.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel RG -morphology Erode Diamond  man_erode.gif
   magick man_erode.gif -channel RG \
           -morphology Thinning:-1 Skeleton +channel  man_skeleton.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_erode.gif"
      ><IMG SRC="man_erode.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3803,11 +3803,11 @@ continuous loop of pixels around it. </P>
 
 Here is a close up of loop around the eroded hole.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_skeleton.gif -crop 22x22+47+29 +repage \
           -scale 120x120    man_skeleton_zoom.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_skeleton_zoom.gif"
      ><IMG SRC="man_skeleton_zoom.gif"      WIDTH=120 HEIGHT=120
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3844,11 +3844,11 @@ generated using a '<CODE><A HREF="#skeleton2" >Skeleton:2</A></CODE>' kernel,
 (found on the <A HREF="http://homepages.inf.ed.ac.uk/rbf/HIPR2/morops.htm"
 >HIPR2 Graphic Tutorial Website</A>). For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif   -channel RG  -morphology Erode Diamond \
           -morphology Thinning:-1 Skeleton:2 +channel  man_skeleton_hipr.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_skeleton_hipr.gif"
      ><IMG SRC="man_skeleton_hipr.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3860,11 +3860,11 @@ generated using a '<CODE><A HREF="#skeleton2" >Skeleton:2</A></CODE>' kernel,
 And here is a zoom of the loop area, showing how the resulting skeleton is
 8-connected, with thinner diagonals.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_skeleton_hipr.gif -crop 22x22+47+29 +repage \
           -scale 120x120    man_skeleton_hipr_zoom.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_skeleton_hipr_zoom.gif"
      ><IMG SRC="man_skeleton_hipr_zoom.gif"      WIDTH=120 HEIGHT=120
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3889,12 +3889,12 @@ thinning kernel, is designed to do this, with a '<CODE><A HREF="#corners"
 the previous 'traditional' skeleton further..
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_skeleton.gif -channel RG \
           -morphology Thinning:-1 Diagonals \
           -morphology Thinning Corners   man_thin_skeleton.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_skeleton.gif"
      ><IMG SRC="man_skeleton.gif"   WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3937,13 +3937,13 @@ those line ends into <A HREF="#ring" >Rings</A> and color them before merging
 with the original skeleton, to make their locations highly visible.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_skeleton.gif -channel R -separate +channel \
           -morphology HMT LineEnds man_ends.gif
   magick man_ends.gif -morphology Dilate Ring -background Red -alpha Shape \
           man_skeleton.gif +swap -magick composite man_ends_marked.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_skeleton.gif"
      ><IMG SRC="man_skeleton.gif"         WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -3973,14 +3973,14 @@ the original skeleton used for counting line-ends.  Do not mix two different
 skeleton generation variants.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_thin_skeleton.gif -channel R -separate +channel \
             -morphology HMT LineJunctions  man_junctions.gif
   magick man_junctions.gif -morphology Dilate Ring \
           -background Red -alpha Shape \
             man_thin_skeleton.gif +swap -magick composite man_junctions_marked.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_thin_skeleton.gif"
      ><IMG SRC="man_thin_skeleton.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4039,11 +4039,11 @@ For a 4-connected skeleton such as this you can even use a smaller set of
 process about twice as fast.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_skeleton.gif -channel G \
           -morphology Thinning:-1 'LineEnds:1>' man_loop.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man_skeleton.gif"
      ><IMG SRC="man_skeleton.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4082,11 +4082,11 @@ primitive iterations. </P>
 
 We have already covered the first step... resulting in...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE already done>
   magick man_skeleton.gif -channel R -separate +channel \
           -morphology HMT LineEnds man_ends.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_ends.gif"
      ><IMG SRC="man_ends.gif"             WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4105,12 +4105,12 @@ To properly disconnect all line magick segment you will also need to add orthogo
 '<CODE>T</CODE>' kernels to the kernel set, and it is also best to include
 a '<CODE>+</CODE>' junction too.  For example.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_skeleton.gif -channel R -separate +channel \
       -morphology HMT 'LineJunctions;LineJunctions:3>;LineJunctions:5' \
       man_disconnect.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_disconnect.gif"
      ><IMG SRC="man_disconnect.gif"       WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4123,13 +4123,13 @@ Thinning with these matches will actually disconnect the segments, however you
 must do this all in one step, (see <A HREF="#thinning_style" >Thinning
 Style</A>), or it will not work correctly.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_skeleton.gif -channel R -separate +channel \
       -define morphology:compose=Darken \
       -morphology Thinning 'LineJunctions;LineJunctions:3>;LineJunctions:5' \
       man_line_segments.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_line_segments.gif"
      ><IMG SRC="man_line_segments.gif"       WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4140,11 +4140,11 @@ Style</A>), or it will not work correctly.
 
 Here is a zoom of the 'loop' showing the disconnected segments.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man_line_segments.gif -crop 22x22+47+29 +repage \
           -scale 120x120    man_line_segments_zoom.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_line_segments_zoom.gif"
      ><IMG SRC="man_line_segments_zoom.gif"      WIDTH=120 HEIGHT=120
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4185,13 +4185,13 @@ and orientation of the lines. </P>
 For example (resulting image enlarged) is is a default line ends thining
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 10x10 xc:black -fill white \
           +antialias  -draw 'line 1,7 8,3' line.gif
   magick line.gif -channel GB \
           -morphology Thinning LineEnds  line_seqential.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="line_mag.gif"
      ><IMG SRC="line_mag.gif"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4232,11 +4232,11 @@ selected pixels for a single removal of selected pixels.  For example... </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick line.gif -channel GB  -define morphology:compose=darken \
           -morphology Thinning LineEnds  line_simultaneous.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="line_simultaneous_mag.gif"
      ><IMG SRC="line_simultaneous_mag.gif"           WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4273,12 +4273,12 @@ Take the case of '<CODE><A HREF="#thinning" >Thinning</A></CODE>' some boxes
 by thinning both the left and right edges simultaneously. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 10x10 xc:black -fill white -draw 'rectangle 4,1 5,7' rect.gif
   magick rect.gif -channel GB  -define morphology:compose=darken \
           -morphology Thinning Edges  rect_simultaneous.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="rect_mag.gif"
      ><IMG SRC="rect_mag.gif"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4302,11 +4302,11 @@ The default 'Sequential Thinning' on the other hand produced... </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rect.gif -channel GB \
           -morphology Thinning Edges rect_seqential.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rect_seqential_mag.gif"
      ><IMG SRC="rect_seqential_mag.gif"           WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4428,11 +4428,11 @@ diagonal edges, or generate a proper skeleton of an image. </P>
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel RG \
           -morphology Thinning:-1 Edges   thin_edges.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4467,11 +4467,11 @@ Here for example I used it to try and thin all diagonal edges...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel RG \
           -morphology Thinning:-1 Corners  thin_corners.gif
-</CODE></PRE></TD></TR></TABLE></P>
+</samp></pre></TD></TR></TABLE></P>
 
 It can be combined with the '<CODE><A HREF="#edges" >Edges</A></CODE>' kernel
 to produce one method skeleton thinning.  See the '<CODE><A HREF="#skeleton"
@@ -4584,10 +4584,10 @@ For example, here we use '<CODE><A HREF="#hitmiss" >Hit-And-Miss</A></CODE>'
 to find all the line ends.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lines.gif -morphology HMT LineEnds  hmt_lineends.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="lines.gif"
      ><IMG SRC="lines.gif"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4684,10 +4684,10 @@ For example, here we use '<CODE><A HREF="#hitmiss" >Hit-And-Miss</A></CODE>'
 to find all the line junctions.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE example done previously>
   magick lines.gif -morphology HMT LineJunctions hmt_junctions.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="lines.gif"
      ><IMG SRC="lines.gif"               WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4863,11 +4863,11 @@ However the kernel will fail for images containing horizontal or vertical
 'slots', such as we have in the 'man' shape.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel R \
           -morphology Thicken:-1 ConvexHull  man_hull.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"              WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4884,12 +4884,12 @@ The solution is to '<CODE><A HREF="#close" >Close</A></CODE>' these slots (and
 the central hole) before using  '<CODE><A HREF="#convexhull"
 >ConvexHull</A></CODE>'.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE this was done above>
   magick man.gif -morphology Close Diamond \
                   -morphology Thicken:-1 ConvexHull \
                   -morphology Close Diamond       man_hull_full.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="man_hull_full.gif"
      ><IMG SRC="man_hull_full.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -4909,11 +4909,11 @@ final shape. </P>
 Here is another example, where the original shape (white) was expanded using
 a convex hull thickening (red).
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick circles.gif -channel R \
           -morphology Thicken:-1 ConvexHull  circles_hull.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="circles_hull.gif"
      ><IMG SRC="circles_hull.gif"      WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -4952,11 +4952,11 @@ cyclically rotated in 45 degree increments. </P>
   <A HREF="kernel_skeleton1.gif"
       ><IMG SRC="kernel_skeleton1.gif"
             ALIGN=middle BORDER=0 ALT="[IM Output]"></A>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel RG \
           -morphology Thinning:-1 Skeleton   thin_skeleton1.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="thin_skeleton1.gif"
      ><IMG SRC="thin_skeleton1.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -4993,11 +4993,11 @@ Processing Resources</A> documentation. </P>
   <A HREF="kernel_skeleton2.gif"
       ><IMG SRC="kernel_skeleton2.gif"
             ALIGN=middle BORDER=0 ALT="[IM Output]"></A>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel RG \
           -morphology Thinning:-1 Skeleton:2   thin_skeleton2.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="thin_skeleton2.gif"
      ><IMG SRC="thin_skeleton2.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -5026,11 +5026,11 @@ a combined '<CODE><B>Edges;Corners</B></CODE>' kernel list.
       ><IMG SRC="kernel_edge-corner.gif"
             ALIGN=middle VSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel RG \
           -morphology Thinning:-1 'Edges;Corners' thin_edge-corner.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="thin_edge-corner.gif"
      ><IMG SRC="thin_edge-corner.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -5071,11 +5071,11 @@ However unlike previous skeletons this requires the use of
   <A HREF="kernel_skeleton3.gif"
       ><IMG SRC="kernel_skeleton3.gif"
             ALIGN=middle BORDER=0 ALT="[IM Output]"></A>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -channel RG \
           -morphology Thinning:-1 Skeleton:3   thin_skeleton3.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="thin_skeleton3.gif"
      ><IMG SRC="thin_skeleton3.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -5261,12 +5261,12 @@ Here is an example of using the '<CODE>Distance</CODE>' method, on our 'man'
 shape.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -threshold 50% \
           -morphology Distance Euclidean:4 \
           +depth  distance.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5324,11 +5324,11 @@ given 100 units more.  Exactly how many units will be assigned is given by the
 So lets look at the largest color value that was set in the above image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=distance_max.txt>
   magick identify -verbose distance.png | grep max:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="distance_max.txt"
      ><IMG SRC="distance_max.txt.gif"
@@ -5351,10 +5351,10 @@ Lets use the mathematical "<CODE><A HREF="../option_link.cgi?auto-level"
 brightest, or most distant pixel from an edge is set to white.  This way we
 can actually see the full effect of the 'distance gradient' generated.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick distance.png -auto-level  distance_man.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
 <TR valign="top">
@@ -5384,11 +5384,11 @@ Another way of making the resulting 'distance' image brighter is to actually
 use a larger distance kernel '<I>scale</I>' value, for example a value of
 3000 units (Q8 users can probably use a value of 20).
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4,3000     distance_scaled.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="distance_scaled.gif"
      ><IMG SRC="distance_scaled.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5405,11 +5405,11 @@ the peak, we can calculate that maximum peak to be  <CODE>16.16 * 3000 =>
 You can also use a percentage scaling factor, for example use a 8% color range
 value for each pixel distance from the edge.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4,8%    distance_scale_percent.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="distance_scale_percent.gif"
      ><IMG SRC="distance_scale_percent.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5435,11 +5435,11 @@ Scaling Flag</A>, '<CODE>!</CODE>'. </P>
 As we already know out shape as a maximum distance from edge of 16.16. least
 request a limit of 18 pixel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4,'18!'   distance_range.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="distance_range.gif"
      ><IMG SRC="distance_range.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5467,12 +5467,12 @@ One solution to this is to remove that hole, by using '<CODE><A HREF="#close"
 >Close</A></CODE>', so as to make the shape 'clean n smooth'.  For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -morphology Close Diamond  man_clean.gif
   magick man_clean.gif   -morphology Distance Euclidean \
                                     -auto-level   distance_clean.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5495,14 +5495,14 @@ into new mask.  The result is that any holes have been closed, but the outside
 boundary of the image has been preserved.  For example..
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -gamma 0,1,1 -bordercolor black -border 1x1 \
           -fill red -floodfill +0+0 black -shave 1x1 \
           -channel R -separate +channel -negate  man_floodfill.gif
   magick man_floodfill.gif    -morphology Distance Euclidean \
                                     -auto-level   distance_floodfill.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"               WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -5528,12 +5528,12 @@ HREF="#showkernel" >Show Kernel</A> output of one of the built-in 'Distance
 Kernels'.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_chebyshev_3.txt>
   magick xc: -define showkernel=1 -precision 3 \
           -morphology Distance:0 Chebyshev:3     null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_chebyshev_3.txt"
      ><IMG SRC="k_chebyshev_3.txt.gif"
@@ -5557,10 +5557,10 @@ All the provided built-in Distance kernels can take two optional
 <I>k_arguments</I>...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
      {<I>distance_kernel</I>}[:{<I>radius</I>}[,{<I>scale</I>}[%][!]]]
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The first argument like all the <A HREF="#kernels" >Shape Kernels</A> is the
@@ -5651,12 +5651,12 @@ This was also the kernel that was used in the previous examples above.  </P>
 Here is the actual kernel it generates...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_chebyshev.txt>
   magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Chebyshev       null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_chebyshev.txt"
      ><IMG SRC="k_chebyshev.txt.gif"
@@ -5681,8 +5681,8 @@ Distance</CODE>' morphology method using an infinite iteration count.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=chebyshev_distance.txt
                            ERR=chebyshev_gradient.txt>
   magick man.gif -threshold 50% +depth \
@@ -5692,12 +5692,12 @@ Distance</CODE>' morphology method using an infinite iteration count.
 <n>  magick identify -format 'Maximum Distance = %[max]' chebyshev_gradient.png
   magick chebyshev_gradient.png -auto-level chebyshev_gradient.gif
   rm chebyshev_gradient.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="chebyshev_gradient.gif"
      ><IMG SRC="chebyshev_gradient.gif"      WIDTH=100   HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="chebyshev_gradient.txt"
      ><IMG SRC="chebyshev_gradient.txt.gif"
@@ -5754,11 +5754,11 @@ version of ImageMagick</A>, or are applying this to very very large images.
 Here is an magnification of the gradient between the shapes 'legs' which
 highlights the features of the distance gradient generated.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick chebyshev_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% chebyshev_magnify.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="chebyshev_magnify.gif"
      ><IMG SRC="chebyshev_magnify.gif"      WIDTH=125 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5792,12 +5792,12 @@ Distance</A>. </P>
 Here is the actual kernel it generates...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_manhattan.txt>
   magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Manhattan     null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_manhattan.txt"
      ><IMG SRC="k_manhattan.txt.gif"
@@ -5816,8 +5816,8 @@ using this 'metric'.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=manhattan_distance.txt>
   magick man.gif -threshold 50% +depth \
           -morphology Distance Manhattan      manhattan_gradient.png
@@ -5825,12 +5825,12 @@ using this 'metric'.
 <n>  magick identify -format 'Maximum Distance = %[max]' manhattan_gradient.png
   magick manhattan_gradient.png -auto-level manhattan_gradient.gif
   rm manhattan_gradient.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="manhattan_gradient.gif"
      ><IMG SRC="manhattan_gradient.gif"      WIDTH=100   HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="manhattan_distance.txt"
      ><IMG SRC="manhattan_distance.txt.gif"
@@ -5854,11 +5854,11 @@ This distance kernel is also a 'integer' kernel and as such you can set the
 
 Here is an magnification of the gradient.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick manhattan_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% manhattan_magnify.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="manhattan_magnify.gif"
      ><IMG SRC="manhattan_magnify.gif"      WIDTH=125 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5892,12 +5892,12 @@ kernel. </P>
 Here is the actual kernel it generates...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_octagonal.txt>
   magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Octagonal     null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_octagonal.txt"
      ><IMG SRC="k_octagonal.txt.gif"
@@ -5914,8 +5914,8 @@ Here we again calculate the maximum distance...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=octagonal_distance.txt>
   magick man.gif -threshold 50% +depth \
           -morphology Distance Octagonal  octagonal_gradient.png
@@ -5923,12 +5923,12 @@ Here we again calculate the maximum distance...
 <n>  magick identify -format 'Maximum Distance = %[max]' octagonal_gradient.png
   magick octagonal_gradient.png -auto-level octagonal_gradient.gif
   rm octagonal_gradient.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="octagonal_gradient.gif"
      ><IMG SRC="octagonal_gradient.gif"      WIDTH=100   HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="octagonal_distance.txt"
      ><IMG SRC="octagonal_distance.txt.gif"
@@ -5945,11 +5945,11 @@ distance to the center of the shape, while remaining an 'integer' value. </P>
 
 Here is an magnification of the gradient.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick octagonal_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% octagonal_magnify.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="octagonal_magnify.gif"
      ><IMG SRC="octagonal_magnify.gif"      WIDTH=125 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5996,8 +5996,8 @@ Here is an example
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=fractional_distance.txt>
   magick man.gif -threshold 50% +depth \
           -morphology Distance '3:3,2,3 2,0,2 3,2,3' \
@@ -6006,12 +6006,12 @@ Here is an example
 <n>  magick identify -format 'Maximum Distance = %[max]' fractional_gradient.png
   magick fractional_gradient.png -auto-level fractional_gradient.gif
   rm fractional_gradient.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="fractional_gradient.gif"
      ><IMG SRC="fractional_gradient.gif"      WIDTH=100   HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="fractional_distance.txt"
      ><IMG SRC="fractional_distance.txt.gif"
@@ -6032,11 +6032,11 @@ away from purely integer distance kernels. </P>
 
 Here is an magnification of the gradient.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick fractional_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% fractional_magnify.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="fractional_magnify.gif"
      ><IMG SRC="fractional_magnify.gif"      WIDTH=125 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6050,11 +6050,11 @@ it is hard to see the pixels that have common distance values. To see the
 shape more clearly, I have taken the above image and colored one set of pixels
 with the same color value, red.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick fractional_magnify.gif -fill red -opaque gray53 \
           fractional_magnify_shape.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="fractional_magnify_shape.gif"
      ><IMG SRC="fractional_magnify_shape.gif"      WIDTH=125 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6188,12 +6188,12 @@ distance.  </P>
 Here is the default kernel it generates...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_knight.txt>
   magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Euclidean    null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_knight.txt"
      ><IMG SRC="k_knight.txt.gif"
@@ -6212,8 +6212,8 @@ created using the default '<CODE>Euclidean</CODE>' or 'Knight Move' kernel.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=knight_distance.txt>
   magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean    knight_gradient.png
@@ -6221,12 +6221,12 @@ created using the default '<CODE>Euclidean</CODE>' or 'Knight Move' kernel.
 <n>  magick identify -format 'Maximum Distance = %[max]' knight_gradient.png
   magick knight_gradient.png -auto-level knight_gradient.gif
   rm knight_gradient.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="knight_gradient.gif"
      ><IMG SRC="knight_gradient.gif"      WIDTH=100   HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="knight_distance.txt"
      ><IMG SRC="knight_distance.txt.gif"
@@ -6251,11 +6251,11 @@ distance kernel posible (of radius 1). </P>
 
 Here is an magnification of the gradient between the shapes 'legs'.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick knight_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% knight_magnify.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="knight_magnify.gif"
      ><IMG SRC="knight_magnify.gif"      WIDTH=125 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6297,12 +6297,12 @@ Here is a true '<CODE>Euclidean</CODE>' kernel using the recommended radius of
 4, which generates a larger 9&times;9 kernel...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_euclidean.txt>
   magick xc: -define showkernel=1  -precision 4 \
           -morphology Distance:0 Euclidean:4     null:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="k_euclidean.txt"
      ><IMG SRC="k_euclidean.txt.gif"
@@ -6320,8 +6320,8 @@ Here is its application...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=euclidean_distance.txt>
   magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4     euclidean_gradient.png
@@ -6329,12 +6329,12 @@ Here is its application...
 <n>  magick identify -format 'Maximum Distance = %[max]' euclidean_gradient.png
   magick euclidean_gradient.png -auto-level euclidean_gradient.gif
   rm euclidean_gradient.png
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="euclidean_gradient.gif"
      ><IMG SRC="euclidean_gradient.gif"      WIDTH=100   HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="euclidean_distance.txt"
      ><IMG SRC="euclidean_distance.txt.gif"
@@ -6351,11 +6351,11 @@ the image, unless the shape is very regular. </P>
 
 Here is an magnification of the gradient between the shapes 'legs'.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick euclidean_gradient.gif -crop 25x20+39+69 +repage \
           -scale 500% euclidean_magnify.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="euclidean_magnify.gif"
      ><IMG SRC="euclidean_magnify.gif"      WIDTH=125 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6375,7 +6375,7 @@ shows the very different gradients generated by each of each of the four
 distance metrics used.
 
 <DIV ALIGN=center>
-<TABLE BORDER=0 CELLSPACING=5 CELLPADDING=5 WIDTH=80%>
+<TABLE BORDER=0 CELLSPACING=5 CELLPADDING=5 width="90%">
 <TR valign="top">
 <TD ALIGN=center>
   <A HREF="chebyshev_magnify.gif"
@@ -6414,7 +6414,7 @@ black pixel close to the lower left corner, without any magnification of the
 pixels.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   magick -size 100x100 xc: -draw 'point 20,80'  distance_start.png
 
@@ -6423,8 +6423,8 @@ pixels.
     magick distance_start.png    -morphology Distance $kernel \
             -auto-level  point_$kernel.png
   done
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=80%>
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="90%">
 <TR valign="top">
 <!--
 <TD ALIGN=center>
@@ -6508,12 +6508,12 @@ interesting distance effects. </P>
 For example here I apply a very small <A HREF="#user" >User Defined Kernel</A>
 that simply says make any pixel to the right larger in value.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -threshold 50% +depth \
           -morphology Distance  '2x1+0+0: 0,100 ' \
           -auto-level    distance_linear.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="distance_linear.gif"
      ><IMG SRC="distance_linear.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6528,12 +6528,12 @@ increasing gradient that it generates. </P>
 And here I create a distance gradient from just the two sides, but
 with different scales for each side!
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -threshold 50% +depth \
           -morphology Distance  '3x1: 50,0,100 ' \
           -auto-level    distance_sides.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="distance_sides.gif"
      ><IMG SRC="distance_sides.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6556,8 +6556,8 @@ HREF="../transform/#shade" >Shade</A> it so as to highlight even the smallest
 error that may be generated by the function.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 129x129 xc: -draw 'circle 64,64 60,4' \
           -negate  circle_shape.png
 
@@ -6566,7 +6566,7 @@ error that may be generated by the function.
 
   magick cone_distance.png -shade 135x30 -auto-level \
           +level 10,90%  cone_distance_shade.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="circle_shape.png"
      ><IMG SRC="circle_shape.png"   WIDTH=129 HEIGHT=129
            ALIGN=middle VSPACE=10 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -6601,12 +6601,12 @@ What we need to do is somehow include those grey edge values in the result,
 and this is done using a pre-processing step before the distance method is
 applied.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick circle_shape.png  -gamma 2 +level 0,100 -white-threshold 99 \
           -morphology Distance Euclidean:4   -auto-level \
           -shade 135x30 -auto-level +level 10,90%   cone_antialiased.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="cone_antialiased.png"
      ><IMG SRC="cone_antialiased.png"   WIDTH=129 HEIGHT=129
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6633,12 +6633,12 @@ possibly even eliminate even those small errors by using a larger Euclidean
 kernel, so as to produce a much more accurate and smoother result. However
 this does take longer to generate.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick circle_shape.png  -gamma 2 +level 0,100 -white-threshold 99 \
           -morphology Distance Euclidean:7   -auto-level \
           -shade 135x30 -auto-level +level 10,90%   cone_improved.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="cone_improved.png"
      ><IMG SRC="cone_improved.png"   WIDTH=129 HEIGHT=129
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6651,8 +6651,8 @@ Here is another example, this time using the two <A HREF="#distance_user"
 >User Defined Distance Kernels</A> from the previous section.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick circle_shape.png -gamma 2 +level 0,100 -white-threshold 99 \
            -morphology Distance  '2x1+0+0:0,100'  -auto-level \
            circle_gradient.png
@@ -6660,7 +6660,7 @@ Here is another example, this time using the two <A HREF="#distance_user"
    magick circle_shape.png -gamma 2 +level 0,100 -white-threshold 99 \
            -morphology Distance  '3x1:50,0,100'  -auto-level \
            circle_ridge.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="circle_gradient.png"
      ><IMG SRC="circle_gradient.png"  WIDTH=129 HEIGHT=129
            ALIGN=middle VSPACE=2 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -6682,8 +6682,8 @@ to properly 'feather' the object. </P>
 For example here is a 10 pixel 'smoothed' feather around an shaped object.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick rose_orig.png \
            \( +clone -fill black -colorize 100% \
               -fill white -draw 'circle 114,75 110,2' \
@@ -6697,7 +6697,7 @@ For example here is a 10 pixel 'smoothed' feather around an shaped object.
               -sigmoidal-contrast 3,0% \
            \) -compose CopyOpacity -magick composite \
            rose_feathered.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="rose_shape.png"
      ><IMG SRC="rose_shape.png"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -6749,11 +6749,11 @@ feathering operation. </P>
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick figure.gif -channel A -virtual-pixel transparent \
           -morphology Distance Euclidean:4,3!  boolean_feathered.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/figure.gif"
      ><IMG SRC="../images/figure.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
@@ -6815,11 +6815,11 @@ conditionally dilate (flood fill) until that disk has been completely
 recolored, seperating it from the other shapes.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick disks.gif -fill red -draw 'color 60,60 floodfill' \
           cond_dilate_draw.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
      ><IMG SRC="../images/disks.gif"    WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6835,13 +6835,13 @@ an user provided 'conditional color'.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick disks.gif \
           -fill green -floodfill +10+40 white \
           -fill blue  -floodfill +30+50 white \
           cond_dilate_floodfill.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="cond_dilate_floodfill.gif"
      ><IMG SRC="cond_dilate_floodfill.gif"    WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6864,15 +6864,15 @@ To do this we create a <A HREF="../masking/#write_mask" >Write Protect Mask</A>
 (what parts of the image which are write protected).
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick disks.gif disks.gif -morphology Erode:7 Diamond disks_big_center.gif
 
   magick disks.gif -negate  disks_mask.gif
 
   magick disks_big_center.gif  -mask disks_mask.gif \
           -morphology Dilate:15 Diamond    +mask disks_big_found.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
      ><IMG SRC="../images/disks.gif"    WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -6942,8 +6942,8 @@ HREF="../masking/#write_mask" >Write Protect Mask</A>.  Find the disks will be
 hit by a diagonal line across the image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 80x80 xc:black -fill white \
                         -draw 'line 0,0 79,79'   disks_line.gif
 
@@ -6952,7 +6952,7 @@ hit by a diagonal line across the image.
 
   magick disks_line_find.gif  -mask disks_mask.gif \
           -morphology Dilate:15 Diamond    +mask disks_line_found.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
      ><IMG SRC="../images/disks.gif"    WIDTH=80 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -7003,8 +7003,8 @@ For example here I discover how far each point is from a single 'seed' point
 (as the crow flys)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <c>  magick -size 100x100 xc: -draw 'point 20,80'  distance_start.png
 
   magick distance_start.png -morphology Distance Euclidean \
@@ -7016,7 +7016,7 @@ For example here I discover how far each point is from a single 'seed' point
 
   magick distance_point.png \( distance_bounds.png -negate \)  \
           -compose multiply -magick composite  -auto-level distance_direct.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="distance_start.png"
      ><IMG SRC="distance_start.png"    WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -7055,13 +7055,13 @@ Mask</A> so that as the distance gradient is calculated it does not cross
 (write to) the 'no go' areas or background of the image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick distance_start.png  -mask distance_bounds.png \
           -morphology IterativeDistance:150 Euclidean \
           +mask -fill black -opaque white -auto-level \
           distance_constrained.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="distance_start.png"
      ><IMG SRC="distance_start.png"    WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -7225,14 +7225,14 @@ to the distance gradient. </P>
 For example, here is a skeleton of the shape after it is been <A HREF="#open"
 >Opened</A> a little to smooth its outline a bit.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif \
           -morphology Open  Diamond \
           -morphology Distance  Chebyshev \
           -morphology TopHat Diamond \
           -auto-level    chebyshev_dist_skel.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="chebyshev_dist_skel.gif"
      ><IMG SRC="chebyshev_dist_skel.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -7251,14 +7251,14 @@ due to the shape having such a rough outline. </P>
 
 Using an Euclidean distance measure produces a better skeleton of the shape.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif \
           -morphology Open  Diamond \
           -morphology Distance Euclidean:4 \
           -morphology TopHat Diamond \
           -auto-level    euclidean_dist_skel.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="euclidean_dist_skel.gif"
      ><IMG SRC="euclidean_dist_skel.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -7273,11 +7273,11 @@ complete is also very dirty with many gray-scale values. </P>
 Here is an enlargement of the 'head' of the skeleton, showing how it
 remains disjointed.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick euclidean_dist_skel.gif -crop 35x28+30+13 +repage \
           -scale 400%   euclidean_dist_skel_mag.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="euclidean_dist_skel_mag.gif"
      ><IMG SRC="euclidean_dist_skel_mag.gif"      WIDTH=140 HEIGHT=112
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -7299,14 +7299,14 @@ processing due to it involvement with printing and font conversion. </P>
 For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick man.gif -negate man_at_prep.png
   autotrace -centerline -output-format svg man_at_prep.png |\
       magick SVG:-  man_centerline.gif
   magick man.gif man_centerline.gif \
           -compose multiply -magick composite man_at_skeleton.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"      WIDTH=100 HEIGHT=125
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>

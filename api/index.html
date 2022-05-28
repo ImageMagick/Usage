@@ -208,7 +208,7 @@ On a Linux Web Service, upload and access this PHP script from the ISP's web
 server...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header('Content-Type: text/plain');
@@ -221,7 +221,7 @@ server...
   print("------ENVIRONMENT VARIABLES-------\n");
   system("exec 2>&amp;1; env");
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This will run quite a number of commands to see what your environment is like.
@@ -259,7 +259,7 @@ specify its location.  This is often done as part of application configuration
 and installation process, for PHP scripts being used on different ISP hosts),
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   $im_path="/opt/php5extras/ImageMagick/bin"
@@ -268,7 +268,7 @@ and installation process, for PHP scripts being used on different ISP hosts),
   system("exec 2>&1; $im_path/magick -list type");
   system("exec 2>&1; $im_path/magick -list font");
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 If you get "<CODE>ldd</CODE>" library errors, the
@@ -282,12 +282,12 @@ PATH environment variable with a line such as this at the top. However this
 method is often 'denied' by default by typical PHP system configuration...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   putenv("PATH=" . $_ENV["PATH"] . ":/opt/php5extras/ImageMagick/bin");
   putenv("LD_LIBRARY_PATH=" . $_ENV["LD_LIBRARY_PATH"] .
                                    ":/opt/php5extras/ImageMagick/lib");
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 After that try some of the simpler examples from IM Examples and try to get
@@ -295,32 +295,32 @@ them working.  For example output the IM 'rose' image as a JPEG image file
 back to the web user...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header( 'Content-Type: image/jpeg' );
   passthru("magick rose: jpg:-");
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 If you need to set the magick command location you can use...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header( 'Content-Type: image/jpeg' );
   $convert="/opt/php5extras/ImageMagick/bin/convert"
   passthru("$magick rose: jpg:-");
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 or if the you have library problems you can try something like...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header( 'Content-Type: image/jpeg' );
@@ -329,7 +329,7 @@ or if the you have library problems you can try something like...
                ":/opt/php5extras/ImageMagick/bin/convert\'";
   system("$libs $magick rose: jpg:-");
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 If you still don't see anything look at my raw <A
@@ -348,13 +348,13 @@ the '<CODE>Utopia</CODE>' font set was available so I was able to try to
 create a label with that font...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header('Content-Type: image/gif');
   passthru("magick -pointsize 72 -font Utopia-Italic label:'Font Test' gif:-");
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <A NAME="php_example"></A>
@@ -363,18 +363,18 @@ create a label with that font...
 Here we have a fairly typical ImageMagick command...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick -background none -fill red -gravity center \
           -font Candice -size 140x92 caption:"A Rose by any Name" \
           \( rose: -negate -resize 200% \) +swap -magick composite    output.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 When converting to PHP it will become something like...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header('Content-Type: image/gif');
@@ -390,7 +390,7 @@ When converting to PHP it will become something like...
             " \\( '$image' -negate -resize '$scale' \\) +swap -composite" .
             " gif:-" );
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Note how I still split up the long command line of the "<CODE>convert</CODE>"
@@ -549,43 +549,43 @@ data deleted. </P>
 Try one of these methods...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
 exec("/usr/local/bin/magick -version",$out,$returnval);
 print_r($out[0]);
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 or
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
 exec("/usr/local/bin/magick -list",$out,$returnval);
 print_r($out);
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 or use shell_exec as follows
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
 $IM_version=shell_exec("/usr/local/bin/magick -version");
 echo $IM_version
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 To include STDERR output...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
 $array=array();
@@ -594,7 +594,7 @@ exec("magick read_test.png write_test.png 2&gt;&amp;1", $array);
 echo "&lt;br&gt;".print_r($array)."&lt;br&gt;";
 echo "&lt;/pre&gt;";
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The above comes from the IM Users forum discussion... <A
@@ -653,7 +653,7 @@ Imagick</B></A> module is actually working upload a simple test
 directory.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   $handle = imagick_readimage( getcwd() . "image.jpg" );
@@ -669,7 +669,7 @@ directory.
   header( "Content-type: " . imagick_getmimetype( $handle ) );
   print imagick_image2blob( $handle );
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 A <A HREF="http://us3.php.net/manual/en/book.imagick.php" >PHP IMagick
@@ -690,7 +690,7 @@ You can check if the <A HREF="http://www.magickwand.org/" ><B>PHP
 MagickWand</B></A> module is part of the PHP installation using...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   if (extension_loaded('magickwand')) {
@@ -699,14 +699,14 @@ MagickWand</B></A> module is part of the PHP installation using...
     echo "PHP MagickWand is NOT available!\n";
   }
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 But to check that it is actually working properly, upload some test
 "<CODE>image.png</CODE>" and this script...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   $image = NewMagickWand();
@@ -719,7 +719,7 @@ But to check that it is actually working properly, upload some test
     echo MagickGetExceptionString($image);
   }
 ?&gt;
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 No guarantees with the above, though more feedback welcome. I do not generally
@@ -950,13 +950,13 @@ more useful. </P>
     a simple 8 digit number.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
     IM_VERSION=`magick -list configure | \
          sed '/^LIB_VERSION_NUMBER /!d;
               s//,/;  s/,/,0/g;
               s/,0*\([0-9][0-9]\)/\1/g'`
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
     For example IM v6.3.5-10  will generate "<CODE>06030510</CODE>" while
@@ -971,14 +971,14 @@ more useful. </P>
     enough for what your script is trying to do.  For example...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
     if [ "$IM_VERSION" -lt '06030600' ]; then
       echo &gt;&amp;2 "The perspective distortion operator is not available."
       echo &gt;&amp;2 "Sorry your installed ImageMagick is too old -- ABORTING"
       exit 10
     fi
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
     Also note how I output the exact reason for the abort to the user, and
@@ -996,7 +996,7 @@ more useful. </P>
     get the information needed.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
     if [ "$IM_VERSION" -lt '06030507' ];
     then font_list="type";
@@ -1004,7 +1004,7 @@ more useful. </P>
     fi
     avail_fonts=`magick -list $font_list | cut -d\  -f1 |\
                     egrep -v '^($|----|Path:|Name$)'`
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
     WARNING: a string starting with '0' in PERL could be interpreted as being
@@ -1016,11 +1016,11 @@ more useful. </P>
     instead of the "<CODE>[</CODE>' test...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
     if  expr + "$im_version" \&gt;= "06030507" &gt;/dev/null; then
        ...
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
     WARNING: The extra '<CODE>+</CODE>' in the above is normally not needed,
@@ -1035,7 +1035,7 @@ more useful. </P>
     has been added to the currently installed ImageMagick.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
     magick -list distort | grep 'Arc' &gt;/dev/null 2&gt;&amp;1
     if [ "$?" -ne 0 ];  then
@@ -1043,7 +1043,7 @@ more useful. </P>
       echo &gt;&amp;2 "Sorry your installed ImageMagick is too old -- ABORTING"
       exit 10
     fi
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
     However be warned that often a new method, like "<CODE><A
@@ -1120,7 +1120,7 @@ more useful. </P>
     (especially usful in a very minimal cygwin environment)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   # Check Dependencies to scripts correct working
   DEPENDENCIES="sed awk grep tr bc magick identify"  # adjust to suit
@@ -1129,7 +1129,7 @@ more useful. </P>
     type $i &gt;/dev/null 2&gt;&amp;1 ||
       Usage "Required program dependency \"$i\" missing"
   done
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <LI>Taking the last point further.  If you need floating point math in a shell
@@ -1142,12 +1142,12 @@ more useful. </P>
     degrees using '<CODE>convert</CODE>' to do the work...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   angle=-20
   sine=`magick xc: -format "%[fx:sin( $angle *pi/180)]" info:`
   echo $sine
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
    The above would output the value '<CODE>-0.34202</CODE>'.  You can adjust
@@ -1170,10 +1170,10 @@ more useful. </P>
 
     For example, I often use a command like...
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
     gif_anim_magick montage animation.miff show:
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV>
     to magick display the result of the script on my magick display screen, rather than save
     it to a file. In fact in many of my scripts if the output is missing it
@@ -1273,10 +1273,10 @@ processing step to continue with. </P>
 
 For example process image replacing the source image.
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick /tmp/image1.png ..operations..  /tmp/image1.png </P>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 In this case a <A HREF="../files/#mpc" >MPC</A> file can speed up the reading
@@ -1505,11 +1505,11 @@ RPMs</A>. </P>
 First make sure your machine has all the compilers and tools it needs.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   sudo yum groupinstall "Development Tools"
   sudo yum install rpmdevtool libtool-ltdl-devel
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -1524,10 +1524,10 @@ First make sure your machine has all the compilers and tools it needs.
 
 For Older systems like CentOS 5.5 it seems you also need these packages
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   sudo yum compat-libstdc++ gcc-c++ gcc-objc++ libstdc++ libstdc++-devel
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Next you should also install development packages for the libraries IM also
@@ -1536,10 +1536,10 @@ the Development version of IM, even though we will build a new one to replace
 it later.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   sudo yum install ImageMagick-devel
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <DL>
@@ -1567,22 +1567,22 @@ Now download a SRPM (source RPM) package from which to build your binary RPMs.
 OR  build a SRPM from an existing TAR or SVN download using...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   rm config.status config.log
   nice ./configure
   rm *.src.rpm
   make srpm
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Note that once you have the SRPM you can build the actual RPM's to install.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   nice rpmbuild --nodeps --rebuild   ImageMagick*.src.rpm
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 This will create a sub-directory "<CODE>rpmbuild</CODE>" in your home, in
@@ -1604,30 +1604,30 @@ ImageMagick Core and PerlMagick packages, you may like to grab more than just
 these two, but that is up to you...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   cp -p ~/rpmbuild/RPMS/*/ImageMagick-[6p]*.i[36]86.rpm .
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Clean up and delete the build areas (including those that may have been
 created for you)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   rm -rf /var/tmp/rpm-tmp.*  ~/rpmbuild
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Now you can install the RPM packages you built.  You will need to be root for
 this, (see note about the "<CODE>sudo</CODE>" command above)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   sudo rpm -ihv --force --nodeps  ImageMagick-*.i[36]86.rpm
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The  "<CODE>--nodeps</CODE>" is typically needed due to some unusual
@@ -1636,10 +1636,10 @@ dependencies that sometimes exists on Linux systems. </P>
 To upgrade an existing installation I generally do this (as root).
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   sudo rpm -Uhv --force --nodeps  ImageMagick-*.i[36]86.rpm
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 If you want to go further I recommend you look at the <A
@@ -1652,10 +1652,10 @@ To later remove IM, you can just remove the package, like this (again as
 root)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   sudo rpm -e --nodeps  ImageMagick\*
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <BR>
@@ -1672,7 +1672,7 @@ missed anything, or it removed something it shouldn't, then please let me know
 so I can update it.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   rpm -e --nodeps `rpm -q ImageMagick ImageMagick-perl`
   rpm -e --nodeps `rpm -q ImageMagick-devel`
@@ -1685,7 +1685,7 @@ so I can update it.
   rm -rf /usr/lib/perl5/site_perl/*/i386-linux-thread-multi/auto/Image/Magick*
   rm -rf /usr/share/man/man?/*Magick*
   rm -f /usr/lib/pkgconfig/ImageMagick.pc
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Warning, other packages may need an IM installed, so if you remove it, I
@@ -1705,10 +1705,10 @@ To get all the development libraries for building ImageMagick use the
 following
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   sudo apt-get install imagemagick libmagick++-dev
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 A web page by "Shane" describes how to <A
@@ -1769,17 +1769,17 @@ that whole directory to remove your installation.  In my case I'll install
 into the "apps/im" sub-directory of my home.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   export MAGICK_HOME=$HOME/apps/im
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Now to install a personal version, download, unpack, and change directory into
 the ImageMagick Sources.  Then configure it as a 'uninstalled' version.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   rm config.status config.log
   nice ./configure --prefix=$MAGICK_HOME --disable-installed \
@@ -1791,7 +1791,7 @@ the ImageMagick Sources.  Then configure it as a 'uninstalled' version.
   nice make clean
   nice make
   nice make install
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 It is the "<CODE>--disable-installed</CODE>" with the "<CODE>--prefix</CODE>"
@@ -1803,20 +1803,20 @@ Now to use your own installed version, instead of the normal system version
 you only need to set the following environment variables.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   export MAGICK_HOME=$HOME/apps/im
   export PATH="$MAGICK_HOME/bin:$PATH"
   export LD_LIBRARY_PATH="$MAGICK_HOME/lib:$LD_LIBRARY_PATH"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Now if I type
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick -version
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 I can see the more up-to-date version of IM you just installed, by default.
@@ -1862,7 +1862,7 @@ As such I installed a 'HDRI' version of IM in my personal area
 "<CODE>hdri</CODE>" containing...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 #!/bin/sh
 #
@@ -1879,16 +1879,16 @@ export LD_LIBRARY_PATH="$MAGICK_HOME/lib:$LD_LIBRARY_PATH"
 
 # Execute the HDRI version of the command
 exec "$@"
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Now if I type...
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=hdri_version.txt >
   hdri magick -version
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="hdri_version.txt"
      ><IMG SRC="hdri_version.txt.gif"
@@ -1909,10 +1909,10 @@ You can also check exactly which magick command the script is trying to
 execute using the 'which'.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   hdri which convert
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 That is the script is flexiable enough that you don't actually need to run
@@ -1921,10 +1921,10 @@ Scripts, so that that script uses the HDRI magick instead of the normal system
 convert. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   hdri  some_im_script   image.png   image_result_hdri.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 
