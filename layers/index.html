@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Layering -- IM v6 Examples</TITLE>
+<TITLE>Layering -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/layers/">
@@ -384,7 +384,7 @@ amount of overlap given in a single location.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick granite: rose: -gravity east -background none \
           \( -clone 1 -chop 30x0 \) \( -clone 0,2 +append \) \
-          -delete 0,2 +swap -magick composite append_overlap.gif
+          -delete 0,2 +swap -composite append_overlap.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="append_overlap.gif"
      ><IMG SRC="append_overlap.gif"
@@ -499,10 +499,10 @@ image at a time...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
   magick -size 100x100 xc:skyblue composite.gif
-  magick composite -geometry  +5+10 balloon.gif composite.gif composite.gif
-  magick composite -geometry +35+30 medical.gif composite.gif composite.gif
-  magick composite -geometry +62+50 present.gif composite.gif composite.gif
-  magick composite -geometry +10+55 shading.gif composite.gif composite.gif
+  composite -geometry  +5+10 balloon.gif composite.gif composite.gif
+  composite -geometry +35+30 medical.gif composite.gif composite.gif
+  composite -geometry +62+50 present.gif composite.gif composite.gif
+  composite -geometry +10+55 shading.gif composite.gif composite.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="composite.gif"
      ><IMG SRC="composite.gif"   WIDTH=100 HEIGHT=100
@@ -531,10 +531,10 @@ You can also resize the overlaid image as well as position it using the
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
   magick -size 100x100 xc:skyblue comp_resize.gif
-  magick composite -geometry 40x40+5+10  balloon.gif comp_resize.gif comp_resize.gif
-  magick composite -geometry      +35+30 medical.gif comp_resize.gif comp_resize.gif
-  magick composite -geometry 24x24+62+50 present.gif comp_resize.gif comp_resize.gif
-  magick composite -geometry 16x16+10+55 shading.gif comp_resize.gif comp_resize.gif
+  composite -geometry 40x40+5+10  balloon.gif comp_resize.gif comp_resize.gif
+  composite -geometry      +35+30 medical.gif comp_resize.gif comp_resize.gif
+  composite -geometry 24x24+62+50 present.gif comp_resize.gif comp_resize.gif
+  composite -geometry 16x16+10+55 shading.gif comp_resize.gif comp_resize.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="comp_resize.gif"
      ><IMG SRC="comp_resize.gif"   WIDTH=100 HEIGHT=100
@@ -566,7 +566,7 @@ HREF="../annotating/#image_gravity" >Image Positioning using Gravity</A>".
 <H3>Composite Operator of Convert</H3>
 
 The "<CODE><A HREF="../option_link.cgi?composite" >-composite</A></CODE>"
-operator is available within the "<CODE>convert</CODE>" command. For more
+operator is available within the "<code>magick</code>" command. For more
 details see <A HREF="../compose/#composite" >Image Composition in IM</A>.
 This allows you to do the same as the above, but all in one command.
 
@@ -575,10 +575,10 @@ This allows you to do the same as the above, but all in one command.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:skyblue \
-          balloon.gif  -geometry  +5+10  -magick composite \
-          medical.gif  -geometry +35+30  -magick composite \
-          present.gif  -geometry +62+50  -magick composite \
-          shading.gif  -geometry +10+55  -magick composite \
+          balloon.gif  -geometry  +5+10  -composite \
+          medical.gif  -geometry +35+30  -composite \
+          present.gif  -geometry +62+50  -composite \
+          shading.gif  -geometry +10+55  -composite \
           compose.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose.gif"
@@ -602,10 +602,10 @@ current image sequence. </P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:skyblue \
-          balloon.gif  -geometry 40x40+5+10   -magick composite \
-          medical.gif  -geometry      +35+30  -magick composite \
-          present.gif  -geometry 24x24+62+50  -magick composite \
-          shading.gif  -geometry 16x16+10+55  -magick composite \
+          balloon.gif  -geometry 40x40+5+10   -composite \
+          medical.gif  -geometry      +35+30  -composite \
+          present.gif  -geometry 24x24+62+50  -composite \
+          shading.gif  -geometry 16x16+10+55  -composite \
           compose_geometry.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_geometry.gif"
@@ -625,10 +625,10 @@ Here is the more verbose recommendation...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:skyblue \
-          \( balloon.gif -resize 40x40 \) -geometry +5+10   -magick composite \
-          \( medical.gif               \) -geometry +35+30  -magick composite \
-          \( present.gif -resize 24x24 \) -geometry +62+50  -magick composite \
-          \( shading.gif -resize 16x16 \) -geometry +10+55  -magick composite \
+          \( balloon.gif -resize 40x40 \) -geometry +5+10   -composite \
+          \( medical.gif               \) -geometry +35+30  -composite \
+          \( present.gif -resize 24x24 \) -geometry +62+50  -composite \
+          \( shading.gif -resize 16x16 \) -geometry +10+55  -composite \
           compose_resize.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_resize.gif"
@@ -640,7 +640,7 @@ Here is the more verbose recommendation...
 <A NAME="draw"></A>
 <H3>Draw Multiple Images</H3>
 
-Also using "<CODE>convert</CODE>" you can also use <A
+Also using "<code>magick</code>" you can also use <A
 HREF="../draw/#primitive" >Draw Primitives</A> to overlay images onto its
 working canvas.
 
@@ -1151,7 +1151,7 @@ animation' handling by the operator.  </P>
    magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
            -page +62+50       present.gif   -page +10+55 shading.gif  \
            -set dispose None  -coalesce  miff:- |\
-     magick montage - -frame 4 -tile x1 -geometry +2+2 \
+     montage - -frame 4 -tile x1 -geometry +2+2 \
              -background none -bordercolor none  coalesce_none.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="coalesce_none.gif"
@@ -1187,7 +1187,7 @@ images!
   magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
           -page +62+50       present.gif   -page +10+55 shading.gif  \
           -set dispose Background  -coalesce  miff:- |\
-    magick montage - -frame 4 -tile x1 -geometry +2+2 \
+    montage - -frame 4 -tile x1 -geometry +2+2 \
             -background none -bordercolor none  coalesce_bgnd.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="coalesce_bgnd.gif"
@@ -1761,7 +1761,7 @@ into the 'layering' command to generate the final image.  </P>
 
 The alternative method (commonly using in PHP scripts) is to use a 'generated
 command' technique, that uses a shell script to generate a long
-"<CODE>convert</CODE>" command to be run. The scripts in <A
+"<code>magick</code>" command to be run. The scripts in <A
 HREF="../warping/#animations" >Image Warping Animations</A> use this
 technique. </P>
 
@@ -2009,7 +2009,7 @@ First lets again look at the simplier 'contant shadow' problem.
     \( -clone 0--1 -dispose None -coalesce \
        -background black -shadow 70x2+4+7 \
        xc:none +insert null: +insert +insert xc:none \) \
-    -layers trim-bounds -compose Atop -layers magick composite \
+    -layers trim-bounds -compose Atop -layers composite \
     \
     -fuzz 10% -trim \
     -reverse -background none -compose Over -layers merge +repage \
@@ -2069,7 +2069,7 @@ Calculations</A>.
        -set page '+%[fx:page.x+4*t]+%[fx:page.y+7*t]' \
             -background black -shadow 70x2+4+7 \
        xc:none +insert null: +insert +insert xc:none \) \
-    -layers trim-bounds -compose Atop -layers magick composite \
+    -layers trim-bounds -compose Atop -layers composite \
     \
     -fuzz 10% -trim \
     -reverse -background none -compose Over -layers merge +repage \
@@ -2147,7 +2147,7 @@ and 'compose' the two image on top of each other, producing an offset of
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick align_blue.png align_red.png -geometry +24+12 \
-          -magick composite align_composite.png
+          -composite align_composite.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="align_composite.png"
      ><IMG SRC="align_composite.png"    WIDTH=100 HEIGHT=64
@@ -2219,7 +2219,7 @@ composted together.
 </TD></TR></TABLE></P>
 
 As the result of the 'merge' the image will have a 'negative' offset (so as to
-preserve layer positions of the images). To magick display the results I needed to
+preserve layer positions of the images). To display the results I needed to
 junk that offset as many browsers do not handle negative offsets in images.
 I do this using "<CODE>+repage</CODE>" before saving the final image. If I was
 going to do further processing (without displaying the result on the web)

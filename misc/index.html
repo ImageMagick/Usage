@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Miscellaneous -- IM v6 Examples</TITLE>
+<TITLE>Miscellaneous -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/misc/">
@@ -1001,7 +1001,7 @@ accessing a pixel outside the normal bounds of the image. </P>
 
 For example, here we use the <A HREF="../transform/#fx" >FX DIY Operator</A>
 "<CODE><A HREF="../option_link.cgi?fx" >-fx</A></CODE>" to 'lookup' and
-magick display all the pixels in and surrounding the small image so we can see what
+display all the pixels in and surrounding the small image so we can see what
 the <B>default</B> "<CODE><A HREF="../option_link.cgi?virtual-pixel"
 >-virtual-pixel</A></CODE>" setting returned.
 
@@ -1044,7 +1044,7 @@ surrounding the source image.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`magick compare -metric PAE virtual_{default,edge}.gif null: 2>&1 |
+  [ "`compare -metric PAE virtual_{default,edge}.gif null: 2>&1 |
         sed 's/ .*//'`" != '0' ] && echo >&2 \
     "ASSERTION FAILURE: Default Virtual Pixel setting is NOT 'edge'\!"
 </CODE> -->
@@ -1473,7 +1473,7 @@ effect the pixels returned all the way out to infinity.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick tree.gif -mattecolor DodgerBlue   -virtual-pixel dither \
+  magick tree.gif -alpha setcolor DodgerBlue   -virtual-pixel dither \
           -set option:distort:viewport  150x100-50-50 \
           -distort perspective '0,0 9,0  31,0 38,0  0,31 0,18  31,31, 40,18' \
           perspective_dither.gif
@@ -1489,7 +1489,7 @@ Some other examples can also be seen in <A HREF="../distorts/#horizon"
 >Viewing Distant Horizons</A>.  </P>
 
 Note that the 'sky' in the above view is actually generated from the "<CODE><A
-HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>" setting, which
+HREF="../option_link.cgi?mattecolor" >-alpha setcolor</A></CODE>" setting, which
 is used by distort to prepresent areas that are 'Invalid', in this case the
 'sky' of a perspective distortion.  It did not come from the "<CODE><A
 HREF="../option_link.cgi?virtual-pixel" >-virtual-pixel</A></CODE>" setting.
@@ -2239,7 +2239,7 @@ completely ignores the  "<CODE><A HREF="../option_link.cgi?background"
 </TD></TR></TABLE></P>
 
 <!-- <CODE EXECUTE ASSERT>
-  magick identify -verbose star_border.gif | grep Alpha: >/dev/null && echo >&2 \
+  identify -verbose star_border.gif | grep Alpha: >/dev/null && echo >&2 \
     "ASSERTION FAILURE: Border did not flatten image transparency\!"
 </CODE> -->
 
@@ -2255,7 +2255,7 @@ minimal settings from the user.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-    magick montage star.gif  -frame 6  -geometry '64x64+5+5&gt;' star_montage.gif
+    montage star.gif  -frame 6  -geometry '64x64+5+5&gt;' star_montage.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
    <A HREF="star_montage.gif"
       ><IMG SRC="star_montage.gif"
@@ -2279,7 +2279,7 @@ preserve the transparency.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick star.gif  -bordercolor LimeGreen \
           -compose Copy  -border 10   star_border_copy.gif
-  magick montage star.gif  -bordercolor LimeGreen \
+  montage star.gif  -bordercolor LimeGreen \
           -compose Copy -background None    -frame 6 \
           -geometry '64x64+0+0&gt;'   star_montage_copy.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -2296,7 +2296,7 @@ For more information on preserving an images transparent background, while
 adding a "<CODE><A HREF="../option_link.cgi?border" >-border</A></CODE>" or
 "<CODE><A HREF="../option_link.cgi?splice" >-frame</A></CODE>", see <A
 HREF="../crop/#border" >adding borders</A>.  and for "<CODE>montage</CODE>",
-see <A HREF="../montage/#bg" >magick montage background and transparency handling
+see <A HREF="../montage/#bg" >montage background and transparency handling
 examples</A>. </P>
 
 
@@ -2314,7 +2314,7 @@ irrelevent.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage star.gif -background Gold -alpha remove \
+  montage star.gif -background Gold -alpha remove \
           -frame 6  -geometry '64x64+5+5&gt;' -size 16x16 \
           -bordercolor LimeGreen  -background SeaGreen \
           star_montage_texture.gif
@@ -2639,7 +2639,7 @@ version 6, <A HREF="../basics/#image_list" >Image List Operators</A>. </P>
 
 <!-- <CODE EXECUTE ASSERT>
   for i in `seq -f %02.f 2 27`; do
-    [ `magick compare -metric PAE list_test_$i.gif list_test_01.gif null: 2>&1 |
+    [ `compare -metric PAE list_test_$i.gif list_test_01.gif null: 2>&1 |
            sed 's/ .*//'` != '0' ] && echo >&2 \
       "ASSERTION FAILURE: Sequence Command Test $i failed\!"
   done

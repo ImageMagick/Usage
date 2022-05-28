@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Morphology of Shapes -- IM v6 Examples</TITLE>
+<TITLE>Morphology of Shapes -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/morphology/">
@@ -815,7 +815,7 @@ happens to be the same as the default '<CODE>Diamond</CODE>' kernel. </P>
 Note that a '<CODE>Plus</CODE>' kernel is a generally not used for normal
 morphological methods, and should be avoided for such purposes.  However it is
 a very useful if you are wanting to find and highlight single points in an
-image, such as I do later to magick display <A HREF="#skeleton_info" >Skeleton
+image, such as I do later to display <A HREF="#skeleton_info" >Skeleton
 Information</A>.  Basically it provides a method of <A HREF="../draw/#symbols"
 >Drawing Symbols</A>, without needing to know exactly where the individual
 'points' are located in the image. </P>
@@ -2011,7 +2011,7 @@ That was equivalent to doing...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pixel.gif -morphology Convolve "Blur:0x1"  -auto-level blur_1.gif
   magick pixel.gif -morphology Convolve "Blur:0x1+90" -auto-level blur_2.gif
-  magick blur_1.gif blur_2.gif -compose Lighten -magick composite \
+  magick blur_1.gif blur_2.gif -compose Lighten -composite \
           -auto-level blur_union.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="pixel.gif"
@@ -2535,7 +2535,7 @@ With this in mind I have created 'Intensity' versions of these methods.
 '<CODE>ErodeIntensity</CODE>', '<CODE>DilateIntensity</CODE>',
 '<CODE>OpenIntensity</CODE>', '<CODE>CloseIntensity</CODE>'. </P>
 
-These magick compare the pixels within the defined 'neighbourhood', and replaces the
+These compare the pixels within the defined 'neighbourhood', and replaces the
 current pixel color according to the pixels intensity.  That is the whole
 color pixel is copied, and not just the individual channel values. As
 a result... </P>
@@ -3324,7 +3324,7 @@ a '<CODE><A HREF="#ring" >Ring</A></CODE>'.  For example...
              -morphology HMT LineJunctions \
              -morphology Dilate Ring \
              -background red -alpha shape \
-          \) -magick composite              hmt_junctions_rings.gif
+          \) -composite              hmt_junctions_rings.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="hmt_junctions_rings.gif"
      ><IMG SRC="hmt_junctions_rings.gif"      WIDTH=80 HEIGHT=80
@@ -3351,7 +3351,7 @@ used to find the free ends of all the lines in the image.
              -morphology HMT LineEnds \
              -morphology Dilate Ring \
              -background red -alpha shape \
-          \) -magick composite                  hmt_lineends_rings.gif
+          \) -composite                  hmt_lineends_rings.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="hmt_lineends_rings.gif"
      ><IMG SRC="hmt_lineends_rings.gif"      WIDTH=80 HEIGHT=80
@@ -3575,7 +3575,7 @@ hull and the original shape.
   magick man_hull_full.gif \
               -morphology EdgeIn Diamond man_convex_edge.gif
   magick man.gif man_convex_edge.gif \
-          -compose Darken -magick composite man_extremities.gif
+          -compose Darken -composite man_extremities.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="man_convex_edge.gif"
      ><IMG SRC="man_convex_edge.gif"              WIDTH=100 HEIGHT=125
@@ -3942,7 +3942,7 @@ with the original skeleton, to make their locations highly visible.
   magick man_skeleton.gif -channel R -separate +channel \
           -morphology HMT LineEnds man_ends.gif
   magick man_ends.gif -morphology Dilate Ring -background Red -alpha Shape \
-          man_skeleton.gif +swap -magick composite man_ends_marked.gif
+          man_skeleton.gif +swap -composite man_ends_marked.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="man_skeleton.gif"
      ><IMG SRC="man_skeleton.gif"         WIDTH=100 HEIGHT=125
@@ -3979,7 +3979,7 @@ skeleton generation variants.
             -morphology HMT LineJunctions  man_junctions.gif
   magick man_junctions.gif -morphology Dilate Ring \
           -background Red -alpha Shape \
-            man_thin_skeleton.gif +swap -magick composite man_junctions_marked.gif
+            man_thin_skeleton.gif +swap -composite man_junctions_marked.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="man_thin_skeleton.gif"
      ><IMG SRC="man_thin_skeleton.gif"               WIDTH=100 HEIGHT=125
@@ -4101,7 +4101,7 @@ locate them). </P>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
 
-To properly disconnect all line magick segment you will also need to add orthogonal
+To properly disconnect all line segment you will also need to add orthogonal
 '<CODE>T</CODE>' kernels to the kernel set, and it is also best to include
 a '<CODE>+</CODE>' junction too.  For example.
 
@@ -4150,7 +4150,7 @@ Here is a zoom of the 'loop' showing the disconnected segments.
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-At this point we can now remove any line magick segment that contains a match
+At this point we can now remove any line segment that contains a match
 with the previously discovered 'line end'. </P>
 
 This can be done either by 'flood filling' from those 'seed' points, to delete
@@ -4178,8 +4178,8 @@ result. </P>
 <H4>Thinning Style - Sequential or Simultaneous</H4>
 
 If you were to do one single 'pruning' of the end of the line segments, and
-magick compare it to the original image you will find that more often than not a line
-magick segment was pruned anywhere from 2 to 4 times, depending on the exact shape
+compare it to the original image you will find that more often than not a line
+segment was pruned anywhere from 2 to 4 times, depending on the exact shape
 and orientation of the lines. </P>
 
 For example (resulting image enlarged) is is a default line ends thining
@@ -4824,7 +4824,7 @@ of this sort, including mirrors of those lines. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x3 "Ridges:2"  miff:- | \
-      magick montage -label Ridges:2 -  -background LightSteelBlue \
+      montage -label Ridges:2 -  -background LightSteelBlue \
               -geometry +0+0  kernel_ridges2.gif
 </CODE>-->
   <A HREF="kernel_ridges2.gif"
@@ -4846,7 +4846,7 @@ octagonal shape that can contain the whole of the shape. </P>
 <DIV ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x2 "ConvexHull"  miff:- | \
-      magick montage -label ConvexHull -  -background LightSteelBlue \
+      montage -label ConvexHull -  -background LightSteelBlue \
               -geometry +0+0  kernel_convexhull.gif
 </CODE>-->
   <A HREF="kernel_convexhull.gif"
@@ -4946,7 +4946,7 @@ cyclically rotated in 45 degree increments. </P>
 <TR VALIGN=bottom><TD width="100%" ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Skeleton:1"  miff:- | \
-      magick montage -label "Skeleton:1 (Traditional)" - \
+      montage -label "Skeleton:1 (Traditional)" - \
           -background LightSteelBlue -geometry +0+0  kernel_skeleton1.gif
 </CODE>-->
   <A HREF="kernel_skeleton1.gif"
@@ -4987,7 +4987,7 @@ Processing Resources</A> documentation. </P>
 <TR VALIGN=bottom><TD width="100%" ALIGN=center>
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Skeleton:2"  miff:- | \
-      magick montage -label "Skeleton:2 (HIPR2)" - \
+      montage -label "Skeleton:2 (HIPR2)" - \
           -background LightSteelBlue -geometry +0+0  kernel_skeleton2.gif
 </CODE>-->
   <A HREF="kernel_skeleton2.gif"
@@ -5003,7 +5003,7 @@ Processing Resources</A> documentation. </P>
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-If you magick compare this with the previous set, you will notice that the internal
+If you compare this with the previous set, you will notice that the internal
 pixel of the corners have been removed.  This will then allow the thinning
 operation to remove the extra thickening from the diagonals. However this
 diagonal thinning is not symmetrical, and highly dependant of the shape of the
@@ -5019,7 +5019,7 @@ a combined '<CODE><B>Edges;Corners</B></CODE>' kernel list.
 
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Edges;Corners"  miff:- | \
-      magick montage -label 'Edges ; Corners' - \
+      montage -label 'Edges ; Corners' - \
               -background LightSteelBlue -geometry +0+0  kernel_edge-corner.gif
 </CODE>-->
   <A HREF="kernel_edge-corner.gif"
@@ -5065,7 +5065,7 @@ However unlike previous skeletons this requires the use of
 
 <!--<CODE EXECUTE>
    kernel2image -15.1 -ml '' -mt x1 "Skeleton:3"  miff:- | \
-      magick montage -label "Skeleton:3 (Bloomberg)" - \
+      montage -label "Skeleton:3 (Bloomberg)" - \
           -background LightSteelBlue -geometry +0+0  kernel_skeleton3.gif
 </CODE>-->
   <A HREF="kernel_skeleton3.gif"
@@ -5113,38 +5113,38 @@ a set of rotated or mirror-rotated flags to the given kernel definition.
   flags="-tile x1 -background LightSteelBlue -geometry +0+0"
   for i in `seq 41 44`; do
       kernel2image -15.1 -m -ml $i  "ThinSE:$i" miff:-
-  done | magick montage - $flags miff:- |
-    magick montage -label "Strong 4-connected" - \
+  done | montage - $flags miff:- |
+    montage -label "Strong 4-connected" - \
       -font ArialB $flags kernel_thinse_4strong.gif
 
   for i in `seq 45 49`; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | magick montage - $flags miff:- |
-    magick montage -label "Weak 4-connected" - \
+  done | montage - $flags miff:- |
+    montage -label "Weak 4-connected" - \
       -font ArialB $flags kernel_thinse_4weak.gif
 
   for i in `seq 81 84`; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | magick montage - $flags miff:- |
-    magick montage -label "Strong 8-connected" - \
+  done | montage - $flags miff:- |
+    montage -label "Strong 8-connected" - \
       -font ArialB $flags kernel_thinse_8strong.gif
 
   for i in `seq 85 89`; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | magick montage - $flags miff:- |
-    magick montage -label "Weak 8-connected" - \
+  done | montage - $flags miff:- |
+    montage -label "Weak 8-connected" - \
       -font ArialB $flags kernel_thinse_8weak.gif
 
   for i in 423 823; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | magick montage - $flags -geometry +15+0 miff:- |
-    magick montage -label "Weak, Combined 2 and 3" - \
+  done | montage - $flags -geometry +15+0 miff:- |
+    montage -label "Weak, Combined 2 and 3" - \
       -font ArialB $flags -geometry +25+0 kernel_thinse_23comb.gif
 
   for i in 481 482; do
       kernel2image -15.1 -m -ml $i "ThinSE:$i" miff:-
-  done | magick montage - $flags -geometry +15+0 miff:- |
-    magick montage -label "General 4 & 8 Conection Preserving" - \
+  done | montage - $flags -geometry +15+0 miff:- |
+    montage -label "General 4 & 8 Conection Preserving" - \
       -font ArialB $flags -geometry +25+0 kernel_thinse_48gen.gif
 -->
 <DIV ALIGN=center>
@@ -5326,7 +5326,7 @@ So lets look at the largest color value that was set in the above image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=distance_max.txt>
-  magick identify -verbose distance.png | grep max:
+  identify -verbose distance.png | grep max:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -5689,7 +5689,7 @@ Distance</CODE>' morphology method using an infinite iteration count.
           -verbose  -morphology IterativeDistance:-1 Chebyshev  +verbose \
           chebyshev_gradient.png
 
-<n>  magick identify -format 'Maximum Distance = %[max]' chebyshev_gradient.png
+<n>  identify -format 'Maximum Distance = %[max]' chebyshev_gradient.png
   magick chebyshev_gradient.png -auto-level chebyshev_gradient.gif
   rm chebyshev_gradient.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -5822,7 +5822,7 @@ using this 'metric'.
   magick man.gif -threshold 50% +depth \
           -morphology Distance Manhattan      manhattan_gradient.png
 
-<n>  magick identify -format 'Maximum Distance = %[max]' manhattan_gradient.png
+<n>  identify -format 'Maximum Distance = %[max]' manhattan_gradient.png
   magick manhattan_gradient.png -auto-level manhattan_gradient.gif
   rm manhattan_gradient.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -5920,7 +5920,7 @@ Here we again calculate the maximum distance...
   magick man.gif -threshold 50% +depth \
           -morphology Distance Octagonal  octagonal_gradient.png
 
-<n>  magick identify -format 'Maximum Distance = %[max]' octagonal_gradient.png
+<n>  identify -format 'Maximum Distance = %[max]' octagonal_gradient.png
   magick octagonal_gradient.png -auto-level octagonal_gradient.gif
   rm octagonal_gradient.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -6003,7 +6003,7 @@ Here is an example
           -morphology Distance '3:3,2,3 2,0,2 3,2,3' \
           fractional_gradient.png
 
-<n>  magick identify -format 'Maximum Distance = %[max]' fractional_gradient.png
+<n>  identify -format 'Maximum Distance = %[max]' fractional_gradient.png
   magick fractional_gradient.png -auto-level fractional_gradient.gif
   rm fractional_gradient.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -6218,7 +6218,7 @@ created using the default '<CODE>Euclidean</CODE>' or 'Knight Move' kernel.
   magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean    knight_gradient.png
 
-<n>  magick identify -format 'Maximum Distance = %[max]' knight_gradient.png
+<n>  identify -format 'Maximum Distance = %[max]' knight_gradient.png
   magick knight_gradient.png -auto-level knight_gradient.gif
   rm knight_gradient.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -6326,7 +6326,7 @@ Here is its application...
   magick man.gif -threshold 50% +depth \
           -morphology Distance Euclidean:4     euclidean_gradient.png
 
-<n>  magick identify -format 'Maximum Distance = %[max]' euclidean_gradient.png
+<n>  identify -format 'Maximum Distance = %[max]' euclidean_gradient.png
   magick euclidean_gradient.png -auto-level euclidean_gradient.gif
   rm euclidean_gradient.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -6687,7 +6687,7 @@ For example here is a 10 pixel 'smoothed' feather around an shaped object.
    magick rose_orig.png \
            \( +clone -fill black -colorize 100% \
               -fill white -draw 'circle 114,75 110,2' \
-           \) -alpha off -compose CopyOpacity -magick composite \
+           \) -alpha off -compose CopyOpacity -composite \
            -trim +repage rose_shape.png
 
    magick rose_shape.png \
@@ -6695,7 +6695,7 @@ For example here is a 10 pixel 'smoothed' feather around an shaped object.
               -gamma 2 +level 0,100 -white-threshold 99 \
               -morphology Distance Euclidean:4,10! \
               -sigmoidal-contrast 3,0% \
-           \) -compose CopyOpacity -magick composite \
+           \) -compose CopyOpacity -composite \
            rose_feathered.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="rose_shape.png"
@@ -6948,7 +6948,7 @@ hit by a diagonal line across the image.
                         -draw 'line 0,0 79,79'   disks_line.gif
 
   magick disks_line.gif disks.gif \
-          -compose Multiply  -magick composite    disks_line_find.gif
+          -compose Multiply  -composite    disks_line_find.gif
 
   magick disks_line_find.gif  -mask disks_mask.gif \
           -morphology Dilate:15 Diamond    +mask disks_line_found.gif
@@ -7015,7 +7015,7 @@ For example here I discover how far each point is from a single 'seed' point
           -threshold 20% distance_bounds.png
 
   magick distance_point.png \( distance_bounds.png -negate \)  \
-          -compose multiply -magick composite  -auto-level distance_direct.png
+          -compose multiply -composite  -auto-level distance_direct.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="distance_start.png"
      ><IMG SRC="distance_start.png"    WIDTH=100 HEIGHT=100
@@ -7305,7 +7305,7 @@ For example...
   autotrace -centerline -output-format svg man_at_prep.png |\
       magick SVG:-  man_centerline.gif
   magick man.gif man_centerline.gif \
-          -compose multiply -magick composite man_at_skeleton.gif
+          -compose multiply -composite man_at_skeleton.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="man.gif"
      ><IMG SRC="man.gif"      WIDTH=100 HEIGHT=125

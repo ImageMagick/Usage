@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Color Basics and Channels -- IM v6 Examples</TITLE>
+<TITLE>Color Basics and Channels -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/color_basics/">
@@ -122,7 +122,7 @@ light, we actually sense the light using both red and green sensors.  If our
 color sensors were strictly pure red and green detectors, we would not see any
 yellow colors at all. Rainbows would in fact show 'gaps' in it. </P>
 
-That means a TV or computer magick display is actually fooling us into seeing yellow
+That means a TV or computer display is actually fooling us into seeing yellow
 by the monitor emitting just the right mix of red and green light, rather than
 actual yellow light.  Our color sensors see the same intensity as it would for
 a pure yellow light, and as a result we see yellow, even though in reality we
@@ -194,7 +194,7 @@ For example here are the red, green, and blue components of a rose image.
   <BR>Blue
 </TD></TR></TABLE></P>
 
-Note how the 'Red' image is much brighter to magick display a rose, than the other
+Note how the 'Red' image is much brighter to display a rose, than the other
 two color components. But all three images are bright for the white patch near
 the bottom. </P>
 
@@ -585,7 +585,7 @@ The image was created using...
 </TD></TR></TABLE></P>
 
 Here are some similar images with differnent 'gamma' levels so you can see how
-close your monitor is to a correct '2.2' gamma magick display for human perception.
+close your monitor is to a correct '2.2' gamma display for human perception.
 
 
 <DIV ALIGN=center>
@@ -633,7 +633,7 @@ closely matches that of sRGB colorspace. </P>
 
 When I wrote this my old screen (provided by work) was extremely poor.  It has
 a Gamma setting of about 1.8, and actually has a different Gamma at the top of
-the magick display (darker) than that at the bottom of the magick display (lighter).
+the display (darker) than that at the bottom of the display (lighter).
 Something that has caused me problems when comparing images at different
 locations on the screen, as the same image looks different, when placed in
 different positions vertically! </P>
@@ -739,7 +739,7 @@ are typically not regarded as being in sRGB colorspace. As such when working
 with such file formats it is typically a good idea to use "<CODE>-set
 colorspace ...</CODE>" to ensure the colorspace is as you are expecting. </P>
 
-And here are all three images together so you can magick compare them.
+And here are all three images together so you can compare them.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 ALIGN=center>
 <TR><TD ALIGN=center>
   <A HREF="gradient.gif"
@@ -1778,9 +1778,9 @@ HREF="../compose/#channel" >Channel Copied</A> into that pre-prepared image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick separate_HSB_0.gif -colorspace HSB \
-          separate_HSB_0.gif -compose CopyRed   -magick composite \
-          separate_HSB_1.gif -compose CopyGreen -magick composite \
-          separate_HSB_2.gif -compose CopyBlue  -magick composite \
+          separate_HSB_0.gif -compose CopyRed   -composite \
+          separate_HSB_1.gif -compose CopyGreen -composite \
+          separate_HSB_2.gif -compose CopyBlue  -composite \
           -colorspace sRGB   rose_HSB_combined_alt.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_HSB_combined_alt.gif"
@@ -2110,7 +2110,7 @@ generate perfect '<CODE>HSL</CODE>' color wheel.
 
   On the other hand the resulting image while generated in linear RGB
   colorspace, is being saved as sRGB colorspace to ensure that browsers
-  and other image magick display programs, magick display the gradient in a way
+  and other image display programs, display the gradient in a way
   that works well visually.
 </I></FONT></TD></TR></TABLE></P>
 
@@ -2212,13 +2212,13 @@ colorspaces at a 50% intensity.
           -alpha copy -channel A -morphology dilate diamond anulus.png
   magick hue_angular.png -size 100x100 xc:white xc:gray50 \
           -combine -set colorspace HSL -colorspace RGB \
-          anulus.png -alpha off -compose Multiply -magick composite \
-          anulus.png -alpha on  -compose DstIn -magick composite \
+          anulus.png -alpha off -compose Multiply -composite \
+          anulus.png -alpha on  -compose DstIn -composite \
           -colorspace sRGB hues_HSL.png
   magick hue_angular.png -size 100x100 xc:white xc:gray50 \
           -combine -set colorspace HCL -colorspace RGB \
-          anulus.png -alpha off -compose Multiply -magick composite \
-          anulus.png -alpha on  -compose DstIn -magick composite \
+          anulus.png -alpha off -compose Multiply -composite \
+          anulus.png -alpha on  -compose DstIn -composite \
           -colorspace sRGB hues_HCL.png
 </samp></pre></TD></TR></TABLE>
 <TABLE valign="top">
@@ -2542,9 +2542,9 @@ This may not seem like much, but when you combine it with a <A HREF="#fuzz"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick balloon.gif \
-          \( +clone -matte -transparent black \
+          \( +clone -alpha set -transparent black \
              -fill white  -colorize 100% \) \
-          -magick composite    balloon_mask_non-black.gif
+          -composite    balloon_mask_non-black.gif
 
 </samp></pre></TD></TR></TABLE></TD><TD>
 
@@ -2629,7 +2629,7 @@ was also made transparent just as they became red in the above...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick present.gif -matte -fill none \
+  magick present.gif -alpha set -fill none \
                       -draw 'color 0,0 replace' present_none.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
 
@@ -2659,7 +2659,7 @@ course.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick present.gif -matte -fill '#00000080' \
+  magick present.gif -alpha set -fill '#00000080' \
             -draw 'matte 0,0 replace' present_semi.png
 </samp></pre></TD></TR></TABLE></TD><TD>
 
@@ -3023,7 +3023,7 @@ match...
   magick colorwheel.png \
           \( +clone  -fuzz 30000 -transparent blue \
              -channel RGB +level-colors white +channel \) \
-          -magick composite   opaque_blue_inv.png
+          -composite   opaque_blue_inv.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="opaque_blue_inv.png"
      ><IMG SRC="opaque_blue_inv.png"
@@ -3218,7 +3218,7 @@ either using multiple small "<CODE><A HREF="../option_link.cgi?fuzz"
 >-fuzz</A></CODE>" factored matches or a smaller 'inverted match', than
 a single large value. </P>
 
-Here we magick compare the colors in the image with another color, the 'near-perfect
+Here we compare the colors in the image with another color, the 'near-perfect
 gray' color, changing similar colors to that same gray color, as the 'fuzz
 factor' increases.
 
@@ -3297,7 +3297,7 @@ however the <A HREF="#fuzz" >Fuzz Factor</A> remains a constant 20%.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
-          -compose CopyOpacity -magick composite  trans_gradient.png
+          -compose CopyOpacity -composite  trans_gradient.png
   magick trans_gradient.png -channel RGBA \
           -fuzz 20% -fill Gray50 -opaque 'GrayA(50%,1.0)' fuzz_trans_100.png
   magick trans_gradient.png -channel RGBA \

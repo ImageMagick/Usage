@@ -2,11 +2,11 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Fuzz Distance -- IM v6 Examples</TITLE>
+<TITLE>Fuzz Distance -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/fuzz_distance/">
+      HREF="https://imagemagick.org/Usage/bugs/fuzz_distance/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
@@ -53,10 +53,10 @@ the fully-transparent Black (or '<CODE>None</CODE>' and a color wheel of
 opaque colors...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
   for P in 50 60 80 100 110; do
-    convert colorwheel.png -alpha set -channel RGBA \
+    magick colorwheel.png -alpha set -channel RGBA \
             -fuzz $P% -fill none -opaque none \
             -fill black -gravity SouthWest -annotate +2+2 "$P%%" \
             miff:-
@@ -83,18 +83,18 @@ distance from full transparency.  This generates a greyscale and transparency
 gradient, and then replaces 'similar colors' to full-transparency.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE>
-  convert -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
+  magick -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
           -compose CopyOpacity -composite  gradient.png
-  convert gradient.png -channel RGBA \
+  magick gradient.png -channel RGBA \
           -fuzz 25% -fill Red -opaque None  fuzz_gradient_25.png
-  convert gradient.png -channel RGBA \
+  magick gradient.png -channel RGBA \
           -fuzz 50% -fill Red -opaque None  fuzz_gradient_50.png
-  convert gradient.png -channel RGBA \
+  magick gradient.png -channel RGBA \
           -fuzz 75% -fill Red -opaque None  fuzz_gradient_75.png
 </CODE><BR></PRE></TD></TR></TABLE>
-<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
+<table class="table table-sm table-hover" width="90%" CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="gradient.png"
      ><IMG SRC="gradient.png"     WIDTH=100  HEIGHT=100
@@ -124,12 +124,12 @@ the last formula below. </P>
 Here is what the LAST image in the above looks like from IM v6.6.6-4 on, where
 the fuzz factor has been fixed with regard to transparencies.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert gradient.png -channel RGBA \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick gradient.png -channel RGBA \
           -fuzz 75% -fill Red -opaque None  fuzz_gradient_75_fixed.png
 </CODE><BR></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
-<TABLE BORDER=1 CELLPADDING=5 BACKGROUND="../../images/bg.gif"><TR>
+<table class="table table-sm table-hover" CELLPADDING=5 BACKGROUND="../../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="fuzz_gradient_75_fixed.png"
      ><IMG SRC="fuzz_gradient_75_fixed.png"     WIDTH=100  HEIGHT=100
@@ -157,9 +157,9 @@ These are expressed as FX formulas where 'u' is the first image and
 Using FX, The DIY Image Operator</A>, in the expresion... </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert xc:color1 xc:color2 -print \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick xc:color1 xc:color2 -print \
     <B>"%[fx:...expression...]%%"</B> \
     null:
 </CODE><BR></PRE></TD></TR></TABLE></P>
@@ -168,7 +168,7 @@ Using FX, The DIY Image Operator</A>, in the expresion... </P>
 
 RGB Opaque Color Distance...
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
     "%[fx:(100)*sqrt(( (u.r-v.r)^2 +
                        (u.g-v.g)^2 +
@@ -179,7 +179,7 @@ RGB Opaque Color Distance...
 
 RMSE Distance?
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
     "%[fx:(100)*sqrt(( (u.r-v.r)^2 +
                        (u.g-v.g)^2 +
@@ -191,7 +191,7 @@ RMSE Distance?
 
 Color with Alpha Multiply
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
     "%[fx:(100)*sqrt(( (u.r*u.a-v.r*v.a)^2 +
                        (u.g*u.a-v.g*v.a)^2 +
@@ -202,7 +202,7 @@ Color with Alpha Multiply
 
 Current (buggy) fuzz calculation being used (to IM v6.6.6-3)
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
     "%[fx:(100)*sqrt(( (u.r*u.a-v.r*v.a)^2 +
                        (u.g*u.a-v.g*v.a)^2 +
@@ -214,7 +214,7 @@ Current (buggy) fuzz calculation being used (to IM v6.6.6-3)
 
 The correct calculation should be (implemented IM v6.6.6-4)
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE SCRIPT IMAGE=fuzz_none_color.png>
     "%[fx:(100)*sqrt( ( (u.r-v.r)^2 +
                         (u.g-v.g)^2 +
@@ -240,7 +240,7 @@ distance is just a simple and complete component of the additional alpha
 channel component. </P>
 
 <B>UPDATE:</B> this color distance metric is now also used for
-<CODE><NOBR>"compare -metric <B>Fuzz</B>"</NOBR></CODE> </P>
+<CODE>"compare -metric <B>Fuzz</B>"</CODE> </P>
 
 </DIV>
 <HR><!-- ---------------------------------------------------------------- -->
@@ -251,6 +251,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/fuzz_distance/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/fuzz_distance/</CODE>
 </ADDRESS></BODY></HTML>
 

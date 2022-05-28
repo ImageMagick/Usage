@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Resizing or Scaling -- IM v6 Examples</TITLE>
+<TITLE>Resizing or Scaling -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/resize/">
@@ -650,7 +650,7 @@ the background image (the second image).  For example see <A
 HREF="../layers/#composite" >Composite Multiple Images</A>. </P>
 
 As you can see it is used as a 'setting' in most IM commands, but in
-"<CODE>convert</CODE>" "<CODE><A HREF="../option_link.cgi?geometry"
+"<code>magick</code>" "<CODE><A HREF="../option_link.cgi?geometry"
 >-geometry</A></CODE>" is both a special image resizing operator and a
 positioning setting. </P>
 
@@ -662,7 +662,7 @@ sequence.  </P>
 
 To complicate this special option further, the positional parts of the
 "<CODE><A HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" option is
-saved by "<CODE>convert</CODE>" command, just as it is in "<CODE><A
+saved by "<code>magick</code>" command, just as it is in "<CODE><A
 HREF="../basics/#composite" >composite</A></CODE>".  That is, any position is
 preserved for later use by the "<CODE><A HREF="../option_link.cgi?composite"
 >-composite</A></CODE>", to position the 'overlay' image, (the second last
@@ -671,7 +671,7 @@ image in the image sequence).  </P>
 
 For this reason, you should limit the use of "<CODE><A
 HREF="../option_link.cgi?geometry" >-geometry</A></CODE>" in
-"<CODE>convert</CODE>" commands to just before a "<CODE><A
+"<code>magick</code>" commands to just before a "<CODE><A
 HREF="../option_link.cgi?composite" >-composite</A></CODE>" or  "<CODE><A
 HREF="../option_link.cgi?layers" >-layers</A> composite</CODE>"  operations.
 </P>
@@ -755,11 +755,11 @@ For example, suppose you had an image that you scanned at a 300dpi (dots per
 inch).  The image was saved with this resolution (density) or when you read it
 into IM, you specified it as a 300dpi image (using "<CODE><A
 HREF="../option_link.cgi?density" >-density</A></CODE>").   Now you decide to
-magick display it on a screen that has a resolution of 90dpi, so you do a
+display it on a screen that has a resolution of 90dpi, so you do a
 "<CODE>-resample 90</CODE>".  IM will now resize the image by 90/300 or to 30%
 of the images original size and set the images new density to 90dpi.  The
 image is now smaller in terms of the number of pixels used, but if displayed
-on a 90dpi magick display will appear at the same physical size as the original image
+on a 90dpi display will appear at the same physical size as the original image
 you scanned.  That is, it now has a resolution appropriate for a 90dpi
 display, so it will be displayed to the user at its original real world size.
 </P>
@@ -1523,7 +1523,7 @@ center of the image (the default control point if not specified)...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick rose: -matte -virtual-pixel transparent \
+  magick rose: -alpha set -virtual-pixel transparent \
           +distort SRT '.9,0' +repage  rose_distort_scale.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_distort_scale.png"
@@ -1554,7 +1554,7 @@ around that control point...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick rose: -matte -virtual-pixel transparent \
+  magick rose: -alpha set -virtual-pixel transparent \
           +distort SRT '0,0  .9  0  .5,0' +repage  rose_distort_shift.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_distort_shift.png"
@@ -2244,7 +2244,7 @@ Here we try to resize an image to fill a 80x80 box.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick logo: -resize 80x80\> \
-          -size 80x80 xc:blue +swap -gravity center  -magick composite \
+          -size 80x80 xc:blue +swap -gravity center  -composite \
           space_resize.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="space_resize.jpg"

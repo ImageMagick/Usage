@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Bluring and Sharpening -- IM v6 Examples</TITLE>
+<TITLE>Bluring and Sharpening -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/blur/">
@@ -409,7 +409,7 @@ HREF="../option_link.cgi?alpha" >-alpha off</A></CODE>" operator.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick yellow_on_red.png   +matte  yellow_on_red_matte.png
+  magick yellow_on_red.png   -alpha off  yellow_on_red_matte.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="yellow_on_red_matte.png"
      ><IMG SRC="yellow_on_red_matte.png"     WIDTH=70  HEIGHT=70
@@ -773,7 +773,7 @@ unsharp 0x3+1+0 is basically the same as sharpen 0x3
 magick A_original_blur3.jpg -unsharp 0x3+1+0
 A_original_blur3_unsharp3_1_0.jpg
 
-magick compare -metric rmse A_original_blur3_sharp3.jpg
+compare -metric rmse A_original_blur3_sharp3.jpg
 A_original_blur3_unsharp3_1_0.jpg null:
 164.661 (0.00251256)
 
@@ -1056,7 +1056,7 @@ a symmetrical padding (like the above) is used for convenience. </P>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that while the "<CODE>-compose Over</CODE>" setting is not actually
   needed in the above, it is recommended. Otherwise later operations (even in
-  other "<CODE>convert</CODE>" commands) could be effected, with unexpected
+  other "<code>magick</code>" commands) could be effected, with unexpected
   results.  That is a non-standard compose setting can effect other
   operations, including: image layering, adding borders, or frames, or simply
   other compositions.
@@ -1076,7 +1076,7 @@ original image onto a generated (larger) shadow image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone  -background navy  -shadow 60x3 \) \
-          +swap -magick composite  +repage shadow_composite.png
+          +swap -composite  +repage shadow_composite.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shadow_composite.png"
      ><IMG SRC="shadow_composite.png"
@@ -1112,7 +1112,7 @@ equally on all sides.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone  -background navy  -shadow 60x3 \) +repage \
-          +swap -gravity center -geometry -3-5 -magick composite shadow_geometry.png
+          +swap -gravity center -geometry -3-5 -composite shadow_geometry.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shadow_geometry.png"
      ><IMG SRC="shadow_geometry.png"
@@ -1164,7 +1164,7 @@ along the edges of the shape becomes fully opaque.
           -font Candice -pointsize 48  label:A -trim \
           \( +clone -background black  -shadow 100x3+0+0 \
              -channel A -level 0,50% +channel \) +swap \
-          +repage -gravity center -magick composite   shadow_outline_darker.png
+          +repage -gravity center -composite   shadow_outline_darker.png
 </code></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="shadow_outline_darker.png"
      ><IMG SRC="shadow_outline_darker.png"
@@ -1182,7 +1182,7 @@ An alternative is to over-do the transparency adjustment (using
   magick -background none -fill white \
           -font Candice -pointsize 48  label:A -trim \
           \( +clone -background black  -shadow 200x3+0+0 \) +swap \
-          +repage -gravity center -magick composite   shadow_outline_fixed.png
+          +repage -gravity center -composite   shadow_outline_fixed.png
 </code></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="shadow_outline_fixed.png"
      ><IMG SRC="shadow_outline_fixed.png"
@@ -1207,7 +1207,7 @@ a separate action.
   magick -background none -fill white -stroke black \
           -font Candice -pointsize 48  label:A -trim \
           \( +clone -background navy  -shadow 80x3 \) +swap \
-          +repage -gravity center -geometry -3-3 -magick composite \
+          +repage -gravity center -geometry -3-3 -composite \
           shadow_geometry_offset.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shadow_geometry_offset.png"
@@ -1242,7 +1242,7 @@ use of the soft 'shaped' shadows this operator provides.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label Rose  rose: \
+  montage -label Rose  rose: \
           -background none -geometry +5+5 -shadow  shadow_montage.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shadow_montage.png"
@@ -1278,7 +1278,7 @@ The equivalent IM operation would be...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick image_clone.png -matte \
+  magick image_clone.png -alpha set \
           -bordercolor none  -border 8  -repage -8-8\!  \
           -channel A -virtual-pixel transparent \
                -blur 8x4 -evaluate multiply .60 +channel

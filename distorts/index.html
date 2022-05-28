@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Distorting -- IM v6 Examples</TITLE>
+<TITLE>Distorting -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/distorts/">
@@ -457,7 +457,7 @@ but you also get severe aliasing effects.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`magick compare -metric PAE koala_rotated_fx.gif \
+  [ "`compare -metric PAE koala_rotated_fx.gif \
                           koala_rotated_srt.gif null: 2>&1 |
         sed 's/ .*//'`" -gt '0' ] && echo >&2 \
     "ASSERTION FAILURE: FX and SRT equivalent methods, did not match"
@@ -577,7 +577,7 @@ source image lies. </P>
 In this case a <A HREF="../misc/#virtual-pixel" >Virtual Pixel</A> is useless
 as it does 'hit' the source image plane in a N-dimensional space, and as such
 the destination pixel is completely invalid!  In this case IM uses the current
-"<CODE><A HREF="../option_link.cgi?matte" >-matte</A></CODE>" setting for the
+"<CODE><A HREF="../option_link.cgi?alpha" >-alpha set</A></CODE>" setting for the
 pixel color. If it is a 'near-miss' IM will anti-alias this invalid color
 with a neighbouring colors of the image plane, if it knows how. It does for
 perspective distortions. </P>
@@ -829,18 +829,18 @@ Distant Horizons</A> below for details, of this distortion.
 
   # Using Interpolated Lookup
   magick checks.png -filter point \
-          -virtual-pixel tile -mattecolor DodgerBlue \
+          -virtual-pixel tile -alpha setcolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           horizon_tile_point.png
 
   # Using Grid Super Sampling
   magick checks.png  -filter point  -set option:distort:scale 10 \
-          -virtual-pixel tile -mattecolor DodgerBlue \
+          -virtual-pixel tile -alpha setcolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           -scale 10%    horizon_tile_super.png
 
   # Using Area Resampling (default)
-  magick checks.png       -virtual-pixel tile -mattecolor DodgerBlue \
+  magick checks.png       -virtual-pixel tile -alpha setcolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           horizon_tile.png
 </samp></pre></TD></TR></TABLE>
@@ -1124,14 +1124,14 @@ some type of 3-dimensional space distortion method and the pixel 'vector' does
 not even hit the source plane in which the image lies.  Basically the the
 result of the distortion becomes 'undefined' mathematically.  In that case the
 color will be determined from the "<CODE><A
-HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>" setting. </P>
+HREF="../option_link.cgi?mattecolor" >-alpha setcolor</A></CODE>" setting. </P>
 
 For example when you see 'sky' in a  <A HREF="#perspective" >Perspective
 Distortion</A> (for example see <A HREF="#horizon" >View Distant
 Horizons</A>), the mathematics for determining the source image location
 became 'undefined' (actually it is defined, but it is not valid from an users
 forward viewing perspective). As such the "<CODE><A
-HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>" is output for
+HREF="../option_link.cgi?mattecolor" >-alpha setcolor</A></CODE>" is output for
 the 'sky'. </P>
 
 Actually the perspective distortion algorithm also manages to include some
@@ -1379,7 +1379,7 @@ distortions. </P>
 </TD></TR></TABLE>
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`magick compare -metric PAE koala.gif koala_noop.gif null: 2>&1 |
+  [ "`compare -metric PAE koala.gif koala_noop.gif null: 2>&1 |
         sed 's/ .*//'`" -gt '9600' ] && echo >&2 \
     "ASSERTION FAILURE: Distort SRT no-op is VERY different\!"
 </CODE> -->
@@ -1931,7 +1931,7 @@ Lets shrink it by 30% as well, but use a transparent background.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick koala.gif  -matte -virtual-pixel transparent \
+  magick koala.gif  -alpha set -virtual-pixel transparent \
           +distort ScaleRotateTranslate '.7,-110' +repage koala_srt_scale.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="koala_srt_scale.png"
@@ -2001,7 +2001,7 @@ Edge</A>. </P>
 This distortion specifically designed to take an image and generate an
 animation based on the movements and rotation of that object.  </P>
 
-For example here I create a stylized space ship, which I then magick animate in a
+For example here I create a stylized space ship, which I then animate in a
 very rough way.  The ship sits on its base at <CODE>20,75</CODE> (for the
 initial 'hunker-down' scaling) while the normal 'handle' for movement and
 rotations is the ships center which is located at <CODE>20,60</CODE> in the
@@ -2621,7 +2621,7 @@ coefficients, rather than the movement of control points.
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=koala_affine_proj.png>
    angle=-20
    tan=`magick xc: -format "%[fx:tan( $angle *pi/180)]" info:`
-   magick koala.gif -matte -virtual-pixel Transparent \
+   magick koala.gif -alpha set -virtual-pixel Transparent \
            +distort AffineProjection "1,$tan,0,1,0,0" +repage \
            koala_affine_proj.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2652,13 +2652,13 @@ on a distorted image. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick checks.png    -matte    -virtual-pixel tile \
+  magick checks.png    -alpha set    -virtual-pixel tile \
           -distort  ScaleRotateTranslate  '20,20  .5  30' \
           checks_srt_tile.png
-  magick checks.png    -matte    -virtual-pixel tile \
+  magick checks.png    -alpha set    -virtual-pixel tile \
           -distort  Affine  '0,0 10,10   0,89 10,50   89,0 50,0' \
           checks_affine_tile.png
-  magick checks.png    -matte    -virtual-pixel tile \
+  magick checks.png    -alpha set    -virtual-pixel tile \
           -distort  AffineProjection  '0.9,0.3,-0.2,0.7,20,15' \
           checks_amatrix_tile.png
 </samp></pre></TD></TR></TABLE>
@@ -2882,7 +2882,7 @@ Shear' position that we used above.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick standing_shape.png   -flip +distort SRT '0,0 1,-1 0' \
-          \( +clone   -virtual-pixel Transparent -mattecolor None \
+          \( +clone   -virtual-pixel Transparent -alpha setcolor None \
              +distort Perspective \
                 '0,0 0,0  100,0 100,0   0,-100 45,-100   100,-100 60,-100' \
              -fuzz 2% -trim   -background Black -shadow 60x3+0+0 \
@@ -3040,7 +3040,7 @@ existing transparency in the image.
           \( +clone -alpha extract -alpha opaque \) \
           +distort Affine '0,0 0,0   %w,0 150,0   0,%h 0,113' \
           -alpha off -crop 150x113+0+0 +repage \
-          -compose CopyOpacity -magick composite      distort_resize_trans.png
+          -compose CopyOpacity -composite      distort_resize_trans.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -3101,7 +3101,7 @@ HREF="../option_link.cgi?distort" ><CODE>-distort</CODE></A>".
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick building.jpg -matte -virtual-pixel transparent \
+  magick building.jpg -alpha set -virtual-pixel transparent \
          -distort Perspective \
               '7,40 4,30   4,124 4,123   85,122 100,123   85,2 100,30' \
           building_pers.png
@@ -3131,7 +3131,7 @@ image is degraded by the distortion.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick building_pers.png  -matte -virtual-pixel transparent \
+  magick building_pers.png  -alpha set -virtual-pixel transparent \
          -distort Perspective \
               '4,30 7,40   4,123 4,124   100,123 85,122   100,30 85,2' \
           building_pers_rev.png
@@ -3162,10 +3162,10 @@ distortion.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick checks.png        -matte    -virtual-pixel transparent \
+  magick checks.png        -alpha set    -virtual-pixel transparent \
           -distort Perspective '0,0,0,0  0,90,0,90  90,0,90,25  90,90,90,65' \
           checks_pers.png
-  magick checks_pers.png   -matte    -virtual-pixel transparent \
+  magick checks_pers.png   -alpha set    -virtual-pixel transparent \
           -distort Perspective '0,0,0,0  0,90,0,90  90,25,90,0  90,65,90,90' \
           checks_pers_rev.png
 </samp></pre></TD></TR></TABLE>
@@ -3226,7 +3226,7 @@ You can produce some very unusual effects using <A HREF="#perspective"
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick checks.png -mattecolor DodgerBlue \
+  magick checks.png -alpha setcolor DodgerBlue \
           -virtual-pixel background -background Green \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           checks_horizon.png
@@ -3240,13 +3240,13 @@ Well we used '<CODE>Green</CODE>' for the virtual pixels that 'surround' the
 original image image, which we enabled using <A HREF="../misc/#background"
 >Virtual Pixel Background Settings</A>.  But what is more interesting is the
 appearance of the 'blue' color that was defined using the "<CODE><A
-HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>" setting.  </P>
+HREF="../option_link.cgi?mattecolor" >-alpha setcolor</A></CODE>" setting.  </P>
 
 This 'blue' color represents an area where the pixels generated by the
 distortion is <I>invalid</I>, and in such areas the "<A
 HREF="../option_link.cgi?distort" ><CODE>-distort</CODE></A>" operator will
 just output the "<CODE><A HREF="../option_link.cgi?mattecolor"
->-mattecolor</A></CODE>" setting.  </P>
+>-alpha setcolor</A></CODE>" setting.  </P>
 
 For a <A HREF="#perspective" >Perspective Distortion</A>, any pixel ending up
 in the 'sky' of the resulting image will be classed as invalid. Also it
@@ -3257,7 +3257,7 @@ when the resulting image is highly foreshortened by the distortion. </P>
 If you don't want a 'sky' in your final image result then the best idea is to
 set both "<CODE><A HREF="../option_link.cgi?background"
 >-background</A></CODE>" and "<CODE><A HREF="../option_link.cgi?mattecolor"
->-mattecolor</A></CODE>" to use the same color. </P>
+>-alpha setcolor</A></CODE>" to use the same color. </P>
 
 The <A HREF="#perspective" >Perspective Distortion</A> gets more interesting
 when one of the special infinite tiling <A HREF="../misc/#virtual-pixel"
@@ -3269,7 +3269,7 @@ tiled plane.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick checks.png  -virtual-pixel tile -mattecolor DodgerBlue \
+  magick checks.png  -virtual-pixel tile -alpha setcolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           horizon_tile.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -3303,7 +3303,7 @@ HREF="../misc/#random" >Random Virtual Pixel Setting</A>...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  magick checks.png  -virtual-pixel random -mattecolor DodgerBlue \
+  magick checks.png  -virtual-pixel random -alpha setcolor DodgerBlue \
           -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           horizon_random.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -3332,12 +3332,12 @@ distorted image. </P>
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  magick -size 90x90 pattern:gray50 -matte \
-       -virtual-pixel random -mattecolor none \
+  magick -size 90x90 pattern:gray50 -alpha set \
+       -virtual-pixel random -alpha setcolor none \
        -set option:distort:viewport 120x120+100-15 \
        -distort Perspective '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
        +repage -size 120x50 gradient:dodgerblue-tomato \
-       -compose DstOver -magick composite    sunset_horizon.png
+       -compose DstOver -composite    sunset_horizon.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="sunset_horizon.png"
      ><IMG SRC="sunset_horizon.png"   WIDTH=120  HEIGHT=120
@@ -3348,7 +3348,7 @@ To complete the image I removed the viewport offset (using "<CODE><A
 HREF="../option_link.cgi?repage" >+repage</A></CODE>" ), and <A
 HREF="../compose/#dstover" >Underlaid or DstOver</A> a gradient of sunset
 colors into the  transparent 'sky' (set using "<CODE><A
-HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>") . </P>
+HREF="../option_link.cgi?mattecolor" >alpha setmattecolor</A></CODE>") . </P>
 
 A very interesting image that could be used as a backdrop for some other image
 processing work.  You can adjust the distortion parameters to adjust the
@@ -3426,7 +3426,7 @@ box.
     -fill black -pointsize 15 -gravity south -annotate +0+5 'ImageMagick' \
     -stroke blue -strokewidth 2 -draw 'line 0,169 150,169' \
     \( logo.gif -resize 100x100 \) \
-    -gravity center -compose multiply -magick composite box_front.jpg
+    -gravity center -compose multiply -composite box_front.jpg
 
   # Distort both images and merge using common points.
   magick \
@@ -3511,7 +3511,7 @@ semi-transparent shadow effects (using <A HREF="../compose/#copyopacity"
 >CopyOpacity</A>). </P>
 
 What is more amazing is the whole process was done by a single
-"<CODE>convert</CODE>" command, from the input images.  It is an excellent
+"<code>magick</code>" command, from the input images.  It is an excellent
 example of just what IM can do, and the process by which a complex command
 script can be generated.  I recommend reading the <A
 HREF="../forum_link.cgi?t=11726" >forum discussion</A> as it contains a lot of
@@ -3628,7 +3628,7 @@ For example...
 <TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD width="90%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=perspective_verbose.txt>
-  magick rose: -matte -virtual-pixel transparent -verbose \
+  magick rose: -alpha set -virtual-pixel transparent -verbose \
           -distort Perspective "0,0,3,0 0,46,10,46 70,0,70,7 70,46,60,40" \
           +verbose perspective_rose.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -3686,7 +3686,7 @@ The final test in the FX equivalent, just before the source image lookup,
 handles the invalid 'sky' pixels, where the destination fails to map to the
 source image correctly. However it will just substitute '<CODE>blue</CODE>'
 for such pixels instead of the "<A HREF="../option_link.cgi?mattecolor"
-><CODE>-mattecolor</CODE></A>", and does not provide any horizon anti-aliasing
+><CODE>-alpha setcolor</CODE></A>", and does not provide any horizon anti-aliasing
 that the internal algorithm provides for the perspective distortion. </P>
 
 <BR>
@@ -3744,11 +3744,11 @@ grid overlaid on it, and distort it with perspective and bilinear.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick mandrill_grid.jpg -matte -virtual-pixel black \
+  magick mandrill_grid.jpg -alpha set -virtual-pixel black \
        -distort Perspective \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_pers.jpg
-  magick mandrill_grid.jpg -matte -virtual-pixel black -interpolate Spline \
+  magick mandrill_grid.jpg -alpha set -virtual-pixel black -interpolate Spline \
        -distort BilinearForward \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_blin.jpg
@@ -3790,7 +3790,7 @@ all the spacings between the lines constant, but this results in the diagonal
 line becomming curved. </P>
 
 That is it preserves the distance ratios along any given line. That is the
-relative lengths each line magick segment remains the same along the whole length of
+relative lengths each line segment remains the same along the whole length of
 the line, even though the line itself may be bent, curved, or shortened as
 a whole.  That means the grid spacing in the above example remains constant
 scale across the whole image, and the distorted square at the top-right is
@@ -3816,10 +3816,10 @@ rose image...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-<c>  magick rose: -matte -virtual-pixel transparent \
+<c>  magick rose: -alpha set -virtual-pixel transparent \
           -distort Perspective "0,0,3,0 0,46,10,46 70,0,70,7 70,46,60,40" \
           perspective_rose.png
-  magick rose: -matte -virtual-pixel transparent -interpolate Spline \
+  magick rose: -alpha set -virtual-pixel transparent -interpolate Spline \
           -distort BilinearForward "0,0,3,0 0,46,10,46 70,0,70,7 70,46,60,40" \
           bilinear_rose.png
 </samp></pre></TD></TR></TABLE>
@@ -3900,7 +3900,7 @@ image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick mandrill_blin.jpg -matte -virtual-pixel black \
+  magick mandrill_blin.jpg -alpha set -virtual-pixel black \
        -distort BilinearForward \
               '26,0 0,0   114,23 128,0   128,100 128,128  0,123 0,128' \
        mandrill_blin_back.jpg
@@ -3929,7 +3929,7 @@ For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick mandrill_blin.jpg -matte -virtual-pixel black \
+  magick mandrill_blin.jpg -alpha set -virtual-pixel black \
        -distort BilinearReverse \
               '26,0 0,0   114,23 128,0   128,100 128,128  0,123 0,128' \
        mandrill_blin_rev.jpg
@@ -3984,7 +3984,7 @@ a '<CODE><A HREF="#bilinear_forward" >BilinearForward</A></CODE>' distortion.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick mandrill_grid.jpg -matte -virtual-pixel black \
+  magick mandrill_grid.jpg -alpha set -virtual-pixel black \
        -distort BilinearReverse \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_blin_rev2.jpg
@@ -4018,7 +4018,7 @@ result.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick checks.png  -virtual-pixel tile  -mattecolor DodgerBlue \
+  magick checks.png  -virtual-pixel tile  -alpha setcolor DodgerBlue \
           -distort BilinearReverse \
                '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           bilinear_rev_tile.png
@@ -4034,14 +4034,14 @@ will never produce a 'horizon' (invalid pixels). </P>
 On the other hand, using '<CODE><A HREF="#bilinear_forward"
 >BilinearForward</A></CODE>' tends to produce 'sky' or 'invalid pixels'
 (filled with the current "<CODE><A HREF="../option_link.cgi?mattecolor"
->-mattecolor</A></CODE>") quite regularly. In fact the tile pattern tends to
+>-alpha setcolor</A></CODE>") quite regularly. In fact the tile pattern tends to
 go rather crazy...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick checks.png  -virtual-pixel tile  -mattecolor DodgerBlue \
+  magick checks.png  -virtual-pixel tile  -alpha setcolor DodgerBlue \
           -interpolate Spline  -distort BilinearForward \
                '0,0 20,60  90,0 70,63  0,90 5,83  90,90 85,88' \
           bilinear_fwd_tile.png
@@ -4066,7 +4066,7 @@ go rather crazy...
 As such I do not recommend using a tiled form of '<CODE><A
 HREF="#bilinear_forward" >BilinearForward</A></CODE>'.  However I do recommend
 you define an appropriate "<CODE><A HREF="../option_link.cgi?mattecolor"
->-mattecolor</A></CODE>" when using the forward distortion, to prevent the
+>-alpha setcolor</A></CODE>" when using the forward distortion, to prevent the
 appearance of unexpected gray patches of 'sky'. </P>
 
 
@@ -4105,7 +4105,7 @@ we created previously...
 <TR<TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD><TD width="90%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=bilinear_verbose.txt>
-  magick checks.png -matte -virtual-pixel transparent -mattecolor none \
+  magick checks.png -alpha set -virtual-pixel transparent -alpha setcolor none \
       -interpolate Spline -verbose -distort BilinearForward \
                    '0,0,0,0  0,90,0,90  90,0,60,30  90,90,90,90' \
       +verbose bilinear_checks.png
@@ -4237,7 +4237,7 @@ of the form...
              + C<sub>0y</sub> <TD></TR>
 </TABLE></P>
 
-Which if you magick compare with the equation used for <A HREF="#affine_projection"
+Which if you compare with the equation used for <A HREF="#affine_projection"
 >Affine Projection</A> you will see that it is the equivalent.  As 3 constants
 is needed for each X and Y formula, you also need to provide at least 3 X,Y
 coordinate pairs. Any more will cause the equation to be least-squares fitted
@@ -4277,7 +4277,7 @@ now has 4 terms per axis, with 4 constants, so you now need at least
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick mandrill_grid.jpg -matte -virtual-pixel black \
+  magick mandrill_grid.jpg -alpha set -virtual-pixel black \
        -distort Polynomial \
               '1.5   0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_poly_1.5.jpg
@@ -4761,7 +4761,7 @@ produces...
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -size 210x30 pattern:checkerboard -matte \
+  magick -size 210x30 pattern:checkerboard -alpha set \
           -virtual-pixel HorizontalTile -background SkyBlue \
           -distort Arc 360   arc_checks.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -5462,7 +5462,7 @@ the middle of the flower.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower_sm.jpg  flower_radial_blur.jpg \
-          -compose Lighten -magick composite   flower_radial_blur_lighten.jpg
+          -compose Lighten -composite   flower_radial_blur_lighten.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_radial_blur_lighten.jpg"
      ><IMG SRC="flower_radial_blur_lighten.jpg"
@@ -5701,7 +5701,7 @@ vertically in the middle.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick rose: -matte -virtual-pixel transparent \
+  magick rose: -alpha set -virtual-pixel transparent \
           -distort Barrel "0.0 0.0 0.0 1.0   0.0 0.0 0.5 0.5" \
           barrel_bulge.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -5717,7 +5717,7 @@ middle.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick rose: -matte -virtual-pixel transparent \
+  magick rose: -alpha set -virtual-pixel transparent \
           -distort Barrel "0.0 0.0 0.0 1.0   0.0 0.0 -0.5 1.9" \
           barrel_pinch.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -5733,7 +5733,7 @@ your squeezing the image between your fingers, making it bulge out the sides.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick rose: -matte -virtual-pixel transparent \
+  magick rose: -alpha set -virtual-pixel transparent \
           -distort Barrel "0.0 0.0 0.5 0.5   0.0 0.0 -0.5 1.9" \
           barrel_pinch_2.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -5784,7 +5784,7 @@ form of distortion.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick rose: -matte -virtual-pixel transparent \
+  magick rose: -alpha set -virtual-pixel transparent \
           -distort BarrelInverse "0.0 0.0 -0.5 1.5   0.0 0.0 0.3 0.5" \
           barrel_inv_pinch.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -6235,15 +6235,15 @@ HREF="#shepards" >Shepards Distortion</A>.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-<c>  magick mandrill_grid.jpg -matte -virtual-pixel black \
+<c>  magick mandrill_grid.jpg -alpha set -virtual-pixel black \
        -distort Perspective \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_pers.jpg
-<c>  magick mandrill_grid.jpg -matte -virtual-pixel black -interpolate Spline \
+<c>  magick mandrill_grid.jpg -alpha set -virtual-pixel black -interpolate Spline \
        -distort BilinearForward \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_blin.jpg
-  magick mandrill_grid.jpg -matte -virtual-pixel black -interpolate Spline \
+  magick mandrill_grid.jpg -alpha set -virtual-pixel black -interpolate Spline \
        -distort Shepards \
               '0,0 26,0   128,0 114,23   128,128 128,100   0,128 0,123' \
        mandrill_shep.jpg

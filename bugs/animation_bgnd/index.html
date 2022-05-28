@@ -2,17 +2,17 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Animation Bugs -- IM v6 Examples</TITLE>
+<TITLE>Animation Bugs -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/animation_bgnd/">
+      HREF="https://imagemagick.org/Usage/bugs/animation_bgnd/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
-<H1>ImageMagick v6 Examples -- <BR>
+<H1>ImageMagick Examples -- <BR>
     <IMG SRC="../../img_www/space.gif" width=50 height=1>
     Animation Bugs involving Coalesce and Deconstruct -- FIXED</H1>
 
@@ -68,9 +68,9 @@ For example here is a  '<CODE><A HREF="../../anim_basics/#background"
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NEVER_EXECUTE_AGAIN>
-    convert -dispose none  -delay 0 \
+    magick -dispose none  -delay 0 \
                   -size 100x100 xc:skyblue \
                   -fill dodgerblue -draw 'circle 50,50 15,25' \
             -dispose background -delay 100 \
@@ -90,9 +90,9 @@ HREF="../../option_link.cgi?coalesce" >-coalesce</A></CODE>" result.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NEVER_EXECUTE_AGAIN>
-    convert canvas_bgnd.gif -coalesce canvas_bgnd_coalesce_old.gif
+    magick canvas_bgnd.gif -coalesce canvas_bgnd_coalesce_old.gif
     montage canvas_bgnd_coalesce_old.gif -tile x1 -geometry '+2+2' \
             -background none -bordercolor none canvas_bgnd_coal_old_frames.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
@@ -116,9 +116,9 @@ like the original animation.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-    convert canvas_bgnd.gif -coalesce canvas_bgnd_coalesce.gif
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick canvas_bgnd.gif -coalesce canvas_bgnd_coalesce.gif
     montage canvas_bgnd_coalesce.gif -tile x1 -geometry '+2+2' \
             -background none -bordercolor none canvas_bgnd_coal_frames.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
@@ -170,10 +170,10 @@ The "<CODE><A HREF="../../option_link.cgi?deconstruct" >-deconstruct</A></CODE>"
 operator will generate the following frames...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-    convert canvas_bgnd_coalesce.gif -deconstruct canvas_bgnd_deconst.gif
-    convert canvas_bgnd_deconst.gif -bordercolor none -frame 4x4+2+2 miff:- |\
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick canvas_bgnd_coalesce.gif -deconstruct canvas_bgnd_deconst.gif
+    magick canvas_bgnd_deconst.gif -bordercolor none -frame 4x4+2+2 miff:- |\
       montage miff:- -tile x1 -geometry '+2+2' \
               -background none -bordercolor none canvas_bgnd_dec_frames.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
@@ -219,6 +219,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/animation_bgnd/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/animation_bgnd/</CODE>
 </ADDRESS></BODY></HTML>
 

@@ -2,17 +2,17 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Composite Mask Bug -- IM v6 Examples</TITLE>
+<TITLE>Composite Mask Bug -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/composite_mask/">
+      HREF="https://imagemagick.org/Usage/bugs/composite_mask/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
-<H1>ImageMagick v6 Examples -- <BR>
+<H1>ImageMagick Examples -- <BR>
     <IMG SRC="../../img_www/space.gif" width=50 height=1>
     Composite Mask Bug - Fixed</H1>
 
@@ -56,9 +56,9 @@ mask. Please note however that the <I>background</I> image still defines the
 final size of resulting image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:black \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:black \
             -fill white   -draw 'circle 35,35 35,5' \
             -fill black   -draw 'circle 28,30 35,5'   moon_mask.gif
     composite tile_water.jpg tile_aqua.jpg \
@@ -94,11 +94,11 @@ Lets use some colored circles for the  source, background, and masking
 images...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 60x60 xc:none -fill red    -draw 'circle 30,21 30,3'  src.png
-  convert -size 60x60 xc:none -fill '#0F0' -draw 'circle 21,39 24,57' bgnd.png
-  convert -size 60x60 xc:black -fill white -draw 'circle 39,39 36,57' mask.png
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 60x60 xc:none -fill red    -draw 'circle 30,21 30,3'  src.png
+  magick -size 60x60 xc:none -fill '#0F0' -draw 'circle 21,39 24,57' bgnd.png
+  magick -size 60x60 xc:black -fill white -draw 'circle 39,39 36,57' mask.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="src.png"
       ><IMG SRC="src.png"     WIDTH=60 HEIGHT=60
@@ -115,8 +115,8 @@ And apply them, again using an  'Over' compose method...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
     composite src.png  bgnd.png   mask.png   mask_masked.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
    <A HREF="mask_masked.png"
@@ -133,8 +133,8 @@ What is happening is that at this time the above is equivalent to...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
     composite mask.png  src.png +matte -compose CopyOpacity  miff:- |\
       composite  -  bgnd.png    mask_masked_equiv.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
@@ -147,8 +147,8 @@ However what it should have generated was something like...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
     composite mask.png  src.png  -compose DstIn  miff:- |\
       composite  -  bgnd.png    mask_masked_true.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
@@ -198,8 +198,8 @@ Currently however using a mask to blend two images together is a tricky
 matter, but is can be done as shown below. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
     composite src.png bgnd.png                                 composed.png
     composite mask.png mask.png  +matte -compose CopyOpacity   alpha_mask.png
 
@@ -208,7 +208,7 @@ matter, but is can be done as shown below. </P>
 
     composite bgnd_masked.png composed_masked.png -compose Plus  result.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
-<TABLE WIDTH=80% CELLSPACING=0 CELLPADDING=0>
+<TABLE width="90%" CELLSPACING=0 CELLPADDING=0>
 <TR><TD>
     <A HREF="src.png"
        ><IMG SRC="src.png"              WIDTH=60 HEIGHT=60
@@ -276,7 +276,7 @@ matter, but is can be done as shown below. </P>
 </TD></TR></TABLE>
 </DIV></P>
 
-ASIDE: The extra step using '<CODE>CopyOpacity</CODE>' is to convert any pure
+ASIDE: The extra step using '<CODE>CopyOpacity</CODE>' is to magick any pure
 greyscale mask into a image with an alpha mask.  While this is not needed for
 this example, it will allow you to use a greyscale mask with the alpha
 composition methods, '<CODE>DstIn</CODE>' and '<CODE>DstOut</CODE>', as well as
@@ -303,6 +303,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/composite_mask/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/composite_mask/</CODE>
 </ADDRESS></BODY></HTML>
 

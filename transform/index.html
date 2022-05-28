@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Transformations -- IM v6 Examples</TITLE>
+<TITLE>Transformations -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/transform/">
@@ -883,7 +883,7 @@ your fellow spy...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -gravity center -size 50x40 label:"Watch\nthe\nPidgeon" message.gif
 </CODE><CODE EXECUTE NOWARN OUT=message_size.txt
->  magick identify message.gif
+>  identify message.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="message.gif"
      ><IMG SRC="message.gif"       WIDTH=50  HEIGHT=40
@@ -897,7 +897,7 @@ your fellow spy...
 </TD></TR></TABLE></TD></TR></TABLE></P>
 
 Note that we will also need the size of the message image (36x43 pixels), thus
-the magick identify in the above. </P>
+the identify in the above. </P>
 
 Next the put it into some image with some offset.  The offset (and message
 size) used is the cryptographic 'key' for the hidden message.
@@ -906,7 +906,7 @@ size) used is the cryptographic 'key' for the hidden message.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite message.gif rose: -stegano +15+2  rose_message.png
+  composite message.gif rose: -stegano +15+2  rose_message.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_message.png"
      ><IMG SRC="rose_message.png"
@@ -941,7 +941,7 @@ original.
               <TD width="90%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=rose_diff_pae.txt>
-  magick compare -metric PAE rose: rose_message.png   rose_difference.png
+  compare -metric PAE rose: rose_message.png   rose_difference.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="rose_difference.png"
      ><IMG SRC="rose_difference.png"
@@ -1123,7 +1123,7 @@ HREF="../option_link.cgi?roll" >-roll</A></CODE>" of some sort will not
 prevent the image from being decrypting, at least partially. </P>
 
 Note that in the above I did not use a file to hold the 'pass-phrase' but fed
-the phrase into the "<CODE>convert</CODE>" command using standard input, which
+the phrase into the "<code>magick</code>" command using standard input, which
 allows you use some other program or command to get the phrase from the
 user, generate it, or some other method, instead of using text file with the
 pass-phrase in the clear.  </P>
@@ -1137,9 +1137,9 @@ encrypt and later decrypt the "<CODE>message.gif</CODE>" image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick identify -format %# rose.gif |\
+  identify -format %# rose.gif |\
     magick message.gif  -encipher - -depth 8    png24:message_signed.png
-  magick identify -format %# rose.gif |\
+  identify -format %# rose.gif |\
     magick message_signed.png   -decipher -   message_restored_3.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="message.gif"
@@ -1232,7 +1232,7 @@ hidden one.  </P>
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  The cipher was implemented using a self-synchronizing magick stream cipher
+  The cipher was implemented using a self-synchronizing stream cipher
   implemented from a block cipher. </P>
 
   This means that you can still decipher even a partial download of the image,
@@ -1336,7 +1336,7 @@ leaving black areas as-is).
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 10x10 xc: -draw 'rectangle 1,1 9,9' -write mpr:block +delete \
           grid_input.png -scale 1000% -size 101x101 tile:mpr:block \
-          +swap -compose screen -magick composite grid_blocks.png
+          +swap -compose screen -composite grid_blocks.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="grid_blocks.png"
      ><IMG SRC="grid_blocks.png"    WIDTH=101 HEIGHT=101
@@ -1364,7 +1364,7 @@ leaving white areas as-is).
   magick -size 10x10 xc: -draw 'circle 5,5 1,3' -negate \
                -write mpr:spot +delete \
           grid_input.png -scale 1000% -size 101x101 tile:mpr:spot \
-          +swap -compose multiply -magick composite grid_spots.png
+          +swap -compose multiply -composite grid_spots.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="grid_spots.png"
      ><IMG SRC="grid_spots.png"    WIDTH=101 HEIGHT=101
@@ -1395,7 +1395,7 @@ HREF="../morphology/#diamond" >Diamond Morphology Kernel</A>.
           -background Navy -alpha shape -write mpr:diamond +delete \
           grid_input.png -scale 1000% -splice 1x1+0+0 \
           -size 101x101 -background none tile:mpr:diamond \
-          -alpha set -compose Over -magick composite grid_diamonds.png
+          -alpha set -compose Over -composite grid_diamonds.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="grid_diamonds.png"
      ><IMG SRC="grid_diamonds.png"    WIDTH=101 HEIGHT=101
@@ -1716,7 +1716,7 @@ image and one that has been offset (or jittered) to the right by 1 pixel.
 <TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick voice.gif \( +clone -roll +1+0 \) -compose difference -magick composite \
+  magick voice.gif \( +clone -roll +1+0 \) -compose difference -composite \
           -negate   voice_jitter_horiz.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="voice_jitter_horiz.gif"
@@ -1733,9 +1733,9 @@ image, we can get a very good anti-aliased outline of the shape.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick voice.gif \
-          \( -clone 0 -roll +1+0 -clone 0 -compose difference -magick composite \) \
-          \( -clone 0 -roll +0+1 -clone 0 -compose difference -magick composite \) \
-          -delete 0  -compose screen -magick composite -negate  voice_jitter_edge.gif
+          \( -clone 0 -roll +1+0 -clone 0 -compose difference -composite \) \
+          \( -clone 0 -roll +0+1 -clone 0 -compose difference -composite \) \
+          -delete 0  -compose screen -composite -negate  voice_jitter_edge.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="voice_jitter_edge.gif"
      ><IMG SRC="voice_jitter_edge.gif"       WIDTH=80  HEIGHT=80
@@ -1812,7 +1812,7 @@ shapes edge.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick heart.gif \( +clone -negate \) -edge 1 \
-          -compose add -magick composite  -negate  heart_edge_double.gif
+          -compose add -composite  -negate  heart_edge_double.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="heart_edge_double.gif"
      ><IMG SRC="heart_edge_double.gif"       WIDTH=80  HEIGHT=80
@@ -2269,7 +2269,7 @@ using (Modulus) Subtraction, then thresholding.
 is roughly equivalent to...
 
    magick rose: -colorspace gray \( +clone -blur 10x65535 \) \
-           -compose subtract -magick composite -threshold 50%  x:
+           -compose subtract -composite -threshold 50%  x:
 
 The special "-blur 10x65535"  is a linear averaging blur limiting itself to a
 10x10 window.
@@ -2297,7 +2297,7 @@ The above was modified from initial notes provided by D Hobson
    -adaptive-sharpen
         Sharpen images only around the edges of the images
 
-   -magick segment cluster-threshold x smoothing-threshold
+   -segment cluster-threshold x smoothing-threshold
          Segmentation of the color space (not image objects)
          This can produce very verbose output.
          This applies the "fuzzy c-means algorithm" if you want to know more.
@@ -2306,7 +2306,7 @@ Also related is -despeckle. to remove single off color pixels.
 
 Generate a 3d stereogram of two images (one for each eye)
 This is also known as an anaglyph
-  magick composite left.jpg right.jpg -stereo anaglyph.jpg
+  composite left.jpg right.jpg -stereo anaglyph.jpg
 
 </PRE>
 
@@ -2552,7 +2552,7 @@ mask image. </P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shade_direction_135.gif  shade_a_mask.gif \
-          -alpha Off -compose CopyOpacity -magick composite   shade_beveled.png
+          -alpha Off -compose CopyOpacity -composite   shade_beveled.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="shade_direction_135.gif"
      ><IMG SRC="shade_direction_135.gif"
@@ -2581,7 +2581,7 @@ the beveled edge, leaving the center of the image hollow.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shade_direction_135.gif \
           \( shade_elevation_90.gif -normalize -negate \) \
-          -alpha Off -compose CopyOpacity -magick composite   shade_beveled_edge.png
+          -alpha Off -compose CopyOpacity -composite   shade_beveled_edge.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="shade_direction_135.gif"
      ><IMG SRC="shade_direction_135.gif"
@@ -2610,8 +2610,8 @@ the size of that mask slightly to produce a better masked beveled image.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shade_direction_135.gif \
           \( shade_elevation_90.gif -normalize -negate \
-             shade_a_mask.gif -compose screen -magick composite \) \
-          -alpha Off -compose CopyOpacity -magick composite   shade_beveled_plus.png
+             shade_a_mask.gif -compose screen -composite \) \
+          -alpha Off -compose CopyOpacity -composite   shade_beveled_plus.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shade_beveled_plus.png"
      ><IMG SRC="shade_beveled_plus.png"
@@ -2630,8 +2630,8 @@ generated from scratch.  For example.
           label:X  -trim +repage -bordercolor black -border 10x5 \
           \( -clone 0 -shade  135x45 \) \
           \( -clone 0 -shade  0x90  -normalize -negate \
-             -clone 0 -compose screen -magick composite \) \
-          -delete 0 -alpha Off -compose CopyOpacity -magick composite \
+             -clone 0 -compose screen -composite \) \
+          -delete 0 -alpha Off -compose CopyOpacity -composite \
           shade_beveled_X.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shade_beveled_X.png"
@@ -2748,7 +2748,7 @@ Lets finish off this shade image by directly masking it as well..
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shade_blur_3n.gif shade_circle_mask.gif \
-          -alpha Off -compose CopyOpacity -magick composite   shade_blur_3n_mask.png
+          -alpha Off -compose CopyOpacity -composite   shade_blur_3n_mask.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="shade_blur_3n.gif"
      ><IMG SRC="shade_blur_3n.gif"           WIDTH=50  HEIGHT=50
@@ -2899,7 +2899,7 @@ For example...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           \( +clone -blur 0x2 -shade 120x21.78 -normalize  \) \
-          +swap -alpha Off -compose CopyOpacity -magick composite  shade_tint_0.png
+          +swap -alpha Off -compose CopyOpacity -composite  shade_tint_0.png
   magick shade_tint_0.png -fill grey50  -colorize 10%  shade_tint_10.png
   magick shade_tint_0.png -fill grey50  -colorize 30%  shade_tint_30.png
   magick shade_tint_0.png -fill grey50  -colorize 50%  shade_tint_50.png
@@ -2946,7 +2946,7 @@ For example...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           \( +clone -blur 0x2 -shade 120x21.78 -contrast-stretch 0% \) \
-          +swap -alpha Off -compose CopyOpacity -magick composite shade_sig_0.png
+          +swap -alpha Off -compose CopyOpacity -composite shade_sig_0.png
 
   magick shade_sig_0.png  -sigmoidal-contrast 10x50%  shade_sig-10.png
   magick shade_sig_0.png  -sigmoidal-contrast  5x50%  shade_sig-5.png
@@ -2999,7 +2999,7 @@ controls...
   magick -size 50x50 xc:black -fill white -draw 'circle 25,25 20,10' \
           \( +clone -blur 0x4 -shade 120x21.78 -contrast-stretch 0% \
              +sigmoidal-contrast 7x50% -fill grey50 -colorize 10%  \) \
-          +swap -alpha Off -compose CopyOpacity -magick composite shade_overlay.png
+          +swap -alpha Off -compose CopyOpacity -composite shade_overlay.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shade_overlay.png"
      ><IMG SRC="shade_overlay.png"
@@ -3087,11 +3087,11 @@ The command is so generic in its abilities, that it can,
 <LI>move color values between images and channels.
 <LI>adjust image colors in just about any way imaginable
 <LI>translate, flip, mirror, rotate, scale, shear and generally distort images.
-<LI>merge or magick composite multiple images together.
+<LI>merge or composite multiple images together.
 <LI>tile image(s) in weird and wonderful ways.
 <LI>convolve or merge neighboring pixels together.
 <LI>generate image metrics or 'fingerprints'
-<LI>magick compare images in unusual ways.
+<LI>compare images in unusual ways.
 </UL></P>
 
 Of course many of these techniques are already part of IM, producing a faster
@@ -3780,7 +3780,7 @@ HREF="../basics/#identify" >identify</A></CODE>" command.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=fx_math.txt>
-  magick identify -format '%[fx:atan(1)*4]' null:
+  identify -format '%[fx:atan(1)*4]' null:
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="fx_math.txt"
      ><IMG SRC="fx_math.txt.gif"
@@ -3959,7 +3959,7 @@ is no longer present at the time the <A HREF="../basics/#define" >Artifact</A>
 was created. </P>
 
 Basically 'Artifact' settings are global during the life time of the
-"<CODE>convert</CODE>" command, and thus can be used to pass information
+"<code>magick</code>" command, and thus can be used to pass information
 from one image to another.  </P>
 
 For programmed API's this situation can be avoided as you can read the
@@ -5100,7 +5100,7 @@ using a <A HREF="../compose/#multiply" >Multiply</A> alpha composition...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_sine.png  math_linear.png  \
-          -compose Multiply -magick composite  math_sine_2.png
+          -compose Multiply -composite  math_sine_2.png
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_sine_2.png   math_sine_2_pf.gif
@@ -5129,7 +5129,7 @@ two....
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_linear.png -negate -evaluate divide 2  math_bias.png
   magick math_sine_2.png  math_bias.png \
-          -compose Plus -magick composite  math_attenuated.png
+          -compose Plus -composite  math_attenuated.png
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_bias.png   math_bias_pf.gif
@@ -5161,9 +5161,9 @@ gradient.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_linear.png  -evaluate cos 1 -negate  math_cosine_peak.png
   magick math_sine.png  math_cosine_peak.png \
-          \( -clone 0,1 -compose multiply -magick composite \) \
+          \( -clone 0,1 -compose multiply -composite \) \
           \( -clone  1  +level 50%,0 \
-             -clone  2  -compose plus -magick composite \) \
+             -clone  2  -compose plus -composite \) \
           -delete 0--2  math_cosine_atten.png
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
@@ -5195,7 +5195,7 @@ operation is the formula <CODE>Sc*Dc-.5*Sc+.5</CODE> or the arguments,
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_sine.png  math_cosine_peak.png \
           -compose Mathematics -set option:compose:args 1,-.5,0,.5 \
-          -magick composite  math_attenuate.png
+          -composite  math_attenuate.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5216,7 +5216,7 @@ to merge the images.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_sine.png \( math_cosine_peak.png -function polynomial -.5,.5 \) \
-          -compose Exclusion -magick composite  math_poly_excl.png
+          -compose Exclusion -composite  math_poly_excl.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5316,11 +5316,11 @@ re-add the bias, and then negate the parts that should be made negative.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_sine.png   math_m_abs.png \
-          -compose Multiply -magick composite    math_m_1.png
+          -compose Multiply -composite    math_m_1.png
   magick math_m_1.png   math_m_bias.png \
-          -compose Plus -magick composite        math_m_2.png
+          -compose Plus -composite        math_m_2.png
   magick math_m_2.png   math_m_sign.png \
-          -compose Difference -magick composite  math_multiply.png
+          -compose Difference -composite  math_multiply.png
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
   im_profile -s math_m_1.png  math_m_1_pf.gif
@@ -5379,9 +5379,9 @@ Here it is again but all in the one command...
           \( -clone  1  -threshold 50% -negate \) \
           \( -clone  1      -solarize 50%      \) \
           \( -clone  3      -level 50%,0       \) \
-          \( -clone 0,4 -compose multiply   -magick composite \
-             -clone  3  -compose plus       -magick composite \
-             -clone  2  -compose difference -magick composite \) \
+          \( -clone 0,4 -compose multiply   -composite \
+             -clone  3  -compose plus       -composite \
+             -clone  2  -compose difference -composite \) \
           -delete 0--2    math_multiply_2.png
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
@@ -5416,7 +5416,7 @@ the argument "<CODE>2,-1,-1,1</CODE>".
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_sine.png  math_cosine_peak.png \
           -compose Mathematics -set option:compose:args 2,-1,-1,1 \
-          -magick composite  math_bias_multiply.png
+          -composite  math_bias_multiply.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5440,7 +5440,7 @@ will also generate the same zero baised multiply.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick math_sine.png  math_cosine_peak.png \
-          -compose exclusion -magick composite -negate  math_excl_neg.png
+          -compose exclusion -composite -negate  math_excl_neg.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
 <!-- <CODE EXECUTE>
@@ -5598,7 +5598,7 @@ that may provide useful.  If you have an interesting effect please contribute.
     look at scripts
        <A HREF="../scripts/divide_vert" >divide_vert</A>
        <A HREF="../scripts/segment_image" >segment_image</A>
-    for some simple scripts I wrote to magick segment well defined images into
+    for some simple scripts I wrote to segment well defined images into
     smaller parts.   I hope to get simple segmentation functions like this
     into the core library, to allow for things like automatic sub-division of
     GIF animations, and seperating images and diagrams from scanned documents.

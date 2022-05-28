@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Masks -- IM v6 Examples</TITLE>
+<TITLE>Masks -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/masking/">
@@ -151,7 +151,7 @@ Composition</A>.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-    magick composite -compose Dst_Over -tile pattern:checkerboard \
+    composite -compose Dst_Over -tile pattern:checkerboard \
               moon.png  moon_background.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="moon_background.jpg"
@@ -828,7 +828,7 @@ none are as direct or as fast as using this operator.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moon.png \( +clone -alpha off \) \
-                        -compose SrcIn   -magick composite   moon_black.png
+                        -compose SrcIn   -composite   moon_black.png
   magick moon.png -channel RGBA  -blur 1x.000000001  moon_black.png
   magick moon.png -channel RGBA   -gaussian 1x0      moon_black.png
   magick moon.png -fuzz 0% -transparent none         moon_black.png
@@ -921,7 +921,7 @@ Methods for generating such a canvas is exampled in <A HREF="../canvas/#blank"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick a.png \( +clone -alpha opaque -fill SkyBlue -colorize 100% \) \
-          +swap -geometry +0+0 -compose Over -magick composite  \
+          +swap -geometry +0+0 -compose Over -composite  \
           -alpha off  a_compose.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="a_compose.jpg"
@@ -991,7 +991,7 @@ original images meta-data and size is preserved.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -compose Dst_Over -tile pattern:checkerboard \
+  composite -compose Dst_Over -tile pattern:checkerboard \
                                                a.png  a_undertile.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="a_undertile.jpg"
@@ -1042,7 +1042,7 @@ the original image.
   magick knight.png \( +clone \
              -channel A -morphology EdgeOut Diamond +channel \
              +level-colors red \
-           \) -compose DstOver -magick composite    knight_outlined.png
+           \) -compose DstOver -composite    knight_outlined.png
 </samp></pre></TD></TR></TABLE>
    <A HREF="../images/knight.png"
       ><IMG SRC="../images/knight.png"
@@ -1071,7 +1071,7 @@ the original.
     magick knight.png \(  +clone \
               -channel A  -blur 0x2.5 -level 0,50% +channel \
               +level-colors red \
-            \) -compose DstOver  -magick composite    knight_halo.png
+            \) -compose DstOver  -composite    knight_halo.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="knight_halo.png"
       ><IMG SRC="knight_halo.png"
@@ -1120,7 +1120,7 @@ restoring it to the original image.
   magick mask.png -fill black -draw "circle 40,80 60,60" mask_bite.png
 
   magick drawn.png mask_bite.png \
-          -alpha Off -compose CopyOpacity -magick composite \
+          -alpha Off -compose CopyOpacity -composite \
           drawn_bite.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="drawn.png"
@@ -1161,7 +1161,7 @@ HREF="../compose/#CopyOpacity" >CopyOpacity Channel Composition</A>.
           -draw "circle 50,70 60,60" \
           -draw "roundRectangle  78,5 98,25 5,5" \
           -alpha off  mask_bite2.png
-  magick composite -compose CopyOpacity mask_bite2.png drawn.png drawn_bite2.png
+  composite -compose CopyOpacity mask_bite2.png drawn.png drawn_bite2.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="mask_bite.png"
      ><IMG SRC="mask_bite.png"  WIDTH=100 HEIGHT=100
@@ -1202,7 +1202,7 @@ use a Shape mask as a sort of 'erase' tool using <A HREf="../compose/#dstout"
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:none -draw "circle 40,80 60,60" mask_shape.png
 
-  magick drawn.png mask_shape.png -compose DstOut -magick composite drawn_bite3.png
+  magick drawn.png mask_shape.png -compose DstOut -composite drawn_bite3.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="drawn.png"
      ><IMG SRC="drawn.png"  WIDTH=100 HEIGHT=100
@@ -1316,7 +1316,7 @@ use, but is no longer recommended.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick heart_mask.gif \( +clone \) -alpha off \
-          -compose CopyOpacity  -magick composite \
+          -compose CopyOpacity  -composite \
           -fill HotPink  -colorize 100%    heart_hotpink.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="heart_hotpink.png"
@@ -1400,9 +1400,9 @@ image generated with a tile pattern.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mask_bite.png -size 100x100   tile:tile_disks.jpg \
-                        -compose Multiply  -magick composite   compose_multiply.png
+                        -compose Multiply  -composite   compose_multiply.png
   magick mask_bite.png -size 100x100   tile:tile_water.jpg  \
-                        -compose Screen    -magick composite   compose_screen.png
+                        -compose Screen    -composite   compose_screen.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="mask_bite.png"
      ><IMG SRC="mask_bite.png"  WIDTH=100 HEIGHT=100
@@ -1433,7 +1433,7 @@ together.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100   tile:tile_water.jpg  tile:tile_disks.jpg \
-           mask_bite.png    -magick composite   compose_masked.png
+           mask_bite.png    -composite   compose_masked.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_masked.png"
      ><IMG SRC="compose_masked.png"  WIDTH=100 HEIGHT=100
@@ -1678,7 +1678,7 @@ composition operator being applied.
   magick -size 70x70 xc:green  green_image.png
 
   magick red_image.png  green_image.png  write_mask.png \
-          -magick composite    masked_composite.png
+          -composite    masked_composite.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="red_image.png"
      ><IMG SRC="red_image.png"  WIDTH=70 HEIGHT=70
@@ -1703,7 +1703,7 @@ Is equivalent (with a negated mask) to...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick write_mask.png  -negate -write MPR:mask +delete \
           red_image.png -mask MPR:mask \
-          green_image.png  -magick composite  +mask  masked_composite_equiv.png
+          green_image.png  -composite  +mask  masked_composite_equiv.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="masked_composite_equiv.png"
      ><IMG SRC="masked_composite_equiv.png"  WIDTH=70 HEIGHT=70
@@ -1798,7 +1798,7 @@ using...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick identify -format '%[8BIM:1999,2998:#1]' image_clip.tiff
+  identify -format '%[8BIM:1999,2998:#1]' image_clip.tiff
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -1897,11 +1897,11 @@ intermediate images to try and make the technique clear...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: rose_bg_mask.png -alpha off \
-          -compose CopyOpacity -magick composite   +compose  rose_bg_only.png
+          -compose CopyOpacity -composite   +compose  rose_bg_only.png
   magick rose_bg_only.png  -channel RGBA -blur 0x8   rose_bg_blurred.png
   magick rose_bg_blurred.png      -alpha off         rose_bg_blur_opaque.png
   magick rose_bg_blur_opaque.png \
-                rose: rose_fg_mask.png -magick composite    rose_bg_blur_good.png
+                rose: rose_fg_mask.png -composite    rose_bg_blur_good.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/rose.png"
      ><IMG SRC="../images/rose.png"  WIDTH=70 HEIGHT=46
@@ -2152,7 +2152,7 @@ the result is equivalent to this (for a single image)...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   ... \( +clone -crop WxH+X+Y ...simple-operators... \
-         \) -geometry +X+Y -magick composite   ...
+         \) -geometry +X+Y -composite   ...
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2162,7 +2162,7 @@ Or this (for multiple images)...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   ... \( -clone 0--1 -crop WxH+X+Y ...simple-operators... \
-         null: +insert \) -geometry +X+Y -layer magick composite ...
+         null: +insert \) -geometry +X+Y -layer composite ...
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2494,7 +2494,7 @@ background).
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick overlay_figure.gif   overlay_bgnd.gif  \
-            -compose ChangeMask  -magick composite  overlay_removed.png
+            -compose ChangeMask  -composite  overlay_removed.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/overlay_figure.gif"
      ><IMG SRC="../images/overlay_figure.gif"   WIDTH=100 HEIGHT=125
@@ -2524,7 +2524,7 @@ Image</A>...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite overlay_figure.gif   overlay_bgnd.gif  \
+  composite overlay_figure.gif   overlay_bgnd.gif  \
             -compose Difference     overlay_difference.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/overlay_figure.gif"
@@ -2568,7 +2568,7 @@ Using this mask we can set anything that has not changed to transparency.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick overlay_figure.gif overlay_mask.png \
-          -alpha off -compose CopyOpacity -magick composite \
+          -alpha off -compose CopyOpacity -composite \
           overlay_removed.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="overlay_removed.png"
@@ -2600,7 +2600,7 @@ image and the background color (as defined by top-left most pixel).
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick cyclops.png \( +clone -fx 'p{0,0}' \) \
-          -compose Difference  -magick composite  \
+          -compose Difference  -composite  \
           -modulate 100,0  -alpha off  difference.png
 </samp></pre></TD></TR></TABLE></TD><TD>
  <A HREF="cyclops.png"
@@ -2628,7 +2628,7 @@ are even the smallest amount different from the background color.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick difference.png  -threshold 0  boolean_mask.png
   magick cyclops.png  boolean_mask.png \
-          -alpha off -compose CopyOpacity -magick composite \
+          -alpha off -compose CopyOpacity -composite \
           cyclops_boolean.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="boolean_mask.png"
@@ -2658,7 +2658,7 @@ only) mask, so as to get the mask closer to the image proper.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick difference.png  -threshold 15%  threshold_mask.png
   magick cyclops.png  threshold_mask.png \
-          -alpha Off -compose CopyOpacity -magick composite \
+          -alpha Off -compose CopyOpacity -composite \
           cyclops_threshold.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="threshold_mask.png"
@@ -2694,7 +2694,7 @@ it, so that the resulting 'halo' becomes diminished by distance.
   magick difference.png -bordercolor black -border 5 \
           -threshold 10%  -blur 0x3  halo_mask.png
   magick cyclops.png -bordercolor white -border 5   halo_mask.png \
-          -alpha Off -compose CopyOpacity -magick composite  cyclops_halo.png
+          -alpha Off -compose CopyOpacity -composite  cyclops_halo.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="halo_mask.png"
      ><IMG SRC="halo_mask.png"            WIDTH=100 HEIGHT=100
@@ -2750,7 +2750,7 @@ typically have for anti-aliasing purposes.  A shape with a shadow effect.
   magick -size 70x60 xc:none -font Candice -pointsize 50 -stroke black \
           -fill black          -annotate +12+42 'A' -channel RGBA  -blur 0x3 \
           -fill tile_disks.jpg -annotate +10+40 'A' \
-          tile_water.jpg  -compose DstOver -magick composite letter.png
+          tile_water.jpg  -compose DstOver -composite letter.png
 </samp></pre></TD></TR></TABLE></TD><TD>
  <A HREF="letter.png"
     ><IMG SRC="letter.png"
@@ -2770,7 +2770,7 @@ background image, and from that generate the masks we will be using.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick letter.png  tile_water.jpg \
-          -compose Difference -magick composite \
+          -compose Difference -composite \
           -modulate 100,0 -channel B -evaluate set 0 \
           -alpha Off  diff_mask.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2878,7 +2878,7 @@ background pattern we are removing.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick diff_mask_32.png -channel blue -separate +channel -negate \
-          letter.png +swap -alpha Off -compose CopyOpacity -magick composite \
+          letter.png +swap -alpha Off -compose CopyOpacity -composite \
           letter_inside.png
 </samp></pre></TD></TR></TABLE></TD><TD>
  <A HREF="letter_inside.png"
@@ -2906,7 +2906,7 @@ shadowing pixels...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick diff_mask_01.png -negate diff_mask_32.png \
-          -channel blue -separate +channel -compose multiply -magick composite \
+          -channel blue -separate +channel -compose multiply -composite \
           mask_aliasing_area.png
 </samp></pre></TD></TR></TABLE></TD><TD>
  <A HREF="mask_aliasing_area.png"
@@ -2923,7 +2923,7 @@ pixels to get a smooth transition from opaque to transparency.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick diff_mask.png -channel red -separate +channel \
-          mask_aliasing_area.png -alpha Off -compose CopyOpacity -magick composite \
+          mask_aliasing_area.png -alpha Off -compose CopyOpacity -composite \
           -background gray30 -compose Over -flatten -normalize \
           mask_antialiased_pixels.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2979,7 +2979,7 @@ edging pixels.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mask_antialiased_pixels.png mask_aliasing_area.png \
-          -compose multiply -magick composite -negate \
+          -compose multiply -composite -negate \
           -background '#444' -channel A  -combine letter_edging.png
 </samp></pre></TD></TR></TABLE></TD><TD>
  <A HREF="letter_edging.png"
@@ -3093,7 +3093,7 @@ and maximize the differences found in each channel.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick match_navy.gif match_gold.gif \
-          -compose difference -magick composite -separate \
+          -compose difference -composite -separate \
           -evaluate-sequence max -auto-level -negate \
           match_alpha.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -3128,7 +3128,7 @@ object from one of the source images. For example...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick match_navy.gif match_alpha.png \
-          -alpha Off -compose Copy_Opacity -magick composite \
+          -alpha Off -compose Copy_Opacity -composite \
           match_bad_colors.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="match_bad_colors.png"
@@ -3161,7 +3161,7 @@ For example here I restore the original colors...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick match_navy.gif match_alpha.png -alpha Off \
           -fx "v==0 ? 0 : u/v - u.p{0,0}/v + u.p{0,0}" \
-          match_alpha.png -compose Copy_Opacity -magick composite \
+          match_alpha.png -compose Copy_Opacity -composite \
           match_recovered.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="match_recovered.png"
@@ -3194,10 +3194,10 @@ Here is the whole sequence all in one command.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick match_gold.gif match_navy.gif -alpha off \
-          \( -clone 0,1 -compose difference -magick composite \
+          \( -clone 0,1 -compose difference -composite \
              -separate -evaluate-sequence max -auto-level -negate \) \
           \( -clone 0,2 -fx "v==0?0:u/v-u.p{0,0}/v+u.p{0,0}" \) \
-          -delete 0,1 +swap -compose Copy_Opacity -magick composite \
+          -delete 0,1 +swap -compose Copy_Opacity -composite \
           match_recovered_2.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="match_recovered_2.png"
@@ -3243,9 +3243,9 @@ painfully slow <A HREF="../transform/#fx" >FX DIY Operator</A>.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick match_black.gif match_white.gif -alpha off \
-          \( -clone 0,1 -compose difference -magick composite -negate \) \
-          \( -clone 0,2 +swap -compose divide -magick composite \) \
-          -delete 0,1 +swap -compose Copy_Opacity -magick composite \
+          \( -clone 0,1 -compose difference -composite -negate \) \
+          \( -clone 0,2 +swap -compose divide -composite \) \
+          -delete 0,1 +swap -compose Copy_Opacity -composite \
           match_recovered_3.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/match_black.gif"
@@ -3394,7 +3394,7 @@ that it covers all the unwanted parts.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick zelda_text.jpg \( zelda_text_mask.gif -negate \) \
-          -compose CopyOpacity -magick composite   zelda_text_hole.png
+          -compose CopyOpacity -composite   zelda_text_hole.png
 </samp></pre></TD></TR></TABLE></P>
 
 So here we have an image with a 'hole' in it that needs to be filled. </P>
@@ -3437,7 +3437,7 @@ to 'fill the hole' that we previously made...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick zelda_text_hole.png zelda_text_fill.png \
-          -compose Dst_Over  -magick composite   zelda_text_removed.png
+          -compose Dst_Over  -composite   zelda_text_removed.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="zelda_text.jpg"
      ><IMG SRC="zelda_text.jpg"              WIDTH=120 HEIGHT=90

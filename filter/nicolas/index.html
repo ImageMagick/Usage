@@ -2,13 +2,13 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Nicolas Robidoux Resampling -- IM v6 Examples</TITLE>
+<TITLE>Nicolas Robidoux Resampling -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/filter/nicolas/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/filter/nicolas/">
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
-<H1>ImageMagick v6 Examples -- <BR>
+<H1>ImageMagick Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
     Resampling by Nicolas Robidoux</H1>
 
@@ -101,10 +101,10 @@ are slightly blurry, with no jaggies to speak of and reasonably mild
 halos.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -filter LanczosSharp -distort Resize 200% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -filter LanczosSharp -distort Resize 200% <I>{output}</I>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The above command resizes by 200 percent, that is, it doubles the
@@ -120,10 +120,10 @@ For much sharper results, use the <A HREF="../#lanczos" >tensor
 (orthogonal or 2-pass resize) Lanczos Filter</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -filter Lanczos -resize 200% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -filter Lanczos -resize 200% <I>{output}</I>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 For certain types of images and operations, tensor Lanczos is
@@ -143,7 +143,7 @@ to run significantly faster than EWA ones. The present recommendations
 focus on quality, not speed. </P>
 
 (To find out whether you are running a Q8, Q16 or HDRI version of the
-convert command, run <CODE>convert -version</CODE>. If "HDRI" appears
+magick command, run <CODE>magick -version</CODE>. If "HDRI" appears
 somewhere in the output text message, it's HDRI. If "Q8" appears, it's
 Q8. Otherwise, it's Q16, the most commonly installed version. If you
 don't know what version you have installed, chances are it's
@@ -154,10 +154,10 @@ If you want something about as sharp as tensor Lanczos with a Q8
 >EWA Lanczos Radius 3</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -filter LanczosRadius -distort Resize 200% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -filter LanczosRadius -distort Resize 200% <I>{output}</I>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 EWA Lanczos Radius 3 (<CODE>-filter LanczosRadius</CODE>) is a recent
@@ -179,10 +179,10 @@ To make the second halo unnoticeable, use EWA Quadratic-windowed Jinc
 generate this filter.)
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -define filter:window=Quadratic -distort Resize 200% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -define filter:window=Quadratic -distort Resize 200% <I>{output}</I>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <BR>
@@ -191,10 +191,10 @@ To eliminate the second halo completely, use the
 <A HREF="../#robidoux" >EWA Robidoux Filter</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -distort Resize 200% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -distort Resize 200% <I>{output}</I>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Robidoux is the <A HREF="../#default_filter" >default</A>
@@ -209,10 +209,10 @@ both have no second halo, EWA Robidoux has less of it, and its halo is
 without usually being more jaggy. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -filter Mitchell -resize 200% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -filter Mitchell -resize 200% <I>{output}</I>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Mitchell is the <A HREF="../#default_filter"
@@ -226,10 +226,10 @@ If you do not want to introduce any halo, use the EWA
 <A HREF="../#gaussian_other" >Quadratic B-spline Filter</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -filter Quadratic -distort Resize 200% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -filter Quadratic -distort Resize 200% <I>{output}</I>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The quadratic B-spline filter is quite blurry, although less so than
@@ -346,13 +346,13 @@ prefer a version with slightly less de-blur, obtained with the
 "<CODE>-filter Lanczos -define filter:blur=.9891028367558475</CODE>".
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
           -filter Lanczos -define filter:blur=.9891028367558475 \
           -distort Resize 500% \
           -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 You would get nearly identical results with the built-in LanczosSharp
@@ -393,7 +393,7 @@ WARNING: The two sigmoidal contrast values must match. That is: If you
 change the first "7.5" to "5", you must do the same with the second
 "7.5" as well.  Likewise, if you remove one of
 the <CODE>-colorspace</CODE> commands, also remove the other one
-unless, of course, you actually intend to convert to another color
+unless, of course, you actually intend to magick to another color
 space. The commands shown in these recommendations assume that the
 input and output color spaces are both sRGB. </P>
 
@@ -403,12 +403,12 @@ You may skip sigmoidization altogether, by omitting the two
 converting into and out of the Lab color space instead of linear RGB.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace Lab \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace Lab \
           -filter Lanczos -define filter:blur=.9891028367558475 \
           -distort Resize 500% -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 As discussed at the end of the <A HREF="#short" >Short Answer</A>,
@@ -419,11 +419,11 @@ two <CODE>-colorspace</CODE> commands is you use a Q8 version of
 ImageMagick.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -filter Lanczos -define filter:blur=.9891028367558475 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -filter Lanczos -define filter:blur=.9891028367558475 \
           -distort Resize 500% <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The last three commands show how to use one single filter (my favorite
@@ -441,12 +441,12 @@ If you want sharper results, use sigmoidized EWA with another modified
 >EWA Lanczos Radius 3</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
           -filter LanczosRadius -distort Resize 500% \
           -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The above command does not work with ImageMagick older than version
@@ -454,13 +454,13 @@ The above command does not work with ImageMagick older than version
 setting the <CODE>blur</CODE> variable.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
           -filter Lanczos -define filter:blur=.9264075766146068 \
           -distort Resize 500% \
           -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The <A HREF="../#blur" >Blur Expert Control</A> can be used to adjust
@@ -478,12 +478,12 @@ If you want something even sharper, use a sigmoidized tensor (orthogonal or
 2-pass resize) "Ginseng 3-lobe" filter.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
           -define filter:window=Jinc -define filter:lobes=3 \
           -resize 500% -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 "Ginseng" refers to "Jinc-windowed Sinc" filter: it is a pun based on
@@ -502,12 +502,12 @@ If the second halo of the above filters bothers you, try sigmoidized
 EWA Jinc 3-lobe windowed with quadratic B-spline ("QuadraticJinc").
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB +sigmoidal-contrast 7.5 \
           -define filter:window=Quadratic -distort Resize 500% \
           -sigmoidal-contrast 7.5 -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <BR>
@@ -533,12 +533,12 @@ filter. Because it is smoothing, higher values of the contrast are
 recommended.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 9.5 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB +sigmoidal-contrast 9.5 \
           -filter Quadratic -distort Resize 500% \
           -sigmoidal-contrast 9.5 -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 If your image contains lines that are perfectly vertical or
@@ -556,12 +556,12 @@ If you want neither halos nor jaggies and are willing to live with a
 lot of blur, use sigmoidized EWA cubic B-spline smoothing.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB +sigmoidal-contrast 10.75 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB +sigmoidal-contrast 10.75 \
           -filter Spline -distort Resize 500% \
           -sigmoidal-contrast 10.75 -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Again, you may want to try the <A HREF="../#gaussian_other" >tensor
@@ -575,11 +575,11 @@ fine without HDRI. </P>
 In this section, I show the results of enlarging a minuscule image
 produced by the following code, 10 times (from 10x6 to 100x60).
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -size 10x6 xc:grey20 +antialias \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 10x6 xc:grey20 +antialias \
           -draw 'fill white line 4,0 5,5' line.png
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The same test image and enlargement ratio was used in the enlargement
@@ -664,23 +664,23 @@ First, try downsizing through linear RGB with the
 discussed in the upsampling section.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB \
           -filter Lanczos -define filter:blur=.9891028367558475 \
           -distort Resize 20%    -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 For sharper results, use linear light <A HREF="../#lanczos_radius"
 >EWA Lanczos Radius 3</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB -filter LanczosRadius \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB -filter LanczosRadius \
           -distort Resize 20% -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 You can increase sharpness by decreasing the <CODE>blur</CODE> value.
@@ -693,11 +693,11 @@ Very sharp results are obtained with <A HREF="../#cosine" >tensor
 Cosine-windowed Sinc 3-lobe</A>, a.k.a. <CODE>Cosine</CODE>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB -filter Cosine \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB -filter Cosine \
           -resize 20% -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <A HREF="../#lanczos" >Tensor Lanczos</A> is sharper than tensor
@@ -730,11 +730,11 @@ following filter, EWA quadratic B-spline-windowed Jinc 3-lobe
 strong moir&eacute; suppression without being too blurry. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB -define filter:window=Quadratic \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB -define filter:window=Quadratic \
           -distort Resize 20% -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 <BR>
@@ -743,11 +743,11 @@ To eliminate the second halo completely, use linear light
 <A HREF="../#robidoux" >Robidoux EWA Filtering</A>.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB \
           -distort Resize 20% -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The <A HREF="../#robidoux" >Robidoux Filter</A> is a member of
@@ -760,12 +760,12 @@ filter; and linear light EWA Robidoux can be reproduced with the
 following command.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB \
           -filter Cubic -define filter:B=.37821575509399867 \
           -distort Resize 20% -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 From blurry (less halo) to sharp (more halo), the named Keys cubics
@@ -790,11 +790,11 @@ Quadratic or Spline filtering (see the upsampling section). You may
 also get good results with linear light EWA Triangle filtering.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert <I>{input}</I> -colorspace RGB -filter Triangle \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick <I>{input}</I> -colorspace RGB -filter Triangle \
           -distort Resize 20% -colorspace sRGB <I>{output}</I>
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 Linear light tensor Triangle (a.k.a. bilinear) is obtained by replacing
@@ -912,5 +912,5 @@ Formatting: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/filter/nicolas/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/filter/nicolas/</CODE>
 </ADDRESS></BODY></HTML>

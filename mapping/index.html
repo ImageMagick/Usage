@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Image Mapped Effects -- IM v6 Examples</TITLE>
+<TITLE>Image Mapped Effects -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/mapping/">
@@ -313,7 +313,7 @@ on the right, and a horizontal gradient across the image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick koala.gif \( -size 75x75 gradient: -rotate -90 \) \
+    magick koala.gif \( -size 75x75 gradient: -rotate -90 \) \
           -fx 'p{v*w,j}'      distort_mirror_x.gif
 </samp></pre></TD></TR></TABLE>
     <A HREF="../images/koala.gif"
@@ -412,7 +412,7 @@ composition.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  map_compress.gif map_compress_y.gif \
-          -compose Distort  -define compose:args=37.5x37.5 -magick composite \
+          -compose Distort  -define compose:args=37.5x37.5 -composite \
           distort_compose.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/koala.gif"
@@ -452,7 +452,7 @@ to calculate it...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  map_compress.gif map_compress_y.gif \
           -set option:compose:args '%[fx:w/2]x%[fx:h/2]' \
-          -compose Distort  -magick composite \
+          -compose Distort  -composite \
           distort_compose_set.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -469,7 +469,7 @@ Distort)...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif  map_compress.gif map_compress_y.gif \
-          -compose Distort -define compose:args='' -magick composite \
+          -compose Distort -define compose:args='' -composite \
           distort_compose_default.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -520,7 +520,7 @@ So lets try to apply a no-op distortion to the methods we have so far used...
   magick -size 75x75 pattern:gray50 \
           \( gradient: -rotate 90 \) \( gradient: -flip \) \
           -set option:compose:args '%[fx:w/2] x %[fx:h/2]' \
-          -compose Distort  -magick composite  distort_compose_check.gif
+          -compose Distort  -composite  distort_compose_check.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
   <A HREF="distort_compose_check.gif"     WIDTH=75 HEIGHT=75
@@ -582,7 +582,7 @@ when calculating the scaling factor between color and coordients. </P>
   magick -size 75x75 pattern:gray50 \
           \( gradient: -rotate 90 \) \( gradient: -flip \) \
           -set option:compose:args '%[fx:(w-1)/2] x %[fx:(h-1)/2]' \
-          -compose Distort  -magick composite  distort_compose_check_correct.gif
+          -compose Distort  -composite  distort_compose_check_correct.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
   <A HREF="distort_compose_check_correct.gif"     WIDTH=75 HEIGHT=75
@@ -599,7 +599,7 @@ undefined, uses the correct scaling values.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 75x75 pattern:gray50 \
           \( gradient: -rotate 90 \) \( gradient: -flip \) \
-          -compose Distort -define compose:args='' -magick composite \
+          -compose Distort -define compose:args='' -composite \
           distort_compose_default_check.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -628,7 +628,7 @@ For this generating the rotated map can be a little tricky, but can be done...
           -gravity center -crop 75x75+0+0 +repage  map_rot45_x.png
   magick map_rot45_x.png  -rotate 90              map_rot45_y.png
   magick koala.gif  map_rot45_x.png   map_rot45_y.png \
-          -compose Distort  -magick composite    distort_rot45.gif
+          -compose Distort  -composite    distort_rot45.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/koala.gif"
      ><IMG SRC="../images/koala.gif"          WIDTH=75 HEIGHT=75
@@ -670,7 +670,7 @@ the rotation down to the correct size.
           -gravity center -crop 75x75+0+0 +repage   map_rot45b_x.png
   magick map_rot45b_x.png  -rotate 90              map_rot45b_y.png
   magick koala.gif  map_rot45b_x.png   map_rot45b_y.png \
-          -compose Distort  -magick composite     distort_rot45_better.png
+          -compose Distort  -composite     distort_rot45_better.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/koala.gif"
      ><IMG SRC="../images/koala.gif"          WIDTH=75 HEIGHT=75
@@ -715,7 +715,7 @@ For example...
   magick -size 75x75 xc:white -background black -rotate 45 \
           -gravity center -crop 75x75+0+0 +repage  map_rot45b_m.png
   magick distort_rot45_better.png map_rot45b_m.png \
-          +matte -compose CopyOpacity -magick composite   distort_rot45_masked.png
+          -alpha off -compose CopyOpacity -composite   distort_rot45_masked.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="distort_rot45_better.png"
      ><IMG SRC="distort_rot45_better.png"          WIDTH=75 HEIGHT=75
@@ -749,7 +749,7 @@ channel, the 'Y map' to the '<CODE>green</CODE>', and the mask to the
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick map_rot45b_x.png map_rot45b_y.png \( map_rot45b_m.png -negate \) \
-          +matte -channel RGA -background black -combine  map_rot45u.png
+          -alpha off -channel RGA -background black -combine  map_rot45u.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="map_rot45b_x.png"
      ><IMG SRC="map_rot45b_x.png"          WIDTH=75 HEIGHT=75
@@ -785,9 +785,9 @@ and one to mask the result.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick koala.gif -matte   map_rot45u.png \
+  magick koala.gif -alpha set   map_rot45u.png \
           \( -clone 0,1  -fx 'p{v.r*w,v.g*h}' \
-             +clone -compose Dst_In -magick composite \) -delete 0,1 \
+             +clone -compose Dst_In -composite \) -delete 0,1 \
           distort_rot45_unified.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/koala.gif"
@@ -809,8 +809,8 @@ method directly using the unified distortion map image...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick koala.gif -matte   map_rot45u.png \
-          -compose Distort -define compose:args='' -magick composite \
+  magick koala.gif -alpha set   map_rot45u.png \
+          -compose Distort -define compose:args='' -composite \
           distort_rot45_compose.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -992,7 +992,7 @@ HREF="../compose/#overlay" >Overlay</A> or <A HREF="../compose/#hardlight"
   magick sphere_mask.png \
           \( +clone -blur 0x20 -shade 110x21.7 -contrast-stretch 0% \
              +sigmoidal-contrast 6x50% -fill grey50 -colorize 10%  \) \
-          -magick composite sphere_overlay.png
+          -composite sphere_overlay.png
 </samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="sphere_overlay.png"
        ><IMG SRC="sphere_overlay.png"      WIDTH=100 HEIGHT=100
@@ -1011,8 +1011,8 @@ Transparency Mask;  to an actual image of the right size (for simplicity).
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena_orig.png -resize 100x100   sphere_lut.png   -fx 'p{ v*w, j }' \
-          sphere_overlay.png   -compose HardLight  -magick composite \
-          sphere_mask.png -alpha off -compose CopyOpacity -magick composite \
+          sphere_overlay.png   -compose HardLight  -composite \
+          sphere_mask.png -alpha off -compose CopyOpacity -composite \
           sphere_lena.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/lena_orig.png"
@@ -1064,10 +1064,10 @@ composition method.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mandrill_grid_sm.jpg   spherical_unified.png  \
-          \( -clone 0,1 -alpha set -compose Distort -magick composite \) \
+          \( -clone 0,1 -alpha set -compose Distort -composite \) \
           \( -clone 1   -channel B -separate +channel \) \
-          \( -clone 2,3 -compose HardLight -magick composite \) \
-          \( -clone 4,1 -compose DstIn -magick composite \) \
+          \( -clone 2,3 -compose HardLight -composite \) \
+          \( -clone 4,1 -compose DstIn -composite \) \
           -delete 0--2  spherical_mandrill.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/mandrill_grid_sm.jpg"
@@ -1344,7 +1344,7 @@ image for the Y (green channel).
   magick rose: \
           \( -size 46x70 gradient: -rotate -90 \) \
           \( -size 1x46 gradient: -spread 23 -scale 70x46\! \) \
-          -compose Distort -define compose:args='' -magick composite \
+          -compose Distort -define compose:args='' -composite \
           rose_row_shuffle.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/rose.png"
@@ -1421,7 +1421,7 @@ Now I'll use some 'magick' to create a 'pure gray' image with 'pure white' and
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   echo "P2 5 1 255\n 127 0 127 255 127" |\
-                magick - -scale 150x50\! +matte   displace_map.jpg
+                magick - -scale 150x50\! -alpha off   displace_map.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displace_map.jpg"
      ><IMG SRC="displace_map.jpg"   WIDTH=150 HEIGHT=50
@@ -1527,20 +1527,21 @@ HREF="../compose/#compose" >Composition Operator</A>, "<CODE>Displace</CODE>".
 
 Here is how you you use it...
 
-<DL><DD><PRE><B>
-magick {<I>image</I>} {<I>displacement_map</I>} \
-        -compose Displace   -define compose:args={<I>X</I>}x{<I>Y</I>} \
-        -magick composite   {<I>result</I>+}
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick {<I>image</I>} {<I>displacement_map</I>} \
+            -compose Displace   -define compose:args={<I>X</I>}x{<I>Y</I>} \
+            -composite   {<I>result</I>+}
 
-magick {<I>image</I>} {<I>displacement_map</I>} \
-        -compose Displace   -set option:compose:args {<I>X</I>}x{<I>Y</I>} \
-        -magick composite   {<I>result</I>+}
+    magick {<I>image</I>} {<I>displacement_map</I>} \
+            -compose Displace   -set option:compose:args {<I>X</I>}x{<I>Y</I>} \
+            -composite   {<I>result</I>+}
 
-magick composite {<I>displacement_map</I>} {<I>image</I>} \
-          -displace {<I>X</I>}x{<I>Y</I>}    {<I>result</I>+}
-</B></PRE></DL>
+    composite {<I>displacement_map</I>} {<I>image</I>} \
+              -displace {<I>X</I>}x{<I>Y</I>}    {<I>result</I>+}
+</samp></pre></TD></TR></TABLE>
 
-Note the order, expecially in the "<CODE>composite</CODE>" command. </P>
+<p>Note the order, expecially in the "<CODE>magick composite</CODE>" command. </P>
 
 The use of "<CODE>-set</CODE>" instead of define also allows you to use <A
 HREF="../basics/#arg_percent" >Percent Escapes</A> in the argument. </P>
@@ -1563,7 +1564,7 @@ For example here is the same Y displacement example we had above...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick label.jpg  displace_map.jpg  -virtual-pixel Gray \
-          -compose Displace -define compose:args=0x10 -magick composite \
+          -compose Displace -define compose:args=0x10 -composite \
           displaced_y.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displaced_y.jpg"
@@ -1612,7 +1613,7 @@ operator.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE>
-  magick composite map_p2d_trapezoidal.png box_image.png \
+  composite map_p2d_trapezoidal.png box_image.png \
             -displace 100x0   distort_p2d_trapezoidal.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -1647,7 +1648,7 @@ generate a wave like transtion between the displaced areas...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick displace_map.jpg  -blur 0x10   dismap_wave.jpg
   magick label.jpg  dismap_wave.jpg  -virtual-pixel Gray \
-          -compose Displace -define compose:args=0x10 -magick composite \
+          -compose Displace -define compose:args=0x10 -composite \
           displaced_wave_y.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="dismap_wave.jpg"
@@ -1667,7 +1668,7 @@ displace the image in a X direction resulting in a sort of compression wave.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick label.jpg  dismap_wave.jpg  -virtual-pixel Gray \
-          -compose Displace -define compose:args=10x0 -magick composite \
+          -compose Displace -define compose:args=10x0 -composite \
           displaced_wave_x.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displaced_wave_x.jpg"
@@ -1683,7 +1684,7 @@ add both a compression wave as well as an amplitude wave.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick label.jpg  dismap_wave.jpg  -virtual-pixel Gray \
-          -compose Displace -define compose:args=10x10 -magick composite \
+          -compose Displace -define compose:args=10x10 -composite \
           displaced_wave_xy.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displaced_wave_xy.jpg"
@@ -1708,7 +1709,7 @@ just as you can in a reflected or refracted images...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   echo "P2 3 1 255\n 255 127 0 " | magick - -scale 150x50\! dismap_copy.jpg
   magick label.jpg  dismap_copy.jpg \
-          -compose Displace -define compose:args=66x0 -magick composite \
+          -compose Displace -define compose:args=66x0 -composite \
           displaced_copy.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="dismap_copy.jpg"
@@ -1728,9 +1729,9 @@ pixels from one side of the image to the other.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -size 50x150 gradient: -rotate -90  +matte  dismap_mirror.png
+  magick -size 50x150 gradient: -rotate -90  -alpha off  dismap_mirror.png
   magick label.jpg  dismap_mirror.png \
-          -compose Displace -define compose:args=150x0 -magick composite \
+          -compose Displace -define compose:args=150x0 -composite \
           displaced_mirror.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="dismap_mirror.png"
@@ -1757,9 +1758,9 @@ Note that by flipping the gradient over, you shrink the image.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -size 50x150 gradient: -rotate 90  +matte  dismap_shrink.png
+  magick -size 50x150 gradient: -rotate 90  -alpha off  dismap_shrink.png
   magick label.jpg  dismap_shrink.png \
-          -compose Displace -define compose:args=150x0 -magick composite \
+          -compose Displace -define compose:args=150x0 -composite \
           displaced_shrink.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="dismap_shrink.png"
@@ -1793,7 +1794,7 @@ For example...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick label.jpg  dismap_shrink.png  -resize 200% \
-          -compose Displace -define compose:args=400x0 -magick composite \
+          -compose Displace -define compose:args=400x0 -composite \
           -resize 50%    displaced_resize.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displaced_resized.jpg"
@@ -1822,7 +1823,7 @@ using it as a displacement map...
                                                       gradient_sinc.gif
   magick -size 121x100 xc: -draw 'line 0,50 120,50'     graph_source.gif
   magick graph_source.gif gradient_sinc.gif \
-          -compose Displace -define compose:args=0x49 -magick composite \
+          -compose Displace -define compose:args=0x49 -composite \
           displace_graph.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="gradient_sinc.gif"
@@ -1861,7 +1862,7 @@ Of course you can improve things by again <A HREF="../distort/#super_sample"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick graph_source.gif gradient_sinc.gif  -resize 400% \
-          -compose Displace -define compose:args=0x196 -magick composite \
+          -compose Displace -define compose:args=0x196 -composite \
           -resize 25%   displace_graph_2.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displace_graph_2.gif"
@@ -1881,7 +1882,7 @@ which works a lot better than displacing a thin line.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 121x50 xc:white xc:black -append \
           gradient_sinc.gif  -resize 400% \
-          -compose Displace -define compose:args=0x196 -magick composite \
+          -compose Displace -define compose:args=0x196 -composite \
           -resize 25%   displace_graph_3.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displace_graph_3.gif"
@@ -1923,7 +1924,7 @@ So lets try a  displacement value of <I>X</I>+10 and <I>Y</I>+10 or
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif dismap_spot.jpg \
-          -compose Displace -define compose:args=10x10 -magick composite \
+          -compose Displace -define compose:args=10x10 -composite \
           displace_spot.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="dismap_spot.jpg"
@@ -1974,7 +1975,7 @@ a reversed direction)...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif dismap_spot.jpg \
-          -compose Displace -define compose:args=-5x-15 -magick composite \
+          -compose Displace -define compose:args=-5x-15 -composite \
           displace_head.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displace_head.png"
@@ -2017,7 +2018,7 @@ displacement map.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif dismap_area.jpg \
-          -compose Displace -define compose:args=5x15 -magick composite \
+          -compose Displace -define compose:args=5x15 -composite \
           displace_area.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="displace_area.png"
@@ -2056,7 +2057,7 @@ HREF="../canvas/#shepards" >Shepard's Interpolated Sparse Gradient</A>.
           '37,37 black   0,0 gray50  74,74 gray50  0,74 gray50  74,0 gray50' \
           dismap_move.jpg
   magick koala.gif dismap_move.jpg \
-          -compose Displace -define compose:args=5x15 -magick composite \
+          -compose Displace -define compose:args=5x15 -composite \
           displace_move.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="dismap_move.jpg"
@@ -2140,7 +2141,7 @@ a simple vertical or horizontal distortion, so as to give it more emphasis.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite wave_gradient.png  flower.jpg -displace 5x5 flower_waves.png
+  composite wave_gradient.png  flower.jpg -displace 5x5 flower_waves.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_waves.png"
      ><IMG SRC="flower_waves.png"   WIDTH=150 HEIGHT=80
@@ -2184,9 +2185,9 @@ bottom. This trickiness ensures that the waves finishes at the pure-gray or
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 150x80 gradient: \
           \( wave_gradient.png \
-             +clone -compose multiply -magick composite \) \
+             +clone -compose multiply -composite \) \
           \( -clone 0 -negate -evaluate divide 2 \
-             -clone 1 -compose plus -magick composite \) \
+             -clone 1 -compose plus -composite \) \
           -delete 0-1      waves_decreasing.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="waves_decreasing.png"
@@ -2204,7 +2205,7 @@ the water itself, making it seem more like a water reflection.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick flower.jpg  waves_decreasing.png  \
-          -compose Displace -define compose:args=8x8 -magick composite \
+          -compose Displace -define compose:args=8x8 -composite \
           -flip   +level 0,80% \
           flower.jpg  +swap -append   flower_in_water.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2244,25 +2245,26 @@ Y directions separately. </P>
 
 Here are the commands you can use...
 
-<DL><DD><PRE><B>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
 magick {<I>image</I>} {<I>X displacement</I>} {<I>Y displacement</I>} \
         -compose Displace   -define compose:args={<I>X</I>}x{<I>Y</I>} \
-        -magick composite   {<I>result</I>+}
+        -composite   {<I>result</I>+}
 
 magick {<I>image</I>} {<I>X displacement</I>} {<I>Y displacement</I>} \
         -compose Displace   -set option:compose:args {<I>X</I>}x{<I>Y</I>} \
-        -magick composite   {<I>result</I>+}
+        -composite   {<I>result</I>+}
 
-magick composite {<I>X displacement</I>} {<I>image</I>} {<I>Y displacement</I>} \
+composite {<I>X displacement</I>} {<I>image</I>} {<I>Y displacement</I>} \
           -displace {<I>X</I>}x{<I>Y</I>}    {<I>result</I>+}
-</B></PRE></DL>
+</samp></pre></TD></TR></TABLE>
 
 Note the input image order in the "<CODE>composite</CODE>" command.  the wierd
 ording is caused by the need to abuse the "<CODE>composite</CODE>" option
 handling, as well as historical reasons.  It is vital you get this correct.
 </P>
 
-Because of this I recommend you use the "<CODE>convert</CODE>" command, rather
+Because of this I recommend you use the "<code>magick</code>" command, rather
 than "<CODE>composite</CODE>". </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
@@ -2288,7 +2290,7 @@ final image.  The 'blue' channel is ignored. </P>
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Internally both "<CODE>convert</CODE>" and "<CODE>composite</CODE>' actually
+  Internally both "<code>magick</code>" and "<CODE>composite</CODE>' actually
   merge the two images (if provided) so as to generate a 'unified displacement
   map', before passing that to the internal API. </P>
 
@@ -2316,7 +2318,7 @@ a soft drink can.  This is the solution...
                  +level 50%,0 \) \
           -delete 1 \
           -virtual-pixel black  -define compose:args=17x7 \
-          -compose Displace  -magick composite   rose_cylinder.png
+          -compose Displace  -composite   rose_cylinder.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_cylinder.png"
      ><IMG SRC="rose_cylinder.png"
@@ -2369,13 +2371,13 @@ areas of X and Y displacements.
 >  magick  mirror_areas.gif -channel R  -separate   mirror_dismap_x.gif
   magick  mirror_areas.gif -channel G  -separate   mirror_dismap_y.gif
 
-  magick composite mirror_dismap_x.gif  dragon_sm.gif  mirror_dismap_y.gif +matte \
+  composite mirror_dismap_x.gif  dragon_sm.gif  mirror_dismap_y.gif -alpha off \
             -background white -virtual-pixel background -displace 7 \
                                                         mirror_displaced.gif
 
   magick  mirror_areas.gif -edge 1 -threshold 20% \
             -evaluate multiply .7 -negate               mirror_cracks.gif
-  magick composite mirror_displaced.gif  mirror_cracks.gif -compose multiply \
+  composite mirror_displaced.gif  mirror_cracks.gif -compose multiply \
                                                         mirror_cracked.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0>
@@ -2482,20 +2484,21 @@ HREF="../option_link.cgi?compose" >-compose</A></CODE>" method
 pixel by an Elliptical Gaussian Average (a blur) of the neighbouring pixels,
 according to a mapping image. </P>
 
-<DL><DD><PRE><B>
-magick composite -blur {<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]<!--
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    composite -blur {<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]<!--
 -->          blur_map  image   result
 
-magick image  blur_map \
+    magick image  blur_map \
         -define compose:args='{<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]' \
-        -compose blur -magick composite   result
+        -compose blur -composite   result
 
-magick image  blur_map \
+    magick image  blur_map \
         -set option:compose:args '{<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]' \
-        -compose blur  -magick composite   result
-</B></PRE></DL>
+        -compose blur  -composite   result
+</samp></pre></TD></TR></TABLE>
 
-Note that this <A HREF="../compose" >Image Composition</A> requires the use of
+<p>Note that this <A HREF="../compose" >Image Composition</A> requires the use of
 an operational argument, which can be set in a number of ways.  See <A
 HREF="../basics/#artifact" >Globally Defined Artifacts</A> for more details.
 
@@ -2512,7 +2515,7 @@ other half completely un-blurred...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 37x75 xc:black -size 38x75 xc:white +append  blur_map_bool.gif
   magick koala.gif blur_map_bool.gif \
-          -compose blur -define compose:args=3 -magick composite \
+          -compose blur -define compose:args=3 -composite \
           blur_koala_bool.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/koala.gif"
@@ -2536,10 +2539,10 @@ TESTING equivelence with blur and gaussian blur
             \( -clone 0 -blur 0x$blur -set label blur \) \
             \( -clone 0 +level-colors white \
                -clone 0 +swap -define compose:args=$blur \
-               -compose blur -magick composite -set label ewa \) \
+               -compose blur -composite -set label ewa \) \
             \( -clone 0 -gaussian 0x$blur -set label gaussian \) \
             -delete 0 miff:- | \
-      magick montage - -background gray -geometry +2+2 show:
+      montage - -background gray -geometry +2+2 show:
 
 -->
 
@@ -2572,7 +2575,7 @@ For example, lets make the koala progressivally more blurry toward his feet...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 75x75 gradient:black-white blur_map_gradient.gif
   magick koala.gif blur_map_gradient.gif \
-          -compose blur -define compose:args=3 -magick composite \
+          -compose blur -define compose:args=3 -composite \
           blur_koala_gradient.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/koala.gif"
@@ -2596,7 +2599,7 @@ height.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick blur_map_bool.gif blur_map_gradient.gif \
-          -compose blur -define compose:args=15 -magick composite \
+          -compose blur -define compose:args=15 -composite \
          blur_edge_gradient.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="blur_map_bool.gif"
@@ -2659,7 +2662,7 @@ an elliptical distance formula, to produce the blurred color.
 
 <!-- <CODE EXECUTE>
   magick koala.gif \( +clone -size 75x75 xc: \
-             -compose blur -define compose:args=5x1-30 -magick composite \) \
+             -compose blur -define compose:args=5x1-30 -composite \) \
           -compose over -bordercolor blue -border 1x1    +append \
           -gravity North -background LightSteelBlue -splice 17x0 \
           -draw "stroke Firebrick fill None \
@@ -2672,7 +2675,7 @@ an elliptical distance formula, to produce the blurred color.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick koala.gif -compose blur -define compose:args=5x1-30 -magick composite \) \
+  magick koala.gif -compose blur -define compose:args=5x1-30 -composite \) \
              elliptical_blur.gif
   # ... other commands to create diagram of blur effect ...
 </samp></pre></TD></TR></TABLE>
@@ -2702,7 +2705,7 @@ a good result.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 75x75 xc: -draw 'circle 36,36 36,8'  black_circle.gif
   magick black_circle.gif blur_map_gradient.gif \
-          -compose blur -define compose:args=15x0 -magick composite \
+          -compose blur -define compose:args=15x0 -composite \
           blur_horizontal.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="black_circle.gif"
@@ -2734,7 +2737,7 @@ vertically only...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick black_circle.gif blur_map_gradient.gif \
-          -compose blur -define compose:args=0x15 -magick composite \
+          -compose blur -define compose:args=0x15 -composite \
           blur_vertical.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="blur_vertical.gif"
@@ -2755,7 +2758,7 @@ a fixed 45 degree angle.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick black_circle.gif blur_map_gradient.gif \
-          -compose blur -define compose:args=15x0+45 -magick composite \
+          -compose blur -define compose:args=15x0+45 -composite \
           blur_angle.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="blur_angle.gif"
@@ -2821,7 +2824,7 @@ like, or even use pre-prepared maps for specific blur effects.
   magick blur_map_r.gif blur_map_g.gif -background black \
           -channel RG -combine blur_map_aspect.gif
   magick black_circle.gif blur_map_aspect.gif \
-          -compose blur -define compose:args=10x10 -magick composite \
+          -compose blur -define compose:args=10x10 -composite \
           blur_aspect.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="blur_map_r.gif"
@@ -2857,7 +2860,7 @@ You can of course still set a fixed angle to the ellipse.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick black_circle.gif blur_map_aspect.gif \
-          -compose blur -define compose:args=15x15+45 -magick composite \
+          -compose blur -define compose:args=15x15+45 -composite \
           blur_aspect_angle.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="blur_aspect_angle.gif"
@@ -2917,7 +2920,7 @@ value) means the minimum angle.
   magick gradient_polar.jpg -background white \
           -channel B -combine blur_map_angle.jpg
   magick koala.gif blur_map_angle.jpg \
-          -compose blur -define compose:args=5x0+0+360 -magick composite \
+          -compose blur -define compose:args=5x0+0+360 -composite \
           blur_rotated.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="gradient_polar.jpg"
@@ -2968,7 +2971,7 @@ For example.
   magick gradient_radial.jpg gradient_radial.jpg gradient_polar.jpg \
           -channel RGB -combine blur_map_polar.jpg
   magick koala.gif blur_map_polar.jpg \
-          -compose blur -define compose:args=10x0+0+360 -magick composite \
+          -compose blur -define compose:args=10x0+0+360 -composite \
           blur_polar.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="gradient_radial.jpg"
@@ -3021,7 +3024,7 @@ distance from the center.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif blur_map_polar.jpg \
-          -compose blur -define compose:args=5x0+90+450 -magick composite \
+          -compose blur -define compose:args=5x0+90+450 -composite \
           blur_radial.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="blur_radial.jpg"
@@ -3042,7 +3045,7 @@ the image center.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick koala.gif blur_map_polar.jpg \
-          -compose blur -define compose:args=10x0+0+180 -magick composite \
+          -compose blur -define compose:args=10x0+0+180 -composite \
           blur_weird.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="blur_weird.jpg"

@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Font Effects -- IM v6 Examples</TITLE>
+<TITLE>Font Effects -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/fonts/">
@@ -753,7 +753,7 @@ This means you can shadow a "<CODE><A HREF="../text/#label"
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -background none -fill white -font Candice \
+  montage -background none -fill white -font Candice \
           -pointsize 72 label:'Anthony' +set label \
           -shadow  -background lightblue -geometry +5+5 \
           font_montage_shadow.jpg
@@ -764,7 +764,7 @@ This means you can shadow a "<CODE><A HREF="../text/#label"
 </DIV></P>
 
 However you do not have any control over the offset, color, or amount of blur
-of the magick montage shadow (as yet). </P>
+of the montage shadow (as yet). </P>
 
 
 <A NAME="soft_outline"></A>
@@ -835,7 +835,7 @@ bottom.
    magick -size 320x40 xc:lightblue  -font Candice -pointsize 72 \
            -fill RoyalBlue -annotate 0x125+20+0 'Anthony' \
            \( -size 320x45 gradient:black -append \) \
-           -compose Blur -set option:compose:args 20x5+45 -magick composite \
+           -compose Blur -set option:compose:args 20x5+45 -composite \
            \( -size 320x60 xc:lightblue \
               -fill Navy    -annotate 0x0+20+59   'Anthony' \) \
            +swap -append   font_var_blur.jpg
@@ -1205,7 +1205,7 @@ The reason is that part of the original font is erased, which presents a
 problem when drawing it on a background that is not a simple solid color.
 </P>
 
-Here is the magick composite font image we generated above.
+Here is the composite font image we generated above.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -1290,7 +1290,7 @@ then mask).
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <r>  magick -size 320x180 plasma: -shave 0x40 plasma_background.jpg
-  magick composite trans_stamp.png   plasma_background.jpg   mask_mask.jpg \
+  composite trans_stamp.png   plasma_background.jpg   mask_mask.jpg \
             mask_result.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="mask_result.jpg"
@@ -1303,7 +1303,7 @@ A three argument "<CODE>magick -composite</CODE>" form of this is...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick plasma_background.jpg  trans_stamp.png  mask_mask.jpg \
-          -magick composite  mask_result2.jpg
+          -composite  mask_result2.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="mask_result2.jpg"
       ><IMG SRC="mask_result2.jpg"                    WIDTH=320 HEIGHT=100
@@ -1327,9 +1327,9 @@ image, while the mask is the image being overlaid into the background image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -compose CopyOpacity   mask_mask.jpg   trans_stamp.png \
+  composite -compose CopyOpacity   mask_mask.jpg   trans_stamp.png \
             trans_stamp3.png
-  magick composite trans_stamp3.png   plasma_background.jpg  mask_result3.jpg
+  composite trans_stamp3.png   plasma_background.jpg  mask_result3.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="trans_stamp3.png"
       ><IMG SRC="trans_stamp3.png"            WIDTH=320 HEIGHT=100
@@ -1378,7 +1378,7 @@ For example here we generate a very complex and colorful bit of text.
   magick -font Times-Bold -pointsize 64 \
                      -background none  label:"Colorful Arc" \
           \( +clone -sparse-color Barycentric '0,%h blue %w,0 red' \
-             \) -compose In -magick composite \
+             \) -compose In -composite \
           -virtual-pixel transparent -distort arc 120 \
           \( +clone -background black -shadow 100x2+4+4 \
              \) +swap -background white -compose over -layers merge +repage \
@@ -1424,14 +1424,14 @@ appropriate font, you can generate a simple 'Neon Sign' effect...
   magick -fill dodgerblue -background black -font Anaconda -pointsize 72 \
           label:' I M  Examples ' -bordercolor black -border 30x30 \
           \( +clone -blur 0x25 -level 0%,50% \) \
-          -compose screen -magick composite    neon_sign.gif
+          -compose screen -composite    neon_sign.gif
 </samp></pre></TD></TR></TABLE>
    <A HREF="neon_sign.gif"
       ><IMG SRC="neon_sign.gif"
             ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-And with just a little more work, you can magick animate it too! But I'll leave that
+And with just a little more work, you can animate it too! But I'll leave that
 as an exercise for the reader. </P>
 
 
@@ -1470,7 +1470,7 @@ magick \
   -function Sinusoid 2.25,0,0.5,0.5 \
   \( gradient:'rgb(100%,100%,80%)-black' -gamma 1 \) \
   +swap \
-  -compose Overlay -magick composite \
+  -compose Overlay -composite \
   -rotate 90 \
   metallic_clut.png
 
@@ -1487,7 +1487,7 @@ magick metallic_input.png -set colorspace RGB \
   \( -clone 0 -alpha extract -shade 135x45 -auto-gamma -auto-level \
      -alpha on -channel A -level 0%x10% +channel \
   \) \
-  -delete 0 -compose Overlay -magick composite \
+  -delete 0 -compose Overlay -composite \
   metallic_clut.png -clut  -set colorspace sRGB \
   \
   \( +clone -background navy -shadow 80x2+5+5 \

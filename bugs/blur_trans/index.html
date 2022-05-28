@@ -2,17 +2,17 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Blur Transparency Bug -- IM v6 Examples</TITLE>
+<TITLE>Blur Transparency Bug -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/blur_trans/">
+      HREF="https://imagemagick.org/Usage/bugs/blur_trans/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
-<H1>ImageMagick v6 Examples -- <BR>
+<H1>ImageMagick Examples -- <BR>
     <IMG SRC="../../img_www/space.gif" width=50 height=1>
     Blur Transparency Bug -- FIXED</H1>
 
@@ -88,20 +88,20 @@ a yellow circle instead...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:none \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:none \
               -fill yellow -draw 'circle 35,35 20,25'  blur_yellow.png
-    convert blur_yellow.png  -channel RGBA -blur 0x8  blur_yellow_2.png
+    magick blur_yellow.png  -channel RGBA -blur 0x8  blur_yellow_2.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
-<NOBR>
+
    <A HREF="blur_yellow.png"
       ><IMG SRC="blur_yellow.png"     WIDTH=70  HEIGHT=70
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
    <A HREF="blur_yellow_2.png"
       ><IMG SRC="blur_yellow_2.png"     WIDTH=70  HEIGHT=70
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Where did all that dark color come from? </P>
@@ -135,20 +135,20 @@ fully-transparent red canvas, rather than the more typical
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:'#F00F' \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:'#F00F' \
               -fill yellow -draw 'circle 35,35 20,25'  blur_on_red.png
-    convert blur_on_red.png  -channel RGBA -blur 0x8  blur_on_red_2.png
+    magick blur_on_red.png  -channel RGBA -blur 0x8  blur_on_red_2.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
-<NOBR>
+
    <A HREF="blur_on_red.png"
       ><IMG SRC="blur_on_red.png"     WIDTH=70  HEIGHT=70
             ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
    <A HREF="blur_on_red_2.png"
       ><IMG SRC="blur_on_red_2.png"     WIDTH=70  HEIGHT=70
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 As you can see, this time we get dark reddish colors, even though the starting
@@ -161,9 +161,9 @@ We can highlight this problem even more limiting the blur to just the alpha
 channel of the image.  In this case the colors are left completely alone and
 only the transparency of the image is blurred.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert blur_on_red.png  -channel A -blur 0x8  blur_on_red_3.png
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick blur_on_red.png  -channel A -blur 0x8  blur_on_red_3.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
    <A HREF="blur_on_red_3.png"
       ><IMG SRC="blur_on_red_3.png"     WIDTH=70  HEIGHT=70
@@ -183,9 +183,9 @@ Well no actually it isn't!  At that is the point. </P>
 To see what colors we were actually blurring, lets just turn off the alpha
 channel on our source image...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert blur_on_red.png   +matte blur_on_red_4.png
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick blur_on_red.png   +matte blur_on_red_4.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
    <A HREF="blur_on_red_4.png"
       ><IMG SRC="blur_on_red_4.png"     WIDTH=70  HEIGHT=70
@@ -226,21 +226,21 @@ then replace the colors of the image using some fancy alpha compositing. (See
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:none -draw 'circle 35,35 20,25' \
             -channel A -blur 0x8  blur_black.png
     composite -compose Atop -size 70x70 xc:yellow blur_black.png \
             blur_color.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
-<NOBR>
+
    <A HREF="blur_black.png"
       ><IMG SRC="blur_black.png"     WIDTH=70  HEIGHT=70
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
    <A HREF="blur_color.png"
       ><IMG SRC="blur_color.png"     WIDTH=70  HEIGHT=70
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 You can do this in a single command, with the help of some IM v6 constructs.
@@ -251,9 +251,9 @@ color canvas generation methods.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:none -draw 'circle 35,35 20,25' \
             -channel A -blur 0x8 \
             \( +clone  -fill green  -draw 'color 0,0 reset' \) \
             -compose ATop -composite    blur_green.png
@@ -270,9 +270,9 @@ interesting looking 'cloud' like object.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:none  -draw 'circle 35,35 15,25' \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:none  -draw 'circle 35,35 15,25' \
             -channel A -blur 0x4  -size 70x70 gradient:white-grey40 \
             -compose ATop -composite      blur_gradient.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -291,9 +291,9 @@ in value as the source image is black.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:none -draw 'circle 35,35 20,25' \
             -channel A -blur 0x8   -channel B -fx .5    blur_navy.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
    <A HREF="blur_navy.png"
@@ -310,9 +310,9 @@ or not.  Then we blur just the alpha channel.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:none -draw 'circle 35,35 20,25' \
             -fx 1   -channel A -blur 0x8   blur_white.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
    <A HREF="blur_white.png"
@@ -330,9 +330,9 @@ HREF="../../option_link.cgi?negate" >-negate</A></CODE>" them to white.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 70x70 xc:none -draw 'circle 35,35 20,25' \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 70x70 xc:none -draw 'circle 35,35 20,25' \
             -negate   -channel A -blur 0x8   blur_negate.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD ALIGN=center>
    <A HREF="blur_negate.png"
@@ -365,5 +365,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/blur_trans/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/blur_trans/</CODE>
 </ADDRESS></BODY></HTML>

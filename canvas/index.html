@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Canvas Creation -- IM v6 Examples</TITLE>
+<TITLE>Canvas Creation -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/canvas/">
@@ -386,7 +386,7 @@ color_colorize.gif
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that  "<CODE><A HREF="../option_link.cgi?alpha" >-alpha</A> <A
   HREF="../masking/#alpha_off" >Off</A></CODE>" (or the older equivelent
-  "<CODE><A HREF="../option_link.cgi?matte" >+matte</A></CODE>") only disables
+  "<CODE><A HREF="../option_link.cgi?matte" >-alpha off</A></CODE>") only disables
   the alpha channel. if you turn it <A HREF="../masking/#alpha_on" >On</A>
   again afterwards, the original alpha channel (which was preserved) will be
   restored. Before IM v6.7.9 alpha was preserved when using "<CODE><A
@@ -962,7 +962,7 @@ ignored.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick test.png  null: -alpha set -compose Clear -magick composite -compose Over \
+  magick test.png  null: -alpha set -compose Clear -composite -compose Over \
           trans_compose.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="trans_compose.png"
@@ -1771,7 +1771,7 @@ dimensional colormap gradients.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 gradient:yellow-blue \
           \( gradient:black-lime -rotate -90 \) \
-          -compose CopyGreen -magick composite  gradient_colormap.jpg
+          -compose CopyGreen -composite  gradient_colormap.jpg
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="gradient_colormap.jpg"
      ><IMG SRC="gradient_colormap.jpg"  WIDTH=100 HEIGHT=100
@@ -1791,7 +1791,7 @@ effects.  For example...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 30x600 xc:red -colorspace HSB \
-          gradient: -compose CopyRed -magick composite \
+          gradient: -compose CopyRed -composite \
           -colorspace RGB -rotate 90  gradient_rainbow.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="gradient_rainbow.jpg"
@@ -2817,7 +2817,7 @@ For example..
           -sparse-color Barycentric '30,10 red   10,80 blue   90,90 lime' \
           -colorspace sRGB  -fill white -stroke black \
           \( -size 100x100 xc:black -draw 'polygon 30,10  10,80  90,90' \) \
-          +matte -compose CopyOpacity -magick composite \
+          -alpha off -compose CopyOpacity -composite \
           -draw 'circle 30,10 30,12  circle 10,80 10,82  circle 90,90 90,92' \
           sparse_bary_triangle.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -3730,7 +3730,7 @@ shape_edge_pixels.gif
     sed '1d; / 0) /d; s/:.* /,/;' | \
      magick shape_edge_pixels.gif -alpha off \
              -sparse-color shepards '@-' shape_edge_in_lights.png
-  magick shape_edge_in_lights.png figure.gif -magick composite shape_in_lights.png
+  magick shape_edge_in_lights.png figure.gif -composite shape_in_lights.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="figure.gif"
      ><IMG SRC="figure.gif"       WIDTH=100 HEIGHT=125
@@ -4380,12 +4380,12 @@ interesting coloration or effect, over and over.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`magick compare -metric PAE plasma_seeded.jpg \
+  [ "`compare -metric PAE plasma_seeded.jpg \
                 ../images/plasma_seeded.jpg null: 2>&1 |\
          sed 's/ .*//'`" != '0' ] &&  echo >&2 \
     "ASSERTION FAILURE: Seeded Plasma Image Changed\!"
   [ "`magick -size 100x100 -seed 1 plasma: -seed 1 plasma: miff:- | \
-      magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
+      compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
 \
     "ASSERTION FAILURE: Repeated Seeded Plasmas do not match\!"
 </CODE> -->
@@ -4595,13 +4595,13 @@ HREF="../compose/#compose" >Image Composition</A> methods.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick random.png   -channel G -threshold 5% -negate \
           -channel RG -separate +channel \
-          -compose Multiply    -magick composite   random_black.png
+          -compose Multiply    -composite   random_black.png
   magick random.png   -channel G -threshold 5% \
           -channel RG -separate +channel \
-          -compose Screen      -magick composite   random_white.png
+          -compose Screen      -composite   random_white.png
   magick random.png   -channel G -threshold 5% -negate \
           -channel RG -separate +channel \
-          -compose CopyOpacity -magick composite   random_trans.png
+          -compose CopyOpacity -composite   random_trans.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="random.png"
      ><IMG SRC="random.png"       WIDTH=100 HEIGHT=100
@@ -4628,7 +4628,7 @@ Generators</A>. </P>
 <!-- <CODE EXECUTE ASSERT>
   [ "`magick -size 100x100 xc: -seed 11 +noise Random \
                       \( +clone -seed 11 +noise Random \) miff:- | \
-      magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
+      compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
 \
     "ASSERTION FAILURE: Seeded Random Images do not match"
 </CODE> -->
@@ -5453,7 +5453,7 @@ case move only because the gradient in the flux animation moves.
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-You can also magick animate the ripples within the animation. Though you may need to
+You can also animate the ripples within the animation. Though you may need to
 use a much larger 'phase cycle rate' (the 'j = 5 * i' expression) for the
 ripples themselves.  Also as you are generating a cycle within a cycle, you
 will need to generate a much longer animation 60 frames in this case. However
@@ -5552,7 +5552,7 @@ HREF="../compose/#tile" >Tile Compositing</A>).
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -tile tile_weave.gif -size 60x60  xc:none   tile_copy.gif
+  composite -tile tile_weave.gif -size 60x60  xc:none   tile_copy.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tile_copy.gif"
      ><IMG SRC="tile_copy.gif"       WIDTH=60 HEIGHT=60
@@ -5605,7 +5605,7 @@ create for the overlay.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick test.png -size 200x200 tile:tile_disks.jpg \
-          -magick composite  tile_over.gif
+          -composite  tile_over.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tile_over.gif"
      ><IMG SRC="tile_over.gif"       WIDTH=150 HEIGHT=100
@@ -5745,7 +5745,7 @@ setting.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage tree.gif     -geometry +24+24 \
+  montage tree.gif     -geometry +24+24 \
           -tile-offset +30+30 -texture rose: offset_texture.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="offset_texture.gif"
@@ -6615,7 +6615,7 @@ and vertically.
 
   magick tile_diag_source.jpg     \( +clone -transpose \) \
           \( +clone -sparse-color voronoi '%w,0 white 0,%h black' \) \
-          -magick composite \
+          -composite \
           \( +clone -flop -chop 1x0 \) +append \
           \( +clone -flip -chop 0x1 \) -append \
           tile_diag_mirror.jpg
@@ -6654,7 +6654,7 @@ to get a 'clipped look' along the mirror lines, but a smoother transition.
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 51x51 xc: +noise Random   \( +clone -transpose \) \
           \( +clone -sparse-color voronoi '%w,0 white 0,%h black' \) \
-          -magick composite \
+          -composite \
           \( +clone -flop -chop 1x0 \) +append \
           \( +clone -flip -chop 0x1 \) -append \
           -chop 1x1 \
@@ -6700,7 +6700,7 @@ image, to produce a smooth result.
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 50x50 xc: +noise Random   \( +clone -transpose \) \
           \( +clone -sparse-color voronoi '%w,0 white 0,%h black' \) \
-          -magick composite \
+          -composite \
           \( +clone -rotate -90 \) +append \
           \( +clone -rotate 180 \) -append \
           \

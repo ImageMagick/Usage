@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="../assets/usage.css">
 Author: <A HREF="http://www.ict.griffith.edu.au/anthony/anthony.html"
         >Anthony Thyssen</A>, &lt;A.Thyssen&#64;griffith.edu.com&gt;<BR>
-<TITLE>Annotating -- IM v6 Examples</TITLE>
+<TITLE>Annotating -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/annotating/">
@@ -173,14 +173,14 @@ Handling</A> for more details of other text drawing methods and techniques.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
 
-<B>Label using Montage</B>  The magick montage command in ImageMagick is often
-overlooked by users as only useful for creating a magick display of a whole directory
+<B>Label using Montage</B>  The montage command in ImageMagick is often
+overlooked by users as only useful for creating a display of a whole directory
 of images. It does provide a very simple way to add labels an image.
 
 <!-- dragon photo is linked from "images" -->
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label "Faerie Dragon"  dragon.gif \
+  montage -label "Faerie Dragon"  dragon.gif \
           -geometry +0+0 -background Gold anno_montage.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="anno_montage.jpg"
@@ -197,11 +197,11 @@ labeling of the image.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label "Faerie Dragon" dragon.gif \
+  montage -label "Faerie Dragon" dragon.gif \
           -font Candice -pointsize 15 \
           -frame 5  -geometry +0+0 anno_montage2.jpg
 </samp></pre></TD></TR></TABLE>
-For more info about using magick montage see <A HREF="../montage/" >Montage, Arrays
+For more info about using montage see <A HREF="../montage/" >Montage, Arrays
 of Images</A>.
 
 </TD><TD>
@@ -341,7 +341,7 @@ it.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -background '#00000080' -fill white label:'Faerie Dragon' miff:- |\
-    magick composite -gravity south -geometry +0+3 \
+    composite -gravity south -geometry +0+3 \
               -   dragon.gif   anno_composite.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="anno_composite.jpg"
@@ -378,10 +378,10 @@ provided, with word wrapping.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  width=`magick identify -format %w dragon.gif`; \
+  width=`identify -format %w dragon.gif`; \
   magick -background '#0008' -fill white -gravity center -size ${width}x30 \
           caption:"Faerie Dragons love hot apple pies\!" \
-          dragon.gif +swap -gravity south -magick composite  anno_caption.jpg
+          dragon.gif +swap -gravity south -composite  anno_caption.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="anno_caption.jpg"
      ><IMG SRC="anno_caption.jpg"
@@ -409,20 +409,20 @@ the annotation.
           -background none -shadow 100x3+0+0 +repage \
           -stroke none -fill white     -annotate 0 'Faerie Dragon' \
           dragon.gif  +swap -gravity south -geometry +0-3 \
-          -magick composite  anno_fancy.jpg
+          -composite  anno_fancy.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="anno_fancy.jpg"
      ><IMG SRC="anno_fancy.jpg"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE>
 
-If you are planning to magick composite the same label (say a copyright message) onto
+If you are planning to composite the same label (say a copyright message) onto
 a lot of images, it would probably be better to generate your label separately
 and compose that label onto each image using the "<A HREF="../basics/#mogrify"
 >mogrify</A>" command. </P>
 
 The "<CODE>-geometry +0-3</CODE>" offset in the above is used to position the
-magick composite overlay closer to the edge, as the soft fuzzy outline of this image
+composite overlay closer to the edge, as the soft fuzzy outline of this image
 is often larger that is necessary. </P>
 
 <BR>
@@ -506,7 +506,7 @@ prepared button frame.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -gravity center  castle.gif  frame.gif  castle_button.gif
+  composite -gravity center  castle.gif  frame.gif  castle_button.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/castle.gif"
      ><IMG SRC="../images/castle.gif"
@@ -527,7 +527,7 @@ the small craws of the faerie dragon.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -geometry +31+105  hand_point.gif dragon.gif \
+  composite -geometry +31+105  hand_point.gif dragon.gif \
             dragon_claw_pointed.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/hand_point.gif"
@@ -569,7 +569,7 @@ to draw it on a paper scroll image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite \( dragon.gif -resize 50% \) scroll.gif \
+  composite \( dragon.gif -resize 50% \) scroll.gif \
             -compose bumpmap -gravity center   dragon_scroll.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/dragon.gif"
@@ -593,7 +593,7 @@ image is lost.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -compose bumpmap  -tile rings.jpg \
+  composite -compose bumpmap  -tile rings.jpg \
             dragon.gif  dragon_rings.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/rings.jpg"
@@ -616,7 +616,7 @@ image is lost.
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>" option above
   only works for compose operations using the "<CODE>composite</CODE>"
-  command. In "<CODE>convert</CODE>" you will have to use the "<CODE><A
+  command. In "<code>magick</code>" you will have to use the "<CODE><A
   HREF="../canvas/#tile" >tile:</A></CODE>" image generator with a "<CODE><A
   HREF="../option_link.cgi?size" >-size</A></CODE>" to specify the extent.
 
@@ -636,7 +636,7 @@ image into grey-scale.
   mesgs PictureWords |\
       magick -pointsize 18 text:-  -trim +repage \
               -bordercolor white -border 10x5   text.gif
-  magick composite -compose multiply -geometry +400+3 \
+  composite -compose multiply -geometry +400+3 \
             paint_brush.gif  text.gif  text_multiply.gif
 </samp></pre></TD></TR></TABLE>
  <A HREF="../images/paint_brush.gif"
@@ -697,7 +697,7 @@ want to watermark, using a small 'eyes' symbol.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick logo: -resize x180  -gravity center  -crop 180x180+0+0  logo.jpg
-  magick composite -geometry +160+13 eyes.gif   logo.jpg  wmark_symbol.jpg
+  composite -geometry +160+13 eyes.gif   logo.jpg  wmark_symbol.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="logo.jpg"
      ><IMG SRC="logo.jpg"                 WIDTH=180   HEIGHT=180
@@ -774,9 +774,9 @@ may be useful for you understanding.
           -draw "fill white  text  1,1  'Copyright'  \
                              text  0,0  'Copyright'  \
                  fill black  text -1,-1 'Copyright'" \
-          +matte stamp_mask.png
-  magick composite -compose CopyOpacity  stamp_mask.png  stamp_fgnd.png  stamp.png
-  magick mogrify -trim +repage stamp.png
+          -alpha off stamp_mask.png
+  composite -compose CopyOpacity  stamp_mask.png  stamp_fgnd.png  stamp.png
+  mogrify -trim +repage stamp.png
 </samp></pre></TD></TR></TABLE>
 <!--
   <A HREF="stamp_fgnd.png"
@@ -797,7 +797,7 @@ Now we have a watermark font we can apply it to our image...
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -gravity south -geometry +0+10 stamp.png  logo.jpg \
+  composite -gravity south -geometry +0+10 stamp.png  logo.jpg \
             wmark_text_stamped.jpg
 </samp></pre></TD></TR></TABLE>
 As you can see the watermark is not as bold as before, and even uses shades of
@@ -825,7 +825,7 @@ commands, with the output of one, feeding the next.
           -gravity NorthWest -draw "text 10,10 'Copyright'" \
           -gravity SouthEast -draw "text 5,15 'Copyright'" \
           miff:- |\
-    magick composite -tile - logo.jpg  wmark_text_tiled.jpg
+    composite -tile - logo.jpg  wmark_text_tiled.jpg
 </samp></pre></TD></TR></TABLE>
 This takes advantage of the fact that an image (like a photograph, not a
 diagram) will generally have some areas in which the tiled test string will be
@@ -887,7 +887,7 @@ producing ugly edge artifacts.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -watermark 30% -gravity south \
+  composite -watermark 30% -gravity south \
             wmark_image.png  logo.jpg    wmark_watermark.jpg
 </samp></pre></TD></TR></TABLE>
 
@@ -910,7 +910,7 @@ HREF="../compose/#watermark" >Watermark Option Usage</A> page. </P>
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -dissolve 25% -gravity south \
+  composite -dissolve 25% -gravity south \
             wmark_image.png   logo.jpg  wmark_dissolve.jpg
 </samp></pre></TD></TR></TABLE>
 
@@ -944,7 +944,7 @@ make the watermark even less intrusive.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -dissolve 15 -tile \
+  composite -dissolve 15 -tile \
             wmark_image.png   logo.jpg  wmark_tiled.jpg
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -967,7 +967,7 @@ technique.  If this is not done the result would be very very bold.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick wmark_image.png  -fill Gray91 -colorize 80  miff:- |\
-  magick composite -compose bumpmap -gravity south \
+  composite -compose bumpmap -gravity south \
             -  logo.jpg    wmark_bumpmap.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="wmark_bumpmap.jpg"
@@ -993,7 +993,7 @@ watermark on black parts of the image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick wmark_image.png  -fill grey50 -colorize 40  miff:- |\
-  magick composite -dissolve 30 -gravity south -  logo.jpg wmark_dissolve_grey.jpg
+  composite -dissolve 30 -gravity south -  logo.jpg wmark_dissolve_grey.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="wmark_dissolve_grey.jpg"
      ><IMG SRC="wmark_dissolve_grey.jpg"    WIDTH=180   HEIGHT=180
@@ -1015,7 +1015,7 @@ image with an even lower dissolve value.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick wmark_image.png  -fill grey50 -colorize 40  miff:- |\
-  magick composite -dissolve 15 -tile  -  logo.jpg wmark_dissolve_tile.jpg
+  composite -dissolve 15 -tile  -  logo.jpg wmark_dissolve_tile.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="wmark_dissolve_tile.jpg"
      ><IMG SRC="wmark_dissolve_tile.jpg"      WIDTH=180   HEIGHT=180
@@ -1140,11 +1140,11 @@ Here is an example of using gravity to position images on a background.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite label:Default                      rings.jpg gravity_default.jpg
-  magick composite label:Center    -gravity center    rings.jpg gravity_center.jpg
-  magick composite label:South     -gravity south     rings.jpg gravity_south.jpg
-  magick composite label:East      -gravity east      rings.jpg gravity_east.jpg
-  magick composite label:NorthEast -gravity northeast rings.jpg gravity_northeast.jpg
+  composite label:Default                      rings.jpg gravity_default.jpg
+  composite label:Center    -gravity center    rings.jpg gravity_center.jpg
+  composite label:South     -gravity south     rings.jpg gravity_south.jpg
+  composite label:East      -gravity east      rings.jpg gravity_east.jpg
+  composite label:NorthEast -gravity northeast rings.jpg gravity_northeast.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="gravity_default.jpg"
      ><IMG SRC="gravity_default.jpg"        WIDTH=94   HEIGHT=94
@@ -1181,11 +1181,11 @@ geometry position has been reversed, while the X direction was left alone.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite label:Default   -geometry +10+10 \
+  composite label:Default   -geometry +10+10 \
             rings.jpg gravity_default_pos.jpg
-  magick composite label:South     -geometry +10+10 -gravity south \
+  composite label:South     -geometry +10+10 -gravity south \
             rings.jpg gravity_south_pos.jpg
-  magick composite label:NorthEast -geometry +10+10 -gravity northeast \
+  composite label:NorthEast -geometry +10+10 -gravity northeast \
             rings.jpg gravity_northeast_pos.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="gravity_default_pos.jpg"
@@ -1227,9 +1227,9 @@ And you can also now use "<CODE><A HREF="../option_link.cgi?composite"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rings.jpg \
-          -gravity Center     castle.gif  -compose Over     -magick composite \
-          -gravity NorthWest  castle.gif  -compose Bumpmap  -magick composite \
-          -gravity SouthEast  castle.gif  -compose Multiply -magick composite \
+          -gravity Center     castle.gif  -compose Over     -composite \
+          -gravity NorthWest  castle.gif  -compose Bumpmap  -composite \
+          -gravity SouthEast  castle.gif  -compose Multiply -composite \
           gravity_image2.jpg
 </samp></pre></TD></TR></TABLE>
 </TD><TD>

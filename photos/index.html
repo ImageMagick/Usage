@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Photo Handling -- IM v6 Examples</TITLE>
+<TITLE>Photo Handling -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/photos/">
@@ -104,7 +104,7 @@ Here is the EXIF data of a photo I took of a <A HREF="../img_photos/pagoda_sm.jp
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=pagoda_sm_exif.txt >
-  magick identify -format "%[EXIF:*]" pagoda_sm.jpg |\
+  identify -format "%[EXIF:*]" pagoda_sm.jpg |\
       sed 's/\(.\{46\}\).*/\1/' | column -c 110
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -120,7 +120,7 @@ Here is the EXIF data of a photo I took of a <A HREF="../img_photos/pagoda_sm.jp
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  The EXIF data, or any magick identify output, should be processed in a case
+  The EXIF data, or any identify output, should be processed in a case
   in-sensitive way.  Many older versions of IM for example, will output
   "<CODE>EXIF:</CODE>" (uppercase) rather than "<CODE>exif:</CODE>"
   (lowercase).
@@ -131,7 +131,7 @@ limit output to EXIF fields involving Time...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=pagoda_sm_time.txt >
-  magick identify -format "%[exif:*time*]" pagoda_sm.jpg
+  identify -format "%[exif:*time*]" pagoda_sm.jpg
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -237,7 +237,7 @@ Escape</A>...
                   <TD width="90%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=orient_show.txt>
-  magick identify -format '%[exif:orientation]' pagoda_sm.jpg
+  identify -format '%[exif:orientation]' pagoda_sm.jpg
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=10%>
   <A HREF="orient_show.txt"
       ><IMG SRC="orient_show.txt.gif"
@@ -407,7 +407,7 @@ dark areas I would like to make more visible.
   magick night_club_orig.jpg  -sigmoidal-contrast 4,0%  night_club_fixed.jpg
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE NOIMAGE>
-  magick mogrify -format gif -thumbnail 120x90 +repage night_club_fixed.jpg
+  mogrify -format gif -thumbnail 120x90 +repage night_club_fixed.jpg
 </CODE> -->
   <A HREF="../img_photos/night_club_orig.jpg"
      ><IMG SRC="../img_photos/night_club_tn.gif"
@@ -439,7 +439,7 @@ balcony looking southwards towards the city of Toronto.
   magick night_scape_orig.jpg -sigmoidal-contrast 10,0%  night_scape_fixed.jpg
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE NOIMAGE>
-    magick mogrify -format gif -thumbnail 120x90 +repage night_scape_fixed.jpg
+    mogrify -format gif -thumbnail 120x90 +repage night_scape_fixed.jpg
 </CODE> -->
   <A HREF="../img_photos/night_scape_orig.jpg"
      ><IMG SRC="../img_photos/night_scape_tn.gif"
@@ -723,7 +723,7 @@ rather like a scale model, rather than quick snap-shot of the real thing.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick beijing_contrast.jpg  beijing_blurmap.jpg \
-          -compose Blur -set option:compose:args 10 -magick composite \
+          -compose Blur -set option:compose:args 10 -composite \
           beijing_model.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="beijing_model.jpg"
@@ -749,7 +749,7 @@ command, and avoid temporary files, or loss of quality.
   magick beijing_md.jpg -sigmoidal-contrast 15x30% \
           \( +clone -sparse-color Barycentric '0,0 black 0,%h gray80' \
              -solarize 50% -level 50%,0 \) \
-          -compose Blur -set option:compose:args 10 -magick composite \
+          -compose Blur -set option:compose:args 10 -composite \
           beijing_model.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -783,9 +783,9 @@ For example here I first blur horizontaly, the vertially...
   magick beijing_md.jpg -sigmoidal-contrast 15x30% \
           \( +clone -sparse-color Barycentric '0,0 black 0,%h gray80' \
              -solarize 50% -level 50%,0 -write mpr:blur_map \) \
-          -compose Blur -set option:compose:args 10x0 -magick composite \
+          -compose Blur -set option:compose:args 10x0 -composite \
           mpr:blur_map \
-          -compose Blur -set option:compose:args 0x10 -magick composite \
+          -compose Blur -set option:compose:args 0x10 -composite \
           beijing_model_2pass.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -853,7 +853,7 @@ The images are just overlayed together...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick ny_family.jpg ny_family.png -magick composite   ny_family_merged.jpg
+  magick ny_family.jpg ny_family.png -composite   ny_family_merged.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/ny_family.jpg"
      ><IMG SRC="../img_photos/ny_family_tn.jpg"
@@ -931,7 +931,7 @@ image correctly using the appropriate gravity (right, or '<CODE>East</CODE>').
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick holocaust_tn.gif -extent 200x90  spiral_stairs_tn.gif \
-          overlap_mask.png  -gravity East -magick composite   overlap_photos.jpg
+          overlap_mask.png  -gravity East -composite   overlap_photos.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="../img_photos/holocaust_tn.gif"
       ><IMG SRC="../img_photos/holocaust_tn.gif"     WIDTH=120  HEIGHT=90
@@ -974,7 +974,7 @@ but also to rotate that gradient so as to have a highly angled overlap.
           +distort SRT 115 +repage \
           holocaust_tn.gif -extent 180x90 +swap \
           spiral_stairs_tn.gif +swap \
-          -gravity East -magick composite   overlap_angled.jpg
+          -gravity East -composite   overlap_angled.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="overlap_angled.jpg"
       ><IMG SRC="overlap_angled.jpg"      WIDTH=160   HEIGHT=90
@@ -1006,11 +1006,11 @@ final canvas size.
   magick -size 90x90 xc:white -size 90x30 gradient: -append -rotate 90 \
           hatching_tn.gif \
           \( chinese_chess_tn.gif -clone 0 \
-                 -compose CopyOpacity +matte -magick composite -repage +90+0 \) \
+                 -compose CopyOpacity -alpha off -composite -repage +90+0 \) \
           \( holocaust_tn.gif -clone 0 \
-                 -compose CopyOpacity +matte -magick composite -repage +180+0  \) \
+                 -compose CopyOpacity -alpha off -composite -repage +180+0  \) \
           \( spiral_stairs_tn.gif -clone 0 \
-                 -compose CopyOpacity +matte -magick composite -repage +270+0 \) \
+                 -compose CopyOpacity -alpha off -composite -repage +270+0 \) \
           -delete 0   -compose Over  -mosaic     overlap_series.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="overlap_series.jpg"
@@ -1120,7 +1120,7 @@ to merge the images.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick anthony_1.jpg anthony_2.jpg anthony_mask.jpg \
-          -magick composite  anthony_doubled.jpg
+          -composite  anthony_doubled.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="anthony_doubled.jpg"
      ><IMG SRC="anthony_doubled.jpg"      WIDTH=100   HEIGHT=90
@@ -1142,7 +1142,7 @@ background.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick anthony_2.jpg anthony_1.jpg anthony_mask.jpg \
-          -magick composite  anthony_removed.jpg
+          -composite  anthony_removed.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="anthony_removed.jpg"
      ><IMG SRC="anthony_removed.jpg"      WIDTH=100   HEIGHT=90
@@ -1159,7 +1159,7 @@ images (video) is to just create an average of all the images. This Turn all
 the people or other transient objects into a light haze of 'ghosts'.  That can
 be an interesting effect in and of itself, but not always what is wanted. </P>
 
-An average image can be an useful step, as once you have it you can magick compare it
+An average image can be an useful step, as once you have it you can compare it
 against each individual image to mask out the person (transient object) from
 each frame, before again combining the backgrounds together, to create a clean
 (no haze) background image). </P>
@@ -1183,7 +1183,7 @@ right.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick anthony_removed.jpg anthony_2.jpg \
-          -compose difference -magick composite \
+          -compose difference -composite \
           -threshold 5% -blur 0x3 -threshold 20% -blur 0x3 \
           anthony_automask.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -1201,7 +1201,7 @@ pictures.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick anthony_1.jpg anthony_ghosts.jpg anthony_mask.jpg \
-          -magick composite  anthony_haunted.jpg
+          -composite  anthony_haunted.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="anthony_haunted.jpg"
      ><IMG SRC="anthony_haunted.jpg"      WIDTH=100   HEIGHT=90
@@ -1268,7 +1268,7 @@ photo where everyone is: facing front, with eyes open, and smiling! </P>
 <H3>Protect Someone's Anonymity
 <FONT SIZE=-1> -- fuzzing out some part of a photo</FONT></H3>
 
-The above technique of using a 3 image magick composite mask can also be used in
+The above technique of using a 3 image composite mask can also be used in
 other ways.   For example you can 'pixelate' and image, then use a mask to
 limit the effect to just the face of a person, so as to "Protect their
 Identity".
@@ -1280,7 +1280,7 @@ Identity".
   magick zelda_tn.gif -gamma 0 -fill white \
           -draw 'circle 65,53 50,40'   zelda_face_mask.gif
   magick zelda_tn.gif zelda_pixelate.gif zelda_face_mask.gif \
-          -magick composite   zelda_anonymity.png
+          -composite   zelda_anonymity.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/zelda_tn.gif"
      ><IMG SRC="../img_photos/zelda_tn.gif"              WIDTH=120 HEIGHT=90
@@ -1308,7 +1308,7 @@ pixelated to normal. For example..
   magick zelda_tn.gif \( +clone -scale 25%  -scale 400% \) \
           \( +clone -gamma 0 -fill white \
              -draw 'circle 65,53 50,40' -blur  10x4 \) \
-          -magick composite  zelda_anonymity.jpg
+          -composite  zelda_anonymity.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="zelda_anonymity.jpg"
      ><IMG SRC="zelda_anonymity.jpg"      WIDTH=120   HEIGHT=90
@@ -1341,7 +1341,7 @@ pagoda at the Kunming Zoo, in southern China.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick tile_fabric.gif -colorspace gray  -normalize \
           -fill gray50 +level 35%      texture_fabric.gif
-  magick composite texture_fabric.gif  pagoda_sm.jpg \
+  composite texture_fabric.gif  pagoda_sm.jpg \
             -tile   -compose Hardlight    photo_texture.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/tile_fabric.gif"
@@ -1359,7 +1359,7 @@ pagoda at the Kunming Zoo, in southern China.
 
 Note that if you want to actually <I>tile</I> the texture over the image you
 need to use the "<CODE>composite</CODE>" command rather than the more
-versatile "<CODE>convert</CODE>" command, though there are a number of other
+versatile "<code>magick</code>" command, though there are a number of other
 ways to <A HREF="../canvas/#tile_memory" >Tile Images in Memory</A> using
 convert. </P>
 
@@ -1390,7 +1390,7 @@ just the near 'white' sky in the pagoda photo.
   magick pagoda_sm.jpg -fuzz 10% -transparent white \
           -alpha extract -negate  pagoda_mask.png
   magick pagoda_sm.jpg  photo_texture.jpg  pagoda_mask.png \
-          -magick composite  photo_texture_masked.jpg
+          -composite  photo_texture_masked.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="pagoda_mask.png"
      ><IMG SRC="pagoda_mask.png"
@@ -1502,7 +1502,7 @@ grey background.
           -channel Hue,Saturation -separate +channel \
           \( -clone 0 -background none -fuzz 5% +transparent grey64 \) \
           \( -clone 1 -background none -fuzz 10% -transparent black \) \
-          -delete 0,1  -alpha extract  -compose multiply -magick composite \
+          -delete 0,1  -alpha extract  -compose multiply -composite \
           shirt_mask.png
 </samp></pre></TD></TR></TABLE></P>
 
@@ -1640,7 +1640,7 @@ holocaust memorial, Berlin.
           -colorspace Gray -blur 0x.5 -contrast-stretch 0x50% \
           color-in.gif
   # For heavily shaded pictures...
-  #     #-magick segment 1x1 +dither -colors 2 -edge 1 -negate -normalize \
+  #     #-segment 1x1 +dither -colors 2 -edge 1 -negate -normalize \
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/holocaust_sm.jpg"
      ><IMG SRC="../img_photos/holocaust_sm.jpg"
@@ -1702,7 +1702,7 @@ The above was added to in a discussion on <A HREF="../forum_link?t=6974"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick taj_mahal_sm.png -colorspace gray \
-          \( +clone -blur 0x2 \) +swap -compose divide -magick composite \
+          \( +clone -blur 0x2 \) +swap -compose divide -composite \
           -linear-stretch 5%x0%   photocopy.png
 </samp></pre></TD></TR></TABLE>
    <A HREF="../img_photos/taj_mahal_sm.png"
@@ -1767,7 +1767,7 @@ into a gray-scaled copy of the original image.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
      magick pagoda_sm.jpg -colorspace gray \
           \( +clone -tile pencil_tile.gif -draw "color 0,0 reset" \
-             +clone +swap -compose color_dodge -magick composite \) \
+             +clone +swap -compose color_dodge -composite \) \
           -fx 'u*.2+v*.8' sketch.gif
 </samp></pre></TD></TR></TABLE>
    <A HREF="../img_photos/pagoda_sm.jpg"
@@ -1781,7 +1781,7 @@ into a gray-scaled copy of the original image.
 
 Note that as the "<CODE><A HREF="../option_link.cgi?blend" >-blend</A></CODE>"
 operator of the "<CODE><A HREF="../basics/#composite" >composite</A></CODE>"
-command is not available to the "<CODE>convert</CODE>" command, I opted to do
+command is not available to the "<code>magick</code>" command, I opted to do
 the equivalent using the DIY "<CODE><A HREF="../option_link.cgi?fx"
 >-fx</A></CODE>" operator.  There are probably better, faster but more
 complicated ways of doing this. (suggestions are welcome) </P>
@@ -1839,7 +1839,7 @@ image.  For example,
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick nikon18-70dx_18mm_f3.5.jpg  vegas_orig.jpg \
-          -compose Divide -magick composite  vegas_fixed.jpg
+          -compose Divide -composite  vegas_fixed.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/vegas_orig.jpg"
      ><IMG SRC="../img_photos/vegas_tn.gif"                           WIDTH=105 HEIGHT=70
@@ -1897,7 +1897,7 @@ page' image, and also adjust it for a better vignette removal result. </P>
 
 Note that using JPEG is not recommended for any sort of photographic work, as
 the format can introduce some artifacts and inconsistencies in the results.
-The format is only good for storage and magick display of the final results. </P>
+The format is only good for storage and display of the final results. </P>
 
 A major discussion on correcting vignettation is in the IM User Forums in the
 discussion <A HREF="../forum_link.cgi?f=1&t=18944" >Algorithmic vignetting

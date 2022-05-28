@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Montage -- IM v6 Examples</TITLE>
+<TITLE>Montage -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/montage/">
@@ -64,7 +64,7 @@
     <LI><A HREF="#html_jpeg"
         > Smaller HTML Index Maps, using JPEG images</A>
     <LI><A HREF="#vid"
-        > Visual Index</A> (A non-magick montage solution)
+        > Visual Index</A> (A non-montage solution)
     <LI><A HREF="#polaroid"
         > A Montage of Polaroid Photos</A> (a fancy index map)
     </UL>
@@ -107,7 +107,7 @@ containment squares, no frame, labels, or shadows.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif  montage.jpg
+  montage balloon.gif medical.gif present.gif shading.gif  montage.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage.jpg"
      ><IMG SRC="montage.jpg"
@@ -145,14 +145,14 @@ modifing the "<CODE><A HREF="../option_link.cgi?geometry"
 none of the images will be resized, and the 'tile' size will be set to the
 largest dimensions of all the images given.
 
-For example here I ask magick montage to tile using the largest image given with
+For example here I ask montage to tile using the largest image given with
 a small gap between tiles.  This is a very typical setting to use when all the
 input images are small and roughly same size.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -geometry +2+2   montage_geom.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_geom.jpg"
@@ -167,7 +167,7 @@ images.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif logo: \
+  montage balloon.gif medical.gif present.gif logo: \
           -geometry 48x48+2+2   montage_geom_size.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_geom_size.jpg"
@@ -181,7 +181,7 @@ tile size.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif logo: \
+  montage balloon.gif medical.gif present.gif logo: \
           -geometry 48x48\>+2+2   montage_geom_larger.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_geom_larger.jpg"
@@ -241,16 +241,16 @@ not look at the images aspect ratios, when deciding on the tiling to use.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_1.gif      -geometry 16x16+1+1  tile_1.gif
-  magick montage font_[12].gif   -geometry 16x16+1+1  tile_2.gif
-  magick montage font_[123].gif  -geometry 16x16+1+1  tile_3.gif
-  magick montage font_[1-4].gif  -geometry 16x16+1+1  tile_4.gif
-  magick montage font_[1-5].gif  -geometry 16x16+1+1  tile_5.gif
-  magick montage font_[1-6].gif  -geometry 16x16+1+1  tile_6.gif
-  magick montage font_[1-7].gif  -geometry 16x16+1+1  tile_7.gif
-  magick montage font_[1-8].gif  -geometry 16x16+1+1  tile_8.gif
-  magick montage font_[1-9].gif  -geometry 16x16+1+1  tile_9.gif
-  magick montage font_[0-9].gif  -geometry 16x16+1+1  tile_0.gif
+  montage font_1.gif      -geometry 16x16+1+1  tile_1.gif
+  montage font_[12].gif   -geometry 16x16+1+1  tile_2.gif
+  montage font_[123].gif  -geometry 16x16+1+1  tile_3.gif
+  montage font_[1-4].gif  -geometry 16x16+1+1  tile_4.gif
+  montage font_[1-5].gif  -geometry 16x16+1+1  tile_5.gif
+  montage font_[1-6].gif  -geometry 16x16+1+1  tile_6.gif
+  montage font_[1-7].gif  -geometry 16x16+1+1  tile_7.gif
+  montage font_[1-8].gif  -geometry 16x16+1+1  tile_8.gif
+  montage font_[1-9].gif  -geometry 16x16+1+1  tile_9.gif
+  montage font_[0-9].gif  -geometry 16x16+1+1  tile_0.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="tile_1.gif"
      ><IMG SRC="tile_1.gif"
@@ -353,16 +353,16 @@ Note however that IM will not automatically select a 'perfect fit' 6x3 tile
 setting for 18 images, nor a 7x4 setting for 28 images. </P>
 
 However if you specify a specific "<CODE><A HREF="../option_link.cgi?tile"
->-tile</A></CODE>" setting, magick montage will always create an image big enough to
+>-tile</A></CODE>" setting, montage will always create an image big enough to
 hold that many 'tiles'.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_[1-7].gif  -tile 9x1  -geometry 16x16+1+1  tile_9x1.gif
-  magick montage font_[1-7].gif  -tile 4x3  -geometry 16x16+1+1  tile_4x3.gif
-  magick montage font_[1-7].gif  -tile 3x3  -geometry 16x16+1+1  tile_3x3.gif
-  magick montage font_1.gif      -tile 2x3  -geometry 16x16+1+1  tile_2x3.gif
+  montage font_[1-7].gif  -tile 9x1  -geometry 16x16+1+1  tile_9x1.gif
+  montage font_[1-7].gif  -tile 4x3  -geometry 16x16+1+1  tile_4x3.gif
+  montage font_[1-7].gif  -tile 3x3  -geometry 16x16+1+1  tile_3x3.gif
+  montage font_1.gif      -tile 2x3  -geometry 16x16+1+1  tile_2x3.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="tile_9x1.gif"
      ><IMG SRC="tile_9x1.gif"
@@ -378,7 +378,7 @@ hold that many 'tiles'.
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-As you can see magick montage created an image that is large enough to hold the
+As you can see montage created an image that is large enough to hold the
 number of tiles specified, regardless of how many images are available to fill
 the tile space requested, be it 7 images, or just 1 image. </P>
 
@@ -390,12 +390,12 @@ to do a column-by-column fill of the tile space. </P>
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Before IM v6.1 magick montage would automatically truncate the extra space if the
+  Before IM v6.1 montage would automatically truncate the extra space if the
   number of images did not use that space. As such a setting such as the
   first "<CODE>9x1</CODE>" image would have been truncated to produce a
   "<CODE>7x1</CODE>" tile image. <P>
 
-  Because of this, past users of magick montage often used large numbers such as
+  Because of this, past users of montage often used large numbers such as
   "<CODE>999x1</CODE>" to generate a single row of images.  Now such a
   argument will produce a very long image, and could take a long time for IM
   to complete.  As such...
@@ -409,19 +409,19 @@ to do a column-by-column fill of the tile space. </P>
 You can avoid the problems of extra space, and multiple images, especially for
 an unknown number of input images, by removing either a row, or the column
 number, from the "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>"
-setting.  The missing number will be taken by magick montage as being variable and
-magick montage will only create enough tile space to hold ALL the input images,
+setting.  The missing number will be taken by montage as being variable and
+montage will only create enough tile space to hold ALL the input images,
 producing only one image, never multiple images.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_[1-7].gif  -tile x1  -geometry 16x16+1+1  tile_x1.gif
-  magick montage font_[1-7].gif  -tile x2  -geometry 16x16+1+1  tile_x2.gif
-  magick montage font_[1-7].gif  -tile x4  -geometry 16x16+1+1  tile_x4.gif
-  magick montage font_[1-7].gif  -tile 4x  -geometry 16x16+1+1  tile_4x.gif
-  magick montage font_[1-7].gif  -tile 5x  -geometry 16x16+1+1  tile_5x.gif
-  magick montage font_[1-7].gif  -tile 9x  -geometry 16x16+1+1  tile_9x.gif
+  montage font_[1-7].gif  -tile x1  -geometry 16x16+1+1  tile_x1.gif
+  montage font_[1-7].gif  -tile x2  -geometry 16x16+1+1  tile_x2.gif
+  montage font_[1-7].gif  -tile x4  -geometry 16x16+1+1  tile_x4.gif
+  montage font_[1-7].gif  -tile 4x  -geometry 16x16+1+1  tile_4x.gif
+  montage font_[1-7].gif  -tile 5x  -geometry 16x16+1+1  tile_5x.gif
+  montage font_[1-7].gif  -tile 9x  -geometry 16x16+1+1  tile_9x.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="tile_x1.gif"
      ><IMG SRC="tile_x1.gif"
@@ -444,7 +444,7 @@ producing only one image, never multiple images.
 </DIV></P>
 
 This is the more typical use of the "<CODE><A HREF="../option_link.cgi?tile"
->-tile</A></CODE>" setting, as it ensures the magick montage is sized correctly,
+>-tile</A></CODE>" setting, as it ensures the montage is sized correctly,
 while still allowing it some control in determining the final array size. </P>
 
 Note the last image, in the above where we requested 9 columns of images.  IM
@@ -452,21 +452,21 @@ still generated the requested 9 columns, even though less than 9 images were
 given. On the other hand the first image (one row requested), is exactly the
 right length to hold all the images. </P>
 
-If you have more input images than magick montage can tile into the space given by a
+If you have more input images than montage can tile into the space given by a
 "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>" setting, then
 multiple images can be generated by montage, either resulting in image
 sequence numbers being added to the filename, or some sort of GIF animation,
 being created.  See <A HREF="../files/#write_list" >Writing Multiple Images</A>
 for details.  </P>
 
-For example, here I have asked magick montage to save separate images for each page
+For example, here I have asked montage to save separate images for each page
 generated, by supplying a '<CODE>%d</CODE>' for the frame/scene/page number of
 each image filename.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage  font_*.gif  -tile 4x1  -geometry +2+2  multi_%d.gif
+  montage  font_*.gif  -tile 4x1  -geometry +2+2  multi_%d.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="multi_0.gif"
      ><IMG SRC="multi_0.gif"
@@ -483,7 +483,7 @@ each image filename.
 <A NAME="frame"></A>
 <H3>Frame Decoration</H3>
 
-The best part of using magick montage to arrange images is that it provides a lot of
+The best part of using montage to arrange images is that it provides a lot of
 extra controls to add extra 'fluff' around each image. </P>
 
 For example, you can better define the images being displayed by adding a
@@ -493,7 +493,7 @@ image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -tile x1  -frame 5  -geometry +5+5   frame.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="frame.jpg"
@@ -501,8 +501,8 @@ image.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-This is not like the same option in "<CODE>convert</CODE>" (See <A
-HREF="../crop/#frame" >Adding a 3D frame</A> example). The magick montage frame
+This is not like the same option in "<code>magick</code>" (See <A
+HREF="../crop/#frame" >Adding a 3D frame</A> example). The montage frame
 option will automatically figure out default values for the internal and
 external bevel of the frame. As such only a single argument number is needed.
 </P>
@@ -519,7 +519,7 @@ setting. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -tile x1  -border 5 -geometry +5+5   border.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="border.jpg"
@@ -546,14 +546,14 @@ setting. </P>
     Before IM v6.1.0 (approx) <A HREF="../option_link.cgi?border"
     ><B>-border</B></A></CODE> would been applied to images at the point in
     which it appeared in the "<CODE>montage</CODE>" command line, just like
-    it would have with "<CODE>convert</CODE>".  </P>
+    it would have with "<code>magick</code>".  </P>
     
     That is border would have been thus added to the image long before the
     images get resized (according to "<A HREF="../option_link.cgi?geometry"
     ><CODE>-geometry</CODE></A>"), which resulted in different border widths
     around each image depending on the size of the image at that point.  It
     was to remove this inconsistancy that <A HREF="../option_link.cgi?border"
-    ><B>-border</B></A></CODE> became a special magick montage setting.
+    ><B>-border</B></A></CODE> became a special montage setting.
 
 </I></FONT></TD></TR></TABLE></P>
 
@@ -566,7 +566,7 @@ Adding a shadow with the frame is also quite good.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -tile x1  -frame 5  -shadow  -geometry +5+5   frame_shadow.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="frame_shadow.jpg"
@@ -579,7 +579,7 @@ Of course you don't actually need a frame to generate image shadows
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -tile x1  -shadow  -geometry +5+5  -background lightblue \
           shadow_noframe.jpg
 </samp></pre></TD></TR></TABLE>
@@ -595,7 +595,7 @@ shaped according to the transparency of the images being displayed!
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_1.gif  font_7.gif  font_2.gif  font_0.gif \
+  montage font_1.gif  font_7.gif  font_2.gif  font_0.gif \
           -tile x1  -shadow  -geometry +3+5 -background none \
           shadow_shaped.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -604,9 +604,9 @@ shaped according to the transparency of the images being displayed!
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-As you can see the shadow used by magick montage is actually a semi-transparent
+As you can see the shadow used by montage is actually a semi-transparent
 color, allowing the background to affect its final color.  This means if you
-create a magick montage with textured background, or use a transparent background and
+create a montage with textured background, or use a transparent background and
 overlay it, the shadow will do the right thing. </P>
 
 Of course you need to use an image format that can handle semi-transparent
@@ -622,7 +622,7 @@ by later images.  For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -tile x1  -shadow  -geometry +1+1  -background none \
           shadow_spacing.png
 </samp></pre></TD></TR></TABLE>
@@ -651,7 +651,7 @@ versions of montage. </P>
 <A NAME="label"></A>
 <H3>Labeling Montage Images</H3>
 
-You can also tell magick montage to label the image with their source filenames,
+You can also tell montage to label the image with their source filenames,
 though you probably need to resize the image frames, or the labels may not
 fit, truncating the text label. </P>
 
@@ -664,7 +664,7 @@ This is probably the most typical use of montage.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label '%f'  balloon.gif medical.gif rose: present.gif shading.gif \
+  montage -label '%f'  balloon.gif medical.gif rose: present.gif shading.gif \
           -tile x1  -frame 5  -geometry '60x60+4+4>'  label_fname.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="label_fname.jpg"
@@ -684,7 +684,7 @@ that they remain clearly readable.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label '%f'  balloon.gif medical.gif logo: present.gif shading.gif \
+  montage -label '%f'  balloon.gif medical.gif logo: present.gif shading.gif \
           -tile x1 -shadow -geometry '60x60+2+2>'  label_shadow.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="label_shadow.jpg"
@@ -703,7 +703,7 @@ settings...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif logo: present.gif shading.gif \
+  montage balloon.gif medical.gif logo: present.gif shading.gif \
           -tile x1  -geometry '90x32+2+2>'  -pointsize 10 \
           -set label '%f\n%wx%h'   -background SkyBlue   label_fname3.jpg
 </samp></pre></TD></TR></TABLE>
@@ -741,7 +741,7 @@ the montage, just because we can...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label Balloon   balloon.gif  \
+  montage -label Balloon   balloon.gif  \
           -label Medical   medical.gif  \
           \( present.gif  -set label Present  \) \
           \( shading.gif  -set label Shading  \) \
@@ -761,7 +761,7 @@ label "<CODE><A HREF="../option_link.cgi?set" >-set</A></CODE>" operation.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage                    balloon.gif \
+  montage                    balloon.gif \
           -label 'My Image'  medical.gif \
           +label             present.gif \
           -label ' '         shading.gif \
@@ -781,14 +781,14 @@ This presents a good rule of thumb when using montage...  </P>
            Either label all your images, or none of them!
 </B></DIV> </P>
 
-You don't have to label your images during the magick montage operation itself.  Both
+You don't have to label your images during the montage operation itself.  Both
 the MIFF and PNG formats, can store a label as part of their image format.
 </P>
 
 Montage will automatically label any image read in that already contains a
 label.  This is automatic and does not need to be specified, and I have used
 this technique to generate some very complex image montages. For example the
-magick montage array in <A HREF="../misc/#annotate" >Annotate Angle Examples</A> was
+montage array in <A HREF="../misc/#annotate" >Annotate Angle Examples</A> was
 created using this technique. </P>
 
 If you do not want this automatic labeling, you must specifically tell montage
@@ -820,7 +820,7 @@ or "<CODE><A HREF="../option_link.cgi?set" >-set</A></CODE>" </P>
   magick -label 'logo'     logo:        label_logo.png
   magick -label 'rose'     rose:       label_rose.png
 
-  magick montage           label_medical.png \
+  montage           label_medical.png \
           -label '' label_logo.png    \
           +label    label_rose.png    \
           -tile x1  -frame 5  -geometry '60x60+2+2>' label_control.jpg
@@ -839,7 +839,7 @@ images label because we turned-off the label setting with
 <A NAME="metadata"></A>
 <H3>Using Saved Image MetaData</H3>
 
-When generating images for later use by magick montage it is important to know
+When generating images for later use by montage it is important to know
 what sort of image metadata a specific image file format can save.
 
 For example only PNG, and MIFF image file format can actually store
@@ -853,7 +853,7 @@ For example only PNG, and MIFF image file format can actually store
   magick -label 'PNG'  present.gif  label.png
   magick -label 'MIFF' shading.gif  label.miff
 
-  magick montage label.gif label.jpg label.png label.miff \
+  montage label.gif label.jpg label.png label.miff \
           -tile x1  -frame 5  -geometry '60x60+2+2>' label_files.jpg
   rm label.*
 </samp></pre></TD></TR></TABLE>
@@ -874,7 +874,7 @@ meta-data, which you can use by specifying a '<CODE>%c</CODE>' argument to
   magick -comment 'PNG'  present.gif  comment.png
   magick -comment 'MIFF' shading.gif  comment.miff
 
-  magick montage -label '%c' comment.gif comment.jpg comment.png comment.miff \
+  montage -label '%c' comment.gif comment.jpg comment.png comment.miff \
           -tile x1  -frame 5  -geometry '60x60+2+2>' comment_files.jpg
   rm comment.*
 </samp></pre></TD></TR></TABLE>
@@ -885,7 +885,7 @@ meta-data, which you can use by specifying a '<CODE>%c</CODE>' argument to
 
 This is often more useful for pictures saved in the JPEG file format, though
 JPEG image comments generally are too large (often whole paragraphs describing
-the image), for use as magick montage labels, as they will not be word wrapped (see
+the image), for use as montage labels, as they will not be word wrapped (see
 <A HREF="#polaroid" >Montage of Polaroid Photos</A> for an alternative method
 of labeling using image 'comment' meta-data). </P>
 
@@ -906,7 +906,7 @@ some such methods. </P>
 It is also important to note that labeling (and image 'comments') is not
 specific to montage.  Montage just makes automatic use of image labels if
 present.  Labels and comments are attached to images, and the their specific
-file formats, and is not magick montage or even IM specific.  </P>
+file formats, and is not montage or even IM specific.  </P>
 
 The PNG and MIFF file format also allow you to use a less commonly used
 '<CODE>caption</CODE>' meta-data.
@@ -919,7 +919,7 @@ The PNG and MIFF file format also allow you to use a less commonly used
   magick present.gif -set caption 'PNG'  caption.png
   magick shading.gif -set caption 'MIFF' caption.miff
 
-  magick montage -label '%[caption]' caption.gif caption.jpg caption.png caption.miff \
+  montage -label '%[caption]' caption.gif caption.jpg caption.png caption.miff \
           -tile x1  -frame 5  -geometry '60x60+2+2>' caption_files.jpg
   rm caption.*
 </samp></pre></TD></TR></TABLE>
@@ -940,7 +940,7 @@ in an image when it is saved!
   magick present.gif -set my_data 'PNG'  my_data.png
   magick shading.gif -set my_data 'MIFF' my_data.miff
 
-  magick montage -label '%[my_data]' my_data.gif my_data.jpg my_data.png my_data.miff \
+  montage -label '%[my_data]' my_data.gif my_data.jpg my_data.png my_data.miff \
           -tile x1  -frame 5  -geometry '60x60+2+2>' my_data_files.jpg
   rm my_data.*
 </samp></pre></TD></TR></TABLE>
@@ -953,21 +953,21 @@ in an image when it is saved!
 <A NAME="null"></A>
 <H3>Leaving Gaps in a Montage</H3>
 
-While you can leave extra space in a magick montage at the bottom by judicious use of
+While you can leave extra space in a montage at the bottom by judicious use of
 the "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>" setting and
 controlling the number of images given, leaving an empty tile space in the
-middle of a magick montage requires the use of a special image.  </P>
+middle of a montage requires the use of a special image.  </P>
 
 The "<CODE>null:</CODE>" generated image was defined specifically for this
 purpose.  The position in which it appears will not receive any label (even if
 one is defined), nor will it have any frame or shadow 'fluff' added.  The tile
 is just left completely empty except for the background color (or texture) of
-the magick montage drawing canvas itself.
+the montage drawing canvas itself.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label 'Image' medical.gif null: present.gif \
+  montage -label 'Image' medical.gif null: present.gif \
           -tile x1  -frame 5  -geometry +2+2   montage_null.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_null.jpg"
@@ -996,7 +996,7 @@ currently it is only 'special' if given on the command line of
   </P>
 
   If you really need this sort of ability you will need to develop your own
-  magick montage type of application.  If you do develop something, then please
+  montage type of application.  If you do develop something, then please
   contribute, and we'll see about merging it into the existing montage
   application. </P>
 
@@ -1036,7 +1036,7 @@ consider for your own needs. </P>
     no such decoration is added. </TD>
 
 <TR valign="top"><TD><CODE><A HREF="../option_link.cgi?mattecolor"
-    ><B>-mattecolor</B></A></CODE></TD>
+    ><B>-alpha setcolor</B></A></CODE></TD>
 <TD>The color used as the frame color. Note that the color is also made
     lighter and darker to give the frame a beveled 3D look. So this setting
     really defines 5 colors.  (See also <A HREF="../crop/#frame_border"
@@ -1059,9 +1059,9 @@ consider for your own needs. </P>
 <BLOCKQUOTE><DL>
 <DT><CODE><A HREF="../option_link.cgi?tile"
     ><B>-tile</B></A> {<I>cols</I>}x{<I>rows</I>}</CODE>
-<DD>The number of images across and down used to fill a single magick montage image.
+<DD>The number of images across and down used to fill a single montage image.
     If more images were read in or created than fits in a
-    single magick montage image, then multiple images will be created.
+    single montage image, then multiple images will be created.
     (See <A HREF="#tile" >Tile Controls</A> above)
 
 <DT><CODE><A HREF="../option_link.cgi?title"
@@ -1094,7 +1094,7 @@ consider for your own needs. </P>
 <DT><CODE><A HREF="../option_link.cgi?geometry"
     ><B>-geometry</B></A> {<I>W</I>}x{<I>H</I>}+{<I>X</I>}+{<I>Y</I>}
     </CODE>
-<DD>Resize images after they have all been read in before magick montage overlays
+<DD>Resize images after they have all been read in before montage overlays
     them onto its canvas.  It also defines the size and the spacing between
     the tiles into which the images are drawn.  If no size is specified the
     images will not be resized.
@@ -1106,7 +1106,7 @@ consider for your own needs. </P>
     >-compose</A></CODE>" defines how images are to be overlaid onto frame
     tile and shadows.  It does not however effect how that result is then
     overlaid onto the background canvas of the montage.  For more detail see
-    <A HREF="#bg" >Background and Transparency</A> magick montage examples below
+    <A HREF="#bg" >Background and Transparency</A> montage examples below
 -->
 
 <DT><CODE><A
@@ -1131,7 +1131,7 @@ These include settings such as "<CODE><A HREF="../option_link.cgi?font"
 "<CODE><A HREF="../option_link.cgi?strokewidth" >-strokewidth</A></CODE>". </P>
 
 As long as any or all of the above setting are defined or reset, before the
-final 'output filename' argument, magick montage will use them as you have requested.
+final 'output filename' argument, montage will use them as you have requested.
 </P>
 
 
@@ -1147,7 +1147,7 @@ problem to the "<CODE>montage</CODE>" command.  </P>
 That means you are free to use any of these option settings to read, create,
 or modify the images being read in, then reset those settings after all the
 images have been read in or created.  The final setting value will be what
-magick montage will use for its final processing. </P>
+montage will use for its final processing. </P>
 
 This was not the case in versions of IM before version 6, in which it was
 generally impossible to separate image creation settings, from montage
@@ -1162,7 +1162,7 @@ settings to other values for the final processing of the images by montage.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -pointsize 24  -background Lavender \
+  montage -pointsize 24  -background Lavender \
           -font Candice      -label Candice      label:Abc-123 \
           -font Corsiva      -label Corsiva      label:Abc-123 \
           -font SheerBeauty  -label SheerBeauty  label:Abc-123 \
@@ -1181,7 +1181,7 @@ settings to other values for the final processing of the images by montage.
           -font Zymbols      -label Zymbols      label:Abc-123 \
           \
           -frame 5  -geometry +2+2   -font Arial -pointsize 12 \
-          -background none  -bordercolor SkyBlue  -mattecolor DodgerBlue \
+          -background none  -bordercolor SkyBlue  -alpha setcolor DodgerBlue \
           montage_fonts.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_fonts.gif"
@@ -1193,26 +1193,26 @@ Note the two stages to the "<CODE>montage</CODE>" command. Which I clearly
 marked using an extra almost empty line. </P>
 
 The first part is essentially exactly as you would define multiple images
-using the normal IM "<CODE>convert</CODE>" command, and is processed in the
+using the normal IM "<code>magick</code>" command, and is processed in the
 same, 'do it as you see it' order. </P>
 
 The second part, defines <I>all</I> the settings I wanted the
 "<CODE>montage</CODE>" command itself to use.   That is the framing, image
-resizing, fonts and colors I wanted to use in the final magick montage image. I
+resizing, fonts and colors I wanted to use in the final montage image. I
 especially take care to reset the "<CODE><A HREF="../option_link.cgi?font"
 >-font</A></CODE>" and "<CODE><A HREF="../option_link.cgi?pointsize"
 >-pointsize</A></CODE>" settings for the labeling underneath the montaged
 images. </P>
 
 While you can separate the options of "<CODE>montage</CODE>" like this, you
-can actually define the magick montage settings at any time on the command line.  As
+can actually define the montage settings at any time on the command line.  As
 long as those settings do not interfere with your image creating and
 processing options, and are still defined correctly when the end of the
 command line is reached, "<CODE>montage</CODE>" will use them. </P>
 
 ASIDE: You may like to look at the shell script I wrote to do something
 similar to the above (and which works with earlier versions of montage) to
-magick display a directory of truetype (.ttf) fonts, called "<CODE><A
+display a directory of truetype (.ttf) fonts, called "<CODE><A
 HREF="../scripts/show_fonts" ><B>show_fonts</B></A></CODE>". Another shell
 script example is "<CODE><A HREF="../scripts/show_colors"
 ><B>show_colors</B></A></CODE>". </P>
@@ -1222,15 +1222,15 @@ script example is "<CODE><A HREF="../scripts/show_colors"
 <H3>Montage vs Convert Option Differences</H3>
 
 Now while "<CODE>montage</CODE>" generally allow you to use any
-"<CODE>convert</CODE>" settings and operators in reading and processing its
+"<code>magick</code>" settings and operators in reading and processing its
 input images, their are a few differences which need to be highlighted. </P>
 
-These "<CODE>convert</CODE>" operators and settings are different when used
+These "<code>magick</code>" operators and settings are different when used
 within "<CODE>montage</CODE>". </P>
 
 <BLOCKQUOTE><DL>
 <DT><CODE><A HREF="../option_link.cgi?tile" ><B>-tile</B></A></CODE>
-<DD>In "<CODE>convert</CODE>" the "<CODE><A HREF="../option_link.cgi?tile"
+<DD>In "<code>magick</code>" the "<CODE><A HREF="../option_link.cgi?tile"
     >-tile</A></CODE>" setting defines an image to use as a texture instead of
     using the "<CODE><A HREF="../option_link.cgi?fill" >-fill</A></CODE>"
     color.  In "<CODE>montage</CODE>" it defines how to layout the individual
@@ -1238,13 +1238,13 @@ within "<CODE>montage</CODE>". </P>
     for more detail. </P>
 
 <DT><CODE><A HREF="../option_link.cgi?frame" ><B>-frame</B></A></CODE>
-<DD>In "<CODE>convert</CODE>" this is an operator used to add a 3D frame
+<DD>In "<code>magick</code>" this is an operator used to add a 3D frame
     border around images, and requires 4 arguments to work correctly (See <A
     HREF="../crop/#frame" >Convert Frame</A> examples). See <A HREF="#frame"
     >Frame Decoration</A> for more detail.  </P>
 
 <DT><CODE><A HREF="../option_link.cgi?border" ><B>-border</B></A></CODE>
-<DD>Sometime around IM v6.1.0 this operator became a special magick montage option.
+<DD>Sometime around IM v6.1.0 this operator became a special montage option.
     As such, like the previous frame option it only takes one number as an
     argument, rather than two arguments as per the <A HREF="../crop/#border"
     >Convert Border</A>.  See <A HREF="#border" >Border Decoration</A> for
@@ -1252,7 +1252,7 @@ within "<CODE>montage</CODE>". </P>
 
 <DT><CODE><A HREF="../option_link.cgi?shadow" ><B>-shadow</B></A></CODE>
 <DD>The "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>"
-    option in "<CODE>convert</CODE>" takes an argument which is used to create
+    option in "<code>magick</code>" takes an argument which is used to create
     a soft blurry shadow to which can be place under a second copy of the
     original image.  However in "<CODE>montage</CODE>" this is only a Boolean
     setting that just turns the rectangular shadowing abilities, on and off.
@@ -1262,42 +1262,42 @@ within "<CODE>montage</CODE>". </P>
 <DD>The "<CODE><A HREF="../option_link.cgi?geometry" >-geometry</A></CODE>"
     option in "<CODE>montage</CODE>" is simply saved to provide the size of
     the images within each cell of the final montage, and the spacing between
-    the cells.  In "<CODE>convert</CODE>" it resizes just the last image, and
+    the cells.  In "<code>magick</code>" it resizes just the last image, and
     sets the off set for <A HREF="../compose/#compose" >Image Composition</A>.
     </P>
 
 </DL></BLOCKQUOTE></P>
 
-If you really need to use the "<CODE>convert</CODE>" form of these options,
-then you will need to pre-process your images using "<CODE>convert</CODE>"
+If you really need to use the "<code>magick</code>" form of these options,
+then you will need to pre-process your images using "<code>magick</code>"
 before passing them to "<CODE>montage</CODE>". </P>
 
 One method using intermediate files was demonstrated in the <A
 HREF="#image_labels" >Image Labels</A> example above. </P>
 
-Another is to just do your processing in "<CODE>convert</CODE>" and just pipe
+Another is to just do your processing in "<code>magick</code>" and just pipe
 the resulting multiple images into "<CODE>montage</CODE>".  This separation is
 easy to do if you always do your image input handling first, then set the
 "<CODE>montage</CODE>" specific settings afterward, such as I have done in all
 these examples.  This is especially shown in the last font example above.
 </P>
 
-For example lets frame our images using the "<CODE>convert</CODE>" frame,
+For example lets frame our images using the "<code>magick</code>" frame,
 and then frame them again using the "<CODE>montage</CODE>" labeled frames.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -label %f   balloon.gif medical.gif present.gif shading.gif \
-          -mattecolor peru  -frame 10x5+3+0    miff:-  |\
-     magick montage  -   -tile x1  -frame 5  -geometry '64x56+5+5>' double_frame.jpg
+          -alpha setcolor peru  -frame 10x5+3+0    miff:-  |\
+     montage  -   -tile x1  -frame 5  -geometry '64x56+5+5>' double_frame.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="double_frame.jpg"
      ><IMG SRC="double_frame.jpg"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-You can also see the extra arguments required by the "<CODE>convert</CODE>"
+You can also see the extra arguments required by the "<code>magick</code>"
 form of the "<CODE><A HREF="../option_link.cgi?frame" >-frame</A></CODE>"
 operator. </P>
 
@@ -1319,7 +1319,7 @@ throughout IM Examples.  Click the 'art' image below to view the result.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -label '%t\n%[width]x%[height]' \
+  montage -label '%t\n%[width]x%[height]' \
           -size 512x512 '../img_photos/*_orig.*[120x90]' -auto-orient \
           -geometry +5+5 -tile 5x  -frame 5  -shadow  photo_index.html
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
@@ -1348,7 +1348,7 @@ The result of this command were three files...
 <BLOCKQUOTE><TABLE CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD><B><CODE><A HREF="photo_index.png"
     >photo_index.png</A></CODE></B></TD>
-    <TD>The magick montage of all thumbnails of the images</TD></TR>
+    <TD>The montage of all thumbnails of the images</TD></TR>
 <TR valign="top"><TD><B><CODE><A HREF="photo_index_map.shtml.txt"
     >photo_index_map.shtml</A></CODE></B></TD>
     <TD>An HTML 'image map' for the thumbnail image</TD></TR>
@@ -1386,7 +1386,7 @@ that the images may have.  For more info see <A HREF="../thumbnails/#profiles"
 >Profiles, Stripping, and JPEG Handling</A> and <A HREF="../formats/#jpg_read"
 >Reading JPEG Images</A>. </P>
 
-Remember the magick montage "<CODE><A HREF="../option_link.cgi?geometry"
+Remember the montage "<CODE><A HREF="../option_link.cgi?geometry"
 >-geometry</A></CODE>" option can also specify a final resize setting, though
 in this case it is isn't needed as I did it during the read process, so I
 don't set any 'size' in that setting. </P>
@@ -1407,7 +1407,7 @@ For other ways of generating thumbnails and HTML index pages, read the
 The above index image generated a PNG format index image.  This was used
 because it is a non-lossy format, which can be important when the images being
 indexed are of wildly different colors.  It also enables the use of the new
-'soft shadows' features of magick montage if the background color is set to
+'soft shadows' features of montage if the background color is set to
 '<CODE>transparent</CODE>' or '<CODE>none</CODE>'. </P>
 
 Very very old IM's will have generated a GIF image for the above.  However,
@@ -1428,7 +1428,7 @@ HTML file.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
-  magick montage -label '%t\n%[width]x%[height]' \
+  montage -label '%t\n%[width]x%[height]' \
           -size 512x512 '../img_photos/*_orig.*[120x90]' -auto-orient \
           -geometry +5+5 -tile 5x  -frame 5  -shadow  photo_jpeg.html
   magick photo_jpeg.png photo_jpeg.jpg
@@ -1445,7 +1445,7 @@ HTML file.
 
 The above commands are rather tricky so here is what happens...
 <UL>
-<LI>First I generate a magick montage thumbnail HTML index, as I did previously.
+<LI>First I generate a montage thumbnail HTML index, as I did previously.
     This generated the files: "<CODE>photo_jpeg.html</CODE>" and
     "<CODE>photo_jpeg.png</CODE>"
 <LI>I then converted the PNG image to a smaller, lossy, JPEG image.
@@ -1487,7 +1487,7 @@ make it even smaller. </P>
 
 
 <A NAME="vid"></A>
-<H3>Visual Index Images <FONT SIZE=-1>(a non-magick montage solution)</FONT></H3>
+<H3>Visual Index Images <FONT SIZE=-1>(a non-montage solution)</FONT></H3>
 
 An alternative to using montage, is to use a special "visual index" input
 format...
@@ -1525,9 +1525,9 @@ And can also generate 'clickable' HTML index files.
   rm vid_index_map.shtml
 </CODE>-->
 
-It is obvious that "<CODE>VID:</CODE>" uses magick montage internally to generate the
+It is obvious that "<CODE>VID:</CODE>" uses montage internally to generate the
 index array. However you do not have the same controls as you do if you had
-used magick montage directly. </P>
+used montage directly. </P>
 
 Note that a VID HTML index creates a PNG format thumbnail image. </P>
 
@@ -1537,13 +1537,13 @@ Note that a VID HTML index creates a PNG format thumbnail image. </P>
 
 With the advent of a <A HREF="../transform/#polaroid" >Complex Polaroid
 Transform</A> it is now possible to generate quite a different style of
-montage, and magick montage indexing.
+montage, and montage indexing.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  magick montage -size 256x256 '../img_photos/*_orig.*' -auto-orient \
+  montage -size 256x256 '../img_photos/*_orig.*' -auto-orient \
           -auto-orient -thumbnail 128x128 \
           -set caption '%t' -bordercolor AliceBlue -background grey20 \
           +polaroid \
@@ -1574,7 +1574,7 @@ reduced 'shadow' effect.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  magick montage -size 400x400  '../img_photos/*_orig.*' \
+  montage -size 400x400  '../img_photos/*_orig.*' \
           -auto-orient -thumbnail 200x200 \
           -set caption '%t' -bordercolor Lavender -background grey40 \
           -pointsize 9  -density 144x144  +polaroid  -resize 50% \
@@ -1589,7 +1589,7 @@ reduced 'shadow' effect.
 
 This fancy montage, as well as other techniques shown above was used to create
 a script "<CODE><A HREF="../scripts/generate_index"
->generate_index</A></CODE>" to generate a magick montage thumbnail index in the
+>generate_index</A></CODE>" to generate a montage thumbnail index in the
 actual "<CODE><A HREF="../img_photos/" >photo_store</A></CODE>" directory.
 </p>
 
@@ -1617,8 +1617,8 @@ two montages.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  magick montage font_*.gif  -tile 1x3  -geometry 16x16+1+1  miff:- |\
-    magick montage -  -geometry +0+0 -tile 5x1  montage_columns.gif
+  montage font_*.gif  -tile 1x3  -geometry 16x16+1+1  miff:- |\
+    montage -  -geometry +0+0 -tile 5x1  montage_columns.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="montage_columns.gif"
      ><IMG SRC="montage_columns.gif"
@@ -1632,14 +1632,14 @@ needed.  It will then output one image for each column of tiles.  The second
 without adding any more space between columns. </P>
 
 If you only want a single image of a variable number of columns, then you can
-replace the second "<CODE>montage</CODE>" with a "<CODE>convert</CODE>" to
+replace the second "<CODE>montage</CODE>" with a "<code>magick</code>" to
 concatanate without adding extra space of 'pages'. For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  magick montage font_*.gif  -tile 1x3  -geometry 16x16+1+1  miff:- |\
+  montage font_*.gif  -tile 1x3  -geometry 16x16+1+1  miff:- |\
     magick - +append montage_columns_2.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="montage_columns_2.gif"
@@ -1666,7 +1666,7 @@ single row of images.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage null:   font_*.gif   null: \
+  montage null:   font_*.gif   null: \
           -tile x1 -geometry -5+2  montage_overlap.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_overlap.jpg"
@@ -1679,7 +1679,7 @@ Rotating the images will make the overlapping series even more interesting...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage null: font_*.gif null: -background none -rotate 30 \
+  montage null: font_*.gif null: -background none -rotate 30 \
           -background white -tile x1 -geometry -8+2  montage_rot_overlap.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_rot_overlap.jpg"
@@ -1698,7 +1698,7 @@ the randomly rotated <A HREF="../transform/#polaroid" >Polaroid Transform</A>.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  magick montage -size 400x400 null: ../img_photos/[a-m]*_orig.* null: \
+  montage -size 400x400 null: ../img_photos/[a-m]*_orig.* null: \
           -auto-orient  -thumbnail 200x200 \
           -bordercolor Lavender -background black +polaroid -resize 30% \
           -gravity center -background none -extent 80x80 \
@@ -1730,7 +1730,7 @@ in <A HREF="../layers/#example" >Programmed Positioning of Layered Images</A>.
 <A NAME="concatenate"></A>
 <H3>Montage Concatenation Mode</H3>
 
-As you saw, magick montage has a special concatenation mode, which can be used to
+As you saw, montage has a special concatenation mode, which can be used to
 join images together without any extra spaces just like the "<CODE><A
 HREF="../option_link.cgi?append" >-append</A></CODE>" option.  I do however
 recommend you set the "<CODE><A HREF="../option_link.cgi?tile"
@@ -1743,7 +1743,7 @@ horizontally.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -mode Concatenate  -tile x1  montage_cat.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_cat.jpg"
@@ -1757,7 +1757,7 @@ Preferably, the images are the same size, so they fit together properly.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage balloon.gif medical.gif present.gif shading.gif \
+  montage balloon.gif medical.gif present.gif shading.gif \
           -mode Concatenate  -tile 2x2  montage_array.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_array.jpg"
@@ -1771,7 +1771,7 @@ When concatenating images of different sizes, the images are concatenated with
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage medical.gif rose:      present.gif shading.gif \
+  montage medical.gif rose:      present.gif shading.gif \
           granite:    balloon.gif netscape:   recycle.gif \
           -mode Concatenate  -tile 4x  montage_cat2.jpg
 </samp></pre></TD></TR></TABLE>
@@ -1785,7 +1785,7 @@ However vertical alignment goes weird when framing is also added.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage medical.gif rose:      present.gif shading.gif \
+  montage medical.gif rose:      present.gif shading.gif \
           granite:    balloon.gif netscape:   recycle.gif \
           -mode Concatenate  -tile 4x  -frame 5  montage_cat3.jpg
 </samp></pre></TD></TR></TABLE>
@@ -1807,7 +1807,7 @@ when you accidentally use a 'zero geometry' (see below). </P>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Montage Concatenation to the 'HTML' image indexing format, produces
   incorrect image maps.  Basically the resulting image map will be as if
-  the generated magick montage was a true equally divided 'array' of images,
+  the generated montage was a true equally divided 'array' of images,
   rather than a concatenation of the images in line.  In other words it is
   wrong for lines of 'short' images.
 </I></FONT></TD></TR></TABLE></P>
@@ -1825,7 +1825,7 @@ This is itself an useful behaviour...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage present.gif rose: shading.gif \
+  montage present.gif rose: shading.gif \
           -frame 5  -geometry +1+1   montage_geom_1.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_geom_1.jpg"
@@ -1841,7 +1841,7 @@ you run into a very unusual problem...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage present.gif rose: shading.gif \
+  montage present.gif rose: shading.gif \
           -tile x1  -frame 5  -geometry +0+0  montage_geom_0.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_geom_0.jpg"
@@ -1850,7 +1850,7 @@ you run into a very unusual problem...
 </DIV></P>
 
 The 'zero geometry' you specified (that is "<CODE>-geometry 0x0+0+0</CODE>" ),
-has the extra effect of putting magick montage in a 'concatenation' mode (see above),
+has the extra effect of putting montage in a 'concatenation' mode (see above),
 which is NOT what we were after in the above. </P>
 
 For single images it also does not matter if we use a zero "<CODE><A
@@ -1872,7 +1872,7 @@ non-zero geometry argument.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage present.gif rose: shading.gif \
+  montage present.gif rose: shading.gif \
           -frame 5  -geometry '1x1+0+0&lt;'  montage_geom_1x1.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="montage_geom_1x1.jpg"
@@ -1892,7 +1892,7 @@ Even if it is only the 'fake' geometry such as I used above. </P>
 <A NAME="bg"></A>
 <H3>Background and Transparency Handling</H3>
 
-By default images are overlaid onto the magick montage canvas, which is created using
+By default images are overlaid onto the montage canvas, which is created using
 the "<CODE><A HREF="../option_link.cgi?background" >-background</A></CODE>"
 color setting, as you can see here.
 
@@ -1900,7 +1900,7 @@ color setting, as you can see here.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  \( recycle.gif -set label recycle \)  medical.gif \
+  montage font_9.gif  \( recycle.gif -set label recycle \)  medical.gif \
           -tile x1  -geometry +5+5  -background lightblue   bg_lightblue.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -1918,7 +1918,7 @@ to use instead of the "<CODE><A HREF="../option_link.cgi?background"
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  \( recycle.gif -set label recycle \)  medical.gif \
+  montage font_9.gif  \( recycle.gif -set label recycle \)  medical.gif \
           -tile x1  -geometry +5+5   -texture bg.gif      bg_texture.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bg_texture.gif"
@@ -1933,7 +1933,7 @@ drawn 'fluff' on top of the background canvas.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  \( recycle.gif -set label recycle \)  medical.gif \
+  montage font_9.gif  \( recycle.gif -set label recycle \)  medical.gif \
           -tile x1  -frame 5  -geometry '40x40+5+5>' \
           -bordercolor lightblue  -texture bg.gif  bg_frame.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -1965,14 +1965,14 @@ Also new to IM version 6.1.4 is the ability to use a special 1 pixel wide
 frame.  This will basically remove the frame around the image cells
 completely, but retaining the internal "<CODE><A
 HREF="../option_link.cgi?bordercolor" >-bordercolor</A></CODE>" padding around
-(and underneath) the image.  For example magick compare a frame of '<CODE>1</CODE>'
+(and underneath) the image.  For example compare a frame of '<CODE>1</CODE>'
 with the minimal frame width of '<CODE>2</CODE>'.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_1.gif  \( recycle.gif -set label recycle \)  medical.gif \
+  montage font_1.gif  \( recycle.gif -set label recycle \)  medical.gif \
           -tile x1  -frame 1  -geometry '40x40+5+5>' \
           -bordercolor lightblue  -texture bg.gif  bg_frame_1.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -1983,7 +1983,7 @@ with the minimal frame width of '<CODE>2</CODE>'.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_2.gif  \( recycle.gif -set label recycle \)  medical.gif \
+  montage font_2.gif  \( recycle.gif -set label recycle \)  medical.gif \
           -tile x1  -frame 2  -geometry '40x40+5+5>' \
           -bordercolor lightblue  -texture bg.gif  bg_frame_2.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2010,7 +2010,7 @@ canvas to show through.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  recycle.gif  medical.gif   -matte \
+  montage font_9.gif  recycle.gif  medical.gif   -alpha set \
           -tile x1 -frame 5 -geometry '40x40+5+5>' -bordercolor LimeGreen \
           -compose copy  -texture bg.gif   bg_compose_copy.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2026,7 +2026,7 @@ HREF="../compose/#dstout" >DstOut</A><CODE>'...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  recycle.gif  medical.gif   -matte \
+  montage font_9.gif  recycle.gif  medical.gif   -alpha set \
           -tile x1 -frame 5 -geometry '40x40+5+5>' -bordercolor LimeGreen \
           -compose DstOut  -texture bg.gif   bg_compose_dstout.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2041,7 +2041,7 @@ Or its inverse '<CODE><A HREF="../compose/#dstout" >DstIn</A><CODE>'...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  recycle.gif  medical.gif   -matte \
+  montage font_9.gif  recycle.gif  medical.gif   -alpha set \
           -tile x1 -frame 5 -geometry '40x40+5+5>' -bordercolor LimeGreen \
           -compose DstIn  -texture bg.gif   bg_compose_dstin.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2057,7 +2057,7 @@ Compose</A> examples. </P>
 
 -->
 
-But what if you want your magick montage to have a transparent background?
+But what if you want your montage to have a transparent background?
 Particularly, if you plan to use it on a web page containing a texture mapping.
 </P>
 
@@ -2075,7 +2075,7 @@ space around and between the images.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  recycle.gif  medical.gif \
+  montage font_9.gif  recycle.gif  medical.gif \
           -tile x1  -geometry +2+2  -background none   bg_none.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bg_none.gif"
@@ -2092,7 +2092,7 @@ too.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  recycle.gif  medical.gif \
+  montage font_9.gif  recycle.gif  medical.gif \
           -tile x1 -frame 5 -geometry '40x40+5+5>' \
           -bordercolor none  -background none    bg_framed_trans.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2101,7 +2101,7 @@ too.
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-Note that the magick montage "<A HREF="../option_link.cgi?shadow"
+Note that the montage "<A HREF="../option_link.cgi?shadow"
 ><CODE>-shadow</CODE></A>" option is completely unaffected by all the above.
 it is applied according to the final transparent shape of the cells, before
 it is overlaid onto the background color or texture.
@@ -2110,7 +2110,7 @@ it is overlaid onto the background color or texture.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  recycle.gif  medical.gif \
+  montage font_9.gif  recycle.gif  medical.gif \
           -tile x1  -shadow  -geometry '40x40+5+5>' \
           -texture bg.gif  bg_shadow.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2123,7 +2123,7 @@ it is overlaid onto the background color or texture.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage font_9.gif  recycle.gif  medical.gif \
+  montage font_9.gif  recycle.gif  medical.gif \
           -tile x1 -frame 5 -shadow  -geometry '40x40+5+5>' \
           -bordercolor none   -texture bg.gif  bg_shadow_framed.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2143,24 +2143,24 @@ of course always welcome. The same goes for anything in these example pages.
 <PRE>
 Montage Image Output Size
 
-The mathematics of magick montage is straight forward...
+The mathematics of montage is straight forward...
 
-Basically the magick montage width should be....
+Basically the montage width should be....
   (geometry_size + 2*frame_size + 2*geometry_offset) * images_per_column
 
-That is each 'cell' of magick montage has a fixed sized frame and spacing (border)
+That is each 'cell' of montage has a fixed sized frame and spacing (border)
 added around it before the cells are appended together.
 
-In essence the size of magick montage is also a multiple of the tile size, which can
+In essence the size of montage is also a multiple of the tile size, which can
 make it easy to break up montage, or re-arrange the 'cells', if so desired,
 as they are simple fixed sized tiles in a rectangular array.
 
 The height is similar but with tha additional spacing needed for labels and
-the optional magick montage title, both of which are much more difficult to
+the optional montage title, both of which are much more difficult to
 calculate, as they depend heavilly on text, font, pointsize, and density
 settings.
 
-There is also an effect of adding a shadow to the magick montage in this calculation,
+There is also an effect of adding a shadow to the montage in this calculation,
 but that appears to be a simple small fixed addition to the bototm and right
 edges.  It does not appear to effect the tile size used.
 

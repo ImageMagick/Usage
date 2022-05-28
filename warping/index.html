@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Warping -- IM v6 Examples</TITLE>
+<TITLE>Warping -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/warping/">
@@ -334,7 +334,7 @@ if no operation was performed at all.
 </TD></TR></TABLE></P>
 
 <!-- <CODE EXECUTE ASSERT>
-  [ `magick compare -metric PAE koala.gif original.gif null: 2>&1 |\
+  [ `compare -metric PAE koala.gif original.gif null: 2>&1 |\
         sed 's/ .*//'` != '0' ] && echo >&2 \
     "ASSERTION FAILURE: Simple Distorts distorted image when it shouldn't\!"
 </CODE> -->
@@ -446,7 +446,7 @@ method) to restore the image back to its original size.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
     magick koala.gif -alpha set \( +clone -background none -rotate 30 \) \
-            -gravity center  -compose Src -magick composite   rotate_resized.png
+            -gravity center  -compose Src -composite   rotate_resized.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
     <A HREF="rotate_resized.png"
@@ -1213,7 +1213,7 @@ This is especially true of rotated images where there is some blurring of the
 result, though minimal in any individual operation,  If you do it over an over
 however, this is the results. </P>
 
-All the scripts use a '<B>Generated "<CODE>convert</CODE>" Command</B>'
+All the scripts use a '<B>Generated "<code>magick</code>" Command</B>'
 technique, to create the animation.  That is a shell script creates a long
 single command, which is then executed. This avoids the need to generate
 temporary files, though can be difficult to debug. </P>

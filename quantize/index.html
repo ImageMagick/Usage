@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Quantization -- IM v6 Examples</TITLE>
+<TITLE>Quantization -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/quantize/">
@@ -382,9 +382,9 @@ which basically all does exactly the same thing.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick identify -verbose  image.png
-  magick image.png miff:- | magick identify -verbose -
-  magick image.png  -verbose -magick identify null:
+  identify -verbose  image.png
+  magick image.png miff:- | identify -verbose -
+  magick image.png  -verbose -identify null:
   magick image.png  -verbose info:
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -432,7 +432,7 @@ included in the result.  </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=95% bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick tree.gif histogram:- | magick identify -depth 8 -format %c -
+  magick tree.gif histogram:- | identify -depth 8 -format %c -
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 </I></FONT></TD></TR></TABLE>
@@ -686,14 +686,14 @@ specify 'near' colors as well. </P>
 <A NAME="compare"></A>
 <H3>Comparing Two Colors</H3>
 
-So you have two specific colors and you want to magick compare them.
+So you have two specific colors and you want to compare them.
 
 You can use "<B><CODE>compare</CODE></B>" get the RMSE (on standard error)...
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_navy.txt>
-  magick compare -metric RMSE xc:Navy xc:blue null:
+  compare -metric RMSE xc:Navy xc:blue null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -713,7 +713,7 @@ comparing 'fully-transparent black'  vs  'fully-transparent white'.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_transparency.txt>
-  magick compare -metric RMSE xc:'#0000' xc:'#FFF0' null:
+  compare -metric RMSE xc:'#0000' xc:'#FFF0' null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -737,8 +737,8 @@ close. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_blue-navy.txt>
-  magick compare -fuzz 20% -metric AE xc:Navy xc:Blue null:
-  magick compare -fuzz 30% -metric AE xc:Navy xc:Blue null:
+  compare -fuzz 20% -metric AE xc:Navy xc:Blue null:
+  compare -fuzz 30% -metric AE xc:Navy xc:Blue null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -757,7 +757,7 @@ the 'FUZZ' metric.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_blue-navy_fuzz.txt>
-  magick compare -metric FUZZ xc:Navy xc:Blue null:
+  compare -metric FUZZ xc:Navy xc:Blue null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -781,7 +781,7 @@ equivelent (producing a value of 0 or no error pixels)...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_fuzz_trans.txt>
-  magick compare -metric FUZZ xc:'#0000' xc:'#FFF0' null:
+  compare -metric FUZZ xc:'#0000' xc:'#FFF0' null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -977,7 +977,7 @@ photograph to produce a reasonable result.  </P>
   ASIDE: As a reference the "<CODE><A HREF="http://www.lcdf.org/gifsicle/"
   >Gifsicle</A></CODE>" program lists a number of other color quantization
   methods (using it "<CODE>--color-method</CODE>" option). I have no idea as
-  to how well these color quantization methods magick compare to IM.  If you find a
+  to how well these color quantization methods compare to IM.  If you find a
   good reference to different methods of color quantization, please mail me.
 
 </I></FONT></TD></TR></TABLE></P>
@@ -1355,7 +1355,7 @@ pattern so that you can see just how transparent the image is.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick xc:red xc:yellow xc:green1 xc:cyan xc:blue \
           +append -filter Cubic -resize 100x100\!  -size 100x100 \
-          gradient: +matte -compose CopyOpacity -magick composite alpha_gradient.png
+          gradient: -alpha off -compose CopyOpacity -composite alpha_gradient.png
   magick alpha_gradient.png  +dither  -colors 256  alpha_colors_256.png
   magick alpha_gradient.png  +dither  -colors 64   alpha_colors_64.png
   magick alpha_gradient.png  +dither  -colors 15   alpha_colors_15.png
@@ -1694,7 +1694,7 @@ magnified so you can see the individual colored pixel assigned.
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that dither actually generated a three color dither pattern.
-  [ `magick identify -format %k dither.gif` -ne 3 ] && echo >&2 \
+  [ `identify -format %k dither.gif` -ne 3 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Map did not produce a 3 color pattern\!"
 </CODE> -->
 
@@ -1712,7 +1712,7 @@ colors that were in the given color table. </P>
 <!-- <CODE EXECUTE ASSERT>
   # Compare color with original image.  (result should be about 277)
   [ `magick dither_not.gif dither.gif -filter box -resize 1x1\! miff:- |\
-     magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'` -gt 300 ] && echo >&2 \
+     compare -metric PAE - null: 2>&1 | sed 's/ .*//'` -gt 300 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Average larger than expected\!"
 </CODE> -->
 
@@ -1760,7 +1760,7 @@ bottom.
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that dither actually generated a three color dither pattern.
-  [ `magick identify -format %k dither_fs.gif` -ne 3 ] && echo >&2 \
+  [ `identify -format %k dither_fs.gif` -ne 3 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Map did not produce a 3 color pattern\!"
 </CODE> -->
 
@@ -1792,7 +1792,7 @@ by the  Hilbert Curve Dither.
 <TR><TD><PRE><CODE EXECUTE OUT=/dev/null>
   magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
           -remap colortable.gif   -scale 80x80   dither_modified.gif
-  magick compare dither.gif dither_modified.gif dither_difference.gif
+  compare dither.gif dither_modified.gif dither_difference.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR><TD ALIGN=center>
   <A HREF="dither.gif"
@@ -1841,7 +1841,7 @@ one side of the change.
   magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' ppm:- |\
     pnmremap -mapfile=colormap.gif -fs 2>/dev/null | \
       magick - -scale 80x80   dither_fs_modified.gif
-  magick compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
+  compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
 </samp></pre></TD></TR></TABLE>
 -->
 
@@ -1851,7 +1851,7 @@ one side of the change.
   magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
           -dither FloydSteinberg -remap colortable.gif \
           -scale 80x80   dither_fs_modified.gif
-  magick compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
+  compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR><TD ALIGN=center>
   <A HREF="dither_fs.gif"
@@ -2021,7 +2021,7 @@ clearly...
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that magnification shows at least two colors
-  [ `magick identify -format %k speckle_prob_mag.gif` -eq 1 ] && echo >&2 \
+  [ `identify -format %k speckle_prob_mag.gif` -eq 1 ] && echo >&2 \
   "ASSERTION FAILURE: No E-Dither Speckle was found"
 </CODE> -->
 
@@ -2099,7 +2099,7 @@ And a magnification of the same area as before.
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
   # check that magnification shows at least two colors
-  [ `magick identify -format %k speckle_fix_mag.gif` -eq 1 ] && echo >&2 \
+  [ `identify -format %k speckle_fix_mag.gif` -eq 1 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Speckle found in 'Fixed image'"
 </CODE> -->
 
@@ -2139,7 +2139,7 @@ needed, then overlay the white box and its additional color.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 <!-- <CODE EXECUTE ASSERT>
-  colors=`magick identify -format %k speckle_perfect.gif`
+  colors=`identify -format %k speckle_perfect.gif`
   [ "$colors" -lt 10 ] && echo >&2 \
   "ASSERTION FAILURE: 64 Color Image saved with too few colors ($colors)"
 </CODE> -->
@@ -2633,7 +2633,7 @@ Guide, Dithering</A>. </P>
 
 To help with this IM provided a built-in colormap image of this special table
 of 216 colors, called "<CODE>netscape:</CODE>".  So lets look at how our test
-image would look on of an old web browser magick display using these colors.
+image would look on of an old web browser display using these colors.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -2679,7 +2679,7 @@ they will work well.  This is particularly important for symbols and
 navigation images. </P>
 
 Of course today, thanks to the demands by game and web users, you can be
-pretty well assured that most users have a modern computer magick display that does
+pretty well assured that most users have a modern computer display that does
 not have those old color limitations, however the use of this "web safe
 palette" is still around, as it does have other benefits, such an image
 compression.  </P>
@@ -3714,7 +3714,7 @@ that can be used.
           \( +clone -distort SRT 30 \) +swap \
           \( +clone -distort SRT 45 \) +swap \
           \( +clone -distort SRT 0 \)  +swap +delete \
-          -compose Overlay -layers magick composite \
+          -compose Overlay -layers composite \
           -set colorspace CMYK -combine -colorspace RGB \
           offset_colorwheel.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -3748,7 +3748,7 @@ more blurry 'screen pattern'.
           \( +clone -distort SRT 2,30 \) +swap \
           \( +clone -distort SRT 2,45 \) +swap \
           \( +clone -distort SRT 2,0  -blur 0x0.7 \) +swap +delete \
-          -compose Overlay -layers magick composite \
+          -compose Overlay -layers composite \
           -set colorspace CMYK -combine -colorspace RGB \
           offset_parrots.png
 </samp></pre></TD></TR></TABLE>
@@ -3814,7 +3814,7 @@ operator can use.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tmaps_list.txt>
-  magick identify -list threshold
+  identify -list threshold
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -3991,7 +3991,7 @@ Because of the different number of color levels per channel, the above image
 does not contain just pure grey colors, but includes some bluish and yellowish
 pixels which cancels each other out to produce extra levels of greys. </P>
 
-Now magick compare the <A HREF="#ordered-dither" >O-dithered</A> version against
+Now compare the <A HREF="#ordered-dither" >O-dithered</A> version against
 error correction dithered version using a posterization levels of 2, and 6,
 and a "332 colormap" (8 levels of red and green, 4 of blue).
 
@@ -4158,7 +4158,7 @@ multi-image GIF file (not a GIF animation)...
   magick -size 2x2 xc:black \
           \( +clone -draw 'fill white line 0,0 1,0' \) \
           xc:white     dpat_hlines2x2.gif
-  magick montage dpat_hlines2x2.gif    -tile x1 -background none -frame 2 \
+  montage dpat_hlines2x2.gif    -tile x1 -background none -frame 2 \
           -filter box  -geometry 32x32+5+0    dpat_hlines2x2_imgs.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="dpat_hlines2x2.gif"
@@ -4351,7 +4351,7 @@ This was the result.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage dpat_hlines.gif   -filter box   -geometry 60x20+2+0 \
+  montage dpat_hlines.gif   -filter box   -geometry 60x20+2+0 \
           -tile x1 -background none  -frame 2   dpat_hlines_images.gif
   magick gradient.png  dpat_hlines.gif  \
           -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1]' \
@@ -4419,8 +4419,8 @@ some fancy image manipulations to merge all the images together.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 1x10 gradient: -flip -crop 1x1 +repage -delete 0,-1 \
           -scale 12x4\! null: \( dpat_hlines.gif -delete 0 \) \
-          +matte -compose CopyOpacity -layers Composite \
-          -reverse -compose Over -flatten +matte dmap_hlines.png
+          -alpha off -compose CopyOpacity -layers Composite \
+          -reverse -compose Over -flatten -alpha off dmap_hlines.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="dmap_hlines.png"
      ><IMG SRC="dmap_hlines_mag.png"          WIDTH=120 HEIGHT=40
@@ -4582,11 +4582,11 @@ pattern for each pixel in the original image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage dpat_symbols.gif   -geometry +5+0 \
-          -tile x1 -background none -mattecolor blue  -frame 3 \
+  montage dpat_symbols.gif   -geometry +5+0 \
+          -tile x1 -background none -alpha setcolor blue  -frame 3 \
           dpat_syms_images.gif
   magick eyes.gif -alpha off -colorspace sRGB -grayscale Average \
-          +matte -scale 1600% -negate  \
+          -alpha off -scale 1600% -negate  \
           dpat_symbols.gif -virtual-pixel tile -fx 'u[floor(15.9999*u)+1]' \
           eyes_syms.gif
 </samp></pre></TD></TR></TABLE>
@@ -4626,7 +4626,7 @@ war games.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage dpat_map.gif   -geometry +5+0 -tile x1  -background none  \
+  montage dpat_map.gif   -geometry +5+0 -tile x1  -background none  \
           dpat_map_images.gif
   magick -seed 100 \
           -size 200x200 plasma:'gray(50%)-gray(50%)' -blur 0x15 \

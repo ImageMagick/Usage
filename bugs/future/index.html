@@ -2,17 +2,17 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Future Development -- IM v6 Examples</TITLE>
+<TITLE>Future Development -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/future/">
+      HREF="https://imagemagick.org/Usage/bugs/future/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
-<H1>ImageMagick v6 Examples -- <BR>
+<H1>ImageMagick Examples -- <BR>
     <IMG SRC="../../img_www/space.gif" width=50 height=1>
     Future Development</H1>
 
@@ -88,7 +88,7 @@ What is really needed is for the command line API to be re-written in such as
 way as to allow...
 <UL>
 <LI>argument processing, using pure argument order (IMv6 mixes this up a bit)
-<LI>the ability to read all arguments from a file (convert scripts!).  This
+<LI>the ability to read all arguments from a file (magick scripts!).  This
     could allow you to call IM, such as from PHP, without needing to do so
     though a shell wrapper.  That is start IM as a piped open, and feed the
     commands to it.
@@ -116,7 +116,7 @@ This new command line API could in fact be done as a separate command to
 convert, but will need someone to get the ball rolling and keep it moving.
 One previous attempt that failed (probably was done before IM was ready for
 it) was "conjure".   The new version would have to be BOTH command line and
-script capable, and do what convert does to properly replace convert. </P>
+script capable, and do what magick does to properly replace convert. </P>
 
 
 <HR WIDTH=50% ALIGN=left><!-- ---------------- -->
@@ -368,7 +368,7 @@ the use of 'depths' for that image format. </PRE>
 These depth/quantium restriction is becoming a problem for many image formats
 such as  NetPBM,  TXT (IM pixel enumeration),  BMP,  TIFF... etc.. </P>
 
-<PRE>   convert -size 1x1000 gradient:  -define pbmplus:quantum=1000  t.pgm
+<PRE>   magick -size 1x1000 gradient:  -define pbmplus:quantum=1000  t.pgm
 
     P2
     1 1000
@@ -511,7 +511,7 @@ to replace montage completely.  "Convert script?" </P>
 
 Add some control to shadows within "<CODE>montage</CODE>" to allow user
 defined hard or soft shadows in a simular way that the new
-"<CODE>convert</CODE>", "<CODE><A HREF="../../option_link.cgi?shadow"
+"<code>magick</code>", "<CODE><A HREF="../../option_link.cgi?shadow"
 >-shadow</A></CODE>" operator does. </P>
 
 No suggestions as to implimentation, as "<CODE>montage</CODE>" "<CODE><A
@@ -587,14 +587,14 @@ remain their correct values. </P>
 Proposed Solution:  using a "fx:limit" set/define...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=fx_region.txt>
-  convert -size 5x5 plasma: \
+  magick -size 5x5 plasma: \
           -channel R -set fx:limit '1x1+2+2'  -fx 'debug(u)' \
           null: 2>&1 | sort
 
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="fx_region.txt"
      ><IMG SRC="fx_region.txt.gif"
@@ -652,10 +652,10 @@ embedded, but it should only be fixed in IMv7. </P>
 The problem with this is that 'draw' functions is designed to do its
 anti-aliasing of lines and circles in linear RGB space. At least that is what
 my tests are showing! However images which are loaded are using SRGB
-colorspace. If you (correctly) convert images to linear RGB (using -colorspace
-SRGB) before drawing on them, then convert back before saving the draw
+colorspace. If you (correctly) magick images to linear RGB (using -colorspace
+SRGB) before drawing on them, then magick back before saving the draw
 anti-aliasing works perfectly, producing nice smooth edge results.  See <A
-HREF="https://legacy.imagemagick.org/Usage/draw/#colorspace" >Drawing with Gamma
+HREF="https://imagemagick.org/Usage/draw/#colorspace" >Drawing with Gamma
 and Colorspace Correction</A> for examples and details of this. </P>
 
 However as the 'SRGB named colors' are applied by draw without regard to
@@ -695,5 +695,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/future/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/future/</CODE>
 </ADDRESS></BODY></HTML>

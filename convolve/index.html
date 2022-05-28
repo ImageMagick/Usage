@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Convolution of Images -- IM v6 Examples</TITLE>
+<TITLE>Convolution of Images -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/convolve/">
@@ -1422,7 +1422,7 @@ original image.  Especially when applying a very strong blur.  For example...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png  -morphology Convolve Gaussian:0x3  face_strong_blur.png
   magick face.png  face_strong_blur.png \
-          -compose Blend -define compose:args=60,40% -magick composite \
+          -compose Blend -define compose:args=60,40% -composite \
           face_soft_blur.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
@@ -1479,7 +1479,7 @@ the <A HREF="../compose/#blend" >Blend Composition</A> afterwards. </P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \( +clone -blur 0x3 \) \
-          -compose Blend -define compose:args=60 -magick composite \
+          -compose Blend -define compose:args=60 -composite \
           face_soft_blur3.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_soft_blur3.png"
@@ -1546,7 +1546,7 @@ a separate step.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \( +clone -blur 0x2 \) \
-          -compose Blend -define compose:args=-100,200 -magick composite \
+          -compose Blend -define compose:args=-100,200 -composite \
           face_unsharp_fast.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_unsharp_fast.png"
@@ -1569,7 +1569,7 @@ the image, causing some aliasing and color distortions.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \( +clone -blur 0x2 \) \
-          -compose Blend -define compose:args=-200 -magick composite \
+          -compose Blend -define compose:args=-200 -composite \
           face_unsharp_200.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_unsharp_200.png"
@@ -1862,7 +1862,7 @@ For example here I have placed the <A HREF="../morphology/#kernel2image"
 If you look on the <A
 HREF="http://en.wikipedia.org/wiki/Difference_of_Gaussians" >Difference of
 Gaussian, Wikipedia</A> web page you will see some graphs where they also
-magick compare the profile of a '<CODE><A HREF="#log" >LoG</A></CODE>' (or "Maxican
+compare the profile of a '<CODE><A HREF="#log" >LoG</A></CODE>' (or "Maxican
 Hat"), with a '<CODE><A HREF="#dog" >DoG</A></CODE>', showing the verly very
 slight difference between matching curves. </P>
 
@@ -1959,7 +1959,7 @@ For example...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick face.png \
           \( -clone 0 -blur 0x1.8 \) \( -clone 0 -blur 0x2.4 \) -delete 0 \
-          -compose Mathematics -define compose:args=0,-4,4,0.5 -magick composite \
+          -compose Mathematics -define compose:args=0,-4,4,0.5 -composite \
           face_diff_of_blurs.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_diff_blurs.png"
@@ -2680,7 +2680,7 @@ processing.
            \( -clone 0 -morphology Convolve Sobel:0 \) \
            \( -clone 0 -morphology Convolve Sobel:90 \) \
            -delete 0 -solarize 50% -level 50,0% \
-           -compose Lighten -magick composite      face_sobel_maximum_3.png
+           -compose Lighten -composite      face_sobel_maximum_3.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_maximum_3.png"
      ><IMG SRC="face_sobel_maximum_3.png"         WIDTH=80 HEIGHT=80
@@ -2702,7 +2702,7 @@ Theorem</A>).
            \( -clone 0 -morphology Convolve Sobel:0 \) \
            \( -clone 0 -morphology Convolve Sobel:90 \) \
            -delete 0 -solarize 50% -level 50,0% \
-           +level 0,70% -gamma 0.5 -compose plus -magick composite  -gamma 2 \
+           +level 0,70% -gamma 0.5 -compose plus -composite  -gamma 2 \
            -auto-level face_sobel_magnitude.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_sobel_magnitude.png"
@@ -2735,7 +2735,7 @@ two edge detection results.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 30x600 xc:'#0F0' -colorspace HSB \
-          gradient: -compose CopyRed -magick composite \
+          gradient: -compose CopyRed -composite \
           -colorspace RGB -rotate 90  rainbow.jpg
   magick shapes.gif -define convolve:scale='50%!' -bias 50% \
       \( -clone 0 -morphology Convolve Sobel:0 \) \
@@ -2743,7 +2743,7 @@ two edge detection results.
       -delete 0 \
       \( -clone 0,1 -fx '0.5+atan2(v-0.5,0.5-u)/pi/2' rainbow.jpg -clut \) \
       \( -clone 0,1 -fx 'u&gt;0.48&amp;&amp;u&lt;0.52&amp;&amp;v&gt;0.48&amp;&amp;v&lt;0.52 ? 0.0 : 1.0' \) \
-      -delete 0,1 -alpha off -compose CopyOpacity -magick composite \
+      -delete 0,1 -alpha off -compose CopyOpacity -composite \
       face_sobel_direction.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="shapes.gif"
@@ -3464,7 +3464,7 @@ image and sub-image). </I></P>
 <A NAME="correlate_vs_hitandmiss"></A>
 <H3>Correlation vs HitAnd Miss Morphology</H3>
 
-If you magick compare the kernel image as I represented it to kernels that are used
+If you compare the kernel image as I represented it to kernels that are used
 by the <A HREF="../morphology/#hitmiss" >Hit-And-Miss Morphology
 Method</A>, you will find they actually represent the same thing. </P>
 
@@ -3728,7 +3728,7 @@ the appropriate 'life and death' result according to the 'Life Rules'.</P>
 </DIV></P>
 
 The image is very small, so I used a <A HREF="../scripts/enlarge_image"
->Enlarge Image Script</A> to generate a larger version to magick display above, with
+>Enlarge Image Script</A> to generate a larger version to display above, with
 each pixel clearly separated.  </P>
 
 Basically the first 10 pixels are what to do for a 'dead cell', the next 10

@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Fourier Transforms -- IM v6 Examples</TITLE>
+<TITLE>Fourier Transforms -- ImageMagick Examples</TITLE>
 <meta name="author" content="Fred Weinhaus">
 <meta name="description" content="Fourier Transforms in ImageMagick">
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
@@ -271,7 +271,7 @@ for an alternative example to the above. </P>
 
 This '<I>wave superposition</I>' (addition of waves) is much closer, but still
 does not exactly match the image pattern. However, you can continue in this
-manner, adding more waves and adjusting them, so the resulting magick composite wave
+manner, adding more waves and adjusting them, so the resulting composite wave
 gets closer and closer to the actual profile of the original image.  Eventually
 by adding enough waves you can exactly reproduce the original profile of the
 image.  </P>
@@ -425,7 +425,7 @@ FFT Images and its Inverse</A>. </P>
 
 Now, lets simply try a Fourier Transform round trip on the Lena image.  That
 is, we simply do the forward transform and immediately apply the inverse
-transform to get back the original image. Then we will magick compare the results to
+transform to get back the original image. Then we will compare the results to
 see the level of quality produced. </P>
 
 <DIV ALIGN=center>
@@ -434,9 +434,9 @@ see the level of quality produced. </P>
   time magick lena.png -fft -ift lena_roundtrip.png
 
 <n>  echo -n "RMSE = "
-<n>  magick compare -metric RMSE lena.png lena_roundtrip.png null:
+<n>  compare -metric RMSE lena.png lena_roundtrip.png null:
 <n>  echo -n "PAE = "
-<n>  magick compare -metric PAE  lena.png lena_roundtrip.png null:
+<n>  compare -metric PAE  lena.png lena_roundtrip.png null:
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/lena.png"
      ><IMG SRC="../img_photos/lena.png"   WIDTH=128 HEIGHT=128
@@ -598,7 +598,7 @@ into a normal 'spatial' image...
 
 <!-- <CODE EXECUTE ASSERT>
   # check the colors come put correctly
-  [ `magick compare -metric PAE lena_roundtrip.png lena_restored.png null: 2>&1 |\
+  [ `compare -metric PAE lena_roundtrip.png lena_restored.png null: 2>&1 |\
         sed 's/ .*//'` != '0' ] &&  echo >&2 \
     "ASSERTION FAILURE: Saved vs In-Memory FFT roundtrip are different\!"
 </CODE> -->
@@ -778,9 +778,9 @@ ImageMagick</A> to generate another 'round trip' conversion of an image.
   time magick lena.png -fft -ift lena_roundtrip_hdri.png
 
 <n>  echo -n "RMSE = "
-<n>  magick compare -metric RMSE lena.png lena_roundtrip_hdri.png null:
+<n>  compare -metric RMSE lena.png lena_roundtrip_hdri.png null:
 <n>  echo -n "PAE = "
-<n>  magick compare -metric PAE  lena.png lena_roundtrip_hdri.png null:
+<n>  compare -metric PAE  lena.png lena_roundtrip_hdri.png null:
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="lena_roundtrip_hdri.png"
      ><IMG SRC="lena_roundtrip_hdri.png"   WIDTH=128 HEIGHT=128
@@ -795,7 +795,7 @@ ImageMagick</A> to generate another 'round trip' conversion of an image.
 </TD></TR></TABLE>
 </DIV></P>
 
-If you magick compare the results above with the previous non-HDRI comparison...
+If you compare the results above with the previous non-HDRI comparison...
 
 <DIV ALIGN=center>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -857,9 +857,9 @@ Real/Imaginary images.
   time magick lena.png   +fft +ift   lena_roundtrip_ri.png
 
 <n>  echo -n "RMSE = "
-<n>  magick compare -metric RMSE lena.png lena_roundtrip_ri.png null:
+<n>  compare -metric RMSE lena.png lena_roundtrip_ri.png null:
 <n>  echo -n "PAE = "
-<n>  magick compare -metric PAE  lena.png lena_roundtrip_ri.png null:
+<n>  compare -metric PAE  lena.png lena_roundtrip_ri.png null:
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="lena_roundtrip_ri.png"
      ><IMG SRC="lena_roundtrip_ri.png"   WIDTH=128 HEIGHT=128
@@ -1711,14 +1711,14 @@ So lets try doing this with two sizes of circular filters, one of diameter 40
   magick -size 128x128 xc:black -fill white \
           -draw "circle 64,64 44,64" circle_r20.png
   magick lena.png -fft \
-       \( -clone 0 circle_r20.png -compose multiply -magick composite \) \
+       \( -clone 0 circle_r20.png -compose multiply -composite \) \
        \( +clone -evaluate log 10000 -write lena_blur_r20_spec.png +delete \) \
        -swap 0 +delete -ift lena_blur_r20.png
 
   magick -size 128x128 xc:black -fill white \
           -draw "circle 64,64 50,64" circle_r14.png
   magick lena.png -fft \
-       \( -clone 0 circle_r14.png -compose multiply -magick composite \) \
+       \( -clone 0 circle_r14.png -compose multiply -composite \) \
        \( +clone -evaluate log 10000 -write lena_blur_r14_spec.png +delete \) \
        -swap 0 +delete -ift lena_blur_r14.png
 </samp></pre></TD></TR></TABLE>
@@ -1780,13 +1780,13 @@ most of the sever 'ringing' effects.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick circle_r20.png -blur 0x4 -auto-level gaussian_r20.png
   magick lena.png -fft \
-       \( -clone 0 gaussian_r20.png -compose multiply -magick composite \) \
+       \( -clone 0 gaussian_r20.png -compose multiply -composite \) \
        \( +clone -evaluate log 10000 -write lena_gblur_r20_spec.png +delete \) \
        -swap 0 +delete -ift lena_gblur_r20.png
 
   magick circle_r14.png -blur 0x4 -auto-level gaussian_r14.png
   magick lena.png -fft \
-       \( -clone 0 gaussian_r14.png -compose multiply -magick composite \) \
+       \( -clone 0 gaussian_r14.png -compose multiply -composite \) \
        \( +clone -evaluate log 10000 -write lena_gblur_r14_spec.png +delete \) \
        -swap 0 +delete -ift lena_gblur_r14.png
 </samp></pre></TD></TR></TABLE>
@@ -1867,14 +1867,14 @@ And then again using a purely gaussian curve. </P>
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick circle_r14.png -negate circle_r14i.png
   magick lena.png -fft \
-       \( -clone 0 circle_r14i.png -compose multiply -magick composite \) \
+       \( -clone 0 circle_r14i.png -compose multiply -composite \) \
        \( +clone -evaluate log 10000 -write lena_edge_r14_spec.png +delete \) \
        -delete 0 +swap -ift -normalize lena_edge_r14.png
 
   magick -size 128x128 xc: -draw "point 64,64" -blur 0x14 \
           -auto-level   gaussian_s14i.png
   magick lena.png -fft \
-       \( -clone 0 gaussian_s14i.png -compose multiply -magick composite \) \
+       \( -clone 0 gaussian_s14i.png -compose multiply -composite \) \
        \( +clone -evaluate log 10000 -write lena_edge_s14_spec.png +delete \) \
        -delete 0 +swap -ift -normalize lena_edge_s14.png
 </samp></pre></TD></TR></TABLE>
@@ -1931,9 +1931,9 @@ the normalization stretch) and then blend it with the original image.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena.png -fft \
        \( -size 128x128 xc: -draw "point 64,64" -blur 0x14 -auto-level \
-          -clone 0 -compose multiply -magick composite \) \
+          -clone 0 -compose multiply -composite \) \
        -delete 0 +swap -ift \
-       lena.png -compose blend -set option:compose:args 100x100 -magick composite \
+       lena.png -compose blend -set option:compose:args 100x100 -composite \
        lena_sharp14.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../img_photos/lena.png"
@@ -2019,13 +2019,13 @@ a difference image against the unedited version. Like this...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_spectrum_edited.png clown_spectrum.png \
-          -compose difference -magick composite \
+          -compose difference -composite \
           -threshold 0 -negate clown_spectrum_mask.png
 </samp></pre></TD></TR></TABLE>
 <!-- This is the inverse of the above -- That is I am cheating :-)
 <CODE EXECUTE>
   magick clown_spectrum_mask.png -negate -background red -alpha shape \
-          clown_spectrum.png +swap -magick composite  clown_spectrum_edited.png
+          clown_spectrum.png +swap -composite  clown_spectrum_edited.png
 </CODE> -->
   <A HREF="clown_spectrum_edited.png"
      ><IMG SRC="clown_spectrum_edited.png"   WIDTH=128 HEIGHT=128
@@ -2037,14 +2037,14 @@ a difference image against the unedited version. Like this...
 </DIV></P>
 
 Now we simply multiply the mask with the magnitude and use the result with the
-original phase image to transform back to the spatial domain. We magick display the
+original phase image to transform back to the spatial domain. We display the
 original image next to it for comparison </P>
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_magnitude.png clown_spectrum_mask.png \
-          -compose multiply -magick composite \
+          -compose multiply -composite \
           clown_phase.png -ift clown_filtered.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="clown_orig.jpg"
@@ -2082,7 +2082,7 @@ And filter the clown, this time re-generating the FFT images in memory.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_orig.jpg -fft \
-          \( -clone 0 clown_mask_blurred.png -compose multiply -magick composite \) \
+          \( -clone 0 clown_mask_blurred.png -compose multiply -composite \) \
           -swap 0 +delete -ift clown_filtered_2.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="clown_filtered_2.png"
@@ -2102,7 +2102,7 @@ an image of the areas where noise was removed.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_orig.jpg clown_filtered_2.png -compose difference \
-          -magick composite -normalize clown_noise.png
+          -composite -normalize clown_noise.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="clown_noise.png"
      ><IMG SRC="clown_noise.png"   WIDTH=128 HEIGHT=128
@@ -2142,13 +2142,13 @@ color (it really doesn't matter which color is used)...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick twigs_spectrum_edited.png twigs_spectrum.png \
-          -compose difference -magick composite \
+          -compose difference -composite \
           -threshold 0 -negate twigs_spectrum_mask.png
 </samp></pre></TD></TR></TABLE>
 <!-- This is the inverse of the above -- That is I am cheating :-)
 <CODE EXECUTE>
   magick twigs_spectrum_mask.png -negate -background blue -alpha shape \
-          twigs_spectrum.png +swap -magick composite  twigs_spectrum_edited.png
+          twigs_spectrum.png +swap -composite  twigs_spectrum_edited.png
 </CODE> -->
   <A HREF="twigs_spectrum_edited.png"
      ><IMG SRC="twigs_spectrum_edited.png"   WIDTH=256 HEIGHT=256
@@ -2166,7 +2166,7 @@ the image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick twigs.jpg -fft \
-          \( -clone 0 twigs_spectrum_mask.png -compose multiply -magick composite \) \
+          \( -clone 0 twigs_spectrum_mask.png -compose multiply -composite \) \
           -swap 0 +delete  -ift twigs_filtered.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="twigs.jpg"
@@ -2184,7 +2184,7 @@ an image of the areas where noise was removed. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick twigs.jpg twigs_filtered.png -compose difference -magick composite \
+  magick twigs.jpg twigs_filtered.png -compose difference -composite \
           -normalize twigs_noise.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="twigs_noise.png"

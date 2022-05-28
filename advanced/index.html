@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Advanced Techniques -- IM v6 Examples</TITLE>
+<TITLE>Advanced Techniques -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/advanced/">
@@ -125,11 +125,11 @@ result also has a Boolean transparency appropriate for a GIF format image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NO_EXECUTE>
-    magick {<I>input_image</I>} -matte \
+    magick {<I>input_image</I>} -alpha set \
             \( +clone -channel A -separate +channel \
                -bordercolor black -border 5  -blur 0x2 -shade 120x30 \
                -normalize -blur 0x1 -fill {<I>color</I>} -tint 100 \) \
-            -gravity center -compose Atop -magick composite \
+            -gravity center -compose Atop -composite \
             {<I>output_image</I>}
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -354,7 +354,7 @@ Lets first create a shape for the color background of logo example...
           -fill white -draw 'circle    60,50  40,50' \
                       -draw 'circle   110,50 130,50' \
                       -draw 'rectangle 60,30 110,70' \
-          -gaussian 1x1 +matte logo_mask.png
+          -gaussian 1x1 -alpha off logo_mask.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="logo_mask.png"
       ><IMG SRC="logo_mask.png"       WIDTH=170  HEIGHT=100
@@ -388,8 +388,8 @@ Now lets give it a 3D-look, by using <A HREF="../transform/#shade_overlay"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick logo.png  -alpha extract -blur 0x6  -shade 110x30  -normalize \
-          logo.png  -compose Overlay -magick composite \
-          logo.png  -alpha on  -compose Dst_In  -magick composite \
+          logo.png  -compose Overlay -composite \
+          logo.png  -alpha on  -compose Dst_In  -composite \
           logo_3D.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="logo_3D.png"
@@ -425,7 +425,7 @@ such examples.
           \( +clone +repage -alpha off -fx 'rand()' -shade 120x30 \
              -fill grey70 -colorize 60 \
              -fill lavender -tint 100 \) \
-          +swap -magick composite logo_3D_bg.jpg
+          +swap -composite logo_3D_bg.jpg
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="logo_3D_bg.jpg"
       ><IMG SRC="logo_3D_bg.jpg"
@@ -461,7 +461,7 @@ context.  For example... <BR CLEAR=all>
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick pokemon.gif \( +clone -flip \) -append \
           -size 100x100 xc:black +swap \
-          -gravity North -geometry +0+5 -magick composite  reflect_perfect.png
+          -gravity North -geometry +0+5 -composite  reflect_perfect.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="reflect_perfect.png"
       ><IMG SRC="reflect_perfect.png"    WIDTH=100  HEIGHT=100
@@ -501,7 +501,7 @@ a black surface.
   magick pokemon.gif \
       \( +clone -flip -fill black -colorize 65% \) -append \
       -size 100x100 xc:black +swap \
-      -gravity North -geometry +0+5 -magick composite  reflect_colored.png
+      -gravity North -geometry +0+5 -composite  reflect_colored.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="reflect_colored.png"
       ><IMG SRC="reflect_colored.png"    WIDTH=100  HEIGHT=100
@@ -521,7 +521,7 @@ value, to make only about 35% of the source object visible.
   magick pokemon.gif -alpha on \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \) -append \
       -size 100x100 xc:black +swap \
-      -gravity North -geometry +0+5 -magick composite  reflect_alpha.png
+      -gravity North -geometry +0+5 -composite  reflect_alpha.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="reflect_alpha.png"
       ><IMG SRC="reflect_alpha.png"    WIDTH=100  HEIGHT=100
@@ -558,7 +558,7 @@ wooden floor.
   magick pokemon.gif -alpha on \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \) -append \
       wooden_floor.png +swap \
-      -gravity North -geometry +0+5 -magick composite  reflect_wood.png
+      -gravity North -geometry +0+5 -composite  reflect_wood.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="reflect_wood.png"
       ><IMG SRC="reflect_wood.png"    WIDTH=100  HEIGHT=100
@@ -583,7 +583,7 @@ Okay. Lets try something a little more fancy, and give the image a bit of some
       +distort Perspective '0,0 0,0  0,64 0,64  64,0 54,10  64,64 54,54' \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \) -append \
       +filter  -size 100x100 xc:black +swap \
-      -gravity North -geometry +0+5 -magick composite  reflect_distort_bad.png
+      -gravity North -geometry +0+5 -composite  reflect_distort_bad.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="reflect_distort_bad.png"
       ><IMG SRC="reflect_distort_bad.png"    WIDTH=100  HEIGHT=100
@@ -615,7 +615,7 @@ results together.
          +distort Perspective '0,0,0,128  0,64,0,64  64,0,54,98  64,64,54,54' \
       \) -delete 0 +swap -background none  -layers merge \
       +filter  -size 100x100 xc:black +swap \
-      -gravity North -geometry +0+5 -magick composite  reflect_distort_sep.png
+      -gravity North -geometry +0+5 -composite  reflect_distort_sep.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="reflect_distort_sep.png"
       ><IMG SRC="reflect_distort_sep.png"    WIDTH=100  HEIGHT=100
@@ -736,7 +736,7 @@ the reflection a little brighter close to the image.
   magick pokemon.gif -alpha on \
       \( +clone -flip \
          -size 64x28 gradient:gray40-black   \
-         -alpha off -compose CopyOpacity -magick composite \
+         -alpha off -compose CopyOpacity -composite \
       \) -append \
       -gravity North  -crop 100x100+0-5\! \
       -background black -compose Over -flatten    reflect_attenuated.png
@@ -783,7 +783,7 @@ so you can see the whole reflection, so you can appreciate its effect.
       -background None -gravity South -extent 100x100 \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \
          -size 100x100 gradient:gray5-white \
-         -compose Blur -set option:compose:args 10 -magick composite -compose Over \
+         -compose Blur -set option:compose:args 10 -composite -compose Over \
       \) -append -trim +repage \
       -gravity North  -crop 100x140+0-5\! \
       -background black -compose Over -flatten    reflect_blurred.png
@@ -811,9 +811,9 @@ not-so-polished, but smooth surface reflection.
       \( +clone -flip \
          \( -size 100x64 gradient:'rgba(0,0,0,0.6)-none' \
             -size 100x36 xc:none  -append \
-         \) -compose Dst_In -magick composite \
+         \) -compose Dst_In -composite \
          \( -size 100x100 gradient:gray5-white \
-         \) -compose Blur -set option:compose:args 4x8 -magick composite \
+         \) -compose Blur -set option:compose:args 4x8 -composite \
       \) -append -trim +repage \
       -gravity North  -crop 100x140+0-5\! \
       -background black -compose Over -flatten    reflect_blur_atten.png
@@ -917,7 +917,7 @@ to be cutout to form the jigsaw piece.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
     magick holocaust_md.jpg \
             \( jigsaw_edge.png -negate \) -geometry +365+96 \
-            -compose multiply -magick composite \
+            -compose multiply -composite \
             -crop 100x100+365+96 +repage jigsaw_outline.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="jigsaw_outline.png"
@@ -951,7 +951,7 @@ so lets cut it out and rotate it too.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
     magick holocaust_md.jpg \
             -crop 100x100+365+96\! -background none -flatten +repage \
-            \( jigsaw_tmpl.png +matte \) -compose CopyOpacity -magick composite \
+            \( jigsaw_tmpl.png -alpha off \) -compose CopyOpacity -composite \
             -rotate -20 -gravity center -crop 100x100+0+0 +repage \
             jigsaw_cutout.png
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -990,8 +990,8 @@ fine control (4 separate factors) of way the highlight is produced.
               -background black -virtual-pixel background \
               -blur 0x2 -shade 120x21.78 -contrast-stretch 0% \
               +sigmoidal-contrast 7x50%  -fill grey50 -colorize 10% \
-              +clone +swap -compose overlay -magick composite \) \
-          -compose In -magick composite jigsaw_bevel.png
+              +clone +swap -compose overlay -composite \) \
+          -compose In -composite jigsaw_bevel.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="jigsaw_bevel.png"
       ><IMG SRC="jigsaw_bevel.png"           WIDTH=100  HEIGHT=100
@@ -1161,7 +1161,7 @@ following command will let you do ALL of them very quickly.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mask_*.png -set filename:mask %t -alpha shape \
-          null: image.jpg -compose In -layers magick composite \
+          null: image.jpg -compose In -layers composite \
           pieces_%[filename:mask].png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -1229,8 +1229,8 @@ modified blurred shade operation...
     magick gel_shape.png \
             \( +clone -alpha extract  -blur 0x12  -shade 110x0 -normalize \
                -sigmoidal-contrast 16,60% -evaluate multiply .5 \
-               -roll +5+10 +clone -compose Screen -magick composite \) \
-            -compose In  -magick composite  gel_highlight.png
+               -roll +5+10 +clone -compose Screen -composite \) \
+            -compose In  -composite  gel_highlight.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="gel_highlight.png"
       ><IMG SRC="gel_highlight.png"            WIDTH=100  HEIGHT=60
@@ -1272,7 +1272,7 @@ Now all that is left is to darken the borders a little...
     magick gel_highlight.png \
           \( +clone -alpha extract  -blur 0x2 -shade 0x90 -normalize \
              -blur 0x2  +level 60,100%  -alpha On \) \
-          -compose Multiply  -magick composite  gel_border.png
+          -compose Multiply  -composite  gel_border.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="gel_border.png"
       ><IMG SRC="gel_border.png"            WIDTH=100  HEIGHT=60
@@ -1429,7 +1429,7 @@ lighting effect darker.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick aqua_lighting.png \
           \( +clone -alpha extract  -blur 0x2 \) \
-          -channel RGB -compose multiply -magick composite \
+          -channel RGB -compose multiply -composite \
           aqua_light+edge.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -1447,7 +1447,7 @@ Composition</A>.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick aqua_shape.png aqua_light+edge.png \
-          -compose Hardlight -magick composite   aqua_result.png
+          -compose Hardlight -composite   aqua_result.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
    <A HREF="aqua_result.png"
@@ -1473,10 +1473,10 @@ shape image, all in one command.
              -background gray50 -alpha background -auto-level \
              -function polynomial  3.5,-5.05,2.05,0.3 \
              \( +clone -alpha extract  -blur 0x2 \) \
-             -channel RGB -compose multiply -magick composite \
+             -channel RGB -compose multiply -composite \
              +channel +compose -chop 1x1 \
           \) \
-          -compose Hardlight -magick composite  aqua_text.png
+          -compose Hardlight -composite  aqua_text.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="aqua_text.png"
      ><IMG SRC="aqua_text.png"
@@ -1505,7 +1505,7 @@ out generate a speckle pattern.
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 100x100 xc: +noise Random -channel R -threshold 5% \
           -negate -channel RG -separate +channel \
-          -compose multiply -magick composite   speckles.gif
+          -compose multiply -composite   speckles.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
   <A HREF="speckles.gif"
@@ -1670,10 +1670,10 @@ animation</A> you can make set of stars that look like christmas decorations.
   magick -size 100x100 xc: +noise Random -separate \
           null: \
             \( xc: +noise Random -separate -threshold 50% -negate \) \
-            -compose CopyOpacity -layers magick composite \
+            -compose CopyOpacity -layers composite \
           null: \
             plasma:red-firebrick plasma:red-firebrick plasma:red-firebrick \
-            -compose Screen -layers magick composite \
+            -compose Screen -layers composite \
           null:  \
             \( xc: +noise Random -channel R -threshold .08% \
               -negate -channel RG -separate +channel \
@@ -1683,7 +1683,7 @@ animation</A> you can make set of stars that look like christmas decorations.
               \( -clone 0  -motion-blur 0x15+30  -motion-blur 0x15-150 \) \
               \( -clone 0  -motion-blur 0x15-30  -motion-blur 0x15+150 \) \
               -compose screen -background black -flatten  -normalize \) \
-            -compose multiply -layers magick composite \
+            -compose multiply -layers composite \
           -set delay 30 -loop 0 -layers Optimize       stars_xmas.gif
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -1716,7 +1716,7 @@ What can you to with this star generator? </P>
     image.  That is rays are not just 'cutoff'.
 
 <LI>Create an animation of a random star bursts.  This may require you to
-    magick animate a single field of star bursts (perhaps with the rays rotating).
+    animate a single field of star bursts (perhaps with the rays rotating).
 
 <LI>By generating a few star burst animations, you can  merge them
     together to form a series of overlapping star bursts from different
@@ -1749,7 +1749,7 @@ sets the number of rays that will be produced.
   magick -size 100x1 xc: +noise Random -channel G -separate +channel \
           -scale 100x100\!                                +write flare_1a.png \
           \( -size 100x100 gradient:'gray(100%)' -sigmoidal-contrast 10x50% \) \
-          -colorspace sRGB -compose hardlight -magick composite  +write flare_1b.png \
+          -colorspace sRGB -compose hardlight -composite  +write flare_1b.png \
           -virtual-pixel HorizontalTileEdge -distort Polar -1 \
           flare_1_final.png
 </samp></pre></TD></TR></TABLE>

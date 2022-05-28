@@ -2,11 +2,11 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Quantization -- IM v6 Examples</TITLE>
+<TITLE>Quantization -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/quantization">
+      HREF="https://imagemagick.org/Usage/bugs/quantization">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
@@ -51,17 +51,17 @@ currently in Imagemagick this is NOT a straight forward. </P>
 Quantization of a gradient should space colors along the gradient equally,
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 20x640  gradient: -rotate 90    gradient_gray.png
-  convert gradient_gray.png  +dither  -colors 3   gray_3.png
-  convert gradient_gray.png  +dither  -colors 4   gray_4.png
-  convert gradient_gray.png  +dither  -colors 5   gray_5.png
-  convert gradient_gray.png  +dither  -colors 6   gray_6.png
-  convert gradient_gray.png  +dither  -colors 7   gray_7.png
-  convert gradient_gray.png  +dither  -colors 8   gray_8.png
-  convert gradient_gray.png  +dither  -colors 9   gray_9.png
-</CODE></PRE></TD></TR></TABLE><CODE><NOBR>
+  magick -size 20x640  gradient: -rotate 90    gradient_gray.png
+  magick gradient_gray.png  +dither  -colors 3   gray_3.png
+  magick gradient_gray.png  +dither  -colors 4   gray_4.png
+  magick gradient_gray.png  +dither  -colors 5   gray_5.png
+  magick gradient_gray.png  +dither  -colors 6   gray_6.png
+  magick gradient_gray.png  +dither  -colors 7   gray_7.png
+  magick gradient_gray.png  +dither  -colors 8   gray_8.png
+  magick gradient_gray.png  +dither  -colors 9   gray_9.png
+</samp></pre></TD></TR></TABLE><CODE>
 -:<A HREF="gradient_gray.png"
      ><IMG SRC="gradient_gray.png"    WIDTH=640   HEIGHT=20
            ALIGN=middle VSPACE=10 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
@@ -86,7 +86,7 @@ Quantization of a gradient should space colors along the gradient equally,
 9:<A HREF="gray_9.png"
      ><IMG SRC="gray_9.png"    WIDTH=640   HEIGHT=20
            ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR><CODE></DIV></P>
+<CODE></DIV></P>
 
 As you can see it is working, though some of the color ranges are not very
 equal.  Not only that but '9' colors did not generate 9 colors! </P>
@@ -94,17 +94,17 @@ equal.  Not only that but '9' colors did not generate 9 colors! </P>
 This seems to get worse for a linear but non-standard color gradient...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  convert -size 20x640  gradient:wheat-tomato -rotate 90  gradient_color.png
-  convert gradient_color.png  +dither  -colors 3   color_3.png
-  convert gradient_color.png  +dither  -colors 4   color_4.png
-  convert gradient_color.png  +dither  -colors 5   color_5.png
-  convert gradient_color.png  +dither  -colors 6   color_6.png
-  convert gradient_color.png  +dither  -colors 7   color_7.png
-  convert gradient_color.png  +dither  -colors 8   color_8.png
-  convert gradient_color.png  +dither  -colors 9   color_9.png
-</CODE></PRE></TD></TR></TABLE><CODE><BR>
+  magick -size 20x640  gradient:wheat-tomato -rotate 90  gradient_color.png
+  magick gradient_color.png  +dither  -colors 3   color_3.png
+  magick gradient_color.png  +dither  -colors 4   color_4.png
+  magick gradient_color.png  +dither  -colors 5   color_5.png
+  magick gradient_color.png  +dither  -colors 6   color_6.png
+  magick gradient_color.png  +dither  -colors 7   color_7.png
+  magick gradient_color.png  +dither  -colors 8   color_8.png
+  magick gradient_color.png  +dither  -colors 9   color_9.png
+</samp></pre></TD></TR></TABLE><CODE><BR>
 -:<A HREF="gradient_color.png"
    ><IMG SRC="gradient_color.png"    WIDTH=640   HEIGHT=20
          ALIGN=middle VSPACE=10 HSPACE=5 BORDER=1 ALT="[IM Output]"></A><BR>
@@ -129,7 +129,7 @@ This seems to get worse for a linear but non-standard color gradient...
 9:<A HREF="color_9.png"
    ><IMG SRC="color_9.png"    WIDTH=640   HEIGHT=20
          ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR><CODE></DIV></P>
+<CODE></DIV></P>
 
 The above clearly shows that the current (IM 6.6.9) is not acceptable for low
 numbers of colors, which is typically the case when quantization is being
@@ -160,15 +160,15 @@ In this example a linear greyscale and transparency gradient is generated, and
 then replaces 'similar colors' to full-transparency.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 100x100 gradient: \( +clone -rotate 90 \) +swap \
           -compose CopyOpacity -composite  gradient_trans.png
-  convert gradient_trans.png +dither -colors 4  trans_4.png
-  convert gradient_trans.png +dither -colors 8  trans_8.png
-  convert gradient_trans.png +dither -colors 16 trans_16.png
+  magick gradient_trans.png +dither -colors 4  trans_4.png
+  magick gradient_trans.png +dither -colors 8  trans_8.png
+  magick gradient_trans.png +dither -colors 16 trans_16.png
 </CODE><BR></PRE></TD></TR></TABLE>
-<TABLE BORDER=1 WIDTH=80% CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
+<table class="table table-sm table-hover" width="90%" CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="gradient_trans.png"
      ><IMG SRC="gradient_trans.png"     WIDTH=100  HEIGHT=100
@@ -192,12 +192,12 @@ then replaces 'similar colors' to full-transparency.
 Note the "<CODE>-quantize transparent</CODE>" setting forces quantization to
 ignore transparency channel. </P>
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert gradient_trans.png -quantize transparent \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick gradient_trans.png -quantize transparent \
           +dither -colors 16 trans_16_trans.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
-<TABLE BORDER=1 CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
+</samp></pre></TD></TR></TABLE></TD><TD>
+<table class="table table-sm table-hover" CELLPADDING=10 BACKGROUND="../../images/bg.gif"><TR>
 <TD ALIGN=center>
   <A HREF="trans_16_trans.png"
      ><IMG SRC="trans_16_trans.png"       WIDTH=100 HEIGHT=100
@@ -220,6 +220,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/quantization/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/quantization/</CODE>
 </ADDRESS></BODY></HTML>
 

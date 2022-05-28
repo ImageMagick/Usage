@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Video Handling -- IM v6 Examples</TITLE>
+<TITLE>Video Handling -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/video/">
@@ -47,7 +47,7 @@ to help us mutually explore IM video conversion techniques. </P>
 <!-- <CODE EXECUTE>
     ls -Hl plane.avi | awk '{printf "%d", $5}'        > plane_avi_size.txt
     magick -quiet plane.avi +append -format %k info: > plane_avi_ncolors.txt
-    magick identify -quiet -format %n plane.avi              > plane_avi_frames.txt
+    identify -quiet -format %n plane.avi              > plane_avi_frames.txt
 </CODE> -->
 However while the AVI itself is quite small, the uncompressed video
 is a massive
@@ -557,7 +557,7 @@ result we works so hard to achieve before.  Which is disappointing. </P>
 
 Not all images are from digital cameras.  It is very common to extract images
 from a digital video feed from a non-CCD video camera.  These images are
-interlaced for direct magick display on a TV, resulting in every second line being a
+interlaced for direct display on a TV, resulting in every second line being a
 different frame of the image (interlacing). </P>
 
 For two frames where things aren't moving, the interlacing is usually not very
@@ -633,7 +633,7 @@ white lines, or use '<CODE><A HREF="../compose/#multiply"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 pattern:Horizontal2 \
-          interlaced.png -compose Multiply -magick composite  deinterlace_2.png
+          interlaced.png -compose Multiply -composite  deinterlace_2.png
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="deinterlace_2.png"
       ><IMG SRC="deinterlace_2.png"       WIDTH=100 HEIGHT=100

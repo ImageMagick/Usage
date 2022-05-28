@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>File Handling -- IM v6 Examples</TITLE>
+<TITLE>File Handling -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/files/">
@@ -120,7 +120,7 @@ general.  </P>
 One of the most common uses of ImageMagick is not to modify images at all, but
 only to magick an image from one image format to another.  In fact this was
 the original reason for IM's creation was this sort of image format
-conversion. This is why the primary IM command is call "<CODE>convert</CODE>".
+conversion. This is why the primary IM command is call "<code>magick</code>".
 </P>
 
 To this end, ImageMagick can handle a bewildering array of image and file
@@ -236,11 +236,11 @@ shell to do this, or problems with command line length limits.  For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage  '*.jpg' -geometry 50x50+2+2  image_index.gif
+  montage  '*.jpg' -geometry 50x50+2+2  image_index.gif
 </samp></pre></TD></TR></TABLE>
 </DIV>
 
-This will produce a single magick montage index image of all the JPEG files in the
+This will produce a single montage index image of all the JPEG files in the
 current directory.  Note however that I needed to quote the argument to
 prevent my UNIX shell from expanding the file names rather than ImageMagick.
 See below for a more complete "<CODE>montage</CODE>" specification. </P>
@@ -504,7 +504,7 @@ effects.  A '<CODE>#</CODE>' represent some number.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage '*.tiff'  -geometry 100x100+5+5 -frame 4  index.jpg
+  montage '*.tiff'  -geometry 100x100+5+5 -frame 4  index.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV>
 
@@ -514,7 +514,7 @@ effects.  A '<CODE>#</CODE>' represent some number.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage '*.tiff[100x100]'  -geometry 100x100+5+5 -frame 4  index.jpg
+  montage '*.tiff[100x100]'  -geometry 100x100+5+5 -frame 4  index.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -530,7 +530,7 @@ effects.  A '<CODE>#</CODE>' represent some number.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick montage -define jpeg:size=200x200 '*.jpg[100x100]' -strip \
+  montage -define jpeg:size=200x200 '*.jpg[100x100]' -strip \
           -geometry 100x100+5+5 -frame 4  index.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -568,7 +568,7 @@ effects.  A '<CODE>#</CODE>' represent some number.
 
     If you want to handle really large images I suggest you look at the
     "<CODE><A HREF="../basics/#stream" >stream</A></CODE>" command and pipe
-    you image into the "<CODE>convert</CODE>" command for further processing.
+    you image into the "<code>magick</code>" command for further processing.
     See <A HREF="#massive" >Massive Image Handling</A> below. </P>
 
 </DL></DL></P>
@@ -719,7 +719,7 @@ See  <A HREF="#save_gzip" >Saving Compressed Images</A> below.
 Processing images is well and good but it can be just as important to save the
 results in the right way. </P>
 
-The last argument of the "<CODE>convert</CODE>", "<CODE>montage</CODE>" and
+The last argument of the "<code>magick</code>", "<CODE>montage</CODE>" and
 "<CODE>composite</CODE>" defines a filename, and image format for a final
 write of the image (defailt image output).  Though you can also save an image
 in the middle of an image sequence using "<CODE><A
@@ -776,7 +776,7 @@ a temporary file.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=write_identify.txt>
-  magick tree.gif -resize 200% miff:- | magick identify -
+  magick tree.gif -resize 200% miff:- | identify -
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -918,7 +918,7 @@ achieving its best compression.
 
 How browsers handle a gzipped image depends on the file type returned by the
 web server and how your browser handled compressed images.  Because of this
-I did not directly magick display the above image.  Click on the 'art' icon to see
+I did not directly display the above image.  Click on the 'art' icon to see
 what your browser does, with such an image from this web server. </P>
 
 Compare the size of this to a normal saved LZW compressed GIF image...
@@ -1487,7 +1487,7 @@ special handling of images. </P>
     collages, animations, or something else. </P>
 
     For example the following generates a list of colors starting with the
-    letter 'b', then uses a loop of "<CODE>convert</CODE>" commands to
+    letter 'b', then uses a loop of "<code>magick</code>" commands to
     generate a labeled color patch, one color at a time.  These are then
     'piped' into a "<CODE>montage</CODE>" to generate a simple color table.
 
@@ -1498,7 +1498,7 @@ special handling of images. </P>
     while read color junk; do \
        magick -label $color -size 70x20 xc:$color +depth miff:-; \
     done |\
-      magick montage - -frame 5 -tile 6x -geometry +2+2 \
+      montage - -frame 5 -tile 6x -geometry +2+2 \
               -background none color_table.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="color_table.png"
@@ -1508,7 +1508,7 @@ special handling of images. </P>
 
     The above specific example was programmed into a script "<B><A
     HREF="../scripts/show_colors" >show_colors</A></B>" which you can use to
-    search for, find and magick display colors, for use in your image processing.
+    search for, find and display colors, for use in your image processing.
     </P>
 
     The above is an example of a '<B>Pipeline of Streaming Images</B> that is
@@ -1527,7 +1527,7 @@ special handling of images. </P>
 
     The alternative method (commonly using in PHP scripts) is to use
     a 'generated command' technique, that uses a shell script to generate
-    a long "<CODE>convert</CODE>" comamnd to be run. The scripts in <A
+    a long "<code>magick</code>" comamnd to be run. The scripts in <A
     HREF="../warping/#animations" >Image Warping Animations</A> use this
     technique. </P>
 
@@ -1609,10 +1609,10 @@ special handling of images. </P>
     <TD WIDTH=90% ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=info_thumbnail.txt >
-  magick logo:           -magick identify \
-          -trim           -magick identify \
-          +repage         -magick identify \
-          -resize 80x80\! -magick identify \
+  magick logo:           -identify \
+          -trim           -identify \
+          +repage         -identify \
+          -resize 80x80\! -identify \
           logo_thumbnail.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="logo_thumbnail.gif"
@@ -1670,7 +1670,7 @@ special handling of images. </P>
 
       For example &nbsp;&nbsp; </I> "<CODE>-verbose -write
       info:image_info.txt +verbose</CODE>" <I> &nbsp;&nbsp; or
-      &nbsp;&nbsp; </I> "<CODE>-verbose -magick identify +verbose</CODE>"
+      &nbsp;&nbsp; </I> "<CODE>-verbose -identify +verbose</CODE>"
       <I>.
 
     </I></FONT></TD></TR></TABLE></P>
@@ -1704,7 +1704,7 @@ special handling of images. </P>
 <DT><A NAME="null"></A>
     <B><CODE>null:</CODE></B>
 <DD>As an output format, this will just 'junk' the image results.  As such if
-    used as the final argument in a "<CODE>convert</CODE>",
+    used as the final argument in a "<code>magick</code>",
     "<CODE>montage</CODE>", or "<CODE>composite</CODE>" command the final
     result will not be saved! </P>
 
@@ -1846,7 +1846,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick netscape: -scale 2x2\! -colorspace LAB -matte txt_cspace_lab.txt
+  magick netscape: -scale 2x2\! -colorspace LAB -alpha set txt_cspace_lab.txt
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1861,15 +1861,15 @@ special handling of images. </P>
     head -1 | grep -i ,RGB\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output using RGB FAILED\!"
   [ "`magick rose: txt:- |\
-          magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using RGB FAILED\!"
 
-  magick rose: -matte -depth 16 txt:- |\
+  magick rose: -alpha set -depth 16 txt:- |\
     head -1 | grep -i ,RGBA\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output RGB with alpha FAILED\!"
-  [ "`magick rose: -matte txt:- |\
-          magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+  [ "`magick rose: -alpha set txt:- |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using RGB with alpha FAILED\!"
 
@@ -1878,16 +1878,16 @@ special handling of images. </P>
     "ASSERTION FAILURE: TXT output using CMYK FAILED\!"
   [ "`magick rose: -colorspace CMYK txt:- |\
         magick - -colorspace RGB miff:- |\
-          magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using CMYK FAILED\!"
 
-  magick rose: -colorspace CMYK -matte -depth 16 txt:- |\
+  magick rose: -colorspace CMYK -alpha set -depth 16 txt:- |\
     head -1 | grep -i ,CMYKA\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output CMYK with alpha FAILED\!"
-  [ "`magick rose: -colorspace CMYK -matte txt:- |\
+  [ "`magick rose: -colorspace CMYK -alpha set txt:- |\
         magick - -colorspace RGB miff:- |\
-          magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using CMYK with alpha FAILED\!"
 
@@ -1896,16 +1896,16 @@ special handling of images. </P>
     "ASSERTION FAILURE: TXT output LAB FAILED\!"
   [ "`magick rose: -colorspace LAB txt:- |\
         magick - -colorspace RGB miff:- |\
-          magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using LAB FAILED\!"
 
-  magick rose: -colorspace LAB -matte -depth 16 txt:- |\
+  magick rose: -colorspace LAB -alpha set -depth 16 txt:- |\
     head -1 | grep -i ,LABA\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output LAB with alpha FAILED\!"
-  [ `magick rose: -colorspace LAB -matte txt:- |\
+  [ `magick rose: -colorspace LAB -alpha set txt:- |\
         magick - -colorspace RGB miff:- |\
-          magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
+          compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'` -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using LAB with alpha FAILED\!"
 </CODE> -->
@@ -1963,7 +1963,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT OUT=txt_shell_read.txt>
-  magick rose: -resize 3x2\! -depth 8 -colorspace RGB +matte txt:- |
+  magick rose: -resize 3x2\! -depth 8 -colorspace RGB -alpha off txt:- |
     tail -n +2 | tr -cs '0-9.\n'  ' ' |
       while read x y r g b junk; do
         echo "$x,$y = rgb($r,$g,$b)"
@@ -2161,7 +2161,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=95% bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick tree.gif histogram:- | magick identify -format %c -
+  magick tree.gif histogram:- | identify -format %c -
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 </I></FONT></TD></TR></TABLE>
@@ -2344,7 +2344,7 @@ special handling of images. </P>
     images in a "<CODE>mpr:</CODE>" register. </P>
 
     Basically the two lines in the above can be thought of as two completely
-    separate "<CODE>convert</CODE>" commands, but using a named memory
+    separate "<code>magick</code>" commands, but using a named memory
     register for the intermediate image rather than disk space.  </P>
 
     In many ways using "<CODE>mpr:</CODE>" is like using <A
@@ -2699,11 +2699,11 @@ special handling of images. </P>
 
   The "<CODE>show:</CODE>" image output delegate uses this with the
   "<CODE>display</CODE>" command, to automatically background an image
-  magick display before the main command continues or exits. (see below)
+  display before the main command continues or exits. (see below)
   </P>
 
   For example I used this in a shell script that calls "<CODE><A
-  HREF="../scripts/flicker_cmp" >flicker_cmp</A></CODE>" to magick display some
+  HREF="../scripts/flicker_cmp" >flicker_cmp</A></CODE>" to display some
   intermediate results, but then automatically continues (or exit) when the
   IM has signaled that the program has finished reading its input image by
   deleting the second image given.
@@ -2734,7 +2734,7 @@ special handling of images. </P>
   while [ -f blurred.png ]; do usleep 100; done
 
   # At this point we can continue (or exit) without problems.
-  # while the on screen magick display continues in background.
+  # while the on screen display continues in background.
   rm -f input_image.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -2761,7 +2761,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NO_EXECUTE>
-  magick montage *.jpg show:
+  montage *.jpg show:
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2770,7 +2770,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NO_EXECUTE>
-  magick compare image1.png image2.png show:
+  compare image1.png image2.png show:
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2786,10 +2786,10 @@ special handling of images. </P>
   ). </P>
 
   On the other hand, using '<CODE>x:</CODE>' or '<CODE>win:</CODE>' will wait
-  for you to quit the magick display window before allowing the original command to
+  for you to quit the display window before allowing the original command to
   continue (and exit). </P>
 
-  Unfortunately none of these methods will magick display animations very well. For
+  Unfortunately none of these methods will display animations very well. For
   that you are better off piping the animation (in MIFF format) into the
   "<CODE><A HREF="../basics/#animate" >animate</A></CODE>" command.  </P>
 
@@ -2797,14 +2797,14 @@ special handling of images. </P>
 <DT><A NAME="x"></A>
     <B><CODE>x:</CODE> (as input)</B> - Reading an X Window Display
 <DD>
-  You can also read the current X window magick display using the "<CODE>x:</CODE>"
+  You can also read the current X window display using the "<CODE>x:</CODE>"
   operator, in much the same way as you can with the "<A
   HREF="../basics/#import" >import</A> command. In fact without options it
   acts exactly like the "import" command.  Use the left button to select the
   window to grab a copy of, or mark out an area using the middle button.
   </P>
 
-  For example, to select a window using your mouse, then magick display the window
+  For example, to select a window using your mouse, then display the window
   just grabbed in another window (exit when grabbed window is displayed)...
 
 <DIV ALIGN=center>
@@ -2819,7 +2819,7 @@ special handling of images. </P>
   the contents of the overlapping window!!!  So make sure when grabbing
   a window that window fully visible on screen. </P>
 
-  To grab the whole magick display use '<CODE>root</CODE>' for the window name.
+  To grab the whole display use '<CODE>root</CODE>' for the window name.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -2852,7 +2852,7 @@ special handling of images. </P>
   with the same name, or the name of the window just can't be determined. </P>
 
   The better way is to tell IM the exact window wanted using a "X Window ID"
-  which is the number that the X magick display uses to uniquely magick identify a
+  which is the number that the X display uses to uniquely identify a
   specific window (or child window). </P>
 
   The X Window ID is typicaly looked up using the "<CODE>xwininfo</CODE>"
@@ -2894,7 +2894,7 @@ special handling of images. </P>
 </DIV></P>
 
   Most terminal programs will tell you the X Window ID they are using to
-  magick display text in the environment variable "WINDOWID".  As such if you run
+  display text in the environment variable "WINDOWID".  As such if you run
   this from a command line of a XTerm, or Gnome Terminal, you will grab a
   copy of the current terminal window.
 
@@ -2920,9 +2920,9 @@ special handling of images. </P>
           -draw 'stroke red         line 50,50 50,150 line 50,150 150,150' \
           -draw 'fill lime          circle 110,100 80,100' \
           -draw 'stroke dodgerblue  line 50,150 150,50' \
-          rose: -geometry +180+60 -magick composite \
+          rose: -geometry +180+60 -composite \
           png:- |\
-    magick display -window $window -
+    display -window $window -
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2947,7 +2947,7 @@ special handling of images. </P>
                   sed -n 's/^ *\(0x[^ ]*\).*/\1/p'`; \
   window="${window:-$WINDOWID}"; \
   magick x:$window -background black -colorize 20% png:- |\
-    magick display -window $window -
+    display -window $window -
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2969,7 +2969,7 @@ special handling of images. </P>
   "XTerm"s because the former likes to 're-draw' its window every time it
   scrolls, where a "XTerm" does not.  </P>
 
-  Imagine IM scripts that magick display the results of graphs and other things
+  Imagine IM scripts that display the results of graphs and other things
   directly in various windows as part of a larger client program.  This is
   in fact how many postscript viewers, and even many web browsers display
   output from special sub-programs. That is they have that sub-program
@@ -3071,7 +3071,7 @@ For example..
 </TD></TR></TABLE></P>
 
 In this case all the delegate command does is use a separate IM
-"<CODE>convert</CODE>" command to 'flip' the image upside down, before the
+"<code>magick</code>" command to 'flip' the image upside down, before the
 original IM command even reads and processes the image! </P>
 
 The delegate assumes the command will understand the image file format given
@@ -3086,7 +3086,7 @@ NOT have any image suffixes, so it is important that you prefix the image
 format type desired, if necessary.  </P>
 
 It is done this way for security reasons, and because IM itself may only be
-reading a magick stream of data, and not an actual file.  It also means the delegate
+reading a stream of data, and not an actual file.  It also means the delegate
 command does not have to deal with things like clean up of those files when
 finished. </P>
 
@@ -3176,7 +3176,7 @@ images, having been provided at least one method of going so.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE OUT=delegate_rose_xyzzy.txt>
   magick rose: -negate   rose.xyzzy
-  magick identify rose.xyzzy
+  identify rose.xyzzy
 </samp></pre></TD></TR></TABLE></TD><TD>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -3189,7 +3189,7 @@ images, having been provided at least one method of going so.
   rm -f rose.xyzzy
 </CODE>-->
 
-Note that the magick identify in the above does not understand the
+Note that the identify in the above does not understand the
 '<CODE>.xyzzy</CODE>' suffix (no input delegate has been provided).  However
 as no specific delegate is provided, the file 'magic' (an identification
 string inside the file itself) tells IM that it is in reality a GIF image
@@ -3290,7 +3290,7 @@ it to delete its input image, then IM will continue as normal, leaving the
 command running in the background. </P>
 
 For example two output delegates "<CODE>show</CODE>" and "<CODE>win</CODE>"
-both provide simple ways to magick display the result of a command in the IM
+both provide simple ways to display the result of a command in the IM
 "<CODE><A HREF="../basics/#display" >display</A></CODE>" program. </P>
 
 For example..
@@ -3301,7 +3301,7 @@ For example..
 </samp></pre></TD></TR></TABLE></TD><TD>
 </DIV></P>
 
-This will append a label to the built-in 'rose' image and just magick display it on
+This will append a label to the built-in 'rose' image and just display it on
 the screen.  When the spawning delegate has read its input image and deleted
 it (typically using the special "<CODE><A HREF="#ephemeral"
 >ephemeral:</A></CODE>" input format, see above), the launching IM will
@@ -3394,7 +3394,7 @@ is not installed, mis-configured, or in an unknown location on your system.
 The delegate system also allows IM to call an external program to convert
 an image from one format to another format, without any processing of the image
 by ImageMagick itself.  But only if the destination image is readable by IM as
-an image and the final result of the "<CODE>convert</CODE>" was an 'untainted'
+an image and the final result of the "<code>magick</code>" was an 'untainted'
 copy of the image.  </P>
 
 For example if you try this comamnd to magick a 'Adobe Illustrator' file
@@ -3424,7 +3424,7 @@ In otherwords IM only used its internal delegates to magick the file
 (actually just rename it).  It never actually processes the image itself, and
 as such the image remains a pure vector image. </P>
 
-This is actually the original purpose of "<CODE>convert</CODE>" as a program
+This is actually the original purpose of "<code>magick</code>" as a program
 back in version 1 of ImageMagick. All the other operations and settings were
 added later over a very long period of time. </P>
 
@@ -3538,7 +3538,7 @@ tested (mail me for more info if interested). </P>
 For handling any sort of large image it would probably be better for you to
 use a Q8 version of ImageMagick, which has half the memory requirements of the
 higher quality Q16 version.  Check your IM's compiled Q level using
-"<CODE>magick identify -version</CODE>". </P>
+"<CODE>identify -version</CODE>". </P>
 
 For medium sized images you can attempt to  use "<CODE><A
 HREF="../option_link.cgi?limit" >-limit</A></CODE>" to increase the processing
@@ -3607,7 +3607,7 @@ the image in a "<CODE>.cache</CODE>". Of course you need to clean up both
 files when you are finished. </P>
 
 This method is designed so that IM does not have to re-parse the image format
-and cache it to disk, every time you run a new "<CODE>convert</CODE>" command.
+and cache it to disk, every time you run a new "<code>magick</code>" command.
 Also if you are accessing only sections of the input image, each command does
 not need to process the whole image, but can now read just that smaller
 section from the cahced disk file as needed.  </P>
@@ -3646,7 +3646,7 @@ is raw RGB image values, so some post-processing is recommended.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick stream -map rgb -storage-type char -extract 600x400+1900+2900 image.png - |\
+  stream -map rgb -storage-type char -extract 600x400+1900+2900 image.png - |\
     magick -depth 8 -size 600x400 rgb:- tileimage.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -3657,7 +3657,7 @@ the smaller image directly.  For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick stream -map rgb -storage-type char -extract 600x400+1900+2900 image.png - |\
+  stream -map rgb -storage-type char -extract 600x400+1900+2900 image.png - |\
     magick -depth 8 -size 600x400 rgb:-  ...more_processing_here...  tile.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -3776,7 +3776,7 @@ The "<CODE>pamcut</CODE>" is the equivalent of a <A HREF="../crop/#crop" >Crop
 Operation</A>, and will extract a smaller area from the input image. Instead
 of <I>width</I> or <I>height</I>.  You can also specify <I>right</I> or
 <I>bottom</I> bounds of the crop.  You could substitute
-a "<CODE>stream</CODE>" command with "<CODE>convert</CODE> </P>
+a "<CODE>stream</CODE>" command with "<code>magick</code> </P>
 
 The central part, can be processed using normal ImageMagick, or if you like
 pain, a chain PbmPlus equivalent tools. </P>
@@ -3841,7 +3841,7 @@ file stream.  We touched on this briefly above in <A HREF="#miff_stream"
 Like ImageMagick's own <A HREF="#miff" >MIFF</A> format, the <A
 HREF="../formats/#pbmplus" >PbmPlus/NetPBM</A> is also a streaming format
 (almost the same just simpler) but is much more well know and commonly used in
-video image magick stream processing. </P>
+video image stream processing. </P>
 
 In a forum discussion, <A HREF="../forum_link.cgi?f=2&t=18320" >Reading
 Multiple Images</A>, an user wanted to process a 'stream' of multiple PPM
@@ -3857,9 +3857,9 @@ scripted processing. </P>
 
 One solution is a small perl script, "<CODE><A
 HREF="../scripts/process_ppm_pipeline" >process_ppm_pipeline</A></CODE>", that
-will accept a magick stream of PPM images, and run a separate "<CODE>convert</CODE>"
+will accept a stream of PPM images, and run a separate "<code>magick</code>"
 command on each image, as it arrives. The output is also a series of PPM
-images that produces a new magick stream of images. </P>
+images that produces a new stream of images. </P>
 
 For example read a video, and 'flip' every frame, one by one...
 
@@ -3873,7 +3873,7 @@ For example read a video, and 'flip' every frame, one by one...
 </DIV></P>
 
 The  "<CODE>pnmtopnm -plain</CODE>" is vital, as the script currently only
-handles a magick stream of ascii-PPM images, though with some more smarts it could
+handles a stream of ascii-PPM images, though with some more smarts it could
 also be made to handle any binary (raw) <A HREF="../formats/#pbmplus"
 >Pbmplus</A> image stream, or even a <A HREF="#miff" >MIFF</A> image stream.
 </P>
@@ -3883,13 +3883,13 @@ massively large images too. Though this may require a lot more in-depth
 knownlege in internal processing of the commands incolved.
 
 if a way can be found to sub-divide such images
-into a magick stream of tiles, and then re-construct the large image again at the
+into a stream of tiles, and then re-construct the large image again at the
 end. </P>
 
 Eventually I hope to include some mechanism by which you can ask a coder to
-read and return just one image from a multi-image file magick stream without closing
+read and return just one image from a multi-image file stream without closing
 that stream, so that another image can be read in again later. In this way Im
-can then process a magick stream of images, one image at a time. </P>
+can then process a stream of images, one image at a time. </P>
 
 <I>UPDATE:  IMv7 can read one image at a time from a stream.  With a loop, or
 using the pipelined commands, it should be posible to generate streaming image

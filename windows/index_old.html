@@ -1,6 +1,6 @@
 <HTML><HEAD>
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Usage under Windows -- IM v6 Examples</TITLE>
+<TITLE>Usage under Windows -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/windows/">
@@ -274,9 +274,9 @@ system tool, located in the Windows system directory
 system into the now common NTFS. </P>
 
 This tool was first shipped with Windows XP and generated a name conflict with
-IM's command line tool "<CODE>convert</CODE>" as IM's program directory was
+IM's command line tool "<code>magick</code>" as IM's program directory was
 <B>appended</B> to the DOS search path (IE: the PATH environment variable),
-the system tool was found first and simple calls to "<CODE>convert</CODE>" in
+the system tool was found first and simple calls to "<code>magick</code>" in
 older scripts weren't resolved correctly. Current versions of IM's Windows
 setup program however place IM's program directory at the head of the search
 path, thereby insuring that in case of conficting names, IM's command line
@@ -652,7 +652,7 @@ For example, following the above rules, this UNIX shell script...
   # Create a negated rose image and overlay a comment
   magick -background none -fill red -gravity center \
           -font Candice -size 140x92 caption:'A Rose by any Name' \
-          \( rose: -negate -resize 200% \) +swap -magick composite \
+          \( rose: -negate -resize 200% \) +swap -composite \
           output.gif
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -667,7 +667,7 @@ will become something like this as a Windows DOS batch file...
   magick -background none -fill red -gravity center  ^
           -font "C:\path\to the\font\candice.ttf"  ^
           -size 140x92   caption:"A Rose by any Name"  ^
-          ( rose: -negate -resize 200%% ) +swap -magick composite  ^
+          ( rose: -negate -resize 200%% ) +swap -composite  ^
           C:\where\to\save\output.gif
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -919,7 +919,7 @@ One of them is that you basically perform only one single command after
   FOR %%a in (*.jpg) DO (
     ECHO Processing file: "%%~nxa"
     magick %%a -blur 30 -negate %%a.miff
-    magick composite %%a.miff %%a -compose overlay "%%~dpn1_light"%%~xa
+    composite %%a.miff %%a -compose overlay "%%~dpn1_light"%%~xa
     DEL %%a.miff
   )
   PAUSE
@@ -963,7 +963,7 @@ parantheses in the above example:</P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick %%1 -blur 30 -negate %%1.miff
-  magick composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
+  composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
   DEL %%1.miff
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -980,7 +980,7 @@ call it from the main loop, then deleted it when the job is finished:</P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   ECHO magick %%1 -blur 30 -negate %%1.miff &gt;%~dp0process.bat
-  ECHO magick composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1 &gt;&gt;%~dp0process.bat
+  ECHO composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1 &gt;&gt;%~dp0process.bat
   ECHO DEL %%1.miff &gt;&gt;%~dp0process.bat
   %~d1
   CD %~p1
@@ -1070,7 +1070,7 @@ We now come to the actual work:</P>
   ECHO %~1&gt;temp.txt
   "C:\Program Files\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8 temp.txt>title.txt
 
-  magick montage -geometry 210x140+0+5 -tile 6x -title @title.txt %1\*.jpg -quality 30%% %TFILE%
+  montage -geometry 210x140+0+5 -tile 6x -title @title.txt %1\*.jpg -quality 30%% %TFILE%
   jhead -cl %1 %TFILE%
   :END
 </samp></pre></TD></TR></TABLE>
@@ -1128,7 +1128,7 @@ batch" into the <CODE>FOR</CODE> loop:</P>
       SET TFILE=IDX_!TFILE:~-4!.jpg
       ECHO %%a &gt;temp.txt
       %ICONV% temp.txt>title.txt
-      magick montage  -geometry 210x140+0+5 -tile 6x -title @title.txt "%%a\*.jpg" -quality 30%% !TFILE!
+      montage  -geometry 210x140+0+5 -tile 6x -title @title.txt "%%a\*.jpg" -quality 30%% !TFILE!
       jhead -cl %%a !TFILE!
     )
   )
@@ -1178,7 +1178,7 @@ instead of percent signs.  </P>
 The use of <CODE>GOTO</CODE> statements within a <CODE>FOR</CODE> loop is
 a possible source of very subtle errors and should therefore be avoided. In
 our batch we can however easily exchange the jump by an <CODE>IF</CODE>
-statement bracketing the code block with the magick montage code.  </P>
+statement bracketing the code block with the montage code.  </P>
 
 <A NAME="arbitrary"></A>
 <H3>Batch Processing an Arbitrary Number of Files</H3>
@@ -1211,7 +1211,7 @@ This allows us to Montage an arbitrary number of images passed by Drag &amp; Dro
   FOR /F "delims=" %%A in ('TYPE files.txt ^| Sort') Do (
   ECHO %%A>>fsorted.txt
   )
-  SET MONTAGE=magick montage -tile 3x
+  SET MONTAGE=montage -tile 3x
   FOR /F "delims=" %%A in (FSorted.txt) Do (
   SET MONTAGE=!MONTAGE! %%A
   )
@@ -1261,7 +1261,7 @@ use the following batch file:</P>
   magick -size 80x80 -flip gradient: compose_src.png
   magick compose_src.png -rotate 90 compose_dst.png
   FOR /F %%A in ('magick -list compose') DO ^
-     magick composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
+     composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
 </samp></pre></TD></TR>
 </TABLE></P>
 <TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
@@ -1348,7 +1348,7 @@ magick -set colorspace %1 RG.miff RB.miff +append top.miff
 magick -set colorspace %1 -size 520x150 xc:Transparent w.miff
 magick top.miff w.miff -append topx.miff
 
-magick composite -geometry +0+299 GB.miff  topx.miff colorspace_%1.png
+composite -geometry +0+299 GB.miff  topx.miff colorspace_%1.png
 DEL *.miff
 </samp></pre></TD></TR></TABLE>
 <TABLE  CELLSPACING=0 CELLPADDING=0>
@@ -1426,7 +1426,7 @@ HREF="http://www.fmwconcepts.com/imagemagick/" >Fred Weinhaus' website</A>:
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F %%a in ('magick identify -format "%%[fx:log(mean)/log(0.5)]" %1') DO ^
+  FOR /F %%a in ('identify -format "%%[fx:log(mean)/log(0.5)]" %1') DO ^
   magick %1 -gamma %%a "%~dpn1"_c.%~x1
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -1463,7 +1463,7 @@ the image:
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F "tokens=1,2" %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  FOR /F "tokens=1,2" %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize 18 -fill white -gravity northwest ^
     -annotate +0+0 "%%i %%j" "%~dpn1"_dated%~x1
 </samp></pre></TD></TR></TABLE>
@@ -1500,7 +1500,7 @@ unconventional formatting of the date by the following code: </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize 18 -fill white -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
 </samp></pre></TD></TR></TABLE>
@@ -1538,8 +1538,8 @@ dimensions of the photograph: </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F %%i IN ('magick identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
-  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  FOR /F %%i IN ('identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize %psize% -fill white -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
 </samp></pre></TD></TR></TABLE>
@@ -1560,7 +1560,7 @@ And here we calculate a random angle between as an integer between
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   FOR /F %%x IN ('magick null: -format "%%[fx:int(rand()*31)-15]" info:') DO SET angle=%%x
-  magick %1 -thumbnail x90 -matte ^
+  magick %1 -thumbnail x90 -alpha set ^
             -background none -rotate %angle%   "%~dpn1"_rotated.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -1586,18 +1586,18 @@ use of the <CODE>SET</CODE> command:</P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   :: Determine the font height
-  FOR /F %%i IN ('magick identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
+  FOR /F %%i IN ('identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
 
   :: The width of the date-time string is roughly 9 times its height
   SET /A pwidth=%psize% * 9
 
   :: Calculate the average brightness in this section
   :: and choose the text color accordingly
-  FOR /F %%i IN ('magick identify -format "%%[fx:mean]" -crop %pwidth%x%psize%+0+0 %1') DO SET mean=%%i
+  FOR /F %%i IN ('identify -format "%%[fx:mean]" -crop %pwidth%x%psize%+0+0 %1') DO SET mean=%%i
   IF %mean% LEQ 0.5 (SET fcolor=white) ELSE SET fcolor=black
 
   :: Annotate the photograph
-  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
   magick %1 -pointsize %psize% -fill %fcolor% -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
 </samp></pre></TD></TR></TABLE>
@@ -1655,7 +1655,7 @@ more flexible and its various calculations more transparent:</P>
   magick -set colorspace %1 -size %l3%x%l4% xc:Transparent w.miff
   magick top.miff w.miff -append topx.miff
 
-  magick composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
+  composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
   DEL *.miff
   DEL *.gif
 </samp></pre></TD></TR></TABLE>
@@ -1799,7 +1799,7 @@ store the minimum required version in the environment variable MINVERSION. In
 the third line, we call Convert with the '-version' option, extract the first
 line from the output via <CODE>^|FIND "Version"</CODE>, get the third word
 from that line and store it in the environment variable VERSION. We then
-magick compare this version to the minimal required version in the forth line. </P>
+compare this version to the minimal required version in the forth line. </P>
 
 <A NAME="summing_it_up"></A>
 <H3>Summing it up</H3>
@@ -1892,7 +1892,7 @@ So here is our VBScript:
   strFileOut = Left(strFileIn,Pos - 1) &amp; strAdd &amp; Mid(strFileIn, Pos)
   '
   ' evaluation of the focal length and calculation of parameter b
-  command = "cmd /k magick identify -format ""%[EXIF:FocalLength]"" " &amp; strFileIn
+  command = "cmd /k identify -format ""%[EXIF:FocalLength]"" " &amp; strFileIn
   Set objExec = wsh.Exec(command)
   strf = objExec.StdOut.Readline
   f = eval(strf)
@@ -1974,7 +1974,7 @@ would be: </P>
          strInputFiles = strInputFiles &amp; " " &amp; Fname(i)
   next
  '
-  Command = "magick montage -geometry 210x140+0+5 -tile 6x " &amp; strInputfiles &amp; " -quality 80% " &amp; fs.getParentFolderName(FName(0)) &amp; "\index.jpg"""
+  Command = "montage -geometry 210x140+0+5 -tile 6x " &amp; strInputfiles &amp; " -quality 80% " &amp; fs.getParentFolderName(FName(0)) &amp; "\index.jpg"""
   wsh.run command, 7, true
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -2140,7 +2140,7 @@ This means that first of all you should ensure that
 
 So as a start, you should test the command line itself within a DOS box. When
 first testing the script, you should not run the IM command, but rather
-magick display the text string in a message box via <CODE>MsgBox(strCommand)</CODE>,
+display the text string in a message box via <CODE>MsgBox(strCommand)</CODE>,
 because if the command line itself is wrong, there is little any debugging
 tool could do. The simple message box is also helpful when debugging the
 script and I never really felt the need for a sophisticated debugger.  </P>

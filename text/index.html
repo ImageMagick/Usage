@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Text Handling -- IM v6 Examples</TITLE>
+<TITLE>Text Handling -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/text/">
@@ -783,7 +783,7 @@ However often what you want is to treat a blank line as a paragraph break.
 That means you need to remove all newlines, except those involved with blank
 lines.  Here is a special "<CODE>sed</CODE>" command to magick such text
 into the format needed by "<CODE>caption:</CODE>".  In this case the text is
-the first page of the "<CODE>convert</CODE>" manpage.
+the first page of the "<code>magick</code>" manpage.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -884,7 +884,7 @@ universal use of imported True Type fonts.
 <A NAME="density"></A>
 <H3>Pointsize, Density and the Actual Font Size</H3>
 
-Pixels are dots on the magick display or in an image, and that is what IM works in.
+Pixels are dots on the display or in an image, and that is what IM works in.
 </P>
 
 On the other hand, images are printed at a specific resolution (specified as
@@ -2324,7 +2324,7 @@ dpi) this will be '<CODE>612x792</CODE>' pixels in size, which for most
 purposes is very large.  </P>
 
 For example here is a direct conversion of the plain text formatted manual for
-the "<CODE>convert</CODE>" command, into an image (it is large so to see it
+the "<code>magick</code>" command, into an image (it is large so to see it
 select the 'page' image on the right to see it)...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
@@ -2657,7 +2657,7 @@ look of the result. </P>
 
 Also note that using a larger density or resolution is not quite the same as
 just enlarging a font. The font definitions could have adjustments for
-handling low resolution situations.  For example magick compare the hole in the
+handling low resolution situations.  For example compare the hole in the
 letter '<CODE>e</CODE>' in the two images.  The original version is sharper
 due to special handling within the font, even though over all the latter super
 sampled version is clearer.  For more information see <A HREF="#pointsize"
@@ -2735,7 +2735,7 @@ even overlay it onto a specific background image, or a tiled background.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -tile bg.gif  ps_transparent.png  -compose DstOver \
+  composite -tile bg.gif  ps_transparent.png  -compose DstOver \
             ps_bgnd_tiled.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="ps_bgnd_tiled.gif"
@@ -2755,7 +2755,7 @@ background.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick composite -tile bg.gif  ps_version.gif  -compose Multiply  ps_multiply.gif
+  composite -tile bg.gif  ps_version.gif  -compose Multiply  ps_multiply.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="ps_multiply.gif"
      ><IMG SRC="ps_multiply.gif"
@@ -3368,7 +3368,7 @@ to replace background and foreground with pattern images.
                                              -draw "color 0,0 reset" \) \
           \( +clone -size 300x150 -tile plasma:tomato \
                                              -draw "color 0,0 reset" \) \
-          -reverse  -magick composite      invitation_rose.jpg
+          -reverse  -composite      invitation_rose.jpg
 </samp></pre></TD></TR></TABLE>
   <A HREF="invitation_rose.jpg"
      ><IMG SRC="invitation_rose.jpg"

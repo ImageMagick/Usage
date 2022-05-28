@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>API &amp; Scripting -- IM v6 Examples</TITLE>
+<TITLE>API &amp; Scripting -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/api/">
@@ -89,16 +89,16 @@ from other API's and programming languages. </P>
 <H2>APIs and other IM usage methods</H2>
 
 API's (Application Programming Interface) for actual image processing are in
-fact no faster than using the CLI commands (such as "<CODE>convert</CODE>"
+fact no faster than using the CLI commands (such as "<code>magick</code>"
 (which is itself represents a type of shell-API).  The same 'core' library is
 used for all image processing in IM.  So if you are doing a complex task such
-as image distortion, using an API over a the shell "<CODE>convert</CODE>" makes
+as image distortion, using an API over a the shell "<code>magick</code>" makes
 very little difference in terms of overall 'speed' of processing. </P>
 
 <I>So why use an API over Command line?</I></P>
 
 A shell constantally 'forks' off many different commands (not just IM
-"<CODE>convert</CODE>" commands, though shells have some 'built-ins'), each of
+"<code>magick</code>" commands, though shells have some 'built-ins'), each of
 which has to be loaded, and initialised every time it is run. </P>
 
 Every IM command also has to re-initialise its configuration files, parse the
@@ -144,7 +144,7 @@ as fast. You can however save lot ot time and re-processing by... <UL>
     intermedite images to disk.  See <A HREF="../scripts/enlarge_image"
     >enlarge_image</A> for a pipelined script example with one step piping the
     image(s) into the next (sometimes optional) step in the sequence.
-<LI>Use a loop to process each image individually, before piping a magick stream of
+<LI>Use a loop to process each image individually, before piping a stream of
     image results into a final 'merge them all' step.  I have many scripts
     like this...  See <A HREF="../layers/#layer_prog" >Programmed Prossition
     of Layered Images</A> for one such script.
@@ -171,7 +171,7 @@ PHP users have three ways of using ImageMagick, <UL>
 <LI>The "<CODE>imagick</CODE> PECL interface
 <LI>The "<CODE>MagicWand</CODE>" interface
 <LI>Using "system()" and "exec()" functions to run the CLI
-    "<CODE>convert</CODE>" command.
+    "<code>magick</code>" command.
 </UL>
 
 Because of the existence of <A HREF="../" >IM Examples</A> this later method
@@ -190,7 +190,7 @@ forum user <I><A HREF="../forum_link.cgi?u=6256" >Bonzo</A></I> and his web
 site <A HREF="http://www.rubblewebs.co.uk/imagemagick/imagemagick.php"
 >RubbleWebs</A>. </P>
 
-Please note, PHP runs "<CODE>convert</CODE>" using a different environment,
+Please note, PHP runs "<code>magick</code>" using a different environment,
 and probably even as a different user, to what you would get from the command
 line.  As such what works on the command line, may take a little tweaking to
 get it to work from a PHP web driven script. </P>
@@ -200,7 +200,7 @@ line IM interface, assuming you do not have direct command line 'shell' access
 on the remote system.  That is you can only upload web files for execution.
 </P>
 
-So the first thing we need to do is try and find the "<CODE>convert</CODE>"
+So the first thing we need to do is try and find the "<code>magick</code>"
 command on the system, what version is installed, and the environment the PHP
 is running. </P>
 
@@ -213,8 +213,8 @@ server...
 &lt;?php
   header('Content-Type: text/plain');
   system("exec 2>&amp;1; pwd");
-  system("exec 2>&amp;1; type convert");
-  system("exec 2>&amp;1; locate */convert");
+  system("exec 2>&amp;1; type magick");
+  system("exec 2>&amp;1; locate */magick");
   system("exec 2>&amp;1; magick -version");
   system("exec 2>&amp;1; magick -list type"); &lt;!-- before IM v6.3.5-7 --&gt;
   system("exec 2>&amp;1; magick -list font");
@@ -232,19 +232,19 @@ script was run.  This may or may not be the directory where the PHP script is
 located, and you may not be able to write in that directory form the PHP
 script. </P>
 
-The next two commands tells you if "<CODE>convert</CODE>" is available on the
+The next two commands tells you if "<code>magick</code>" is available on the
 default provided command PATH using "<CODE>type</CODE>", and if so where is
-it.  The "<CODE>locate</CODE>" command should find all "<CODE>convert</CODE>"
+it.  The "<CODE>locate</CODE>" command should find all "<code>magick</code>"
 commands that exists on the server (assuming it is a linux server), but may
-find other non-ImageMagick "<CODE>convert</CODE>" commands, files and
+find other non-ImageMagick "<code>magick</code>" commands, files and
 directories. You will need to interpret the results. </P>
 
-The next three commands, assume "<CODE>convert</CODE>" is on the command PATH,
+The next three commands, assume "<code>magick</code>" is on the command PATH,
 and asks it to report its version number, and what fonts IM think it has
 access to. Which command reports what fonts depends on how old the installed
 IM version is. </P>
 
-If you only see errors, then the "<CODE>convert</CODE>" is not on the command
+If you only see errors, then the "<code>magick</code>" is not on the command
 line path,  and your ISP provider did NOT initialise the web server
 "<CODE>PATH</CODE>" and "<CODE>LD_LIBRARY_PATH</CODE>" properly to include it.
 See output from the "<CODE>env</CODE>" command for what they did define.  </P>
@@ -253,7 +253,7 @@ If this is the case you will need to find out exactly where it is located and
 use something like the following PHP script. This will make your script less
 portable, as it is hard coded for that specific ISP. </P>
 
-For example suppose the "<CODE>convert</CODE>" command is in
+For example suppose the "<code>magick</code>" command is in
 "<CODE>/opt/php5extras/ImageMagick/bin</CODE>", then you can set a variable to
 specify its location.  This is often done as part of application configuration
 and installation process, for PHP scripts being used on different ISP hosts),
@@ -311,7 +311,7 @@ If you need to set the magick command location you can use...
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header( 'Content-Type: image/jpeg' );
-  $convert="/opt/php5extras/ImageMagick/bin/convert"
+  $magick="/opt/php5extras/ImageMagick/bin/magick"
   passthru("$magick rose: jpg:-");
 ?&gt;
 </samp></pre></TD></TR></TABLE>
@@ -324,9 +324,9 @@ or if the you have library problems you can try something like...
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
 &lt;?php
   header( 'Content-Type: image/jpeg' );
-  $convert="/opt/php5extras/ImageMagick/bin/convert";
+  $magick="/opt/php5extras/ImageMagick/bin/magick";
   $libs="LD_LIBRARY_PATH=\'" .  $_ENV["LD_LIBRARY_PATH"] .
-               ":/opt/php5extras/ImageMagick/bin/convert\'";
+               ":/opt/php5extras/ImageMagick/bin/magick\'";
   system("$libs $magick rose: jpg:-");
 ?&gt;
 </samp></pre></TD></TR></TABLE>
@@ -367,7 +367,7 @@ Here we have a fairly typical ImageMagick command...
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   magick -background none -fill red -gravity center \
           -font Candice -size 140x92 caption:"A Rose by any Name" \
-          \( rose: -negate -resize 200% \) +swap -magick composite    output.gif
+          \( rose: -negate -resize 200% \) +swap -composite    output.gif
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -393,7 +393,7 @@ When converting to PHP it will become something like...
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
-Note how I still split up the long command line of the "<CODE>convert</CODE>"
+Note how I still split up the long command line of the "<code>magick</code>"
 command to make the image processing sequence easier to follow, and to edit
 later.  This was done using PHP appended strings rather than the shell line
 continuation used in shell scripts. </P>
@@ -404,7 +404,7 @@ can protect those options by using single quotes instead of backslashes.  </P>
 
 I also used some PHP variables to allow easier adjusted of the PHP script
 image generated, to provide better control the results. However when I insert
-those options in the "<CODE>convert</CODE>" I used single quotes to protect
+those options in the "<code>magick</code>" I used single quotes to protect
 them from further modification by the shell.  But watch out for single quotes
 within those inserted strings!  </P>
 
@@ -757,7 +757,7 @@ dated.  </P>
 <H3>Perl Magick Scripts</H3>
 
 The <A HREF="https://imagemagick.org/script/perl-magick.php"
->PerlMagick</A> API is a good way of conveting "<CODE>convert</CODE>" commands
+>PerlMagick</A> API is a good way of conveting "<code>magick</code>" commands
 into a script that can also handle databases, large numbers of images, or more
 complex image processing, that is otherwise posible.
 
@@ -769,7 +769,7 @@ and processing various images.  Also present is the script "demo.pl" that
 lists just about all common Image Processing options, and how you can use
 them.  </P>
 
-When converting a command line "<CODE>convert</CODE>" command to perl there
+When converting a command line "<code>magick</code>" command to perl there
 are a few things you need to remember. </P>
 
 <UL>
@@ -803,12 +803,12 @@ are a few things you need to remember. </P>
 To magick a command line into perl, you would basically do the exact same
 operations, in the exact same sequence.  However as images are generally not
 deleted, and multiple image sequences are common, the use of parenthesis, and
-extra cloning operations in "<CODE>convert</CODE>" commands are usally not
+extra cloning operations in "<code>magick</code>" commands are usally not
 an issue.  </P>
 
 The hardest part in converting scripts is usually mapping a command line option
 to a PerlMagick function call.  The fastest way I found is to get the source
-code of IM and look at the file "<CODE>wand/mogrify.c</CODE>" and search for
+code of IM and look at the file "<CODE>MagickWand/mogrify.c</CODE>" and search for
 the specific command line option you are having trouble with. </P>
 
 For example for say the <CODE>-threshold</CODE> option search for
@@ -930,7 +930,7 @@ more useful. </P>
     problem.  What works for you may be completely in-appropriate for their
     system and setup.  They may not even have Internet access! </P>
 
-    Just say that the "<CODE>convert</CODE>" command from ImageMagick, was not
+    Just say that the "<code>magick</code>" command from ImageMagick, was not
     found.
 
     If you want add installation requirements, or suggestions, add it as
@@ -1139,7 +1139,7 @@ more useful. </P>
     windows).  </P>
 
     For example here we get calculate the sin() of a specific angle given in
-    degrees using '<CODE>convert</CODE>' to do the work...
+    degrees using '<code>magick</code>' to do the work...
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -1172,10 +1172,10 @@ more useful. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-    gif_anim_magick montage animation.miff show:
+    gif_anim_montage animation.miff show:
 </samp></pre></TD></TR></TABLE>
 </DIV>
-    to magick display the result of the script on my magick display screen, rather than save
+    to display the result of the script on my display screen, rather than save
     it to a file. In fact in many of my scripts if the output is missing it
     defaults to use "show:". </P>
 
@@ -1237,7 +1237,7 @@ However IMv6 should allow you to do all your processing in one single command.
 But sadly even that is not always possible. </P>
 
 I use multiple commands for a number possible reasons.  Typically in the
-example pages, I do it so I can magick display the intermediate image result, so as
+example pages, I do it so I can display the intermediate image result, so as
 to better demonstrate the intermediate processing stages that are involved.
 Later in the same example area I may repeat the process but using a single
 command, with perhaps a little more complexity. </P>
@@ -1324,7 +1324,7 @@ smaller, or requires more complex changes to the IM installation. </P>
     overall image processing as intermediate images loose information. See <A
     HREF="../basics/#hdri" >HDRI</A> for the opposite of this. </P>
 
-<LI>Use a single "<CODE>convert</CODE>" command if possible, so all the
+<LI>Use a single "<code>magick</code>" command if possible, so all the
     processing required for a single image.  This saves on initialization,
     having to create temporary files, or pipelines between commands, and even
     the encode/decode to image file formats for those pipelines and disk I/O.
@@ -1339,7 +1339,7 @@ smaller, or requires more complex changes to the IM installation. </P>
     steps and extra file handling to disk.  This is of course better thanks
     to the new IM v6 option handling, allowing you to do a large number of
     image processing operations in a single command. Even so you can rarely
-    can do everything in a single "<CODE>convert</CODE>" command, so you often
+    can do everything in a single "<code>magick</code>" command, so you often
     have to use multiple commands to achieve what you want. </P>
 
     As such an API like perl, ruby, or a PHP magick module is faster as it
@@ -1916,7 +1916,7 @@ execute using the 'which'.
 </DIV></P>
 
 That is the script is flexiable enough that you don't actually need to run
-"<CODE>convert</CODE>" but can run any command, such as ImageMagick Shell
+"<code>magick</code>" but can run any command, such as ImageMagick Shell
 Scripts, so that that script uses the HDRI magick instead of the normal system
 convert. </P>
 

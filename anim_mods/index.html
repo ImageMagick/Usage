@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Animation Modifications -- IM v6 Examples</TITLE>
+<TITLE>Animation Modifications -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/anim_mods/">
@@ -175,7 +175,7 @@ Basics</A>.
           -fill black     -annotate +1+1 "Copyright" \
           -fill white     -annotate +0+0 "Copyright" \
           annotate.gif
-  gif_anim_magick montage annotate.gif annotate_frames.gif
+  gif_anim_montage annotate.gif annotate_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="annotate.gif"
      ><IMG SRC="annotate.gif"          WIDTH=100 HEIGHT=100
@@ -222,7 +222,7 @@ For example, here we draw a fancy green circle near the top left corner of the
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick canvas_prev.gif -fill LimeGreen -stroke SeaGreen \
           -draw 'circle 35,35 20,30'  draw_circle_fail.gif
-  gif_anim_magick montage draw_circle_fail.gif draw_circle_fail_frames.gif
+  gif_anim_montage draw_circle_fail.gif draw_circle_fail_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="draw_circle_fail.gif"
      ><IMG SRC="draw_circle_fail.gif"          WIDTH=100 HEIGHT=100
@@ -250,7 +250,7 @@ for details.
   magick canvas_prev.gif -coalesce \
           -fill LimeGreen -stroke SeaGreen -draw 'circle 35,35 20,30' \
           -layers Optimize  draw_circle.gif
-  gif_anim_magick montage draw_circle.gif draw_circle_frames.gif
+  gif_anim_montage draw_circle.gif draw_circle_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="draw_circle.gif"
      ><IMG SRC="draw_circle.gif"          WIDTH=100 HEIGHT=100
@@ -318,7 +318,7 @@ destroy the animation, I also used semi-transparent colors.
           \( -clone 3 -annotate 0 'is'          \) -swap 3 +delete \
           \( -clone 4 -annotate 0 'Copy\nright' \) -swap 4 +delete \
           -layers OptimizeFrame   frame_mod.gif
-  gif_anim_magick montage frame_mod.gif frame_mod_frames.gif
+  gif_anim_montage frame_mod.gif frame_mod_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="frame_mod.gif"
       ><IMG SRC="frame_mod.gif"          WIDTH=100 HEIGHT=100
@@ -390,7 +390,7 @@ expected for all animations.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=cropped_error.txt>
   magick canvas_prev.gif -crop 50x50+3+30  cropped.gif
-  gif_anim_magick montage cropped.gif cropped_frames.gif
+  gif_anim_montage cropped.gif cropped_frames.gif
 </samp></pre></TD></TR></TABLE>
 <DIV ALIGN=center>
    <A HREF="cropped_frames.gif"
@@ -418,7 +418,7 @@ As you can see this did not change the overall virtual canvas size! </P>
     >+repage</A></CODE>" to remove the crop offsets from a frame optimized GIF
     animation.  Doing do will also remove the needed frame offsets that the
     position the sub-frames on the virtual canvas, and which later frames
-    may rely on to magick animate correctly.
+    may rely on to animate correctly.
 </I></FONT></TD></TR></TABLE></P>
 
 The above "<CODE><A HREF="../option_link.cgi?crop" >-crop</A></CODE>"
@@ -487,7 +487,7 @@ information using the '<CODE>!</CODE>' flag...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick canvas_prev.gif -quiet -crop 50x50+3+30\!  crop_viewport.gif
-  gif_anim_magick montage crop_viewport.gif crop_viewport_frames.gif
+  gif_anim_montage crop_viewport.gif crop_viewport_frames.gif
 </samp></pre></TD></TR></TABLE>
 <DIV ALIGN=center>
    <A HREF="crop_viewport_frames.gif"
@@ -622,7 +622,7 @@ pixels down and right, returning the first 'background' frame in its normal
            \( -clone 0 -repage +0+0 \) -swap 0,-1 +delete \
            repage_offset.gif
 </CODE><CODE EXECUTE NOWARN OUT=repage_offset.txt>
-  magick identify repage_offset.gif
+  identify repage_offset.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="repage_offset.gif"
       ><IMG SRC="repage_offset.gif"
@@ -700,7 +700,7 @@ which were now being placed 'out-of-bounds'...
     The PNG and MNG formats can handle negative offsets, but many web browsers
     and other programs may not understand such offsets, producing weird
     effects. One version of the "<CODE>Firefox</CODE>" web browser for example
-    produces extremely large images, when attempting to magick display a PNG with
+    produces extremely large images, when attempting to display a PNG with
     a negative offset.
 
 </I></FONT></TD></TR></TABLE></P>
@@ -1408,7 +1408,7 @@ overlaying the original image over those shadow images...
   magick shadows_k.gif  null:  coalesced_k.gif \
           -layers Composite          compose_shadow.gif
 
-  gif_anim_magick montage compose_shadow.gif compose_shadow_frames.gif
+  gif_anim_montage compose_shadow.gif compose_shadow_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
    <A HREF="coalesced_k.gif"
       ><IMG SRC="coalesced_k.gif"
@@ -1538,7 +1538,7 @@ all the destination images is large enough to contain your final results.
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The resize capability of "<CODE><A HREF="../option_link.cgi?geometry"
-  >-geometry</A></CODE>" is not strictly part of the magick composite operation, it
+  >-geometry</A></CODE>" is not strictly part of the composite operation, it
   only resizes the last image of the current image sequence. As such it will
   not do what you expect if used with multi-image <A HREF="../#composite"
   >Layers Composition</A>.  See <A HREF="../resize/#geometry" >Resize
@@ -1743,7 +1743,7 @@ starting point for generating any other type of glitter.  The
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <r>  magick -size 100x100 xc: +noise Random -separate \
           null: \( xc: +noise Random -separate -threshold 30% -negate \) \
-              -compose CopyOpacity -layers magick composite \
+              -compose CopyOpacity -layers composite \
           -set dispose background -set delay 20 -loop 0   glitter_overlay.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="glitter_overlay.gif"
@@ -1782,7 +1782,7 @@ slightly randomised coloring to the glitter pattern.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <r>  magick glitter_overlay.gif null: -size 100x100 \
           plasma:red-firebrick plasma:red-firebrick  plasma:red-firebrick \
-          -compose Screen -layers magick composite    glitter_plasma.gif
+          -compose Screen -layers composite    glitter_plasma.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="glitter_plasma.gif"
      ><IMG SRC="glitter_plasma.gif"      WIDTH=100 HEIGHT=100
@@ -1804,8 +1804,8 @@ HREF="../compose/#dstin" >DstIn</A>)
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 -fill white -background none -font Candice \
           -gravity center -pointsize 90 label:A   glitter_mask_trans.gif
-  magick glitter_plasma.gif null: glitter_mask_trans.gif -matte \
-          -compose DstIn -layers magick composite        glitter_masked_trans.gif
+  magick glitter_plasma.gif null: glitter_mask_trans.gif -alpha set \
+          -compose DstIn -layers composite        glitter_masked_trans.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="glitter_mask_trans.gif"
      ><IMG SRC="glitter_mask_trans.gif"      WIDTH=100 HEIGHT=100
@@ -1824,8 +1824,8 @@ HREF="../compose/#copyopacity" >CopyOpacity</A>)
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 -fill white -background black -font Candice \
           -gravity center -pointsize 90 label:A    glitter_mask.gif
-  magick glitter_plasma.gif null: glitter_mask.gif +matte \
-          -compose CopyOpacity -layers magick composite   glitter_masked.gif
+  magick glitter_plasma.gif null: glitter_mask.gif -alpha off \
+          -compose CopyOpacity -layers composite   glitter_masked.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="glitter_mask.gif"
      ><IMG SRC="glitter_mask.gif"      WIDTH=100 HEIGHT=100
@@ -1846,10 +1846,10 @@ However in our case I'll underlay a background, and overlay an border.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick glitter_masked.gif -size 100x100 \
-          null: gradient:gold1-gold4 -compose DstOver -layers magick composite \
+          null: gradient:gold1-gold4 -compose DstOver -layers composite \
           null: \( -fill none -background none -stroke white -strokewidth 2 \
                    -font Candice -gravity center -pointsize 90 label:A \) \
-              -compose over -layers magick composite      glittered_letter.gif
+              -compose over -layers composite      glittered_letter.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="glittered_letter.gif"
      ><IMG SRC="glittered_letter.gif"      WIDTH=100 HEIGHT=100
@@ -1866,7 +1866,7 @@ of a smooth border around the glittered region. </P>
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     While I may have used GIF format images in the above to allow me to
-    magick display individual steps of the process, in practice you would either
+    display individual steps of the process, in practice you would either
     combine all the steps into a single command, or use a better intermediate
     image file format such as MIFF. That is done to avoid the inherent
     problems of the GIF format, until we have finished.
@@ -1902,7 +1902,7 @@ giving our wizard a cloak of invisibility ;-)
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick logo.gif -matte -fuzz 33% -transparent blue logo_holed.gif
+  magick logo.gif -alpha set -fuzz 33% -transparent blue logo_holed.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/logo.gif"
      ><IMG SRC="../images/logo.gif"      WIDTH=180 HEIGHT=180
@@ -1950,7 +1950,7 @@ glitter under the 'holey' image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick logo_holed.gif null: glitter_blue_tiled.gif \
-          -compose DstOver -layers magick composite \
+          -compose DstOver -layers composite \
           -loop 0 -layers Optimize logo_glittered.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="logo_glittered.gif"
@@ -1967,11 +1967,11 @@ parts.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick logo.gif -matte -fuzz 10% -fill none \
+  magick logo.gif -alpha set -fuzz 10% -fill none \
           -draw 'matte 120,150 floodfill  matte 150,120 floodfill' \
           null: \( glitter_blue.gif -virtual-pixel tile \
             -set option:distort:viewport 300x300 -distort SRT 0 \) \
-          -compose DstOver -layers magick composite \
+          -compose DstOver -layers composite \
           -loop 0 -layers Optimize logo_glitter_cloak.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="logo_glitter_cloak.gif"
@@ -2597,7 +2597,7 @@ make an animation look very bad. </P>
 
 Suppose you want both animations to be appended side-by-side, but have both
 parts of the animation animating at the same time.  This is not so easy, as
-you need to append (or magick composite together) each pair frames in the the two
+you need to append (or composite together) each pair frames in the the two
 animations together, so the animation also works together.. </P>
 
 The real problem to doing this is the IM command line only works with a single
@@ -2671,7 +2671,7 @@ Forums</A>, though the actual problem he gave was far, far, worse. </P>
      ALIGN=right VSPACE=0 HSPACE=0 BORDER=0 ALT="[right]"
 >
 
-Now browsers usually magick animate each of the separate GIF images, without any
+Now browsers usually animate each of the separate GIF images, without any
 synchronization. As such the two animations may become out-of-sync with each
 other, producing a 'cat' that appears to have been part of a chainsaw
 massacre.   You may be able to see this effect to the right where I placed two
@@ -2951,8 +2951,8 @@ highlighting the areas of change.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR valign="top"><TD><pre class="bg-light text-dark mx-4"><samp>
   magick   bag.gif   -coalesce  -set delay 0 \
-          -bordercolor red -border 0 +matte    null: \
-          -duplicate 1,1--2 -compose difference -layers magick composite \
+          -bordercolor red -border 0 -alpha off    null: \
+          -duplicate 1,1--2 -compose difference -layers composite \
           +delete -compose plus -background black -flatten \
           -separate -flatten -threshold 0 bag_areas.gif
 </samp></pre></TD></TR></TABLE>
@@ -3005,7 +3005,7 @@ about six or more areas, though you will not gain much from optimization doing
 this. All it would really do is complicate your web page, and create more
 files for the user to download. </P>
 
-Now unlike the larger animation, these smaller areas will magick animate quite
+Now unlike the larger animation, these smaller areas will animate quite
 independently from each other.  We can even also change the timings of these
 simple sub-animations without adversely affecting the result so as to
 completely de-synchronize them from the other sub-animations.  The result is
@@ -3018,7 +3018,7 @@ these animations. </P>
 
 Also the first two frames of the 'cat' are also exactly the same.  However
 unlike the 'bear' and 'wing' you can't just remove one of them, as each frame
-contains time delays to allow the 'bear' and 'wing' to magick animate without the cat
+contains time delays to allow the 'bear' and 'wing' to animate without the cat
 being present. </P>
 
 To correctly remove these duplicate frames, you need to use the "<CODE><A

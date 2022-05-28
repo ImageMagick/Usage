@@ -2,17 +2,17 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Resize Halo Bug -- IM v6 Examples</TITLE>
+<TITLE>Resize Halo Bug -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/resize_halo/">
+      HREF="https://imagemagick.org/Usage/bugs/resize_halo/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
-<H1>ImageMagick v6 Examples -- <BR>
+<H1>ImageMagick Examples -- <BR>
     <IMG SRC="../../img_www/space.gif" width=50 height=1>
     Resize Halo Bug -- FIXED</H1>
 
@@ -44,60 +44,60 @@ was fixed.  </P>
 We have a white text on a transparent background.  Everything works fine.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -background none -fill white -pointsize 72 -font Candice \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -background none -fill white -pointsize 72 -font Candice \
             label:Hello   label.png
-</CODE>&nbsp;</PRE></TD></TR></TABLE><NOBR>
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="label.png"
       ><IMG SRC="label.png"
             ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 But resizing it slightly produces a slightly darker edge, though this is not
 easily seen on the darker background of this page.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -background none -fill white -pointsize 72 -font Candice \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -background none -fill white -pointsize 72 -font Candice \
             label:Hello  -resize 95%  resized.png
-</CODE>&nbsp;</PRE></TD></TR></TABLE><NOBR>
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="resized.png"
       ><IMG SRC="resized.png"
             ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 To see the halo clearly lets overlay the white text image on a white
 background, then normalize to show the darker pixels.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -background none -fill white -pointsize 72 -font Candice \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -background none -fill white -pointsize 72 -font Candice \
             label:Hello  -resize 95% \
             -background white -flatten -normalize     resize_halo.jpg
-</CODE>&nbsp;</PRE></TD></TR></TABLE><NOBR>
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="resize_halo.jpg"
       ><IMG SRC="resize_halo.jpg"
             ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 We can see that this really is a resize bug by removing the resize command
 and overlaying, producing the expected pure white image.  A pure white image
 should have been the result of the previous command.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -background none -fill white -pointsize 72 -font Candice \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -background none -fill white -pointsize 72 -font Candice \
             label:Hello  \
             -background white -flatten -normalize      no_resize.jpg
-</CODE>&nbsp;</PRE></TD></TR></TABLE><NOBR>
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="no_resize.jpg"
       ><IMG SRC="no_resize.jpg"
             ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 <HR><!-- ---------------------------------------------------------------- -->
 
@@ -108,9 +108,9 @@ Lets look at this in a different way.... </P>
 Running the command...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NO_EXECUTE>
-    convert -background none -fill white -pointsize 72 -font Candice \
+    magick -background none -fill white -pointsize 72 -font Candice \
              label:Hello    txt:-  |\
       egrep -v '\) (white|none|#FFFFFFFFFFFF)'
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
@@ -129,9 +129,9 @@ However if we now resize the image slightly before outputing the
 "<CODE>txt:</CODE>" image file...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NO_EXECUTE>
-    convert -background none -fill white -pointsize 72 -font Candice \
+    magick -background none -fill white -pointsize 72 -font Candice \
             label:Hello   -resize 95%    txt:-  |\
       egrep -v '\) (white|none|#FFFFFFFFFFFF)'
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
@@ -159,43 +159,43 @@ That is use a fully-transparent white (EG: '<CODE>#FFFF</CODE>' as the
 background instead of fully transparent black (EG: '<CODE>none</CODE>'). 
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -background '#FFFF' -fill white -pointsize 72 -font Candice \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -background '#FFFF' -fill white -pointsize 72 -font Candice \
             label:Hello   -resize 95%  resized_white.png
-</CODE>&nbsp;</PRE></TD></TR></TABLE><NOBR>
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="resized_white.png"
       ><IMG SRC="resized_white.png"
             ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 For resize you can also try turn off the resize filters by using a
 '<CODE>point</CODE>' resize filter. </P>
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -background none -fill white -pointsize 72 -font Candice \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -background none -fill white -pointsize 72 -font Candice \
             label:Hello   -filter point  -resize 95%  resized_point.png
-</CODE>&nbsp;</PRE></TD></TR></TABLE><NOBR>
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="resized_point.png"
       ><IMG SRC="resized_point.png"
             ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 And this works reasonably well for resizing small amounts, but falls down when
 heavily resizing images.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -background none -fill white -pointsize 1200 -font Candice \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -background none -fill white -pointsize 1200 -font Candice \
             label:Hello   -filter point -resize 5%  resized_point_big.png
-</CODE>&nbsp;</PRE></TD></TR></TABLE><NOBR>
+</CODE>&nbsp;</PRE></TD></TR></TABLE>
    <A HREF="resized_point_big.png"
       ><IMG SRC="resized_point_big.png"
             ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 If you look closely at the result you can see that the image while not
 having a resize halo effect, also effectively has no anti-aliasing along the
@@ -215,5 +215,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/resize_halo/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/resize_halo/</CODE>
 </ADDRESS></BODY></HTML>

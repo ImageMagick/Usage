@@ -2,17 +2,17 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Testing Minor Bugs -- IM v6 Examples</TITLE>
+<TITLE>Testing Minor Bugs -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/testing/">
+      HREF="https://imagemagick.org/Usage/bugs/testing/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
 </HEAD><BODY BGCOLOR="#B0C4DE">
 
-<H1>ImageMagick v6 Examples -- <BR>
+<H1>ImageMagick Examples -- <BR>
     <IMG SRC="../../img_www/space.gif" width=50 height=1>
     Testing for Minor Bugs</H1>
 
@@ -37,18 +37,18 @@ question. </P>
 <!-- Example with side image and text underneath.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR VALIGN=top><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
-               <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+               <TD width="90%" ALIGN=justify>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE ERR=error.txt>
-  convert rose: -verbose rose.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
+  magick rose: -verbose rose.gif
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="../../images/rose.gif"
      ><IMG SRC="../../images/rose.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD><TD><IMG SRC="../../img_www/good.gif" HSPACE=10>
 </TD><TD><IMG SRC="../../img_www/bad.gif" HSPACE=10>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="error.txt"
      ><IMG SRC="error.txt.gif"
@@ -58,11 +58,11 @@ question. </P>
 
 <!--  Example with just a an output text box below
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE NOIMAGE OUT=output.txt>
-  convert anim_canvas.gif  -format '%s/%n %D %wx%h\n' info:
-</CODE></PRE></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+  magick anim_canvas.gif  -format '%s/%n %D %wx%h\n' info:
+</samp></pre></TD></TR></TABLE>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
   <A HREF="output.txt"
      ><IMG SRC="output.txt.gif"
@@ -83,10 +83,10 @@ These are known bugs, that will probably take some time to figure out and fix.
 Separate a rose image into its CMYK channels.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert rose: -colorspace CMYK -separate separate_CMYK_%d.gif
-</CODE></PRE></TD></TR></TABLE>
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick rose: -colorspace CMYK -separate separate_CMYK_%d.gif
+</samp></pre></TD></TR></TABLE>
  <A HREF="../../images/rose.gif"
     ><IMG SRC="../../images/rose.gif"
           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -109,11 +109,11 @@ Using combine to re-create the original image works.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert separate_CMYK_?.gif  -set colorspace CMYK  -combine  \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick separate_CMYK_?.gif  -set colorspace CMYK  -combine  \
           -colorspace RGB  rose_CMYK_combined.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_CMYK_combined.gif"
      ><IMG SRC="rose_CMYK_combined.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -123,15 +123,15 @@ Now lets try to use the channel coping compose methods to re-combine them.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert separate_CMYK_0.gif -colorspace CMYK \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick separate_CMYK_0.gif -colorspace CMYK \
           separate_CMYK_0.gif -compose CopyRed   -composite \
           separate_CMYK_1.gif -compose CopyGreen -composite \
           separate_CMYK_2.gif -compose CopyBlue  -composite \
           separate_CMYK_3.gif -compose CopyBlack -composite \
           -colorspace RGB   rose_CMYK_combined_alt.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
+</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="rose_CMYK_combined_alt.gif"
      ><IMG SRC="rose_CMYK_combined_alt.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -143,15 +143,15 @@ Check the channel contents after copies shows a complete break down of the
 black channel copy.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert separate_CMYK_0.gif -colorspace CMYK \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick separate_CMYK_0.gif -colorspace CMYK \
           separate_CMYK_0.gif -compose CopyRed   -composite \
           separate_CMYK_1.gif -compose CopyGreen -composite \
           separate_CMYK_2.gif -compose CopyBlue  -composite \
           separate_CMYK_3.gif -compose CopyBlack -composite \
           -separate separate_again_%d.gif
-</CODE></PRE></TD></TR></TABLE>
+</samp></pre></TD></TR></TABLE>
  <A HREF="../../images/rose.gif"
     ><IMG SRC="../../images/rose.gif"
           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -179,13 +179,13 @@ shouldn't.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify >
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-    convert -size 100x60 xc:skyblue \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+    magick -size 100x60 xc:skyblue \
             -fill white -stroke '#0004' -strokewidth 16 \
             -draw "stroke-linecap round       path 'M 60,30 L -10,30'" \
             draw_endcap.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="draw_endcap.gif"
        ><IMG SRC="draw_endcap.gif"              WIDTH=100 HEIGHT=60
              ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -204,12 +204,12 @@ There appears to be a bug in 'arc' or 'ellipse' in that it is drawing the
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify >
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 xc:skyblue -fill none -stroke white -strokewidth 5 \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 100x60 xc:skyblue -fill none -stroke white -strokewidth 5 \
           -draw "stroke-linejoin round ellipse 50,0 45,45 60,160" \
           draw_linejoin.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="draw_linejoin.png"
        ><IMG SRC="draw_linejoin.png"              WIDTH=100 HEIGHT=60
              ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -229,13 +229,13 @@ This may be related to the next bug... </P>
 With a stroke of 2 this is fine.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify >
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x60 xc:white -fill white -colorspace RGB \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 80x60 xc:white -fill white -colorspace RGB \
           -draw "stroke black stroke-width 2 stroke-linejoin round \
                  polyline 14,53 30,5 71,14 51,41" \
           -colorspace sRGB draw_line2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="draw_line2.png"
        ><IMG SRC="draw_line2.png"              WIDTH=80 HEIGHT=60
              ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -244,13 +244,13 @@ With a stroke of 2 this is fine.
 But with a stroke of 3 it goes wrong.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify >
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x60 xc:white -fill white -colorspace RGB \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 80x60 xc:white -fill white -colorspace RGB \
           -draw "stroke black stroke-width 3 stroke-linejoin round \
                  polyline 14,53 30,5 71,14 51,41" \
           -colorspace sRGB draw_line3.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="draw_line3.png"
        ><IMG SRC="draw_line3.png"              WIDTH=80 HEIGHT=60
              ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -259,13 +259,13 @@ But with a stroke of 3 it goes wrong.
 But without the stroke-linejoin round it works correctly again.
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify >
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 80x60 xc:white -fill white -colorspace RGB \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 80x60 xc:white -fill white -colorspace RGB \
           -draw "stroke black stroke-width 3 \
                  polyline 14,53 30,5 71,14 51,41" \
           -colorspace sRGB draw_line3_2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="draw_line3_2.png"
        ><IMG SRC="draw_line3_2.png"              WIDTH=80 HEIGHT=60
              ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -282,12 +282,12 @@ Especially if you use a linear colorspace for drawing...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 xc:skyblue -colorspace RGB -fill white -stroke black \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 100x60 xc:skyblue -colorspace RGB -fill white -stroke black \
           -draw "path 'M 10,10 L 90,10 L 90,50 Z'" \
           -colorspace sRGB draw_path_line_closed.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="draw_path_line_closed.gif"
        ><IMG SRC="draw_path_line_closed.gif"              WIDTH=100 HEIGHT=60
              ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -298,13 +298,13 @@ But the line appears to be much thicker when drawn as a dashed line.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
 <TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
-<TR><TD><PRE><CODE EXECUTE>
-  convert -size 100x60 xc:skyblue -colorspace RGB -fill white -stroke black \
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
+<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+  magick -size 100x60 xc:skyblue -colorspace RGB -fill white -stroke black \
           -draw "stroke-dasharray 3 3 33 3 3 3 \
                  path 'M 10,10 L 90,10 L 90,50 Z'" \
           -colorspace sRGB draw_path_dash_closed.gif
-</CODE></PRE></TD></TR></TABLE></TD><TD>
+</samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="draw_path_dash_closed.gif"
        ><IMG SRC="draw_path_dash_closed.gif"              WIDTH=100 HEIGHT=60
              ALIGN=middle VSPACE=5 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
@@ -318,5 +318,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/testing/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/testing/</CODE>
 </ADDRESS></BODY></HTML>

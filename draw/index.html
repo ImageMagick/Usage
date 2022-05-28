@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Drawing -- IM v6 Examples</TITLE>
+<TITLE>Drawing -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/draw/">
@@ -133,7 +133,7 @@ The other way is less common, and less modifiable, but in another sense more
 versatile,  Object Vector Graphics.  In this form the image is described in
 terms of lines, arcs, color fills, and sometimes depth.  This is useful
 because you can scale these images to just about any size you want and they
-still magick display perfectly.  You can also describe very large and complex images
+still display perfectly.  You can also describe very large and complex images
 in a very small amount of space when compared to the raster format
 equivalent. </P>
 
@@ -485,7 +485,7 @@ The '<CODE>bezier</CODE>' primitive is not really useful without specifying all
 4 points. Only the first and last point are classed as 'knots' through which
 the curve will pass (or end).  All the other intervening points are regarded
 purely as control points, effecting the curve in the sequence given, the
-further away the control point is the larger its effect on that magick segment of the
+further away the control point is the larger its effect on that segment of the
 curve.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
@@ -1395,7 +1395,7 @@ you can see how the color changes the resulting beat.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR>
 <TR><TD width="100%" ALIGN=justify>
-Lets magick compare that to a stroke of none...
+Lets compare that to a stroke of none...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 25x10 xc:lightblue \
@@ -1482,7 +1482,7 @@ without overlap.  The resulting 'tiny' images, have been enlarged for display.
   magick -size 10x10 xc: -draw 'polygon 2,-1 7,10 10,10 10,-1' bound_left.gif
   magick -size 10x10 xc: -draw 'polygon 2,-1 7,10 -1,10 -1,-1' bound_right.gif
 
-  magick bound_left.gif bound_right.gif -compose Plus -magick composite bound_add.gif
+  magick bound_left.gif bound_right.gif -compose Plus -composite bound_add.gif
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE SCRIPT>
   for i in left right add; do
@@ -1619,7 +1619,7 @@ demonstrated above. </P>
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  A font, stretch, style, and weight are used to magick identify a font from the
+  A font, stretch, style, and weight are used to identify a font from the
   ImageMagick font list. Most people however just select a specific font and
   pointsize to use instead.  As such they are rarely used in IM.
 </I></FONT></TD></TR></TABLE></P>
@@ -2279,7 +2279,7 @@ the radius by the same amount as that lines length so the curve is resized
 accordinally, so the arc also scales correctly. </P>
 
 Note that the 'sweep' flag controls if the curve bulges outward or inward,
-according to the direction each path magick segment is drawn (see above).
+according to the direction each path segment is drawn (see above).
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
 <TR><TD width="100%" ALIGN=justify>
@@ -2393,7 +2393,7 @@ the 'assumed mirror' of the last control point.
 </TD></TR></TABLE></P>
 
 The line connecting the control point to the final point on the path of that
-path magick segment (control line) basically defines the direction of the curve
+path segment (control line) basically defines the direction of the curve
 though that point on the path.  A long control line will produce a smoother
 curve at that point, while a short line generates a sharper curve at that
 point. If the control point matches the point of the curve (control line is
@@ -2444,7 +2444,7 @@ drawn.  The longer that line segment, less 'sharp' the curve is at that
 control point, with a zero length producing a 'point'. </P>
 
 The '<CODE>S</CODE>' function internally generates the mirror control
-point/line for the next magick segment from the data of the previous segment, so as
+point/line for the next segment from the data of the previous segment, so as
 to produce a smooth continuation of the curve. </P>
 
 For more examples of this path function see, <A
@@ -2475,7 +2475,7 @@ without needing any fancy GUI tools. </P>
 <LI>At this point you can test draw your path. The path will only consist of
     straight line segments as all control lines will be of length zero.
 <LI>All you need to do is now slowly and carefully adjust the position of the
-    controlling line magick segment (the first coordinate of each '<CODE>S</CODE>'
+    controlling line segment (the first coordinate of each '<CODE>S</CODE>'
     pair) to get the final curve you want. Do not make control lines too long,
     or in the wrong direction or you'll get a very funny looking curve.
 <LI>To help see your changes and find mistakes, use the conversion
@@ -2563,7 +2563,7 @@ an upside-down shark fin, rather than a sail. </P>
 
 Remember Quadratic Arcs are parabolas, while Elliptical Arcs basically
 generate circular segments.  This may be the key to determined which type of
-arc'ing line magick segment you should use.  </P>
+arc'ing line segment you should use.  </P>
 
 For more examples of this path function see, <A
 HREF="http://www.w3.org/TR/SVG/paths.html#PathDataQuadraticBezierCommands"
@@ -3098,7 +3098,7 @@ this.  For the above shell script case I just found "<CODE>awk</CODE>" to be
 the simplest and fastest means. </P>
 
 Actually you can even use Imagemagick itself to do that 'macro' expansion using
-the "<CODE>convert</CODE>" format option...  For example here I use it to
+the "<code>magick</code>" format option...  For example here I use it to
 calculate a point on the circumference of the circle, for this 'point symbol'.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
@@ -3213,7 +3213,7 @@ first 'plus' example above which needed a lot of calculations.
 
 This uses the special shell programming technique where anything and everything
 that is 'echoed' within the shell parenthesis will be fed into the final
-"<CODE>convert</CODE>" command as a MVG file.  The first 'echo' defines and
+"<code>magick</code>" command as a MVG file.  The first 'echo' defines and
 fills the drawing canvas for the image, while the 'while' loop converts each
 'point' giving into a circle of the given radius. </P>
 
@@ -4431,7 +4431,7 @@ library is not present)...
 <!-- <CODE EXECUTE ASSERT>
   magick -list format | grep ' SVG\* ' | grep -q 'XML' && echo >&2 \
     "ASSERTION FAILURE: magick is using internal MSVG rather than RSVG\!"
-  [ "`magick compare -metric PAE diagonal_*.gif null: 2>&1 |\
+  [ "`compare -metric PAE diagonal_*.gif null: 2>&1 |\
          sed 's/ .*//'`" -lt 40000 ] && echo >&2 \
     "ASSERTION FAILURE: MSVG and RSVG conversion library outputs are equal\!"
 </CODE> -->

@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Color Modifications -- IM v6 Examples</TITLE>
+<TITLE>Color Modifications -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/color_mods/">
@@ -960,7 +960,7 @@ methods of specifying the 'reversed' form.
 </TD></TR></TABLE>
 </DIV></P>
 
-If you magick compare the above "<CODE>+level&nbsp;25%</CODE>" operation with the use
+If you compare the above "<CODE>+level&nbsp;25%</CODE>" operation with the use
 of an a negative de-contrasting, "<CODE>-level&nbsp;-25%</CODE>" operator we
 showed previously, you will see that are not the same. The 'plus' version
 produces a much stronger de-contrasted image (it is greyer), but does so by
@@ -1896,7 +1896,7 @@ normalization test image.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ "`magick identify -format '%[fx:saturation]' normalize.jpg`" != 0 ] && echo >&2 \
+  [ "`identify -format '%[fx:saturation]' normalize.jpg`" != 0 ] && echo >&2 \
     "ASSERTION FAILURE: Normalize channels were not tied together."
 </CODE> -->
 
@@ -2267,12 +2267,12 @@ With "<CODE>-linear-stretch</CODE>", all the channels will be processed in a
 common way, thus assuring that no color shifts of the channels relative to
 each other will be produced.  </P>
 
-So lets get a verbose magick identify and the histogram of a real image.
+So lets get a verbose identify and the histogram of a real image.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE NO_TXT2GIF OUT=info_port.txt>
-  magick port.png  -verbose -magick identify +verbose  histogram:port_hist.gif
+  magick port.png  -verbose -identify +verbose  histogram:port_hist.gif
 </samp></pre></TD></TR></TABLE>
 <!--<CODE EXECUTE SCRIPT OUT=info_port_mod.txt>
   sed '2,/blue: 8-bit/ d; /Image statistics:/,$ d;
@@ -2437,7 +2437,7 @@ independently.
 </DIV></P>
 
 You may note that the histogram does not look very uniform. But if we convert
-the resulting image to grayscale and magick display its histogram, its histogram looks
+the resulting image to grayscale and display its histogram, its histogram looks
 a bit more uniform in comparison to the original image's grayscale histogram
 </P>
 
@@ -2635,7 +2635,7 @@ each bin. </P>
 
 So that we can look at the results, I also process the histogram counts into a
 gradient image (via the <A HREF="../formats/#netpbm" >NetPBM, PGM text
-grayscale</A> image file format, and magick display it as a line graph using the
+grayscale</A> image file format, and display it as a line graph using the
 "<CODE><A HREF="../scripts/im_profile" >im_profile</A></CODE>" script.
 Essentially this is just a different way of generating a histogram image,
 though this time directly from a numerical data file. </P>
@@ -2784,7 +2784,7 @@ to redistribute the image's histogram.
           } ' |\
   im_profile -s  -  png:- |\
   magick gaussian_hist_graph.gif -crop 150x75+0+0 \
-          png:- +swap -compose multiply -magick composite \
+          png:- +swap -compose multiply -composite \
           zelda_redist_graph.gif
 </CODE>-->
   <A HREF="../img_photos/zelda.png"
@@ -3877,7 +3877,7 @@ semi-transparent overlay of the specific color wanted.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick test.png  \( +clone -colorspace gray \
                -function polynomial -4,4,0 -background Gold -alpha shape \) \
-          -magick composite   tint_diy_compose.png
+          -composite   tint_diy_compose.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tint_diy_compose.png"
      ><IMG SRC="tint_diy_compose.png"       WIDTH=150   HEIGHT=100
@@ -3911,8 +3911,8 @@ to tint the original image.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick test.png \( +clone +matte -fill gold -colorize 100% \) \
-          -compose overlay -magick composite  tint_overlay.png
+  magick test.png \( +clone -alpha off -fill gold -colorize 100% \) \
+          -compose overlay -composite  tint_overlay.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tint_overlay.png"
      ><IMG SRC="tint_overlay.png"   WIDTH=150 HEIGHT=100
@@ -3928,9 +3928,9 @@ fix this problem.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick test.png \
-          \( +clone +matte -fill gold -colorize 100% \
-             +clone +swap -compose overlay -magick composite \) \
-          -compose SrcIn -magick composite  tint_overlay_fixed.png
+          \( +clone -alpha off -fill gold -colorize 100% \
+             +clone +swap -compose overlay -composite \) \
+          -compose SrcIn -composite  tint_overlay_fixed.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tint_overlay_fixed.png"
      ><IMG SRC="tint_overlay_fixed.png"   WIDTH=150 HEIGHT=100
@@ -3957,8 +3957,8 @@ tile pattern.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick test.png \
           \( -size 150x100 tile:tile_disks.jpg \
-             +clone +swap -compose overlay -magick composite \) \
-          -compose SrcIn -magick composite  tint_overlay_pattern.png
+             +clone +swap -compose overlay -composite \) \
+          -compose SrcIn -composite  tint_overlay_pattern.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tint_overlay_pattern.png"
      ><IMG SRC="tint_overlay_pattern.png"   WIDTH=150 HEIGHT=100
@@ -5001,7 +5001,7 @@ LUT, with a very limited number of colors.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-I enlarged the gradient image for the web page magick display above, otherwise it
+I enlarged the gradient image for the web page display above, otherwise it
 would be too small to see properly. The LUT is in actual fact only 6 pixels in
 size.  However if you look at the result you will see that the Color Lookup
 Operator smooths out those 6 colors into a smooth gradient. </P>
@@ -5185,9 +5185,9 @@ previously.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -size 1x512 gradient: -rotate 90 +matte \
+  magick -size 1x512 gradient: -rotate 90 -alpha off \
           -fx '3.5u^3 - 5.05u^2 + 2.05u + 0.3' \
-          -size 512x1 xc:DodgerBlue -compose Overlay -magick composite \
+          -size 512x1 xc:DodgerBlue -compose Overlay -composite \
           aqua_gradient.png
 </samp></pre></TD></TR></TABLE>
    <A HREF="aqua_gradient.png"
@@ -5300,7 +5300,7 @@ and white replacement at the bottom.
 Remember the above will only work as expected if the gray-scale image has no
 alpha channel (turned off using either "<CODE><A
 HREF="../option_link.cgi?alpha" >-alpha</A> off</CODE>" or "<CODE><A
-HREF="../option_link.cgi?matte" >+matte</A></CODE>"), and you specify that you
+HREF="../option_link.cgi?matte" >-alpha off</A></CODE>"), and you specify that you
 also want to lookup alpha channel values (using "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A> RGBA</CODE>"). </P>
 
@@ -5312,7 +5312,7 @@ adjustment gradient (with no alpha channel enabled). </P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:none -draw 'polygon 50,10 10,80 90,80' \
-          tile_disks.jpg -compose In -magick composite shape_triangle.gif
+          tile_disks.jpg -compose In -composite shape_triangle.gif
   magick shape_triangle.gif -channel A -blur 0x10 +channel shape_blurred.png
   magick -size 1x50 gradient: xc:black -append -flip \
           -sigmoidal-contrast 6x0%  feather_histogram.jpg
@@ -5446,7 +5446,7 @@ image, using the  "<CODE><A HREF="../option_link.cgi?hald-clut"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 <!-- <CODE EXECUTE ASSERT>
-  [ `magick compare -metric PAE rose: rose_hald_noop.png null: 2>&1 |
+  [ `compare -metric PAE rose: rose_hald_noop.png null: 2>&1 |
                sed 's/ .*//'` != '0' ] && echo >&2 \
     "ASSERTION FAILURE: Noop Hald CLUT made a chnage to the image\!"
 </CODE> -->

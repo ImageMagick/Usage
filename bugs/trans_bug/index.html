@@ -2,15 +2,15 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
 <link rel="stylesheet" href="../../assets/usage.css">
-<TITLE>Semi-Transparency Bug -- IM v6 Examples</TITLE>
+<TITLE>Semi-Transparency Bug -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical"
-      HREF="https://legacy.imagemagick.org/Usage/bugs/trans_bug/">
+      HREF="https://imagemagick.org/Usage/bugs/trans_bug/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../../img_www/pngfix.js"></script>
 <![endif]><![endif]-->
-</HEAD><BODY BGCOLOR=white BACKGROUND="bg.gif">
+</HEAD><BODY BGCOLOR=white">
 
 <H1>ImageMagick 5.5.7 -- <BR>
     <IMG SRC="../../img_www/space.gif" width=50 height=1>
@@ -45,9 +45,9 @@ was fixed.  </P>
 
 Generate an opaque rectangle
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE>
-    convert -size 200x200 xc:none -fill "#808080" \
+    magick -size 200x200 xc:none -fill "#808080" \
             -draw "rectangle 0,0 150,100" rectangle.png
 </CODE><BR></PRE></TD></TR></TABLE>
    <A HREF="rectangle.png"
@@ -57,9 +57,9 @@ Generate an opaque rectangle
 
 and a white circle  (Semi-Transparent Bug  in -draw command happens here)
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE>
-    convert -size 200x200 xc:none -fill "#FFFFFF" \
+    magick -size 200x200 xc:none -fill "#FFFFFF" \
             -draw "circle 125,125 73,73" circle_white.png
 </CODE><BR></PRE></TD></TR></TABLE>
    <A HREF="circle_white.png"
@@ -72,9 +72,9 @@ circle. </P>
 
 Make it semi-transparent
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE>
-    convert circle_white.png  -fill "#FFFFFF80" -opaque "#FFFFFF" circle.png
+    magick circle_white.png  -fill "#FFFFFF80" -opaque "#FFFFFF" circle.png
 </CODE><BR></PRE></TD></TR></TABLE>
    <A HREF="circle.png"
       ><IMG SRC="circle.png"
@@ -88,7 +88,7 @@ to do so.  </I></FONT></P>
 Overlay circle on rectangle (Semi-Transparency Bug  in overlays happens here)
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE>
     composite circle.png rectangle.png alpha.png
 </CODE><BR></PRE></TD></TR></TABLE>
@@ -103,7 +103,7 @@ circle becomes grey in color, instead of remaining unchanged. </P>
 Overlay the above result onto a white background, so we can see the result on
 browsers like IE.
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE>
     composite alpha.png  -size 200x200 xc:white  result.png
 </CODE><BR></PRE></TD></TR></TABLE>
@@ -143,9 +143,9 @@ If I had generated the semi-transparent circle using this (more correct)
 command instead (only valid in IMv6)...
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
+<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE>
-    convert circle_white.png  -channel A -fx A/2  circle.png
+    magick circle_white.png  -channel A -fx A/2  circle.png
 </CODE><BR></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -167,6 +167,6 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/bugs/trans_bug/</CODE>
+URL: <CODE>https://imagemagick.org/Usage/bugs/trans_bug/</CODE>
 </ADDRESS></BODY></HTML>
 

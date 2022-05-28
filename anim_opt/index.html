@@ -2,7 +2,7 @@
 <meta charset="utf-8" >
 <meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Animation Optimization -- IM v6 Examples</TITLE>
+<TITLE>Animation Optimization -- ImageMagick Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/anim_opts/">
@@ -90,7 +90,7 @@
 </DL>
 
 These examples start to make use of the <A HREF="../anim_basics/" >Basic
-Animation Handling</A>, to try to optimize the final magick display and file size
+Animation Handling</A>, to try to optimize the final display and file size
 of an animation.  This is especially important for complex GIF animations
 where smaller sub-frame overlays can be used, as well as three types of
 disposal methods controlling how an animation is handled. </P>
@@ -245,7 +245,7 @@ Previous Animation</A>, created in the previous section.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick canvas_prev.gif -coalesce  -layers OptimizeFrame  optframe.gif
-  gif_anim_magick montage optframe.gif optframe_frames.gif
+  gif_anim_montage optframe.gif optframe_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="optframe.gif"
@@ -276,7 +276,7 @@ HREF="../anim_basics/#background" >Background Dispose Animations</A>...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick canvas_bgnd.gif -coalesce  -layers OptimizeFrame  optframe_bgnd.gif
-  gif_anim_magick montage optframe_bgnd.gif optframe_bgnd_frames.gif
+  gif_anim_montage optframe_bgnd.gif optframe_bgnd_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="optframe_bgnd.gif"
@@ -359,7 +359,7 @@ But notice that every second frame of the animation is simply repeated.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  gif_anim_magick montage paddleball.gif paddleball_frames.gif
+  gif_anim_montage paddleball.gif paddleball_frames.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="paddleball_frames.gif"
      ><IMG SRC="paddleball_frames.gif"
@@ -374,7 +374,7 @@ After frame optimizing it we get a very special GIF disposal sequence.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick paddleball.gif -coalesce -layers OptimizeFrame  paddleball_opt.gif
-  gif_anim_magick montage paddleball_opt.gif paddleball_opt_frames.gif
+  gif_anim_montage paddleball_opt.gif paddleball_opt_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="paddleball_opt.gif"
@@ -439,7 +439,7 @@ deal with <A HREF="#colors" >Color Optimization Problems</A>.
                 \( +clone -rotate 90 \) \( +clone -rotate 90 \) \
                 \( +clone -rotate 90 \) -compose DstOut -layers Composite \
           -set dispose background  moving_hole.gif
-  gif_anim_magick montage moving_hole.gif moving_hole_frames.gif
+  gif_anim_montage moving_hole.gif moving_hole_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="moving_hole.gif"
      ><IMG SRC="moving_hole.gif"          WIDTH=100 HEIGHT=100
@@ -468,7 +468,7 @@ So lets try a straight-forward frame optimization for this animation.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole.gif  -layers OptimizeFrame  moving_hole_opt.gif
-  gif_anim_magick montage moving_hole_opt.gif moving_hole_opt_frames.gif
+  gif_anim_montage moving_hole_opt.gif moving_hole_opt_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="moving_hole_opt.gif"
@@ -526,7 +526,7 @@ animation.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole.gif[0] -set delay 0   moving_hole.gif \
           -layers OptimizeFrame    moving_hole_dup.gif
-  gif_anim_magick montage moving_hole_dup.gif moving_hole_dup_frames.gif
+  gif_anim_montage moving_hole_dup.gif moving_hole_dup_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="moving_hole_dup.gif"
@@ -578,7 +578,7 @@ doubling) to see how that affects the final image...
   magick moving_hole.gif  \( -clone 0--1 -set delay 0 \) \
           +delete -insert 2 -insert 1 -insert 0 \
           -layers OptimizeFrame  moving_hole_double.gif
-  gif_anim_magick montage x2 moving_hole_double.gif moving_hole_double_frames.gif
+  gif_anim_montage x2 moving_hole_double.gif moving_hole_double_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="moving_hole_double.gif"
@@ -637,7 +637,7 @@ For example, lets get IM to do the frame doubling optimization...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole.gif  -layers OptimizePlus   moving_hole_oplus.gif
-  gif_anim_magick montage x2 moving_hole_oplus.gif moving_hole_oplus_frames.gif
+  gif_anim_montage x2 moving_hole_oplus.gif moving_hole_oplus_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
   <A HREF="moving_hole_oplus.gif"
@@ -682,7 +682,7 @@ this animation, you will also get all the extra frames that the above added.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole_oplus.gif -coalesce gif:- |\
-     gif_anim_magick montage x2 - moving_hole_oplus_cframes.gif
+     gif_anim_montage x2 - moving_hole_oplus_cframes.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="moving_hole_oplus_cframes.gif"
      ><IMG SRC="moving_hole_oplus_cframes.gif"
@@ -705,7 +705,7 @@ For example..
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole_oplus.gif -coalesce -layers RemoveDups  gif:- |\
-     gif_anim_magick montage - moving_hole_oplus_rmdups_frames.gif
+     gif_anim_montage - moving_hole_oplus_rmdups_frames.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="moving_hole_oplus_rmdups_frames.gif"
      ><IMG SRC="moving_hole_oplus_rmdups_frames.gif"
@@ -759,7 +759,7 @@ before the animation loops.
              -fill RoyalBlue  -draw 'circle 50,50 30,25' \) \
           \( +clone \) -insert 1 \( +clone \) -insert 3  +swap \
           -set dispose background  moving_hole_split.gif
-  gif_anim_magick montage x2 moving_hole_split.gif moving_hole_split_frames.gif
+  gif_anim_montage x2 moving_hole_split.gif moving_hole_split_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="moving_hole_split.gif"
      ><IMG SRC="moving_hole_split.gif"          WIDTH=100 HEIGHT=100
@@ -789,7 +789,7 @@ So lets try a standard frame optimization after adding these extra frames...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole_split.gif \
                -layers OptimizeFrame     moving_hole_split_opt.gif
-  gif_anim_magick montage x2 moving_hole_split_opt.gif \
+  gif_anim_montage x2 moving_hole_split_opt.gif \
                       moving_hole_split_opt_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
@@ -824,7 +824,7 @@ doing that 'frame doubling' technique as well...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole_split.gif \
                -layers OptimizePlus moving_hole_split_oplus.gif
-  gif_anim_magick montage x2 moving_hole_split_oplus.gif \
+  gif_anim_montage x2 moving_hole_split_oplus.gif \
                       moving_hole_split_oplus_frames.gif
 </samp></pre></TD></TR></TABLE></TD>
 <TD ALIGN=center ROWSPAN=2>
@@ -911,7 +911,7 @@ For example...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick moving_hole_split_oplus.gif -coalesce -layers RemoveZero gif:- |\
-     gif_anim_magick montage - moving_hole_split_rmzero_frames.gif
+     gif_anim_montage - moving_hole_split_rmzero_frames.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="moving_hole_split_rmzero_frames.gif"
      ><IMG SRC="moving_hole_split_rmzero_frames.gif"
@@ -1034,7 +1034,7 @@ could take just about any sub-image as the object being teleported.
   magick -channel RGBA -fill white \
           \( medical.gif -repage 100x100+34+65 -coalesce -set delay 200 \) \
           \( +clone -motion-blur 0x20+90 -blur 0x3 -colorize 100% \
-                +clone -colorize 30%  +swap  -magick composite  -set delay 10  \) \
+                +clone -colorize 30%  +swap  -composite  -set delay 10  \) \
           \( +clone -roll +0-20 -blur 0x3 -colorize 30% \
              -motion-blur 0x15+90 -motion-blur 0x15-90 -set delay 10 \) \
           \( +clone -colorize 30% \
@@ -1042,7 +1042,7 @@ could take just about any sub-image as the object being teleported.
           \( +clone -motion-blur 0x50+90 -blur 0x2 -crop +0+20\! \) \
           \( +page -size 100x100 xc:none -set delay 200 \) \
           -set dispose background -coalesce   -loop 0     teleport.miff
-  gif_anim_magick montage teleport.miff teleport_frames.png
+  gif_anim_montage teleport.miff teleport_frames.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="teleport_frames.png"
      ><IMG SRC="teleport_frames.png"
@@ -1051,7 +1051,7 @@ could take just about any sub-image as the object being teleported.
 
 I purposely left the animation in the IM internal MIFF: file format as this
 ensures that the original image is preserved without modification, and used a
-PNG: file format to magick display the frames so that you can see all the
+PNG: file format to display the frames so that you can see all the
 semi-transparent pixels contained in it! </P>
 
 This is not only important for animations with semi-transparent pixels, but
@@ -1068,7 +1068,7 @@ IM will just threshold all those semi-transparent pixels.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick teleport.miff teleport_thres.gif
-  gif_anim_magick montage teleport_thres.gif teleport_thres_frames.gif
+  gif_anim_montage teleport_thres.gif teleport_thres_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="teleport_thres.gif"
      ><IMG SRC="teleport_thres.gif"         WIDTH=100  HEIGHT=100
@@ -1111,7 +1111,7 @@ semi-transparent pixel present, to '<CODE>90%</CODE>' to make them all opaque.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick teleport.miff -channel A -threshold 90% +channel teleport_thres90.gif
-  gif_anim_magick montage teleport_thres90.gif teleport_thres90_frames.gif
+  gif_anim_montage teleport_thres90.gif teleport_thres90_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="teleport_thres90.gif"
      ><IMG SRC="teleport_thres90.gif"         WIDTH=100  HEIGHT=100
@@ -1138,7 +1138,7 @@ Background</A>.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick teleport.miff -bordercolor skyblue \
                   -coalesce -border 0 teleport_bgnd.gif
-  gif_anim_magick montage teleport_bgnd.gif teleport_bgnd_frames.gif
+  gif_anim_montage teleport_bgnd.gif teleport_bgnd_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="teleport_bgnd.gif"
      ><IMG SRC="teleport_bgnd.gif"         WIDTH=100  HEIGHT=100
@@ -1183,7 +1183,7 @@ channel, to remove the semi-transparent pixels.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick teleport.miff -channel A -ordered-dither o8x8  teleport_od.gif
-  gif_anim_magick montage teleport_od.gif teleport_od_frames.gif
+  gif_anim_montage teleport_od.gif teleport_od_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="teleport_od.gif"
      ><IMG SRC="teleport_od.gif"         WIDTH=100  HEIGHT=100
@@ -1207,7 +1207,7 @@ nicer effect by making the transparency pattern bolder.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick teleport.miff -channel A -ordered-dither h8x8a teleport_htone.gif
-  gif_anim_magick montage teleport_htone.gif teleport_htone_frames.gif
+  gif_anim_montage teleport_htone.gif teleport_htone_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="teleport_htone.gif"
      ><IMG SRC="teleport_htone.gif"         WIDTH=100  HEIGHT=100
@@ -1232,7 +1232,7 @@ pixels.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick teleport.miff -rotate 90 \
           -channel A -ordered-dither hlines -rotate -90 teleport_lines.gif
-  gif_anim_magick montage teleport_lines.gif teleport_lines_frames.gif
+  gif_anim_montage teleport_lines.gif teleport_lines_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="teleport_lines.gif"
      ><IMG SRC="teleport_lines.gif"         WIDTH=100  HEIGHT=100
@@ -1323,7 +1323,7 @@ that we can really test out the problems involved in color optimization.
           -loop 0   speed.miff
 
   magick  speed.miff  speed.gif
-  gif_anim_magick montage  speed.gif  speed_frames.gif
+  gif_anim_montage  speed.gif  speed_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="speed.gif"
      ><IMG SRC="speed.gif"          WIDTH=100 HEIGHT=60
@@ -1350,7 +1350,7 @@ So lets look at various details of our original animation..
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=speed_nframes.txt>
-  magick identify -format "Number of Frames: %n\n" speed.miff | head -1
+  identify -format "Number of Frames: %n\n" speed.miff | head -1
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1360,7 +1360,7 @@ So lets look at various details of our original animation..
 </TD></TR></TABLE>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=speed_ncf.txt>
-  magick identify -format "Colors in Frame %p: %k\n"  speed.miff
+  identify -format "Colors in Frame %p: %k\n"  speed.miff
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1395,7 +1395,7 @@ process called <A HREF="../quantize/#colors" >Color Quantization</A>)...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=speed_ncolors2.txt>
-  magick identify -format "Colors in Frame %p: %k\n"  speed.gif
+  identify -format "Colors in Frame %p: %k\n"  speed.gif
   magick speed.gif +append  -format "Total Number of Colors: %k"  info:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -1473,7 +1473,7 @@ avoiding the introduced color differences from one frame to another.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE>
   magick speed.miff  -layers OptimizeFrame  speed_opt.gif
-  gif_anim_magick montage  speed_opt.gif  speed_opt_frames.gif
+  gif_anim_montage  speed_opt.gif  speed_opt_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="speed_opt.gif"
      ><IMG SRC="speed_opt.gif"         WIDTH=100  HEIGHT=60
@@ -1508,14 +1508,14 @@ Now because a slightly different set of colors are used from one frame to the
 next, and a different pattern of pixels are used for each frame in the
 animation, each frame can be regarded as a completely different image. </P>
 
-For example lets magick compare the first and third frames, which share large amount
+For example lets compare the first and third frames, which share large amount
 of the same background image....
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick compare  speed.gif'[0,2]' speed_compare.gif
+  compare  speed.gif'[0,2]' speed_compare.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="speed_compare.gif"
      ><IMG SRC="speed_compare.gif"              WIDTH=100  HEIGHT=60
@@ -1558,7 +1558,7 @@ Optimize</A> the animation, we get no optimization at all...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick speed.gif  -layers OptimizeFrame  speed_opt2.gif
-  gif_anim_magick montage  speed_opt2.gif  speed_opt2_frames.gif
+  gif_anim_montage  speed_opt2.gif  speed_opt2_frames.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="speed_opt2_frames.gif"
      ><IMG SRC="speed_opt2_frames.gif"
@@ -1576,7 +1576,7 @@ appropriate <A HREF="../color_basics/#fuzz" >Fuzz Factor</A>.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick speed.gif  -fuzz 5%  -layers OptimizeFrame  speed_opt3.gif
-  gif_anim_magick montage speed_opt3.gif speed_opt3_frames.gif
+  gif_anim_montage speed_opt3.gif speed_opt3_frames.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="speed_opt3_frames.gif"
      ><IMG SRC="speed_opt3_frames.gif"
@@ -1612,7 +1612,7 @@ thoughout, you could have used the old <A HREF="../anim_basics/#deconstruct"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick speed.gif  -fuzz 5%  -deconstruct  speed_opt4.gif
-  gif_anim_magick montage speed_opt4.gif speed_opt4_frames.gif
+  gif_anim_montage speed_opt4.gif speed_opt4_frames.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="speed_opt4_frames.gif"
      ><IMG SRC="speed_opt4_frames.gif"
@@ -1752,7 +1752,7 @@ a lot simpler than the DIY method above.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick speed.miff  +matte +map   speed_map.gif
+  magick speed.miff  -alpha off +map   speed_map.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="speed_map.gif"
      ><IMG SRC="speed_map.gif"         WIDTH=100  HEIGHT=60
@@ -1886,7 +1886,7 @@ transparency.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick bunny_bgnd.gif -layers OptimizeTransparency \
                                     +map   bunny_bgnd_opttrans.gif
-  gif_anim_magick montage bunny_bgnd_opttrans.gif bunny_bgnd_opttrans_frames.gif
+  gif_anim_montage bunny_bgnd_opttrans.gif bunny_bgnd_opttrans_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bunny_bgnd_opttrans.gif"
      ><IMG SRC="bunny_bgnd_opttrans.gif"          WIDTH=120 HEIGHT=80
@@ -1973,7 +1973,7 @@ application at its highest '<CODE>-O2</CODE>' optimization level.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   gifsicle -O2 bunny_bgnd.gif -o bunny_bgnd_lzw_gifsicle.gif
-  gif_anim_magick montage bunny_bgnd_lzw_gifsicle.gif bunny_bgnd_lzw_frames.gif
+  gif_anim_montage bunny_bgnd_lzw_gifsicle.gif bunny_bgnd_lzw_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bunny_bgnd_lzw_gifsicle.gif"
      ><IMG SRC="bunny_bgnd_lzw_gifsicle.gif"          WIDTH=120 HEIGHT=80
@@ -2037,7 +2037,7 @@ animation, much further. </P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   gifsicle -O3 --lossy=80 bunny_bgnd.gif -o bunny_bgnd_giflossy.gif
-  gif_anim_magick montage bunny_bgnd_giflossy.gif bunny_bgnd_lossy_frames.gif
+  gif_anim_montage bunny_bgnd_giflossy.gif bunny_bgnd_lossy_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="bunny_bgnd_giflossy.gif"
      ><IMG SRC="bunny_bgnd_giflossy.gif"          WIDTH=120 HEIGHT=80
@@ -2071,7 +2071,7 @@ of the previous non-lossy LWZ compression against a lossy LWZ compression.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick compare bunny_bgnd_lossy_frames.gif bunny_bgnd_lzw_frames.gif \
+  compare bunny_bgnd_lossy_frames.gif bunny_bgnd_lzw_frames.gif \
           bunny_bgnd_diff_frames.gif
 </TD></TR></TABLE>
   <A HREF="bunny_bgnd_diff_frames.gif"
@@ -2220,7 +2220,7 @@ often found that IM will often produce an overall better result that just using
 these LZW compression optimizers. </P>
 
 I also suggest you also <A HREF="../anim_basics/#coalesce" >Coalesce</A> the
-result again afterward and magick compare its frames against the original
+result again afterward and compare its frames against the original
 un-optimized animation, to ensure that the non-IM program did not somehow
 stuff up the animation entirely (see note above).  Believe me I have seen it
 happen, and scripts should double check animations remain valid. </P>
@@ -2249,7 +2249,7 @@ animations that are often so obvious that they are overlooked. </P>
     example, "<CODE>Gimp</CODE>" by default adds "<CODE>Created with The
     GIMP</CODE>" to images.  If the comment is not needed, it is a waste of
     space.  Remove them by adding a "<CODE><A HREF="../option_link.cgi?set"
-    >+set</A> comment</CODE>" operator to the IM "<CODE>convert</CODE>"
+    >+set</A> comment</CODE>" operator to the IM "<code>magick</code>"
     command before the GIF is saved.  </P>
 
     Please note however that if the comment is a copyright notice, it may not
