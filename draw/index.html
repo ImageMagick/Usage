@@ -30,7 +30,7 @@
     <LI><A HREF="#primitives"   >Draw Primitives</A>
     <LI><A HREF="#bezier"       >Bezier Curve Primitive</A>
     <LI><A HREF="#color"        >Color Fill Primitives</A>
-    <LI><A HREF="#matte"        >Matte Fill Primitives</A>
+    <LI><A HREF="#alpha"        >Alpha Fill Primitives</A>
     </UL>
 <DD><A HREF="#specifics"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
@@ -579,7 +579,7 @@ overlaid.
 <TR><TD width="100%" ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  magick -size 3x1 xc:red -matte -fill '#00F8' \
+  magick -size 3x1 xc:red -alpha on -fill '#00F8' \
           -draw 'point 1,0' \
           -draw 'color 2,0 point'   -scale 33x33  draw_points.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -729,21 +729,20 @@ FUTURE: Using a "<CODE><A HREF="../option_link.cgi?tile"
 >-tile</A></CODE>" pattern to fill the area. </P>
 
 
-<A NAME="matte"></A>
-<H3>Matte Fill Primitives</H3>
+<A NAME="alpha"></A>
+<H3>Alpha Fill Primitives</H3>
 
-The '<CODE>matte</CODE>' draw primitive works in exactly the same way as the
+The '<CODE>alpha</CODE>' draw primitive works in exactly the same way as the
 '<CODE>color</CODE>' primitive described above, except it will not replace the
-color of the areas selected, only the 'matte' channel of the areas selected.
-(That is only the 'alpha' or 'matte' channel is adjusted by these fill
-functions). </P>
+color of the areas selected, only the 'alpha' channel of the areas selected.
+(That is only the 'alpha' hannel is adjusted by these fill functions). </P>
 
-Just as like the '<CODE>color</CODE>' fill function, the 'matte' value uses
+Just as like the '<CODE>color</CODE>' fill function, the 'alpha' value uses
 the fill color (unless "<CODE><A HREF="../option_link.cgi?tile"
 >-tile</A></CODE>" as the source of the 'alpha value' to use). </P>
 
 Here we use the same '<CODE>color floodfill</CODE>' example above, but here
-only adjust the matte channel to make the filled parts fully-transparent.
+only adjust the alpha channel to make the filled parts fully-transparent.
 That is the original color is still present, just transparent!
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
@@ -751,11 +750,11 @@ That is the original color is still present, just transparent!
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick color_test.png   -fill none \
-          -draw 'matte 30,20 floodfill'      matte_floodfill.png
+          -draw 'alpha 30,20 floodfill'      matte_floodfill.png
 
 
   magick color_test.png   -fill none   -fuzz 15%   \
-          -draw 'matte 30,20 floodfill'      matte_floodfill_fuzz.png
+          -draw 'alpha 30,20 floodfill'      matte_floodfill_fuzz.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="matte_floodfill.png"
      ><IMG SRC="matte_floodfill.png"          WIDTH=100 HEIGHT=60
@@ -767,7 +766,7 @@ That is the original color is still present, just transparent!
 </TD></TR>
 </TD></TR></TABLE></P>
 
-The '<CODE>matte reset</CODE>' function can also be used to make a whole image
+The '<CODE>alpha reset</CODE>' function can also be used to make a whole image
 semi-transparent. Of course in this case we must output to PNG which can
 accept semi-transparent colors in images. </P>
 
@@ -776,7 +775,7 @@ accept semi-transparent colors in images. </P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick color_test.png   -fill '#00000080' \
-          -draw 'matte 30,20 reset'      matte_reset.png
+          -draw 'alpha 30,20 reset'      matte_reset.png
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="matte_reset.png"
      ><IMG SRC="matte_reset.png"          WIDTH=100 HEIGHT=60
@@ -784,14 +783,14 @@ accept semi-transparent colors in images. </P>
 </TD></TR></TABLE></P>
 
 Notice that the '<CODE>black</CODE>' color component was not used in
-operations, only the matte component of the color. The images original color
+operations, only the alpha component of the color. The images original color
 is left as is. </P>
 
 FUTURE: Using "<CODE><A HREF="../option_link.cgi?tile"
->-tile</A></CODE>" pattern for in interesting matte effect. </P>
+>-tile</A></CODE>" pattern for in interesting alpha effect. </P>
 
 
-Both '<CODE>color</CODE>' and '<CODE>matte</CODE>' are full replacement of
+Both '<CODE>color</CODE>' and '<CODE>alpha</CODE>' are full replacement of
 color functions, which will always produce a Boolean (all or nothing) type of
 color replacement. As such the edges of such areas will always show <A
 HREF="../antialiasing/" >Aliasing effects</A>.  </P>
@@ -3382,7 +3381,7 @@ a transparent background.
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.7.6-9 The <A HREF="../color_basics/#combine" >Combine
   Operator</A> requires the transparency channel of the image to be given as
-  'matte' values rather than alpha values, as such the resulting alpha channel
+  'opacity' values rather than alpha values, as such the resulting alpha channel
   created needs to be negated.  EG:
 
 <DIV ALIGN=center>
