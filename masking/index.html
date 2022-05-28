@@ -23,15 +23,15 @@
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     >Alpha (Matte) Channel</A>
     <UL>
-    <LI><A HREF="#matte"
+    <LI><A HREF="#alpha"
         >Internal Matte Channel</A>
     <LI><A HREF="#alpha"
         >Alpha Channel Operator</A>
         <DL><DD>
         <A HREF="#alpha_off"         ><CODE>Off</CODE></A>
-           &nbsp;(or&nbsp;<A HREF="#alpha_off"<CODE>+matte</CODE></A>),&nbsp;
+           &nbsp;(or&nbsp;<A HREF="#alpha_off"<CODE>-alpha off</CODE></A>),&nbsp;
         <A HREF="#alpha_set"         ><CODE>Set</CODE></A>
-           &nbsp;(or&nbsp;<A HREF="#alpha_set"><CODE>-matte</CODE></A>),&nbsp;
+           &nbsp;(or&nbsp;<A HREF="#alpha_set"><CODE>-alpha set</CODE></A>),&nbsp;
         <A HREF="#alpha_on"          ><CODE>On</CODE></A>,&nbsp;<BR>
         <A HREF="#alpha_opaque"      ><CODE>Opaque</CODE></A>,&nbsp;
         <A HREF="#alpha_transparent" ><CODE>Transparent</CODE></A>,&nbsp;
@@ -111,7 +111,7 @@ backgrounds, or other elements, such as signs, text, spam. </P>
 <HR><!-- ---------------------------------------------------------------- -->
 
 <A NAME="alpha_channel"></A>
-<H2>Alpha (matte) Channel</H2>
+<H2>Alpha Channel</H2>
 
 The transparency (alpha) channel of an image is completely optional, and often
 requires special handling separate to the normal 'color' channels. See <A
@@ -159,28 +159,26 @@ Composition</A>.
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<A NAME="matte"></A>
-<H3>Internal Matte Channel</H3>
+<A NAME="alpha"></A>
+<H3>Internal Alpha Channel</H3>
 
-Now internally IM v6 stores the transparency information in a 'matte' channel,
+Now internally IM v7 stores the transparency information in a 'alpha' channel,
 which just like the color channel is just a plain grey scale image of values
 which range from white, for fully-transparent (or clear), to black for
 fully-opaque.  It is sort of like what you would get if you look at a
 silhouette of the original image. </P>
 
-Now while the image transparency data is stored internally as 'matte' values,
-almost all the operators will deal with transparency as 'alpha'.  As such on
-very low level operators such as  "<CODE><A HREF="../option_link.cgi?level"
+Low level operators such as  "<CODE><A HREF="../option_link.cgi?level"
 >-level</A></CODE>" and  "<CODE><A HREF="../option_link.cgi?threshold"
->-threshold</A></CODE>" actually handle the data as 'matte' rather than alpha.
+>-threshold</A></CODE>" handle the data as alpha.
 Check the <A HREF="../option_link.cgi" >Official Option Reference</A> if you
 are unsure.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
 
-Here is a very old way to extract a 'matte' transparency values from an
-image.  It saves the transparency channel as a 'matte' image file format, and
+Here is a very old way to extract a 'alpha' transparency values from an
+image.  It saves the transparency channel as a 'alpha' image file format, and
 required two separate steps, and commands to define the right image file
 format.
 
@@ -188,18 +186,18 @@ format.
 <TR><TD width="100%" ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-<c>  magick moon.png matte:moon.matte
-<c>  magick MIFF:moon.matte moon_matte2.png
+<c>  magick moon.png alpha:moon.matte
+<c>  magick MIFF:moon.alpha moon_matte2.png
 
   # You can join those two steps in a pipeline as well...
-  magick moon.png matte:- | magick - moon_matte3.png
+  magick moon.png alpha:- | magick - moon_matte3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="moon_matte3.png"
      ><IMG SRC="moon_matte3.png"  WIDTH=70 HEIGHT=70
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-This technique for extracting the 'matte' of an image was common when IM v5
+This technique for extracting the 'alpha' of an image was common when IM v5
 was in use. Basically it was the only method provided to get access to the
 transparency of an image.  It is now very rarely used. </P>
 
@@ -210,7 +208,7 @@ There are two operators that give you low-level control of the transparency
 channel of an image in memory.  The newer operator "<CODE><A
 HREF="../option_link.cgi?alpha" >-alpha</A></CODE>" methods are now the
 recommended method of control, though many IM Examples still show and use the
-older "<CODE><A HREF="../option_link.cgi?matte" >-matte</A></CODE>" operator.
+older "<CODE><A HREF="../option_link.cgi?alpha" >-alpha</A></CODE>" operator.
 </P>
 
 An image cannot only have alpha channel data, but it also has a 'switch' that
@@ -255,7 +253,7 @@ Here are the various "<CODE><A HREF="../option_link.cgi?alpha"
 transparency. </P>
 
 <A NAME="alpha_off"></A>
-<H4>Alpha Off <FONT SIZE=-1>or</FONT> "<CODE>+matte</CODE>"</H4>
+<H4>Alpha Off <FONT SIZE=-1>or</FONT> "<CODE>-alpha off</CODE>"</H4>
 
 This is just a simple switch on the image, which turns off any effect the
 transparency has on the image.  It does not actually delete or destroy the
@@ -314,7 +312,7 @@ areas typically turning black when saved as a JPEG image.  See <A
 HREF="#alpha_remove" >Alpha Remove - Removing Transparency</A> below for the
 correct way to remove transparency before saving to a JPEG file format. </P>
 
-The "<CODE><A HREF="../option_link.cgi?matte" >+matte</A></CODE>" operator is
+The "<CODE><A HREF="../option_link.cgi?alpha" >+alpha</A></CODE>" operator is
 an older command that is exactly the same as "<CODE>-alpha Off</CODE>". That
 is it just turns off the transparency channel. </P>
 
@@ -326,12 +324,12 @@ grayscale colors. </P>
 
 
 <A NAME="alpha_set"></A>
-<H4>Alpha Set <FONT SIZE=-1>or</FONT> "<CODE>-matte</CODE>"</H4>
+<H4>Alpha Set <FONT SIZE=-1>or</FONT> "<CODE>-alpha set</CODE>"</H4>
 
 The '<CODE>Set</CODE>' alpha method is the same as the older "<CODE><A
-HREF="../option_link.cgi?matte" >-matte</A></CODE>" option. </P>
+HREF="../option_link.cgi?alpha" >-alpha on</A></CODE>" option. </P>
 
-This ensures that the image has a 'transparency' or alpha/matte channel, but
+This ensures that the image has a 'transparency' or alpha channel, but
 if it was not present or turned off, that it is initialised to be fully-opaque
 (See the <A HREF="#alpha_opaque" >Alpha Opaque</A> method below). </P>
 
@@ -432,9 +430,9 @@ For an example of this special usage see <A HREF="../transform/#shade_shape"
 >Shaded Shape Images</A>. </P>
 
 <!-- <CODE EXECUTE ASSERT>
-  [ "`magick xc:none +matte -matte txt:- | md5sum`" = \
-      "`magick  xc:black   -matte txt:- | md5sum`" ] || echo >&2 \
-  "ASSERTION FAILURE: Alpha Channel not set opaque using '-matte'"
+  [ "`magick xc:none -alpha off -alpha on txt:- | md5sum`" = \
+      "`magick  xc:black   -alpha on txt:- | md5sum`" ] || echo >&2 \
+  "ASSERTION FAILURE: Alpha Channel not set opaque using '-alpha one'"
   [ "`magick xc:none -alpha Off  txt:- | md5sum`" = \
       "`magick xc:black txt:- | md5sum`" ] || echo >&2 \
   "ASSERTION FAILURE: Alpha Channel 'Off' did not turn off alpha"
@@ -463,15 +461,15 @@ or 'deactivated/off'.  For example...
 </TD></TR></TABLE></P>
 
 On older versions of IM, this was equivalent to using both "<CODE><A
-HREF="../option_link.cgi?matte" >+matte</A></CODE>" to turn off the alpha
-channel, then using "<CODE><A HREF="../option_link.cgi?matte"
->-matte</A></CODE>" to turn it on, while resetting it to be opaque.
+HREF="../option_link.cgi?alph" >-alpha off</A></CODE>" to turn off the alpha
+channel, then using "<CODE><A HREF="../option_link.cgi?alpha"
+>-alpha on</A></CODE>" to turn it on, while resetting it to be opaque.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
-  magick moon.png  +matte -matte  alpha_opaque_matte.png
+  magick moon.png  -alpha off -alpha on  alpha_opaque_matte.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="alpha_opaque_matte.png"
      ><IMG SRC="alpha_opaque_matte.png"          WIDTH=70 HEIGHT=70
