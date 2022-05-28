@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Color Basics and Channels -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/color_basics/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -412,10 +412,10 @@ IM version 7 Greyscale is a single channel image (much smaller memory usage).
 
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The above changes to the 'colorspace' of an image is only a gross
   arrangement of the colors of an image within memory.  It also provides very
   basic (simplistic) color conversions between different colorspaces. </P>
@@ -440,15 +440,15 @@ All the color-spaces we looked at above are known as 'linear' colorspaces,
 which means that the actual value used represents the actual 'intensity'
 values of the color in an image. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 However real life is never quite so simple. It never is! </P>
 
 For example lets generate and save an image with a simple a linear sequence of
 gray values...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x100 gradient:'gray(100%)-gray(0)' \
           -set colorspace sRGB gradient.gif
@@ -511,12 +511,12 @@ HREF="../color_mods/#gamma" >Gamma Operator</A>.  However you could also
 directly modify the image values using the <A HREF="../transform/#evaluate_pow"
 >Evaluate POW function</A>.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 So lets apply it and see the result of a 'gamma corrected image'..
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x100 gradient:'gray(100%)-gray(0)' -gamma 2.2 \
           -set colorspace sRGB gradient_gamma.gif
@@ -555,8 +555,8 @@ light and dark (in linear space). </P>
 
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 <A NAME="monitor" ></A>
 <H3>Gamma of your Monitor</H3>
@@ -573,7 +573,7 @@ Most computer monitors fail this test!</P>
 However HDMI TV's should come out perfect. </P>
 
 The image was created using...
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 45x256 gradient: -size 10x256 pattern:gray50 \
           -duplicate 1,0 +append -set colorspace sRGB -colorspace RGB \
@@ -649,12 +649,12 @@ Saving an image using a sRGB Colorspace is very similar to Gamma correcting an
 image, but is slightly more complicated so as to better reproduce the actual
 response of the human eye, specifically with very dark shades of color. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 So lets save our linear gradient in a sRGB corrected colorspace.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x100 gradient:'gray(100%)-gray(0)' \
           -set colorspace RGB -colorspace sRGB    gradient_sRGB.gif
@@ -665,10 +665,10 @@ So lets save our linear gradient in a sRGB corrected colorspace.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   As of IM v6.7.7 the above is simplified to just
 
 <DIV ALIGN=center>
@@ -689,10 +689,10 @@ So lets save our linear gradient in a sRGB corrected colorspace.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM version 6.7.5 the above would have failed as IM had the
   meanings of 'sRGB' and 'RGB' colorspace reversed.  As such on older versions
   of IM the two colorspace names needed to be swapped. For example...
@@ -787,14 +787,14 @@ This example more clearly shows why processing in sRGB is not a good idea.
 From a discussion on <A HREF="../forum_link.cgi?t=30974&p=140758" >Color
 Blurs</A> and 'Broken Colors', on the IM Users Forum. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 We take two colors using different color channels and blur them together
 so that within the channel the color is blurring to zero (a low color value).
 First lets do thus using the default sRGB input channel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 40x80 xc:red xc:lime +append \
           -blur 0x20 blur_sRGB.png
@@ -808,12 +808,12 @@ If you look at the results, it looks like the colors are blurring from red
 through black and then to green.  That is because the values to our eyes
 appear darker than they should be in sRGB colorspace. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Here I blur the same image again but using a linear RGB colorspace.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 40x80 xc:red xc:lime +append \
           -colorspace RGB -blur 0x20 -colorspace sRGB blur_RGB.png
@@ -836,10 +836,10 @@ process the images in a linear colorspace for the more accurate results,
 though in reality few people do this. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Helmut Dersch (of Barrel Distortion and Len Correction fame) recommends that
   you should consider using the linear '<CODE>LAB</CODE>' colorspace for
   processing images, especially for resizing and image distortions.  </P>
@@ -927,10 +927,10 @@ The script that generated it is "<CODE><A HREF="../scripts/hsl_named_colors"
 HREF="../layers/#example" >Programmed Positioning of Layered Images</A>. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Technically as I draw the HSL colors in the 3-dimensional form of
   a 'bi-cone' rather than a 'cylinder', the radius of each color spot has been
   set equal to the 'Chroma' of the color ('Saturation'/'Brightness'), rather
@@ -1066,10 +1066,10 @@ Names</A>. </P>
 <I>Future: Examples of using other colorspaces (still in development)</I></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   While RGB in ImageMagick represents a linear-RGB colorspace, it is an
   accepted practice that a colorname of '<CODE>rgb(value,value,value)</CODE>'
   is actually defining a <B>sRGB color</B>. </P>
@@ -1144,10 +1144,10 @@ transparency.
 </CODE> -->
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.3.0, the last set of hex digits contained the colors
   transparency in the form of a 'matte' or 'opacity' value.  That is the final
   hexadecimal '<CODE>00</CODE>' represented 'opaque' and
@@ -1198,10 +1198,10 @@ specified as a decimal fraction between 0.0 (transparent) to 1.0 (opaque).
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM version 6.2.7, the '<CODE>rgba()</CODE>' also used a matte value
   for the alpha channel value.  That is a value of 0 for fully opaque and
   255 for fully-transparent.  This was changed as defined by the "W3C CSS3
@@ -1264,9 +1264,9 @@ It is also posible to draw a named fill color using <A
 HREF="../draw/#mvg_settings" >MVG Drawing Settings</A>, though you will need a
 transparent starting canvas for this to work correctly. For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 50x50 xc:none \
           -draw "fill Tomato fill-opacity 0.5 rectangle 0,0 49,49" \
@@ -1282,10 +1282,10 @@ transparent starting canvas for this to work correctly. For example...
 
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that a fully-transparent colors while completely invisible, still has
   a color.  However most IM operators recognise that any color that is
   fully-transparent, is the same as any other fully-transparent color.
@@ -1416,10 +1416,10 @@ are prominent in the green channel but not the others.  The white near the
 bottom of the image is bright in all the channels. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   In IM v5 and before "<A HREF="../option_link.cgi?channel"
   ><CODE>-channel</CODE></A>" was not only a setting for later image
   operations but also on occasion an 'image operator' that converted the
@@ -1527,7 +1527,7 @@ the rose image, using a number of different representations.
   magick rose: -colorspace CMYK -channel K -negate -separate channel_black.gif
   magick rose: -colorspace LAB  -channel R -separate channel_lab_light.gif
 </CODE></PRE></TD></TR></TABLE>
-<TABLE><TR VALIGN=top>
+<TABLE><TR valign="top">
 <TD ALIGN=center>
   <A HREF="channel_gray.gif"
      ><IMG SRC="channel_gray.gif"
@@ -1672,9 +1672,9 @@ An user wanted to be able to swap the red and blue
 channels of an image, this makes it easy, separate the channels, swap, and
 re-combine.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -separate -swap 0,2 -combine rose_rb_swap.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1741,9 +1741,9 @@ Once the image has been combined in the right colorspace you can use a normal
 "<CODE><A HREF="../option_link.cgi?colorspace" >-colorspace</A></CODE>"
 operator to map the pixel data back to normal RGB data.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick separate_HSB_?.gif  -set colorspace HSB  -combine  \
           -colorspace sRGB  rose_HSB_combined.gif
@@ -1756,9 +1756,9 @@ operator to map the pixel data back to normal RGB data.
 This method also works for CMYK images, which is often difficult to handle
 due to the need for a fourth color channel.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick separate_CMYK_?.gif  -set colorspace CMYK  -combine  \
           -colorspace sRGB  rose_CMYK_combined.gif
@@ -1773,9 +1773,9 @@ An alternative workaround (for earlier versions of IM) is to load one image
 that each individual channel image can be loaded and <A
 HREF="../compose/#channel" >Channel Copied</A> into that pre-prepared image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick separate_HSB_0.gif -colorspace HSB \
           separate_HSB_0.gif -compose CopyRed   -magick composite \
@@ -1794,10 +1794,10 @@ in place, as this does not change the actual pixel data, only the way the data
 is interpreted.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The last example will not work for '<CODE>CMYK</CODE>' images, as the
   '<CODE>Black</CODE>' channel image does not actually contain a black
   channel!  As such "<CODE>-compose CopyBlack</CODE>" will fail to find valid
@@ -1812,9 +1812,9 @@ rose image and want to negate the luminance channel of the image in
 '<CODE>Lab</CODE>' colorspace.  When finished I re-combine to build a sRGB
 image again. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -colorspace Lab -separate \
           \( -clone 0 -negate \) -swap 0 +delete \
@@ -1827,10 +1827,10 @@ image again. </P>
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Previously this example used '<CODE>HSL</CODE>' colorspace, but that is
   a linear colorspace, and we want to negate in a 'perceptual colorspace'
   as provided by '<CODE>Lab</CODE>'. </P>
@@ -1846,9 +1846,9 @@ itself a channel controlled operator we did not have to "<A
 HREF="../option_link.cgi?separate" ><CODE>-separate</CODE></A>" out the
 luminance channel in order to negate it.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -colorspace Lab \
           -channel R   -negate   +channel \
@@ -1879,9 +1879,9 @@ The most direct technique, is often to use the <A
 HREF="../transform/#evaluate" >Evaluate Operator</A> to zero all the values in
 the unwanted channel...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -colorspace HSL \
           -channel G  -evaluate set 0  +channel \
@@ -2072,7 +2072,7 @@ generate perfect '<CODE>HSL</CODE>' color wheel.
           -combine -set colorspace HSL \
           -colorspace sRGB colorwheel_HSL.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE VALIGN=top>
+<TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="angular.png"
      ><IMG SRC="angular.png"    WIDTH=100 HEIGHT=100
@@ -2099,10 +2099,10 @@ generate perfect '<CODE>HSL</CODE>' color wheel.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The grey scale images are generated as a linear gradient using sRGB values.
   As such the gradients tend to look a little darker than they should.  It is
   however tha values in the input images that is important here, not the
@@ -2157,7 +2157,7 @@ four of these 'hex-cone' colorspaces.
           -combine -set colorspace HCLp \
           -colorspace sRGB colorwheel_HCLp.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE VALIGN=top>
+<TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="colorwheel_HSL.png"
      ><IMG SRC="colorwheel_HSL.png"    WIDTH=100 HEIGHT=100
@@ -2221,7 +2221,7 @@ colorspaces at a 50% intensity.
           anulus.png -alpha on  -compose DstIn -magick composite \
           -colorspace sRGB hues_HCL.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE VALIGN=top>
+<TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="hues_HSL.png"
      ><IMG SRC="hues_HSL.png"    WIDTH=100 HEIGHT=100
@@ -2327,7 +2327,7 @@ equivalent '<CODE>HCL</CODE>' colorspace shown above.
           -combine -set colorspace LCHuv \
           -colorspace sRGB colorwheel_LCHuv.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE VALIGN=top>
+<TABLE valign="top">
 <TR><TD ALIGN=center>
   <A HREF="radial.png"
      ><IMG SRC="radial.png"    WIDTH=100 HEIGHT=100
@@ -2432,13 +2432,13 @@ operators are designed for replacing one color in an image with another. </P>
 For example to replace a '<CODE>blue</CODE>' color with say '<CODE>white</CODE>'
 you would use a command like this...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick balloon.gif  -fill white -opaque blue   balloon_white.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2446,7 +2446,7 @@ you would use a command like this...
   <A HREF="balloon_white.gif"
      ><IMG SRC="balloon_white.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Basically any color that was 'blue' has been replaced with the current
@@ -2460,14 +2460,14 @@ the alpha channel to make colors transparent.  You will also need to ensure
 the image has a 'matte' or <A HREF="../basics/#alpha" >alpha channel</A>
 enabled, to hold the transparency information.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick balloon.gif   -alpha set  -channel RGBA \
                         -fill none -opaque blue   balloon_none.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2475,20 +2475,20 @@ enabled, to hold the transparency information.  </P>
   <A HREF="balloon_none.gif"
      ><IMG SRC="balloon_none.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Because replacing a color with transparency is such a common operation the
 above has its own special replace with transparency operator "<CODE><A
 HREF="../option_link.cgi?transparent" >-transparent</A></CODE>".
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick balloon.gif  -transparent blue   balloon_trans.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2496,7 +2496,7 @@ HREF="../option_link.cgi?transparent" >-transparent</A></CODE>".
   <A HREF="balloon_trans.gif"
      ><IMG SRC="balloon_trans.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 As of IM version  6.3.7-10, the 'plus' versions of these operators inverts the
@@ -2504,13 +2504,13 @@ color selection.  That is, the colors that do NOT match the given color will
 be replaced.  For example here I replace any color that is NOT pure-black,
 with white, leaving just the pure black borders of the image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick balloon.gif  -fill white +opaque black   balloon_borders.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2518,17 +2518,17 @@ with white, leaving just the pure black borders of the image.
   <A HREF="balloon_borders.gif"
      ><IMG SRC="balloon_borders.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 This may not seem like much, but when you combine it with a <A HREF="#fuzz"
 >Fuzz Factor</A> (see below), this becomes a very powerful tool. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.3.7-10, the inverse operation required the use of some
   trickiness using image masks.  Basically you replace the color you want to
   preserve with transparency, then "<CODE><A
@@ -2537,9 +2537,9 @@ This may not seem like much, but when you combine it with a <A HREF="#fuzz"
   overlaid on the original image to 'mask out' the colors that did not match!
   </I>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick balloon.gif \
           \( +clone -matte -transparent black \
@@ -2547,7 +2547,7 @@ This may not seem like much, but when you combine it with a <A HREF="#fuzz"
           -magick composite    balloon_mask_non-black.gif
 
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/balloon.gif"
      ><IMG SRC="../images/balloon.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2555,7 +2555,7 @@ This may not seem like much, but when you combine it with a <A HREF="#fuzz"
   <A HREF="balloon_mask_non-black.gif"
      ><IMG SRC="balloon_mask_non-black.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
   <I>As you can see the 'plus' form of the operator simplified the 'not this
@@ -2566,10 +2566,10 @@ For more advanced replacement techniques, I suggest you look at <A
 HREF="../masking/#bg_remove" >Background Removal</A>. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Be warned that as all matching colors (especially 'fuzzy matched colors',
   see below) is replaced with a single uniform color, you will not get any
   anti-aliasing of the edges of the colored areas.  And you will lose any an
@@ -2597,13 +2597,13 @@ You can also use <A HREF="../draw/#color" >Draw Color Replacement</A> to
 recolor images based on colors present in the image itself, rather than a
 specific color.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -fill red -draw 'color 0,0 replace' present_blue.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2611,7 +2611,7 @@ specific color.
   <A HREF="present_blue.gif"
      ><IMG SRC="present_blue.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Note that I never specified the color to be replaced, only the location of the
@@ -2625,14 +2625,14 @@ red pixels within the 'present' image above. </P>
 Transparency also presents no problem, though some internal parts of the image
 was also made transparent just as they became red in the above...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -matte -fill none \
                       -draw 'color 0,0 replace' present_none.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2640,7 +2640,7 @@ was also made transparent just as they became red in the above...
   <A HREF="present_none.gif"
      ><IMG SRC="present_none.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Note however that unlike "<CODE><A HREF="../option_link.cgi?opaque"
@@ -2655,14 +2655,14 @@ all matching colors transparent, or semi-transparent, without actually
 changing the color of the pixel itself. With the appropriate file format of
 course.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -matte -fill '#00000080' \
             -draw 'matte 0,0 replace' present_semi.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2670,7 +2670,7 @@ course.
   <A HREF="present_semi.png"
      ><IMG SRC="present_semi.png"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 This becomes much more useful when a <A HREF="#fuzz" >Fuzz Factor</A> is also
@@ -2680,14 +2680,14 @@ The biggest advantage of using "<CODE><A HREF="../option_link.cgi?draw"
 >-draw</A></CODE>" is that you can also replace the color with a tile pattern.
 For example..
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -tile pattern:right30 \
                 -draw 'color 0,0 replace' present_tile.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2695,7 +2695,7 @@ For example..
   <A HREF="present_tile.gif"
      ><IMG SRC="present_tile.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 For more advanced replacement techniques, I suggest you look at <A
@@ -2714,13 +2714,13 @@ image. </P>
 The specified point will not only specify the stating (seed point) but also
 the color that you are trying to replace.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -fill red -draw 'color 0,0 floodfill' present_fill.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2728,7 +2728,7 @@ the color that you are trying to replace.
   <A HREF="present_fill.gif"
      ><IMG SRC="present_fill.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Note that the red areas which was not 'attached' to the 0,0 pixel was not
@@ -2738,15 +2738,15 @@ For background replacing that can be a problem, but the solution is just as
 easy.  Expand the image slightly so the floodfill can 'leak' into the image
 from all directions, then remove that extra space when finished.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -bordercolor white -border 1x1 \
           -fill red     -draw 'color 0,0 floodfill' \
           -shave 1x1               present_bgnd.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2754,7 +2754,7 @@ from all directions, then remove that extra space when finished.
   <A HREF="present_bgnd.gif"
      ><IMG SRC="present_bgnd.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Of course you can adjust what colors are 'matched' using the <A HREF="#fuzz"
@@ -2783,15 +2783,15 @@ This can be regarded as the operators feature as well as its curse.  </P>
 
 For example, add a border of known color to flood fill from edges...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -bordercolor white -border 1x1 \
           -fill red    -floodfill +0+0 white \
           -shave 1x1              present_floodfill.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2799,7 +2799,7 @@ For example, add a border of known color to flood fill from edges...
   <A HREF="present_floodfill.gif"
      ><IMG SRC="present_floodfill.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 This will replace any color that is 'white' to 'red' that is directly part of
@@ -2808,15 +2808,15 @@ the area surrounding the seed pixel starting at +0+0, which is guranteed to be
 
 You can also floodfill with a tile pattern.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick present.gif -bordercolor white -border 1x1 \
                 -tile pattern:left30   -floodfill +0+0 white \
                 -shave 1x1           present_pattern.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="../images/present.gif"
      ><IMG SRC="../images/present.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
@@ -2824,7 +2824,7 @@ You can also floodfill with a tile pattern.
   <A HREF="present_pattern.gif"
      ><IMG SRC="present_pattern.gif"     WIDTH=32 HEIGHT=32
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 The '<I>color</I>' argument can sometimes be a pain, in that it must match
@@ -2834,9 +2834,9 @@ not the unexpected.
 
 For example, here I try to fill white disks with various colors...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick disks.gif \
           -fill Red   -floodfill +30+50 white \
@@ -2974,15 +2974,15 @@ HREF="../basics/#quality" >16 bit quality</A> for color store) this is quite
 small, for an IM Q8  this is VERY large, and will cause a lot of colors to
 match each other. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Here for example I change all the colors that are within 30,000 color units (for
 IM Q16) of '<CODE>blue</CODE>' to white.  With my Q16 ImageMagick programs,
 that represents approximately the distance from '<CODE>blue</CODE> to
 '<CODE>navy</CODE>' (half dark blue),
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick colorwheel.png \
           -fuzz 30000 -fill white -opaque blue \
@@ -2993,13 +2993,13 @@ that represents approximately the distance from '<CODE>blue</CODE> to
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 To make this easier to understand here I invert the matched colors
 turning the unmatched colors to white.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick colorwheel.png \
           -fuzz 30000 -fill white +opaque blue \
@@ -3010,15 +3010,15 @@ turning the unmatched colors to white.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 If your IM is older than version 6.3.7-10 when the 'plus' form of the
 "<CODE><A HREF="../option_link.cgi?opaque" >-opaque</A></CODE>" operator was
 added, you can use this masking method to invert the result of the color
 match...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick colorwheel.png \
           \( +clone  -fuzz 30000 -transparent blue \
@@ -3030,15 +3030,15 @@ match...
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Or this method that limits all modifications to just the 'alpha channel', so
 that all the original colors, are left as is. That is, you create a negated
 mask from the color selection, so as to make all non-selected colors
 fully-transparent.  They remain present, just transparent!
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick colorwheel.png -fuzz 30000 -transparent blue \
           -channel A -negate +channel   opaque_blue_inv_alpha.png
@@ -3048,15 +3048,15 @@ fully-transparent.  They remain present, just transparent!
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 An advantage of these alternative methods, is that you can expand them to
 generate a '<I>not multiple colors</I>' technique. All that you need to do is
 add more colors to the list being made transparent, before negating the mask,
 and posibly removing the negated transparency.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick colorwheel.png \
           -fuzz 25000 -transparent blue -transparent red -transparent lime \
@@ -3071,10 +3071,10 @@ and posibly removing the negated transparency.
 <BR>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   As a matter of interest, in an IM with a Q8 compilation setting, a
   "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" factor of 256
   (2<SUP>8</SUP>) will make the colors '<CODE>black</CODE>' and
@@ -3093,10 +3093,10 @@ and posibly removing the negated transparency.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   It is likely that better and more realistic color distances can be defined
   using a 'perceptual' colorspace, such as '<CODE>LAB</CODE>', or
   '<CODE>LUV</CODE>'.  Just magick images into that colorspace before
@@ -3117,15 +3117,15 @@ That is, it represents the color distance from '<CODE>black</CODE>' to
 '<CODE>white</CODE>', across the 3 dimensional diagonal of the RGB color cube.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Here we replace any color within 90% of the distance from white to black, with
 white.  This should result in only the last 10% colors near
 '<CODE>black</CODE>' to be left on the image, as black is on the opposite side
 of the RGB color cube.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick colorwheel.png -fuzz 90% -fill white -opaque white  opaque_w90.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3134,14 +3134,14 @@ of the RGB color cube.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Note that this 90% represents a sphere of colors around 'white' in the RGB
 color cube.  However this is is not the same as replacing the colors that are
 not within a 10% sphere of black.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick colorwheel.png -fuzz 10% -fill white +opaque black  opaque_k10.jpg
 </CODE></PRE></TD></TR></TABLE></P>
@@ -3160,10 +3160,10 @@ you will be able to understand the difference between the two images.</P>
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   A "<CODE><A HREF="../option_link.cgi?fuzz" >-fuzz</A></CODE>" factor of
   100%, equates to the RGB color cube distance from '<CODE>black</CODE>' to
   '<CODE>white</CODE>'. From this we can calculate that a percentage of about
@@ -3187,7 +3187,7 @@ factor percentage around the blue colors...
   magick colorwheel.png -fuzz 57% -fill white -opaque blue opaque_b57.jpg
   magick colorwheel.png -fuzz 81% -fill white -opaque blue opaque_b81.jpg
   magick colorwheel.png -fuzz 95% -fill white -opaque blue opaque_b95.jpg
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="opaque_b10.jpg"
      ><IMG SRC="opaque_b10.jpg"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -3203,7 +3203,7 @@ factor percentage around the blue colors...
   <A HREF="opaque_b95.jpg"
      ><IMG SRC="opaque_b95.jpg"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 From this you can clearly see that it isn't '<CODE>black</CODE>', or
 '<CODE>white</CODE>' that is the most distant color from '<CODE>blue</CODE>',
@@ -3230,7 +3230,7 @@ factor' increases.
   magick colorwheel.png -fuzz 35% -fill gray50 -opaque gray50 opaque_g35.jpg
   magick colorwheel.png -fuzz 45% -fill gray50 -opaque gray50 opaque_g45.jpg
   magick colorwheel.png -fuzz 51% -fill gray50 -opaque gray50 opaque_g51.jpg
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="opaque_g25.jpg"
      ><IMG SRC="opaque_g25.jpg"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
@@ -3246,7 +3246,7 @@ factor' increases.
   <A HREF="opaque_g51.jpg"
      ><IMG SRC="opaque_g51.jpg"
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 As you can see colors in the colorwheel image only just start to match at
 a fuzz factor just before 30%, and slowly increase until at 45% all but the
@@ -3358,14 +3358,14 @@ colors transparency (alpha value).  The last image in the above matched all
 pixels that was within 20% of being fully-transparent, regardless of actual
 color. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 This also means that a large <A HREF="#fuzz" >Fuzz Factor</A> with
 a fully-transparent color (like 'none'), can be used to match all, or
 almost-all semi-transparent colors. For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick trans_gradient.png -channel RGBA \
           -fuzz 95% -fill Gray50 -opaque None \
@@ -3387,10 +3387,10 @@ This example is essentially equivalent to a threshold of the alpha channel,
 before adding a gray color underlay (to make transparent colors grey) </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.6.6-4 fuzz color matching did not match fully-transparent with
   opaque colors equally. In fact Black was much closer match than White. As
   such the last example will fail.  See <A HREF="../bugs/fuzz_distance/" >Fuzz
@@ -3398,10 +3398,10 @@ before adding a gray color underlay (to make transparent colors grey) </P>
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Worse still before IM v6.2.6-2 fuzz color matching did not regard all
   fully-transparent colors as being the same color. That is fully-transparent
   black (also known as 'None') was not the same as fully-transparent white (or
@@ -3450,7 +3450,7 @@ Color maths (get the average of two or more colors)....
 
 </DIV>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 1 December 2010 <BR>
 Updated: 9 March 2011 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -3458,5 +3458,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/color_basics/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>
 

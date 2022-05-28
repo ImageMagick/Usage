@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Masks -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/masking/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -142,14 +142,14 @@ Not only that I needed to save the image using the 'PNG' image format which is
 one of the small number of image formats that properly understands and handles
 transparent and semi-transparent colors. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 I can demonstrate this transparency by overlaying the image onto the IM
 built-in checkerboard pattern, using <A HREF="../compose/" >Alpha
 Composition</A>.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick composite -compose Dst_Over -tile pattern:checkerboard \
               moon.png  moon_background.jpg
@@ -176,17 +176,17 @@ very low level operators such as  "<CODE><A HREF="../option_link.cgi?level"
 Check the <A HREF="../option_link.cgi" >Official Option Reference</A> if you
 are unsure.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Here is a very old way to extract a 'matte' transparency values from an
 image.  It saves the transparency channel as a 'matte' image file format, and
 required two separate steps, and commands to define the right image file
 format.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
 <c>  magick moon.png matte:moon.matte
 <c>  magick MIFF:moon.matte moon_matte2.png
@@ -348,9 +348,9 @@ Off</A>, and then enable it again using <A HREF="#alpha_set" >Alpha Set</A>,
 the image will have an alpha channel, but it will be fully-opaque, just as the
 image looked, when '<CODE>Set</CODE>' operation was requested.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -alpha off    -alpha set    alpha_set.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -361,9 +361,9 @@ image looked, when '<CODE>Set</CODE>' operation was requested.
 
 If applied to an image that has an enabled alpha channel, no change is made.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -alpha set    alpha_noset.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -404,9 +404,9 @@ that data will suddenly be visible again. </P>
 For example here we turn '<CODE>Off</CODE>' the transparency data, then
 immediately turn it back '<CODE>On</CODE>, reproducing the original image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -alpha off  -alpha on    alpha_on.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -451,9 +451,9 @@ This method not only ensures the alpha channel is 'active' but that it is also
 completely opaque, regardless of if the image had transparency 'activated/on'
 or 'deactivated/off'.  For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -alpha opaque    alpha_opaque.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -467,9 +467,9 @@ HREF="../option_link.cgi?matte" >+matte</A></CODE>" to turn off the alpha
 channel, then using "<CODE><A HREF="../option_link.cgi?matte"
 >-matte</A></CODE>" to turn it on, while resetting it to be opaque.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  +matte -matte  alpha_opaque_matte.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -492,9 +492,9 @@ case. </P>
 Similarly this ensures the alpha channel is 'active' but also fully
 transparent.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -alpha transparent    alpha_transparent.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -506,9 +506,9 @@ transparent.
 The color data of the image is still present, so turning off transparency
 afterward will again show the images existing colors.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -alpha transparent  -alpha off  alpha_transparent_off.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -569,9 +569,9 @@ turn '<CODE><A HREF="#alpha_extract" >Off</A></CODE>' the alpha, but it is
 not cleared, so turning the alpha channel back '<CODE><A HREF="#alpha_extract"
 >On</A></CODE>' will re-create a shape mask of the original image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -alpha extract -alpha on   alpha_extract_on.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -585,9 +585,9 @@ various shades grays around the edges.  We can see this if we remove the
 transparency with a white background, (See <A HREF="#alpha_remove" >Alpha
 Remove</A> method below)
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick alpha_extract_on.png -background white -alpha remove alpha_edge.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -663,9 +663,9 @@ but will also color it using the current background color.
 This means you can very quickly color a gray-scale mask simply by shaping the
 image, then flattening it onto a different background color
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick alpha_extract.png -background Yellow -alpha shape \
                             -background Blue   -alpha remove alpha_colormask.png
@@ -676,10 +676,10 @@ image, then flattening it onto a different background color
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Background is not actually the right color to use for this 'shape' coloring
   operation.  It should be using the 'fill' color to set the shapes foreground
   color. As such which color should be used is likely to change.  Background
@@ -693,9 +693,9 @@ HREF="../color_mods/#level-colors" >Level Adjustment by Color</A>. This will
 avoid the need to enable or even modify the existing images transparency
 channel.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick alpha_extract.png  +level-colors Blue,Yellow   level_color.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -705,10 +705,10 @@ channel.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The above will map the colors using a linear colorspace, and may need to be
   converted to sRGB at some point to get a more visually correct gradient of
   colors.
@@ -725,9 +725,9 @@ The "<CODE><A HREF="../option_link.cgi?alpha" >-alpha</A>
 transparency from an image, using the current "<CODE><A
 HREF="../option_link.cgi?background" >-background</A></CODE>".
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png  -background tan  -alpha remove  alpha_remove.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -772,13 +772,13 @@ Note that no color mixing is applied, only a direct color assignment to any
 fully-transparent color. The pixels however will still remain
 fully-transparent, and as such you will see not change to the image. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%> <TR VALIGN=top><TD
-       WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%"> <TR valign="top"><TD
+       width="100%" ALIGN=justify>
 
 For example here I use it to set all fully-transparent pixels to
 '<CODE>HotPink</CODE>'.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon.png -background HotPink -alpha Background moon_hotpink.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -787,15 +787,15 @@ For example here I use it to set all fully-transparent pixels to
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 As you can see this made no change to the actual look of the image. </P>
 
 To see the change we will now <A HREF="#alpha_off" >turn off</A> the alpha
 channel.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick moon_hotpink.png -alpha off moon_hotpink_off.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -893,9 +893,9 @@ The <I>best solution</I> is to use the <A HREF="#alpha_remove" >Alpha
 Remove</A> method to quickly and simply replace the transparency with
 a background color underlay...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick a.png   -background skyblue  -alpha remove -alpha off a_remove.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -918,9 +918,9 @@ profiles, labels, captions and comments that may be present.  </P>
 Methods for generating such a canvas is exampled in <A HREF="../canvas/#blank"
 >Creating Image Canvases of Same Size</A>.  Here is one such method...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick a.png \( +clone -alpha opaque -fill SkyBlue -colorize 100% \) \
           +swap -geometry +0+0 -compose Over -magick composite  \
@@ -940,9 +940,9 @@ image.  This operator is so often used for this purpose that the process of
 removing transparency has often erroneously been called 'flattening'.  For
 example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick a.png   -background skyblue -flatten  -alpha off  a_flatten.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -961,9 +961,9 @@ image a zero sized <A HREF="../crop/#border" >Border</A> with the appropriate
 "<CODE><A HREF="../option_link.cgi?bordercolor">-bordercolor</A></CODE>". For
 example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick a.png   -bordercolor skyblue -border 0  -alpha off  a_border.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -989,9 +989,9 @@ HREF="../compose/#tile" >Tile</A> an image 'under' the original, (using <A
 HREF="../compose/#dstover" >Dst_Over</A>).  This compose method ensures the
 original images meta-data and size is preserved.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick composite -compose Dst_Over -tile pattern:checkerboard \
                                                a.png  a_undertile.jpg
@@ -1002,10 +1002,10 @@ original images meta-data and size is preserved.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Many of the above methods, are either effected by, or may destroy any
   virtual canvas information an image may have, as part of its processing.
   When the virtual canvas is involved, you may need to look at the details of
@@ -1066,9 +1066,9 @@ shape.  To do this we <A HREF="../blur/#blur" >Blur</A> and recolor the image,
 then again <A HREF="../compose/#dstover" >Under (DstOver) Compose</A> it with
 the original.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick knight.png \(  +clone \
               -channel A  -blur 0x2.5 -level 0,50% +channel \
@@ -1244,9 +1244,9 @@ For example suppose we just want to use a mask as a symbol or shape
 we want to overlay onto an image in various colors.  For this we need
 a mask, which I'll extract from a special 'symbol' font.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -font WebDings -pointsize 24 label:Y \
           +trim +repage  -negate   heart_mask.gif
@@ -1264,9 +1264,9 @@ shape is to use the <A HREF="#alpha_shape" >Alpha Shape</A> operator, This is
 exactly like <A HREF="#alpha_copy" >Alpha Copy</A>, but with an extra step to
 color the final shape.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick heart_mask.gif  -background Red -alpha Shape  heart_red.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1276,10 +1276,10 @@ color the final shape.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note the use of 'PNG' image format for generated shaped image rather than
   GIF so as to avoid problems with <A HREF="../formats/#trans" >GIF Boolean
   Transparency</A>.
@@ -1289,9 +1289,9 @@ Before this the simplest solution was to negate the alpha mask into a matte <A
 HREF="../color_basics/#channels" >Channel Image</A> then use <A
 HREF="../color_basics/#combine" >Combine</A> to generate the shaped image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick heart_mask.gif -negate  \
           -background Gold  -channel A  -combine   heart_gold.png
@@ -1313,9 +1313,9 @@ HREF="../color_mods/#colorize" >Uniformly Color Tinting</A> to color the
 resulting shape.  This works and for a long time was the best technique to
 use, but is no longer recommended.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick heart_mask.gif \( +clone \) -alpha off \
           -compose CopyOpacity  -magick composite \
@@ -1331,9 +1331,9 @@ any background we want, such as the built-in rose image, using one of the many
 <A HREF="../layers/" >Image Layering Techniques</A> and <A HREF="../compose/"
 >Alpha Composition Methods</A>.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -page +2+2  heart_gold.png \
                  \( +clone -repage +7+29 \)  \
@@ -1352,9 +1352,9 @@ impractical for overlaying lots of symbols with lots of different colors. </P>
 One way you can make multi-colored overlays is to re-color the shaped image
 immediately after reading in the image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \(  heart_gold.png           -repage +2+2   \) \
           \( +clone -fill Red     -colorize 100% -repage +7+29 \) \
@@ -1430,9 +1430,9 @@ The special three image form of <A HREF="../compose/#mask" >Masked Alpha
 Composition</A> allows you use the same mask to directly merge two images
 together.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x100   tile:tile_water.jpg  tile:tile_disks.jpg \
            mask_bite.png    -magick composite   compose_masked.png
@@ -1699,9 +1699,9 @@ composition operator being applied.
 
 Is equivalent (with a negated mask) to...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick write_mask.png  -negate -write MPR:mask +delete \
           red_image.png -mask MPR:mask \
@@ -1743,9 +1743,9 @@ a 'blended' or smoothed result. </P>
 
 For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick red_image.png  -clip-mask write_mask.png \
           -fill blue -opaque red   +clip-mask    clipped_modulate.png
@@ -1767,10 +1767,10 @@ operator (IMv5). The newer "<CODE><A HREF="../option_link.cgi?mask"
 >-mask</A></CODE>" operator should be used instead. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   In IMv6, a 'write-mask' and 'clip-mask' are implemented side-by-side, even
   though they technically do exactly the same function.  As such you could
   apply both masks simultaneously. </P>
@@ -1991,9 +1991,9 @@ area of an image. </P>
 
 For example here I color tint the whole rectangular region red...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick koala.gif  -region 40x33+15+5 -fill red -colorize 50% \
           koala_region_red.gif
@@ -2005,9 +2005,9 @@ For example here I color tint the whole rectangular region red...
 
 You can also make a region transparent...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick koala.gif -alpha set \
           -region 40x33+15+5 -alpha transparent   koala_region_trans.gif
@@ -2024,10 +2024,10 @@ change. See <A HREF="#region_internals" >How Regions Work</A> below for
 details. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.6.9-5 transparency preservation was broken, and the results
   of transparency in a region was always "see-thru to original". As such the
   result of the above would not include any transparent pixels, even though the
@@ -2180,9 +2180,9 @@ For example here I purposefully turned off the transparency in the original
 image, but then <A HREF="../warping/#rotate" >Rotate</A> the region so as to
 produce some areas of transparency in the corners.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick koala.gif -alpha off -region 30x30+10+10 \
           -alpha on -background None  -rotate 30  koala_region_rotate_1.gif
@@ -2201,9 +2201,9 @@ If the original image does contain active <A HREF="#alpha" >Transparency</A>
 then the transparency in the modified region image can also be modified, so
 transparency is just 'copied' as is.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick koala.gif -alpha set  -region 30x30+10+10 \
           -background None  -rotate 30    koala_region_rotate_2.gif
@@ -2228,9 +2228,9 @@ Region Images which are enlarged or shrunk, may not 'fit' back into the
 original.  For example here I resize (and color) the region image so it
 becomes smaller...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick koala.gif  -region 30x30+10+10 \
           -resize 75% -fill red -colorize 30%  koala_region_shrink.gif
@@ -2246,9 +2246,9 @@ was restored.  As such those parts not covered were not replaced. </P>
 In a similar way, if the region becomes larger, more of the original image may
 become covered by the overlaid region image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick koala.gif  -region 30x30+10+10 \
           -resize 150% -fill red -colorize 30%  koala_region_enlarge.gif
@@ -2267,10 +2267,10 @@ Though in some special circumstances you can still handle a resized region.
 For an example of this look at the 'wave distortion' example above. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Like "<CODE><A HREF="../basics/#mogrify" >mogrify</A></CODE>" you cannot
   merge multiple sub-images as that requires the use of a non-simple image
   operation.  However you can use "<CODE><A HREF="../option_link.cgi?draw"
@@ -2281,10 +2281,10 @@ For an example of this look at the 'wave distortion' example above. </P>
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   At the time of writing, the 'region image' still contains the <A
   HREF="../crop/#crop" >Crop Virtual Canvas Offset</A> from its extraction
   from the original image.  This may, or may not be regarded as a bug,
@@ -2336,18 +2336,18 @@ HREF="../color_basics/#replace" >Replacing Colors in Images</A>. </P>
 For example here is a direct floodfill masking of an image with a solid color
 background.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick cyclops.png -alpha set -channel RGBA \
           -fuzz 1% -fill none -floodfill +0+0 white \
           cyclops_flood_1.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="cyclops_flood_1.png"
     ><IMG SRC="cyclops_flood_1.png"            WIDTH=100 HEIGHT=100
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 Well that did not work, as the floodfill 'seed' point in the top-right corner
 does not actually reach all parts of the image!!! </P>
@@ -2356,19 +2356,19 @@ The solution to this is to enlarge the image slightly, so as to provide a path
 for the floodfill to reach all the outside edges of the image.  However for
 this you need to know the color of the background.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick cyclops.png -bordercolor white -border 1x1 \
           -alpha set -channel RGBA -fuzz 1% \
           -fill none -floodfill +0+0 white \
           -shave 1x1    cyclops_flood_2.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="cyclops_flood_2.png"
     ><IMG SRC="cyclops_flood_2.png"            WIDTH=100 HEIGHT=100
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 Of course we did not specify a very good <A HREF="../color_basics/#fuzz" >Fuzz
 Factor</A>.  The problem with this is that you get a halo around the object
@@ -2379,19 +2379,19 @@ However as this image has a good black border to it, relative to the
 background, using a nice large fuzz setting can be used to nicely separate the
 image from the background.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick cyclops.png -bordercolor white -border 1x1 \
           -alpha set -channel RGBA -fuzz 20% \
           -fill none -floodfill +0+0 white \
           -shave 1x1    cyclops_flood_3.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="cyclops_flood_3.png"
     ><IMG SRC="cyclops_flood_3.png"            WIDTH=100 HEIGHT=100
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 This technique has some problems with it.  First it is an all or nothing
 masking of the image, producing edges that are aliased, staircase-like and
@@ -2403,9 +2403,9 @@ It is also very very difficult to get every anti-aliasing edge pixel.  As such
 if I overlay the above image on a black background, you may see some pixels
 that are much whiter that normal.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick cyclops_flood_3.png -background black -flatten \
           cyclops_flood_3_over.png
@@ -2545,14 +2545,14 @@ Image</A>...
 As you can see the difference image is black for all the unchanged parts
 and a mix of colors for the parts which has changed. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 By separating and adding the individual color channels together and
 thresholding we get a mask of any difference in any channel between the two
 images.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick overlay_difference.png -channel RGBA -separate +channel \
           -evaluate-sequence add  -threshold 0   overlay_mask.png
@@ -2562,12 +2562,12 @@ images.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Using this mask we can set anything that has not changed to transparency.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick overlay_figure.gif overlay_mask.png \
           -alpha off -compose CopyOpacity -magick composite \
@@ -2597,21 +2597,21 @@ For example,  Here we have a 'Cyclops' on a white background, which we want to
 extract.  We then generate gray-scale image of the differences between this
 image and the background color (as defined by top-left most pixel).
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick cyclops.png \( +clone -fx 'p{0,0}' \) \
           -compose Difference  -magick composite  \
           -modulate 100,0  -alpha off  difference.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="cyclops.png"
     ><IMG SRC="cyclops.png"            WIDTH=100 HEIGHT=100
           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
  <A HREF="difference.png"
     ><IMG SRC="difference.png"            WIDTH=100 HEIGHT=100
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 Of course this difference image is no good as a mask directly.  If you did use
 it you will effectively make most of your image semi-transparent, instead of
@@ -2624,22 +2624,22 @@ masks can be created, depending on exactly what you are trying to achieve.
 We can adjust the above difference image to produce a mask of all pixels that
 are even the smallest amount different from the background color.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick difference.png  -threshold 0  boolean_mask.png
   magick cyclops.png  boolean_mask.png \
           -alpha off -compose CopyOpacity -magick composite \
           cyclops_boolean.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="boolean_mask.png"
      ><IMG SRC="boolean_mask.png"            WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
   <A HREF="cyclops_boolean.png"
      ><IMG SRC="cyclops_boolean.png"            WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 As you can see a boolean 'any difference' resulted in a good amount of the
 original background being included.  This is because the original image is
@@ -2654,22 +2654,22 @@ By varying the "<CODE><A HREF="../option_link.cgi?threshold"
 >-threshold</A></CODE>" you can add a 'fuzz factor' to the boolean (on/off
 only) mask, so as to get the mask closer to the image proper.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick difference.png  -threshold 15%  threshold_mask.png
   magick cyclops.png  threshold_mask.png \
           -alpha Off -compose CopyOpacity -magick composite \
           cyclops_threshold.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
    <A HREF="threshold_mask.png"
       ><IMG SRC="threshold_mask.png"            WIDTH=100 HEIGHT=100
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
    <A HREF="cyclops_threshold.png"
       ><IMG SRC="cyclops_threshold.png"            WIDTH=100 HEIGHT=100
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 Notice that the eye of the cyclops image is now also regarded as being a
 transparent <B>hole</B>! </P>
@@ -2689,22 +2689,22 @@ background.
 You can enhance the halo effect by blurring the mask a little before applying
 it, so that the resulting 'halo' becomes diminished by distance.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick difference.png -bordercolor black -border 5 \
           -threshold 10%  -blur 0x3  halo_mask.png
   magick cyclops.png -bordercolor white -border 5   halo_mask.png \
           -alpha Off -compose CopyOpacity -magick composite  cyclops_halo.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
   <A HREF="halo_mask.png"
      ><IMG SRC="halo_mask.png"            WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
   <A HREF="cyclops_halo.png"
      ><IMG SRC="cyclops_halo.png"            WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 The resulting 'halo' effect can be further modified by using more <A
 HREF="../color_mods/#histogram" >Histogram Adjustments</A> on the mask image,
@@ -2745,19 +2745,19 @@ For this example I decided to use something that was very hard to separate,
 but which showed a LOT more shaded pixels around the edges than you would
 typically have for anti-aliasing purposes.  A shape with a shadow effect.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x60 xc:none -font Candice -pointsize 50 -stroke black \
           -fill black          -annotate +12+42 'A' -channel RGBA  -blur 0x3 \
           -fill tile_disks.jpg -annotate +10+40 'A' \
           tile_water.jpg  -compose DstOver -magick composite letter.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="letter.png"
     ><IMG SRC="letter.png"
           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 First we will need to generate a difference image, and lucky for us we do know
 what the background image is.  Of course it will work just as well for a plain
@@ -2767,19 +2767,19 @@ generate two masks.  </P>
 Basically by using a difference image we can remove any influence of the
 background image, and from that generate the masks we will be using.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick letter.png  tile_water.jpg \
           -compose Difference -magick composite \
           -modulate 100,0 -channel B -evaluate set 0 \
           -alpha Off  diff_mask.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="diff_mask.png"
     ><IMG SRC="diff_mask.png"
           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 Note that this time I processed the grayscale difference image slightly,
 limiting it to red and green channels, while clearing out the blue channel,
@@ -2875,18 +2875,18 @@ We can now use this mask to extract the 'core' or inside of our image. That is
 the parts we are sure does not contain any semi-transparency through to the
 background pattern we are removing.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick diff_mask_32.png -channel blue -separate +channel -negate \
           letter.png +swap -alpha Off -compose CopyOpacity -magick composite \
           letter_inside.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="letter_inside.png"
     ><IMG SRC="letter_inside.png"
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 Note how I extracted the blue mask from the flood-filled masked images.
 Also due to the all-or-nothing nature of flood-filling, the mask will show
@@ -2903,36 +2903,36 @@ By negating and subtracting (multiplying) the masks we can generate a new mask
 which defines the area where we want to extract semi-transparent edging or
 shadowing pixels...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick diff_mask_01.png -negate diff_mask_32.png \
           -channel blue -separate +channel -compose multiply -magick composite \
           mask_aliasing_area.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="mask_aliasing_area.png"
     ><IMG SRC="mask_aliasing_area.png"
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 This area is then used to extract the anti-aliasing pixels from the difference
 mask, which defines how transparent the pixels should be.  We normalize those
 pixels to get a smooth transition from opaque to transparency.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick diff_mask.png -channel red -separate +channel \
           mask_aliasing_area.png -alpha Off -compose CopyOpacity -magick composite \
           -background gray30 -compose Over -flatten -normalize \
           mask_antialiased_pixels.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="mask_antialiased_pixels.png"
     ><IMG SRC="mask_antialiased_pixels.png"
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 The lighter the color in the above mask, the more opaque the pixel will be.
 Similarly the darker the color, the more transparency it will be. </P>
@@ -2950,10 +2950,10 @@ because of the interaction of the original background I decided to go for a
 dark grey color for the shadow </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   You will need to somehow figure out what color the semi-transparent pixels
   should be, so you can set the correct color for the anti-aliasing pixels.
   </P>
@@ -2976,33 +2976,33 @@ dark grey color for the shadow </P>
 While we are at it lets also re-mask the image to leave just these special
 edging pixels.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick mask_antialiased_pixels.png mask_aliasing_area.png \
           -compose multiply -magick composite -negate \
           -background '#444' -channel A  -combine letter_edging.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="letter_edging.png"
     ><IMG SRC="letter_edging.png"
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 All that is needed is to now layer the inside 'core' of the image with the
 semi-transparent edging pixels.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick letter_inside.png letter_edging.png \
           -background none  -flatten    letter_recovered.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="letter_recovered.png"
     ><IMG SRC="letter_recovered.png"
           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 And hey presto, we have an image with the background removed to produce a
 perfect anti-aliased image, with correctly recovered semi-transparent edging
@@ -3010,17 +3010,17 @@ and shadowing </P>
 
 You can even overlay it onto a completely different background.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick letter_recovered.png tile_aqua.jpg \
           -background none -compose DstOver -flatten    letter_on_aqua.png
-</CODE></PRE></TD></TR></TABLE></TD><TD><NOBR>
+</CODE></PRE></TD></TR></TABLE></TD><TD>
  <A HREF="letter_on_aqua.png"
     ><IMG SRC="letter_on_aqua.png"
           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 The image I used for this example is very difficult with a large 'edge'
 region.  Most images are not nearly so bad, but this method is probably the
@@ -3090,9 +3090,9 @@ Recovery the transparency or 'mask' is of course the first step, and is
 actually a very straight forward step. Generate a difference image, then merge
 and maximize the differences found in each channel.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick match_navy.gif match_gold.gif \
           -compose difference -magick composite -separate \
@@ -3125,9 +3125,9 @@ The next task is harder, as the colors of each semi-transparent pixel is
 modified by the background, you cannot just use the alpha mask to extract the
 object from one of the source images. For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick match_navy.gif match_alpha.png \
           -alpha Off -compose Copy_Opacity -magick composite \
@@ -3157,9 +3157,9 @@ background, as in these examples.  </P>
 
 For example here I restore the original colors...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick match_navy.gif match_alpha.png -alpha Off \
           -fx "v==0 ? 0 : u/v - u.p{0,0}/v + u.p{0,0}" \
@@ -3191,9 +3191,9 @@ overlay from any two known but different background patterns. </P>
 
 Here is the whole sequence all in one command.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick match_gold.gif match_navy.gif -alpha off \
           \( -clone 0,1 -compose difference -magick composite \
@@ -3208,10 +3208,10 @@ Here is the whole sequence all in one command.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   In IM v6.6.8-3, if FX references a transparent pixel using 'p{}' it gets
   zero values rather than the actual fully-transparent color values!
   This is a bug and was reported and fixed in IM v6.6.8-5.  It is not known
@@ -3338,12 +3338,12 @@ to fill-in that hole.  </P>
 <H3>Creating a hole to fill</H3>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Suppose we have an image with some ugly text...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick zelda_tn.gif -gravity Southwest -annotate +8+20 Zelda zelda_text.jpg
 </CODE></PRE></TD></TR></TABLE></P>
@@ -3359,13 +3359,13 @@ filled.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 For this case however I'll create a mask using a drawn line that covers the
 'ugly text', as if an user had quickly used an image editor.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 120x90 xc:black  -stroke white  -strokewidth 7 \
           -draw 'stroke-linecap round line 9,62 36,63' \
@@ -3387,13 +3387,13 @@ result will be.  A rough oddly shaped hole is also better than a very smoothly
 outlined hole.  So taking your time to make the smallest hole that removes all
 unwanted effects, can make a big difference. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Now lets use the mask to cut a hole out of the image, which will also check
 that it covers all the unwanted parts.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick zelda_text.jpg \( zelda_text_mask.gif -negate \) \
           -compose CopyOpacity -magick composite   zelda_text_hole.png
@@ -3413,13 +3413,13 @@ So here we have an image with a 'hole' in it that needs to be filled. </P>
 So we have a hole, that needs to be fill with some color.  Something that will
 not look like we have actually removed somethign from the image.</P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 One of the simplest methods is to simply blur the image, allowing the colors
 around the hole to 'spread' into the hole, and then remove the transparency.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick zelda_text_hole.png -blur 0x1 -alpha off zelda_text_fill.png
 </CODE></PRE></TD></TR></TABLE></P>
@@ -3517,7 +3517,7 @@ OpenCV inpainting</A>
 
 </DIV></P>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 10 December 2003 (originally 'channels') <BR>
 Updated: 2 October 2018 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -3525,5 +3525,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/masking/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>
 

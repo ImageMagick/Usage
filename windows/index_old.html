@@ -3,7 +3,7 @@
 <TITLE>Usage under Windows -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://legacy.imagemagick.org/Usage/windows/">
+<LINK REL="canonical" HREF="https://imagemagick.org/Usage/windows/">
 <!--[if gte IE 5.5000]><![if lt IE 7.0000]>
   <SCRIPT SRC="" TYPE=text/javascript></SCRIPT>
 <![endif]><![endif]-->
@@ -95,7 +95,7 @@ UNIX shell scripting in mind, as these systems are designed with batch
 processing and network servers in mind. However, more and more users of
 ImageMagick want to use it from the Windows Environment. This section provides
 details and examples of how you can use IM in that environment and, more
-important, how to convert a UNIX shell command (as used in the rest of the IM
+important, how to magick a UNIX shell command (as used in the rest of the IM
 Examples) into its Windows DOS equivalent.  </P>
 
 I wish to express specific thanks to Wolfgang Hugemann
@@ -128,13 +128,13 @@ files or for bulks of files. Tasks such as:  </P>
 <DT><B>Bulk format conversion</B>
 <DD>This is offered by quite a lot of Windows programs, such as IrfanView.
     However, IM's versatility when it comes to image formats is unsurpassed.
-    You can for instance convert all the pages of a PDF into a series of JPEGs
+    You can for instance magick all the pages of a PDF into a series of JPEGs
     (if GhostScript is installed on your computer).  </P>
 
 <DT><B>Shrinking and preprocessing digital photographs</B>
 <DD>When embedding digital photographs into a word processor document, you
     should usually reduce their resolution, such that the document can be
-    printed faster. The same holds if you convert the document into a PDF via
+    printed faster. The same holds if you magick the document into a PDF via
     a PDF printer driver such as <A HREF="http://freepdfxp.de/">FreePDF</A>.
     Preprocessing could also comprise colour and lens correction routines.
     </P>
@@ -315,7 +315,7 @@ simply use the following in Linux...
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  convert label:&auml;&ouml;&uuml; test.png
+  magick label:&auml;&ouml;&uuml; test.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -325,7 +325,7 @@ read and UTF-8 coded string from a textfile:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  convert label:umlauts.txt test.png
+  magick label:umlauts.txt test.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -337,7 +337,7 @@ switch the codepage to UTF-8 in advance: </P>
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   CHCP 65001
   ECHO &auml;&ouml;&uuml; > umlauts.txt
-  convert label:umlauts.txt test.png
+  magick label:umlauts.txt test.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -349,13 +349,13 @@ through directory trees. And switching the codepage to and fro between, say
 1252 (West European Latin) and 65001 will usually not work either or become at
 least rather tricky. </P>
 
-The safest approach is to convert strings when they are needed, using an
+The safest approach is to magick strings when they are needed, using an
 external command line program, such as "<CODE>Iconv.exe</CODE>", a UNIX tool
 which is also available for Windows.  Download the setup file from <A
 HREF="http://gnuwin32.sourceforge.net/packages/libiconv.htm" >SourgeForge</A>
 and install the files into the standard directory <CODE>C:\Program
 Files\GnuWin32</CODE>.  Then dump the output of the DOS command to a text file
-in your script and convert that file to UTF-8 in the following: </P>
+in your script and magick that file to UTF-8 in the following: </P>
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -363,7 +363,7 @@ in your script and convert that file to UTF-8 in the following: </P>
   CHCP 1252
   DIR /B &auml;&ouml;&uuml;.jpg > temp.txt
   "C:\Program Files\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8 temp.txt > title.txt
-  convert label:@title.txt &auml;&ouml;&uuml;.jpg -append &auml;&ouml;&uuml;_labelled.jpg
+  magick label:@title.txt &auml;&ouml;&uuml;.jpg -append &auml;&ouml;&uuml;_labelled.jpg
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -392,8 +392,8 @@ on a monthly basis. It is strongly recommended to use an up-to-date version of
 IM, especially when IM doesn't seem to perform a job quite as you expect it to
 do. In most cases, the installation of the current version will solve the
 problem. The setup program of the current binary release can be found at <A
-HREF="https://legacy.imagemagick.org/script/binary-releases.php#windows"
->https://legacy.imagemagick.org/script/binary-releases.php#windows</A>.</p>
+HREF="https://imagemagick.org/script/binary-releases.php#windows"
+>https://imagemagick.org/script/binary-releases.php#windows</A>.</p>
 
 By default, IM installs itself in a program directory called <CODE>C:\Program
 Files\ImageMagick x.x.x-x</CODE>, where "x.x.x-x" stands for its version
@@ -578,7 +578,7 @@ following modifications:
       <UL>
       <LI>The special character '<CODE>&gt;</CODE>' (used for resize geometry)
           needs to be escaped using '<CODE>^</CODE>'. For example
-          "<NOBR><CODE>-resize 100x100^&gt;</CODE></NOBR>"
+          "<CODE>-resize 100x100^&gt;</CODE>"
       <LI>Similarly the 'internal fit resize' flag '<CODE>^</CODE>' needs to
           be doubled to become '<CODE>^^</CODE>'.
       </UL></P>
@@ -591,8 +591,8 @@ following modifications:
     escape characters such as '<CODE>&lt;</CODE>' and '<CODE>&gt;</CODE>'.
     <BR>
 
-    For example: "<NOBR><CODE>-resize 100x100\&gt;</CODE></NOBR>" will become
-    "<NOBR><CODE>-resize 100x100^&gt;</CODE></NOBR>".  </P>
+    For example: "<CODE>-resize 100x100\&gt;</CODE>" will become
+    "<CODE>-resize 100x100^&gt;</CODE>".  </P>
 
 <LI>In DOS batch files, the percent '<CODE>%</CODE>' character also has
     a special meaning as it references to the command line parameters.  For
@@ -603,8 +603,8 @@ following modifications:
 
 <LI>Keep in mind that Windows filenames can include space characters. Spaces
     can also be used under UNIX but not so common.  Such filenames which may
-    contain spaces have to be included in double quotes <CODE><NOBR>"file
-    name.jpg"</NOBR></CODE> or <CODE><NOBR>"file name".jpg</NOBR></CODE>.
+    contain spaces have to be included in double quotes <CODE>"file
+    name.jpg"</CODE> or <CODE>"file name".jpg</CODE>.
     A filename passed to a script or batchfile via Drag &amp; Drop or SendTo
     as a command line parameter needs special attention, as it is passed to
     the script without quotes, if it doesn't contain space characters, and
@@ -650,9 +650,9 @@ For example, following the above rules, this UNIX shell script...
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   #!/bin/sh
   # Create a negated rose image and overlay a comment
-  convert -background none -fill red -gravity center \
+  magick -background none -fill red -gravity center \
           -font Candice -size 140x92 caption:'A Rose by any Name' \
-          \( rose: -negate -resize 200% \) +swap -composite \
+          \( rose: -negate -resize 200% \) +swap -magick composite \
           output.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -664,10 +664,10 @@ will become something like this as a Windows DOS batch file...
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   @ECHO OFF
   :: Create a negated rose image and overlay a comment
-  convert -background none -fill red -gravity center  ^
+  magick -background none -fill red -gravity center  ^
           -font "C:\path\to the\font\candice.ttf"  ^
           -size 140x92   caption:"A Rose by any Name"  ^
-          ( rose: -negate -resize 200%% ) +swap -composite  ^
+          ( rose: -negate -resize 200%% ) +swap -magick composite  ^
           C:\where\to\save\output.gif
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -769,7 +769,7 @@ most basic code would be:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-convert %1 %1.jpg
+magick %1 %1.jpg
 PAUSE
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -782,7 +782,7 @@ rid of the original extension, things become a little trickier:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-convert %1 "%~dpn1.jpg"
+magick %1 "%~dpn1.jpg"
 PAUSE
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -813,7 +813,7 @@ write:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-ECHO convert %1 "%~dpn1.jpg"
+ECHO magick %1 "%~dpn1.jpg"
 PAUSE
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -832,7 +832,7 @@ box: </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR %a in (*.jpg) DO convert %a -resize 50% small_%a
+  FOR %a in (*.jpg) DO magick %a -resize 50% small_%a
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -843,7 +843,7 @@ this command in a batch file you will have to replace it by </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR %%a in (*.jpg) DO convert %%a -resize 50%% small_%%a
+  FOR %%a in (*.jpg) DO magick %%a -resize 50%% small_%%a
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -859,7 +859,7 @@ the current directory in the first step:</P>
   %~d1
   CD "%~p1"
   MD small
-  FOR %%a in (*.jpg) DO convert %%a -resize 50%% small\%%a
+  FOR %%a in (*.jpg) DO magick %%a -resize 50%% small\%%a
   PAUSE
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -890,7 +890,7 @@ a little easier and shorter. We could however as well have written:</P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   MD "%~dp1small"
-  FOR %%a in ("%~dp1*.jpg") DO convert "%%a" -resize 50%% "%%~dpasmall\%%~nxa"
+  FOR %%a in ("%~dp1*.jpg") DO magick "%%a" -resize 50%% "%%~dpasmall\%%~nxa"
   PAUSE
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -918,8 +918,8 @@ One of them is that you basically perform only one single command after
   CD "%~p1"
   FOR %%a in (*.jpg) DO (
     ECHO Processing file: "%%~nxa"
-    convert %%a -blur 30 -negate %%a.miff
-    composite %%a.miff %%a -compose overlay "%%~dpn1_light"%%~xa
+    magick %%a -blur 30 -negate %%a.miff
+    magick composite %%a.miff %%a -compose overlay "%%~dpn1_light"%%~xa
     DEL %%a.miff
   )
   PAUSE
@@ -962,8 +962,8 @@ parantheses in the above example:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert %%1 -blur 30 -negate %%1.miff
-  composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
+  magick %%1 -blur 30 -negate %%1.miff
+  magick composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
   DEL %%1.miff
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -979,8 +979,8 @@ call it from the main loop, then deleted it when the job is finished:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  ECHO convert %%1 -blur 30 -negate %%1.miff &gt;%~dp0process.bat
-  ECHO composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1 &gt;&gt;%~dp0process.bat
+  ECHO magick %%1 -blur 30 -negate %%1.miff &gt;%~dp0process.bat
+  ECHO magick composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1 &gt;&gt;%~dp0process.bat
   ECHO DEL %%1.miff &gt;&gt;%~dp0process.bat
   %~d1
   CD %~p1
@@ -1004,7 +1004,7 @@ not the point of this example. </P>
 There are several techniques to process all files in a (sub-)directory tree.
 The simplest approach is to use the "<CODE>/R</CODE>" flag in the
 <CODE>FOR</CODE> statement to make it loop over all the files in all
-sub-directories under the current directory. In order to convert all TIFF
+sub-directories under the current directory. In order to magick all TIFF
 files in the subdirectory tree to JPEG you thus simply type:</P>
 
 <DIV ALIGN=center>
@@ -1070,7 +1070,7 @@ We now come to the actual work:</P>
   ECHO %~1&gt;temp.txt
   "C:\Program Files\Gnuwin32\bin\iconv.exe" -f ISO-8859-1 -t UTF-8 temp.txt>title.txt
 
-  montage -geometry 210x140+0+5 -tile 6x -title @title.txt %1\*.jpg -quality 30%% %TFILE%
+  magick montage -geometry 210x140+0+5 -tile 6x -title @title.txt %1\*.jpg -quality 30%% %TFILE%
   jhead -cl %1 %TFILE%
   :END
 </CODE></PRE></TD></TR></TABLE>
@@ -1128,7 +1128,7 @@ batch" into the <CODE>FOR</CODE> loop:</P>
       SET TFILE=IDX_!TFILE:~-4!.jpg
       ECHO %%a &gt;temp.txt
       %ICONV% temp.txt>title.txt
-      montage  -geometry 210x140+0+5 -tile 6x -title @title.txt "%%a\*.jpg" -quality 30%% !TFILE!
+      magick montage  -geometry 210x140+0+5 -tile 6x -title @title.txt "%%a\*.jpg" -quality 30%% !TFILE!
       jhead -cl %%a !TFILE!
     )
   )
@@ -1178,7 +1178,7 @@ instead of percent signs.  </P>
 The use of <CODE>GOTO</CODE> statements within a <CODE>FOR</CODE> loop is
 a possible source of very subtle errors and should therefore be avoided. In
 our batch we can however easily exchange the jump by an <CODE>IF</CODE>
-statement bracketing the code block with the montage code.  </P>
+statement bracketing the code block with the magick montage code.  </P>
 
 <A NAME="arbitrary"></A>
 <H3>Batch Processing an Arbitrary Number of Files</H3>
@@ -1211,7 +1211,7 @@ This allows us to Montage an arbitrary number of images passed by Drag &amp; Dro
   FOR /F "delims=" %%A in ('TYPE files.txt ^| Sort') Do (
   ECHO %%A>>fsorted.txt
   )
-  SET MONTAGE=montage -tile 3x
+  SET MONTAGE=magick montage -tile 3x
   FOR /F "delims=" %%A in (FSorted.txt) Do (
   SET MONTAGE=!MONTAGE! %%A
   )
@@ -1258,10 +1258,10 @@ use the following batch file:</P>
   @ECHO OFF
   :: compose two gradients using all compose methods available
   ::
-  convert -size 80x80 -flip gradient: compose_src.png
-  convert compose_src.png -rotate 90 compose_dst.png
-  FOR /F %%A in ('convert -list compose') DO ^
-     composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
+  magick -size 80x80 -flip gradient: compose_src.png
+  magick compose_src.png -rotate 90 compose_dst.png
+  FOR /F %%A in ('magick -list compose') DO ^
+     magick composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
 </CODE></PRE></TD></TR>
 </TABLE></P>
 <TABLE  CELLSPACING=0 CELLPADDING=0 WIDTH=80%>
@@ -1326,29 +1326,29 @@ spanned by the three coordinates of the colour space:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-convert -size 256x256 gradient: gy.miff
-convert gy.miff -rotate 90 gx.miff
-convert -size 256x256 xc:black black.miff
+magick -size 256x256 gradient: gy.miff
+magick gy.miff -rotate 90 gx.miff
+magick -size 256x256 xc:black black.miff
 
 ::R + G top left
-convert gy.miff gx.miff -flop black.miff -set colorspace %1 -combine ^
+magick gy.miff gx.miff -flop black.miff -set colorspace %1 -combine ^
         -resize 260x300! -background none -shear 0x-30 ^
         -virtual-pixel Transparent RG.miff
 
 :: R + B top right
-convert gy.miff  black.miff gx.miff -set colorspace %1 -combine ^
+magick gy.miff  black.miff gx.miff -set colorspace %1 -combine ^
         -resize 260x300! -background none -shear 0x30 RB.miff
 
 :: G + B bottom
-convert black.miff gx.miff gy.miff -set colorspace %1 -combine ^
+magick black.miff gx.miff gy.miff -set colorspace %1 -combine ^
         -resize  260x300! -background none -shear 0x30 -rotate 120 ^
         -crop 520x300+0+75 GB.miff
 
-convert -set colorspace %1 RG.miff RB.miff +append top.miff
-convert -set colorspace %1 -size 520x150 xc:Transparent w.miff
-convert top.miff w.miff -append topx.miff
+magick -set colorspace %1 RG.miff RB.miff +append top.miff
+magick -set colorspace %1 -size 520x150 xc:Transparent w.miff
+magick top.miff w.miff -append topx.miff
 
-composite -geometry +0+299 GB.miff  topx.miff colorspace_%1.png
+magick composite -geometry +0+299 GB.miff  topx.miff colorspace_%1.png
 DEL *.miff
 </CODE></PRE></TD></TR></TABLE>
 <TABLE  CELLSPACING=0 CELLPADDING=0>
@@ -1380,7 +1380,7 @@ another batch file that provides the names of the colour spaces:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F %%A in ('convert -list colorspace') DO CALL cspace %%A
+  FOR /F %%A in ('magick -list colorspace') DO CALL cspace %%A
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1390,7 +1390,7 @@ DOS:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
-  convert -list colorspace | FIND "RGB" &gt;&gt;clist.txt
+  magick -list colorspace | FIND "RGB" &gt;&gt;clist.txt
   FOR /F %%A in (clist.txt) DO CALL cspace %%A
   DEL clist.txt
 </CODE></PRE></TD></TR></TABLE>
@@ -1404,7 +1404,7 @@ avoiding the temporary file:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F %%A in ('convert -list colorspace ^| FIND "RGB"') DO CALL cspace %%A
+  FOR /F %%A in ('magick -list colorspace ^| FIND "RGB"') DO CALL cspace %%A
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1426,8 +1426,8 @@ HREF="http://www.fmwconcepts.com/imagemagick/" >Fred Weinhaus' website</A>:
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F %%a in ('identify -format "%%[fx:log(mean)/log(0.5)]" %1') DO ^
-  convert %1 -gamma %%a "%~dpn1"_c.%~x1
+  FOR /F %%a in ('magick identify -format "%%[fx:log(mean)/log(0.5)]" %1') DO ^
+  magick %1 -gamma %%a "%~dpn1"_c.%~x1
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
@@ -1446,10 +1446,10 @@ better don't start the next line with spaces.
 </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   This method of automatic gamma correction is now built into IM using
   "<CODE><A HREF="../option_link.cgi?auto-gamma" >-auto-gamma</A></CODE>", and
   was added to IM v6.5.5-1. But it shows the technique of re-using command
@@ -1463,17 +1463,17 @@ the image:
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F "tokens=1,2" %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
-  convert %1 -pointsize 18 -fill white -gravity northwest ^
+  FOR /F "tokens=1,2" %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  magick %1 -pointsize 18 -fill white -gravity northwest ^
     -annotate +0+0 "%%i %%j" "%~dpn1"_dated%~x1
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Photos are typically saved using JPEG format. Reading and re-saving JPEG
   images causes slight degrading of the image due to <A HREF="../formats/#jpeg"
   >JPEG Lossy Compression</A> and as such saving back to JPEG is not
@@ -1500,8 +1500,8 @@ unconventional formatting of the date by the following code: </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
-  convert %1 -pointsize 18 -fill white -gravity northwest ^
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  magick %1 -pointsize 18 -fill white -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1538,9 +1538,9 @@ dimensions of the photograph: </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F %%i IN ('identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
-  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
-  convert %1 -pointsize %psize% -fill white -gravity northwest ^
+  FOR /F %%i IN ('magick identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  magick %1 -pointsize %psize% -fill white -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1559,8 +1559,8 @@ And here we calculate a random angle between as an integer between
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  FOR /F %%x IN ('convert null: -format "%%[fx:int(rand()*31)-15]" info:') DO SET angle=%%x
-  convert %1 -thumbnail x90 -matte ^
+  FOR /F %%x IN ('magick null: -format "%%[fx:int(rand()*31)-15]" info:') DO SET angle=%%x
+  magick %1 -thumbnail x90 -matte ^
             -background none -rotate %angle%   "%~dpn1"_rotated.png
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1586,19 +1586,19 @@ use of the <CODE>SET</CODE> command:</P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
   :: Determine the font height
-  FOR /F %%i IN ('identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
+  FOR /F %%i IN ('magick identify -format "%%[fx:min(w,h)*0.05]" %1') DO SET psize=%%i
 
   :: The width of the date-time string is roughly 9 times its height
   SET /A pwidth=%psize% * 9
 
   :: Calculate the average brightness in this section
   :: and choose the text color accordingly
-  FOR /F %%i IN ('identify -format "%%[fx:mean]" -crop %pwidth%x%psize%+0+0 %1') DO SET mean=%%i
+  FOR /F %%i IN ('magick identify -format "%%[fx:mean]" -crop %pwidth%x%psize%+0+0 %1') DO SET mean=%%i
   IF %mean% LEQ 0.5 (SET fcolor=white) ELSE SET fcolor=black
 
   :: Annotate the photograph
-  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('identify -format "%%[EXIF:DateTime]" %1') DO ^
-  convert %1 -pointsize %psize% -fill %fcolor% -gravity northwest ^
+  FOR /F "tokens=1,2,3,* delims=: " %%i IN ('magick identify -format "%%[EXIF:DateTime]" %1') DO ^
+  magick %1 -pointsize %psize% -fill %fcolor% -gravity northwest ^
     -annotate +0+0 "%%j/%%k/%%i %%l" "%~dpn1"_dated%~x1
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -1629,9 +1629,9 @@ more flexible and its various calculations more transparent:</P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  convert -size 256x256 gradient: gy.gif
-  convert gy.gif -rotate 90 gx.gif
-  convert -size 256x256 xc:black black.gif
+  magick -size 256x256 gradient: gy.gif
+  magick gy.gif -rotate 90 gx.gif
+  magick -size 256x256 xc:black black.gif
 
   :: Set the dimension of the color cube / hexagon and calculate the various lengths
   SET l1=512
@@ -1640,22 +1640,22 @@ more flexible and its various calculations more transparent:</P>
   FOR /F %%i IN ('EVAL "round((1+sin(degree*30))*%l1%/2)"') DO SET l4=%%i
   FOR /F %%i IN ('EVAL "round(%l1%/4)"') DO SET l5=%%i
 
-  convert gy.gif gx.gif -flop black.gif -set colorspace %1 -combine ^
+  magick gy.gif gx.gif -flop black.gif -set colorspace %1 -combine ^
           -resize %l2%x%l1%! -background none -shear 0x-30 ^
           -virtual-pixel Transparent RG.miff
 
-  convert gy.gif  black.gif gx.gif -set colorspace %1 -combine ^
+  magick gy.gif  black.gif gx.gif -set colorspace %1 -combine ^
           -resize %l2%x%l1%! -background none -shear 0x30 RB.miff
 
-  convert black.gif gx.gif gy.gif -set colorspace %1 -combine ^
+  magick black.gif gx.gif gy.gif -set colorspace %1 -combine ^
           -resize  %l2%x%l1%! -background none -shear 0x30 -rotate 120 ^
           -crop %l3%x%l1%+0+%l5% GB.miff
 
-  convert -set colorspace %1 RG.miff RB.miff +append top.miff
-  convert -set colorspace %1 -size %l3%x%l4% xc:Transparent w.miff
-  convert top.miff w.miff -append topx.miff
+  magick -set colorspace %1 RG.miff RB.miff +append top.miff
+  magick -set colorspace %1 -size %l3%x%l4% xc:Transparent w.miff
+  magick top.miff w.miff -append topx.miff
 
-  composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
+  magick composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
   DEL *.miff
   DEL *.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -1701,9 +1701,9 @@ you should first of all check whether Convert is accessible: </P>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
   @ECHO OFF
-  convert -version 1&gt;nul: 2&gt;nul:
+  magick -version 1&gt;nul: 2&gt;nul:
   IF NOT %errorlevel%==0 GOTO NoMagick:
-  convert ...
+  magick ...
   GOTO END:
   ...
   :NoMagick
@@ -1765,7 +1765,7 @@ The "words" in this line of text are separated by tabs (in Windows XP) or
 several blanks (Windows Vista). These are the standard delimiters used by
 <CODE>For /F</CODE>. The third "word" (%%C) is the one we are looking for and
 we store it in the environment variable MPATH, which we can refer to when
-calling convert later in the script.</P>
+calling magick later in the script.</P>
 
 A script might require a certain minimum version number of ImageMagick to be
 installed.  For example, the <A HREF=../distorts/#perspective >Perspective
@@ -1779,7 +1779,7 @@ test whether the installed version of IM is newer than that:</P>
   @ECHO OFF
   SETLOCAL EnableDelayedExpansion
   SET MINVERSION=7.5.3-0
-  FOR /F "tokens=1,2,3" %%a in ('convert -version ^|FIND "Version"') DO SET VERSION=%%c
+  FOR /F "tokens=1,2,3" %%a in ('magick -version ^|FIND "Version"') DO SET VERSION=%%c
   IF %VERSION% LSS %MINVERSION% GOTO GetNewVersion:
   Goto End:
   :GetNewVersion
@@ -1799,7 +1799,7 @@ store the minimum required version in the environment variable MINVERSION. In
 the third line, we call Convert with the '-version' option, extract the first
 line from the output via <CODE>^|FIND "Version"</CODE>, get the third word
 from that line and store it in the environment variable VERSION. We then
-compare this version to the minimal required version in the forth line. </P>
+magick compare this version to the minimal required version in the forth line. </P>
 
 <A NAME="summing_it_up"></A>
 <H3>Summing it up</H3>
@@ -1892,7 +1892,7 @@ So here is our VBScript:
   strFileOut = Left(strFileIn,Pos - 1) &amp; strAdd &amp; Mid(strFileIn, Pos)
   '
   ' evaluation of the focal length and calculation of parameter b
-  command = "cmd /k identify -format ""%[EXIF:FocalLength]"" " &amp; strFileIn
+  command = "cmd /k magick identify -format ""%[EXIF:FocalLength]"" " &amp; strFileIn
   Set objExec = wsh.Exec(command)
   strf = objExec.StdOut.Readline
   f = eval(strf)
@@ -1974,7 +1974,7 @@ would be: </P>
          strInputFiles = strInputFiles &amp; " " &amp; Fname(i)
   next
  '
-  Command = "montage -geometry 210x140+0+5 -tile 6x " &amp; strInputfiles &amp; " -quality 80% " &amp; fs.getParentFolderName(FName(0)) &amp; "\index.jpg"""
+  Command = "magick montage -geometry 210x140+0+5 -tile 6x " &amp; strInputfiles &amp; " -quality 80% " &amp; fs.getParentFolderName(FName(0)) &amp; "\index.jpg"""
   wsh.run command, 7, true
 </CODE></PRE></TD></TR></TABLE>
 </DIV></P>
@@ -2140,7 +2140,7 @@ This means that first of all you should ensure that
 
 So as a start, you should test the command line itself within a DOS box. When
 first testing the script, you should not run the IM command, but rather
-display the text string in a message box via <CODE>MsgBox(strCommand)</CODE>,
+magick display the text string in a message box via <CODE>MsgBox(strCommand)</CODE>,
 because if the command line itself is wrong, there is little any debugging
 tool could do. The simple message box is also helpful when debugging the
 script and I never really felt the need for a sophisticated debugger.  </P>
@@ -2174,7 +2174,7 @@ You may also like to look at <I><A HREF="forum_link.cgi?u=6256"
 
 </DIV></P>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 23 April 2009 <BR>
 Updated: 15 February 2010 <BR>
 Author: Wolfgang Hugemann, &lt;ImageMagick_AT_Hugemann.de&gt;<BR>
@@ -2182,5 +2182,5 @@ Author: <A HREF="http://www.ict.griffith.edu.au/anthony/anthony.html"
         >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://legacy.imagemagick.org/Usage/windows/</CODE>
-</ADDRESS></BODY></HTML>
+URL: <CODE>https://imagemagick.org/Usage/windows/</CODE>
+</div></footer></body></HTML>

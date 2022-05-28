@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Resampling Filters -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/filter/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -16,7 +16,7 @@
 
 <B>Index</B><BR>
 <TABLE CELLSPACING=0>
-<TR VALIGN=top><TD COLSPAN=2>
+<TR valign="top"><TD COLSPAN=2>
 <A HREF="../"
    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
    > ImageMagick Examples Preface and Index</A>
@@ -173,7 +173,7 @@ isolated pixels with round dots, to remove some of the blockiness.
   magick storm.gif  -scale  300%  storm_scaled.gif
   magick storm.gif  -resize 300%  storm_resized.gif
   magick storm.gif -filter Gaussian -resize 300%  storm_resized_gas.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
 <TABLE><TR VALIGN=center><TD ALIGN=center>
   <A HREF="../images/storm.gif"
      ><IMG SRC="../images/storm.gif"                WIDTH=32  HEIGHT=32
@@ -197,7 +197,7 @@ isolated pixels with round dots, to remove some of the blockiness.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
   <BR>Gaussian Resized
 </TD></TR></TABLE>
-</NOBR></DIV></P>
+</DIV></P>
 
 The primary cause of 'blocking' is either badly anti-aliased source image, or
 not enough smoothing (color mixing or blurring) between pixels to improve the
@@ -248,7 +248,7 @@ enlargements.
   magick gray_edge.gif -filter Sinc \
                          -resize 100x100\!  gray_edge_ringing.gif
   magick gray_edge.gif  -resize 100x100\!  gray_edge_resize.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="gray_edge.gif"
      ><IMG SRC="gray_edge.gif"                WIDTH=16  HEIGHT=16
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -259,7 +259,7 @@ enlargements.
   <A HREF="gray_edge_resize.gif"
      ><IMG SRC="gray_edge_resize.gif"         WIDTH=100  HEIGHT=100
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV>
+</DIV>
 
 The above shows quite clearly the over compensation produced by the use of
 a raw resize filter, without any of the optimization IM provides. The
@@ -270,9 +270,9 @@ desirable in that it perceptually sharpens the border. </P>
 Here is another example of the ringing effect, this time by enlarging a
 single pixel, on a gray background.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 1x1 xc: -bordercolor '#444' -border 4x4 \
           -define filter:lobes=5  -filter Sinc \
@@ -293,9 +293,9 @@ And this time with a cylindrical filter (via the <A HREF="../distorts/#resize"
 2 pass orthogonally aligned (tensor) filter which the <A
 HREF="../resize/#resize" >Resize Operator</A> uses.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 1x1 xc: -bordercolor '#444' -border 4x4 \
           -define filter:lobes=5  -filter Jinc \
@@ -392,7 +392,7 @@ shown first, and then reduced its size by just 5%.
   magick rings_crop.png    -scale  100x100    rings_crop_scale.png
   magick rings_crop.png    -resize 100x100    rings_crop_resize.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE WIDTH=80%><TR VALIGN=top><TD ALIGN=center>
+<TABLE WIDTH=80%><TR valign="top"><TD ALIGN=center>
   <A HREF="rings_crop.png"
      ><IMG SRC="rings_crop.png"   WIDTH=105 HEIGHT=105
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -461,10 +461,10 @@ can also make it worse, depending on the exact filter and the resize ratios
 that are being used.  No guarantees can be given. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.3.6-3 the <A HREF="../filter/#blur" >Filter Blur</A>
   setting was called "<CODE><A HREF="../option_link.cgi?support"
   >-support</A></CODE>", which was very misleading in exactly what it did.
@@ -634,18 +634,18 @@ position, and that is all.  </P>
 This means that the <A HREF="../resize/#resize" >Resize Operator</A> will
 simply use the color of an actual pixel in the source image will be used.  No
 attempt will be made to merge colors or generate a better color for the
-resulting image. As a result using <NOBR>"<CODE>-filter point -resize
-...</CODE>"</NOBR> will produce the same result as "<CODE><A
+resulting image. As a result using "<CODE>-filter point -resize
+...</CODE>" will produce the same result as "<CODE><A
 HREF="../option_link.cgi?sample" >-sample</A></CODE>" (see <A
 HREF="../resize/#sample" >Sampling Operator</A>), though the latter is
 faster as it code is specifically designed to resizing images by point
 sampling, with controls to tune the exact sampling point. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   For the <A HREF="../distorts/#distort" >Distort Operator</A> selecting
   "<CODE><A HREF="../option_link.cgi?filter" >-filter</A> Point</CODE>", will
   force the use of <A HREF="../misc/#interpolate" >Interpolated Point
@@ -825,10 +825,10 @@ identical results, except in a special case of reducing images by just a few
 pixels. When 'binning' it will produce identical results. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The <A HREF="../resize/#scale" >Scale Operator</A> is not exactly the same
   as a 'Box Filter', as it is implemented using a special 'Pixel Mixing'
   algorithm.  For exact details see <A HREF="../resize/#pixel_mixing" >Scale
@@ -893,10 +893,10 @@ in using a simple 'nearest-neighbour' selection.
 </CODE> -->
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The <A HREF="../resize/#scale" >Scale Operator</A> also produces similar
   results, but with some pixel color mixing, when enlarging, unless enlarging
   by an integer scaling factor.
@@ -1237,14 +1237,14 @@ perfectly). But all that is at the cost of extreme <A HREF="#blurring"
 >blurring</A> for the resulting image. </P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 In fact, during large scale enlargements, this filter will generate round
 dots, rather than square looking dots. For example, here I greatly enlarge a
 3x3 pixel image with a single dot in the center.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick xc:red -bordercolor yellow -border 1 \
           -filter Gaussian   -resize 99x99  -normalize dot_gaussian.jpg
@@ -1281,10 +1281,10 @@ Expert Setting</A> can be used to override this automatic effect, but it is
 typically not necessary.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The '<CODE>filter:sigma</CODE>' expert option only works for the <A
   HREF="#gaussian" >Gaussian Filter</A>.  No other filters are effected by
   this expert control.  </P>
@@ -1366,8 +1366,8 @@ If you really want, you can change the 'support' of a filter using the special
 expert setting  "<CODE><A HREF="../option_link.cgi?define" >-define</A>
 filter:support=<I>{value}</I></CODE>". </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 For example here I resize an image with a single pixel using the smaller
 support value of 1.25, or 2-1/2 times the sigma value.(see the <A
@@ -1375,7 +1375,7 @@ HREF="graph_gaussian_support.jpg" >resulting graph</A> right).  This is of
 course smaller that the normal generally accepted minimum of 3 times the sigma
 value.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
 <c>  magick pattern:gray5 -crop 5x1+0+3 +repage pixel_5.gif
   magick pixel_5.gif  -filter gaussian -define filter:support=1.25 \
@@ -1454,10 +1454,10 @@ filter can generate visible artifacts in the resulting image. </P>
 
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Previous to IM v6.3.6-3 the 'support' for the Gaussian filter was set to this
   value of '<CODE>1.25</CODE>' producing <A HREF="#ringing" >Ringing</A>
   effects in enlargements (such as shown above). For this reason the 'support'
@@ -1525,7 +1525,7 @@ using a <A HREF="#spline" >Gaussian-like Spline Filter</A>..
             -resize 150x logo_blur_$blur.png; \
   done
 </CODE></PRE></TD></TR></TABLE>
-<TABLE CELLSPACING=0 CELLPADDING=0><TR VALIGN=top><TD ALIGN=center>
+<TABLE CELLSPACING=0 CELLPADDING=0><TR valign="top"><TD ALIGN=center>
   <A HREF="logo_blur_0.5.png"
      ><IMG SRC="logo_blur_0.5.png"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -1556,9 +1556,9 @@ can cause the resampling to 'miss' all pixels, or generate only zero weighted
 pixels.  As a result regular 'black' lines or blocks will be generated. For
 example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -define filter:blur=0.1 -filter Gaussian \
           -resize 100x100  rose_black_bars.png
@@ -1586,10 +1586,10 @@ into the 'support window', and thus polymorphs into various other forms (see
 below). </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Using bad support settings with filters containing negative weightings
   (basically any of the filters we will look at next) can produce inverse
   sharpening and negation effects, and disproportionately stronger aliasing
@@ -1602,10 +1602,10 @@ below). </P>
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.3.6-3 the '<CODE>filter:blur</CODE>' define was mistakenly
   set by the option "<CODE>-support</CODE>", which was very misleading in
   exactly what it did.  This option has been depreciated, and no longer
@@ -1640,7 +1640,7 @@ non-symmetrical skew that does seem to work better as an interpolator.
   magick logo: -define filter:blur=0.75 -filter Gaussian \
           -resize 150x logo_gaussian_interpolate.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE CELLSPACING=0 CELLPADDING=0><TR VALIGN=top><TD ALIGN=center>
+<TABLE CELLSPACING=0 CELLPADDING=0><TR valign="top"><TD ALIGN=center>
   <A HREF="logo_blur_1.0.png"
      ><IMG SRC="logo_blur_1.5.png"
            ALIGN=middle VSPACE=5 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
@@ -1672,7 +1672,7 @@ is the trade off of using a less blurry form of the filter. </P>
   magick rings_crop.png -filter gaussian -define filter:blur=0.75 \
                               -resize 100x100  rings_gaussian_interpolate.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE CELLSPACING=0 CELLPADDING=0><TR VALIGN=top><TD ALIGN=center>
+<TABLE CELLSPACING=0 CELLPADDING=0><TR valign="top"><TD ALIGN=center>
   <A HREF="rings_gaussian.png"
      ><IMG SRC="rings_gaussian.png"   WIDTH=100  HEIGHT=100
            ALIGN=middle VSPACE=5 HSPACE=30 BORDER=1 ALT="[IM Output]"></A>
@@ -1798,10 +1798,10 @@ or the Jinc function (depending on the image processing operator), and the
 <A HREF="#options" >Expert Filter Controls</A> below). </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before v6.3.6-3, IM made the grave mistake of actually using the windowing
   functions directly as the filter's weighting function.  This in turn caused
   all these filters (except Lanczos) to produce badly <A HREF="#aliasing"
@@ -2107,10 +2107,10 @@ both enlargement and shrinking of images. with minimal <A HREF="#blocking"
 HREF="#blurring" >blurring</A> effects. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The <A HREF="#support" >Support Expert Control</A> is really
   defining the 'order' of the Lagrange filter that should be used.  That is,
   the default 2.0 support Lagrange filter, generates a Lagrange filter of
@@ -2119,7 +2119,7 @@ HREF="#blurring" >blurring</A> effects. </P>
   sizes.  </P>
 
   As such, to get a Lagrange order 4 filter you would use the option</I>
-  &nbsp; <NOBR><CODE>-define filter:support=2.5</CODE></NOBR>
+  &nbsp; <CODE>-define filter:support=2.5</CODE>
 </FONT></TD></TR></TABLE></P>
 
 <A HREF="graph_lagrange_windowed.jpg"
@@ -2170,10 +2170,10 @@ the current '<A HREF="#support" >support</A>' setting, regardless of how big
 or small that setting is.  It is a self-windowing resize filter.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The '<CODE><A HREF="#lagrange" >Lagrange</A></CODE>' filter was not fully
   defined and usable until IM version v6.3.7-1.
 </I></FONT></TD></TR></TABLE></P>
@@ -2353,7 +2353,7 @@ to produce an overly blurry (the Spline or Gaussian-like) effect. </P>
 This makes it easy for experts (or even normal users) to adjust this value to
 find a filter that is 'good to them'.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD ALIGN=justify>
 To the right is a table of the B,C values for the specifically 'named' <A
 HREF="#cubics" >Cubic Filters</A>. </P>
@@ -2392,10 +2392,10 @@ filter used by the <A HREF="../distorts/#distort" >General Distort Operator</A>
 
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The '<CODE>Parzen</CODE>' windowing filter uses a '<CODE>Spline</CODE>'
   filter as its windowing function.  As such you can re-define this windowing
   filter in terms of B,C expert options.  How useful this is, and what effect
@@ -2448,7 +2448,7 @@ pixel image by 30 times using the equivalent <A HREF="../resize/#resize"
           -filter Box   -resize 3000%      dot_resize_box_black.png
   magick xc:  -bordercolor black -border 1 \
           -filter Box   +distort SRT 30,0  dot_distort_box_black.png
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
 <TABLE CELLPADDING=0 CELLSPACING=0><TR VALIGN=bottom>
 <TD ALIGN=center>
   <A HREF="dot_resize_box_black.png"
@@ -2462,7 +2462,7 @@ pixel image by 30 times using the equivalent <A HREF="../resize/#resize"
            ALIGN=middle VSPACE=2 HSPACE=25 BORDER=1 ALT="[IM Output]"></A>
   <BR>Distort
 </TD></TR></TABLE>
-</NOBR></DIV></P>
+</DIV></P>
 
 As you can see when the '<CODE><A HREF="#box" >Box</A></CODE>' filter is used
 as a Cylindrical filter you get a circle (or a cylinder in 3 dimensions).
@@ -2476,9 +2476,9 @@ together. </P>
 Here is a more colorful example of the results of expanding an image using
 a 'Cylindrical Box' filter for enlargement...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick \( xc:red   xc:white xc:black +append \) \
           \( xc:blue  xc:lime  xc:white +append \) \
@@ -2493,9 +2493,9 @@ a 'Cylindrical Box' filter for enlargement...
 With a distorted image, these circular pixels are also distorted into
 a set of overlapping ellipses.  For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick \( xc:red   xc:white xc:black +append \) \
           \( xc:blue  xc:lime  xc:white +append \) \
@@ -2510,10 +2510,10 @@ a set of overlapping ellipses.  For example...
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The support 'radius' for a cylindrical '<CODE>Box</CODE>' filter is
   increased from '<CODE>0.5</CODE>' to '<CODE>0.707</CODE>'
   (<CODE>sqrt(2)/2</CODE>). This ensures the filter will always find at least
@@ -2525,10 +2525,10 @@ a set of overlapping ellipses.  For example...
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   If the support is not at least '<CODE>0.707</CODE>', then you may get areas
   of your image in which the filter 'misses' all source pixels, and thus
   produce a <A HREF="../distorts/#distort_failure" >Resampling Failure</A>. </P>
@@ -2537,9 +2537,9 @@ a set of overlapping ellipses.  For example...
   'circles' become larger, and more pixels will become blended together.
   For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick \( xc:red   xc:white xc:black +append \) \
           \( xc:blue  xc:lime  xc:white +append \) \
@@ -2617,7 +2617,7 @@ an orthogonal resize, while the bottom line uses a cylindrical distortion.
            ALIGN=middle VSPACE=2 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
 <BR>Catrom
 </TD></TR></TABLE>
-</NOBR></DIV></P>
+</DIV></P>
 
 You can see how the results are similar but with different syles of <A
 HREF="#artifacts" >Artefacts</A> being generated, both internally and
@@ -2632,8 +2632,8 @@ for magnification (enlarging). </P>
 
 <A NAME="cyl_gaussian"></A>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 <H4>Cylindrical Gaussian</H4>
 
@@ -2641,7 +2641,7 @@ The one filter which produces no difference in results between an
 orthogonal 'resize' and a cylindrical 'distort' forms,  is the special
 '<CODE><A HREF="#gaussian" >Gaussian</A></CODE>' filter...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick xc:red -bordercolor yellow -border 1 \
           -filter Gaussian   +distort SRT 33,0  -normalize  dot_distort.jpg
@@ -2668,10 +2668,10 @@ Expert Control</A>, you can also use this filter as a type of interpolated
 filter. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   As of IM v6.6.5-0, IM no longer used this filter, by default for <A
   HREF="../distorts/#distort" >Image Distortions</A>. Instead another filter
   '<CODE><A HREF="#robidoux" >Robidoux</A></CODE>' filter specifically
@@ -2684,10 +2684,10 @@ filter. </P>
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.6.7-6, IM would use a slightly larger 'sigma' value for
   a Cylindrical Gaussian, of 1/sqrt(2) or approximatally 0.707, instead of
   1/2.  This resulted in a slightly more blurry result, which was to reduce
@@ -2790,10 +2790,10 @@ it, as is basicaly a blend of  B-spline 'Cubic' smoothing filter and the
 Cublic two-lobe sinc equivelent Catmull-Rom filter. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The resize operator will by default short-circuit itself, so as to do
   nothing for the no-op case.  As such unless you specifically specify
   a filter you can not generate a 'noop' resize.  </P>
@@ -2834,7 +2834,7 @@ pattern from an image. No scaling is used, just a distortion applied
   magick -size 100x100 pattern:gray50  hash.png
   magick hash.png -filter Lanczos -distort resize 100% hash_removed.png
 </CODE></PRE></TD></TR></TABLE>
-<TABLE CELLSPACING=5 CELLPADDING=0><TR VALIGN=top><TD ALIGN=center>
+<TABLE CELLSPACING=5 CELLPADDING=0><TR valign="top"><TD ALIGN=center>
 <TD ALIGN=center>
   <A HREF="hash.png"
      ><IMG SRC="hash.png"        WIDTH=100  HEIGHT=100
@@ -2849,10 +2849,10 @@ pattern from an image. No scaling is used, just a distortion applied
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The reason the percieved gray-level of the hash is so much darker than the
   the overall gray-level of the hash is because of the way <A
   HREF="../color_basics/#perception" >Human Color Perception</A> works.</P>
@@ -2877,9 +2877,9 @@ The actual number of lobes of a Windowed Jinc filter, has an enormous bearing
 on the results as well.  With 2 lobes, a 'pixel level hash' has a tendancy to
 be preserved, though dulled or blurred.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick hash.png -filter Lanczos2 -distort resize 100% hash_2_lobes.png
 </CODE></PRE></TD></TR></TABLE></P>
@@ -3103,8 +3103,8 @@ HREF="../forum_link.cgo?p=83754" >Proper Scaling of a Jinc Filter in EWA</A>
 gives this as a summary of cylindrical filters... </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1>
+<TR valign="top">
+<TD ALIGN=justify width="100%"><FONT SIZE=-1>
   If Robidoux is too soft and RobidouxSharp too aliased, I suggest that you
   try Mitchell (with distort Resize), which is pretty much halfway. </P>
 
@@ -3145,10 +3145,10 @@ those default values as specified above, at the time filter is setup for
 a specific resize or distortion image processing operation. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The "<CODE><A HREF="../option_link.cgi?filter" >-filter</A></CODE>" setting
   'Point' completely bypasses all the above filter setup, and degenerates into
   an unscaled 'Nearest Neighbor' direct lookup (resize), or interpolated
@@ -3592,7 +3592,7 @@ So much so he has his own section... <BR>
 
 
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 10 October 2012 (split from resize) <BR>
 Updated: 14 Feburary 2013 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -3600,4 +3600,4 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/filter/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>

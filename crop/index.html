@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Cutting and Bordering -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/crop/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -129,7 +129,7 @@ size and position you specify by its geometry argument.
   magick rose: -crop 90x60-10-10  crop_all.gif
 </CODE><CODE EXECUTE ERR=crop_error.txt
 >  magick rose: -crop 40x30+90+60  crop_miss.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
  <A HREF="rose.gif"
     ><IMG SRC="rose.gif"                  WIDTH=70  HEIGHT=46
           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -149,7 +149,7 @@ size and position you specify by its geometry argument.
  <A HREF="crop_miss.gif"
     ><IMG SRC="crop_miss.gif"
           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 Just so you can check on exactly what happened here is output from
 "<CODE>identify</CODE>" on the results of the crop above.
@@ -198,10 +198,10 @@ this see.  <A HREF="../anim_basics/#deconstruct" >Deconstruct GIF
 Animations</A>. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   GIF images make active use of the 'page' or 'virtual canvas', size and
   offset information in images cropped by IM.  If you don't want this
   information remove it with "<CODE><A HREF="../option_link.cgi?repage"
@@ -342,7 +342,7 @@ ways.  As before the canvas size itself is not modified by the operation.
   magick paged.gif -quiet -crop 32x32+56+56  crop_page_miss.gif
 <n>  magick identify paged.gif crop_page.gif crop_page_tl.gif crop_page_br.gif \
            crop_page_all.gif crop_page_miss.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"                WIDTH=64  HEIGHT=64
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -362,7 +362,7 @@ ways.  As before the canvas size itself is not modified by the operation.
   <A HREF="crop_page_miss.gif"
      ><IMG SRC="crop_page_miss.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR>
+
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="crop_page_ident.txt"
@@ -386,7 +386,7 @@ semi-transparent square over the area that was cropped.
 <TR><TD><PRE><CODE EXECUTE>
   magick paged.gif -page 64x64+32+32 -size 32x32 xc:'#fff8' \
           -matte  -background none  -mosaic    crop_area_br.png
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"                WIDTH=64  HEIGHT=64
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -398,7 +398,7 @@ semi-transparent square over the area that was cropped.
   <A HREF="crop_page_br.gif"
      ><IMG SRC="crop_page_br.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 From this you can see just what is happening.   Even though the crop is
 contained completely in the page canvas, the crop did not cover the actual
@@ -422,7 +422,7 @@ page canvas and position to match the actual cropped image.
   magick rose: -crop 40x30-10-10  +repage  repage_tl.gif
   magick rose: -crop 90x60-10-10  +repage  repage_all.gif
   magick rose: -quiet  -crop 40x30+90+60  +repage  repage_miss.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="rose.gif"
      ><IMG SRC="rose.gif"                 WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -442,7 +442,7 @@ page canvas and position to match the actual cropped image.
   <A HREF="repage_miss.gif"
      ><IMG SRC="repage_miss.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 This is of course the result new users of IM would normally have expected from
 the "<CODE><A HREF="../option_link.cgi?crop" >-crop</A></CODE>" operator.  It
@@ -461,10 +461,10 @@ The last image in the above is of course the special <A HREF="#crop_missed"
 setting.  <P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   For IM version 5 and earlier the "<CODE><A
   HREF="../option_link.cgi?repage" >+repage</A></CODE>" operation was handled
   by a "<CODE>-page +0+0</CODE>" argument sequence, usually just before saving
@@ -514,7 +514,7 @@ For example...
 </CODE><CODE EXECUTE NOWARN OUT=crop_vp_ident.txt>
   magick identify rose.gif  crop_vp.gif crop_vp_br.gif crop_vp_tl.gif \
               crop_vp_all.gif  crop_vp_miss.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="rose.gif"
      ><IMG SRC="rose.gif"                  WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -534,7 +534,7 @@ For example...
   <A HREF="crop_vp_miss.gif"
      ><IMG SRC="crop_vp_miss.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR>
+
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="crop_vp_ident.txt"
@@ -544,10 +544,10 @@ For example...
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The '<CODE>!</CODE>' character has special significance to some UNIX
   shells, like "<CODE>csh</CODE>", and must be escaped with a backslash,
   even when placed inside quotes.
@@ -571,12 +571,12 @@ requested crop, with any 'missed' areas filled out with the current "<CODE><A
 HREF="../option_link.cgi?background" >-background</A></CODE>" color 'viewport'.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
 
 For example when <A HREF="../thumbnails/#pad" >Padding out an Image</A>.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -crop 100x100-15-25\! -background skyblue -flatten \
           crop_viewport.gif
@@ -604,10 +604,10 @@ both act is if they are a 'window' into the resulting image.  Both can be used
 as a 'cropping' method. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The '<CODE>!</CODE>' flag can NOT be used when generating multi-image
   <A HREF="#crop_tile" >Tiled crops</A>, or with equal-area tile cropping,
   where it has a different meaning. See the appropriate sections below.
@@ -627,9 +627,9 @@ either the center, corner, or an edge of the image. </P>
 The most common use of a gravitated crop, is to crop the '<CODE>center</CODE>'
 of an image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -gravity Center  -crop 32x32+0+0 +repage  crop_center.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -647,9 +647,9 @@ For example if you use a "<CODE><A HREF="../option_link.cgi?gravity"
 '<CODE>+0+5</CODE>' will offset the crop area upward, instead of downward as
 it normally would.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -gravity South  -crop 20x20+0+5   crop_south.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -676,9 +676,9 @@ understands how to crop an image to just a percentage of its original size.
 
 For example this will half the size of the image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose:  -crop 50%x+0+0      crop_half.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -688,10 +688,10 @@ For example this will half the size of the image.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   If only one size number is given, then that value is used for both the width
   and height percentages and the final size of the area that is being cropped
   will be rounded to nearest integer.   The offset is not optional.
@@ -700,9 +700,9 @@ For example this will half the size of the image.
 Note that while the size can be a percentage the offset will always be in
 pixels.  You can not provide an offset as a percentage of the image size. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose:  -crop 50%x+30+20      crop_percent.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -712,10 +712,10 @@ pixels.  You can not provide an offset as a percentage of the image size. </P>
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   When a crop is given with an offset you <B>must</B> supply an
   '<CODE>x</CODE>' symbol in the argument so that the argument can be
   interpreted correctly. This is especially important when only a single
@@ -728,9 +728,9 @@ pixels.  You can not provide an offset as a percentage of the image size. </P>
 
 More commonly a percentage crop is done from the center of an image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -gravity Center -crop 50x80%+0+0  crop_percent_center.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -740,10 +740,10 @@ More commonly a percentage crop is done from the center of an image.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The percentage symbol '<CODE>%</CODE>' can appear anywhere in an argument,
   and if given will refer to both width and height numbers.  It is a flag
   that just declares that the 'image size' parts are a percentage fraction
@@ -755,9 +755,9 @@ You can also use a 'viewport crop' flag with percentage crops, to
 automatically set the canvas size and offset of the crop, to the area being
 cropped.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -gravity Center -crop 50%\!  crop_percent_vp.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -767,10 +767,10 @@ cropped.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   You can not use percent sizes for tile cropping (see next).  As such if the
   offset is not provided, and a percent size is given (as above) an offset of
   +0+0 is assumed. </P>
@@ -795,7 +795,7 @@ crop generates a whole series of images..
 <c>  magick rose: -shave 12x0 -repage 64x64+9+9  paged.gif
 <z>  magick paged.gif  +gravity -crop 32x32  tiles_%d.gif
 <n>  magick identify paged.gif tiles_?.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"                 WIDTH=64  HEIGHT=64
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -812,7 +812,7 @@ crop generates a whole series of images..
   <A HREF="tiles_3.gif"
      ><IMG SRC="tiles_3.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR>
+
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="tiles_ident.txt"
@@ -826,10 +826,10 @@ at <A HREF="#crop_equal" >Cropping into roughly Equally Sized Divisions</A>
 below. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   It is a good idea to make sure gravity is turned off using "<CODE><A
   HREF="../option_link.cgi?gravity" >+gravity</A></CODE>".  This is because in
   one special case (centered percentage crop) the gravity setting can turn
@@ -842,9 +842,9 @@ By using "<CODE><A HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>" or
 layering operators, (see <A HREF="../layers/#flatten" >Layer Flatten</A>)  you
 can layer these images all on top of each other, restoring the original image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick tiles_[0-3].gif -background white -mosaic  tiles_mosaic.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -865,9 +865,9 @@ in, as  "<CODE><A HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>" or
 "<CODE><A HREF="../option_link.cgi?flatten" >-flatten</A></CODE>" layering
 methods would.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick tiles_[0-3].gif -background none -layers merge  tiles_layered.gif
 </CODE><CODE EXECUTE NOWARN OUT=tiles_layered_ident.txt
@@ -877,7 +877,7 @@ methods would.
      ><IMG SRC="tiles_layered.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE>
   <A HREF="tiles_layered_ident.txt"
      ><IMG SRC="tiles_layered_ident.txt.gif"
@@ -1134,7 +1134,7 @@ And here we use the above calculations perform a Centered Tile Crop...
 
 If you want to preserve the original offset location of the tiles, but remove
 the centering offset, you can do a relative offset adjustment using
-<NOBR>"<CODE>-repage -25-17\!</CODE>"</NOBR> (replacing the "<CODE><A
+"<CODE>-repage -25-17\!</CODE>" (replacing the "<CODE><A
 HREF="../option_link.cgi?repage" >+repage</A></CODE>" in the above).  </P>
 
 If you did not add two columns and rows to the number of tiles and thus
@@ -1177,7 +1177,7 @@ not know they were there and ignores them. </P>
 
 Again replacing the "<CODE><A HREF="../option_link.cgi?repage"
 >+repage</A></CODE>" in the above, with a relative offset adjustment using the
-negated offset values <NOBR>"<CODE>-repage +5+3\!</CODE>"</NOBR> will restore
+negated offset values "<CODE>-repage +5+3\!</CODE>" will restore
 the original offset locations from which the tiles were cropped. </P>
 
 
@@ -1247,7 +1247,7 @@ image.
 <z>  magick paged.gif  -crop 20x0+30+0  strip_column.gif
 <z>  magick paged.gif  -crop 0x20+0+30  strip_row.gif
 <n>  magick identify paged.gif strip_column.gif strip_row.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1258,7 +1258,7 @@ image.
   <A HREF="strip_row.gif"
      ><IMG SRC="strip_row.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR>
+
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE>
   <A HREF="strip_ident.txt"
@@ -1277,7 +1277,7 @@ image into a series of strips or columns, instead of tiles.
 <z>  magick crop.gif -quiet -crop  20x  strips_%d.gif
 </CODE><CODE EXECUTE NOIMAGE OUT=strips_ident.txt
 >  magick identify crop.gif strips_?.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="crop.gif"
      ><IMG SRC="crop.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1294,7 +1294,7 @@ image into a series of strips or columns, instead of tiles.
   <A HREF="strips_3.gif"
      ><IMG SRC="strips_3.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR>
+
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE>
   <A HREF="strips_ident.txt"
@@ -1318,10 +1318,10 @@ is not recommended unless you are expecting such an event, and are prepared
 for it, such as in a script. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   It is possible for an image to be positioned such that it does not even
   appear on its own page or virtual canvas, or be so large that the page
   canvas can only contain a small window or part of the image. </P>
@@ -1372,7 +1372,7 @@ For example here I crop the image into quadrants around the point 30,40
 <z>  magick paged.gif  -crop 0x40+30+0  quadrant_tr.gif
 <z>  magick paged.gif  -crop 30x0+0+40  quadrant_bl.gif
 <z>  magick paged.gif  -crop    +30+40  quadrant_br.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1389,7 +1389,7 @@ For example here I crop the image into quadrants around the point 30,40
    <A HREF="quadrant_br.gif"
      ><IMG SRC="quadrant_br.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 Of course if the point you were cropping around missed the actual image, then
 two or even three of the resulting quadrant images will be the special <A
@@ -1417,7 +1417,7 @@ to the images canvas size.
 <z>  magick paged.gif  -crop -30-30  neg_offset_3.gif
 <z>  magick paged.gif  -crop -40-40  neg_offset_4.gif
 <z>  magick paged.gif  -crop -50-50  neg_offset_5.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -1437,7 +1437,7 @@ to the images canvas size.
   <A HREF="neg_offset_5.gif"
      ><IMG SRC="neg_offset_5.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 As you can see steadily decreasing the offset to a larger negative value
 slowly results in the bottom and right edges being 'chopped' off, the last
@@ -1660,10 +1660,10 @@ This crop option can also be used as an alternative to the <A HREF="#shave"
 >Shave Operator</A> for 'paged' images. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM version v6.6.1-0, equal-sized tile cropping for images with
   a virtual canvas offset was broken.
 </I></FONT></TD></TR></TABLE></P>
@@ -1977,10 +1977,10 @@ include the overlapping (spacing) area in the tile crop results.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The '<CODE>!</CODE>' character has special significance to some UNIX
   shells, like "<CODE>csh</CODE>", and must be escaped with a backslash,
   even when placed inside quotes.
@@ -2027,7 +2027,7 @@ the space added is "<CODE><A HREF="../option_link.cgi?bordercolor"
   magick rose: -bordercolor LimeGreen  -border 10x0  border_sides.gif
   magick rose: -bordercolor Tomato     -border  0x10 border_topbot.gif
   magick rose: -matte -bordercolor none -border 10    border_none.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="border.gif"
      ><IMG SRC="border.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2043,7 +2043,7 @@ the space added is "<CODE><A HREF="../option_link.cgi?bordercolor"
   <A HREF="border_none.gif"
      ><IMG SRC="border_none.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 Note last example image above.  The border color was set to be the transparent
 color "<CODE>none</CODE>", but for this to work as expected we needed to
@@ -2054,10 +2054,10 @@ you can omit the second number in the border, using just a single number.
 </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   As shown above the default color used by the "<CODE><A
   HREF="../option_link.cgi?border" >-border</A></CODE>" operator  is a light
   gray as it matches nicely the default grey page color of web pages on the
@@ -2066,9 +2066,9 @@ you can omit the second number in the border, using just a single number.
 
 You can specify borders as a percentage of the image size...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -border 10%x10%  border_percent.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2091,7 +2091,7 @@ one.  For example...
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick star.gif -bordercolor LimeGreen -border 0  star_background.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="../images/star.gif"
      ><IMG SRC="../images/star.gif"
            ALIGN=middle VSPACE=2 HSPACE=25 BORDER=0 ALT="[IM Output]"></A>
@@ -2099,16 +2099,16 @@ one.  For example...
   <A HREF="star_background.gif"
      ><IMG SRC="star_background.gif"
            ALIGN=middle VSPACE=2 HSPACE=25 BORDER=0 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 Of course there are lots of other ways to <A HREF="../masking/#remove" >Remove
 Alpha Transparency</A>. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The fact that adding a border to images with transparency, also by default
   fills the transparent background of the image, has been the cause of some
   debate amongst IM users and the development team.  A summary of this debate
@@ -2150,9 +2150,9 @@ not. </P>
 For example here is the same 'star' image with transparency, but this time the
 border was added without destroying the images transparency.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick star.gif  -bordercolor LimeGreen   -compose Copy \
                      -border 5     star_border_copy.gif
@@ -2193,7 +2193,7 @@ canvas. </P>
 <TR><TD><PRE><CODE EXECUTE>
 <c>  magick rose: -shave 12x0 -repage 64x64+9+9  paged.gif
 <z>  magick paged.gif         -border 5x5        paged_border.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2201,7 +2201,7 @@ canvas. </P>
   <A HREF="paged_border.gif"
      ><IMG SRC="paged_border.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 Note that the size of the virtual canvas was also increased by twice the
 border thickness to accommodate the added border. </P>
@@ -2249,7 +2249,7 @@ Here are some examples of using the "<CODE><A HREF="../option_link.cgi?frame"
   magick rose:   -frame 10x10+6+0     frame_rasied_part.gif
   magick rose:   -frame 10x10+0+6     frame_sunken_part.gif
   magick rose:   -frame 10x10+0+10    frame_sunken.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="frame.gif"
      ><IMG SRC="frame.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2275,7 +2275,7 @@ Here are some examples of using the "<CODE><A HREF="../option_link.cgi?frame"
   <A HREF="frame_sunken.gif"
      ><IMG SRC="frame_sunken.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 Using multiple frame operations can also produce weirder framing styles.
 
@@ -2286,7 +2286,7 @@ Using multiple frame operations can also produce weirder framing styles.
   magick rose:      -frame 3x3+3+0      -frame 7x7+3+0  frame_popped.gif
   magick rose:      -frame 7x7+0+3      -frame 3x3+0+3  frame_pressed.gif
   magick rose: -frame 3x3+3+0 -frame 4x4 -frame 3x3+0+3  frame_inverted.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="frame_normal.gif"
      ><IMG SRC="frame_normal.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2299,13 +2299,13 @@ Using multiple frame operations can also produce weirder framing styles.
   <A HREF="frame_inverted.gif"
      ><IMG SRC="frame_inverted.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The default "<CODE><A HREF="../option_link.cgi?mattecolor"
   >-mattecolor</A></CODE>" is a slightly darker gray than that of the default
   setting of "<CODE><A HREF="../option_link.cgi?bordercolor"
@@ -2315,10 +2315,10 @@ Using multiple frame operations can also produce weirder framing styles.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   While "<CODE><A HREF="../option_link.cgi?frame" >-frame</A></CODE>" may
   actually use the "<CODE><A HREF="../option_link.cgi?mattecolor"
   >-mattecolor</A></CODE>"  color, it also generates four more extra colors
@@ -2332,9 +2332,9 @@ Using multiple frame operations can also produce weirder framing styles.
 With some effort you can even reproduce a "<CODE>montage</CODE>"-like
 framed image complete with text label.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose:  -mattecolor grey  -background grey  -frame 3x3+0+3 \
           -gravity South -splice 0x15 -annotate 0x0 'A Red Rose' \
@@ -2354,9 +2354,9 @@ HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>" for the frame
 HREF="../canvas/#plasma_fractal" >Fractal Plasma Canvas</A>), to produce a
 more colorful frame.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
 <r>  magick rose: -matte -mattecolor '#CCC6' -frame 10x10+3+4 \
           \( -size 100x100 plasma:fractal -normalize -blur 0x1 \) \
@@ -2391,9 +2391,9 @@ HREF="../option_link.cgi?bordercolor" >-bordercolor</A></CODE>" will not be
 visible, as it is overlaid by the image itself.  But for images that do
 contain some transparent areas, the background color does become visible.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick star.gif  -frame 6x6+2+2 star_framed.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2409,10 +2409,10 @@ replaced by the "<CODE><A HREF="../option_link.cgi?bordercolor"
 >-bordercolor</A></CODE>" which by default is a light grey color. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The fact that adding a frame to images with transparency, also by default
   fills the transparent background of the image with the bordercolor has
   caused some debate amongst IM users and the Development team.  A summary
@@ -2427,9 +2427,9 @@ The first is to used transparent "<CODE><A
 HREF="../option_link.cgi?bordercolor" >-bordercolor</A></CODE>" such as
 '<CODE>none</CODE>'.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick star.gif -bordercolor none  -frame 6x6+2+2  star_framed_none.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2443,9 +2443,9 @@ are preserved when the image is added to the frame.  This is done by using a
 special "<CODE><A HREF="../option_link.cgi?compose" >-compose</A></CODE>"
 method called '<CODE><A HREF="../compose/#copy" >Copy</A></CODE>'.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick star.gif -compose Copy  -frame 6x6+2+2  star_framed_copy.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2455,10 +2455,10 @@ method called '<CODE><A HREF="../compose/#copy" >Copy</A></CODE>'.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The use of "<A HREF="../option_link.cgi?bordercolor"
   >-bordercolor</A></CODE>" as the background image for both "<CODE><A
   HREF="../option_link.cgi?border" >-border</A></CODE>" and "<CODE><A
@@ -2513,7 +2513,7 @@ the whole canvas.
 <TR><TD><PRE><CODE EXECUTE>
 <c>  magick rose: -shave 12x0 -repage 64x64+9+9  paged.gif
 <z>  magick paged.gif         -frame 5x5+2+2     paged_framed.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2521,7 +2521,7 @@ the whole canvas.
   <A HREF="paged_framed.gif"
      ><IMG SRC="paged_framed.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 Note that the size of the virtual canvas was also increased by twice the border
 thickness to accommodate the added frame. </P>
@@ -2550,7 +2550,7 @@ added by these commands. </P>
   magick border.gif -shave 10x10 shave.gif
   magick border.gif -shave 10x0  shave_sides.gif
   magick border.gif -shave  0x20 shave_topbot.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="border.gif"
      ><IMG SRC="border.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2564,7 +2564,7 @@ added by these commands. </P>
   <A HREF="shave_topbot.gif"
      ><IMG SRC="shave_topbot.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 The main thing to keep in mind about these three operators is that they add
 and remove space on <I>opposite</I> sides of the images, not just one side, or
@@ -2588,7 +2588,7 @@ and not the virtual canvas itself. </P>
 <c>  magick paged.gif         -border 5x5        paged_border.gif
 <z>  magick paged_border.gif  -frame  5x5+2+2    paged_frame.gif
 <z>  magick paged_frame.gif   -shave  10x10      paged_shave.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2604,7 +2604,7 @@ and not the virtual canvas itself. </P>
   <A HREF="paged_shave.gif"
      ><IMG SRC="paged_shave.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 An alternative to using shave is to use the new <A HREF="#crop_equal" >Equal
 Sized Tile Cropping</A> operator.  The advantage of this operator is that
@@ -2615,7 +2615,7 @@ not modify the canvas size of the resulting image.
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick paged_frame.gif   -crop  1x1-10-10@     paged_tile_shave.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="paged_frame.gif"
      ><IMG SRC="paged_frame.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2623,13 +2623,13 @@ not modify the canvas size of the resulting image.
   <A HREF="paged_tile_shave.gif"
      ><IMG SRC="paged_tile_shave.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM version v6.6.1-0, equal-sized tile cropping for images
   with a canvas offset (such as the above) was broken.
 </I></FONT></TD></TR></TABLE></P>
@@ -2655,7 +2655,7 @@ remain unaffected.
   magick rose: -background skyblue -extent  40x40     extent_shrink.gif
   magick rose: -background skyblue -extent 100x40     extent_wider.gif
   magick rose: -background skyblue -extent  40x60     extent_taller.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="extent_enlarge.gif"
      ><IMG SRC="extent_enlarge.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2668,17 +2668,17 @@ remain unaffected.
   <A HREF="extent_taller.gif"
      ><IMG SRC="extent_taller.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 As you can see it will fill any new areas with the "<CODE><A
 HREF="../option_link.cgi?background" >-background</A></CODE>" color of any new
 areas added to the image. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM version v6.3.2, "<CODE><A HREF="../option_link.cgi?extent"
   >-extent</A></CODE>" just cleared the memory of any new areas to zero, or
   straight black.  It did not fill the areas with  "<CODE><A
@@ -2699,7 +2699,7 @@ relative to the original image. </P>
   magick rose: -gravity west   -extent 100x80 extent_west.gif
   magick rose: -gravity center -extent 100x80 extent_center.gif
   magick rose: -gravity center -extent  40x80  extent_center2.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="extent_north.gif"
      ><IMG SRC="extent_north.gif"        WIDTH=100 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2718,7 +2718,7 @@ relative to the original image. </P>
   <A HREF="extent_center2.gif"
      ><IMG SRC="extent_center2.gif"      WIDTH=40 HEIGHT=80
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 The last example in the above show that extent can also do centered crops, but
 without the need for a "<CODE><A HREF="../option_link.cgi?repage"
@@ -2726,14 +2726,14 @@ without the need for a "<CODE><A HREF="../option_link.cgi?repage"
 "<CODE><A HREF="../option_link.cgi?background" >-background</A></CODE>" color.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
 
 You can even use offsets, which basically means the <A HREF="#extent" >Extent
 Operator</A> is simply a straight forward <A HREF="#crop" >Crop</A> with
 background padded fill, regardless of position.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -background skyblue -extent 100x100-15-25 extent.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2758,9 +2758,9 @@ default using it with an image containing transparency will replace the
 transparency with the current "<CODE><A HREF="../option_link.cgi?background"
 >-background</A></CODE>" color.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick star.gif  -background LimeGreen  -extent 80x80-10-10  star_extent.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2798,7 +2798,7 @@ comes from the "<CODE><A HREF="../option_link.cgi?background"
   magick rose: -background blue  -splice 20x0+40+0    splice_column.gif
   magick rose: -background blue  -splice 0x10+0+30    splice_row.gif
   magick rose: -background blue  -splice 20x10        splice_topleft.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="rose.gif"
      ><IMG SRC="rose.gif"                  WIDTH=70  HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2815,13 +2815,13 @@ comes from the "<CODE><A HREF="../option_link.cgi?background"
   <A HREF="splice_topleft.gif"
      ><IMG SRC="splice_topleft.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   If the background color is not set, IM will attempt to determine this
   value from the image itself.  This means that for some images it may be
   white (the normal default), on others it may black, or for the GIF format
@@ -2856,7 +2856,7 @@ and the splice geometry setting.
                  -background blue  -splice 20x0  splice_right.gif
   magick rose: -gravity southeast \
                  -background blue  -splice 20x10  splice_botright.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="splice_top.gif"
      ><IMG SRC="splice_top.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2872,14 +2872,14 @@ and the splice geometry setting.
   <A HREF="splice_botright.gif"
      ><IMG SRC="splice_botright.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 One of the most common uses of splice is to add space in which to draw
 a label.  (See <A HREF="../annotating/#labeling" >Labeling Images</A>)
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -gravity South  -background LimeGreen  -splice 0x15 \
            -annotate 0x0 'Rose'    splice_label.gif
@@ -2908,7 +2908,7 @@ restore the image to its original form.
   magick splice_chop.gif  -chop  20x10+30+20   chop.gif
   magick chop.gif -background grey \
                            -splice 20x10+30+20   chop_splice.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="splice.gif"
      ><IMG SRC="splice.gif"
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -2924,7 +2924,7 @@ restore the image to its original form.
  <A HREF="chop_splice.gif"
    ><IMG SRC="chop_splice.gif"
          ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 I continued processing the last example to show how you can reverse the order of
 the "<CODE><A HREF="../option_link.cgi?splice" >-splice</A></CODE>" and "<CODE><A
@@ -2942,7 +2942,7 @@ gravity to select that edge.   For example...
   magick frame_red.gif                 -chop 10x0   chop_left.gif
   magick frame_red.gif -gravity East   -chop 10x0   chop_right.gif
   magick frame_red.gif -gravity South  -chop  0x10  chop_bottom.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="frame_red.gif"
      ><IMG SRC="frame_red.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2959,7 +2959,7 @@ gravity to select that edge.   For example...
   <A HREF="chop_bottom.gif"
      ><IMG SRC="chop_bottom.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 As an alternative to using "<CODE><A HREF="../option_link.cgi?chop"
 >-chop</A></CODE>" for removing a single edge, you can in fact use the more
@@ -2977,7 +2977,7 @@ afterward.
   magick frame_red.gif  -crop +10+0 +repage  crop_edge_left.gif
   magick frame_red.gif  -crop -10+0 +repage  crop_edge_right.gif
   magick frame_red.gif  -crop +0-10 +repage  crop_edge_bottom.gif
-</CODE></PRE></TD></TR></TABLE><NOBR>
+</CODE></PRE></TD></TR></TABLE>
   <A HREF="frame_red.gif"
      ><IMG SRC="frame_red.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
@@ -2994,7 +2994,7 @@ afterward.
   <A HREF="crop_edge_bottom.gif"
      ><IMG SRC="crop_edge_bottom.gif"
            ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></DIV></P>
+</DIV></P>
 
 This relies on the fact that if "<CODE><A HREF="../option_link.cgi?crop"
 >-crop</A></CODE>" is not given an image area to remove, it will default to the
@@ -3048,10 +3048,10 @@ not change in color or transparency. In other words it removes the 'boring'
 bits surrounding an image. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that in ImageMagick version 5 and before, an auto-crop operation was
   achieved by using a '<CODE>0x0</CODE>' argument to the "<CODE><A
   HREF="../option_link.cgi?crop" >-crop</A></CODE>" operator.  This is no
@@ -3066,13 +3066,13 @@ bits surrounding an image. </P>
 </I></FONT></TD></TR></TABLE></P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 For example here we take the IM logo, which we resize, and 'trim' or
 'auto-crop' all the surrounding extra space in the logo.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick logo: -resize 30%    -trim     trim.gif
 </CODE></PRE></TD></TR></TABLE></P>
@@ -3107,8 +3107,8 @@ was trimmed, not the actual trimmed image.
 </TD></TR></TABLE>
 </DIV></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 However if you don't care about this information, just junk it by resetting the
 page information of the image either using a "<CODE><A
@@ -3116,7 +3116,7 @@ HREF="../option_link.cgi?repage" >+repage</A></CODE>" operator, or saving to a
 format that does not save canvas information (such as the JPEG format).  Here
 we do both, to make it clear, that we are junking the canvas information.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick logo: -resize 30%    -trim +repage    trim_repage.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3199,9 +3199,9 @@ to preserve.  </P>
 As such if you look at the result without removing the virtual canvas
 information you can see that image was shifted.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick stripes.gif -bordercolor red -border 1x1  -trim  \
            stripes_trim_red_shifted.gif
@@ -3216,9 +3216,9 @@ So lets try correcting the virtual canvas size (subtract
 <CODE><I>border_width</I>x2</CODE> ) and offset (subtract
 <CODE><I>border_width</I></CODE>)when trimming a specific color.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick stripes.gif -bordercolor red -border 1x1  -trim  \
            -set page '%[fx:page.width-2]x%[fx:page.height-2]+%[fx:page.x-1]+%[fx:page.y-1]' \
@@ -3239,9 +3239,9 @@ Alternatively if you do not care about the canvas size (typical in a layered
 image) you can use a far simplier <A HREF="../basics/#page" >Relative
 Repage</A> to only adjusted the image's position on the enlarged canvas.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick stripes.gif -bordercolor red -border 1x1  -trim  \
            -repage -1-1\! stripes_trim_red_fix2.gif
@@ -3304,9 +3304,9 @@ will also be trimmed, leaving just one color stripe to be cleaned up. </P>
 Here is the whole one side trim as a single command, but for trimming the
 top edge (stripes are added to the bottom or 'South' edge).
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick border.gif -gravity South \
           -background white -splice 0x1  -background black -splice 0x1 \
@@ -3322,9 +3322,9 @@ HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" settings used in the
 previous example is not needed and the setting defaults to a
 '<CODE>North-West</CODE>' setting for images.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick border.gif \
           -background white -splice 0x1  -background black -splice 0x1 \
@@ -3426,12 +3426,12 @@ This the 'blur' method gives two main controls:<DL><DD>
     </P>
 </DL>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 For example lets use a smaller "<CODE>logo:</CODE>" image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick logo:   -resize 30%   noisy.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -3464,10 +3464,10 @@ just the canvas information from the image. </P>
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   You may need to check the  <A HREF="../misc/#virtual" >Virtual Pixel</A>
   setting to enure that you get the right 'edge effects' with the blur. </P>
 
@@ -3485,12 +3485,12 @@ a "<CODE><A HREF="../option_link.cgi?crop" >-crop</A></CODE>" argument of
 and its offset on the virtual canvas, and presumably the location of the major
 (single) object we are looking for within the image. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 This can then be used on the original image, which has not been blurred.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick noisy.jpg   -crop 89x121+78+23 +repage   noisy_trimmed.jpg
 </CODE></PRE></TD></TR></TABLE></P>
@@ -3501,13 +3501,13 @@ And here we have trimmed our image to just the wizard!
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 This can be done in a single line, using a little bit of extra 'UNIX shell
 scripting', and some formating of the results of that first command.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick noisy.jpg -crop \
     `magick noisy.jpg -virtual-pixel edge -blur 0x15 -fuzz 15% \
@@ -3532,10 +3532,10 @@ the output of "<CODE><A HREF="../files/#info" >info:</A></CODE>". </P>
 </CODE>-->
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The above uses an UNIX command line shell feature for 'command-substitution'
   method using back-quotes '<CODE>`...`</CODE>'  to insert the generated
   "<CODE><A HREF="../option_link.cgi?crop" >-crop</A></CODE>" argument into
@@ -3552,14 +3552,14 @@ hat isn't.  This is the drawback of this method, it will ignore sharp points
 and fine details. But then that is what we were asking it to ignore in the
 first place. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 The method could be improved by expanding the area trimmed by a small amount
 (10 pixels in 4 four directions), using some <A
 HREF="../transform/#fx_escapes" >FX Escape</A> to do the mathematics...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick noisy.jpg -crop \
       `magick noisy.jpg -virtual-pixel edge -blur 0x15 -fuzz 15% -trim \
@@ -3576,13 +3576,13 @@ If the calculated bounds expands beyond the original image, the <A
 HREF="#crop" >crop operator</A> will automatically limit it to the image
 bounds. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 In IMv7 (using the "<CODE>magick</CODE>" command) you can do it all in one
 command, saving the calculated trim size in a setting for later use.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick noisy.jpg \
          \( +clone -virtual-pixel edge -blur 0x15 -fuzz 15% -trim \
@@ -3609,7 +3609,7 @@ image down to a highly different contrast regaion for scanning purposes.   See
 </P>
 
 <HR><!-- ------------------------------------------------------------------ -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 15 March 2004 <BR>
 Updated: 9 December 2016 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -3617,4 +3617,4 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/crop/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>

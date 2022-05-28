@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Video Handling -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/video/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -64,15 +64,15 @@ colors, over
             ALIGN=absmiddle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
 frames. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 IM however has no real trouble converting this video into a GIF animation.
 However be warned that you will probably get some unsupported 'AVI chunk'
 errors, which can be ignored by using a "<CODE><A HREF="../option_link.cgi?quiet"
 >-quiet</A></CODE>" <A HREF="../basics/#controls" >control setting</A>.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -quiet -delay 1 plane.avi plane.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -135,13 +135,13 @@ colors that is different from frame to frame.  A later example will make this
 
 <H4>Common Global Color Table</H4>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Here I <A HREF="../anim_opt/#colortables" >Generate a Single Global Color
 Table</A> for all the frames of the video.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -quiet -delay 1 plane.avi  +map   plane_cgc.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -199,8 +199,8 @@ serious detrimental effects on the color selection, or resorting local color
 tables for each frame.  Each frame is dithered to the same color map,
 completely independently of what other frames are in the animation. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Here I use a <A HREF="../quantize/#332_colormap" >'332' color map</A> which
 is usually regarded as being a very good standard colormap when no transparency
@@ -208,7 +208,7 @@ is needed. I have often seen this colormap (or a 219 color <A
 HREF="../quantize/#netscape" >'web-safe' colormap</A>) used often in various
 video formats.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -quiet -delay 1 plane.avi -map colormap_332.png plane_ugc.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -242,12 +242,12 @@ colors that changes from frame to frame, resulting in the appearance of
 background noise in the image.  See <A HREF="../quantize/#dither_prob"
 >Problems with E-Dithers</A> for more detail as to why this happens. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 We could just turn off the color dithering to remove the 'dither noise'...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -quiet -delay 1 plane.avi \
           +dither -map colormap_332.png plane_ugc_nd.gif
@@ -284,15 +284,15 @@ generally regarded as a very bad trade-off. </P>
 The real solution is to use a different color dithering technique, which does
 not produce a different pattern from one frame to the next. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 For example here I used a <A HREF="../quantize/#od_posterize" >Ordered Dither
 using Posterized Color Levels</A> to dither the same universal <A
 HREF="../quantize/#332_colormap" >'332' colormap</A>.
 
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -quiet -delay 1 plane.avi \
           -ordered-dither o8x8,8,8,4 +map plane_od.gif
@@ -374,12 +374,12 @@ animation to the limited GIF format.  And here is the command I use...
 Basically I increased and decreased the number of color levels to use, until I
 had a figure that was just within the required 256 color limit.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 I can then apply the discovered 'color level' choice to the plane animation.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -quiet -delay 1 plane.avi \
           -ordered-dither o8x8,23 +map plane_od2.gif
@@ -438,14 +438,14 @@ Because this video uses a panning camera, the background of the video
 changes from frame to frame. This means the GIF animation will not <A
 HREF="../anim_opt/#frame_opt" >Frame Optimize</A> very well. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 However we can still use a simple <A HREF="../anim_opt/#opt_trans"
 >Transparency Optimization</A> to further reduce the final size of the GIF
 animation.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick plane_od2.gif  -layers OptimizeTransparency +map plane_opt.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -493,13 +493,13 @@ a fork of the original <A HREF="http://www.lcdf.org/gifsicle/" >Gifsicle</A>
 program modifies the colors of each frame so as to allow LZW to compress the
 image much more. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 For example, here I applied it to the original GIF animation, asking it to
 reduce the colors to a single 256 color table.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   gifsicle -O3 --lossy=80 --colors 256 plane.gif -o plane_giflossy.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -519,14 +519,14 @@ dither but it is less than 1/2 the size. </P>
             ALIGN=absmiddle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Emboldened by that above result I decided to use <A
 HREF="https://kornel.ski/lossygif" >GifLossy</A> on the best ordered dither
 result we got, to see if it can make it even smaller.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   gifsicle -O3 --lossy=80 plane_od2.gif -o plane_od2_giflossy.gif
 </CODE></PRE></TD></TR></TABLE>
@@ -565,8 +565,8 @@ noticeable. Perhaps producing only a slight edge blurring of the image.  But whe
 a fast moving object is involved, the resulting interlaced image is very
 disconcerting, as two frames have been merged together. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Wolfgang Hugemann &lt;Auto&#64;Hugemann.de&gt; (Germany), had this problem and
 sent me a snapshot of a <A HREF="../img_photos/video_frame.png" >crash test</A>, that
@@ -574,7 +574,7 @@ Wolfgang took himself.   But for demonstration I will use a smaller image
 cropped from this one.  The techniques however will work on the full sized
 image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick video_frame.png  -crop 100x100+200+470 +repage  interlaced.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -584,10 +584,10 @@ image.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     Wolfgang Hugemann used a TIFF format for the original video frame, I
     converted this to PNG for use on IM Examples.  Do NOT be tempted to use
     JPEG for these images, until you have finished processing as it will
@@ -601,14 +601,14 @@ producing a very high quality video image.  The resulting image is two
 interwoven half-frames with the car's side mirror moving quite a distance
 during the intervening 1/50 second time period between half frames. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Here we just replace one of the interlaced half-frames (every second line)
 with white. This is the standard de-interlacing method, known as a 'BoB'
 filter.  This was contributed by Wolfgang for IM Examples.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick interlaced.png  -fx "floor(j/2)==j/2 ? u : 1"  deinterlace_1.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -622,15 +622,15 @@ alturnative is to create a 'striped image'.  Such an image can be generated
 from the special "<CODE>pattern:Horizontal2</CODE>" built-in image.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 That image can then be overlaid with the original, using a '<CODE><A
 HREF="../compose/#screen" >Screen</A></CODE>' composition method to overlay
 white lines, or use '<CODE><A HREF="../compose/#multiply"
 >Multiply</A></CODE>' or overlay black lines.  For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x100 pattern:Horizontal2 \
           interlaced.png -compose Multiply -magick composite  deinterlace_2.png
@@ -644,13 +644,13 @@ Negating the pattern can be used to select the other half of the interlaced
 image.  Or if you change the '<CODE>Multiply</CODE>' to '<CODE>Screen</CODE>'
 you can extract frames with a white background. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 As an alternative I tried to fill in the missing frame lines by just
 duplicating the previous line.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick interlaced.png  -fx "u.p{i,j-j%2}"  deinterlace_3.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -659,14 +659,14 @@ duplicating the previous line.
             ALIGN=absmiddle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 You can also use a <A HREF="../transform/#pixelate" >Pixelization
 Technique</A> to shrink and expand an image so as to double up every second
 line.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick interlaced.png -sample 100%x50% \
                            -sample 100%x200%  deinterlace_4.png
@@ -676,13 +676,13 @@ line.
             ALIGN=absmiddle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 And with a slight variation you can combine the lines on both sides to
 vertically smooth the half-frame image as part of the resize expansion.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick interlaced.png -sample 100%x50% \
                            -resize 100%x200%  deinterlace_5.png
@@ -695,13 +695,13 @@ vertically smooth the half-frame image as part of the resize expansion.
 The result is a particularly nice extraction of one frame of the interlaced
 video image. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 If you want to extract the other half-frame from the image you can adjust
 the '<CODE>sampling:offset</CODE> (as of IM v6.8.4-7)
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick interlaced.png -define sample:offset=75 \
             -sample 100%x50%  -resize 100%x200%    deinterlace_6.png
@@ -718,7 +718,7 @@ achieve the same result.
 
 </DIV>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 28 February 2007 <BR>
 Updated: 7 October 2010 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -726,4 +726,4 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/video/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>

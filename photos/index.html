@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Photo Handling -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/photos/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -116,10 +116,10 @@ Here is the EXIF data of a photo I took of a <A HREF="../img_photos/pagoda_sm.jp
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The EXIF data, or any magick identify output, should be processed in a case
   in-sensitive way.  Many older versions of IM for example, will output
   "<CODE>EXIF:</CODE>" (uppercase) rather than "<CODE>exif:</CODE>"
@@ -232,10 +232,10 @@ IM can extract the current orientation (as a number) from the photo using an
 <A HREF="https://imagemagick.org/script/escape.php" >Image Property
 Escape</A>...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR VALIGN=center><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
                   <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=orient_show.txt>
   magick identify -format '%[exif:orientation]' pagoda_sm.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD WIDTH=10%>
@@ -249,10 +249,10 @@ Escape</A>...
 You can also set the EXIF value directly (caution is required as no format
 checks are performed).
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR VALIGN=center><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
                   <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE _EXECUTE NOIMAGE OUT=orient_set.txt>
   magick pagoda_sm.jpg -set exif:orientation 5 \
                   -format '%[exif:orientation]'   info:
@@ -267,10 +267,10 @@ IM provides a special "<CODE><A HREF="../option_link.cgi?orient"
 >-orient</A></CODE>" operator (use "<CODE><A HREF="../option_link.cgi?list"
 >-list</A> orientation</CODE>" to see possible values).
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR VALIGN=center><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
                   <TD WIDTH=80% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=orient_setting.txt>
   magick pagoda_sm.jpg -orient bottom-right \
                  -format '%[exif:orientation]'   info:
@@ -305,10 +305,10 @@ all the digital photos in a directory.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The JPEG lossless rotation will only work correctly for images that have
   a size that is divisible by 8 or 16. This is true with most (but not all)
   digital camera photos.  If you try this with an image that is an odd size the
@@ -418,10 +418,10 @@ dark areas I would like to make more visible.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR VALIGN=top>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     As always, you should use a non-lossy format like TIFF or PNG for
     intermediate work. The JPEG format is only used here to reduce disk
     space and download bandwidth for web publishing. </P>
@@ -504,10 +504,10 @@ grid) the signal-to-noise ratio is doubled.  Similarly, a 2560x1920
 picture binned 3x3 to 853x640 pixels will have a factor of 3 improvement
 in signal-to-noise ratio. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR VALIGN=top>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     In order to make use of binning, the photo image must be a whole number
     multiple of the final desired size.
 </I></FONT></TD></TR></TABLE></P>
@@ -563,13 +563,13 @@ original image not a small thumbnail, but the techniques is the same for any
 image.  In this case the image needs to be rotated by -1.8 degrees, to correct
 it. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 Now if you just simply rotate the image you will get a slightly larger image
 containing areas of color in the corners, making the correction look obvious
 and horible.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick beijing_tn.png -rotate -1.95  beijing_rotate.png
 </CODE></PRE></TD></TR></TABLE>
@@ -591,13 +591,13 @@ obvious that something has been done. Though the formula to do that clipping
 is not simple, but is demonstrated in <A HREF="../distorts/#rotate_methods"
 >Distortion Rotation Methods</A>. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 The better solution is to not only rotate the image, but scale it slightly so
 as to produce a rotated image that is the same size as the original.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   angle=-1.95
   magick beijing_tn.png -distort SRT \
@@ -648,14 +648,14 @@ artificial.  Almost as if you were taking a photo of a small, highly detailed,
 and brightly lit, model. </P>
 
 <BR CLEAR=all>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 The first thing we need to do, is enhance the colors in the image to give it a
 very high contrast, and perhaps brighten it a bit to make it look like it is
 very well lit with strong studio lights. </P>
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick beijing_md.jpg -sigmoidal-contrast 15x30% beijing_contrast.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -686,8 +686,8 @@ will see that even just enhancing colors gives the image a feel of artificial
 lights, though it does not look like a model, with too much detail to the
 cars in the background, and people in the foreground. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Now for the tilt-shift. </P>
 
@@ -695,7 +695,7 @@ For this we prepare a gradient image that is white at the top and bottom, and
 black in the middle.  Some people might use a linear gradient for this, but
 I find a parabolic gradient better.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick beijing_contrast.jpg \
           -sparse-color Barycentric '0,0 black 0,%h white' \
@@ -903,9 +903,9 @@ non-overlapped areas. </P>
 
 So lets generate a masking image...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 90x80 xc:white xc:black   -size 90x40 gradient: \
           +swap -append -rotate 90    overlap_mask.png
@@ -964,9 +964,9 @@ For example, this uses some <A HREF="../canvas/#gradient_distort" >Distorted
 Gradient</A> techniques to not only generate a smoother gradient curve,
 but also to rotate that gradient so as to have a highly angled overlap.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -page +0-15 -size 1x30 gradient: \
           -sigmoidal-contrast 5,50% -contrast-stretch 0 \
@@ -1080,9 +1080,9 @@ camera, the result would be an average of these two images, generating
 see-thru 'ghosts' of myself.  Here is the digital simulation of this
 technique...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick anthony_1.jpg anthony_2.jpg -average  anthony_ghosts.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1099,9 +1099,9 @@ This mask can be generated in two ways.  You can just manually create the mask
 by dividing the image along the static or unchanging parts.  A rather simple
 matter in this particular case...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x90 xc: -draw 'rectangle 0,0 50,89' \
           -blur 0x3  anthony_mask.jpg
@@ -1115,9 +1115,9 @@ Note that I blurred the mask, so as to 'feather' the cut-over between the two
 images.  And here I use a <A HREF="../compose/#mask" >Masked Composition</A>
 to merge the images.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick anthony_1.jpg anthony_2.jpg anthony_mask.jpg \
           -magick composite  anthony_doubled.jpg
@@ -1137,9 +1137,9 @@ By swapping the input images, or just negating the mask, you can remove me
 completely from the image, so get an unrestricted view of the static
 background.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick anthony_2.jpg anthony_1.jpg anthony_mask.jpg \
           -magick composite  anthony_removed.jpg
@@ -1178,9 +1178,9 @@ object within the image, but any shadows or reflections it may cast on the
 background scenery.  A little trial and error may also be needed to get it
 right.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick anthony_removed.jpg anthony_2.jpg \
           -compose difference -magick composite \
@@ -1196,9 +1196,9 @@ Now lets use this mask to mix my 'ghosts' image with the original image so it
 looks like my conscience is 'haunting' me for making such 'impossible'
 pictures.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick anthony_1.jpg anthony_ghosts.jpg anthony_mask.jpg \
           -magick composite  anthony_haunted.jpg
@@ -1301,9 +1301,9 @@ Identity".
 Of course you can do this all in one go, and even smooth the change from
 pixelated to normal. For example..
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick zelda_tn.gif \( +clone -scale 25%  -scale 400% \) \
           \( +clone -gamma 0 -fill white \
@@ -1448,9 +1448,9 @@ HREF="../color_basics/#separate" >Separating Channel Images</A>, then looking
 up the 'hue shade' wanted.  For example...
 
 <BR CLEAR=all>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick shirt.jpg -colorspace HSL -channel Hue -separate shirt_hue.jpg
 </CODE></PRE></TD></TR></TABLE>
@@ -1489,14 +1489,14 @@ green shirt for example.  But I will work with what I was given. </P>
           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 So lest extract and combine the two channel masks. Note that Hue = Gray64
 after the image hues was 'rolled' using module, and Saturated = Black for the
 grey background.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick shirt.jpg -modulate 100,100,33.3  -colorspace HSL \
           -channel Hue,Saturation -separate +channel \
@@ -1529,15 +1529,15 @@ HREF="../option_link.cgi?-mask" >-mask</A></CODE>"
          ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Here I cleanup the previous mask of the small defects (optional), and negate
 it to define what areas I want to 'write protect'.  Then I set this mask,
 shift the hues to turn 'pink' into a 'light blue' color, and save the
 resulting image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick shirt_mask.png -morphology Smooth Square \
           -negate   shirt_write_mask.png
@@ -1739,14 +1739,14 @@ time, so for this example I made it a bit smaller, while preserving its
 ability to be tiled across larger images. See <A HREF="../canvas/#tile_mod"
 >Modifying Tile Images</A> for details of the techniques. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 This only needs to be done once and can then be re-used.  As such you can
 generate a much larger one for your own use, so as to avoid any tiling
 effects. Ideally make it as large as the images you plan to convert.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
 <r>  magick -size 256x256 xc:  +noise Random  -virtual-pixel tile \
              -motion-blur 0x20+135 -charcoal 1 -resize 50% pencil_tile.gif
@@ -1872,9 +1872,9 @@ The white photo was also grey scaled to remove any color distortion as well,
 note that I changed the ordering which will also preserve any 'meta-data' that
 was in the original (as it is the 'destination' image in this case.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE_linked_from_photo_store>
   magick vegas_orig.jpg \( nikon18-70dx_18mm_f3.5.jpg -colorspace Gray \) \
           -fx '(u/v)*v.p{w/2,h/2}'   vegas_fixed_fx.jpg
@@ -1912,7 +1912,7 @@ Things that can effect vignettation include... <UL>
 
 </DIV></P>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 21 July 2006 <BR>
 Updated: 16 June 2011 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -1920,5 +1920,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/photos/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>
 

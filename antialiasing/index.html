@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Anti-Aliasing -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/antialiasing/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -184,9 +184,9 @@ HREF="../morphology/#ring" >Ring Kernel</A>. </P>
 For example the normal IM way of drawing a circle produces a lot of grey
 anti-aliasing colors to give the circle a smooth appearance.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+</TD></TR><TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 15x15 xc: -fill none -stroke black \
           -draw 'translate 7,7 circle 0,0 5,0' \
@@ -200,9 +200,9 @@ anti-aliasing colors to give the circle a smooth appearance.
 Simply turning of anti-aliasing however produces circles and lines that
 are not a nice thin 'bitmap' line.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+</TD></TR><TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -draw 'translate 7,7 circle 0,0 5,0' \
@@ -217,9 +217,9 @@ What you need to to is also adjust the "<CODE><A
 HREF="../option_link.cgi?strokewidth" >-strokewidth</A></CODE>" , which
 defaults to 1 pixel wide, to something smaller, such as 0.5 pixels wide.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+</TD></TR><TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.5   -draw 'translate 7,7 circle 0,0 5,0' \
@@ -235,9 +235,9 @@ Better not quite right. </P>
 But you can also make the stroke width too small, especially with odd sized
 radii.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+</TD></TR><TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0  -draw 'translate 7,7 circle 0,0 5,0' \
@@ -251,9 +251,9 @@ radii.
 And here is a good solution for a circle of 5 pixels centered on an integer
 actual pixel location.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+</TD></TR><TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.4  -draw 'translate 7,7 circle 0,0 5,0' \
@@ -275,9 +275,9 @@ all radii and centers.  Especally a circle that is slightly off center.  </P>
 For example this circle which is not centered on a pixel, or a pixel boundary,
 not only has gaps at the top, but is also too thick at the bottom! Yuck!
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-</TD></TR><TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+</TD></TR><TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.47  -draw 'translate 7,7.3 circle 0,0 5,0' \
@@ -291,9 +291,9 @@ not only has gaps at the top, but is also too thick at the bottom! Yuck!
 Here is a table of good "<CODE><A HREF="../option_link.cgi?strokewidth"
 >-strokewidth</A></CODE>", to generate a thin single pixel wide circle of
 specific radius.   Note that the best value to use varies depending on if the
-circle is centered either on an <I>actual</I> pixel (such as '<NOBR><CODE> 5 ,
-5 </CODE></NOBR>'), or on a <I>half</I> pixel boundry (such as '<NOBR><CODE>
-5.5 , 5.5 </CODE></NOBR>')
+circle is centered either on an <I>actual</I> pixel (such as '<CODE> 5 ,
+5 </CODE>'), or on a <I>half</I> pixel boundry (such as '<CODE>
+5.5 , 5.5 </CODE>')
 
 <TABLE BORDER=1 WIDTH=50% CELLSPACING=0 ALIGN=center>
 <TR><TH ALIGN=center> Circle Radius
@@ -381,12 +381,12 @@ area you are filling. </P>
 For example, Here we do a typical flood fill operation.  Draw a circle, then
 try to fill it with a pattern...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
 <!-- <CODE EXECUTE>
    magick $HOME/icons/desc/cl-bgnd/display/weave-purple.gif tile_weave.gif
 </CODE> -->
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill none -stroke red -draw "circle 30,30 5,30" \
@@ -395,14 +395,14 @@ try to fill it with a pattern...
     magick tile_fill_1.gif -crop 10x10+35+4 +repage -scale 80x80 \
             tile_fill_1_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD><NOBR>
+</TD><TD>
    <A HREF="tile_fill_1.gif"
       ><IMG SRC="tile_fill_1.gif"       WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
    <A HREF="tile_fill_1_mag.gif"
       ><IMG SRC="tile_fill_1_mag.gif"   WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 As you can see in the magnified portion of the image, a line of 'off-color'
 pixels was completely missed by the flood fill operation, as the color of
@@ -412,9 +412,9 @@ One way to improve this is to pre-fill the areas you intend to fill with a
 color that matches the pattern you are using. The pattern will still not fill
 the area fully, but at least it will not look quite so bad.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill black -stroke red  -draw "circle 30,30 5,30" \
@@ -423,14 +423,14 @@ the area fully, but at least it will not look quite so bad.
     magick tile_fill_2.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_2_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD><NOBR>
+</TD><TD>
    <A HREF="tile_fill_2.gif"
       ><IMG SRC="tile_fill_2.gif"       WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
    <A HREF="tile_fill_2_mag.gif"
       ><IMG SRC="tile_fill_2_mag.gif"   WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 
 Another way of doing this is to fill the area with your pattern, with a high
@@ -438,9 +438,9 @@ Another way of doing this is to fill the area with your pattern, with a high
 fill the area completely, right to the very edge, without missing the edge
 pixels.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill none -stroke red  -draw "circle 30,30 5,30" \
@@ -449,20 +449,20 @@ pixels.
     magick tile_fill_3.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_3_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD><NOBR>
+</TD><TD>
    <A HREF="tile_fill_3.gif"
       ><IMG SRC="tile_fill_3.gif"       WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
    <A HREF="tile_fill_3_mag.gif"
       ><IMG SRC="tile_fill_3_mag.gif"   WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that a high '<A HREF="../color_basics/#fuzz" >fuzz factor</A>', like
   this, or the border that is too thin, can result in the fill pattern
   'leaking' from the defined area. Some care is always needed when using
@@ -478,9 +478,9 @@ alias effects. </P>
 You can improve that situation by seperating the image drawing into separate
 steps.  Create a colored circle,  fill it, then draw the border.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick -size 60x60 xc:lightblue -fill black -draw "circle 30,30 5,30" \
             -tile tile_weave.gif -draw "color 30,30 floodfill" +tile \
@@ -489,14 +489,14 @@ steps.  Create a colored circle,  fill it, then draw the border.
     magick tile_fill_4.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_4_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD><NOBR>
+</TD><TD>
    <A HREF="tile_fill_4.gif"
       ><IMG SRC="tile_fill_4.gif"       WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
    <A HREF="tile_fill_4_mag.gif"
       ><IMG SRC="tile_fill_4_mag.gif"   WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 This is one simple way to improve flood fill. Others is to use a shaped
 overlay, but that can be a tricky method to work out. Later I will look at
@@ -506,9 +506,9 @@ Of course if you are drawing the area being flood filled yourself, and not
 using an existing image, the ideal solution would be to avoid flood fill by by
 specifying the fill pattern for the original draw operation.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -tile tile_weave.gif -stroke red -draw "circle 30,30 5,30" \
@@ -516,14 +516,14 @@ specifying the fill pattern for the original draw operation.
     magick tile_fill_5.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_5_mag.gif
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD><NOBR>
+</TD><TD>
    <A HREF="tile_fill_5.gif"
       ><IMG SRC="tile_fill_5.gif"       WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
    <A HREF="tile_fill_5_mag.gif"
       ><IMG SRC="tile_fill_5_mag.gif"   WIDTH=60 HEIGHT=60
             ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</NOBR></TD></TR></TABLE></P>
+</TD></TR></TABLE></P>
 
 <HR><!-- ---------------------------------------------------------------- -->
 
@@ -556,7 +556,7 @@ EG:   magick image.xbm  -blur 0x.3  smoothed_image.png
 
 </DIV></P>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 9 December 2003 <BR>
 Updated: 27 February 2006 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -564,5 +564,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/antialiasing/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>
 

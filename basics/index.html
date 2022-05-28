@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Basic Usage -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/basics/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -16,7 +16,7 @@
 
 <B>Index</B><BR>
 <TABLE CELLSPACING=0>
-<TR VALIGN=top><TD COLSPAN=2>
+<TR valign="top"><TD COLSPAN=2>
 <A HREF="../"
    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
    > ImageMagick Examples Preface and Index</A>
@@ -215,9 +215,9 @@ to work as people expected. </P>
 The cause of the problem was that ImageMagick followed a fairly standard UNIX
 command line style...
 
-<DL><DD><PRE><NOBR><B>
+<DL><DD><PRE><B>
 command  [options]  input_image   output_image
-</B></NOBR></PRE></DL></P>
+</B></PRE></DL></P>
 
 As time went on this started to produce problems, as images are complex
 objects with an enormous number of operations that can be performed on them
@@ -225,9 +225,9 @@ often involving other images. </P>
 
 As a consequence of this the above slowly expanded to become..
 
-<DL><DD><PRE><NOBR><B>
+<DL><DD><PRE><B>
 command  [options] image1 [options] image2 [options]  output_image
-</B></NOBR></PRE></DL></P>
+</B></PRE></DL></P>
 
 This worked, and is the basic style that was used in version 5.5.7. </P>
 
@@ -322,18 +322,18 @@ operation, that of translate an image in a file to an image in memory.  </P>
 So the correct way to do this in IMv6 is to read the image, process and then
 use the final 'implicit write' argument to write out the result.  That is..
 
-<DL><DD><PRE><NOBR><B>
+<DL><DD><PRE><B>
 command  "image" { -operation }... "output_image"
-</B></NOBR></PRE></DL></P>
+</B></PRE></DL></P>
 
 Of course there are some settings that may be need to control the image
 reading which need to be given before actually reading the image (see below
 for the meaning of a setting).  As such <B>IMv6 syntax</B> basically follows
 the following...
 
-<DL><DD><PRE><NOBR><B>
+<DL><DD><PRE><B>
 command { [settings] [operation] }...  "implict_write"
-</B></NOBR></PRE></DL></P>
+</B></PRE></DL></P>
 
 With the part in '<CODE>{...}</CODE>' being repeated with as many 'reads' or
 'operations' you want or need. And '<CODE>[operation]</CODE>' being either
@@ -622,7 +622,7 @@ is vital to the way IM now works. </P>
 
 Remember under version 6 of ImageMagick... </P>
 <DIV ALIGN=center><B>
-        Settings are <I>saved</I> in some way for later use, </BR>
+        Settings are <I>saved</I> in some way for later use, <br/>
        while Operators are applied <I>immediately</I> to the images.
 </B></DIV></P>
 
@@ -638,11 +638,11 @@ to magick identify what is an 'setting' and what is an 'operator'. </P>
 <A NAME="example"></A>
 <H3>Working Example of an IM Command</H3>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 Let's take a look at an example, and how it will be processed by IM version 6.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick eye.gif news.gif -append    storm.gif tree.gif \
            -background skyblue +append    result.gif
@@ -655,49 +655,49 @@ Let's take a look at an example, and how it will be processed by IM version 6.
 
 Let's break this down and look at what IM v6 does...
 <TABLE WIDTH=90% ALIGN=center CELLPADDING=3>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B>Argument</B>
     <TD ROWSPAN=30>&nbsp;&nbsp;&nbsp;
     <TD><B>Action Performed
     <TD ALIGN=center><B>Images</B>
-<TR VALIGN=top>
+<TR valign="top">
     <TD COLSPAN=7><HR></TD>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>convert</CODE></FONT></B>
     <TD>Initialize and Create an empty 'image list'
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>empty&nbsp;seq</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>eye.gif</CODE></FONT></B>
     <TD>Read in image and add to end of current image list
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>1 image</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>news.gif</CODE></FONT></B>
     <TD>Add a second image into list (now with two images)
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>2 images</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>-append</CODE></FONT></B>
     <TD>Take all images in current list, and append vertically.
     <BR>All images are replaced by a single image.
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>1&nbsp;(merged)</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>storm.gif</CODE></FONT></B>
     <TD>Add another image to the image list
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>2</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>tree.gif</CODE></FONT></B>
     <TD>And another
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>3</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>-background&nbsp;skyblue</CODE></FONT></B>
     <TD>Set a 'background color' to be used later.
     <BR>No changes are made to any images.
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>3</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>+append</CODE></FONT></B>
     <TD>Join all 3 images in the list horizontally
     <BR>Current background color is used to fill the empty space
     <TD ALIGN=center VALIGN=bottom><FONT SIZE=-1>1&nbsp;(merged)</FONT>
-<TR VALIGN=top>
+<TR valign="top">
     <TD><B><FONT SIZE=-1><CODE>result.gif</CODE></FONT></B>
     <TD ALIGN=justify>As this is last argument, an implicit
        <B><CODE>-write</CODE></B> operation is performed with this argument.
@@ -716,9 +716,9 @@ the point...  </P>
 Due to the fact that a lot of very old IM scripts out there use a command with
 a single image operator of the form... </P>
 
-<DL><DD><PRE><NOBR><B>
+<DL><DD><PRE><B>
 command  -operator  input_image   output_image
-</B></NOBR></PRE></DL></P>
+</B></PRE></DL></P>
 
 That is you specified an image operator before you actually read the image
 to which the operator will be applied. </P>
@@ -728,15 +728,15 @@ sees, and apply them to the first image when it is finally seen on the command
 line.  That is the above will work as if you wrote the operation in the IMv6
 way... </P>
 
-<DL><DD><PRE><NOBR><B>
+<DL><DD><PRE><B>
 command  input_image   -operator  output_image
-</B></NOBR></PRE></DL></P>
+</B></PRE></DL></P>
 
 For example, this IMv5 legacy (UNIX option handling) command....
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -flip  storm.gif   cmd_flip_legacy.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -747,9 +747,9 @@ For example, this IMv5 legacy (UNIX option handling) command....
 
 Will produce the same result as this IM version 6 command...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick storm.gif -flip  cmd_flip_postfix.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -777,10 +777,10 @@ this old style, should also be updated to do image reads before the operators
 you want to apply to them. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Legacy support will continue into IM version 7, which includes a command
   that allows for single-pass processing of command lines. This allows it to
   actually read image processing options from script files and even
@@ -1104,10 +1104,10 @@ Also '<CODE>50%x30</CODE>' will probably actually mean '<CODE>50%x30%</CODE>'
 and NOT 50% of the images width, and 30 pixels high as you might think.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   As a geometry arguments can contain special '<CODE>%</CODE>' flags, you
   currently can not use <A HREF="#arg_percent" >Percent Escapes</A> to set its
   values based on image attributes. </P>
@@ -1177,10 +1177,10 @@ escapes is applied</I>.  That is string read from the file will be taken as
 literal, and used without modification.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   WARNING: that file could be anything, including system and password files
   that may be readable by the program. As such web users should pre-check
   input strings for this special case, or better still feed that string to IM
@@ -1209,10 +1209,10 @@ content or index of the image!  You can even pre-calculate some complex
 settings using per-image or predefined global settings. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.6.9-0 <A HREF="http://imagemagick.org/script/escape.php"
   >Percent Escapes</A> and more specifically <A
   HREF="../transform/#fx_escapes">FX Percent Escapes</A> involving image
@@ -1256,10 +1256,10 @@ so that it can make use of the attributes of the image to which it is being
 applied. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The major limitation to the more wide spread use of <A
   HREF="http://imagemagick.org/script/escape.php" >Percent Escapes</A> is that
   it is currently only applied to a limited set of option arguments.  For
@@ -1392,10 +1392,10 @@ image.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.8.5-8 "<CODE><A HREF="../option_link.cgi?format"
   >-format</A></CODE>" would automatically add an end-of-line character(s)
   to the output, so as to separate multiple image results.  This is no longer
@@ -1425,9 +1425,9 @@ from a PNG image file.  For example, here I create an image with a 'label', and
 attempt to use a simple format setting to print out that label.
 
 <DIV ALIGN=center>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE IMAGE=rose.png OUT=identify_ping.txt >
   magick rose: -set label "rose with a label" rose.png
   magick identify -format '"%l"\n' rose.png
@@ -1735,10 +1735,10 @@ an existing sub-directory, using something like this...
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.3.4-3 the "<CODE><A HREF="../option_link.cgi?format"
   >-format</A></CODE>" and "<CODE><A HREF="../option_link.cgi?path"
   >-path</A></CODE>" settings were mutually exclusive. From that version
@@ -2012,10 +2012,10 @@ section, and in particular <A HREF="../windows/#for_loops" >Windows, Batch
 Processing Several Files</A>. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Remember "<CODE><A HREF="#mogrify" >mogrify</A></CODE>", and all other IM
   commands will also expand all filenames containing shell meta-characters
   such as '*' and '?'.  This is done to allow the use of these meta-characters
@@ -2451,12 +2451,12 @@ However "<CODE>stream</CODE>" will only output the raw color bytes of the
 image (RAW format) as defined by the image depth, as such you may need to pipe
 the output of the extracted magick segment into convert. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick stream -map rgb -storage-type char -extract 100x100+200+100 logo: - |\
     magick -depth 8 -size 100x100 rgb:-   stream_wand.gif
@@ -2625,9 +2625,9 @@ already previously read in or have been working on. </P>
 
 Let's look at some simple examples...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick  eye.gif  storm.gif  -negate  +append  cmd_negate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2643,9 +2643,9 @@ current image list in memory at that time. </P>
 But by adding parenthesis we can limit the negation to just the second
 image...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick  eye.gif \(  storm.gif  -negate \) +append  cmd_bracket.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2661,10 +2661,10 @@ we can add the result to the main image list (that is the "<CODE>)</CODE>"
 operator), before appending the two images together as before. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Parenthesis must be given as a separate argument.  That is you must separate
   them from the other arguments by spaces.  You can not add them hard up
   against neighbouring arguments.  In other words in the IM command line
@@ -2685,9 +2685,9 @@ operator), before appending the two images together as before. </P>
 Parenthesis also make it possible to do something not previously possible to
 do in a single "<CODE>convert</CODE>" command.  Generating arrays of images!
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick eye.gif news.gif  +append \
          \( storm.gif tree.gif +append \)   -append  cmd_array.gif
@@ -2704,9 +2704,9 @@ separate command makes image processing scripts more complex. </P>
 Of course if you like to make the command look more array like itself, you are
 free to add some extra parenthesis. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick \( eye.gif    news.gif  +append \) \
           \( storm.gif  tree.gif  +append \) \
@@ -2733,11 +2733,11 @@ Option 'settings' are not affected by parenthesis, and will continue across
 the parenthesis image operators, until the setting is changed or turned off.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -pointsize 24 \
           -font Candice label:Outside \
@@ -2770,11 +2770,11 @@ save and retrieve the previous settings that have been given.  That means any
 settings given within parenthesis, will only remain set, until the end of the
 parenthesis.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -respect-parenthesis   -pointsize 24 \
           -font Candice label:Outside \
@@ -2834,9 +2834,9 @@ The "<CODE><A HREF="../option_link.cgi?delete" >-delete</A></CODE>" list
 operator is the simplest of the image list operators, it just deletes
 images from the current image list.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif -delete 1 +append  seq_delete.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2853,9 +2853,9 @@ The "<CODE><A HREF="../option_link.cgi?delete" >-delete</A></CODE>" operator
 will also accept a comma separated list of numbers, or a number range to be
 deleted.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-7].gif -delete 1-4,6 +append  seq_delete2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2866,9 +2866,9 @@ deleted.
 
 Or delete everything (and add a new image)...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-7].gif -delete 0--1  tree.gif seq_delete3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2934,9 +2934,9 @@ is sort of the opposite of "<CODE><A HREF="../option_link.cgi?delete"
 >-delete</A></CODE>".  It will take the last image in the current image
 list and insert so that it is positioned at the given index.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif tree.gif -insert 1 +append seq_insert.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2958,9 +2958,9 @@ list.  As such "<CODE>-insert -2</CODE>" will 'roll' the last three
 images, placing two images between the newly inserted image and the end of the
 image list.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif tree.gif -insert -2 +append seq_insert2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2973,9 +2973,9 @@ The plus form "<CODE><A HREF="../option_link.cgi?insert" >+insert</A></CODE>"
 will move the last image to the front of the image list (index
 <CODE>0</CODE>), effectively rolling the whole image list by one frame.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif tree.gif +insert +append seq_insert3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3000,9 +3000,9 @@ swap the positions of two images in the current image list.  For example
 "<CODE>-swap 0,2</CODE>" will swap the first and the third images in the
 current image list.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif  -swap 0,2  +append  seq_swap.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3013,12 +3013,12 @@ current image list.
 
 The plus form of this option "<CODE><A HREF="../option_link.cgi?swap"
 >+swap</A></CODE>" will swap the last two images in the current image
-list. In other words, it is equivalent to "<NOBR><CODE>-swap
--2,-1</CODE></NOBR>".
+list. In other words, it is equivalent to "<CODE>-swap
+-2,-1</CODE>".
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif  +swap  +append  seq_swap2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3034,9 +3034,9 @@ HREF="../option_link.cgi?flatten" >-flatten</A></CODE>", "<CODE><A
 HREF="../option_link.cgi?append" >-append</A></CODE>", or "<CODE><A
 HREF="../option_link.cgi?fx" >-fx</A></CODE>".
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick tree.gif  frame.gif   +swap \
           -gravity center  -magick composite   framed_tree.gif
@@ -3050,9 +3050,9 @@ As of IM v6.4 a "<CODE><A HREF="../option_link.cgi?swap" >-swap</A></CODE>"
 with a single number will swap the last image with the number given.  That is
 "<CODE>-swap 1</CODE>"  is equivalent to a "<CODE>-swap 1,-1</CODE>".
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif  -swap 1  +append  seq_swap3.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3070,9 +3070,9 @@ The "<CODE><A HREF="../option_link.cgi?reverse" >-reverse</A></CODE>" operator
 (added to IM v6.3.4) will quite simply reverse the order of the whole image
 list.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif -reverse  +append seq_reverse.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3100,9 +3100,9 @@ operator.  That is... </P>
 The reason for this is that it allows you to extract a copy of an image from
 the last saved (pushed) image list, so you can process it further.  For example.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-2].gif \( -clone 1 -rotate 90 \) +append  seq_clone.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3115,9 +3115,9 @@ The 'plus' argument-less form "<CODE>+clone</CODE>" will just make a copy of
 the last image of the saved (pushed) image list so that you can process it
 further
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-2].gif \( +clone -flip \) +append  seq_clone2.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3130,9 +3130,9 @@ As of the release of version 6.2.2 "<CODE><A HREF="../option_link.cgi?clone"
 >-clone</A></CODE>" operator will take a comma separated list of images, or a
 range of indexes of the form '<CODE><I>{index}-{index}</I></CODE>'.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-2].gif \( -clone 1-2 \) +append  seq_clone_range.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3147,9 +3147,9 @@ to duplicate the whole image list you can specify it using numbers
 using the range '<CODE>0--1</CODE>'.  It may look strange but it makes sense
 and works fine.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-2].gif \( -clone 0--1 \) +append  seq_clone_all.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3161,9 +3161,9 @@ and works fine.
 When you use a comma separated list of indexes, the images are extracted in
 that order you specify.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-2].gif \( -clone 2,0,1 \) +append  seq_clone_list.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3176,9 +3176,9 @@ If the images in a range are reversed (after negative indexes are converted to
 an actual image index), the extracted images is also reversed, as part of the
 process.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-2].gif \( -clone 2-0 \) +append  seq_clone_reversed.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3223,9 +3223,9 @@ not require the use of parenthesis. </P>
 For example to make N extra copies an image (to a total on N+1) you can do
 this...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_5.gif   -duplicate 4   +append seq_duplicate.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3242,9 +3242,9 @@ very memory efficent. </P>
 
 If more than one image is present, the last image is duplicated N times...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-1].gif   -duplicate 3   +append seq_dup_n.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3256,9 +3256,9 @@ If more than one image is present, the last image is duplicated N times...
 If you just want to duplicate the last image once, you can use the 'plus' form
 of the argument.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif  +duplicate   +append seq_dup_last.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3270,9 +3270,9 @@ of the argument.
 If you want to select a particular image mutliple times duplication you can
 specify image index as a second argument.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-2].gif  -duplicate 2,0  +append seq_dup_index.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3298,9 +3298,9 @@ three times the original number of images...
 A <A HREF="../anim_mods/#patrol" >Patrol Cycle</A> type of animation list is
 also easy to create by using an image list that is reversed.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-9].gif -duplicate 1,-2-1 \
           -set delay 50 -set dispose previous -loop 0  seq_reverse_anim.gif
@@ -3312,7 +3312,7 @@ also easy to create by using an image list that is reversed.
 
 Note that I did not copy the whole image list, but skipped copying the very
 first (<CODE>0</CODE>) and last (<CODE>-1</CODE>) image, making the image
-indexes <NOBR><CODE>-2</CODE> to <CODE>1</CODE>.</NOBR> </P>
+indexes <CODE>-2</CODE> to <CODE>1</CODE>. </P>
 
 If your version of IM is older than v6.6.8-7, you can still generate duplicate
 images, <A HREF="#clone" >Clone Image Operator</A>, but only one set of images
@@ -3324,9 +3324,9 @@ duplicate images.  The trick is to first make one clone to generate two
 identical images, then use "<CODE><A HREF="../option_link.cgi?morph"
 >-morph</A></CODE>" to generate in the last N-2 images between them.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_7.gif \( +clone \) -morph 3  +append seq_dup_morph.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3356,9 +3356,9 @@ by first "<CODE><A HREF="../option_link.cgi?delete" >-delete</A></CODE>" it
 and "<CODE><A HREF="../option_link.cgi?insert" >-insert</A></CODE>" the new
 one.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif  \( -clone 1  -modulate 100,100,166 \) \
           -delete 1  -insert 1    +append seq_update_1.gif
@@ -3375,9 +3375,9 @@ the old image that is now on the end. This only requires you to give the
 image position twice, instead of three times. Once to clone, and once to
 replace the modified image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick font_[0-3].gif  \( -clone 2  -modulate 100,100,166 \) \
           -swap 2  +delete     +append seq_update_2.gif
@@ -3410,13 +3410,13 @@ operation on a line by itself for easier programming and editing.  See <A
 HREF="../api/#scripts" >Hints for Better ImageMagick Shell/PHP Scripts</A>. </P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 For example, here I go though a whole complex processing sequence to generate
 a red button on a black background.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 30x30 xc:black -fill white  -draw 'circle 15,15 5,15' \
           \( +clone -shade 110x90 -normalize -negate -alpha Off \) \
@@ -3494,7 +3494,7 @@ You can even get fancier by using "<CODE><A HREF="#montage"
 
 This type of image processing also allows for easy viewing of intermediate
 images, immediately the image has been created.  Basically you can insert
-lines this in between "<NOBR><CODE>\( ...  \)</CODE></NOBR>" statements.
+lines this in between "<CODE>\( ...  \)</CODE>" statements.
 
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
@@ -3528,9 +3528,9 @@ Flattening</A></CODE>" merges multiple images together, to leave just the one
 resulting image, which can reduce the overall number of intermediate images in
 memory.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -font Ravie -pointsize 48 -background black -fill white \
           label:'IM' -bordercolor black -border 5  seq_label.gif
@@ -3760,9 +3760,9 @@ For example here I use all the setting methods available to set the 'virtual
 canvas offset' or 'page' of the individual images, as I create a <A <A
 HREF="../anim_basics" >Animation</A> from them...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -delay 100 -dispose Background \
             -page 100x100+5+10  eye.gif  \
@@ -3786,9 +3786,9 @@ created by come complex image processing methods. </P>
 For example to change the image offset of the third image (image index
 '<CODE>2</CODE>', or the 'tree') in the last example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick animation_page.gif \
           \( -clone 2 -set page +55+10 \) -swap 2  +delete \
@@ -3808,7 +3808,7 @@ Here is another example using "<CODE><A HREF="../option_link.cgi?set"
 specific image.
 
 <DIV ALIGN=center>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=comments.txt>
   magick xc: -duplicate 9 \
               -set comment 'T minus %[fx:n-t]' \
@@ -3937,10 +3937,10 @@ a larger space in which the image exists, and the 'offset' or location within
 that 'canvas' where the actual image is positioned. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   While negative 'offsets' are allowed, the 'canvas size' is limited to an area
   from 0,0 to the given width and height. That is only a positive canvas can
   be specified.
@@ -4031,16 +4031,16 @@ some browsers go crazy when given PNG images with negative offsets. </P>
 
 What virtual canvas information is saved with an image is format dependent.
 <TABLE WIDTH=90% ALIGN=center>
-<TR VALIGN=top><TD><B>JPEG</B>&nbsp;&nbsp;<TD>
+<TR valign="top"><TD><B>JPEG</B>&nbsp;&nbsp;<TD>
     Like many image file formats, JPEG images do not save virtual canvas
     information at all.  The information is just ignored and lost.
 
-<TR VALIGN=top><TD><B>GIF</B><TD>
+<TR valign="top"><TD><B>GIF</B><TD>
     The size of the virtual canvas and offsets will be saved as part of its
     GIF animation handling.  However it will not handle negative offsets.  Any
     negative offset will be reset to zero on save.
 
-<TR VALIGN=top><TD><B>PNG</B><TD>
+<TR valign="top"><TD><B>PNG</B><TD>
     Offsets and even negative offsets is saved, but the PNG file format does
     not normally save the virtual canvas information.  However PNG images
     saved by IM will include the virtual canvas size information, but is only
@@ -4111,9 +4111,9 @@ user.  For example the final pointsize selected by a <A
 HREF="../text/#label_bestfit" >Best Fit Label</A>, will be saved as a special
 image property.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100%>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE REPLACE OUT=property_label.txt>
   magick -size 100x label:Anthony  -verbose -magick identify  property_label.gif |\
     sed -n '/Artifacts/q; /Properties/,$ p'
@@ -4122,7 +4122,7 @@ image property.
      ><IMG SRC="property_label.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="property_label.txt"
     ><IMG SRC="property_label.txt.gif"
@@ -4131,19 +4131,19 @@ image property.
 </TD><TD></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that the <A HREF="../text/#label" >label:</A> generator itself also
   sets a 'label' attribute, which happens to be saved as a property string.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   All 'properties' are saved as a free form string data type, and stored as
   image meta-data.  </P>
 
@@ -4158,9 +4158,9 @@ Here I use an magick identify "<CODE><A HREF="../option_link.cgi?format"
 >-format</A></CODE>" setting to get IM to output the pointsize of the label it
 created and discarded.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=property_pointsize.txt>
   magick -size 100x label:Anthony \
           -format 'pointsize = %[label:pointsize]pts' info:
@@ -4211,10 +4211,10 @@ images in an Image Sequence, and are available when no images have been
 read in or created yet. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that API's can have multiple image list, with different sets of
   'artifacts' attached, but the command line interface (CLI), only has one
   active image list, as such 'artifacts' really are global.
@@ -4334,9 +4334,9 @@ We showed above how you can "<CODE><A HREF="../option_link.cgi?set"
 >-set</A></CODE>" special purpose personal <A HREF="#properties"
 >Proprieties</A>, on a per-image bases.  For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 80x40 xc:  -set myinfo 'I love IM!' \
           -gravity center -annotate 0x0 '%[myinfo]' \
@@ -4351,9 +4351,9 @@ But as <A HREF="#properties" >Proprieties</A> are attached to specific
 images, you can't use them in the creation of new images.  For example this
 will fail...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -set myinfo 'I love IM!'  label:'== %[myinfo] ==' \
           -gravity center  -append   property_append_fail.gif
@@ -4372,9 +4372,9 @@ generators or image file coders can read them for various control settings.
 As such as using a "<CODE><A HREF="../option_link.cgi?define"
 >-define</A></CODE>" will work as expected.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -define myinfo='I love IM!'  label:'== %[myinfo] ==' \
           -gravity center  -append   artifact_append.gif
@@ -4394,9 +4394,9 @@ addition causes "<CODE><A HREF="../option_link.cgi?set" >-set</A></CODE>" to
 define a 'artifact' with the name that follows the prefix.
 
 For example, this is equivelent to the last example.
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -set option:myinfo 'I love IM!'  label:'== %[myinfo] ==' \
           -gravity center  -append   property_option_append.gif
@@ -4419,9 +4419,9 @@ artifact, this information is available when I create a second label image.
 I then append the two labels together (with a separating '<CODE>gray</CODE>'
 line).  <I>A very tricky example</I>.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x -gravity center label:Anthony \
           -set option:my_pointsize '%[label:pointsize]' \
@@ -4451,10 +4451,10 @@ values.  When finished, only the last image will have 'defined' the artifact.
 </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   At this time the 'FX escape' has no way of reading properties or artifacts.
   And as such you current can not do arithmetic on such values.
 </I></FONT></TD></TR></TABLE></P>
@@ -4640,10 +4640,10 @@ such image will still only have information equivalent to 8 bit depth as the
 quality is just not present in memory, to be saved.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   If IM reads an image using 8 bit values (many image formats do), the images
   'depth' will be set to 8 bit, and when saved IM will normally save the image
   at that same 8 bit value depth, even if  you process the image using a Q16
@@ -4716,9 +4716,9 @@ image profile (using the script "<CODE><A
 HREF="../scripts/im_profile">im_profile</A></CODE>") to make it easier to
 follow.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Using a normal non-HDRI version of IM...
   magick -size 20x600 gradient:  -rotate 90 \
@@ -4756,9 +4756,9 @@ was added to ImageMagick in the first place. </P>
 And here I 'stretch' the gradient so that the original black and white color
 values go well beyond the "Quantum Range", before being restored again.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # Using a normal non-HDRI version of IM...
   magick -size 20x600 gradient:  -rotate 90 \
@@ -4820,9 +4820,9 @@ You can force HDRI image to be 'clipped' by the normal image value range
 by using "<CODE><A HREF="../option_link.cgi?clamp" >-clamp</A></CODE>"
 between the two level options.   For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI>
   # Using a HDRI version of IM...
   magick -size 20x600 gradient:  -rotate 90 \
@@ -5041,20 +5041,20 @@ Rough results from the above article <UL>
 </UL>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that Q64 automatically uses "double long floats", rather than 64 bit
   integers.  It is sort of a double precision HDRI, but while very precise is
   the slowest of all in-memory quality settings, and most memory intensive.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The actual speed will depend on your computer specifications, and if you
   have a Math Co-Processor or not.  If it is not important using the default
   Q16, or standard HDRI, is probably best. </P>
@@ -5075,7 +5075,7 @@ IM also has a few special options that it uses to control its operational
 working, information reporting, and for debugging purposes.
 
 <TABLE>
-<TR VALIGN=top><TD><A NAME="version"></A>
+<TR valign="top"><TD><A NAME="version"></A>
     <B>-version</B></TD>
 <TD>Output what version of IM, the image quality it is using,
     and when was it built. </P>
@@ -5084,10 +5084,10 @@ working, information reporting, and for debugging purposes.
     </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   In IMv7, "<CODE><A HREF="../option_link.cgi?version" >-version</A></CODE>"
   will exit if it is the ONLY option on the command line. That is it will make
   the final 'implicit write' argument, optional.  If any other arguments are
@@ -5097,7 +5097,7 @@ working, information reporting, and for debugging purposes.
 
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="list"></A>
+<TR valign="top"><TD><A NAME="list"></A>
     <B>-list</B></TD>
 <TD>This is an informational option only and will list the requested
     items, then exit.  That is you can not use this with any other
@@ -5123,7 +5123,7 @@ working, information reporting, and for debugging purposes.
     <TR><TD><B>font</B></TD>
         <TD>Known fonts (IM also knows about X and PS fonts)
         </TD></TR>
-    <TR VALIGN=top>
+    <TR valign="top">
         <TD><B>type</B></TD>
         <TD>file image types ("<CODE><A HREF="../option_link.cgi?type"
             >-type</A></CODE>" )(after IM v6.3.5-7)
@@ -5171,10 +5171,10 @@ working, information reporting, and for debugging purposes.
     IM will implicitly exit after outputting this information. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   In IMv7, "<CODE><A HREF="../option_link.cgi?list" >-list</A></CODE>"
   will exit if it is the ONLY option on the command line. That is it will make
   the final 'implicit write' argument, optional.  If any other arguments are
@@ -5184,7 +5184,7 @@ working, information reporting, and for debugging purposes.
 
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="verbose"></A>
+<TR valign="top"><TD><A NAME="verbose"></A>
     <B>-verbose</B></TD>
 <TD>Report extra info on some of the more complex operations.
 <BR>For example "<CODE><A HREF="../option_link.cgi?segment"
@@ -5204,7 +5204,7 @@ working, information reporting, and for debugging purposes.
     "<CODE><A HREF="../option_link.cgi?verbose" >+verbose</A></CODE>". </P>
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="regard-warnings"></A>
+<TR valign="top"><TD><A NAME="regard-warnings"></A>
     <B>-regard<BR>&nbsp;&nbsp;-warnings</B>&nbsp;&nbsp;&nbsp;</TD>
 <TD>The '<CODE>-regard-warnings</CODE>', will make some informative warnings
     about some image file formats fatal.  It also causes IM to return a proper
@@ -5216,7 +5216,7 @@ working, information reporting, and for debugging purposes.
     contained 'unknown' profiles. </P>
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="precision"></A>
+<TR valign="top"><TD><A NAME="precision"></A>
     <B>-precision</B> <I>{number}</I></TD>
 <TD>Control the number of significant digits.
 <BR>When IM outputs floating point values in response to various debugging,
@@ -5246,7 +5246,7 @@ working, information reporting, and for debugging purposes.
 
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="quiet"></A>
+<TR valign="top"><TD><A NAME="quiet"></A>
     <B>-quiet</B></TD>
 <TD>Don't report informational warning messages. Only proper errors
     such as I/O errors, or bad options, etc. </P>
@@ -5264,8 +5264,8 @@ working, information reporting, and for debugging purposes.
 
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="respect-parenthesis2"></A>
-    <B>-respect<BR>&nbsp;&nbsp;<NOBR>-parenthesis</NOBR></B>&nbsp;&nbsp;&nbsp;</TD>
+<TR valign="top"><TD><A NAME="respect-parenthesis2"></A>
+    <B>-respect<BR>&nbsp;&nbsp;-parenthesis</B>&nbsp;&nbsp;&nbsp;</TD>
 <TD>Causes <A HREF="#parenthesis" >parenthesis</A> to not only to save and
     restore the current image list but also all the current <A HREF="#options"
     >operational settings</A> are saved and restored.  Than means that when
@@ -5275,7 +5275,7 @@ working, information reporting, and for debugging purposes.
 
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="ping"></A>
+<TR valign="top"><TD><A NAME="ping"></A>
    <B>-ping</B></TD>
 <TD>For the "<A HREF="#identify" >identify</A>" command.  IM will try to avoid
     completely reading and decoding the full image file format for basic
@@ -5283,7 +5283,7 @@ working, information reporting, and for debugging purposes.
 
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="monitor"></A>
+<TR valign="top"><TD><A NAME="monitor"></A>
     <B>-monitor</B></TD>
 <TD>Report a percentage of processing during each stage of image processing,
     especially for very large or long image processing tasks. </P>
@@ -5293,7 +5293,7 @@ working, information reporting, and for debugging purposes.
 
 
 &nbsp;</TD></TR>
-<TR VALIGN=top><TD><A NAME="debug"></A>
+<TR valign="top"><TD><A NAME="debug"></A>
     <B>-debug</B></TD>
 <TD>Report verbosely exactly what IM is doing, in various areas.  </P>
 
@@ -5311,14 +5311,14 @@ working, information reporting, and for debugging purposes.
     <TR><TD><B>trace</B></TD>
         <TD>Report the trace points at the start of each library function
         </TD></TR>
-    <TR VALIGN=top><TD><B>annotate</B></TD>
+    <TR valign="top"><TD><B>annotate</B></TD>
         <TD>Report on font metrics when a font is used with "<CODE><A
             HREF="../option_link.cgi?annotate" >-annotate</A></CODE>".
         </TD></TR>
-    <TR VALIGN=top><TD><B>command</B></TD>
+    <TR valign="top"><TD><B>command</B></TD>
          <TD>IMv7 -- show the command line options (or script) as they
              are being processed. EG: option processing.
-    <TR VALIGN=top><TD><B>all</B></TD>
+    <TR valign="top"><TD><B>all</B></TD>
         <TD>Show every trace point during processing
         <BR>This is very very VERY verbose and not recommended
         </TD></TR>
@@ -5353,7 +5353,7 @@ with a "cache resource exhausted" exception.
 
 </DIV>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 30 January 2004 <BR>
 Updated: 27 September 2017 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -5361,4 +5361,4 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/basics/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>

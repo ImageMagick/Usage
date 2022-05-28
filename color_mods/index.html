@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Color Modifications -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/color_mods/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -157,8 +157,8 @@ Here we look at techniques for modifying all the colors in an image as
 a whole.  Whether it is to lighten or darken the image, or more drastic color
 modifications.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 To explore these technqiues we will need a test image... <BR>
 
@@ -179,10 +179,10 @@ you can look at the special script, "<CODE><A HREF="../scripts/generate_test"
 
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   WARNING: The color processes below generally assumes the image is using
   a linear colorspace.  Most images are however saved using a sRGB or Gamma
   corrected colorspace, as such to get things right colorspace correction
@@ -222,14 +222,14 @@ intensity as they seem to appear to the human eye.  That is, '<CODE>red</CODE>'
 is quite a bright color compared to '<CODE>blue</CODE>' which looks darker.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 This is equivelent to the use of the '<CODE>rec709luma</CODE>' conversion
 formula with the dedicated "<CODE><A HREF="../option_link.cgi?grayscale"
 >-grayscale</A></CODE>" operator (Added IM v6.8.3-10).
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  -grayscale rec709luma  gray_grayscale.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -243,13 +243,13 @@ that has been defined for use by the "<CODE><A
 HREF="../option_link.cgi?intensity" >-intensity</A></CODE>" setting (see
 below). </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 Here for example is the other common greyscaling formula
 '<CODE>rec601luma</CODE>'
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  -grayscale rec601luma  gray_grayscale_601.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -265,14 +265,14 @@ different red, green and blue color channels. </P>
 
 However there a many other methods, and meanings of 'gray-scale'... </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 For example, you can drain all the color out of the image by using the
 <A HREF="#modulate" >Modulate Operator</A>, to set all
 color saturation levels to zero.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  -modulate 100,0  gray_modulate.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -295,14 +295,14 @@ standard. If you need a pure RGB green you can use the color
 '<CODE>lime</CODE>' instead. See <A HREF="../color_basics/#color_conflicts"
 >Color Name Conflicts</A> for more detail. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Another way is to use the <A HREF="../transform/#fx" >FX DIY operator</A> to
 average the three channels together to get a pure mathematical meaning of
 gray-scale.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -fx '(r+g+b)/3' gray_fx_average.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -312,17 +312,17 @@ gray-scale.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
    The average of sRGB channel values also equivelent to the intensity channel
    of '<CODE>OHTA</CODE>' colorspace (red channel). Or the 'I' channel of HSI.
    colorspace.
 </I></FONT></TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Another technique is to simply add all three channels together (a color
 measure known as manhatten distance) and while the resulting image will not
@@ -330,7 +330,7 @@ loose information due to 'quantum rounding' effects, you may loose information
 about the brightest colors.  Unfortunately, you also loose the transparency
 channel, too.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -separate \
           -background black -compose plus -flatten   gray_added.png
@@ -340,14 +340,14 @@ channel, too.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 You can use the same adding channels technique to control the weighting of the
 individual color channels.  For example this is one DIY formula that you can
 use...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -fx '0.3*r+0.6*g+0.1*b' gray_diy.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -357,13 +357,13 @@ use...
 </TD></TR></TABLE></P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 You can also use 'intensity' if you want the same meaning within the "<CODE><A
 HREF="../option_link.cgi?fx" >-fx</A></CODE>" operator.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  -fx intensity  gray_intensity.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -377,13 +377,13 @@ The 'intensity' function is itself controlled (as is a lot of other operators
 needing a grayscale value) by a new setting call "<CODE><A
 HREF="../option_link.cgi?intensity" >-intensity</A></CODE>". </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Here we use the '<CODE>brightness</CODE>' formula (maximum value of any of the
 color channels) that is used by the HSB colorspace. </P>
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  -intensity brightness -fx intensity  gray_brightness.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -395,8 +395,8 @@ color channels) that is used by the HSB colorspace. </P>
 
 <BR>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 However as the <A HREF="../transform/#fx" >FX DIY operator</A> is interpreted,
 it can run very very slowly.  For more complex operations you can use the
@@ -406,9 +406,9 @@ HREF="../option_link.cgi?evaluate" >-evaluate</A></CODE>". </P>
 For example here is a 2/5/3 ratio gray-scaled image, though again I make no
 attempt to preserve the transparency channel of the original image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -channel R -evaluate multiply .2 \
                    -channel G -evaluate multiply .5 \
@@ -421,10 +421,10 @@ attempt to preserve the transparency channel of the original image.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The above would suffer from 'quantization' effects for an ImageMagick
   compiled at a 'Q8' <A HREF="../basics/#quality" >Quality Level</A>.  That
   is because the results of the "<CODE><A HREF="../option_link.cgi?evaluate"
@@ -440,13 +440,13 @@ attempt to preserve the transparency channel of the original image.
   operation, so avoiding 'quantum rounding' effects. </P>
 </I></FONT></TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 A similar technique can be used to generate a pure mathematical gray-scale, by
 directly averaging the three RGB channels equally.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -separate -average  gray_average.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -462,9 +462,9 @@ Another fast alternative is to use the "<CODE><A
 HREF="../option_link.cgi?recolor" >-recolor</A></CODE>" color matrix operator,
 which will let you specify the weighting of the three color channels.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=gray_recolor.png>
   magick test.png -recolor '.2 .5 .3
                              .2 .5 .3
@@ -482,14 +482,14 @@ Basically the first row of numbers is the channel weighting for the resulting
 images red channel, next 3 for green, and the final three numbers for blue.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 You can also use "<CODE><A HREF="../option_link.cgi?type" >-type</A></CODE>"
 to tell IM to treat the image as gray-scale, when either reading or writing
 the image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  -type GrayScaleMatte  gray_type.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -499,10 +499,10 @@ the image.
 </TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The "<CODE><A HREF="../option_link.cgi?type" >-type</A></CODE>" setting is
   generally only used as a guide when an image is being read or written to
   a file. As such its action is delayed to the final write of the image.  Its
@@ -514,10 +514,10 @@ the image.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.3.5-9 the above will have removed any transparency in the
   written image (equivalent of a "<CODE><A HREF="../option_link.cgi?type"
   >-type</A> Grayscale</CODE>") due to a bug.  This was fixed as soon as I
@@ -804,8 +804,8 @@ negative color to black or white.  The result is a general graying of the
 image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=*>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -level -25%  rose_decontrast.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -831,8 +831,8 @@ operator to negate an image (as previously shown above, just by swapping the
 "<CODE>-level&nbsp;100%,0</CODE>".
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=*>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -level 100%,0  rose_level_neg.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -856,8 +856,8 @@ the results of a "<CODE>-level&nbsp;50%,50%</CODE>" operation, and its effect
 on a grayscale gradient. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=*>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -level 50%,50%  rose_level_thres.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -881,20 +881,20 @@ the whole image, makes it one of the best color modification operators
 available to IM users. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note you can also use the <A HREF="../transform/#evaluate" >Evaluate and
   Function Operators</A> for a more direct mathematical modification of the
   color values, to achieve the same results for -level both + and - forms).
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Be warned that the "<CODE><A HREF="../option_link.cgi?level"
   >-level</A></CODE>" operator treats the transparency channel as 'matte'
   values.  As such 100% is fully transparent and 0% is opaque.  Please take
@@ -1140,9 +1140,9 @@ Correction</A>. </P>
 We can also use this function to brighten the image differently for each
 individual RGB channel.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -gamma 0.8,1.3,1.0  gamma_channel.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1156,10 +1156,10 @@ adjustments to an image, or correct images with contain too much of a specific
 color. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   For reasons about why you should used this function see <A
   HREF="../color_basics/#gamma" >Gamma Correction</A>. </P>
 </I></FONT></TD></TR></TABLE></P>
@@ -1318,9 +1318,9 @@ will be used for both black and white points. That means all the colors in the
 image will be reset to that one color.  (according to the current "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting limitations).
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  +level-colors dodgerblue  levelc_blue.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1338,9 +1338,9 @@ include the transparency channel, OR set the <A HREF="../basics/#alpha" >Alpha
 Channel</A> to fully-opaque, using either "<CODE>-alpha opaque</CODE>" or
 "<CODE>-alpha off</CODE>".
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -channel ALL +level-colors dodgerblue levelc_blue2.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1403,30 +1403,30 @@ a contrast factor ('<CODE>10</CODE>' being very high, and '<CODE>0.5</CODE>'
 very low).  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     For those interested, the corrected formula for the 'sigmoidal
     non-linearity contrast control' is...
 
-    <DIV ALIGN=center><CODE><NOBR>
+    <DIV ALIGN=center><CODE>
         ( 1/(1+exp(<B>&beta;</B>*(<B>&alpha;</B>-u)))
              - 1/(1+exp(<B>&beta;</B>*(<B>&alpha;</B>))
         ) / ( 1/(1+exp(<B>&beta;</B>*(<B>&alpha;</B>-1)))
                - 1/(1+exp(<B>&beta;</B>*<B>&alpha;</B>)) )
-    </NOBR></CODE></DIV>
+    </CODE></DIV>
 
     Where <B>&alpha;</B> is the threshold level, and <B>&beta;</B> the contrast
     factor to be applied. </P>
 
     Here is an alternate version of the formula using intermedite variables.
 
-    <DIV ALIGN=center><CODE><NOBR>
+    <DIV ALIGN=center><CODE>
        x = exp(<B>&beta;</B> * (<B>&alpha;</B> - u))
        y = exp(<B>&beta;</B> + 1
        result (x / y + 1) * (1 / (x + 1) - 1 / y)
-    </NOBR></CODE></DIV>
+    </CODE></DIV>
 
     The formula is actually very simple exponential curve, with the bulk of
     the above formula is designed to ensure that 0 remains zero and 1 remains
@@ -1477,14 +1477,14 @@ have been rolled into the floating point constants, to speed up the function.
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </DIV></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Lucky for us IM v6.2.1 had this complex function built in as a new operator
 "<CODE><A HREF="../option_link.cgi?sigmoidal-contrast"
 >-sigmoidal-contrast</A></CODE>", allowing a much simpler application.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick test.png  -sigmoidal-contrast 10,50% test_sigmoidal.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1493,14 +1493,14 @@ Lucky for us IM v6.2.1 had this complex function built in as a new operator
             ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 As a bonus IM also provides the inverse, a 'sigmoidal contrast reduction'
 function (as plus '<CODE>+</CODE>' form of the operator), which if applied
 with the same arguments restores our original image (almost exactly).
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick test_sigmoidal.png +sigmoidal-contrast 10,50% \
                                              test_sigmoidal_inv.png
@@ -1512,9 +1512,9 @@ with the same arguments restores our original image (almost exactly).
 
 And here we apply it to the rose image...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick rose: -sigmoidal-contrast 10,50%  rose_sigmoidal.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1592,8 +1592,8 @@ color levels (pixel values) in the image that fall into that range. </P>
 The result is a representation of how the color values that make up an image
 are distributed, from black at the left, to white at at the right. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGn=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGn=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 The histogram can be generated for each channel separately or as a global
 histogram which looks at values from all the channels combined.  The result is
@@ -1601,7 +1601,7 @@ often displayed as an image of a bar chart. In IM, this is done using the
 special <A HREF="../files/#histogram">Histogram:</A> output format.  For
 example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: histogram:histogram.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1840,10 +1840,10 @@ range.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   For practical reasons to do with JPEG color inaccuracies (see <A
   HREF="../formats/#jpg_color" >JPEG Color Distortion</A> for more details)
   and scanned image noise, "<CODE><A HREF="../option_link.cgi?normalize"
@@ -1907,8 +1907,8 @@ maximum value.  That is, no black pixels were generated, as all the added blue
 colors already contain 'zero' values in the 'red' and 'green' channels.  As
 such the lower bounds of the image did not expand. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 If you want the old  "<CODE><A HREF="../option_link.cgi?normalize"
 >-normalize</A></CODE>" behaviour (before IM v6.2.5-5), you will need to
@@ -1916,7 +1916,7 @@ specify any non-default "<CODE><A HREF="../option_link.cgi?channel"
 >-channel</A></CODE>" setting.  For images that contain no alpha (or matte)
 channel, you can just use the '<CODE>all</CODE>' channel setting.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick color_range.jpg -channel all  -normalize   normalize_all.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1925,15 +1925,15 @@ channel, you can just use the '<CODE>all</CODE>' channel setting.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Alternatively, you can normalize each channel as a separate image using the
 "<CODE><A HREF="../option_link.cgi?separate" >-separate</A></CODE>" operator
 (as of IM v6.2.9-2), then "<CODE><A HREF="../option_link.cgi?combine"
 >-combine</A></CODE>" them back into a single image again.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick color_range.jpg -separate -normalize -combine normalize_sep.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1999,14 +1999,14 @@ of the above gradient, as those gray colors get stretched well beyond the
 limits of the color range. </P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 And here I purposefully 'burn' 90% of the darker grays, leaving just 10% of
 the brightest pixels to be stretched into a tight linear gradient at the top
 of the image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick gray_range.jpg  -contrast-stretch 90%x0%  stretch_black.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -2029,7 +2029,7 @@ stretch the min and max bins to full black and full white.  This will result
 in a contrast stretch with a minimum or possibly zero amount of clipping, with
 all the values in those 'bins' becoming 0 and maximum values. </P>
 
-<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+<TABLE CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD BGCOLOR="#800000" COLSPAN=5
         ><IMG SRC="../img_www/space.gif" WIDTH=3 HEIGHT=3></TD>
 </TR>
@@ -2280,7 +2280,7 @@ So lets get a verbose magick identify and the histogram of a real image.
        /kurtosis:/d; /skewness:/d;  ' info_port.txt
 </CODE>-->
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80%>
-<TR><TD BGCOLOR="#CCCCCC" WIDTH=100%>
+<TR><TD BGCOLOR="#CCCCCC" width="100%">
   <A HREF="info_port.txt"
      ><IMG SRC="info_port_mod.txt.gif"
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
@@ -2381,7 +2381,7 @@ is ignored. Thus there is no color shift between channels and the result is
 identical to that above without "<CODE>-channel RGB</CODE>".  </P>
 
 &nbsp;</TD></TR>
-<TR><TD WIDTH=100% BGCOLOR="#800000" COLSPAN=5
+<TR><TD width="100%" BGCOLOR="#800000" COLSPAN=5
         ><IMG SRC="../img_www/space.gif" WIDTH=3 HEIGHT=3></TD>
 </TR></TABLE>
 
@@ -3034,15 +3034,15 @@ Adjustments by Color</A> operator "<CODE><A
 HREF="../option_link.cgi?level-colors" >+level-colors</A></CODE>" </P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
 
 However unlike "<CODE><A HREF="../option_link.cgi?colors"
 >+level-colors</A></CODE>", the colors to use can of course come from any
 image source, and not just the color names provided as an argument. However
 even direct use of color names is possible.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png   -fx "yellow*u+green*(1-u)"  fx_linear.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3243,10 +3243,10 @@ you can install on most linux distributions, as well as windows.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that the number of parameters ('<CODE>a</CODE>' to '<CODE>d</CODE>'
   in above) needed for curve fitting, must equal the number of control
   points you provide.  As such if you want five control points you need to
@@ -3269,12 +3269,12 @@ the function generated fits the control points perfectly. Also as it generated
 a "<A HREF="../option_link.cgi?fx" >-fx</A></CODE>" style formula it can be used
 as is as an IM argument. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
 
 For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png    -fx "`cat fx_funct.txt`"     fx_funct_curve.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3352,12 +3352,12 @@ special '<CODE>-c</CODE>' option...
 </TD></TR></TABLE>
 </DIV></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 For example lets apply those curves to our test image...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  -function Polynomial `cat coefficients.txt`  test_curves.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3458,18 +3458,18 @@ color channels separately.  This is useful for linearly darkening (or
 lightening) an image in a special way. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.7.9 the "<CODE><A HREF="../option_link.cgi?colorize"
   >-colorize</A></CODE>" operator did not modify the alpha channel at all.
   From that version onwards, as you can see above, it now uniformly tints
   all pixels including fully transparent pixels.
 </I></FONT></TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 One common use of the "<CODE><A HREF="../option_link.cgi?colorize"
 >-colorize</A></CODE>" operator is to simply replace all the colors in an
@@ -3481,7 +3481,7 @@ HREF="../masking/#alpha_on" >Alpha On</A> for more details). </P>
 
 For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -alpha off \
           -fill blue -colorize 100% \
@@ -3492,13 +3492,13 @@ For example...
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Without this protection, colorize would have fully-blanked the canvas to
 the given color...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png -fill blue -colorize 100% colorize_blank.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3562,10 +3562,10 @@ however can be tricky to use and may need some experimentation to get right.
 Better to specify the color you want for perfect 50% grays.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   <!-- <CODE EXECUTE>
      im_histogram -t "Tint Vector Function" \
             '1-(4.0*((x-0.5)*(x-0.5)))' tint_plot
@@ -3637,10 +3637,10 @@ While a value less than 100 will darken colors.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   At this time, the a pure mid-tone gray color will not be mapped to the
   "<CODE><A HREF="../option_link.cgi?fill" >-fill</A></CODE>" color. </P>
 
@@ -3668,9 +3668,9 @@ HREF="../option_link.cgi?sepia-tone" >-sepia-tone</A></CODE>" is basically
 consists to converting the image into a gray-scale, and coloring all the
 mid-tones to a special brown color.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose:  -sepia-tone 65%     sepia-tone.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3722,9 +3722,9 @@ Which color you should use on the exact effect you are looking for.
 I myself find that mixing or blending a sepia-tone image, with the original,
 so as to reduce its effect can also produce a better 'faded' effect.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone -sepia-tone 60% \) -average  sepia-tone_blended.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3871,9 +3871,9 @@ similar what that the <A HREF="#colorize" >Colorize Operator</A> does. </P>
 For example, here I magick an image's gray-scale brightness level into a
 semi-transparent overlay of the specific color wanted.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png  \( +clone -colorspace gray \
                -function polynomial -4,4,0 -background Gold -alpha shape \) \
@@ -3903,13 +3903,13 @@ with color (and pattern) tinting in mind.  These compose methods also will
 replace mid-tone grays leaving black and white highlights in the image alone.
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 For example here I quickly generate a colored overlay image, and compose it
 to tint the original image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png \( +clone +matte -fill gold -colorize 100% \) \
           -compose overlay -magick composite  tint_overlay.png
@@ -3923,9 +3923,9 @@ As you can see the alpha composition does not preserve any transparency of the
 original image, requiring the use of a second alpha composition operation to
 fix this problem.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png \
           \( +clone +matte -fill gold -colorize 100% \
@@ -3951,9 +3951,9 @@ Of course unlike the other tinting methods I have shown so far, you are not
 limited to tinting a simple color, but can apply a tint using an image, or
 tile pattern.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick test.png \
           \( -size 150x100 tile:tile_disks.jpg \
@@ -3969,10 +3969,10 @@ This however is getting outside the scope of basic color handling so I'll
 leave image tinting at that. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The alpha composition method '<CODE><A HREF="../compose/#hardlight"
   >HardLight</A></CODE>' will produce the same results as '<CODE><A
   HREF="../compose/#overlay" >Overlay</A></CODE>' but with the source and
@@ -4000,9 +4000,9 @@ modifies it and converts it back to its original color space. </P>
 It takes three values (though later values are optional) as a percentage such
 that 100 will make no change to an image.  For example..
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -modulate 100,100,100  mod_noop.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4129,7 +4129,7 @@ For example...
   magick rose:  -modulate 100,100,166.6  mod_hue_166.gif
   magick rose:  -modulate 100,100,200    mod_hue_200.gif
 </CODE></PRE></TD></TR></TABLE>
-<TABLE><TR VALIGN=top><TD ALIGN=center>
+<TABLE><TR valign="top"><TD ALIGN=center>
   <A HREF="mod_hue_0.gif"
      ><IMG SRC="mod_hue_0.gif"        WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -4183,7 +4183,7 @@ For examples of using 'Hue Modulation' to modify colors in images see, <A
 HREF="../photos/#chroma_key" >Chroma Key Masking</A> and <A
 HREF="../layers/#layer_pins" >Pins in a Map</A>. </P>
 
-</BR>
+<br/>
 
 These types of operations and more can also be applied using advanced <A
 HREF="../color_basics/#colorspace" >Color Space</A> techniques, such as using
@@ -4276,10 +4276,10 @@ The solution to this is to "<CODE><A HREF="../option_link.cgi?modulate"
 instead of HSL colorspace.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The 'B' in HSB, means Brigthness, but is also commonally known as HSV, with
   using 'V' meaning Value. They are the same colorspace, but 'V' is a
   confusing term, as a value normally means 'a stored number'. </P>
@@ -4302,9 +4302,9 @@ Or with IM v6.5.3-7 and later, you can <A HREF="../basics/#define" >Define an
 Operational Control</A> of '<CODE>modulate:colorspace</CODE>' with one of the
 'Hue' color spaces.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick wedding_party_sm.jpg \
           -define modulate:colorspace=HSB -modulate 85 \
@@ -4352,10 +4352,10 @@ and a specified HSB colorspace, for comparison.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.4.0-10 the "<CODE><A HREF="../option_link.cgi?modulate"
   >-modulate</A></CODE>" operator actually did use HSB color space rather than
   HSL colorspace. This was changed because of a bug report by an user about the
@@ -4395,10 +4395,10 @@ HREF="http://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation"
 HREF="http://hclcolor.com/" >The HCL Colorspace</A> for more information. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The equivelent channels of '<B><CODE>LCHab</CODE></B>' and
   '<B><CODE>LCHuv</CODE></B>' colorspaces are reverse to those of the
   '<B><CODE>HCL</CODE></B>' and '<B><CODE>HCB</CODE></B>' colorspaces.  That
@@ -4418,7 +4418,7 @@ for the '<B><CODE>HSL</CODE></B>' colorspace above.
                             -modulate 100,100,$i     mod_lch_$i.gif
   done
 </CODE></PRE></TD></TR></TABLE>
-<TABLE><TR VALIGN=top><TD ALIGN=center>
+<TABLE><TR valign="top"><TD ALIGN=center>
   <A HREF="mod_lch_0.gif"
      ><IMG SRC="mod_lch_0.gif"        WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=7 BORDER=1 ALT="[IM Output]"></A>
@@ -4475,7 +4475,7 @@ Here is comparison of a simple hue rotation of red to blue for
 appropriate rotation percentages).
 
 <DIV ALIGN=center>
-<TABLE><TR VALIGN=top><TD ALIGN=center>
+<TABLE><TR valign="top"><TD ALIGN=center>
   <A HREF="../images/rose.png"
      ><IMG SRC="../images/rose.png"        WIDTH=70 HEIGHT=46
            ALIGN=middle VSPACE=5 HSPACE=10 BORDER=1 ALT="[IM Output]"></A>
@@ -4502,10 +4502,10 @@ For more information on HCL colorspace hues, see the examples on <A
 HREF="../color_basics/#colorwheel_LCH" >The LCH Color Wheel</A>. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before  IM v6.8.4-7 you would have used the colorspace
   '<B><CODE>HCL</CODE></B>' (introduced IM v6.7.9-1).  This colorspace is
   exacty the same as '<B><CODE>LCHuv</CODE></B>' but with the channel order
@@ -4522,10 +4522,10 @@ HREF="../color_basics/#colorwheel_LCH" >The LCH Color Wheel</A>. </P>
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that for very dark colors the '<B><CODE>LCHuv</CODE></B>' can generate
   color values with discontinuities.  This however should not happen for real
   images, only images generated directly in the cylindrical space. </P>
@@ -4549,9 +4549,9 @@ on
 
 For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix ' 1 0 0
                                 0 1 0
@@ -4576,9 +4576,9 @@ special array, known as an 'identity matrix'. </P>
 By mixing up the rows you can use to swap the various channels around.  For
 example here I swap the red and blue channel values.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix ' 0 0 1
                                 0 1 0
@@ -4593,9 +4593,9 @@ Or simply copy the red channel to the other two channels, to extract
 or separate out the 'red channel' (Also see <A HREF="../color_basics/#separate"
 >Separating Channel Images</A>)...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix ' 1 0 0
                                 1 0 0
@@ -4609,9 +4609,9 @@ or separate out the 'red channel' (Also see <A HREF="../color_basics/#separate"
 or magick the image to gray-scale image using a 2/5/3 greyscale ratio
 (See <A HREF="#grayscale" >Converting Color to Gray-Scale</A>)...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix ' .2 .5 .3
                                 .2 .5 .3
@@ -4652,9 +4652,9 @@ color calculations, or only want to modify one channel. </P>
 
 For example invert (negate) the image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix '6x3: -1  0  0 0 0 1
                                      0 -1  0 0 0 1
@@ -4667,9 +4667,9 @@ For example invert (negate) the image.
 
 Set all red channel values to maximum (using the 'constant')...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix '6x1: 0,0,0,0,0,1'  matrix_red_max.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4682,10 +4682,10 @@ Because of the overlay on the identity matrix, none of the other channel
 values are effected, though they are still re-calculated internally. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM v6.6.1-0, "<CODE><A HREF="../option_link.cgi?color-matrix"
   >-color-matrix</A></CODE>" was named "<CODE>-recolor</CODE>.
 </I></FONT></TD></TR></TABLE></P>
@@ -4696,9 +4696,9 @@ values are effected, though they are still re-calculated internally. </P>
 
 <B>Sepia Color</B>, or at least a linear form of that operation
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=matrix_sepia.png>
   magick rose: -color-matrix ' 0.393 0.769 0.189
                                 0.349 0.686 0.168
@@ -4713,9 +4713,9 @@ values are effected, though they are still re-calculated internally. </P>
 HREF="http://www.reflectiveimages.com/digitalvelvia.htm" >Digital
 Velvia</A>...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix '  1.2 -0.1 -0.1
                                 -0.1  1.2 -0.1
@@ -4733,9 +4733,9 @@ color saturation by 20%, but it is similar to it. </P>
 
 <B>Polaroid Color</B>...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -color-matrix \
             '6x3:  1.438 -0.122 -0.016  0 0 -0.03
@@ -4781,9 +4781,9 @@ image is to basically 'burn' the brightest colors black.  The brighter the
 color, the darker the solarized color is.  This happens in photography when
 chemical film is over exposed.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose:  -solarize 90%     solarize.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4800,9 +4800,9 @@ For example here is a faked "<CODE><A HREF="../option_link.cgi?solarize"
 >-solarize</A></CODE>" using a "<CODE><A HREF="../option_link.cgi?fx"
 >-fx</A></CODE>" mathematical formula.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose:  -fx  '.9>u ? u : 1-u'     solarize_fx.jpg
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -4944,10 +4944,10 @@ second is a gradient image that is either a single row, or a single column.
 </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The "<CODE><A HREF="../option_link.cgi?clut" >-clut</A></CODE>" operator was
   added to IM v6.3.5-8.
 </I></FONT></TD></TR></TABLE></P>
@@ -4959,9 +4959,9 @@ then you can roll your own using the <A HREF="../transform/#fx" >General DIY
 Operator, FX</A>. For example here is a slow, but equivalent command to the
 above.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick gray_image.jpg  gradient_ice-sea.png \
           -fx 'v.p{0,u*v.h}'  gray_recolored_fx.jpg
@@ -5036,7 +5036,7 @@ various type of interpolated smoothing of the LUT colors.
   magick gray_image.jpg  gradient_levels.png \
           -interpolate Spline          -clut  gray_levels_spline.jpg
 </CODE></PRE></TD></TR></TABLE>
-<TABLE CELLSPACING=0 CELLPADDING=0><TR VALIGN=top><TD ALIGN=center>
+<TABLE CELLSPACING=0 CELLPADDING=0><TR valign="top"><TD ALIGN=center>
   <A HREF="gray_levels_integer.jpg"
      ><IMG SRC="gray_levels_integer.jpg"   WIDTH=110 HEIGHT=100
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
@@ -5196,10 +5196,10 @@ previously.
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The polynomial  "<CODE><A HREF="../option_link.cgi?fx" >-fx</A></CODE>"
   in the above can now be generated more directly and faster using a <A
   HREF="../transform/#function_polynomial" >Polynomial Function</A>.
@@ -5600,7 +5600,7 @@ Thresholds  (after negation)
 
 </DIV></P>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 19 December 2003 <BR>
 Updated: 6 October 2011 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -5608,5 +5608,5 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/color_mods/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>
 

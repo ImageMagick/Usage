@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Advanced Techniques -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/advanced/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -21,7 +21,7 @@
 > ImageMagick Examples Preface and Index</A>
 
 <TABLE CELLSPACING=0 CELLPADDING=2 BORDER=0>
-<TR VALIGN=top><TD ROWSPAN=99>&nbsp;&nbsp;</TD><TD>
+<TR valign="top"><TD ROWSPAN=99>&nbsp;&nbsp;</TD><TD>
     <A HREF="#3d-bullets"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > 3D Bullets from Shapes</A>
@@ -30,28 +30,28 @@
         Using a script to generate huge numbers of images
     <BR>Color tinting and shaping a 3-D gray-scale shade image
     </FONT></TD></TR>
-<TR VALIGN=top><TD>
+<TR valign="top"><TD>
     <A HREF="#3d-logos"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > Making Logos 3D</A>
     <TD><FONT SIZE=-1>
         Using transparent overlays to tint the basic shaped image
     </FONT></TD></TR>
-<TR VALIGN=top><TD>
+<TR valign="top"><TD>
     <A HREF="#reflections"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > Reflections</A>
     <TD><FONT SIZE=-1>
         Adding Surface Reflections of many types.
     </FONT></TD></TR>
-<TR VALIGN=top><TD>
+<TR valign="top"><TD>
     <A HREF="#jigsaw"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > Jigsaw Pieces</A>
     <TD><FONT SIZE=-1>
         Cutting out and enhancing an odd shaped piece from a photo
     </FONT></TD></TR>
-<TR VALIGN=top><TD>
+<TR valign="top"><TD>
     <A HREF="#gel_effects"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > "Gel" Effects</A>
@@ -59,14 +59,14 @@
         Adjusting the size, brightness, and sharpness of the highlight
     <BR>Lighting and Darkening using 'Screen' and 'Multiply' compose
     </FONT></TD></TR>
-<TR VALIGN=top><TD>
+<TR valign="top"><TD>
     <A HREF="#aqua_effects"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > "Aqua" Effects</A>
     <TD><FONT SIZE=-1>
         Using 'curves' to adjust the highlights.
     </FONT></TD></TR>
-<TR VALIGN=top><TD>
+<TR valign="top"><TD>
     <A HREF="#stars"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > Tilable Stars and Comets</A>
@@ -74,7 +74,7 @@
         Randomized Points.
     <BR>"My God! It's full of stars! -- 2001, A Space Odyssey"
     </FONT></TD></TR>
-<TR VALIGN=top><TD>
+<TR valign="top"><TD>
     <A HREF="#radial_flares"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     > Radial Flares</A>
@@ -340,9 +340,9 @@ to, and its mask.... </P>
 
 Lets first create a shape for the color background of logo example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 170x100 xc:black \
           -fill white -draw 'circle    50,50  13,50' \
@@ -364,9 +364,9 @@ Lets first create a shape for the color background of logo example...
 Now we use our mask to cut out the solid color of our logo,
 and add some text to generate a plain, solid color logo.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick logo_mask.png -background red -alpha shape \
           -font Candice  -pointsize 36  -fill white  -stroke black \
@@ -383,9 +383,9 @@ and add some text to generate a plain, solid color logo.
 Now lets give it a 3D-look, by using <A HREF="../transform/#shade_overlay"
 >Overlay Highlighting</A> techniques.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick logo.png  -alpha extract -blur 0x6  -shade 110x30  -normalize \
           logo.png  -compose Overlay -magick composite \
@@ -400,9 +400,9 @@ Now lets give it a 3D-look, by using <A HREF="../transform/#shade_overlay"
 Adding shadows is also easier thanks to the new <A HREF="../blur/#shadow"
 >Shadow Generation</A> operator provided by IM.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick logo_3D.png \( +clone -background navy -shadow 80x4+6+6 \) +swap \
           -background none  -layers merge +repage logo_3D_shadowed.png
@@ -417,9 +417,9 @@ background.  A huge number of other background canvases can also be created,
 see <A HREF="../backgrounds/" >Background Examples</A> for a collection of
 such examples.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
 <r>  magick logo_3D_shadowed.png \
           \( +clone +repage -alpha off -fx 'rand()' -shade 120x30 \
@@ -455,9 +455,9 @@ Now doing a reflection of a perfect mirror you would simply copy and flip the
 source object, and add some background behind it to make it to give it some
 context.  For example... <BR CLEAR=all>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif \( +clone -flip \) -append \
           -size 100x100 xc:black +swap \
@@ -494,9 +494,9 @@ reflecting, for colored surfaces, that is usually pretty bad, so a large
 amount of color needs to be added, "<CODE>65%</CODE>" is quite good for
 a black surface.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif \
       \( +clone -flip -fill black -colorize 65% \) -append \
@@ -514,9 +514,9 @@ The other way to make a reflection weaker is to make the reflected image
 semi-transparent, or translucent. For example multiply the images alpha
 value, to make only about 35% of the source object visible.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \) -append \
@@ -534,9 +534,9 @@ color or even some type of color texture or pattern. </P>
 For example, lets generate a horizontal wooden floor, using an infinite tiling
 technique from <A HREF="../distorts/#horizon" >Viewing Distant Horizons</A>.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick tile_wood.gif   -set option:distort:viewport 100x100 \
           -virtual-pixel tile     -distort Perspective \
@@ -551,9 +551,9 @@ technique from <A HREF="../distorts/#horizon" >Viewing Distant Horizons</A>.
 And now overlay our image with its semi-transparent reflection onto this
 wooden floor.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \) -append \
@@ -575,9 +575,9 @@ a very highly polished look to it! </P>
 Okay. Lets try something a little more fancy, and give the image a bit of some
 3D <A HREF="../distorts/#perspective" >Perspective</A> depth to it.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on   -virtual-pixel transparent \
       +distort Perspective '0,0 0,0  0,64 0,64  64,0 54,10  64,64 54,54' \
@@ -604,9 +604,9 @@ One way to fix this would be to distort the source image and the reflection of
 that image separately, before <A HREF="../layers/#merge" >Layer Merge</A> the
 results together.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on   -virtual-pixel transparent \
       \( -clone 0 \
@@ -663,9 +663,9 @@ for distorted images.  Just append the reflection to the source image first,
 then distort the source image as if it has no reflection attached, letting its
 reflection distort along with the main image...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on   -virtual-pixel transparent \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \) -append \
@@ -686,9 +686,9 @@ It also allows you to use distortions that would be otherwise be impossible to
 repeat to create a separate reflection.  For example, generating a 3D arc from
 the image...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on   -virtual-pixel transparent \
       \( +clone -flip -channel A -evaluate multiply .35 +channel \) -append \
@@ -729,9 +729,9 @@ The simplest way to create a distance effect is to make the reflection weaker
 the further it is from the surface.  For this is is usually acceptable to make
 the reflection a little brighter close to the image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on \
       \( +clone -flip \
@@ -775,9 +775,9 @@ However for this to work, it is a good idea to add a transparent border around
 the object into which to blur.  In these examples, I extended the final image
 so you can see the whole reflection, so you can appreciate its effect.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on \
       -background None -gravity South -extent 100x100 \
@@ -802,9 +802,9 @@ If you then combine the "Blurred Attenuation" with a "Gradient Attenuation"
 you will start to get a very realistic reflection of a typical,
 not-so-polished, but smooth surface reflection.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pokemon.gif -alpha on \
       -background None -gravity South -extent 100x100 \
@@ -849,8 +849,8 @@ generate a lot of separate pieces, at lots of different rotations.  The
 following was developed from our discussion for just one piece, but with the
 right set of templates, any pattern of pieces can be generated. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD ROWSPAN=2 WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD ROWSPAN=2 width="100%" ALIGN=justify>
 
 To the right is a thumbnail linked to a 800x600 image of a photo of the
 Holocaust Memorial, Berlin, Germany.  I took this photo during on my European
@@ -894,12 +894,12 @@ The extra padding itself will allow you to easily rotate, add thickness and
 shadow effects to the final image, without needing to change the size or
 offset of the cutout jigsaw piece.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
 
 First however lets magick this template into an outline.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick jigsaw_tmpl.png -edge .5 -blur 0x.5 jigsaw_edge.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -911,9 +911,9 @@ First however lets magick this template into an outline.
 I can then overlay this onto the image to get a rough idea as to what is going
 to be cutout to form the jigsaw piece.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick holocaust_md.jpg \
             \( jigsaw_edge.png -negate \) -geometry +365+96 \
@@ -931,10 +931,10 @@ puzzle).  If so you can adjust the offset to select better content for that
 jigsaw piece.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     Due to the way "<CODE><A HREF="../option_link.cgi?edge" >-edge</A></CODE>"
     works the jigsaw outline generated above is inside the masked (white) area
     masking image.  This can be important if you like to make use of this
@@ -945,9 +945,9 @@ jigsaw piece.
 Okay we have a jigsaw shape, and an offset for the piece to cut out.
 so lets cut it out and rotate it too.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick holocaust_md.jpg \
             -crop 100x100+365+96\! -background none -flatten +repage \
@@ -981,9 +981,9 @@ highlight around the edges.  This is as per <A
 HREF="../transform/#shade_overlay" >Shade Highlight Overlays</A>, which allows
 fine control (4 separate factors) of way the highlight is produced.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
    magick jigsaw_cutout.png \
            \( +clone -channel A -separate +channel -negate \
@@ -1006,9 +1006,9 @@ Now lets add some thickness to the piece. This is the best and quickest way I
 have found, though I don't consired it a very good technique.  If you can find
 something better, then please let me know.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
    magick jigsaw_bevel.png \
            \( +clone -fill DarkSlateGrey -colorize 100% -repage +0+1 \) \
@@ -1024,9 +1024,9 @@ something better, then please let me know.
 
 And finally how about some shadow.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick jigsaw_thickness.png \
             \( +clone   -background Black -shadow 50x3+4+4 \) \
@@ -1120,10 +1120,10 @@ result shown, simply and easily. See the script itself for the other options
 available. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     As page offsets generated can be negative, and could contain an optional
     soft shadow effect, it is recommended that only PNG images be used for
     extracted pieces.  GIF images cannot handle negative page offsets, or
@@ -1204,9 +1204,9 @@ above. </P>
 
 In this case lets use a simple oval shape for a button...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x60 xc:none \
           -fill red -draw 'circle    25,30  10,30' \
@@ -1222,9 +1222,9 @@ In this case lets use a simple oval shape for a button...
 Now lets add the sharp 'Gel' highlight to the colored shape, using a highly
 modified blurred shade operation...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick gel_shape.png \
             \( +clone -alpha extract  -blur 0x12  -shade 110x0 -normalize \
@@ -1265,9 +1265,9 @@ Now, as the highlight is grey on black (black to remain unchanged), a
 used to lighten the non-black areas by the given grey level. </P>
 
 Now all that is left is to darken the borders a little...
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick gel_highlight.png \
           \( +clone -alpha extract  -blur 0x2 -shade 0x90 -normalize \
@@ -1290,9 +1290,9 @@ composition to darken the effected borders.  </P>
 
 Lets finish of the oval 'Gel' button with some text and shadow effects...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
     magick gel_border.png \
             -font Candice  -pointsize 24  -fill white  -stroke black \
@@ -1322,9 +1322,9 @@ following. </P>
 
 First lets create an image to use, in this case a curvy letter A.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -background none -fill DodgerBlue \
           -font Candice -pointsize 72  label:A  -trim +repage \
@@ -1342,9 +1342,9 @@ the next processing steps just that little bit easier. </P>
 Now we need to generate <A HREF="../transform/#shade_blur" >Rounded Shade</A>
 of this shaped image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick aqua_shape.png \
           -alpha Extract -blur 0x8  -shade 130x30 -alpha On \
@@ -1365,9 +1365,9 @@ normalization.  This can be very important. </P>
 Now we magick that shade into a 'lighting effect' that looks vaguely like
 the way light is distorted by a bubble of water or glass.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick aqua_shade.png \
           -function polynomial  3.5,-5.05,2.05,0.3 \
@@ -1423,9 +1423,9 @@ the polynomial equantion needed for the 'curve that fits these control points.
 The final adjustment of this lighting effect is make the edges of the
 lighting effect darker.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick aqua_lighting.png \
           \( +clone -alpha extract  -blur 0x2 \) \
@@ -1442,9 +1442,9 @@ And the shading overlay is complete.  All that is left is to apply this
 to the original image, using <A HREF="../compose/#hardlight" >HardLight
 Composition</A>.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick aqua_shape.png aqua_light+edge.png \
           -compose Hardlight -magick composite   aqua_result.png
@@ -1499,9 +1499,9 @@ attempts at this. </P>
 A <A HREF="../canvas/#random" >random noise</A> image is used to thin itself
 out generate a speckle pattern.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 100x100 xc: +noise Random -channel R -threshold 5% \
           -negate -channel RG -separate +channel \
@@ -1519,9 +1519,9 @@ point for other effects. </P>
 For example to make stars we need to modify its random 'speckle' pattern a bit
 more, so as to make things more realistic.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 100x100 xc: +noise Random -channel R -threshold 1% \
           -negate -channel RG -separate +channel \
@@ -1551,9 +1551,9 @@ By using two <A HREF="../canvas/#random" >random noise</A> images, (one for
 the mask, the other for the star color), we can generate randomly colored
 stars, instead of simple greyscale ones.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 100x100 xc: +noise Random -channel R -threshold 1% \
           -negate -channel RG -separate +channel \
@@ -1580,9 +1580,9 @@ Now that I have a star-scape generator, I can simply use "<CODE><A
 HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>" to create a
 field of falling stars!
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 100x100 xc: +noise Random -channel R -threshold .4% \
           -negate -channel RG -separate +channel \
@@ -1602,9 +1602,9 @@ Of course we want less stars and less of a 'fall-off' in star intensities.
 By <A HREF="../distorts/#polar" >Polar Distorting</A> the image we can make
 the comets flying or spiraling into a point!
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 250x100 xc: +noise Random -channel R -threshold .4% \
           -negate -channel RG -separate +channel \
@@ -1631,9 +1631,9 @@ the comets flying or spiraling into a point!
 Here we motion blur the stars in six directions (in pairs) then merge them
 together to create a field of 'star bursts', such as you get in a glass lens.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 100x100 xc: +noise Random -channel R -threshold .2% \
           -negate -channel RG -separate +channel \
@@ -1663,9 +1663,9 @@ astronomical photos of nebula and gas clouds. </P>
 By combining the above with a <A HREF="../anim_mods/#glitter" >plasma glitter
 animation</A> you can make set of stars that look like christmas decorations.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 100x100 xc: +noise Random -separate \
           null: \
@@ -1821,13 +1821,13 @@ remain a roughly constant width as they get dimmer, or at least thinner. </P>
 
 <I>Ideas and pointers welcome</I></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Color tinting can also be important in this type of image. For example here I
 <A HREF="../color_mods/#tint" >Tint Mid-Tone Colors</A>  Blue.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick flare_2_final.png  -fill SkyBlue  -tint 100%  flare_2_color.png
 </CODE></PRE></TD></TR></TABLE>
@@ -1848,7 +1848,7 @@ HREF="../forum_link.cgi?t=16004" >Using Radial Flare for a Mask</A>. </P>
 </DIV>
 <HR><!-- ---------------------------------------------------------------- -->
 
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 9 February 2004 <BR>
 Updated: 16 February 2010 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -1856,4 +1856,4 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>www.imagemagick.org/Usage/advanced/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>

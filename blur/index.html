@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Bluring and Sharpening -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/blur/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -124,9 +124,9 @@ table of the results for various operator settings.   I also purposely used a
 font that contains both thick and thin lines see the fuzzing of small line
 details and large areas of color. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NO_PNG2JPG>
   magick -font Gecko -pointsize 48  label:A \
           -bordercolor white -border 20x10  blur_source.png
@@ -209,22 +209,22 @@ this way for a very long time, and would break too many things. </P>
 To demonstrate blur, lets start simply by generating a fuzzy black circle on a
 light blue background...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:lightblue \
           -fill black -draw 'circle 35,35 20,25'  circle_on_blue.png
   magick circle_on_blue.png    -blur 0x8         circle_on_blue_blur.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="circle_on_blue.png"
      ><IMG SRC="circle_on_blue.png"     WIDTH=70  HEIGHT=70
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
   <A HREF="circle_on_blue_blur.png"
      ><IMG SRC="circle_on_blue_blur.png"     WIDTH=70  HEIGHT=70
            ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 As you can see a blurring a plain image like this has no problems.  It just
@@ -232,22 +232,22 @@ works, as you would expect. </P>
 
 But if we try this again with an image containing a transparent background...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none \
           -fill black -draw 'circle 35,35 20,25'  black_circle.png
   magick black_circle.png       -blur 0x8        black_blurred.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="black_circle.png"
      ><IMG SRC="black_circle.png"     WIDTH=70  HEIGHT=70
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
   <A HREF="black_blurred.png"
      ><IMG SRC="black_blurred.png"     WIDTH=70  HEIGHT=70
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Hang on, what happened!  The image didn't change!  </P>
@@ -280,9 +280,9 @@ alpha channel.  To do this we set the "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting to all four
 channels of the image (EG: using a value of '<CODE>RGBA</CODE>').
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR valign="top"><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick black_circle.png  -channel RGBA  -blur 0x8  black_blurred_RGBA.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -298,10 +298,10 @@ Just to summarize...
 </B></DIV> </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   IM version 5.5.7 would have blurred all four color channels automatically
   but the operator has other, buggy effects for images with transparency.
   See <A HREF="../bugs/blur_trans/" >Blur with Transparency Bug</A> for
@@ -309,10 +309,10 @@ Just to summarize...
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Some image formats such as GIF and JPEG do not handle semi-transparent
   pixels.  As such I suggest you use PNG format for any images with some
   form of semi-transparent colors, if possible.
@@ -328,22 +328,22 @@ For example lets try that last 'forgot the "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting' example
 again, but this time with a yellow circle. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none \
           -fill yellow   -draw 'circle 35,35 20,25'   yellow_circle.png
   magick yellow_circle.png       -blur 0x8           yellow_blurred.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
-<NOBR>
+
   <A HREF="yellow_circle.png"
      ><IMG SRC="yellow_circle.png"     WIDTH=70  HEIGHT=70
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
   <A HREF="yellow_blurred.png"
      ><IMG SRC="yellow_blurred.png"     WIDTH=70  HEIGHT=70
            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</NOBR>
+
 </TD></TR></TABLE></P>
 
 Notice that instead of getting unchanged image as we did with a black circle,
@@ -362,9 +362,9 @@ Of course we can fix this by setting the "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting correctly for
 a transparent image, things do work as expected.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick yellow_circle.png  -channel RGBA  -blur 0x8  yellow_blurred_RGBA.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -385,9 +385,9 @@ Here we create a very special image of a yellow circle, which has been drawn
 on a fully-transparent red background.  This will let us see the effect of a
 transparent color has when blurring images.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:'#F000' \
           -fill yellow   -draw 'circle 35,35 20,25'   yellow_on_red.png
@@ -405,9 +405,9 @@ We can see the color of the transparent parts of the image by effectively
 deleting the alpha or matte channel of the image using the "<CODE><A
 HREF="../option_link.cgi?matte" >+matte</A></CODE>" operator.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick yellow_on_red.png   +matte  yellow_on_red_matte.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -420,9 +420,9 @@ Now lets try blurring just the colors of the image again, using the default
 '<CODE>RGB</CODE>', "<CODE><A HREF="../option_link.cgi?channel"
 >-channel</A></CODE>" setting.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick yellow_on_red.png   -blur 0x8   yellow_on_red_RGB.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -438,9 +438,9 @@ generating it, than to rely on invisible fully-transparent colors.  </P>
 
 Just prove you can blur this image correctly, lets do it properly...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick yellow_on_red.png  -channel RGBA  -blur 0x8  yellow_on_red_RGBA.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -470,9 +470,9 @@ separately, thus effectually disconnecting the algorithms 'visibility
 adjustment' on the color channels.  The result is more like a sun
 shining through a dirty brown haze.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick yellow_on_red.png  -channel  A  -blur 0x8 \
                              -channel RGB -blur 0x8  yellow_on_red_GS.png
@@ -499,10 +499,10 @@ can use it in that way if you really want. You didn't always have this choice
 however... </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Before IM version 6.2.4-4, the "<CODE><A HREF="../option_link.cgi?blur"
   >-blur</A></CODE>", and "<CODE><A HREF="../option_link.cgi?gaussian-blur"
   >-gaussian-blur</A></CODE>" operators were applied as pure grey-scale
@@ -834,9 +834,9 @@ HREF="../layers/#merge" >Layer Merge</A> operator. </P>
 Here for example is a standard method of shadowing an existing image, using a
 navy shadow color to match this web page.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone  -background navy  -shadow 80x3+5+5 \) +swap \
           -background none   -layers merge  +repage   shadow.png
@@ -851,9 +851,9 @@ Note how the shadow image is correctly offset from the image. </P>
 You can even zero the blur '<I>sigma</I>' value and create a hard shadow, but
 semi-transparent shadow.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone  -background navy  -shadow 60x0+4+4 \) +swap \
           -background none   -layers merge +repage  shadow_hard.png
@@ -868,9 +868,9 @@ merge</CODE>" to layer shadow images with the original image makes it easy to
 generate shadows from a light source from any direction, not just the upper
 left side.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone -background navy -shadow 80x3-5+5 \) +swap \
           -background none  -layers merge +repage  shadow_other.png
@@ -889,10 +889,10 @@ HREF="#shadow_offset" >Shadows and the Offset Problem</A> for alternative
 techniques. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The <A HREF="../layers/#merge" >Layers Merge</A> method was added to IM
   v6.3.6-2. Before this you would need to use the similar layer flattening
   operator "<CODE><A HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>"
@@ -907,9 +907,9 @@ Now "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" was designed
 with shaped images in mind, (and this is the reason for its complexity).
 For example here is a typical shadowed font.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -background none -stroke black -fill white \
           -font Candice -pointsize 48 label:A -trim \
@@ -926,9 +926,9 @@ the original image, you can use this command.  It uses a special '<CODE><A
 HREF="../compose/#dst_over" >DstOver</A></CODE>' composition method so as to
 avoid the need to swap the order of the two images.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -background none -stroke black -fill white \
           -font Candice -pointsize 48 label:'A ' \
@@ -964,9 +964,9 @@ HREF="../option_link.cgi?layers" >-layers</A></CODE>" method
 '<CODE>merge</CODE>' available.  For example here we try to add a shadow on
 the left side, of the image as if a light shone from the upper right.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone  -background navy  -shadow 60x3-5+5 \) +swap \
           -background none   -mosaic   shadow_left_clipped.png
@@ -983,9 +983,9 @@ negative offset.  Not good!  </P>
 One solution is to add an initial offset to the original image so the
 resulting shadow images offset will not be negative.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -repage +11+0\
           \( +clone   -background navy   -shadow 80x3-5+5 \) +swap \
@@ -1002,9 +1002,9 @@ HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>" them together.  Note the
 use of a '<CODE>!</CODE>' flag with "<CODE><A HREF="../option_link.cgi?repage"
 >-repage</A></CODE>" to add the given offset to both images.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone -background navy -shadow 80x3-5-5 \) +swap \
           -repage +11+11\! -background none  -mosaic  shadow_tl.png
@@ -1029,9 +1029,9 @@ shadow, and then underlay the shadow image directly.  I included a border in
 the displayed image result so that you can see that the final image remains
 centered in the 'padded' image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -bordercolor None -border 11x11 \
           \( +clone -background navy -shadow 80x3+5+5 \) \
@@ -1050,10 +1050,10 @@ clipped.  Padding can be asymmetrical to reduce space, but typically
 a symmetrical padding (like the above) is used for convenience. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Note that while the "<CODE>-compose Over</CODE>" setting is not actually
   needed in the above, it is recommended. Otherwise later operations (even in
   other "<CODE>convert</CODE>" commands) could be effected, with unexpected
@@ -1071,9 +1071,9 @@ lower-level "<CODE><A HREF="../option_link.cgi?composite"
 >-composite</A></CODE>" to merge the images.  For example directly overlay the
 original image onto a generated (larger) shadow image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone  -background navy  -shadow 60x3 \) \
           +swap -magick composite  +repage shadow_composite.png
@@ -1107,9 +1107,9 @@ and the easiest way is to use a "<CODE><A HREF="../option_link.cgi?gravity"
 >-gravity</A> Center</CODE>" setting, as the enlarged shadow image is expanded
 equally on all sides.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \( +clone  -background navy  -shadow 60x3 \) +repage \
           +swap -gravity center -geometry -3-5 -magick composite shadow_geometry.png
@@ -1130,9 +1130,9 @@ You can also use  "<CODE><A HREF="../option_link.cgi?shadow"
 By using <A HREF="../layers/#merge" >Layers Merge</A> IM will automatically
 add the extra space needed for the semi-transparent blur.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -background none -fill white \
               -font Candice -pointsize 48 label:A -trim \
@@ -1156,9 +1156,9 @@ Better still you can adjust the transparency of the shadow image, using a <A
 HREF="../color_mods/#level" >Level Adjustment</A> so that a 50% transparency
 along the edges of the shape becomes fully opaque.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -background none -fill white \
           -font Candice -pointsize 48  label:A -trim \
@@ -1175,9 +1175,9 @@ along the edges of the shape becomes fully opaque.
 An alternative is to over-do the transparency adjustment (using
 '<CODE>200x</CODE>' instead of '<CODE>100x</CODE>') fix the problem.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -background none -fill white \
           -font Candice -pointsize 48  label:A -trim \
@@ -1200,9 +1200,9 @@ By adding a "<CODE><A HREF="../option_link.cgi?geometry"
 >-geometry</A></CODE>" composition offset you can then offset the shadow as
 a separate action.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -background none -fill white -stroke black \
           -font Candice -pointsize 48  label:A -trim \
@@ -1238,9 +1238,9 @@ As of IM v6.3.1 the "<CODE>montage</CODE>" "<CODE><A
 HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" setting, started to make
 use of the soft 'shaped' shadows this operator provides.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick montage -label Rose  rose: \
           -background none -geometry +5+5 -shadow  shadow_montage.png
@@ -1304,10 +1304,10 @@ Basically use the previous techniques to correctly handle posible negative
 offsets involved with shadow images. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The PNG, and MIFF formats are the only image formats I know that can
   handle a negative offset, as well as semi-transparent pixels. I
   recommended PNG be used if saving shadow images, for future use.
@@ -1383,9 +1383,9 @@ Note however that like a normal  "<CODE><A HREF="../option_link.cgi?blur"
 >-radial-blur</A></CODE>" is affected by the  "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 35,5 35,65' \
@@ -1401,9 +1401,9 @@ You can place the object off center (by adding some space to an image) for
 more interesting "<CODE><A HREF="../option_link.cgi?radial-blur"
 >-radial-blur</A></CODE>" effects.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
@@ -1419,9 +1419,9 @@ The blur argument is the angle the radial-blur covers. That is half that angle
 in each direction from the original image. So an angle of 180 is over a half
 circle, while 360 degrees will blur the image in a full circle.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
@@ -1433,9 +1433,9 @@ circle, while 360 degrees will blur the image in a full circle.
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
@@ -1450,9 +1450,9 @@ circle, while 360 degrees will blur the image in a full circle.
 You can even add a little <A HREF="../warping/" >Image Warping</A> to
 make the effect more interesting...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
@@ -1465,15 +1465,15 @@ make the effect more interesting...
 </TD></TR></TABLE></P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 The full circle radial blur, can be used to generate a rough circular
 gradients.  However formulating the correct shape to generate the correct
 gradient can be extremely difficult, and probably not worth the effort.
 I did try though...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 80x80 xc:lightblue -fill red \
           -draw "path 'M 40,40   C 43,43 47,47 50,40 \
@@ -1500,9 +1500,9 @@ HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>". </P>
 This gives your image a look as if it (or the camera) was moving very very
 fast.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none  -channel RGBA \
           -fill yellow  -stroke red  -strokewidth 3 \
@@ -1521,9 +1521,9 @@ This leading edge blurring can be improved by re-drawing or overlaying the
 original image and re-applying a smaller "<CODE><A
 HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>" multiple times.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none -channel RGBA \
           -fill yellow  -stroke red -strokewidth 3 \
@@ -1540,9 +1540,9 @@ HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>" multiple times.
 Multiple motion blurs can be made to effect some spread of the trailing
 tail of the moving object. Sort of like dissipating smoke or flames.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x70 xc:none -channel RGBA \
           -fill yellow  -stroke red -strokewidth 3 \
@@ -1563,9 +1563,9 @@ though that requires some image shifting to get the center right.
 You can also add some extra <A HREF="../warping/" >Image Warping</A>
 to make things even more interesting...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 70x100 xc:none -channel RGBA \
           -fill yellow  -stroke red -strokewidth 3 \
@@ -1623,12 +1623,12 @@ of obvious it is a copy-n-paste. </P>
 Basically insteand of having a 'hard' edge to some shape, soften it to 'fake'
 anti-aliasing, or lens blurring, so that the paste is more seemless. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
 
 For example here I have a GIF image which I overlay a light colored baground
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick shape.gif -background wheat -flatten  overlaid.png
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1642,13 +1642,13 @@ result has highly aliases, or staircase-like edges, the image looks very much
 out of place on the background.  If you were dealing with real life images,
 the above result would look very artifical. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
 
 But by bluring the image transparency a little, I can make the overlay
 fit onto the background more smoothly.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick figure.gif -alpha set -virtual-pixel transparent \
           -channel A -blur 0x0.7  -level 50,100% +channel \
@@ -1687,9 +1687,9 @@ previously hidden by the image transparency.  </P>
 However blur has a particularly nasty problem in also smoothing the outline of
 the shape.  For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -size 100x60 xc: -draw 'polygon 5,5 50,30 5,55 95,30' \
           sharp_angles.gif
@@ -1701,9 +1701,9 @@ the shape.  For example...
 
 If you blur this particular shape you get...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick sharp_angles.gif -blur 0x5  feather_blurred.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1719,9 +1719,9 @@ pixels with an undefined color may actually become visible! </P>
 
 You can see this more clearly if we threshold the image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick feather_blurred.gif  -threshold 50%  feather_blur_thres.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1787,7 +1787,7 @@ Basic image modifications
 </PRE>
 
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 19 April 2004 <BR>
 Updated: 6 October 2007 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -1795,4 +1795,4 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/blur/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>

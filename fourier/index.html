@@ -1,6 +1,6 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>Fourier Transforms -- IM v6 Examples</TITLE>
 <meta name="author" content="Fred Weinhaus">
@@ -8,7 +8,7 @@
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/fourier/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -513,10 +513,10 @@ saved into "<CODE>lena_fft_0.png</CODE>" and phase image (second image) into
 "<CODE>lena_fft_1.png</CODE>".  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   To prevent any chance of distortions resulting from saving FFT images, It is
   best not to save them to disk at all, but hold them in memory while you
   process the image.  </P>
@@ -698,13 +698,13 @@ How much of a log enhancement you need to use depends on the image, so you
 should adjust it until you get the amount of detail you need to clearly see
 the pattern of the images frequency spectrum. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Alternatively you can use the following small shell script, to calculate
 a <I>log scaling factor</I> to use for the specific magnitude image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=lena_spectrum_auto.png>
   scale=`magick lena_fft_0.png -auto-level \
           -format "%[fx:exp(log(mean)/log(0.5))]" info:`
@@ -717,14 +717,14 @@ a <I>log scaling factor</I> to use for the specific magnitude image.
 </TD></TR></TABLE></P>
 
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
 
 However remember that you can not use a spectrum image, for the inverse
 "<CODE><A HREF="../option_link.php#ift" >-ift</A></CODE>" transform as it will
 produce an overly bright image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick lena_spectrum.png lena_fft_1.png -ift lena_roundtrip_fail.png
 </CODE></PRE></TD></TR></TABLE></P>
@@ -770,9 +770,9 @@ same, just much more accurate. </P>
 For example here I use a <A HREF="../basics/#hdri" >HDRI version
 ImageMagick</A> to generate another 'round trip' conversion of an image.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI ERR2OUT OUT=lena_roundtrip_hdri_cmp.txt>
   # HDRI version of IM used
   time magick lena.png -fft -ift lena_roundtrip_hdri.png
@@ -817,10 +817,10 @@ be saved using special <A HREF="../basics/#hdri_formats" >HDRI capable File
 Formats</A> that can handle floating-point values. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Floating point compatible file formats include "<CODE><A
   HREF=../files/#miff" >MIFF</A></CODE>", "<CODE><A HREF="../formats/#tiff"
   >TIFF</A></CODE>",  "<CODE><A HREF="../formats/#netpbm" >PFM</A></CODE>" and
@@ -849,9 +849,9 @@ For example here I used a <A HREf="../basics/#hdri" >HDRI version of IM</A> to
 also perform a 'round trip' FFT of an image, but this time generating
 Real/Imaginary images.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE HDRI ERR2OUT OUT=lena_roundtrip_ri_cmp.txt>
   # HDRI version of IM used
   time magick lena.png   +fft +ift   lena_roundtrip_ri.png
@@ -874,14 +874,14 @@ Real/Imaginary images.
 </TD></TR></TABLE>
 </DIV></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGN=center>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 You must use a HDRI version when you use the plus forms to generate
 Real/Imaginary FFT images.  If you don't, about 1/2 the values will be zero,
 resulting in an image that looks 'dirty'.  For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   # non-HDRI Q16 version of IM used  -- THIS IS BAD
   magick lena.png   +fft +ift   lena_roundtrip_ri_bad.png
@@ -969,13 +969,13 @@ Current</I>') value of the image, and is the one pixel that does not represent
 a sine wave.  In other words this value is just the FFT constant component!
 </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 To see this single pixel more clearly lets also magnify that area of the
 image...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick constant_magnitude.png -gravity center -extent 5x5 \
            -scale 2000% constant_dc_zoom.gif
@@ -998,10 +998,10 @@ really... It does not care!  To a fourier transform an image is just an array
 of values, and that is all. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   While the 'phase' of the DC value is not important, it should always be
   a 'zero' angle (a phase color value of 50% gray). If it is not set to 50%
   gray, the DC value will have a 'unreal' component, and its value modulated
@@ -1045,13 +1045,13 @@ Another way of thinking about this special pixel is that it represents the
 center 'bias' level, around which all the other sine waves modify the image
 colors.  </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 For example lets replace that 'dark pink' DC pixel with some other color
 such as the more orange color 'tomato'...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick lena.png -fft \
           \( -clone 0  -draw "fill tomato  color 64,64 point" \) \
@@ -1099,10 +1099,10 @@ image with 4 cycles across the image </P>
 </DIV></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The unusual creation of the gradient image in the above is necessary to
   ensure that the resulting sine wave image tiles perfectly across the image.
   </P>
@@ -1179,13 +1179,13 @@ This is one of the most vital aspects to remember when dealing with Fourier
 Transforms, as it is the key to removing noise (small features) from an image,
 while preserving the overall larger aspects of the image. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 Lets take a closer look at these three 'frequencies' by plotting their original
 magnitudes (not the logarithmic spectrum).
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick sine16.png -fft -delete 1  miff:- |\
      im_profile - sine16_magnitude_pf.png
@@ -1224,10 +1224,10 @@ images still contain exactly the same amount of information, half in one
 image, and half in the other.  Together they produce a whole. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   During generation the FFT algorithm only generates the left half the images.
   The other half is generated by rotations and duplication of the generated
   data.  </P>
@@ -1288,30 +1288,30 @@ horizontal or vertical direction, and that is the main limitation of this
 technique. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Actually only the first (left most) 'gray25' dot was needed to generate the
   sine wave as the IFT transform completely ignores the right half of the image
   as this should simply be a rotational mirror of the left half.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The phase of the DC value must have a 'zero angle' (50% gray color).  If you
   don't ensure that is the case the DC color value will be modulated by its
   non-zero phase, producing a darker, possibly 'clipped' image.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The other pixels in the phase can be any grey level you like, and will
   effectively 'roll' the sine wave across the image.  Again only the phase of
   the left most dot actually matters.  The right hand side is completely
@@ -2056,15 +2056,15 @@ original image next to it for comparison </P>
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 A very good result.  But we can do even better. </P>
 
 As you saw in the previous examples, simple 'circles' are not particularly
 friendly to a FFT image, so lets blur the mask slightly...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick clown_spectrum_mask.png \
           -blur 0x5 -level 50x100%  clown_mask_blurred.png
@@ -2074,12 +2074,12 @@ friendly to a FFT image, so lets blur the mask slightly...
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 And filter the clown, this time re-generating the FFT images in memory.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick clown_orig.jpg -fft \
           \( -clone 0 clown_mask_blurred.png -compose multiply -magick composite \) \
@@ -2093,13 +2093,13 @@ And filter the clown, this time re-generating the FFT images in memory.
 A simply amazing result! And one that could possibly be improved further by
 adjusting that mask to fit the 'star' shapes better. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
 We can even take the difference between the original and the result to create
 an image of the areas where noise was removed.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick clown_orig.jpg clown_filtered_2.png -compose difference \
           -magick composite -normalize clown_noise.png
@@ -2214,7 +2214,7 @@ image processing operators. </P>
 
 </DIV>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 22 July 2000 <BR>
 Updated: 27 October 2011 <BR>
 Author: <A HREF="http://www.fmwconcepts.com/fmw/fmw.html" >Fred Weinhaus</A>,
@@ -2225,5 +2225,5 @@ with editing and formatting by
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/fourier/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>
 

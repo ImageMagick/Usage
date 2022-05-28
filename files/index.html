@@ -1,12 +1,12 @@
 <HTML><HEAD>
 <meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+<meta name="viewport" content="width=device-width" >
 <link rel="stylesheet" href="../assets/usage.css">
 <TITLE>File Handling -- IM v6 Examples</TITLE>
 <LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
 <LINK REL="canonical" HREF="https://imagemagick.org/Usage/files/">
-</HEAD><BODY BGCOLOR="#B0C4DE">
+</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
 
 <H1>ImageMagick v6 Examples -- <BR>
     <IMG SRC="../img_www/space.gif" width=50 height=1>
@@ -189,9 +189,9 @@ IM can also download an image that is published on the 'world wide web' by
 specifying that images URL. This basically provides a '<CODE>http:</CODE>'
 image coder, which is why it works.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick http://www.ict.griffith.edu.au/anthony/images/anthony_castle.gif \
           -resize 100x100 castle_logo.png
@@ -205,10 +205,10 @@ As you can see this command reads the image from the WWW and  resizes it
 before finally saving the result to disk. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   When a prefix file format is given, any suffix given as part of the filename
   does not have any bearing on the way the file is read.  This is in fact
   vital when reading some file formats such as the "<CODE><A
@@ -267,9 +267,9 @@ an formated incrementing number in the filename. </P>
 If the filename is simply the single character string '<CODE>-</CODE>' IM
 reads the image from standard input.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NO_TXT2GIF>
   cat tree.gif | magick - -frame 5x5+2+2 read_stdin.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -283,9 +283,9 @@ files together in one long multi-image stream.  These formats include the
 simple <A HREF="../formats/#pbmplus" >PbmPlus/NetPBM</A> image formats, as
 well as IM's own special file format <A HREF="#miff" >MIFF:</A>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=read_multiple_stdin.gif>
   for image in eye.gif news.gif storm.gif
   do
@@ -302,9 +302,9 @@ The special character '<CODE>@</CODE>' at the start of a filename, means
 replace the filename, with contents of the given file.  That is you can read
 a file containing a list of files!
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NO_TXT2GIF>
   echo "eye.gif news.gif storm.gif" > filelist.txt
   magick @filelist.txt  -frame 5x5+2+2 +append filelist.gif
@@ -317,9 +317,9 @@ a file containing a list of files!
 You can also use '<CODE>@</CODE>' with the special filename '<CODE>-</CODE>'
 to read the filenames from standard input.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   echo "eye.gif news.gif storm.gif" |\
     magick @- -frame 5x5+2+2 +append filelist_stdin.gif
@@ -331,19 +331,19 @@ to read the filenames from standard input.
 
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Reading a list of filenames from a file using the '@' syntax was added
   in IM v6.5.2-1.
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   As a security precaution this only works with actual image files. It does
   not work with image generators such as  "<CODE>rose:</CODE>" or
   "<CODE>label:string</CODE>".  It also can not be used to 'include' command
@@ -362,9 +362,9 @@ the image(s) are actually added to the current image sequence.
 You can specify a "<CODE><A HREF="../option_link.cgi?extract"
 >-extract</A></CODE>" setting.  For example, here I crop the rose image...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick -extract 32x32+20+5 rose: +repage rose_extract.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -376,9 +376,9 @@ You can specify a "<CODE><A HREF="../option_link.cgi?extract"
 Or you can append a read modifier to the end of the filename using square
 brackets '<CODE>[...]</CODE>'.  For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick 'rose:[32x32+20+5]' +repage  rose_read_modifier.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -462,11 +462,11 @@ effects.  A '<CODE>#</CODE>' represent some number.
     before that image is added to the other images already in memory. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
-<TR VALIGN=bottom><TD WIDTH=100% ALIGN=justify>
+<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
     This can both shrink images, or enlarge images.  For example...
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick pattern:gray95'[60x60]' enlarged_dots.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -483,9 +483,9 @@ effects.  A '<CODE>#</CODE>' represent some number.
     a solid color canvas. Actually what is happening is that it is resizing
     the default single pixel image.  For example...
 
-    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-    <TR><TD WIDTH=100% ALIGN=justify>
-    <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+    <TR><TD width="100%" ALIGN=justify>
+    <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
     <TR><TD><PRE><CODE EXECUTE>
       magick 'canvas:DodgerBlue[50x50]'  canvas_size.gif
     </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -581,10 +581,10 @@ compressed format, but use them directly in later IM processing. For large
 text based images this can result in enormous disk space savings. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The PNG format includes "<CODE>gzip</CODE>" compression as part of its
   format specification.  In this case the first digit of the two digit PNG
   "<CODE><A HREF="../option_link.cgi?quality" >-quality</A></CODE>" setting
@@ -612,10 +612,10 @@ creation, including, "<CODE><A HREF="../option_link.cgi?page"
 Image Meta-Data</A>. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Be very careful when passing an user provided argument to IM in a script,
   insuring that the argument is what you expect.  You do not want to let a web
   image processing script return an image of the system password file for
@@ -730,9 +730,9 @@ either use a filename suffix, such as I use in just about all these examples,
 or prefix the filename with the string "<CODE>{format}:</CODE>". For
 example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick tree.gif    GIF:tree_image
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -810,9 +810,9 @@ filename you will need to double it ('<CODE>%%</CODE>'). </P>
 As of IM v6.4.8-4 you can now also insert special pre-prepared setting (must
 start with '<CODE>filename:</CODE>' into the final filename.  For example...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE IMAGE=rose_70x46.png>
   magick rose: -set filename:mysize "%wx%h" 'rose_%[filename:mysize].png'
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -905,9 +905,9 @@ For example here I save the built-in "<CODE>rose:</CODE>" image as a
 compression of GIF, as it would prevent "<CODE>gzip</CODE>" compression from
 achieving its best compression.
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -compress none  rose.gif.gz
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -923,9 +923,9 @@ what your browser does, with such an image from this web server. </P>
 
 Compare the size of this to a normal saved LZW compressed GIF image...
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: rose.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -1053,10 +1053,10 @@ will see that IM generated images named "<CODE>image-0.gif</CODE>" to
 "<CODE>image-2.gif</CODE>". </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Previous to ImageMagick version 6.2.0 the output filename of the above
   would have been  "<CODE>image.gif.0</CODE>" to "<CODE>image.gif.2</CODE>".
   This resulted in many problems due to the loss of the filename suffix,
@@ -1088,10 +1088,10 @@ Here we generated the images "<CODE>image_0.gif</CODE>" to
 a dash. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Not only can you use '<CODE>%d</CODE>' for a decimal number, but you can
   use '<CODE>%x</CODE>' for a hexadecimal number (lowercase),
   '<CODE>%X</CODE>' for a hexadecimal number (uppercase), or
@@ -1099,10 +1099,10 @@ a dash. </P>
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   If you really want a percent character which is followed by one of these
   letters, then you will need to double the percent character to escape its
   meaning.  That is you will need to use '<CODE>%%</CODE>' to ensure you
@@ -1110,10 +1110,10 @@ a dash. </P>
 </I></FONT></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The '<CODE>%d</CODE>' in the output filename actually enables the
   "<CODE><A HREF="../option_link.cgi?adjoin" >+adjoin</A></CODE>" setting of
   ImageMagick, automatically. <BR>
@@ -1453,10 +1453,10 @@ special handling of images. </P>
     below. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     The raw image data (binary) is actually prefixed by the four character
     sequence "\n\f\n:", (formfeed on a line by itself, and a colon).  How this
     data should be read is encoded in the header data, but tyically consists
@@ -1578,7 +1578,7 @@ special handling of images. </P>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
 <TR><TD WIDTH=10% ALIGN=justify></TD>
     <TD WIDTH=90% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE ERR=info_paged.txt>
   magick rose: -shave 12x0 -repage 64x64+9+9 \
           -format '%wx%h %g'  -write info:info_paged.txt    paged.gif
@@ -1587,7 +1587,7 @@ special handling of images. </P>
      ><IMG SRC="paged.gif"   WIDTH=64  HEIGHT=64
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR> <TR></TD><TD></TD><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="info_paged.txt"
     ><IMG SRC="info_paged.txt.gif"
@@ -1596,8 +1596,8 @@ special handling of images. </P>
 </TD><TD></TD></TR></TABLE></P>
 
     There is also a "<CODE><A HREF="../option_link.cgi?identify"
-    >-identify</A></CODE>" operator that is equivalent using <NOBR>"<CODE><A
-    HREF="../option_link.cgi?write" >-write</A> info:</CODE>"</NOBR> to output
+    >-identify</A></CODE>" operator that is equivalent using "<CODE><A
+    HREF="../option_link.cgi?write" >-write</A> info:</CODE>" to output
     image identification information to standard output.  This make it even
     easier to monitor what is happening to your images when debugging your IM
     commands. </P>
@@ -1607,7 +1607,7 @@ special handling of images. </P>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
 <TR><TD WIDTH=10% ALIGN=justify></TD>
     <TD WIDTH=90% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=info_thumbnail.txt >
   magick logo:           -magick identify \
           -trim           -magick identify \
@@ -1619,7 +1619,7 @@ special handling of images. </P>
      ><IMG SRC="logo_thumbnail.gif"  WIDTH=80   HEIGHT=80
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR> <TR></TD><TD></TD><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="info_thumbnail.txt"
     ><IMG SRC="info_thumbnail.txt.gif"
@@ -1654,10 +1654,10 @@ special handling of images. </P>
 </DIV></P>
 
     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-    <TR VALIGN=top>
+    <TR valign="top">
     <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
         ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
       The "<CODE><A HREF="../option_link.cgi?verbose" >-verbose</A></CODE>"
       setting will also cause extra information about images being read in
       or out, to be printed to the standard error (with the exception of the
@@ -1668,17 +1668,17 @@ special handling of images. </P>
       HREF="../option_link.cgi?identify" >-identify</A></CODE>" or the
       "<CODE>info:</CODE>" format. </P>
 
-      For example &nbsp;&nbsp; </I><NOBR> "<CODE>-verbose -write
-      info:image_info.txt +verbose</CODE>" </NOBR><I> &nbsp;&nbsp; or
-      &nbsp;&nbsp; </I><NOBR> "<CODE>-verbose -magick identify +verbose</CODE>"
-      </NOBR><I>.
+      For example &nbsp;&nbsp; </I> "<CODE>-verbose -write
+      info:image_info.txt +verbose</CODE>" <I> &nbsp;&nbsp; or
+      &nbsp;&nbsp; </I> "<CODE>-verbose -magick identify +verbose</CODE>"
+      <I>.
 
     </I></FONT></TD></TR></TABLE></P>
 
-    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR VALIGN=top>
+    <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%><TR valign="top">
     <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
         ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
       Scripted reading of the output from any form of "<CODE><A
       HREF="../basics/#identify" >identify</A></CODE>", should do so in a case
       in-sensitive way. This insures better backward compatibility between
@@ -1716,8 +1716,8 @@ special handling of images. </P>
     then junk all the other images using "<CODE>null:</CODE>".
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGn=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick eye.gif news.gif storm.gif tree.gif rose: logo: \
             \( -clone 2 -write write_storm.gif \)   null:
@@ -1820,10 +1820,10 @@ special handling of images. </P>
 </DIV></P>
 
     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-    <TR VALIGN=top>
+    <TR valign="top">
     <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
         ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-    <TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+    <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
       At this time you can not set a specific 'Maximum Value' to use in the
       output file format. You can only define a different value in terms of
       the current "<CODE><A HREF="../option_link.cgi?depth"
@@ -1923,10 +1923,10 @@ special handling of images. </P>
     in parenthesis.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     The values are normally intergers.  However as of IM v6.9.2-1, if the
     special define "<CODE><A HREF="../option_link.cgi?define" >-define</A>
     txt:compliance=css</CODE>" is given with "<CODE><A
@@ -2012,9 +2012,9 @@ special handling of images. </P>
     HREF="../basics/#depth" >Depth</A>.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
-<TR VALIGN=top><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
+<TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
               <TD WIDTH=90% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tree_colors.txt>
   magick tree.gif -unique-colors txt:-
 </CODE></PRE></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -2022,7 +2022,7 @@ special handling of images. </P>
      ><IMG SRC="../images/tree.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="tree_colors.txt"
      ><IMG SRC="tree_colors.txt.gif"
@@ -2133,9 +2133,9 @@ special handling of images. </P>
     identify.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90%>
-<TR VALIGN=top><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
+<TR valign="top"><TD WIDTH=10% ALIGN=justify ROWSPAN=2></TD>
               <TD WIDTH=90% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tree_histogram.txt>
   magick tree.gif  -define histogram:unique-colors=true \
            -format %c histogram:info:-
@@ -2144,7 +2144,7 @@ special handling of images. </P>
      ><IMG SRC="../images/tree.gif"
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR><TR><TD>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD>
   <A HREF="tree_histogram.txt"
      ><IMG SRC="tree_histogram.txt.gif"
@@ -2152,10 +2152,10 @@ special handling of images. </P>
 </TD></TR></TABLE></TD></TR></TABLE></P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The "<CODE>info:</CODE>" output format was added to IM v6.2.4.
   For IM versions before this use..
 <DIV ALIGN=center>
@@ -2172,10 +2172,10 @@ special handling of images. </P>
     been replaced by a count of the number of pixels.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
     ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   This comment can take a very long time to create.  As of IM v6.6.1-5, you
   can add the special setting "<CODE><A HREF="../option_link.cgi?define"
   >-define</A> histogram:unique-colors=false</CODE>" which will turn off this
@@ -2189,15 +2189,15 @@ special handling of images. </P>
     make magenta.  In other words with color channel has its own separate
     histogram. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGn=center>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGn=center>
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
     If you want the image converted to some other format, just save it into
     that format. "<CODE>histogram:</CODE>" is a special image processing
     format.  It will magick the image, then output in the format specified by
     the filename suffix or further "<CODE><I>format</I>:</CODE>" codes.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: \
           -define histogram:unique-colors=false \
@@ -2245,14 +2245,14 @@ special handling of images. </P>
     and blue spikes on the left, showing that is has very little influence on
     the image at all. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGn=center>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGn=center>
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
     If you are more interesting in the brightness of an image rather than its
     colors, magick the image to a gray-scale before generating a
     "<CODE>histogram:</CODE>" image.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -colorspace Gray \
           -define histogram:unique-colors=false \
@@ -2272,15 +2272,15 @@ special handling of images. </P>
     The completely empty space at the extreme left also shows that there are
     no dark patches in the image at all. </P>
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% ALIGn=center>
-<TR VALIGN=top><TD WIDTH=100% ALIGN=justify>
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGn=center>
+<TR valign="top"><TD width="100%" ALIGN=justify>
 
     On the other hand a better 'global' histogram can be generated by
     simply separating all the color channels in the original image and
     appending.   The resulting histogram is a representation of all the color
     values regardless of which channel that value is from.
 
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -separate -append \
           -define histogram:unique-colors=false \
@@ -2324,8 +2324,8 @@ special handling of images. </P>
     like.  For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick tree.gif -write mpr:tree  +delete \
           \
@@ -2359,8 +2359,8 @@ special handling of images. </P>
     operator to tile an image over a larger area.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick tree.gif -flip   -write mpr:tree  +delete \
           -size 64x64 tile:mpr:tree   mpr_tile.gif
@@ -2377,8 +2377,8 @@ special handling of images. </P>
     in the same command,
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick rose: -define histogram:unique-colors=false \
           -write histogram:mpr:hgram  +delete \
@@ -2424,8 +2424,8 @@ special handling of images. </P>
     For example here I extract the 'storm' image from a set of four images.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick eye.gif news.gif storm.gif tree.gif \
           -write mpr:images  -delete 0--1 \
@@ -2445,10 +2445,10 @@ special handling of images. </P>
 
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     As of IM v6.8.2 you can also store images in a remote IM caching daemon
     process.  This allows images (and there meta-data) to be passed between
     separately running IM commands, without needed disk space. See <A
@@ -2590,8 +2590,8 @@ special handling of images. </P>
   external image source.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=b64_noseguy.gif>
   magick 'inline:data:image/gif;base64,
       R0lGODlhIAAgAPIEAAAAAB6Q/76+vvXes////wAAAAAAAAAAACH5BAEAAAUALAAA
@@ -2619,8 +2619,8 @@ special handling of images. </P>
   HTML tag of the form...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE>
   &lt;IMG SRC="data:image/gif;base64,
         R0lGODlhIAAgAPIEAAAAAB6Q/76+vvXes////wAAAAAAAAAAACH5BAEAAAUALAAA
@@ -2652,8 +2652,8 @@ special handling of images. </P>
   end of that part of the inline image data string. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=b64_folder.gif>
   magick 'inline:data:,R0lGODlhEAAOALMAAOazToeHh0tLS/7LZv/0jvb29t/f3//U
        b//ge8WSLf/rhf/3kdbW1mxsbP//mf///yH5BAAAAAAALAAAAAAQAA4AAARe8L1Ek
@@ -3059,9 +3059,9 @@ prefix, it should call the above command, to read the 'flip' format image. </P>
 
 For example..
 
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
-<TR><TD WIDTH=100% ALIGN=justify>
-<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=100% BGCOLOR="#CCCCCC">
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
+<TR><TD width="100%" ALIGN=justify>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 width="100%" BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE>
   magick flip:tree.gif   delegate_tree_flip.gif
 </CODE></PRE></TD></TR></TABLE></TD><TD>
@@ -3105,10 +3105,10 @@ Lots of delegates of this type has already been added to the system file, so
 it is worth a look. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   For security reasons delegates in a personal "<CODE>delegates.xml</CODE>"
   file will not override the delegates defined in the system installed
   "<CODE>delegates.xml</CODE>" file.  You can only add new unique delegate
@@ -3364,10 +3364,10 @@ is not installed, mis-configured, or in an unknown location on your system.
 </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR VALIGN=top>
+<TR valign="top">
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
-<TD ALIGN=justify WIDTH=100%><FONT SIZE=-1><I>
+<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The PDF/PS "<CODE>ghostscript</CODE>" delegates are in a special format
   used internally.  IM internally examines postscript format images to
   attempt to determine exactly how to rasterize the file via the given
@@ -3897,7 +3897,7 @@ filters. More experimentation needed. </I></P>
 
 </DIV>
 <HR><!-- ---------------------------------------------------------------- -->
-<ADDRESS>
+</div></main><footer class="magick-footer"><div class="container-fluid">
 Created: 27 October 2005 (separated from 'basics' page) <BR>
 Updated: 10 May 2013 <BR>
 Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
@@ -3905,4 +3905,4 @@ Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
 Examples Generated with:
         <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
 URL: <CODE>https://imagemagick.org/Usage/files/</CODE>
-</ADDRESS></BODY></HTML>
+</div></footer></body></HTML>
