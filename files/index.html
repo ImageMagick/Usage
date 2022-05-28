@@ -1424,7 +1424,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE IMAGE=write_miff_info.txt OUT=write_miff_info.txt>
-<r>  magick rose:   miff:-  | sed -n '/^\f$/q; p'
+<r>  magick rose:  miff:-  | sed -n '/^\f$/q; p'
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1643,7 +1643,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=info_verbose.txt >
-  magick rose:  -verbose  info:  | head
+  magick rose: -verbose  info:  | head
 </CODE></PRE></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD>
@@ -1860,7 +1860,7 @@ special handling of images. </P>
   magick rose: -depth 16 txt:- |\
     head -1 | grep -i ,RGB\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output using RGB FAILED\!"
-  [ "`magick rose:  txt:- |\
+  [ "`magick rose: txt:- |\
           magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using RGB FAILED\!"
@@ -1868,7 +1868,7 @@ special handling of images. </P>
   magick rose: -matte -depth 16 txt:- |\
     head -1 | grep -i ,RGBA\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output RGB with alpha FAILED\!"
-  [ "`magick rose:  -matte txt:- |\
+  [ "`magick rose: -matte txt:- |\
           magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
     "ASSERTION FAILURE: TXT read using RGB with alpha FAILED\!"
@@ -1876,7 +1876,7 @@ special handling of images. </P>
   magick rose: -colorspace CMYK -depth 16 txt:- |\
     head -1 | grep -i ,CMYK\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output using CMYK FAILED\!"
-  [ "`magick rose:  -colorspace CMYK txt:- |\
+  [ "`magick rose: -colorspace CMYK txt:- |\
         magick - -colorspace RGB miff:- |\
           magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
@@ -1885,7 +1885,7 @@ special handling of images. </P>
   magick rose: -colorspace CMYK -matte -depth 16 txt:- |\
     head -1 | grep -i ,CMYKA\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output CMYK with alpha FAILED\!"
-  [ "`magick rose:  -colorspace CMYK -matte txt:- |\
+  [ "`magick rose: -colorspace CMYK -matte txt:- |\
         magick - -colorspace RGB miff:- |\
           magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
@@ -1894,7 +1894,7 @@ special handling of images. </P>
   magick rose: -colorspace LAB -depth 16 txt:- |\
     head -1 | grep -i ,LAB\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output LAB FAILED\!"
-  [ "`magick rose:  -colorspace LAB txt:- |\
+  [ "`magick rose: -colorspace LAB txt:- |\
         magick - -colorspace RGB miff:- |\
           magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'`" -gt 10 ] && echo >&2 \
@@ -1903,7 +1903,7 @@ special handling of images. </P>
   magick rose: -colorspace LAB -matte -depth 16 txt:- |\
     head -1 | grep -i ,LABA\$ >/dev/null || echo >&2 \
     "ASSERTION FAILURE: TXT output LAB with alpha FAILED\!"
-  [ `magick rose:  -colorspace LAB -matte txt:- |\
+  [ `magick rose: -colorspace LAB -matte txt:- |\
         magick - -colorspace RGB miff:- |\
           magick compare -dissimilarity-threshold 1 -metric PAE - rose: null: 2>&1 |\
             sed 's/ .*//'` -gt 10 ] && echo >&2 \
@@ -2726,7 +2726,7 @@ special handling of images. </P>
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=b64_image.txt>
   # Blur an image, and show an on screen comparision before
   # auto-deleting and exiting.
-  magick rose:  input_image.png
+  magick rose: input_image.png
   magick input_image.png -blur 0x5  blurred.png
   flicker_cmp input_image.png ephemeral:blurred.png &amp;
 
@@ -3175,7 +3175,7 @@ images, having been provided at least one method of going so.
 <DIV ALIGN=center>
 <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
 <TR><TD><PRE><CODE EXECUTE OUT=delegate_rose_xyzzy.txt>
-  magick rose:  -negate   rose.xyzzy
+  magick rose: -negate   rose.xyzzy
   magick identify rose.xyzzy
 </CODE></PRE></TD></TR></TABLE></TD><TD>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=80% BGCOLOR="#CCCCCC">
