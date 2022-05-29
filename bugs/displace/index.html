@@ -29,7 +29,7 @@
 </DL>
 
 This is a demonstration of numerous bugs that I found in the
-"<CODE>composite</CODE>" commands  "<CODE><A
+"<code>magick composite</code>" commands  "<CODE><A
 HREF="../../option_link.cgi?displace" >-displace</A></CODE>" method, in IM
 versions 6.2.8 and before. </P>
 
@@ -65,7 +65,7 @@ Have a look at this displacement result.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:grey50 -draw 'circle 50,50 25,50' dismap.png
 
-  composite dismap.png dismap.png dismap.png  -displace 20x20 displaced.jpg
+  magick composite dismap.png dismap.png dismap.png  -displace 20x20 displaced.jpg
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
     <A HREF="dismap.png"
        ><IMG SRC="dismap.png"            WIDTH=100 HEIGHT=100
@@ -76,7 +76,7 @@ Have a look at this displacement result.
              ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-This is really caused by the way the "<CODE>composite</CODE>" command actually
+This is really caused by the way the "<code>magick composite</code>" command actually
 handles mask images. This is detailed on the page for <A
 HREF="../composite_mask/" >Composite Mask Bug</A>.  What is going on is that
 internally the Y displacement map (mask image) is merged with the X
@@ -92,7 +92,7 @@ to...
 <TR><TD WIDTH=100% ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-   composite dismap.png dismap.png xc:white'[100x100]' \
+   magick composite dismap.png dismap.png xc:white'[100x100]' \
               -displace 20x20   displace_masked.jpg
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
     <A HREF="displace_masked.jpg"
@@ -114,7 +114,7 @@ contain transparency information without problems.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite dismap.png  dismap.png  dismap.png \
+  magick composite dismap.png  dismap.png  dismap.png \
                              +matte  -displace 20x20 displaced_matte.jpg
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
     <A HREF="dismap.png"
@@ -172,10 +172,10 @@ Results seen for -displacement arguments with one displacement map.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite dismap.png +matte dismap.png -displace 15    displaced_1.jpg
-  composite dismap.png +matte dismap.png -displace 15x0  displaced_x.jpg
-  composite dismap.png +matte dismap.png -displace 0x30  displaced_y.jpg
-  composite dismap.png +matte dismap.png -displace 15x30 displaced_xy.jpg
+  magick composite dismap.png +matte dismap.png -displace 15    displaced_1.jpg
+  magick composite dismap.png +matte dismap.png -displace 15x0  displaced_x.jpg
+  magick composite dismap.png +matte dismap.png -displace 0x30  displaced_y.jpg
+  magick composite dismap.png +matte dismap.png -displace 15x30 displaced_xy.jpg
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
     <A HREF="dismap.png"
        ><IMG SRC="dismap.png"             WIDTH=100 HEIGHT=100

@@ -4385,7 +4385,7 @@ interesting coloration or effect, over and over.
          sed 's/ .*//'`" != '0' ] &&  echo >&2 \
     "ASSERTION FAILURE: Seeded Plasma Image Changed\!"
   [ "`magick -size 100x100 -seed 1 plasma: -seed 1 plasma: miff:- | \
-      compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
+      magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
 \
     "ASSERTION FAILURE: Repeated Seeded Plasmas do not match\!"
 </CODE> -->
@@ -4628,7 +4628,7 @@ Generators</A>. </P>
 <!-- <CODE EXECUTE ASSERT>
   [ "`magick -size 100x100 xc: -seed 11 +noise Random \
                       \( +clone -seed 11 +noise Random \) miff:- | \
-      compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
+      magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'`" != '0' ] && echo >&2 
 \
     "ASSERTION FAILURE: Seeded Random Images do not match"
 </CODE> -->
@@ -5552,7 +5552,7 @@ HREF="../compose/#tile" >Tile Compositing</A>).
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -tile tile_weave.gif -size 60x60  xc:none   tile_copy.gif
+  magick composite -tile tile_weave.gif -size 60x60  xc:none   tile_copy.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tile_copy.gif"
      ><IMG SRC="tile_copy.gif"       WIDTH=60 HEIGHT=60
@@ -5739,7 +5739,7 @@ canvas image using "<CODE>tile:</CODE>" or "<CODE>pattern:</CODE>".
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
-This also works for the "<CODE>montage</CODE>" background
+This also works for the "<code>magick montage</code>" background
 "<CODE><A HREF="../../option_link.cgi?texture" >-texture</A></CODE>"
 setting.
 

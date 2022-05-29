@@ -883,7 +883,7 @@ your fellow spy...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -gravity center -size 50x40 label:"Watch\nthe\nPidgeon" message.gif
 </CODE><CODE EXECUTE NOWARN OUT=message_size.txt
->  identify message.gif
+>  magick identify message.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="message.gif"
      ><IMG SRC="message.gif"       WIDTH=50  HEIGHT=40
@@ -906,7 +906,7 @@ size) used is the cryptographic 'key' for the hidden message.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite message.gif rose: -stegano +15+2  rose_message.png
+  magick composite message.gif rose: -stegano +15+2  rose_message.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="rose_message.png"
      ><IMG SRC="rose_message.png"
@@ -941,7 +941,7 @@ original.
               <TD width="90%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=rose_diff_pae.txt>
-  compare -metric PAE rose: rose_message.png   rose_difference.png
+  magick compare -metric PAE rose: rose_message.png   rose_difference.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="rose_difference.png"
      ><IMG SRC="rose_difference.png"
@@ -1137,9 +1137,9 @@ encrypt and later decrypt the "<CODE>message.gif</CODE>" image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  identify -format %# rose.gif |\
+  magick identify -format %# rose.gif |\
     magick message.gif  -encipher - -depth 8    png24:message_signed.png
-  identify -format %# rose.gif |\
+  magick identify -format %# rose.gif |\
     magick message_signed.png   -decipher -   message_restored_3.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="message.gif"
@@ -2306,7 +2306,7 @@ Also related is -despeckle. to remove single off color pixels.
 
 Generate a 3d stereogram of two images (one for each eye)
 This is also known as an anaglyph
-  composite left.jpg right.jpg -stereo anaglyph.jpg
+  magick composite left.jpg right.jpg -stereo anaglyph.jpg
 
 </PRE>
 
@@ -3780,7 +3780,7 @@ HREF="../basics/#identify" >identify</A></CODE>" command.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=fx_math.txt>
-  identify -format '%[fx:atan(1)*4]' null:
+  magick identify -format '%[fx:atan(1)*4]' null:
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="fx_math.txt"
      ><IMG SRC="fx_math.txt.gif"
@@ -3792,7 +3792,7 @@ this value is available as the built-in variable '<CODE>pi</CODE>'. </P>
 
 You can generate random numbers.  For example to generate an integer
 between -5 and 10 inclusive.  Here I use the "<CODE><A HREF="../files/#info:"
->info:</A></CODE>" equivalent to the "<CODE>identify</CODE>" command.
+>info:</A></CODE>" equivalent to the "<code>magick identify</code>" command.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>

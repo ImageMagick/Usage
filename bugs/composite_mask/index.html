@@ -44,7 +44,7 @@ fixed.  </P>
 
 <HR><!-- ---------------------------------------------------------------- -->
 
-The "<CODE>composite</CODE>" command and  "<CODE><A
+The "<code>magick composite</code>" command and  "<CODE><A
 HREF="../../option_link.cgi?composite" >-composite</A></CODE>" operator will
 also take a third masking image which is suposed to limit the area effected by
 the "<CODE><A HREF="../../option_link.cgi?compose" >-compose</A></CODE>"
@@ -61,7 +61,7 @@ final size of resulting image.
     magick -size 70x70 xc:black \
             -fill white   -draw 'circle 35,35 35,5' \
             -fill black   -draw 'circle 28,30 35,5'   moon_mask.gif
-    composite tile_water.jpg tile_aqua.jpg \
+    magick composite tile_water.jpg tile_aqua.jpg \
               moon_mask.gif  +matte     mask_over.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
    <A HREF="../../images/tile_water.jpg"
@@ -117,7 +117,7 @@ And apply them, again using an  'Over' compose method...
 <TR><TD WIDTH=100% ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-    composite src.png  bgnd.png   mask.png   mask_masked.png
+    magick composite src.png  bgnd.png   mask.png   mask_masked.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
    <A HREF="mask_masked.png"
       ><IMG SRC="mask_masked.png"           WIDTH=60  HEIGHT=60
@@ -135,8 +135,8 @@ What is happening is that at this time the above is equivalent to...
 <TR><TD WIDTH=100% ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-    composite mask.png  src.png +matte -compose CopyOpacity  miff:- |\
-      composite  -  bgnd.png    mask_masked_equiv.png
+    magick composite mask.png  src.png +matte -compose CopyOpacity  miff:- |\
+      magick composite  -  bgnd.png    mask_masked_equiv.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
    <A HREF="mask_masked_equiv.png"
       ><IMG SRC="mask_masked_equiv.png"      WIDTH=60  HEIGHT=60
@@ -149,8 +149,8 @@ However what it should have generated was something like...
 <TR><TD WIDTH=100% ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH=100% bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-    composite mask.png  src.png  -compose DstIn  miff:- |\
-      composite  -  bgnd.png    mask_masked_true.png
+    magick composite mask.png  src.png  -compose DstIn  miff:- |\
+      magick composite  -  bgnd.png    mask_masked_true.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE></TD><TD>
    <A HREF="mask_masked_true.png"
       ><IMG SRC="mask_masked_true.png"      WIDTH=60  HEIGHT=60
@@ -200,13 +200,13 @@ matter, but is can be done as shown below. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-    composite src.png bgnd.png                                 composed.png
-    composite mask.png mask.png  +matte -compose CopyOpacity   alpha_mask.png
+    magick composite src.png bgnd.png                                 composed.png
+    magick composite mask.png mask.png  +matte -compose CopyOpacity   alpha_mask.png
 
-    composite alpha_mask.png bgnd.png      -compose DstOut  bgnd_masked.png
-    composite alpha_mask.png composed.png  -compose DstIn   composed_masked.png
+    magick composite alpha_mask.png bgnd.png      -compose DstOut  bgnd_masked.png
+    magick composite alpha_mask.png composed.png  -compose DstIn   composed_masked.png
 
-    composite bgnd_masked.png composed_masked.png -compose Plus  result.png
+    magick composite bgnd_masked.png composed_masked.png -compose Plus  result.png
 </CODE>&nbsp;</PRE></TD></TR></TABLE>
 <TABLE width="90%" CELLSPACING=0 CELLPADDING=0>
 <TR><TD>

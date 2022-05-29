@@ -84,17 +84,17 @@ or other text or notices from images. </P>
 <A NAME="compare"></A>
 <H3>Compare Program</H3>
 
-The "<CODE>compare</CODE>" program is provided to give you an easy way to
+The "<code>magick compare</code>" program is provided to give you an easy way to
 compare two similar images, to determine just how 'different' the images are.
 </P>
 
 For example here I have two frames of an animated 'bag', which I then gave to
-"<CODE>compare</CODE>' to highlight the areas where it changed.
+"<code>magick compare</code>' to highlight the areas where it changed.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare bag_frame1.gif bag_frame2.gif  compare.gif
+  magick compare bag_frame1.gif bag_frame2.gif  magick compare.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/bag_frame1.gif"
      ><IMG SRC="../images/bag_frame1.gif"      WIDTH=97  HEIGHT=92
@@ -120,8 +120,8 @@ HREF="../basics/#display" >display</A></CODE>" program.  For example..
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare bag_frame1.gif bag_frame2.gif  x:
-  compare bag_frame1.gif bag_frame2.gif  miff:- | display
+  magick compare bag_frame1.gif bag_frame2.gif  x:
+  magick compare bag_frame1.gif bag_frame2.gif  miff:- | display
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -132,8 +132,8 @@ to some other more interesting color...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare bag_frame1.gif bag_frame2.gif \
-          -highlight-color  SeaGreen  compare_color.gif
+  magick compare bag_frame1.gif bag_frame2.gif \
+          -highlight-color  SeaGreen  magick compare_color.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compare_color.gif"
      ><IMG SRC="compare_color.gif"         WIDTH=97 HEIGHT=92
@@ -146,9 +146,9 @@ As of IM v6.4.2-8 you can specify the other color as well.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare bag_frame1.gif bag_frame2.gif \
+  magick compare bag_frame1.gif bag_frame2.gif \
           -highlight-color  SeaGreen  -lowlight-color PaleGreen \
-          compare_colors.gif
+          magick compare_colors.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compare_colors.gif"
      ><IMG SRC="compare_colors.gif"         WIDTH=97 HEIGHT=92
@@ -162,7 +162,7 @@ add a "<CODE>-compose src</CODE>" to the options to remove it.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare bag_frame1.gif bag_frame2.gif \
+  magick compare bag_frame1.gif bag_frame2.gif \
           -compose Src compare_src.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compare_src.gif"
@@ -177,9 +177,9 @@ changed pixels...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare bag_frame1.gif bag_frame2.gif \
+  magick compare bag_frame1.gif bag_frame2.gif \
           -compose Src -highlight-color White -lowlight-color Black \
-          compare_mask.gif
+          magick compare_mask.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compare_mask.gif"
      ><IMG SRC="compare_mask.gif"         WIDTH=97 HEIGHT=92
@@ -194,7 +194,7 @@ image to the <A HREF="../formats/#jpg" >Lossy JPEG Format</A> produces...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick bag_frame1.gif  bag_frame1.jpg
-  compare bag_frame1.gif bag_frame1.jpg   compare_lossy_jpeg.gif
+  magick compare bag_frame1.gif bag_frame1.jpg   magick compare_lossy_jpeg.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/bag_frame1.gif"
      ><IMG SRC="../images/bag_frame1.gif"      WIDTH=97  HEIGHT=92
@@ -209,7 +209,7 @@ image to the <A HREF="../formats/#jpg" >Lossy JPEG Format</A> produces...
 </DIV></P>
 
 As you can see even though you can't really see any difference between GIF and
-the JPEG versions of the image, "<CODE>compare</CODE>" reports a lot of
+the JPEG versions of the image, "<code>magick compare</code>" reports a lot of
 differences. </P>
 
 By using a small <A HREF="../color_basics/#fuzz" >Fuzz Factor</A> you can ask
@@ -219,8 +219,8 @@ IM to ignore these minor differences between the two images.
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_fuzz.txt>
-  compare -metric AE -fuzz 5% \
-          bag_frame1.gif bag_frame1.jpg   compare_fuzz.gif
+  magick compare -metric AE -fuzz 5% \
+          bag_frame1.gif bag_frame1.jpg   magick compare_fuzz.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -253,7 +253,7 @@ better of getting a more exact '<CODE><A HREF="../compose/#difference"
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite bag_frame1.gif bag_frame1.jpg \
+  magick composite bag_frame1.gif bag_frame1.jpg \
             -compose difference  difference_jpeg.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="difference_jpeg.gif"
@@ -261,7 +261,7 @@ better of getting a more exact '<CODE><A HREF="../compose/#difference"
            ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-As you can see while "<CODE>compare</CODE>" showed that JPEG created a lot of
+As you can see while "<code>magick compare</code>" showed that JPEG created a lot of
 differences between the images, a '<CODE><A HREF="../compose/#difference"
 >difference</A></CODE>' composition was quite dark, indicating that all the
 differences were relatively minor. </P>
@@ -294,7 +294,7 @@ without any enhancement.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite bag_frame1.gif bag_frame2.gif \
+  magick composite bag_frame1.gif bag_frame2.gif \
             -compose difference  difference_frames.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="difference_frames.gif"
@@ -305,7 +305,7 @@ without any enhancement.
 Note that as the '<CODE><A HREF="../compose/#difference"
 >difference</A></CODE>' compose method is associative, the order of the two
 images in the above examples does not matter, although unlike
-"<CODE>compare</CODE>", you can compare different sized images, with the
+"<code>magick compare</code>", you can compare different sized images, with the
 destination image determining the final size of the difference image. </P>
 
 The different method is even more useful when used with the
@@ -328,7 +328,7 @@ generate a mask of any pixel that changed color between the two images.
            ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-This is basically what the "<CODE>compare</CODE>" program does, but with
+This is basically what the "<code>magick compare</code>" program does, but with
 more controls as to the color and output style. </P>
 
 However as you can see it tends to find even the smallest minor change between
@@ -353,14 +353,14 @@ comparison image, than a colorful one.
            ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-Now unlike "<CODE>compare</CODE>", the difference image shows a mixture of
+Now unlike "<code>magick compare</code>", the difference image shows a mixture of
 both images combined in the final result. For example look at the weird
 'talisman' seems to appear in the forehead of the cat. This was originally the
 handle of the bag from the first image.  This merger can make it confusing as
 to exactly what differences you are seeing, and you see a megere of both the
 additions and removals from the image.  </P>
 
-Because of this confusion of details, the "<CODE>compare</CODE>" is usually the
+Because of this confusion of details, the "<code>magick compare</code>" is usually the
 better way for us humans to view, while the 'difference' image is the better
 method for further processing the image. </P>
 
@@ -457,7 +457,7 @@ HREF="http://ecocam.evsc.virginia.edu/change_detection_description/change_detect
 <A NAME="flicker"></A>
 <H3>Flicker Compare</H3>
 
-An alternative to the "<CODE>compare</CODE>" program to see differences
+An alternative to the "<code>magick compare</code>" program to see differences
 between images is to do a flicker comparison between the similar images at a
 reasonably fast rate.
 
@@ -495,7 +495,7 @@ by splitting up the animation into separate frames again.   For example...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
     magick \( anim1.gif -coalesce -append \) \
             \( anim2.gif -coalesce -append \) miff:- | \
-      compare - miff:- |\
+      magick compare - miff:- |\
         magick - -crop 160x120 +repage anim_compare.gif
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -558,12 +558,12 @@ Compare  Program  Statistics...
 
    You can get an actual average difference value using the -metric
 
-     compare -metric MAE image1 image2 null: 2>&1
+     magick compare -metric MAE image1 image2 null: 2>&1
 
    Adding -verbose will provide more specific information about each separate
    channel.
 
-      compare -verbose -metric MAE rose.jpg reconstruct.jpg null: 2>&1
+      magick compare -verbose -metric MAE rose.jpg reconstruct.jpg null: 2>&1
 
       Image: rose.jpg
       Channel distortion: MAE
@@ -663,12 +663,12 @@ Compare  Program  Statistics...
    For example...
    To AE fully-transparent white and fully-transparent black are the same.
 
-     compare -metric AE xc:#0000 xc:#FFF0 null:
+     magick compare -metric AE xc:#0000 xc:#FFF0 null:
      0
 
    But to RMSE they are VERY different
 
-     compare -metric RMSE xc:#0000 xc:#FFF0 null:
+     magick compare -metric RMSE xc:#0000 xc:#FFF0 null:
      56755 (0.866025)
 
 Dissimilarity-threshold
@@ -699,7 +699,7 @@ Under Construction
 <PRE>
 Using "compare -subimage-search" option...
 
-  compare -subimage-search  large_image.png  sub-image.png  results-%d.png
+  magick compare -subimage-search  large_image.png  sub-image.png  results-%d.png
 
   This produces two images
     results-0.png
@@ -738,7 +738,7 @@ Using "compare -subimage-search" option...
   separate color difference channel results into a final image
 
     magick large_image.png small_image.png miff:- |
-      compare -metric RMSE -subimage-search - miff:- |
+      magick compare -metric RMSE -subimage-search - miff:- |
         magick - -delete 0 -grayscale MS show:
 
 
@@ -768,7 +768,7 @@ Some Basic Sub-Image Search Examples....
   immeditally abort after finding that first match.
   Don't bother outputing the incomplete image results.
 
-     compare -subimage-search -metric AE -similarity-threshold 1.0 \
+     magick compare -subimage-search -metric AE -similarity-threshold 1.0 \
                    screen.png letter.png null: 2>&1
 
   NOTE speed will be highly dependant on where in the image that first
@@ -777,20 +777,20 @@ Some Basic Sub-Image Search Examples....
   Find all occurances of exactly that image,
   as an image (white dots on matches, black elsewhere)
 
-     compare -subimage-search -metric AE \
+     magick compare -subimage-search -metric AE \
                    screen.png letter.png miff:- 2>/dev/null |
        magick - -delete 0 show:
 
   Extract a list of the coordinates of all matching letters (white dots)
   (as an enumerated pixel list, ignoring anything black)
 
-     compare -subimage-search -metric AE \
+     magick compare -subimage-search -metric AE \
                    screen.png letter.png miff:-  2>/dev/null |
        magick - -delete 0 txt:- | grep -v '#000000'
 
   Just the coordinate list
 
-     compare -subimage-search -metric AE \
+     magick compare -subimage-search -metric AE \
                    screen.png letter.png miff:-  2>/dev/null |
        magick - -delete 0 txt:- | sed -n '/#FFFFFF/s/:.*//p'
 
@@ -1056,7 +1056,7 @@ You can have IM generate a 'signature' for each image...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  identify -quiet -format "%#" images...
+  magick identify -quiet -format "%#" images...
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -1075,7 +1075,7 @@ JPEG image format uses. </P>
 
 <H4>Direct Comparison</H4>
 
-You can directly compare two images (using the "<CODE>compare</CODE>" program)
+You can directly compare two images (using the "<code>magick compare</code>" program)
 if they are the same size, to see how well they match. (See above) </P>
 
 This is very slow, and in my experience not very useful when used against
@@ -1270,7 +1270,7 @@ probably want the ability to... <UL>
 
 Currently I group matches into sets and use a combination of programs to
 handle them under the users control.  These programs include IM's
-"<CODE>display</CODE>" and "<CODE>montage</CODE>", as well as image viewers
+"<code>magick display</code>" and "<code>magick montage</code>", as well as image viewers
 "<CODE>XV</CODE>" and "<CODE>GQview</CODE>". </P>
 
 However I am open to other suggestions of programs that can open two or more
@@ -1459,7 +1459,7 @@ will determine if the image is purely (or almost purely) black and white. </P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick wmark_dragon.jpg  -solarize 50% -colorspace Gray  wmark_bw_test.png
-   identify -verbose -alpha off wmark_bw_test.png | \
+   magick identify -verbose -alpha off wmark_bw_test.png | \
        sed -n '/Histogram/q; /Colormap/q; /statistics:/,$ p'  > wmark_stats.txt
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR><TD>
@@ -1497,7 +1497,7 @@ Lets repeat this test using the built in granite image.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
    magick granite: granite.jpg
    magick granite.jpg -solarize 50% -colorspace Gray  granite_bw_test.png
-   identify -verbose -alpha off granite_bw_test.png | \
+   magick identify -verbose -alpha off granite_bw_test.png | \
      sed -n '/Histogram/q; /Colormap/q; /statistics:/,$ p' > granite_stats.txt
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR><TD>

@@ -1537,7 +1537,7 @@ Here is how you you use it...
             -compose Displace   -set option:compose:args {<I>X</I>}x{<I>Y</I>} \
             -composite   {<I>result</I>+}
 
-    composite {<I>displacement_map</I>} {<I>image</I>} \
+    magick composite {<I>displacement_map</I>} {<I>image</I>} \
               -displace {<I>X</I>}x{<I>Y</I>}    {<I>result</I>+}
 </samp></pre></TD></TR></TABLE>
 
@@ -1613,7 +1613,7 @@ operator.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE _EXECUTE>
-  composite map_p2d_trapezoidal.png box_image.png \
+  magick composite map_p2d_trapezoidal.png box_image.png \
             -displace 100x0   distort_p2d_trapezoidal.png
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -2141,7 +2141,7 @@ a simple vertical or horizontal distortion, so as to give it more emphasis.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite wave_gradient.png  flower.jpg -displace 5x5 flower_waves.png
+  magick composite wave_gradient.png  flower.jpg -displace 5x5 flower_waves.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flower_waves.png"
      ><IMG SRC="flower_waves.png"   WIDTH=150 HEIGHT=80
@@ -2259,13 +2259,13 @@ composite {<I>X displacement</I>} {<I>image</I>} {<I>Y displacement</I>} \
           -displace {<I>X</I>}x{<I>Y</I>}    {<I>result</I>+}
 </samp></pre></TD></TR></TABLE>
 
-Note the input image order in the "<CODE>composite</CODE>" command.  the wierd
-ording is caused by the need to abuse the "<CODE>composite</CODE>" option
+Note the input image order in the "<code>magick composite</code>" command.  the wierd
+ording is caused by the need to abuse the "<code>magick composite</code>" option
 handling, as well as historical reasons.  It is vital you get this correct.
 </P>
 
 Because of this I recommend you use the "<code>magick</code>" command, rather
-than "<CODE>composite</CODE>". </P>
+than "<code>magick composite</code>". </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
 <TR valign="top">
@@ -2290,7 +2290,7 @@ final image.  The 'blue' channel is ignored. </P>
 <TD><IMG SRC="../img_www/expert.gif"   WIDTH=23 HEIGHT=26
     ><IMG SRC="../img_www/space.gif"   WIDTH=17 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Internally both "<code>magick</code>" and "<CODE>composite</CODE>' actually
+  Internally both "<code>magick</code>" and "<code>magick composite</code>' actually
   merge the two images (if provided) so as to generate a 'unified displacement
   map', before passing that to the internal API. </P>
 
@@ -2371,13 +2371,13 @@ areas of X and Y displacements.
 >  magick  mirror_areas.gif -channel R  -separate   mirror_dismap_x.gif
   magick  mirror_areas.gif -channel G  -separate   mirror_dismap_y.gif
 
-  composite mirror_dismap_x.gif  dragon_sm.gif  mirror_dismap_y.gif -alpha off \
+  magick composite mirror_dismap_x.gif  dragon_sm.gif  mirror_dismap_y.gif -alpha off \
             -background white -virtual-pixel background -displace 7 \
                                                         mirror_displaced.gif
 
   magick  mirror_areas.gif -edge 1 -threshold 20% \
             -evaluate multiply .7 -negate               mirror_cracks.gif
-  composite mirror_displaced.gif  mirror_cracks.gif -compose multiply \
+  magick composite mirror_displaced.gif  mirror_cracks.gif -compose multiply \
                                                         mirror_cracked.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE CELLSPACING=0 CELLPADDING=0>
@@ -2486,7 +2486,7 @@ according to a mapping image. </P>
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-    composite -blur {<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]<!--
+    magick composite -blur {<I>Xscale</I>}[x{<I>Yscale</I>}[+{<I>angle</I>}]]<!--
 -->          blur_map  image   result
 
     magick image  blur_map \

@@ -489,7 +489,7 @@ pairs. </P>
 <H3>Using the Composite Command</H3>
 
 The traditional method of combining two images together using ImageMagick is
-though the "<CODE>composite</CODE>" command.  This command can only combine
+though the "<code>magick composite</code>" command.  This command can only combine
 only two images at a time, saving the results of each operation into a file.
 This of course does not stop you from using it to layer multiple images, one
 image at a time...
@@ -499,10 +499,10 @@ image at a time...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
   magick -size 100x100 xc:skyblue composite.gif
-  composite -geometry  +5+10 balloon.gif composite.gif composite.gif
-  composite -geometry +35+30 medical.gif composite.gif composite.gif
-  composite -geometry +62+50 present.gif composite.gif composite.gif
-  composite -geometry +10+55 shading.gif composite.gif composite.gif
+  magick composite -geometry  +5+10 balloon.gif composite.gif composite.gif
+  magick composite -geometry +35+30 medical.gif composite.gif composite.gif
+  magick composite -geometry +62+50 present.gif composite.gif composite.gif
+  magick composite -geometry +10+55 shading.gif composite.gif composite.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="composite.gif"
      ><IMG SRC="composite.gif"   WIDTH=100 HEIGHT=100
@@ -531,17 +531,17 @@ You can also resize the overlaid image as well as position it using the
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN>
   magick -size 100x100 xc:skyblue comp_resize.gif
-  composite -geometry 40x40+5+10  balloon.gif comp_resize.gif comp_resize.gif
-  composite -geometry      +35+30 medical.gif comp_resize.gif comp_resize.gif
-  composite -geometry 24x24+62+50 present.gif comp_resize.gif comp_resize.gif
-  composite -geometry 16x16+10+55 shading.gif comp_resize.gif comp_resize.gif
+  magick composite -geometry 40x40+5+10  balloon.gif comp_resize.gif comp_resize.gif
+  magick composite -geometry      +35+30 medical.gif comp_resize.gif comp_resize.gif
+  magick composite -geometry 24x24+62+50 present.gif comp_resize.gif comp_resize.gif
+  magick composite -geometry 16x16+10+55 shading.gif comp_resize.gif comp_resize.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="comp_resize.gif"
      ><IMG SRC="comp_resize.gif"   WIDTH=100 HEIGHT=100
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-The "<CODE>composite</CODE>" command also has a few other advantages in that
+The "<code>magick composite</code>" command also has a few other advantages in that
 you can use to control the way the image is drawn onto the background with the
 "<CODE><A HREF="../option_link.cgi?compose" >-compose</A></CODE>" option and
 its relative position is effected by the "<CODE><A
@@ -550,13 +550,13 @@ HREF="../option_link.cgi?gravity" >-gravity</A></CODE>" setting. </P>
 You can also "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>" the
 overlay so that it will just cover the background image, without needing to
 specify tile limits. This is something only available when using
-"<CODE>composite</CODE>". </P>
+"<code>magick composite</code>". </P>
 
 The big disadvantage with this method is that you are using multiple commands,
 and IM has to write-out the working image, either to a pipeline, or to disk,
 for the next command to read-in again. </P>
 
-To find more examples of using the "<CODE>composite</CODE>" command, to
+To find more examples of using the "<code>magick composite</code>" command, to
 overlay images on top of other images, see "<A HREF="../annotating/#overlay"
 >Annotating by Overlaying Images</A>" and "<A
 HREF="../annotating/#image_gravity" >Image Positioning using Gravity</A>".

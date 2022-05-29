@@ -166,7 +166,7 @@
 
 Image Composition is the technique of combining images that have, or do not
 have, transparency or an  alpha channel.  This is usually performed using the
-IM "<CODE>composite</CODE>" command.  It may also be performed as either part
+IM "<code>magick composite</code>" command.  It may also be performed as either part
 of a larger sequence of operations or internally by other image operators.
 </P>
 
@@ -195,13 +195,13 @@ ImageMagick...
 <CENTER>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite {<I>overlay</I>} {<I>background</I>} [{<I>mask</I>}] [-compose {<I>method</I>}]   {<I>result</I>}
+  magick composite {<I>overlay</I>} {<I>background</I>} [{<I>mask</I>}] [-compose {<I>method</I>}]   {<I>result</I>}
 
   magick {<I>background</I>} {<I>overlay</I>} [{<I>mask</I>}] [-compose {<I>method</I>}] -composite   {<I>result</I>}
 </samp></pre></TD></TR></TABLE>
 </CENTER></P>
 
-The "<CODE>composite</CODE>" command is the conventional method of compositing
+The "<code>magick composite</code>" command is the conventional method of compositing
 in IM.  Having a dedicated command demonstrates just how important Image
 Composition is. </P>
 
@@ -281,7 +281,7 @@ On top of the long list of "<CODE><A HREF="../option_link.cgi?compose"
 >-compose</A></CODE>" methods there are some that require extra numerical
 arguments to work correctly. </P>
 
-In the "<CODE>composite</CODE>" command these arguments are passed using the
+In the "<code>magick composite</code>" command these arguments are passed using the
 special options: "<CODE><A HREF="../option_link.cgi?dissolve"
 >-dissolve</A></CODE>", "<CODE><A HREF="../option_link.cgi?blend"
 >-blend</A></CODE>", "<CODE><A HREF="../option_link.cgi?watermark"
@@ -314,7 +314,7 @@ setting... </P>
 <DT><B><A HREF="../layers/#composition" >Composition of Pairs of Images</A></B>
 
 <DD>Practical examples using the primary image composition operators, both
-    the primative "<CODE>composite</CODE>" command, as well as the
+    the primative "<code>magick composite</code>" command, as well as the
     <A HREF="../option_link.cgi?composite" >-composite</A></CODE>"
     operator for "<code>magick</code>". </P>
 
@@ -577,7 +577,7 @@ example of overlaying a single letter image over a background image.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -background none  -fill white \
           -font Ravie  -pointsize 36   label:A   label_A_white.png
-  composite -gravity center label_A_white.png   rose:  compose_over.gif
+  magick composite -gravity center label_A_white.png   rose:  compose_over.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_A_white.png"
      ><IMG SRC="label_A_white.png"
@@ -639,7 +639,7 @@ expanding the image size.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -background none  -fill black \
           -font Ravie  -pointsize 36   label:A   label_A_black.png
-  composite -compose Dst_Over  -geometry +5+5 \
+  magick composite -compose Dst_Over  -geometry +5+5 \
           label_A_black.png  label_A_white.png   compose_under.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_A_black.png"
@@ -658,7 +658,7 @@ clipped by the background.  This is what makes this operator such an important
 and useful operator. </P>
 
 The "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>" setting of
-"<CODE>composite</CODE>" also makes this form of 'over' very useful as a way
+"<code>magick composite</code>" also makes this form of 'over' very useful as a way
 to tile underneath an image.  For example, tile the built in checkerboard
 pattern underneath the shadowed letter we just created.
 
@@ -666,7 +666,7 @@ pattern underneath the shadowed letter we just created.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite  -compose Dst_Over -tile pattern:checkerboard \
+  magick composite  -compose Dst_Over -tile pattern:checkerboard \
              compose_under.png   compose_under_tiled.jpg
 </samp></pre></TD></TR></TABLE>
 </TD><TD>
@@ -706,7 +706,7 @@ needing to know just how big the rose image is.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
-  composite -compose Src  -size 100x100  plasma:tomato-dodgerblue \
+  magick composite -compose Src  -size 100x100  plasma:tomato-dodgerblue \
             rose:  compose_crop.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="compose_crop.gif"
@@ -732,7 +732,7 @@ alpha channel).
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Src -gravity South \
+  magick composite -compose Src -gravity South \
             hand_point.gif   rose:  -alpha set   compose_expand.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="../images/hand_point.gif"
@@ -768,7 +768,7 @@ by the 'Duff-Porter' algorithm.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Copy -gravity South \
+  magick composite -compose Copy -gravity South \
             hand_point.gif   rose:  -alpha set   compose_copy.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_copy.gif"
@@ -893,7 +893,7 @@ from the rose image. </P>
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Dst_In  -gravity center \
+  magick composite -compose Dst_In  -gravity center \
             label_A_white.png  rose: -alpha Set  compose_mask.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_mask.png"
@@ -933,7 +933,7 @@ ignored. </P>
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Dst_Out  -gravity center \
+  magick composite -compose Dst_Out  -gravity center \
             label_A_white.png  rose: -alpha Set  compose_erase.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_erase.png"
@@ -955,7 +955,7 @@ the same (to the pixel) as the original '<CODE>rose:</CODE>' image.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Plus  compose_mask.png  compose_erase.png \
+  magick composite -compose Plus  compose_mask.png  compose_erase.png \
             compose_rejoin.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_rejoin.png"
@@ -1078,7 +1078,7 @@ limit it to the circle.
   magick -size 70x70 xc:none -draw 'circle 35,35 35,20' \
           -negate  -channel A -blur 0x8    red_highlight.png
 
-  composite -compose ATop -geometry -13-17 red_highlight.png \
+  magick composite -compose ATop -geometry -13-17 red_highlight.png \
             red_circle.png red_ball.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="red_circle.png"
@@ -1146,7 +1146,7 @@ use.
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Clear null:  rose: -alpha Set compose_clear.png
+  magick composite -compose Clear null:  rose: -alpha Set compose_clear.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_clear.png"
      ><IMG SRC="compose_clear.png"
@@ -1164,7 +1164,7 @@ the operator will clear the image to black, due to the mathematics involved.
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Clear null:  rose: -alpha Off compose_black.png
+  magick composite -compose Clear null:  rose: -alpha Off compose_black.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="compose_black.png"
      ><IMG SRC="compose_black.png"
@@ -1268,7 +1268,7 @@ is produced by composing two gradient images as in the following...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 64x64 gradient:             gradient_src.png
   magick -size 64x64 gradient: -rotate 90  gradient_dst.png
-  composite gradient_src.png -compose Multiply gradient_dst.png \
+  magick composite gradient_src.png -compose Multiply gradient_dst.png \
             gradient_result.png
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR valign="top">
@@ -1361,7 +1361,7 @@ compose method a '<I>Burn</I>' style of composition. (See <A HREF="#light"
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick label:Rose label_white.gif
-  composite -compose Multiply -gravity center \
+  magick composite -compose Multiply -gravity center \
             label_white.gif  rose: compose_multiply.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_white.gif"
@@ -1438,7 +1438,7 @@ background, then onto other images...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -background black -fill white label:Rose label_black.gif
-  composite -compose Screen -gravity center \
+  magick composite -compose Screen -gravity center \
             label_black.gif  rose: compose_screen.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="label_black.gif"
@@ -1474,7 +1474,7 @@ For example...
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose Bumpmap -gravity SouthEast -geometry +3+3 \
+  magick composite -compose Bumpmap -gravity SouthEast -geometry +3+3 \
             hand_point.gif   cyclops.gif   -alpha Set   compose_bumpmap.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="compose_bumpmap.gif"
@@ -1512,7 +1512,7 @@ The formula for
 '<CODE>Divide_Src</CODE>' is &nbsp; <CODE><I>Dest</I> / <I>Src</I></CODE> </P>
 
 Due to the order of images normally defined in image composition, and the
-"<CODE>composite</CODE> command, the original method '<CODE>Divide</CODE>
+"<code>magick composite</code> command, the original method '<CODE>Divide</CODE>
 meant...
 
 <DIV ALIGN=center><B>
@@ -1660,10 +1660,10 @@ the individual channel has color.  For example...
           -draw 'circle 39,39 36,57'  compose_G.png
   magick -size 60x60 xc:none -fill blue \
           -draw 'circle 21,39 24,57'  compose_B.png
-  composite -compose plus  compose_R.png compose_G.png  compose_plus_RG.png
-  composite -compose plus  compose_R.png compose_B.png  compose_plus_RB.png
-  composite -compose plus  compose_G.png compose_B.png  compose_plus_GB.png
-  composite -compose plus  compose_R.png compose_plus_GB.png \
+  magick composite -compose plus  compose_R.png compose_G.png  compose_plus_RG.png
+  magick composite -compose plus  compose_R.png compose_B.png  compose_plus_RB.png
+  magick composite -compose plus  compose_G.png compose_B.png  compose_plus_GB.png
+  magick composite -compose plus  compose_R.png compose_plus_GB.png \
             compose_plus_RGB.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="compose_R.png"
@@ -1769,7 +1769,7 @@ The result is one image subtracted from the other. </P>
 Which image is the subtracted from the other depend on if
 '<CODE>Minus_Src</CODE>' or '<CODE>Minus_Dst</CODE>' is applied.  Specifically
 '<CODE>Minus_Dst</CODE>', means 'subtract the destination' or if applied in
-a "<CODE>composite</CODE>" command....
+a "<code>magick composite</code>" command....
 
 The formula for..
 '<CODE>Minus_Dst</CODE>' is &nbsp; <CODE><I>Src</I> - <I>Dest</I></CODE>
@@ -1777,7 +1777,7 @@ The formula for..
 '<CODE>Minus_Src</CODE>' is &nbsp; <CODE><I>Dest</I> - <I>Src</I></CODE> </P>
 
 Due to the order of images normally defined in image composition, and the
-"<CODE>composite</CODE> command, the original method '<CODE>Minus</CODE>
+"<code>magick composite</code> command, the original method '<CODE>Minus</CODE>
 meant...
 
 <DIV ALIGN=center><B>
@@ -1795,7 +1795,7 @@ HREF="#plus" >Plus</A></CODE>' operation above.
 <TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite compose_plus_RGB.png  -compose minus_dst  compose_R.png \
+  magick composite compose_plus_RGB.png  -compose minus_dst  compose_R.png \
             compose_minus.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="compose_minus.png"
@@ -1845,7 +1845,7 @@ wrap to form a second gradient.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 60x60 gradient:    gradient.png
-  composite  gradient.png gradient.png -compose ModulusAdd  compose_add.png
+  magick composite  gradient.png gradient.png -compose ModulusAdd  compose_add.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="compose_add.png"
      ><IMG SRC="compose_add.png"     WIDTH=60 HEIGHT=60
@@ -1859,7 +1859,7 @@ gradients such as.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite gradient.png \( gradient.png -rotate -90 \) \
+  magick composite gradient.png \( gradient.png -rotate -90 \) \
             -compose ModulusAdd   gradient_diagonal.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
   <A HREF="gradient_diagonal.png"
@@ -1906,7 +1906,7 @@ instead of black, in seemingly uncontrolled ways.
 <TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose subtract  compose_plus_RGB.png  compose_R.png \
+  magick composite -compose subtract  compose_plus_RGB.png  compose_R.png \
             compose_subtract.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
     <A HREF="compose_subtract.png"
@@ -1957,7 +1957,7 @@ For example lets negate half the rose image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 2x1 pattern:gray50  -scale 70x50\! black_n_white.gif
-  composite black_n_white.gif   rose: \
+  magick composite black_n_white.gif   rose: \
             -gravity center -compose difference   compose_negate.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
     <A HREF="black_n_white.gif"
@@ -3004,7 +3004,7 @@ and a perfect-gray color overlays.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 1x3 gradient: -sample 70x46\! grayscale_3.gif
-  composite grayscale_3.gif  rose: -compose softlight  compose_softlight_2.gif
+  magick composite grayscale_3.gif  rose: -compose softlight  compose_softlight_2.gif
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
     <A HREF="grayscale_3.gif"
        ><IMG SRC="grayscale_3.gif"
@@ -3617,9 +3617,9 @@ is overlaid on top of the the background, according to the percentages given.
 </P>
 
 <DL><DD><PRE>
-<B>    composite -dissolve {<I>percent</I>} overlay  bgnd  result
+<B>    magick composite -dissolve {<I>percent</I>} overlay  bgnd  result
 <BR>
-<BR>   composite -dissolve {<I>src_percent</I>}x{<I>dst_percent</I>} overlay  bgnd  result
+<BR>   magick composite -dissolve {<I>src_percent</I>}x{<I>dst_percent</I>} overlay  bgnd  result
 <BR>
 <BR>  magick bgnd  overlay   -compose dissolve \
 <BR> &nbsp;
@@ -3649,7 +3649,7 @@ Here is a table of results with various dissolve arguments...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -dissolve {<I>argument</I>}  -gravity South \
+  magick composite -dissolve {<I>argument</I>}  -gravity South \
             star.gif   dragon_sm.gif -alpha Set   {<I>result</I>}
 </samp></pre></TD></TR></TABLE>
 </TD><TD ALIGN=center>
@@ -3686,7 +3686,7 @@ arguments) will produce different results. </P>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
     For the 100% to 200% range, or the second percentage argument to work, the
     background image must contain an alpha channel.  This is especially
-    important for JPEG images which do not contain any transparencies by
+    magick important for JPEG images which do not contain any transparencies by
     default. <P>
 
     As such it is probably a good idea to tell IM to give all images an alpha
@@ -3708,7 +3708,7 @@ opaque.  For example:
   magick dragon_sm.gif star.gif -alpha on \
           -compose dissolve -define compose:args='50,50' \
           -gravity South  -composite     dissolve_50_50.png
-  composite -compose Dst_Over -tile pattern:checkerboard \
+  magick composite -compose Dst_Over -tile pattern:checkerboard \
             dissolve_50_50.png   dissolve_50_50_bg.png
 </samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="dissolve_50_50_bg.png"
@@ -3800,7 +3800,7 @@ Here is a table of results with various dissolve arguments...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -blend {<I>argument</I>}  -gravity South \
+  magick composite -blend {<I>argument</I>}  -gravity South \
             compose_R.png compose_plus_GB.png  -alpha Set  {<I>result</I>}
 </samp></pre></TD></TR></TABLE>
 </TD><TD ALIGN=center>
@@ -3995,11 +3995,11 @@ by blending it with a pure black image of the same size.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -blend   0 rose: -size 70x46 xc:black -alpha Set blend_dark_0.jpg
-  composite -blend  50 rose: -size 70x46 xc:black -alpha Set blend_dark_50.jpg
-  composite -blend 100 rose: -size 70x46 xc:black -alpha Set blend_dark_100.jpg
-  composite -blend 150 rose: -size 70x46 xc:black -alpha Set blend_dark_150.jpg
-  composite -blend 200 rose: -size 70x46 xc:black -alpha Set blend_dark_200.jpg
+  magick composite -blend   0 rose: -size 70x46 xc:black -alpha Set blend_dark_0.jpg
+  magick composite -blend  50 rose: -size 70x46 xc:black -alpha Set blend_dark_50.jpg
+  magick composite -blend 100 rose: -size 70x46 xc:black -alpha Set blend_dark_100.jpg
+  magick composite -blend 150 rose: -size 70x46 xc:black -alpha Set blend_dark_150.jpg
+  magick composite -blend 200 rose: -size 70x46 xc:black -alpha Set blend_dark_200.jpg
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_dark_0.jpg"
@@ -4035,12 +4035,12 @@ Similarly blending with a pure gray image lets you adjust any images contrast.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -blend   0 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_0.jpg
-  composite -blend  50 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_50.jpg
-  composite -blend  80 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_80.jpg
-  composite -blend 100 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_100.jpg
-  composite -blend 120 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_120.jpg
-  composite -blend 150 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_150.jpg
+  magick composite -blend   0 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_0.jpg
+  magick composite -blend  50 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_50.jpg
+  magick composite -blend  80 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_80.jpg
+  magick composite -blend 100 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_100.jpg
+  magick composite -blend 120 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_120.jpg
+  magick composite -blend 150 rose: -size 70x46 xc:'#808080' -alpha Set blend_gray_150.jpg
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_gray_0.jpg"
@@ -4077,11 +4077,11 @@ control the saturation of colors.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -type grayscale  rose_gray.png
-  composite -blend   0 rose: rose_gray.png -alpha Set blend_color_0.jpg
-  composite -blend  50 rose: rose_gray.png -alpha Set blend_color_50.jpg
-  composite -blend 100 rose: rose_gray.png -alpha Set blend_color_100.jpg
-  composite -blend 150 rose: rose_gray.png -alpha Set blend_color_150.jpg
-  composite -blend 200 rose: rose_gray.png -alpha Set blend_color_200.jpg
+  magick composite -blend   0 rose: rose_gray.png -alpha Set blend_color_0.jpg
+  magick composite -blend  50 rose: rose_gray.png -alpha Set blend_color_50.jpg
+  magick composite -blend 100 rose: rose_gray.png -alpha Set blend_color_100.jpg
+  magick composite -blend 150 rose: rose_gray.png -alpha Set blend_color_150.jpg
+  magick composite -blend 200 rose: rose_gray.png -alpha Set blend_color_200.jpg
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_color_0.jpg"
@@ -4116,11 +4116,11 @@ blurred form.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose: -blur 0x5  rose_blurred.png
-  composite  -blend   0  rose: rose_blurred.png -alpha Set blend_blur_0.jpg
-  composite  -blend  50  rose: rose_blurred.png -alpha Set blend_blur_50.jpg
-  composite  -blend 100  rose: rose_blurred.png -alpha Set blend_blur_100.jpg
-  composite  -blend 150  rose: rose_blurred.png -alpha Set blend_blur_150.jpg
-  composite  -blend 200  rose: rose_blurred.png -alpha Set blend_blur_200.jpg
+  magick composite  -blend   0  rose: rose_blurred.png -alpha Set blend_blur_0.jpg
+  magick composite  -blend  50  rose: rose_blurred.png -alpha Set blend_blur_50.jpg
+  magick composite  -blend 100  rose: rose_blurred.png -alpha Set blend_blur_100.jpg
+  magick composite  -blend 150  rose: rose_blurred.png -alpha Set blend_blur_150.jpg
+  magick composite  -blend 200  rose: rose_blurred.png -alpha Set blend_blur_200.jpg
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR>
 <TH><A HREF="blend_blur_0.jpg"
@@ -4158,7 +4158,7 @@ composite option or the "<CODE>modulate</CODE>" compose method, is meant to
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-<B>    composite -watermark {<I>brightness</I>}[x{<I>saturation</I>}] overlay  bgnd  result
+<B>    magick composite -watermark {<I>brightness</I>}[x{<I>saturation</I>}] overlay  bgnd  result
 <BR>
 <BR>   magick bgnd  overlay   -compose modulate \
 <BR> &nbsp;
@@ -4183,7 +4183,7 @@ Here is a table of results with various arguments...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -watermark {<I>argument</I>}  -gravity South \
+  magick composite -watermark {<I>argument</I>}  -gravity South \
             sphinx.gif  cyclops.gif   {<I>result</I>}
 </samp></pre></TD></TR></TABLE>
 </TD><TD ALIGN=center>
@@ -4229,7 +4229,7 @@ For other watermarking techniques see, <A HREF="../annotating/#wmark_image"
 <A NAME="mask"></A>
 <H2>Using a Compose Mask to Limit the Composed Area</H2>
 
-The "<CODE>composite</CODE>" command and  "<CODE><A
+The "<code>magick composite</code>" command and  "<CODE><A
 HREF="../option_link.cgi?composite" >-composite</A></CODE>" operator will also
 take a third masking image which will limit the area effected by the
 "<CODE><A HREF="../option_link.cgi?compose" >-compose</A></CODE>" method. </P>
@@ -4242,7 +4242,7 @@ final size of the resulting image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite tile_water.jpg   tile_aqua.jpg  moon_mask.gif   mask_over.jpg
+  magick composite tile_water.jpg   tile_aqua.jpg  moon_mask.gif   mask_over.jpg
 </samp></pre></TD></TR></TABLE>
     <A HREF="../images/tile_water.jpg"
        ><IMG SRC="../images/tile_water.jpg"
@@ -4365,8 +4365,8 @@ a mask limiting the area in which the destination image is changed.
   magick -size 60x60 xc:none -fill blue -draw 'circle 21,39 24,57' m_bgnd.png
   magick -size 60x60 xc:   -draw 'polygon 0,59 59,0, 0,0'          m_mask.png
 
-  composite m_src.png  m_bgnd.png                   m_over.png
-  composite m_src.png  m_bgnd.png   m_mask.png      m_over_masked.png
+  magick composite m_src.png  m_bgnd.png                   m_over.png
+  magick composite m_src.png  m_bgnd.png   m_mask.png      m_over_masked.png
 </samp></pre></TD></TR></TABLE>
     <A HREF="m_src.png"
        ><IMG SRC="m_src.png"     WIDTH=60 HEIGHT=60
@@ -4410,7 +4410,7 @@ masked area in the destination with the contents of the source image.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite  m_src.png  m_bgnd.png  m_mask.png  -compose Src  m_src_masked.png
+  magick composite  m_src.png  m_bgnd.png  m_mask.png  -compose Src  m_src_masked.png
 </samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="m_src_masked.png"
        ><IMG SRC="m_src_masked.png"           WIDTH=60  HEIGHT=60
@@ -4447,15 +4447,15 @@ of something being obscured by foreground objects in the destination. </PRE>
 <TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
 The "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>" setting in
-"<CODE>composite</CODE>" is very different to that same setting in either
-"<code>magick</code>" or "<CODE>montage</CODE>".  If given it means that the
+"<code>magick composite</code>" is very different to that same setting in either
+"<code>magick</code>" or "<code>magick montage</code>".  If given it means that the
 <I>source</I> image is to be tiled over the <I>background</I> image. </P>
 
 For example here we tile a 'color star' over a netscape color map image...
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite  -tile star.gif   netscape:   tile.gif
+  magick composite  -tile star.gif   netscape:   tile.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="tile.gif"
        ><IMG SRC="tile.gif"
@@ -4468,7 +4468,7 @@ of this see the last examples of <A HREF="../annotating/#wmark_text"
 >Watermarking with Text</A>. </P>
 
 Note that the setting is essentially (at least at this time) argument-less.
-It is only a Boolean on and off flag to the final "<CODE>composite</CODE>"
+It is only a Boolean on and off flag to the final "<code>magick composite</code>"
 operation.  Consequently you can not use it to tile a <I>background</I> image
 as that would mean IM can not use the background image to set the final size
 of the result. </P>
@@ -4481,7 +4481,7 @@ HREF="#dstover" >Dst_Over</A></CODE>' instead.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -background none -pointsize 36 label:'Tile Under'  png:- |\
-  composite -tile bg.gif  -   -compose Dst_Over   tile_under.gif
+  magick composite -tile bg.gif  -   -compose Dst_Over   tile_under.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
     <A HREF="tile_under.gif"
        ><IMG SRC="tile_under.gif"
@@ -4683,7 +4683,7 @@ individual steps.  </P>
   The '<CODE><A HREF="#mathematics" >Mathematics</A></CODE>' compose method
   was added to IM version 6.5.4-3.  And is currently only available using the
   "<CODE>-compose</CODE>" operator.  It is not available from the
-  "<CODE>composite</CODE>" command due to its need for arguments.
+  "<code>magick composite</code>" command due to its need for arguments.
 </I></FONT></TD></TR></TABLE></P>
 
 

@@ -567,7 +567,7 @@ the textual output of Compare to a text file, you would have to write
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE DO_NOT_EXECUTE >
-  compare -metric PSNR 1.png 2.png dif_1_2.png 2>result.txt
+  magick compare -metric PSNR 1.png 2.png dif_1_2.png 2>result.txt
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -1109,7 +1109,7 @@ One of them is that you basically perform only one single command after
   FOR %%a in (*.jpg) DO (
     ECHO Processing file: "%%~nxa"
     magick %%a -blur 30 -negate %%a.miff
-    composite %%a.miff %%a -compose overlay "%%~dpn1_light"%%~xa
+    magick composite %%a.miff %%a -compose overlay "%%~dpn1_light"%%~xa
     DEL %%a.miff
   )
   PAUSE
@@ -1153,7 +1153,7 @@ parantheses in the above example:</P>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick %%1 -blur 30 -negate %%1.miff
-  composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
+  magick composite %%1.miff %%1 -compose overlay "%%~dpn1_light"%%~x1
   DEL %%1.miff
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -1268,7 +1268,7 @@ We now come to the actual work:</P>
 In the first line we switch the codepage to Western European Latin
 (ISO-8859-1).  In the second line, we check whether the directory actually
 contains any photographs and skip the rest of the batch if not. (Executing the
-rest of the batch instead would actually do no harm, as <CODE>montage</CODE>
+rest of the batch instead would actually do no harm, as <code>magick montage</code>
 would simply generate no output, but the count of the IDX files would no
 longer be consecutive.) Since Windows XP there is a special GoTo target Label
 <CODE>:EOF</CODE> which allows to terminate the execution without defining an
@@ -1486,7 +1486,7 @@ use the following batch file:</P>
   magick -size 80x80 -flip gradient: compose_src.png
   magick compose_src.png -rotate 90 compose_dst.png
   FOR /F %%A in ('magick -list compose') DO ^
-     composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
+     magick composite compose_src.png compose_dst.png -compose %%A compose_%%A.png
 </samp></pre></TD></TR>
 </TABLE></P>
 <TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
@@ -1903,7 +1903,7 @@ more flexible and its various calculations more transparent:</P>
   magick -set colorspace %1 -size %l3%x%l4% xc:Transparent w.miff
   magick top.miff w.miff -append topx.miff
 
-  composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
+  magick composite -geometry +0+%l1% GB.miff  topx.miff colorspace_%1.png
   DEL *.miff
   DEL *.gif
 </samp></pre></TD></TR></TABLE>
@@ -2225,7 +2225,7 @@ basic, in order to demonstrate the advantages of VBScript compared to a simple
 batch file. In the following, we will correct the lens distortion for the
 Nikon 995 digital camera by use of IM's <A HREF="../distorts/#barrel">barrel
 distortion</A>. The correction parameter(s) depend on the focal length, which
-is looked up via <CODE>identify</CODE> first.  </P>
+is looked up via <code>magick identify</code> first.  </P>
 
 For the correction of the Nikon 995 lens, we only need the parameter <I>b</I>
 (i.e. <I>a, c</I> = 0), which can be calculcated from the focal length

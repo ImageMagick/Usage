@@ -910,9 +910,9 @@ If your application needs to be able to do any of these things (though few
 applications actually need to go this far) then an API may be a better choice.
 </P>
 
-The "<CODE><A HREF="#conjure" >conjure</A></CODE>" program (see below) was
+The "<CODE><A HREF="#conjure" >magick conjure</A></CODE>" program (see below) was
 originally designed to allow better scripted use of ImageMagick, allowing the
-use of multiple image lists. The improvements made to IM v6
+use of multiple image lists. The improvements made to IM v7
 "<code>magick</code>" has seen this experimental API fall into disuse, though
 it is still available and still being developed. </P>
 
@@ -1516,12 +1516,12 @@ on the outcome in this case, but can speed up the command enormously. </P>
 <DD>Normally IM reads in the image into memory (which is essentially into own
     internal data format), using various image library APIs and delegate
     programs, before outputting the results it sees using identify.  That is
-    "<CODE>identify</CODE>" analyzes the image/data content it has read in and
+    "<code>magick identify</code>" analyzes the image/data content it has read in and
     stored.  It does not analyze how the specific file format stores or
     handles the image data. </P>
 
     This is important as there can be very specific aspects of specific file
-    formats that "<CODE>identify</CODE>" will not report on.  For example
+    formats that "<code>magick identify</code>" will not report on.  For example
     while it lists the contents of a GIF image color table for each image
     present (multiple images are possible), it will not tell you if all the
     images in the file share the same color table or not. </P>
@@ -1677,7 +1677,7 @@ images may be needed to arrange for it to output once only. </P>
 <A NAME="mogrify"></A>
 <H3>Mogrify -- in-place batch processing</H3>
 
-The "<CODE>mogrify</CODE>" command is in many ways like "<code>magick</code>"
+The "<code>magick mogrify</code>" command is in many ways like "<code>magick</code>"
 except it is designed to <I>modify images in place</I>.   That is it's primary
 purpose is to read images (or animations), one file at a time, and modify
 them, before save the image back into the <I>exact same filename</I> the image
@@ -1687,15 +1687,15 @@ was read from. Because of this...
       Mogrify is dangerous, as it can easily destroy the original image!
 </B></DIV></P>
 
-As such, before you do anything final, test "<CODE>mogrify</CODE>" with
+As such, before you do anything final, test "<code>magick mogrify</code>" with
 a separate copy of your images.  Do not do use it on an original image that
 has no backup. </P>
 
-Now while "<CODE>mogrify</CODE>" normally saves a modified image into the same
+Now while "<code>magick mogrify</code>" normally saves a modified image into the same
 filename, it has two special options which allows it to save images into
 a different file. </P>
 
-The "<CODE>mogrify</CODE>" specific setting "<CODE><A
+The "<code>magick mogrify</code>" specific setting "<CODE><A
 HREF="../option_link.cgi?format" >-format</A></CODE>", defines a different
 format and suffix to use when saving files. </P>
 
@@ -1704,7 +1704,7 @@ As such a command like...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  mogrify    -format jpg   *.png
+  magick mogrify    -format jpg   *.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -1730,7 +1730,7 @@ an existing sub-directory, using something like this...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  mogrify   -path thumbnail-directory   -thumbnail 100x100  *
+  magick mogrify   -path thumbnail-directory   -thumbnail 100x100  *
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -1745,7 +1745,7 @@ an existing sub-directory, using something like this...
   you can change formats and output directory location.
 </I></FONT></TD></TR></TABLE></P>
 
-Due to the multi-image processing capability the "<CODE>mogrify</CODE>"
+Due to the multi-image processing capability the "<code>magick mogrify</code>"
 command can not use any of the <A HREF="#option_list" >Multi-Image List
 Operators</A> or  <A HREF="#option_stack" >Image Stack Operators</A>. </P>
 
@@ -1756,7 +1756,7 @@ HREF="../option_link.cgi?composite" >-composite</A></CODE>", "<CODE><A
 HREF="../option_link.cgi?append" >-append</A></CODE>", "<CODE><A
 HREF="../option_link.cgi?flatten" >-flatten</A></CODE>", and "<CODE><A
 HREF="../option_link.cgi?layers" >-layers</A></CODE>" in
-a "<CODE>mogrify</CODE>" command. </P>
+a "<code>magick mogrify</code>" command. </P>
 
 As some setting options are needed to be set before the first image is read in
 (for example (for example "<CODE><A HREF="../option_link.cgi?size"
@@ -1775,7 +1775,7 @@ For example..
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE>
-  mogrify -format gif  -size 200x200  -pointsize 18 \
+  magick mogrify -format gif  -size 200x200  -pointsize 18 \
           -font Candice -gravity north  -annotate 0 "%f" \
           -font Ravie   -gravity Center -annotate 0 "%f" \
           -font Gecko   -gravity south  -annotate 0 "%f" \
@@ -1803,7 +1803,7 @@ This added complexity means that it is probably a good idea to...
 <DIV ALIGN=center><B>    Mogrify images simply.   </B></DIV></P>
 
 Do not attempt to do very long and complex "<code>magick</code>"-like
-operations in a batch operation using "<CODE>mogrify</CODE>", it will probably
+operations in a batch operation using "<code>magick mogrify</code>", it will probably
 have 'setting' issues.  If you are really wanting to do complex processing,
 write a shell/dos/perl script to use "<code>magick</code>" to process each
 image one at a time, or go to an ImageMagick API interface. </P>
@@ -1811,12 +1811,12 @@ image one at a time, or go to an ImageMagick API interface. </P>
 For examples of modifying lots of images using a script see <A
 HREF="../advanced/" >Advanced ImageMagick Examples</A>. </P>
 
-Just remember, "<CODE>mogrify</CODE>" is a dangerous command, and should
+Just remember, "<code>magick mogrify</code>" is a dangerous command, and should
 always be thoroughly tested on backup images, before putting into production.
 </P>
 
 Actually I also recommend that scripts include a quick 'tests' on things like
-"<CODE>mogrify</CODE>" to make sure the command does not break anything (due
+"<code>magick mogrify</code>" to make sure the command does not break anything (due
 to version changes or differences in computer installations) before processing
 a very large collection of images. That is do a small 'test case' and abort if
 it fails to produce a correct, before proceeding. </P>
@@ -1826,9 +1826,9 @@ as to protect users from unforeseen consequences.  I do this myself in IM
 Examples, and it has saved me a lot of trouble. </P>
 
 <A NAME="mogrify_compose"></A>
-<H4>Alpha Composition using "<CODE>mogrify</CODE>"</H4>
+<H4>Alpha Composition using "<code>magick mogrify</code>"</H4>
 
-Because "<CODE>mogrify</CODE>" can not use <A HREF="#option_list"
+Because "<code>magick mogrify</code>" can not use <A HREF="#option_list"
 >Multi-Image List Operators</A> it can not easily overlay thing like
 logos, or mask images using <A HREF="../compose/#compose" >Alpha
 Composition</A>. </P>
@@ -1843,7 +1843,7 @@ using a special "<CODE><A
 HREF="http://www.ict.griffith.edu.au/anthony/software/#mv_perl"
 >cp_perl</A></CODE>" script.  I then create temporary circle 'mask' image,
 which I then use to cut out a circle shape from all those images, using
-"<CODE>mogrify</CODE>" with a '<CODE><A HREF="../compose/#dstin"
+"<code>magick mogrify</code>" with a '<CODE><A HREF="../compose/#dstin"
 >Dst_In</A></CODE>' alpha composition method.
 
 <DIV ALIGN=center>
@@ -1851,7 +1851,7 @@ which I then use to cut out a circle shape from all those images, using
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=/dev/null>
   cp_perl  's/^/mogrify_/'  eye.gif news.gif storm.gif tree.gif
   magick -size 32x32 xc:none -draw 'circle 15.5,15.5 15.5,0'  circle.gif
-  mogrify  -alpha Set -draw 'image Dst_In 0,0 0,0 "circle.gif"'  mogrify_*.gif
+  magick mogrify  -alpha Set -draw 'image Dst_In 0,0 0,0 "circle.gif"'  magick mogrify_*.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/eye.gif"
      ><IMG SRC="../images/eye.gif"
@@ -1887,7 +1887,7 @@ which I then use to cut out a circle shape from all those images, using
 Note that any Alpha Composition method can be used in this way, but only with
 a constant 'source' or 'overlay' image being applied to all the images.  </P>
 
-Also as "<CODE>mogrify</CODE>" will be reading the 'source' image multiple
+Also as "<code>magick mogrify</code>" will be reading the 'source' image multiple
 times, I suggest you use the special IM specific "<A HREF="../files/#mpc"
 >MPC:</A>" file format to reduce the overhead of decoding the image when
 reading it over and over.  This image file format does not need to be parsed
@@ -1948,7 +1948,7 @@ normally would, but may need to use the specialised <A
 HREF="../anim_mods/#composite" >Multi-Image List Composition</A> to do the
 job. </P>
 
-Of course just as with "<CODE>mogrify</CODE>" this method of using
+Of course just as with "<code>magick mogrify</code>" this method of using
 "<code>magick</code>" can be dangerous, as it could easily overwrite and
 destroy the original image files. </P>
 
@@ -1956,7 +1956,7 @@ destroy the original image files. </P>
 <A NAME="mogrify_not"></A>
 <H4>Batch Processing Alternatives</H4>
 
-If batch processing images using "<CODE>mogrify</CODE>" is not practical,
+If batch processing images using "<code>magick mogrify</code>" is not practical,
 especially if you are copying the images rather than modifying them in place,
 then it may be better to use some other non-IM looping solutions. These
 include...
@@ -2020,7 +2020,7 @@ Processing Several Files</A>. </P>
   commands will also expand all filenames containing shell meta-characters
   such as '*' and '?'.  This is done to allow the use of these meta-characters
   on the old DOS command line shell. However this could cause a bug, repeated
-  mogrify execution, or possibly even a 'hack' from a some evil source that
+  magick mogrify execution, or possibly even a 'hack' from a some evil source that
   provided the filename to use.  Caution and complete understanding of
   security issues is advised.
 
@@ -2031,17 +2031,17 @@ Processing Several Files</A>. </P>
 <A NAME="composite"></A>
 <H3>Composite -- overlaying images in special ways</H3>
 
-The "<CODE>composite</CODE>" command is designed specifically for simple alpha
+The "<code>magick composite</code>" command is designed specifically for simple alpha
 compositing (overlaying) of two images together in various ways.  This
 includes limiting the area in which images are combined together, though the
 use of a third masking image. </P>
 
-Unlike "<code>magick</code>" the "<CODE>composite</CODE>" command is a very
+Unlike "<code>magick</code>" the "<code>magick composite</code>" command is a very
 traditional command in that it will read all its options and settings, before
 it actually performs the single image processing operation it was designed to
 do. </P>
 
-The "<CODE>composite</CODE>" command also provides simple access to some
+The "<code>magick composite</code>" command also provides simple access to some
 of the more complex alpha composition modes. For example "<CODE><A
 HREF="../option_link.cgi?dissolve" >-dissolve</A></CODE>", "<CODE><A
 HREF="../option_link.cgi?blend" >-blend</A></CODE>", and "<CODE><A
@@ -2052,11 +2052,11 @@ will be) given for that command. </P>
 
 Note also that the "<CODE><A HREF="../option_link.cgi?tile" >-tile</A></CODE>"
 setting also works differently to that of either "<code>magick</code>" or
-"<CODE>montage</CODE>" and "<CODE>display</CODE>". In "<CODE>composite</CODE>"
+"<code>magick montage</code>" and "<code>magick display</code>". In "<code>magick composite</code>"
 this will cause the overlaid image to be tiled across the whole of the
 background image. Something not yet available in other IM commands. </P>
 
-While these special features makes "<CODE>composite</CODE>" an useful command,
+While these special features makes "<code>magick composite</code>" an useful command,
 the alpha compositing is now also available for use in the
 "<code>magick</code>" command. (For details see <A HREF="../compose/#compose"
 >Alpha Composition in IM</A>). </P>
@@ -2076,21 +2076,21 @@ Composed Area</A>.   </P>
 <A NAME="montage"></A>
 <H3>Montage -- generating arrays of thumbnails</H3>
 
-The special IM image indexing command "<CODE>montage</CODE>" also followed the
+The special IM image indexing command "<code>magick montage</code>" also followed the
 same 'do it as you see it' style of command line structure, as
 "<code>magick</code>". </P>
 
 The only difference is that when the end of the command is reached (other that
-the final output image filename argument), "<CODE>montage</CODE>" will start to
+the final output image filename argument), "<code>magick montage</code>" will start to
 process the image list into a thumbnail image index page(s), according to
 the settings that are currently set. </P>
 
-This makes "<CODE>montage</CODE>" much more versatile than it was in IM
+This makes "<code>magick montage</code>" much more versatile than it was in IM
 version 5, as you can now process the images just as you would in
-"<code>magick</code>", then set all the "<CODE>montage</CODE>" settings you
+"<code>magick</code>", then set all the "<code>magick montage</code>" settings you
 want, and let it finish the job. </P>
 
-For more details about "<CODE>montage</CODE>" see <A HREF="../montage/"
+For more details about "<code>magick montage</code>" see <A HREF="../montage/"
 >Montage, Arrays of Thumbnails</A>. </P>
 
 <BR>
@@ -2099,7 +2099,7 @@ For more details about "<CODE>montage</CODE>" see <A HREF="../montage/"
 <H3>display
 <FONT SIZE=-1>-- Slideshows of Images</FONT></H3>
 
-The "<CODE>display</CODE>" program is designed to display an image, or list
+The "<code>magick display</code>" program is designed to display an image, or list
 of images in the form of a looped slideshow.  It is not designed for a
 carefully orchestrated and timed animation of images,  for that use the
 "<CODE><A HREF="#animate" >animate</A></CODE>" command. </P>
@@ -2130,14 +2130,14 @@ recommended that you always set a "<CODE><A HREF="../option_link.cgi?delay"
 delay 5+2 or about 7 seconds) for your script and needs. </P>
 
 The same goes for the "<CODE><A HREF="../option_link.cgi?loop"
->-loop</A></CODE>" setting.  By default "<CODE>display</CODE>" loops forever
+>-loop</A></CODE>" setting.  By default "<code>magick display</code>" loops forever
 ("<CODE>-loop 0</CODE>") but image formats like <A HREF="../files/#miff"
 >MIFF</A> or <A HREF="../formats/#gif" >GIF</A> can override this so as to
 cause it to exit after last image in the loop. See the "<CODE><A
 HREF="../option_link.cgi?loop" >-loop</A></CODE>" option appropriately for
 your situation. </P>
 
-Note that "<CODE>display</CODE>" will not handle any <A
+Note that "<code>magick display</code>" will not handle any <A
 HREF="../anim_basics/#gif_anim" >GIF Animation Settings</A> so frames are not
 disposed of, and virtual canvas sizes and offsets are ignored.  In other words
 you will see the raw partial images in a GIF animation, not the correctly
@@ -2157,9 +2157,9 @@ You can change that by selecting a different background with
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  display -texture granite: test.png
+  magick display -texture granite: test.png
 
-  display -texture xc:black test.png
+  magick display -texture xc:black test.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2171,7 +2171,7 @@ regarded as a bug, though technically it isn't. </P>
 
 However if you like display to handle such images in the same way as other
 images containing transparency information, you can remove the palette
-meta-data before feeding the image to "<CODE>display</CODE>" using the
+meta-data before feeding the image to "<code>magick display</code>" using the
 following commands to change the internal style for the image output format.
 
 <DIV ALIGN=center>
@@ -2183,13 +2183,13 @@ following commands to change the internal style for the image output format.
 
 Alternatively, just about any operation that modifies the image being
 displayed will also remove the existing palette meta-data.  As such some
-"<CODE>display</CODE>" options can be used to remove the palette. For example
+"<code>magick display</code>" options can be used to remove the palette. For example
 using "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>".
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  display -coalesce image.gif
+  magick display -coalesce image.gif
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2203,7 +2203,7 @@ Yes these methods are clumsy, but they work. </P>
 <A NAME="display_convert"></A>
 <H4>Display Using Convert</H4>
 
-An alternative display method (other than using "<CODE>animate</CODE>", see
+An alternative display method (other than using "<code>magick animate</code>", see
 next) is to use the simpler  "<CODE>x:</CODE>" output image format (See <A
 HREF="../files/#show" >display output format</A>).
 
@@ -2251,7 +2251,7 @@ larger), use...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  display -resize 800x600\> photo.jpg
+  magick display -resize 800x600\> photo.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2262,7 +2262,7 @@ Control Options</A>.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  display -define jpeg:size=1600x1200 -thumbnail 800x600\> photo.jpg
+  magick display -define jpeg:size=1600x1200 -thumbnail 800x600\> photo.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2273,18 +2273,18 @@ file format. </P>
 
 If you don't want menus, you can turn them off using the "<CODE><A
 HREF="../option_link.cgi?immutable" >-immutable</A></CODE>" setting to
-"<CODE>display</CODE>", so it knows not to allow editing. </P>
+"<code>magick display</code>", so it knows not to allow editing. </P>
 
 <A NAME="display_script"></A>
 <H4>Scripted use of Display</H4>
 
 With these options in mind, the following is my recommendation for using
-"<CODE>display</CODE>" to display results from a complex shell script...
+"<code>magick display</code>" to display results from a complex shell script...
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  display -delay 0 -loop 1 -coalesce -resize 800x600\>   some_random_image
+  magick display -delay 0 -loop 1 -coalesce -resize 800x600\>   some_random_image
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2295,14 +2295,14 @@ With these options in mind, the following is my recommendation for using
 
 The option "<CODE><A HREF="../option_link.cgi?window" >-window</A> root</CODE>"
 can be used to display an image on the X window background (root) window. In
-this case the "<CODE>display</CODE>" program automatically exits. </P>
+this case the "<code>magick display</code>" program automatically exits. </P>
 
 By default an image is tiled across the background. For example try this..
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  display -window root pattern:checkerboard
+  magick display -window root pattern:checkerboard
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2328,7 +2328,7 @@ fill the X window background completely.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   screen_size=`xdpyinfo | sed '/dimensions:/!d;s/^[^0-9]*//;s/ pixels.*//'`
-  display  -resize $screen_size! -window root photo.jpg
+  magick display  -resize $screen_size! -window root photo.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2338,27 +2338,27 @@ fill the X window background completely.
 
 Display does provide a special "<CODE><A HREF="../option_link.cgi?remote"
 >-remote</A></CODE>" option.  This will look for an already running
-"<CODE>display</CODE>" command and will then pass the given arguments to it.
+"<code>magick display</code>" command and will then pass the given arguments to it.
 </P>
 
 For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  display wizard: &
+  magick display wizard: &
   sleep 5
-  display -remote logo: &
+  magick display -remote logo: &
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 Will display the built in "wizard" image in a backgrounded command.  The
 script will then wait 5 seconds before replace it with the built-in "logo"
 image.</P>
 
-Note that if no "<CODE>display</CODE>" command is running, the current command
+Note that if no "<code>magick display</code>" command is running, the current command
 will open a window and not exit.  As such you should also background the
 "<CODE>display -remote</CODE>" commands as a precaution. </P>
 
-At this time you can not request a remote "<CODE>display</CODE>" to exit. As
+At this time you can not request a remote "<code>magick display</code>" to exit. As
 such the best way to close the remote display is to either kill the running
 process, or 'delete' the display window using some X window command. </P>
 
@@ -2376,18 +2376,18 @@ For example (using the non-IM command "<CODE>xdotool</CODE>")...
 <H3>animate
 <FONT SIZE=-1>-- Show an animation of images</FONT></H3>
 
-In many ways "<CODE>animate</CODE>" and "<CODE><A HREF="#display"
+In many ways "<code>magick animate</code>" and "<CODE><A HREF="#display"
 >display</A></CODE>" are extremely similar. </P>
 
 However "<CODE><A HREF="#display" >display</A></CODE>" only shows the images
 in the given image file 'as-is' without change, adding an minimal 2 second
 pause between each frame for user input. </P>
 
-"<CODE>animate</CODE>" on the other hand will apply any <A
+"<code>magick animate</code>" on the other hand will apply any <A
 HREF="../anim_basics/#gif_anim" >GIF Animation Settings</A> that are saved
 with the image, and only display each image according to its 'time delay'
 settings, looping back to the start to repeat the animation.  In other words
-"<CODE>animate</CODE>" 'animates' animation formats properly where "<CODE><A
+"<code>magick animate</code>" 'animates' animation formats properly where "<CODE><A
 HREF="#display" >display</A></CODE>" does not. </P>
 
 However because of this, the virtual canvas of the first image will control
@@ -2402,7 +2402,7 @@ to add an extra pause at the end of the animation loop, beyond whatever the
 final frames "<CODE><A HREF="../option_link.cgi?delay" >-delay</A></CODE>"
 setting specifies. </P>
 
-For example you can use "<CODE>animate</CODE>" to generate a <A
+For example you can use "<code>magick animate</code>" to generate a <A
 HREF="../compare/#flicker" >Flicker Comparison</A> of two very similar images,
 using something like..
 
@@ -2410,7 +2410,7 @@ using something like..
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick image1.png image2.png -scale 400% miff:- |\
-     animate -delay 50 -loop 0 -
+     magick animate -delay 50 -loop 0 -
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2433,7 +2433,7 @@ Comparison Page</A> section of IM Examples. </P>
 <H3>stream
 <FONT SIZE=-1>-- pipeline processing of massive images</FONT></H3>
 
-"<CODE>stream</CODE>" is a special program that is designed to handle
+"<code>magick stream</code>" is a special program that is designed to handle
 extracting a portion of a very large image file. It is the only such program
 within ImageMagick, all others read the images completely into memory before
 processing (the exception is JPEG images via the "<CODE><A
@@ -2447,7 +2447,7 @@ HREF="../option_link.cgi?depth" >-depth</A></CODE>" setting.  And finally, you
 can select which color channels to extract using the "<CODE><A
 HREF="../option_link.cgi?channel" >-channel</A></CODE>" option. </P>
 
-However "<CODE>stream</CODE>" will only output the raw color bytes of the
+However "<code>magick stream</code>" will only output the raw color bytes of the
 image (RAW format) as defined by the image depth, as such you may need to pipe
 the output of the extracted segment into convert. </P>
 
@@ -2458,8 +2458,8 @@ For example...
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  stream -map rgb -storage-type char -extract 100x100+200+100 logo: - |\
-    magick -depth 8 -size 100x100 rgb:-   stream_wand.gif
+  magick stream -map rgb -storage-type char -extract 100x100+200+100 logo: - |\
+    magick -depth 8 -size 100x100 rgb:-   magick stream_wand.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="stream_wand.gif"
      ><IMG SRC="stream_wand.gif"          WIDTH=100 HEIGHT=100
@@ -2474,7 +2474,7 @@ Massive Image Handling</A>. </P>
 <H3>import
 <FONT SIZE=-1>-- read images from the on screen display</FONT></H3>
 
-The "<CODE>import</CODE>" command is a special program that can be used to
+The "<code>magick import</code>" command is a special program that can be used to
 grab and extract images from an X windows display.
 
 For example lets get it to grab and print a window you select from your
@@ -2482,7 +2482,7 @@ display...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  import -page A4 -gravity center ps:- | lpr
+  magick import -page A4 -gravity center ps:- | lpr
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -2490,7 +2490,7 @@ It is actually rarely used as the special file format "<CODE><A
 HREF="../file/#x" >X:</A></CODE>" also provides exactly the same functionality
 from within the magick command.  </P>
 
-The only difference between the two is that "<CODE>import</CODE>" has more X
+The only difference between the two is that "<code>magick import</code>" has more X
 window specific settings than the "<CODE><A HREF="../file/#x" >X:</A></CODE>"
 format, such as specifying the display, screen, and/or window ID, the image is
 to be grabbed from. </P>
@@ -2520,7 +2520,7 @@ or a X window ID, which you can find using the X window utility
 using "<CODE><A HREF="../option_link.cgi?extract" >-extract</A></CODE>". </P>
 
 See also the special input format,  "<CODE><A HREF="../files/#x"
->X:</A></CODE>" as an alternative to using "<CODE>import</CODE>". </P>
+>X:</A></CODE>" as an alternative to using "<code>magick import</code>". </P>
 
 <PRE>
     Note to import from the Windows clipboard use
@@ -2539,7 +2539,7 @@ multiple image lists, but the improvements made to IM v6
 It is an XML based language.  Though if you want XML, SVG may be
 better for your needs. </P>
 
-In my opinion, using the "<CODE>conjure</CODE>" script is probably better and
+In my opinion, using the "<code>magick conjure</code>" script is probably better and
 easier when dealing with multi-image list. And is being used, though not very
 widely, due to lack of examples and support by users.  </P>
 
@@ -2697,7 +2697,7 @@ do in a single "<code>magick</code>" command.  Generating arrays of images!
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-Arrays like this were of course possible using "<CODE>montage</CODE>" (see <A
+Arrays like this were of course possible using "<code>magick montage</code>" (see <A
 HREF="../montage/#concatenate" >Montage Concatenation Mode</A>),  But using a
 separate command makes image processing scripts more complex. </P>
 
@@ -3671,7 +3671,7 @@ ways...
     reading and image processing of all the images. An example of which
     is the "<CODE>verbose</CODE>" setting that causes some operations to
     output general information about there actions, including more verbose
-    identify output. </P>
+    magick identify output. </P>
 
     Users can modify these global values using <A HREF="#define" >Define</A>
     (see below), or with a special case of the <A HREF="#set" >Set</A>, (see
@@ -4083,7 +4083,7 @@ option can actually define ANY setting with ANY value. </P>
 If the setting is not a specifically known attribute of an image (to be saved
 in a way to allow fast acceess by operators), it is saved into the image as
 a '<B>Property</B>' (an array of strings), and will be listed near the bottom
-of a verbose "<CODE>identify</CODE>" output, or retrieved and expanded using
+of a verbose "<code>magick identify</code>" output, or retrieved and expanded using
 <A HREF="http://imagemagick.org/script/escape.php" >Percent Escapes</A>. </P>
 
 The built in rose image for example automatically generates three

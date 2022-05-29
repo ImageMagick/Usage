@@ -382,7 +382,7 @@ which basically all does exactly the same thing.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  identify -verbose  image.png
+  magick identify -verbose  image.png
   magick image.png miff:- | identify -verbose -
   magick image.png  -verbose -identify null:
   magick image.png  -verbose info:
@@ -688,12 +688,12 @@ specify 'near' colors as well. </P>
 
 So you have two specific colors and you want to compare them.
 
-You can use "<B><CODE>compare</CODE></B>" get the RMSE (on standard error)...
+You can use "<B><code>magick compare</code></B>" get the RMSE (on standard error)...
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_navy.txt>
-  compare -metric RMSE xc:Navy xc:blue null:
+  magick compare -metric RMSE xc:Navy xc:blue null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -713,7 +713,7 @@ comparing 'fully-transparent black'  vs  'fully-transparent white'.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_transparency.txt>
-  compare -metric RMSE xc:'#0000' xc:'#FFF0' null:
+  magick compare -metric RMSE xc:'#0000' xc:'#FFF0' null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -737,8 +737,8 @@ close. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_blue-navy.txt>
-  compare -fuzz 20% -metric AE xc:Navy xc:Blue null:
-  compare -fuzz 30% -metric AE xc:Navy xc:Blue null:
+  magick compare -fuzz 20% -metric AE xc:Navy xc:Blue null:
+  magick compare -fuzz 30% -metric AE xc:Navy xc:Blue null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -757,7 +757,7 @@ the 'FUZZ' metric.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_blue-navy_fuzz.txt>
-  compare -metric FUZZ xc:Navy xc:Blue null:
+  magick compare -metric FUZZ xc:Navy xc:Blue null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -781,7 +781,7 @@ equivelent (producing a value of 0 or no error pixels)...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=compare_fuzz_trans.txt>
-  compare -metric FUZZ xc:'#0000' xc:'#FFF0' null:
+  magick compare -metric FUZZ xc:'#0000' xc:'#FFF0' null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1712,7 +1712,7 @@ colors that were in the given color table. </P>
 <!-- <CODE EXECUTE ASSERT>
   # Compare color with original image.  (result should be about 277)
   [ `magick dither_not.gif dither.gif -filter box -resize 1x1\! miff:- |\
-     compare -metric PAE - null: 2>&1 | sed 's/ .*//'` -gt 300 ] && echo >&2 \
+     magick compare -metric PAE - null: 2>&1 | sed 's/ .*//'` -gt 300 ] && echo >&2 \
   "ASSERTION FAILURE: E-Dither Average larger than expected\!"
 </CODE> -->
 
@@ -1792,7 +1792,7 @@ by the  Hilbert Curve Dither.
 <TR><TD><PRE><CODE EXECUTE OUT=/dev/null>
   magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
           -remap colortable.gif   -scale 80x80   dither_modified.gif
-  compare dither.gif dither_modified.gif dither_difference.gif
+  magick compare dither.gif dither_modified.gif dither_difference.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR><TD ALIGN=center>
   <A HREF="dither.gif"
@@ -1821,7 +1821,7 @@ resulting image to become different, even though overall look of an image
 (when not enlarged) is still basically the same (which is the purpose of a
 good dither algorithm after all). </P>
 
-The "<CODE>compare</CODE>" image also shows the extent of the change in the
+The "<code>magick compare</code>" image also shows the extent of the change in the
 dither pattern.  In this case, approximately 80% of the pixels were assigned a
 completely different color. In a Hilbert Curve Dither, a single pixel change
 actually will result in every pixel that comes later being possibly different,
@@ -1841,7 +1841,7 @@ one side of the change.
   magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' ppm:- |\
     pnmremap -mapfile=colormap.gif -fs 2>/dev/null | \
       magick - -scale 80x80   dither_fs_modified.gif
-  compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
+  magick compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
 </samp></pre></TD></TR></TABLE>
 -->
 
@@ -1851,7 +1851,7 @@ one side of the change.
   magick -size 10x10 xc:'#999999' -draw 'fill #C28 point 2,2' \
           -dither FloydSteinberg -remap colortable.gif \
           -scale 80x80   dither_fs_modified.gif
-  compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
+  magick compare dither_fs.gif dither_fs_modified.gif dither_fs_difference.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE><TR><TD ALIGN=center>
   <A HREF="dither_fs.gif"
@@ -3814,7 +3814,7 @@ operator can use.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=tmaps_list.txt>
-  identify -list threshold
+  magick identify -list threshold
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>

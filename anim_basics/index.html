@@ -266,7 +266,7 @@ animations... </P>
 
       Positive offsets larger than the image canvas are quite acceptable but
       may result in the image not appearing in the canvas drawing area when
-      displayed.  How a GIF animation display program handles this is
+      magick displayed.  How a GIF animation display program handles this is
       undefined.   Caution is advised.
     </I></FONT></TD></TR></TABLE></P>
 
@@ -608,7 +608,7 @@ frame.  You can see some of this information using the default IM
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN OUT=identify_prev.txt>
-  identify canvas_prev.gif
+  magick identify canvas_prev.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -640,7 +640,7 @@ some of the more specialzed <A HREF="http://imagemagick.org/script/escape.php"
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN OUT=identify_prev_more.txt>
-  identify -format "%f canvas=%Wx%H size=%wx%h offset=%X%Y %D %Tcs\n" \
+  magick identify -format "%f canvas=%Wx%H size=%wx%h offset=%X%Y %D %Tcs\n" \
            canvas_prev.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -863,7 +863,7 @@ As you can see the result is like a film strip of the animation, allowing you
 to clearly see how the previous pieces fit together to form a hand drawn
 letter 'K'. </P>
 
-As of  IM version 6.2.6, the "<CODE>montage</CODE>" command understood the
+As of  IM version 6.2.6, the "<code>magick montage</code>" command understood the
 use of "<CODE><A HREF="../option_link.cgi?coalesce" >-coalesce</A></CODE>",
 allowing you to create 'film strip' like image of the animation frames,
 exactly as shown above. This version also contained fixes for coalesce, and
@@ -1015,7 +1015,7 @@ animations. However they all destroy information about the original animation
 in the process. </P>
 
 You can see this extra information on framing, time delays, frame dispose,
-etc., using the  IM "<CODE>identify</CODE>" command with a "<CODE><A
+etc., using the  IM "<code>magick identify</code>" command with a "<CODE><A
 HREF="../option_link.cgi?verbose" >-verbose</A></CODE>" option.  However I, and
 probably most other users, find the output from this command, overwhelming
 and not really directly usable. </P>
@@ -1378,7 +1378,7 @@ disposed</A>' animation.
   magick canvas_bgnd.gif  -coalesce  canvas_bgnd_coal.gif
   gif_anim_montage canvas_bgnd_coal.gif canvas_bgnd_coal_frames.gif
 
-  magick canvas_bgnd_coal.gif  -layers CompareAny   compare_any.gif
+  magick canvas_bgnd_coal.gif  -layers CompareAny   magick compare_any.gif
   gif_anim_montage compare_any.gif compare_any_frames.gif
 </samp></pre></TD></TR></TABLE>
 
@@ -1435,7 +1435,7 @@ the previous frame.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick canvas_bgnd_coal.gif  -layers CompareOverlay  compare_overlay.gif
+  magick canvas_bgnd_coal.gif  -layers CompareOverlay  magick compare_overlay.gif
   gif_anim_montage compare_overlay.gif compare_overlay_frames.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="compare_overlay_frames.gif"

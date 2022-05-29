@@ -1249,10 +1249,10 @@ such methods here, while others are talked about in various other places in
 the IM example pages. </P>
 
 Probably the simplest is not to fix the above font at all, but to use a 'mask'
-when drawing it onto the background image to tell the "<CODE>composite</CODE>"
+when drawing it onto the background image to tell the "<code>magick composite</code>"
 command, to ignore the middle section.  </P>
 
-A "<CODE>composite</CODE>" mask image is a grey-scale image, pure black for
+A "<code>magick composite</code>" mask image is a grey-scale image, pure black for
 parts that will be transparent, and pure white for any parts that you want
 completely visible (opaque).  Any grey shades will be draw as
 semi-transparent, merging into the background colors underneath.  </P>
@@ -1290,7 +1290,7 @@ then mask).
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <r>  magick -size 320x180 plasma: -shave 0x40 plasma_background.jpg
-  composite trans_stamp.png   plasma_background.jpg   mask_mask.jpg \
+  magick composite trans_stamp.png   plasma_background.jpg   mask_mask.jpg \
             mask_result.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="mask_result.jpg"
@@ -1327,9 +1327,9 @@ image, while the mask is the image being overlaid into the background image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  composite -compose CopyOpacity   mask_mask.jpg   trans_stamp.png \
+  magick composite -compose CopyOpacity   mask_mask.jpg   trans_stamp.png \
             trans_stamp3.png
-  composite trans_stamp3.png   plasma_background.jpg  mask_result3.jpg
+  magick composite trans_stamp3.png   plasma_background.jpg  mask_result3.jpg
 </samp></pre></TD></TR></TABLE>
    <A HREF="trans_stamp3.png"
       ><IMG SRC="trans_stamp3.png"            WIDTH=320 HEIGHT=100

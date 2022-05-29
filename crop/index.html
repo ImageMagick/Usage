@@ -152,12 +152,12 @@ size and position you specify by its geometry argument.
 </DIV></P>
 
 Just so you can check on exactly what happened here is output from
-"<CODE>identify</CODE>" on the results of the crop above.
+"<code>magick identify</code>" on the results of the crop above.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN OUT=crop_indent.txt>
-  identify rose: crop.gif crop_br.gif crop_tl.gif \
+  magick identify rose: crop.gif crop_br.gif crop_tl.gif \
                  crop_all.gif crop_miss.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -267,7 +267,7 @@ it only contains one single transparent pixel.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOWARN OUT=crop_miss_ident.txt>
-  identify crop_miss.gif
+  magick identify crop_miss.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -340,7 +340,7 @@ ways.  As before the canvas size itself is not modified by the operation.
   magick paged.gif -crop 32x32+32+32  crop_page_br.gif
   magick paged.gif -crop 60x60+2+2    crop_page_all.gif
   magick paged.gif -quiet -crop 32x32+56+56  crop_page_miss.gif
-<n>  identify paged.gif crop_page.gif crop_page_tl.gif crop_page_br.gif \
+<n>  magick identify paged.gif crop_page.gif crop_page_tl.gif crop_page_br.gif \
            crop_page_all.gif crop_page_miss.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="paged.gif"
@@ -512,7 +512,7 @@ For example...
   magick rose: -crop 90x60-10-10\!  crop_vp_all.gif
   magick rose: -quiet -crop 40x30+90+60\!  crop_vp_miss.gif
 </CODE><CODE EXECUTE NOWARN OUT=crop_vp_ident.txt>
-  identify rose.gif  crop_vp.gif crop_vp_br.gif crop_vp_tl.gif \
+  magick identify rose.gif  crop_vp.gif crop_vp_br.gif crop_vp_tl.gif \
               crop_vp_all.gif  crop_vp_miss.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="rose.gif"
@@ -794,7 +794,7 @@ crop generates a whole series of images..
 <TR><TD><PRE><CODE EXECUTE OUT=tiles_ident.txt>
 <c>  magick rose: -shave 12x0 -repage 64x64+9+9  paged.gif
 <z>  magick paged.gif  +gravity -crop 32x32  tiles_%d.gif
-<n>  identify paged.gif tiles_?.gif
+<n>  magick identify paged.gif tiles_?.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"                 WIDTH=64  HEIGHT=64
@@ -871,7 +871,7 @@ methods would.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick tiles_[0-3].gif -background none -layers merge  tiles_layered.gif
 </CODE><CODE EXECUTE NOWARN OUT=tiles_layered_ident.txt
->  identify tiles_layered.gif
+>  magick identify tiles_layered.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="tiles_layered.gif"
      ><IMG SRC="tiles_layered.gif"
@@ -890,7 +890,7 @@ HREF="../option_link.cgi?repage" >+repage</A></CODE>" then the images no
 longer contain the offset from where they were cropped, nor the original size
 of the source image. In that case you can re-join all the images together
 again using the special '<CODE>concatenation</CODE>' mode of
-"<CODE>montage</CODE>". You will need to tell montage how many rows or columns
+"<code>magick montage</code>". You will need to tell montage how many rows or columns
 of images were extracted from the original image.
 
 <DIV ALIGN=center>
@@ -1246,7 +1246,7 @@ image.
 <c>  magick rose: -shave 12x0 -repage 64x64+9+9  paged.gif
 <z>  magick paged.gif  -crop 20x0+30+0  strip_column.gif
 <z>  magick paged.gif  -crop 0x20+0+30  strip_row.gif
-<n>  identify paged.gif strip_column.gif strip_row.gif
+<n>  magick identify paged.gif strip_column.gif strip_row.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="paged.gif"
      ><IMG SRC="paged.gif"
@@ -1276,7 +1276,7 @@ image into a series of strips or columns, instead of tiles.
 <c>  magick rose: -crop 40x30+10+10  crop.gif
 <z>  magick crop.gif -quiet -crop  20x  strips_%d.gif
 </CODE><CODE EXECUTE NOIMAGE OUT=strips_ident.txt
->  identify crop.gif strips_?.gif
+>  magick identify crop.gif strips_?.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="crop.gif"
      ><IMG SRC="crop.gif"
@@ -2329,7 +2329,7 @@ Using multiple frame operations can also produce weirder framing styles.
 
 <A NAME="frame_montage"></A>
 
-With some effort you can even reproduce a "<CODE>montage</CODE>"-like
+With some effort you can even reproduce a "<code>magick montage</code>"-like
 framed image complete with text label.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
@@ -2466,7 +2466,7 @@ method called '<CODE><A HREF="../compose/#copy" >Copy</A></CODE>'.
   version 6.1.4.  Before this the background canvas generated consisted of a
   black canvas onto which the border, or frame was drawn.  </P>
 
-  This use of black was especially bad for the "<CODE>montage</CODE>"
+  This use of black was especially bad for the "<code>magick montage</code>"
   command which makes heavy usage of the internal "<CODE><A
   HREF="../option_link.cgi?frame" >-frame</A></CODE>" function in its internal
   processing. (See <A HREF="../montage/#bg" >Montage Background and
@@ -2498,7 +2498,7 @@ The use of a "<CODE><A HREF="../option_link.cgi?compose" >-compose</A></CODE>"
 setting of '<CODE><A HREF="../compose/#copy" >Copy</A></CODE>' becomes very
 important if you also want to use the "<CODE><A
 HREF="../option_link.cgi?bordercolor" >-bordercolor</A></CODE>" setting in
-"<CODE>montage</CODE>" frames.  See <A HREF="../montage/#bg" >Montage
+"<code>magick montage</code>" frames.  See <A HREF="../montage/#bg" >Montage
 Background and Transparency Handling</A> for more details. </P>
 
 <A NAME="frame_canvas"></A>

@@ -1350,7 +1350,7 @@ So lets look at various details of our original animation..
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=speed_nframes.txt>
-  identify -format "Number of Frames: %n\n" speed.miff | head -1
+  magick identify -format "Number of Frames: %n\n" speed.miff | head -1
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1360,7 +1360,7 @@ So lets look at various details of our original animation..
 </TD></TR></TABLE>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=speed_ncf.txt>
-  identify -format "Colors in Frame %p: %k\n"  speed.miff
+  magick identify -format "Colors in Frame %p: %k\n"  speed.miff
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1395,7 +1395,7 @@ process called <A HREF="../quantize/#colors" >Color Quantization</A>)...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=speed_ncolors2.txt>
-  identify -format "Colors in Frame %p: %k\n"  speed.gif
+  magick identify -format "Colors in Frame %p: %k\n"  speed.gif
   magick speed.gif +append  -format "Total Number of Colors: %k"  info:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -1411,7 +1411,7 @@ IM also needed to supply a separate colormap for each frame in the animation.
 This means that the GIF file has one 'Global Color Table' and it always does,
 but also three separate 'Local Color Tables'. </P>
 
-The "<CODE>identify</CODE>" command cannot tell you how many such local color
+The "<code>magick identify</code>" command cannot tell you how many such local color
 tables a GIF file has, as the information is too format specific, and not
 important to the image processing IM normally does. However the more specific
 "<CODE><A HREF="http://www.ict.griffith.edu.au/anthony/software/#giftrans"
@@ -1515,7 +1515,7 @@ of the same background image....
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare  speed.gif'[0,2]' speed_compare.gif
+  magick compare  speed.gif'[0,2]' speed_compare.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="speed_compare.gif"
      ><IMG SRC="speed_compare.gif"              WIDTH=100  HEIGHT=60
@@ -2071,7 +2071,7 @@ of the previous non-lossy LWZ compression against a lossy LWZ compression.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  compare bunny_bgnd_lossy_frames.gif bunny_bgnd_lzw_frames.gif \
+  magick compare bunny_bgnd_lossy_frames.gif bunny_bgnd_lzw_frames.gif \
           bunny_bgnd_diff_frames.gif
 </TD></TR></TABLE>
   <A HREF="bunny_bgnd_diff_frames.gif"
@@ -2259,14 +2259,14 @@ animations that are often so obvious that they are overlooked. </P>
 <BR>If animation looks okay with fewer colors, use a smaller color table. The
     color tables are always a power of two, so if you can use less than 32
     colors, that is a lot smaller than using 256 colors.  This is especially
-    important as color tables are not compressed by the LZW compression used
+    magick important as color tables are not compressed by the LZW compression used
     for the GIF image data. </P>
 
     Also using fewer colors will generally produce better LZW compression as
     more common pixel sequences are found.  This is not always the case
     however as color dithering (due to the color reduction) can also make the
     compression worse.  Turning of dithering or using an ordered dither can be
-    important here.  </P>
+    magick important here.  </P>
 
 <LI><B>Half the number of user visible frames.</B>
 <BR>If you can handle a less smooth animation, then halving the total number
