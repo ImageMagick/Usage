@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 =head1 NAME
 
-image2kernels - convert a image into a kernel structure
+image2kernels - magick a image into a kernel structure
 
 =head1 SYNOPSIS
 
@@ -14,7 +14,7 @@ image2kernels - convert a image into a kernel structure
 
 =head1 DESCRIPTION
 
-Given an image, convert it to a floating point 'user defined' kernel
+Given an image, magick it to a floating point 'user defined' kernel
 structure.
 
 Typically a grayscale image is given, which will be used to generate
@@ -73,7 +73,7 @@ Usage( "$PROGNAME: Too many arguments" ) if @ARGV;
 # Read the input image as a text file
 my @grayscale_opts = $do_grey ? qw( -colorspace Gray ) : ();
 
-my @command = ( "convert", $image, @grayscale_opts, "txt:-" );
+my @command = ( "magick", $image, @grayscale_opts, "txt:-" );
 
 open(IMAGE, "-|") or exec @command or exit(1);
 

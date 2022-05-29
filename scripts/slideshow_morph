@@ -90,7 +90,7 @@ while :; do
   # The final delay is minimum magick display time
   # The extra frame is to prevent a 'flash' of the first frame
   # just before the 'static' magick display is set.
-  convert -delay 20 "$prev_image" "$next_image" -morph 10 \
+  magick -delay 20 "$prev_image" "$next_image" -morph 10 \
           \( +clone -set delay 1000 \) +swap +delete \
           -loop 0 $temp
 

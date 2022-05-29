@@ -68,7 +68,7 @@ c_ctrls=`echo $curve |\
 
 case $testing in
 1)  # Font Readability Check:
-    convert -background $c_color  -fill $f_color \
+    magick -background $c_color  -fill $f_color \
             -font $font -pointsize $f_size   -size 100x \
             -gravity center    caption:'IM\nExamples' \
             -wave ${wave}x200 -rotate $rotate  -trim +repage \
@@ -77,52 +77,52 @@ case $testing in
     ;;
 2)  # Logo Manipluation (2 seems good, but currenly not used)
     case 2 in
-    1) convert $bgnd -swirl 70  $file & ;;
-    2) convert $bgnd -wave -10x70  $file & ;;
-    9) convert  \
+    1) magick $bgnd -swirl 70  $file & ;;
+    2) magick $bgnd -wave -10x70  $file & ;;
+    9) magick  \
             logo: -rotate 20 -trim +repage \
             -resize x180 -gravity center -crop 180x180+0+0 \
             -flop -repage 180x180+0+0 info: -background white -flatten -flop \
             $file & ;;
-    *) convert $bgnd
+    *) magick $bgnd
             logo: -resize x180 -gravity center -crop 180x180+0+0\! \
             $file & ;;
     esac
     exit
     ;;
 3)  # Check the draw path curves and control points, and logo position...
-    convert -size 100x100 xc:none -fill $c_color \
+    magick -size 100x100 xc:none -fill $c_color \
         -draw "path '$curve'" \
         -draw "fill none stroke red stroke-width 1 \
                 path '$c_ctrls'" \
           \( logo: -resize x180 -gravity center -crop 180x180+0+0\! \
-            \) +swap -gravity SouthWest -magick composite \
+            \) +swap -gravity SouthWest -composite \
           \( -background None  -fill $f_color \
             -font $font -pointsize $f_size   -size 100x \
             -gravity center    caption:"$text" \
             -wave ${wave}x200 -rotate $rotate  -trim +repage \
-            \) -gravity SouthWest -geometry $geom  -magick composite \
+            \) -gravity SouthWest -geometry $geom  -composite \
           $file &
     exit
     ;;
 4)  # 'Gel' Effect testing
-    convert -size 100x100 xc:none -fill $c_color \
+    magick -size 100x100 xc:none -fill $c_color \
         -draw "path '$curve'" \
           \( +clone -fx A +matte  -blur 0x15  -shade 130x0 -normalize \
             -sigmoidal-contrast 12,70% -evaluate Multiply .3 -roll +10+13 \
-            +clone  -compose Screen -magick composite \
-            \) -matte  -compose In  -magick composite \
+            +clone  -compose Screen -composite \
+            \) -matte  -compose In  -composite \
           -background white -flatten \
           $file &
     exit
     ;;
 5)  # 'Aqua' Effect
-    convert -size 100x100 xc:none -fill $c_color \
+    magick -size 100x100 xc:none -fill $c_color \
         -draw "path '$curve'" \
           \( +clone  -fx A  +matte -blur 0x15  -shade 120x45  -normalize \
             -fx "`im_fx_curves -p  0,20  50,50  80,50  100,90 `" \
-            +clone  -compose Overlay -magick composite \
-            \) -matte  -compose In  -magick composite \
+            +clone  -compose Overlay -composite \
+            \) -matte  -compose In  -composite \
           -background white -flatten \
           $file &
     exit
@@ -133,22 +133,22 @@ esac
 # ----------------------
 
 # Generate the fill IM logo with a Green 'Aqua' splash for "IM Examples"
-convert -size 100x100 xc:none -fill $c_color \
+magick -size 100x100 xc:none -fill $c_color \
         -draw "path '$curve'" \
         \( +clone  -fx A  +matte -blur 0x15  -shade 120x45  -normalize \
            -fx "`im_fx_curves -p  0,20  50,50  80,50  100,90 `" \
-           +clone  -compose Overlay -magick composite \
-           \) -matte  -compose In  -magick composite \
+           +clone  -compose Overlay -composite \
+           \) -matte  -compose In  -composite \
         \( +clone -fx A  +matte -blur 0x3  -shade 0x90 -normalize \
            -blur 0x1  -fx '1-(1-u)*.4' -roll -1-2 \
-           +clone  -compose Multiply -magick composite \) \
-        -matte  -compose In  -magick composite \
+           +clone  -compose Multiply -composite \) \
+        -matte  -compose In  -composite \
         \( -background None -fill $f_color \
            -font $font -pointsize $f_size   -size 100x \
            -gravity center    caption:"$text" \
            -wave ${wave}x200 -rotate $rotate  -trim +repage \
-           \) -gravity SouthWest -geometry $geom -compose over -magick composite \
-        $bgnd +swap +geometry -gravity SouthWest -magick composite \
+           \) -gravity SouthWest -geometry $geom -compose over -composite \
+        $bgnd +swap +geometry -gravity SouthWest -composite \
         $post $file
 
 expr "$file" : '.*:' >/dev/null && exit
@@ -156,13 +156,13 @@ expr "$file" : '.*:' >/dev/null && exit
 chmod 644 $file
 
 # output a favicon  as well.
-  convert -size 100x100 xc:none -fill $c_color \
+  magick -size 100x100 xc:none -fill $c_color \
        -draw "path '$curve'" \
         \( -background None -fill $f_color \
            -font $font -pointsize $f_size   -size 100x \
            -gravity center    caption:"$text" \
            -wave ${wave}x200 -rotate $rotate  -trim +repage \
-           \) -gravity SouthWest -geometry $geom -compose over -magick composite \
-        -resize 16x16  ico:- | convert ico:- favicon.ico
+           \) -gravity SouthWest -geometry $geom -compose over -composite \
+        -resize 16x16  ico:- | magick ico:- favicon.ico
 chmod 644 favicon.ico
 

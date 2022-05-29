@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# convert any image (essentially from AdobeRGB or CMYK) to sRGB jpg
+# magick any image (essentially from AdobeRGB or CMYK) to sRGB jpg
 # and optionally resize
 #
 #
@@ -65,28 +65,28 @@ do
 
    # extract possible color profile
    [ -n "$debug" ] && echo "    extracting profile $f"
-   convert "$f" "$profile" 2>/dev/null
+   magick "$f" "$profile" 2>/dev/null
 
    [ -n "$debug" ] && echo "    resize = $resize"
 
    if [ -s "$profile" ]; then
       # we have an embedded profile, so ImageMagick will use that anyway
-      [ -n "$debug" ] && echo "    convert with embedded profile $f"
-      convert "$f" -profile "$srgb" +profile '*' $resize $add_options "$out" \
+      [ -n "$debug" ] && echo "    magick with embedded profile $f"
+      magick "$f" -profile "$srgb" +profile '*' $resize $add_options "$out" \
       && echo -e "\tOK $out"
    else
       # no embedded profile in source
       if magick identify -format "%r" "$f" | grep CMYK >/dev/null ; then
          # CMYK file without embedded profile
-         [ -n "$debug" ] && echo "    convert cmyk without embedded profile $f"
-         convert "$f" -profile "$cmyk" -profile "$srgb" +profile '*' $resize $add_options "$out" \
+         [ -n "$debug" ] && echo "    magick cmyk without embedded profile $f"
+         magick "$f" -profile "$cmyk" -profile "$srgb" +profile '*' $resize $add_options "$out" \
          && echo -e "\tOK $out"
          # alternative would be
-         #convert "$f" -colorspace RGB -resize $size "$out"
+         #magick "$f" -colorspace RGB -resize $size "$out"
       else
          # No profile and not CMYK. Probably already in RGB. Just resize
          [ -n "$debug" ] && echo "    resizing only $f"
-         convert "$f" $resize $add_options "$out" \
+         magick "$f" $resize $add_options "$out" \
          && echo -e "\tOK $out"
       fi
    fi

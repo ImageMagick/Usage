@@ -34,7 +34,7 @@ FONT="-font CourierNew  -pointsize 12"
 expand "$1" | $fmt |           # Expand tabs (and posibly reformat text)
   perl -0777 -pe 's/\n$//' |    # Remove last newline from txt input
     #sed 's/\\/\\\\/g' |        # Escape escapes  -- removed IM v6.3.3
-      convert $FONT -background "$txt_bg_color" label:@- \
+      magick $FONT -background "$txt_bg_color" label:@- \
               -bordercolor "$txt_bg_color" -border 1 \
               "$1.gif"
 

@@ -36,7 +36,7 @@
 #
 # Advanced pre-prepared label handling (broken? Why?)
 #
-#   convert -size 100x100 xc:red xc:blue -set color '%[pixel:u]' miff:- |\
+#   magick -size 100x100 xc:red xc:blue -set color '%[pixel:u]' miff:- |\
 #       flicker_cmp -l '%[color]' -d 100 -
 #
 ###
@@ -110,17 +110,17 @@ if [ "X$label" = "X" ]; then
   esac
 fi
 
-#convert $jpegsize \
-#convert "$@" -set label "$label" -background $color $resize miff:- |
+#magick $jpegsize \
+#magick "$@" -set label "$label" -background $color $resize miff:- |
 # Do each image seperatally as they could be very large
 for img in "$@"; do
-  convert $jpeg "$img" -set label "$label" \
+  magick $jpeg "$img" -set label "$label" \
           -background $color $resize miff:-
 done |
   magick montage - -geometry +0+0 -tile 1x1 -background $color miff:- |
     if [ "X$output" = "X" ]; then
       magick animate -delay "$delay" -dispose background -loop 0 -
     else
-      convert - -delay "$delay" -dispose background -loop 0 "$output"
+      magick - -delay "$delay" -dispose background -loop 0 "$output"
     fi
 

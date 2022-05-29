@@ -16,26 +16,26 @@
 #
 # Expand the row spacing of some text by 4 pixels (must be a multiple of two)
 #
-#  convert -size 50x caption:'This is a word wrapped line of text' miff:- |\
-#    divide_vert - miff:- | convert - -splice 0x2 -append  gap_expansion.png
+#  magick -size 50x caption:'This is a word wrapped line of text' miff:- |\
+#    divide_vert - miff:- | magick - -splice 0x2 -append  gap_expansion.png
 #
 # This will remove all gaps between lines of text...
 #
-#  convert -size 50x caption:'This is a word wrapped line of text' miff:- |\
-#    divide_vert -i - miff:- | convert - -append  gaps-removed.png
+#  magick -size 50x caption:'This is a word wrapped line of text' miff:- |\
+#    divide_vert -i - miff:- | magick - -append  gaps-removed.png
 #
 # Replace all gaps by a fixed amount (5 pixels),
 # though this is not a good idea for normal text images.
 #
-#  convert -size 50x caption:'This is a word wrapped line of text' miff:- |\
+#  magick -size 50x caption:'This is a word wrapped line of text' miff:- |\
 #    divide_vert -i - miff:- |\
-#      convert - -splice 0x5 -append \
+#      magick - -splice 0x5 -append \
 #              -gravity south -splice 0x5  gaps_replaced.png
 #
 #
 # You can also specify a specific color for the background 'gap'
 #
-#  convert -size 20x256 gradient: miff:- |\
+#  magick -size 20x256 gradient: miff:- |\
 #    divide_vert -b grey30 - miff:- |\
 #      magick identify -format "%h " -
 #  178 1 77
@@ -44,7 +44,7 @@
 #
 # Or with a fuzzy match of a specific background color
 #
-#  convert -size 20x256 gradient: miff:- |\
+#  magick -size 20x256 gradient: miff:- |\
 #    divide_vert -b grey50 -f 25% - miff:- |\
 #      magick identify -format "%h " -
 #  115 127 14
@@ -107,7 +107,7 @@ input="$1"  # Read from this IM input file format, may be a pipe
 output="$2" # Write to this IM input file format, may be a pipe
 
 if [ "X$bg_color" != "X" ]; then
-  bg_color=`convert xc:"$bg_color" -depth 16 -alpha on \
+  bg_color=`magick xc:"$bg_color" -depth 16 -alpha on \
               -format '%[pixel:s]' info: `
   [ "X$bg_color" = "X" ] && Usage "Invalid Background Color"
 fi
@@ -121,18 +121,18 @@ trap 'exit 2' 1 2 3 15
 
 # Read input image, once only as it may be pipelines, 
 # save a MPC copy of it.   Return the height of that image.
-height=`convert "$input" +gravity +repage \
+height=`magick "$input" +gravity +repage \
                 -format '%[fx:u.h-1]' -magick identify \
                 $tmpdir/original.mpc`
 
 # Extract information on each row.
 # Then extract the number of colors, and first color from each row!
 if [ "X$bg_color" = "X" ]; then
-  convert $tmpdir/original.mpc -crop 0x1 \
+  magick $tmpdir/original.mpc -crop 0x1 \
           -format '%k %[pixel:s]\n' info:$tmpdir/image_data
 else
   # Same but first simplify any near background to the background color
-  convert $tmpdir/original.mpc -alpha set -channel RGBA \
+  magick $tmpdir/original.mpc -alpha set -channel RGBA \
           $fuzz -fill "$bg_color" -opaque "$bg_color" \
           -crop 0x1 -depth 16 -alpha on \
           -format '%k %[pixel:s]\n' info:$tmpdir/image_data
@@ -163,12 +163,12 @@ while x=`expr $x + 1`; read cnum color; do
       # Save this division from the original image
       h=`expr $x - $top`   # height of region
       file=`printf "$tmpdir/divisions_%06d.mpc" $count`  # save the division
-      convert $tmpdir/original.mpc -crop 0x$h+0+$top +repage $file
+      magick $tmpdir/original.mpc -crop 0x$h+0+$top +repage $file
       count=`expr $count + 1`  # we found this many divisions.
 
       # debug
       echo "division $count: top $top height $h"
-      #convert $file x:
+      #magick $file x:
     fi
     # set things up for the next area to be divided
     top=$x  top_cnum=$cnum  top_color="$color"
@@ -181,32 +181,32 @@ if [ $count -ne 0 ]; then
     # save the last division that is present in the original image
     h=`expr $height + 1 - $top`   # height of region
     file=`printf "$tmpdir/divisions_%06d.mpc" $count`
-    convert $tmpdir/original.mpc -crop 0x$h+0+$top +repage $file
+    magick $tmpdir/original.mpc -crop 0x$h+0+$top +repage $file
   fi
   #count=`expr $count + 1`
   #echo >&2 "split_horiz: Found $count divisions"
 
   # Debug
-  #convert $tmpdir/divisions_*.mpc \
+  #magick $tmpdir/divisions_*.mpc \
   #        -background red -splice 0x1+0+0 -append x:
 
   # output the parts that were saved, if any!
   if  ls -d $tmpdir/divisions_*.mpc >/dev/null 2>/dev/null;  then
     # Output all the divisions as a posible multi-image file
-    convert $tmpdir/divisions_*.mpc "$output"
+    magick $tmpdir/divisions_*.mpc "$output"
   else
     # No divisions were found! presumably we are ignoring gaps!
     # This should be imposible, so ouput the 'null' error image
-    convert null: "$output"
+    magick null: "$output"
   fi
 else
-  # No divisions were found, so just output image (via convert again)
+  # No divisions were found, so just output image (via magick again)
   if [ $top_cnum -ne 1 -o ! "$IGNORE_GAPS" ]; then
-    convert $tmpdir/original.mpc "$output"
+    magick $tmpdir/original.mpc "$output"
   else
     # image is blank, BUT we were asked to not output blank images!
     # This is imposible, so ouput the 'null' error image
-    convert null: "$output"
+    magick null: "$output"
   fi
 fi
 

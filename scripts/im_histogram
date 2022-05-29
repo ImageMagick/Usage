@@ -78,7 +78,7 @@ name=$1; shift;
   else
     echo "plot [0:1][0:1] $func"
   fi
-) | gnuplot | convert - $name.jpg
+) | gnuplot | magick - $name.jpg
 chmod 644 $name.jpg
 
 # ------
@@ -101,6 +101,6 @@ chmod 644 $name.jpg
     echo "plot [0:1][0:1] $func"
   fi
 ) | gnuplot | \
-  convert - -trim +repage -bordercolor white -border 5 \
+  magick - -trim +repage -bordercolor white -border 5 \
           -resize '150x100!'  -colors 256  $name.gif
 

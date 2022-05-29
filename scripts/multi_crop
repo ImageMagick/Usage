@@ -155,7 +155,7 @@ mkdir $tmp ||
   Error "Unable to create tmp dir \"$tmp\""
 
 # read the input image into the temp files and test validity.
-convert -quiet -regard-warnings "$infile" +repage "$tmp/IN.mpc" ||
+magick -quiet -regard-warnings "$infile" +repage "$tmp/IN.mpc" ||
   Error "File $infile not readable as an image"
 
 
@@ -174,10 +174,10 @@ height=`magick identify -ping -format "%h" $tmp/IN.mpc`
 if [ "X$bgcolor" != "X" ]; then
   coords="0,0"
 else
-  widthm1=`convert xc: -format "%[fx:$width-1]" info:`
-  heightm1=`convert xc: -format "%[fx:$height-1]" info:`
-  midwidth=`convert xc: -format "%[fx:round(($width-1))/2]" info:`
-  midheight=`convert xc: -format "%[fx:round(($height-1))/2]" info:`
+  widthm1=`magick xc: -format "%[fx:$width-1]" info:`
+  heightm1=`magick xc: -format "%[fx:$height-1]" info:`
+  midwidth=`magick xc: -format "%[fx:round(($width-1))/2]" info:`
+  midheight=`magick xc: -format "%[fx:round(($height-1))/2]" info:`
   coords=`echo "$coords" | tr "[:upper:]" "[:lower:]"`
   case "$coords" in
     ''|nw|northwest) coords="0,0" ;;
@@ -191,19 +191,19 @@ else
     [0-9]*,[0-9]*)   coords=$coords ;;
     *)  Error "--- INVALID COORDS ---" ;;
   esac
-  bgcolor=`convert $tmp/IN.mpc -format "%[pixel:u.p{$coords}]" info:`
+  bgcolor=`magick $tmp/IN.mpc -format "%[pixel:u.p{$coords}]" info:`
 fi
 #echo "DEBUG: bgcolor=$bgcolor"
 
 # get grid spacing
-wg=`convert xc: -format "%[fx:round($grid*$width/100)]" info:`
-hg=`convert xc: -format "%[fx:round($grid*$height/100)]" info:`
-num=`convert xc: -format "%[fx:round(100/$grid) - 2]" info:`
+wg=`magick xc: -format "%[fx:round($grid*$width/100)]" info:`
+hg=`magick xc: -format "%[fx:round($grid*$height/100)]" info:`
+num=`magick xc: -format "%[fx:round(100/$grid) - 2]" info:`
 #echo "DEBUG: width=$width; height=$height; wg=$wg; hg=$hg; num=$num"
 
 
 # OLD METHOD: Fill from the given coolrdinate point
-# convert $tmp/IN.mpc -fuzz ${fuzz}% -fill none \
+# magick $tmp/IN.mpc -fuzz ${fuzz}% -fill none \
 #   -draw "matte $coords floodfill" \
 #   -fill red +opaque none \
 #   $tmp/MASK.mpc
@@ -213,7 +213,7 @@ num=`convert xc: -format "%[fx:round(100/$grid) - 2]" info:`
 # problems with 'thin decorative lines' that may box or link images.  It also
 # tends to remove most 'text' and other 'too small' hits.
 
-convert $tmp/IN.mpc -fuzz ${fuzz}% -fill none \
+magick $tmp/IN.mpc -fuzz ${fuzz}% -fill none \
         -bordercolor $bgcolor -border 1x1 \
         -draw "matte $coords replace" \
         +fuzz -shave 1x1 -fill red +opaque none \
@@ -226,10 +226,10 @@ case "$mask" in
      magick display $tmp/MASK.mpc
      exit 0 ;;
   s|save)
-     convert $tmp/MASK.mpc ${outname}_mask.gif
+     magick $tmp/MASK.mpc ${outname}_mask.gif
      ;;
   o|ouput)
-     convert $tmp/MASK.mpc ${outname}_mask.gif
+     magick $tmp/MASK.mpc ${outname}_mask.gif
      exit 0 ;;
   *) Error "Mask $mask must be either \"view\", \"save\", or \"output\""
      ;;
@@ -247,13 +247,13 @@ for ((j=0;j<=$num;j++))
     do
     x=$(($x + $wg))
     # test if found color is 'red' -- match
-    testcolor=`convert $tmp/MASK.mpc -format "%[pixel:u.p{$x,$y}]" info:`
+    testcolor=`magick $tmp/MASK.mpc -format "%[pixel:u.p{$x,$y}]" info:`
     echo "$x $y $testcolor"
     if [ "$testcolor" = 'red' ]; then
       echo "Processing Image $k"
       # Take red and none mask.
       # Floodfill the local red region with white.
-      convert $tmp/MASK.mpc -channel rgba -alpha on -fill "white" \
+      magick $tmp/MASK.mpc -channel rgba -alpha on -fill "white" \
               -draw "color $x,$y floodfill" $tmp/part.mpc
       # Fill anything not white with transparency and
       # turn transparency off so black.
@@ -263,7 +263,7 @@ for ((j=0;j<=$num;j++))
       # areas eaten away are filled with white.
       # Note flatten uses the virtual canvas left by -trim so that it
       # goes back into the right location.
-      convert \( $tmp/part.mpc -channel rgba -alpha on \
+      magick \( $tmp/part.mpc -channel rgba -alpha on \
         -fill none +opaque white -alpha off \) \
         \( +clone -trim -fill white -opaque black -write $tmp/ptrim.mpc \) \
         -flatten $tmp/pmask.mpc
@@ -280,11 +280,11 @@ for ((j=0;j<=$num;j++))
         n=`printf %02d $k`
         echo "  Output to file \"${outname}-${n}.${suffix}\""
         if [ "$unrotate" = 'unrotate' ]; then
-          convert $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -magick composite \
+          magick $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -composite \
             -fuzz ${fuzz}% -trim miff:- | \
           unrotate -f ${fuzz}% - ${outname}-${n}.${suffix}
         else
-          convert $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -magick composite \
+          magick $tmp/IN.mpc $tmp/pmask.mpc -compose multiply -composite \
             -fuzz ${fuzz}% -trim -background "$bgcolor" $unrotate \
             -compose over -bordercolor "$bgcolor" -border 2 -trim +repage \
             ${outname}-${n}.${suffix}
@@ -295,7 +295,7 @@ for ((j=0;j<=$num;j++))
       # so that the same sub-image is not found again.
       # Do this as a flood fill so any internal 'sub-rectangles' are not
       # effected.
-      convert $tmp/MASK.mpc -channel rgba -alpha on \
+      magick $tmp/MASK.mpc -channel rgba -alpha on \
               -fill none -draw "matte $x,$y floodfill" $tmp/MASK.mpc
     fi
   done

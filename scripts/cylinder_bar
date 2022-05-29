@@ -159,10 +159,10 @@ EOF
 }
 label_image() {
   # This command is basically one enormouse 'echo' but is designed
-  # to generate  convert options that will create a 'label' image.
+  # to generate  magick options that will create a 'label' image.
   # using   $(...)
   #
-  #convert
+  #magick
   cat<<EOF
   -background None \( -font Garfield -size ${width}x${height} \
   -fill red -stroke snow4 -strokewidth 1   label:'$percent %' \
@@ -176,9 +176,9 @@ EOF
 # Main program...
 
 # Put it all together...
-eval "convert -size ${width}x${height} -background None mvg:<(draw_base) \
+eval "magick -size ${width}x${height} -background None mvg:<(draw_base) \
         \( mvg:<(draw_glass_shading) -background black -alpha shape \
-        \) -magick composite \
+        \) -composite \
         -draw @<(draw_glass_edges) \
         \
         -trim +repage \
@@ -201,6 +201,6 @@ exit 0
         \
         $(label_image) \
         -background none -gravity center -extent ${width}x${height} \
-        -magick composite -bordercolor $background -border 0 \
+        -composite -bordercolor $background -border 0 \
         "${2:-"show:"}"
 

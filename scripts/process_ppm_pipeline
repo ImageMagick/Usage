@@ -5,7 +5,7 @@ process_ppm_pipeline - process a pipeline of multiple PPM images
 
 =head1 SYNOPSIS
 
- process_ppm_pipeline  convert_args....
+ process_ppm_pipeline  magick_args....
 
  Extra non-Imagemagick options:
     -help
@@ -14,7 +14,7 @@ process_ppm_pipeline - process a pipeline of multiple PPM images
 =head1 DESCRIPTION
 
 Read from standard input a pipline of PPM images (pnmnoraw) and run the
-specified imagemagick convert arguments on them. The resulting image is
+specified imagemagick magick arguments on them. The resulting image is
 then feed to the output as pipeline of normal PPM images.
 
 For example, process a very long video sequence...
@@ -25,16 +25,16 @@ For example, process a very long video sequence...
 
 OR for GIF animations...
 
- convert animation.gif  -coalesce  -compress none ppm:- |
-   process_ppm_pipeline  logo.gif -gravity SouthEast -magick composite   |
- convert -   -layers Optimize -set delay 10 -loop 0 animation_new.gif
+ magick animation.gif  -coalesce  -compress none ppm:- |
+   process_ppm_pipeline  logo.gif -gravity SouthEast -composite   |
+ magick -   -layers Optimize -set delay 10 -loop 0 animation_new.gif
 
-The convert arguments should assume only one image has already been
+The magick arguments should assume only one image has already been
 read into memory and should not provide a final output filename.
 
 =head1 WHY
 
-The reason this script is needed is that while "convert" and other
+The reason this script is needed is that while "magick" and other
 ImageMagick commands can read a pipeline of PNM images, it will read ALL
 of the images into memory.  This is not good if you are processing
 a video stream, as you would end up with the whole (huge) video,
@@ -49,11 +49,11 @@ http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=18320&p=71150
 =head1 FUTURE
 
 This script could be made better, by feeding the image directly into the
-convert command while it is still looking for the end of image to be
+magick command while it is still looking for the end of image to be
 found.  That is without buffering the whole (single) image itself!
 
 Also with a little more savvy it could know exactly how many bytes needs
-to be read and passed on to the "convert" comamnd, using a binary (raw)
+to be read and passed on to the "magick" comamnd, using a binary (raw)
 PPM file format, without over-reading into the next image.
 
 In the same way, it could also be made handle a ImageMagick MIFF image
@@ -86,9 +86,9 @@ Usage(-verbose => 2) if grep( /-+manual/, @ARGV);
 # -----------------------------------------------------------------
 my $image;
 
-sub run_convert {
+sub run_magick {
    open(CVT, "|-")
-       or exec( 'convert', '-', @ARGV, 'ppm:-');
+       or exec( 'magick', '-', @ARGV, 'ppm:-');
    print CVT $image;
    undef $image;
    close CVT;
@@ -101,10 +101,10 @@ Usage "Input is not ASCII-PPM images! Did you forget to use 'pnmnoraw'?"
      unless $image =~ /^P3\s/;
 
 while ( <STDIN> ) {
-  run_convert   if /^P/ && $image;
+  run_magick   if /^P/ && $image;
   $image .= $_;
 }
-run_convert if $image;
+run_magick if $image;
 
 exit 0;
 # -----------------------------------------------------------------

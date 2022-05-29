@@ -82,12 +82,12 @@ grange="`expr $size_w - 1`"    # 0 to $grange values input
   # Read image Data in Binary
   echo -n 'plot "-" binary format="%ushort" endian=big'
   echo    '  array='"$size_w"' using ($1/65536) with lines'
-  eval convert -size 1x$size_w gradient: -rotate 90 $im_func \
+  eval magick -size 1x$size_w gradient: -rotate 90 $im_func \
           -depth 16 -endian MSB gray:-
 
 ) | gnuplot |
-  #convert - -write info:fd:2 miff:- | magick display -; exit  # DEBUGGING
-  convert -background $page_bg_color -bordercolor $page_bg_color \
+  #magick - -write info:fd:2 miff:- | magick display -; exit  # DEBUGGING
+  magick -background $page_bg_color -bordercolor $page_bg_color \
           label:"0                ½                1" \
           -resize 120x -border 1x0 -unsharp 0x.5 \
           -write mpr:label +delete \

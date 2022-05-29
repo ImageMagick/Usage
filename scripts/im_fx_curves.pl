@@ -21,7 +21,7 @@
 #    7.56u^3-11.9u^2+5.09u+0.2
 #
 # This uses a perl "Math::Polynomial" module to do the least squares curve
-# fit. However it may also be converted to use "Algorithm::CurveFit" instead.
+# fit. However it may also be magicked to use "Algorithm::CurveFit" instead.
 #
 ####
 #
@@ -72,7 +72,7 @@ if ( 1 ) {
   # Set how the polynomial should be formated to fit IM's -fx function
   Math::Polynomial->string_config({
       fold_sign     => 1,
-      convert_coeff => sub { sprintf "%.3f", @_ },
+      magick_coeff => sub { sprintf "%.3f", @_ },
       leading_minus => q{-},
       times         => q{*},
       variable      => q{u},

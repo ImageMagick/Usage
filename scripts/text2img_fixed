@@ -2,9 +2,9 @@
 #
 # text2img_fixed [options] output_image  < textfile
 #
-# Given a text file of characters (utf-8) convert each character into
+# Given a text file of characters (utf-8) magick each character into
 # an image, and join them together into a table of 'fixed width' character
-# cells.  That is convert the text keeping the results tabular as if using a
+# cells.  That is magick the text keeping the results tabular as if using a
 # 'monospace' font, even if the font used is proportional.
 #
 # Options:
@@ -77,7 +77,7 @@ export LC_CTYPE
 
 #------------------------------------------------------------------------------
 
-# use perl to read in a line (as unicode), and convert each character
+# use perl to read in a line (as unicode), and magick each character
 # to the special 'fixed width' format, as a IM command.
 #
 perl -e '
@@ -93,7 +93,7 @@ perl -e '
   # This currently needs some method of horizontal only trim
   sub output_string {
     $s = shift;
-    print "convert -quiet -font '"'$font'"' -pointsize '"'$pointsize'"' ";
+    print "magick -quiet -font '"'$font'"' -pointsize '"'$pointsize'"' ";
     print "label:$s -set label \"\" -trim +repage miff:-;\n";
   }
 
@@ -102,7 +102,7 @@ perl -e '
   sub output_char {
     output_string $quote . pack("U", shift) . $quote;
   }
-  sub blank  { print "convert xc: miff:-;\n"; }    # empty character
+  sub blank  { print "magick xc: miff:-;\n"; }    # empty character
   sub quote  { output_string "\"$quote\""; }       # quote the single quote
   sub at     { output_string $quote."\\\@".$quote; } # excape the at symbol
   sub bslash { output_string $quote."\\\\".$quote; } # excape the backslash

@@ -33,15 +33,15 @@ for image in "$@"; do
    # read, thumbnail, polaroid image to a temp file.
    # I used super-sampled polariod to make the result better
    # This could have been done in a previous step to this loop
-   convert -size 500x500 "$image" -thumbnail 240x240 \
+   magick -size 500x500 "$image" -thumbnail 240x240 \
        -set caption '%t' -bordercolor Lavender -background black \
        -pointsize 12  -density 96x96  +polaroid  -resize 50% \
        "$tmpfile"
 
    # Now gather image size, half it, and determine its virtual canvas
    # location so as to place it's center at the current position.
-   xpos=`convert "$tmpfile" -format "%[fx: $center - w/2 ]" info:`
-   ypos=`convert "$tmpfile" -format "%[fx: - h/2 ]" info:`
+   xpos=`magick "$tmpfile" -format "%[fx: $center - w/2 ]" info:`
+   ypos=`magick "$tmpfile" -format "%[fx: - h/2 ]" info:`
 
    # $xpos may be positive, in which case it needs to have a '+' sign
    # $ypos is always negative (but check its formating anyway)
@@ -55,17 +55,17 @@ for image in "$@"; do
    # It would be nice if gravity/justification could be used to position
    # centers, then we would not need to read the image size ourselves!
    #
-   convert -page $pos "$tmpfile" MIFF:-
+   magick -page $pos "$tmpfile" MIFF:-
 
    # Increment position for next image  (lets use IM for the math ;-)
-   center=`convert xc: -format "%[fx: $center + $offset ]" info:`
+   center=`magick xc: -format "%[fx: $center + $offset ]" info:`
 
 done |
 
   # Now we read the pipeline of the images output from the above loop
   # and create the canvas.  Repage the virtual canvas, add some extra
   # border space and output it.
-  convert -background "$background"  MIFF:- \
+  magick -background "$background"  MIFF:- \
           -layers merge +repage \
           -bordercolor "$background" -border 5x5  JPEG:-
 

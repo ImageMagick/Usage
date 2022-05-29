@@ -138,7 +138,7 @@ x=0; y=0; offset=+0+0        # current offset of piece over original image
 
 # -----------------------------------------------------
 # Read in the mask (once only)
-convert "$mask_input" miff:$tmp2
+magick "$mask_input" miff:$tmp2
 if [ ! -s $tmp2 ]; then
   echo >&2 "$PROGNAME: Mask Image "$mask_input" read failed -- aborting"
   exit 1
@@ -164,13 +164,13 @@ fi
 
 if [ -z "$PRESERVE" ]; then
   # Trim the mask and adjust offset due to trim (assumes mask is greyscale!)
-  offset_add `convert $tmp2 +repage \
+  offset_add `magick $tmp2 +repage \
               -bordercolor black -border 1x1 -repage -1-1 \
               -trim -format %O -magick identify +repage $tmp2`
 
   if [ "X$MASK_SIZE" != 'X' ]; then
     # Center the mask on an image of the size given
-    convert $tmp2 -bordercolor black -border $MASK_SIZE \
+    magick $tmp2 -bordercolor black -border $MASK_SIZE \
             -gravity center -crop $MASK_SIZE+0+0\! +repage \
             -background black -flatten  $tmp1
 
@@ -184,13 +184,13 @@ fi
 
 if [ "$MASK_ONLY" ]; then
   # Return the trimmed mask, with adjusted offset (for later re-use).
-  convert -page $offset $tmp2 "$destination"
+  magick -page $offset $tmp2 "$destination"
   exit 0
 fi
 
 # --------------
 # Read the Source Photo Image (once only)
-convert "$photo_input" +repage miff:$tmp1
+magick "$photo_input" +repage miff:$tmp1
 if [ ! -s $tmp1 ]; then
   echo >&2 "$PROGNAME: Photo Image "$photo_input" read failed -- aborting"
   exit 1
@@ -199,14 +199,14 @@ fi
 # Cut out the Source image at the current offset (add outline)
 crop=`magick identify -format %wx%h$offset $tmp2`
 if [ "$OUTLINE" ]; then
-  convert $tmp1 -crop $crop\! -background none -flatten +repage \
+  magick $tmp1 -crop $crop\! -background none -flatten +repage \
           \( $tmp2 -edge 1 -blur 0x.5 -normalize -negate \) \
-          -compose multiply -magick composite \
-          \( $tmp2 +matte \) -compose CopyOpacity -magick composite \
+          -compose multiply -composite \
+          \( $tmp2 +matte \) -compose CopyOpacity -composite \
           $tmp1
 else
-  convert $tmp1 -crop $crop\! -background none -flatten +repage \
-          \( $tmp2 +matte \) -compose CopyOpacity -magick composite \
+  magick $tmp1 -crop $crop\! -background none -flatten +repage \
+          \( $tmp2 +matte \) -compose CopyOpacity -composite \
           $tmp1
 fi
 
@@ -214,14 +214,14 @@ fi
 if [ "$ROTATE" ]; then
   if [ -z "$PRESERVE" ]; then
     # Trimmed rotate, adjust offset as a result of rotate
-    convert $tmp1 -matte -background none -rotate "$ROTATE" \
+    magick $tmp1 -matte -background none -rotate "$ROTATE" \
             -bordercolor none -border 1x1 -trim +repage  $tmp1
     set -$- -- `magick identify -format "%w %h " $tmp1 $tmp2`
     offset_add "`expr \( $3 - $1 \) / 2` `expr \( $4 - $2 \) / 2`"
   else
     # Rotate but preserve original masked size (no offset adjust needed)
-    convert $tmp1 -matte \( +clone -background none -rotate "$ROTATE" \) \
-            -gravity center  -compose Src -magick composite   $tmp1
+    magick $tmp1 -matte \( +clone -background none -rotate "$ROTATE" \) \
+            -gravity center  -compose Src -composite   $tmp1
   fi
 fi
 
@@ -234,23 +234,23 @@ fi
 
 if [ "$HIGHLIGHT" ]; then
   # Add highlights to the cutout piece
-  convert $tmp1 \
+  magick $tmp1 \
           \( +clone -channel A -separate +channel -negate \
              -background black -virtual-pixel background \
              -blur $shade_blur -shade $shade_angle -normalize \
              -contrast-stretch 0% -fill grey50 -colorize $shade_contrast \
              +sigmoidal-contrast $shade_surface \
-             +clone -compose Overlay -magick composite \
-          \) -compose In -magick composite $tmp1
+             +clone -compose Overlay -composite \
+          \) -compose In -composite $tmp1
 fi
 
 if [ "$THICKNESS" ]; then
   if [ -z "$PRESERVE" ]; then  # first add some extra space
-    convert $tmp1 -background none -gravity SouthEast \
+    magick $tmp1 -background none -gravity SouthEast \
             -splice $[(${THICKNESS}+1)/2]x${THICKNESS}  $tmp1
   fi
   # now generate a 'variable' thickness command.
-  convert $tmp1 \( +clone -fill DarkSlateGrey -colorize 100% -repage +0+1 \) \
+  magick $tmp1 \( +clone -fill DarkSlateGrey -colorize 100% -repage +0+1 \) \
           $( for i in $( seq 2 "$THICKNESS" ); do
                printf '( +clone -repage %+d%+d ) ' $[ ($i+1)/2 ] $i;
              done ) -background none -compose DstOver -flatten $tmp1
@@ -258,14 +258,14 @@ fi
 
 if [ "$SHADOW" ]; then
   if [ -z "$PRESERVE" ]; then  # first add some extra space
-    convert $tmp1 -background none -gravity SouthEast -splice 8x8 $tmp1
+    magick $tmp1 -background none -gravity SouthEast -splice 8x8 $tmp1
   fi
   # now add shadow without resizing the resulting image
-  convert $tmp1 \( +clone  -background Black -shadow 50x3+4+4 \) \
+  magick $tmp1 \( +clone  -background Black -shadow 50x3+4+4 \) \
                 -background none -compose DstOver -flatten    $tmp1
 fi
 
 # Output the result, adding offset to image format (for PNG, GIF, MIFF)
-convert -page $offset $tmp1 "$destination"
+magick -page $offset $tmp1 "$destination"
 
 

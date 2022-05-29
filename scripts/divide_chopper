@@ -15,7 +15,7 @@
 #
 # Example...
 #
-#   convert label:'Goodbye\nCruel World' +set label text.png
+#   magick label:'Goodbye\nCruel World' +set label text.png
 #
 #   divide_chopper  -i -b white   text.png  parts
 #
@@ -69,16 +69,16 @@ fi
 echo "doing row division"
 $divider $args "$infile" "$tmpdir/%03d.mpc"
 
-#convert $tmpdir/*.mpc -background red -splice 0x1+0+0 -append show:
+#magick $tmpdir/*.mpc -background red -splice 0x1+0+0 -append show:
 
 for row in $tmpdir/*.mpc; do
 
   num=$(echo $row | sed 's/^.*\/\([0-9][0-9]*\)\.mpc$/\1/')
   echo "Column dividing row $num"
 
-  convert $row -rotate 90 miff:- |
+  magick $row -rotate 90 miff:- |
     $divider $args - miff:- |
-      convert - -rotate -90 "${prefix}_${num}_%03d.png"
+      magick - -rotate -90 "${prefix}_${num}_%03d.png"
 
 done
 exit 0

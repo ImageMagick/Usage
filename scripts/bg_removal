@@ -140,24 +140,24 @@ fi
 # 6 = final image combining all the above
 #
 #
-convert "$image" \
-  \( -clone 0 $bgnd -compose Difference -magick composite \
+magick "$image" \
+  \( -clone 0 $bgnd -compose Difference -composite \
      $grayscale \
      -channel B -evaluate 'set' 0 +channel \) \
   \( -clone 1 -fill blue -fuzz $fzout%  $fill \
      -channel B -separate +channel \) \
   \( -clone 1 -fill blue -fuzz $fzin%  $fill \
      -channel B -separate +channel -negate \) \
-  \( -clone 2,3 -negate -compose multiply -magick composite \) \
+  \( -clone 2,3 -negate -compose multiply -composite \) \
   $showmasks \
-  \( -clone 0,3 +matte -compose CopyOpacity -magick composite \) \
+  \( -clone 0,3 +matte -compose CopyOpacity -composite \) \
   \( -clone 1 -channel R -separate +channel \
-     -clone 4 +matte -compose CopyOpacity -magick composite \
-     \( +clone -blur 0x30 +matte \) +swap -compose Over -magick composite \
+     -clone 4 +matte -compose CopyOpacity -composite \
+     \( +clone -blur 0x30 +matte \) +swap -compose Over -composite \
      +matte -normalize \
-     -clone 4 -compose multiply -magick composite  \
+     -clone 4 -compose multiply -composite  \
      -background $background -alpha shape \
-     -clone 5 -compose over -magick composite \) \
+     -clone 5 -compose over -composite \) \
   -delete 0--2 "$image_out"
 
 exit 0

@@ -106,7 +106,7 @@ while [ $# -ne 0 ]; do
   # Create a mask of points which have acceptable entropy
   # That is points along edges and boundaries of color areas.
 
-  convert $img2  \
+  magick $img2  \
           \( -clone 0 -magick segment 1 -median 3 \
              -morphology Edge Diamond \
              -morphology thinning:2 Skeleton \
@@ -117,7 +117,7 @@ while [ $# -ne 0 ]; do
           \( -clone 0 -alpha extract -virtual-pixel black \
              -morphology erode Square:$edge_radius \
           \) \
-          -delete 0 -compose multiply -magick composite -compose over \
+          -delete 0 -compose multiply -composite -compose over \
           $tmpdir/acceptable.miff
 
   # DEBUG: checking 'entropy' results...
@@ -130,11 +130,11 @@ while [ $# -ne 0 ]; do
   # and returns the point with a minimal distance.
   #
   read -r x y dist < <(
-    convert $tmpdir/acceptable.miff \
+    magick $tmpdir/acceptable.miff \
             \( +clone -threshold -1 \
                -fill black -draw 'rectangle 0,0 1,1' -roll -1-1 \
                -virtual-pixel white -morphology Distance Euclidean:2 \
-            \) -compose multiply -magick composite -compose over \
+            \) -compose multiply -composite -compose over \
             -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
         awk 'NR==1 { min=1e8; next; }
@@ -144,7 +144,7 @@ while [ $# -ne 0 ]; do
 
   # Okay we have the first valid point for a sub-image search.
   # now set up a distribution map for later use.
-  convert $tmpdir/acceptable.miff -threshold -1 \
+  magick $tmpdir/acceptable.miff -threshold -1 \
           -fill black -draw "point $x,$y" \
           $tmpdir/distribute.miff
 
@@ -169,9 +169,9 @@ while [ $# -ne 0 ]; do
     # we have so far found, and saved in the 'distribute map'.
 
     read -r x y dist < <(
-      convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
+      magick $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
               \( +clone -auto-level -write $tmpdir/distance.miff +delete \) \
-              $tmpdir/acceptable.miff -compose multiply -magick composite \
+              $tmpdir/acceptable.miff -compose multiply -composite \
               -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
         awk 'NR==1 { next; }
@@ -184,7 +184,7 @@ while [ $# -ne 0 ]; do
     done
 
     # Add this new point to the distribution map (for next selection)
-    convert $tmpdir/distribute.miff \
+    magick $tmpdir/distribute.miff \
             -fill black -draw "point $x,$y" \
             $tmpdir/distribute.miff
 
@@ -205,12 +205,12 @@ while [ $# -ne 0 ]; do
     # Basically ensure the crop areas has a high entropy.
     #
     coords=`
-      convert "$img1" "$img2" \
+      magick "$img1" "$img2" \
               -background grey -alpha remove -alpha off \
               \( +clone -crop "$size$offset" +repage \) \
               +swap +delete miff:- |\
       magick compare -subimage-search - miff:- | \
-      convert - +swap +delete +depth txt:- | \
+      magick - +swap +delete +depth txt:- | \
       tail -n+2 | tr -cs '0-9\n' ' ' | sort -rn -t\  -k3 | tail -n-1 `
 
     read -r x y match junk <<< "$coords"
@@ -230,7 +230,7 @@ while [ $# -ne 0 ]; do
       echo "   $img1 -page +$x+$y $img2 -> \"$output_image\""
 
       # Output a merged img
-      convert "$img1" -page "+$x+$y" "$img2" \
+      magick "$img1" -page "+$x+$y" "$img2" \
               -background none -layers merge +repage "$output_image"
       magick display "$output_image" & # magick display it when found
 

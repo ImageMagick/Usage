@@ -10,7 +10,7 @@
 #
 # For example,
 #   wget http://www.imagemagick.org/Usage/images/hand_point.gif
-#   convert xc: -background black -gravity center -extend 60x60 pixel.gif
+#   magick xc: -background black -gravity center -extend 60x60 pixel.gif
 #
 #   convolve_image pixel.gif hand_point.gif  convolved_pixel.gif
 #
@@ -36,7 +36,7 @@ mkdir $tmp ||
   Error "Unable to create tmp dir \"$tmp\""
 
 
-IM_VERSION=`convert -list configure | \
+IM_VERSION=`magick -list configure | \
      sed '/^LIB_VERSION_NUMBER /!d;
           s//,/;  s/,/,0/g;
           s/,0*\([0-9][0-9]\)/\1/g'`
@@ -49,7 +49,7 @@ fi
 image2kernel $kernel $k.dat
 
 # apply kernels to input image, and merge the results.
-convert "$input" -alpha off \
+magick "$input" -alpha off \
         \( -clone 0 -morphology Convolve "@${k}_R.dat" \) \
         \( -clone 0 -morphology Convolve "@${k}_G.dat" \) \
         \( -clone 0 -morphology Convolve "@${k}_B.dat" \) \
@@ -62,7 +62,7 @@ exit 0
 # I think it is showing up some bug in Morphology Convolve for Alpha channel
 #
 
-convert "$input" -alpha shape \
+magick "$input" -alpha shape \
         -channel R -morphology Convolve "@${k}_R.dat"  \
         -channel G -morphology Convolve "@${k}_G.dat"  \
         -channel B -morphology Convolve "@${k}_B.dat"  \

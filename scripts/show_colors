@@ -10,9 +10,9 @@
 #
 IFS='
 '
-for color in `convert -list color | grep -i "$1" | sed 's/ *.rgb.*//'`
+for color in `magick -list color | grep -i "$1" | sed 's/ *.rgb.*//'`
 do
-   convert -size 100x50 -label "$color" xc:"$color" miff:-
+   magick -size 100x50 -label "$color" xc:"$color" miff:-
 done |
    magick montage - -tile 6x -geometry +5+5 -frame 5 show:
 

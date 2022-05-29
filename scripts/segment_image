@@ -39,12 +39,12 @@ fuzz='0%'    # fuzz factor for flood filling sepearte colored areas
 # Read input image, once only as it may part of a pipeline of commands,
 # and save a MPC working image, for fast image reading.
 # Actually it may be better to just save as a IM TXT image file instead.
-convert "$1" -matte $tmpdir/working.mpc
+magick "$1" -matte $tmpdir/working.mpc
 
 while true; do
 
   # Find the first non-transparent pixel in inpit image.
-  coords=`convert $tmpdir/working.mpc txt:- | sed '1d; / 0)/d; s/:.*//; q'`
+  coords=`magick $tmpdir/working.mpc txt:- | sed '1d; / 0)/d; s/:.*//; q'`
 
   # If image is now only transparent, all segments found
   [ -z "$coords" ]  && break
@@ -53,7 +53,7 @@ while true; do
   # Write the image to the output pipeline BEFORE the magick segment is removes
   # Only THEN, remove that magick segment from working image (mask),
   # Write the working image back so we can look for another segment.
-  convert $tmpdir/working.mpc   -write miff:-   \
+  magick $tmpdir/working.mpc   -write miff:-   \
           -fuzz $fuzz -fill none -draw "matte $coords floodfill" \
           $tmpdir/working.mpc
 
@@ -62,5 +62,5 @@ done |
   # then use 'OptimizeTransparency' to make previously added pixels
   # transparent, leaving just the newly added pixels. Reverse the list back to
   # the order of discovery and output as a multi-image image sequence.
-  convert miff:- -reverse -layers OptimizeTransparency -reverse "$2"
+  magick miff:- -reverse -layers OptimizeTransparency -reverse "$2"
 

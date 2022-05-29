@@ -90,7 +90,7 @@ fi
 
 case "$method" in
  1) # Montage only method
-    convert "$input" -set background none -alpha on -set label "$label" \
+    magick "$input" -set background none -alpha on -set label "$label" \
             -compose Copy -bordercolor $border -border $thickness \
             -set dispose Background -coalesce  miff:- |\
       magick montage - -frame 4 -geometry '+1+1' $tile \
@@ -99,7 +99,7 @@ case "$method" in
     ;;
  2) # Montage with a disposed image underlay
     # Still need some way to make the underlay partically transparent
-    convert "$input"  -set label "$label" -write mpr:a \
+    magick "$input"  -set label "$label" -write mpr:a \
             -coalesce -bordercolor none -border $thickness \
             -channel A -evaluate divide 2 +channel  null: \
             \( mpr:a -bordercolor none -mattecolor $border -frame $thickness \
@@ -109,8 +109,8 @@ case "$method" in
               -bordercolor none -pointsize $pointsize \
               $montage_opts  "$output"
     ;;
- 3) # convert only method  -- no magick montage labels :-(
-    convert -dispose Background  "$input" \
+ 3) # magick only method  -- no magick montage labels :-(
+    magick -dispose Background  "$input" \
             -compose Copy -bordercolor $border -border $thickness \
             -compose Over -coalesce  -bordercolor none   -frame 4x4+1+1 \
             -bordercolor none -border 2x2 +append -set delay 0 \

@@ -183,7 +183,7 @@ while [ $# -ne 0 ]; do
     threshold="-auto-level"     # have it prefer to select very high entropy
     #threshold="-auto-level -gamma .3"
     #threshold="-threshold 18%" # make all points equal (simple mask)
-    convert $img2  \
+    magick $img2  \
             \( -clone 0 -blur 0x1.5 \
               -morphology Edge Diamond \
               -morphology thinning:2 Skeleton \
@@ -194,13 +194,13 @@ while [ $# -ne 0 ]; do
             \( -clone 0 -alpha extract -virtual-pixel black \
               -morphology erode Square:$radius \
             \) \
-            -delete 0 -compose multiply -magick composite -compose over \
+            -delete 0 -compose multiply -composite -compose over \
             $tmpdir/entropy.miff
 
-    # convert -size 200x200 radial-gradient: \
+    # magick -size 200x200 radial-gradient: \
     #         -gravity center -crop 128x128+0+0 +repage \
     #         -auto-level -gamma 3  $tmpdir/entropy.miff \
-    #         -compose multiply -magick composite -compose over \
+    #         -compose multiply -composite -compose over \
     #         -auto-level $tmpdir/entropy.miff
 
     if [ "$ENTROPY" ]; then
@@ -221,11 +221,11 @@ while [ $# -ne 0 ]; do
     #
     # ex,ey = a high entropy center coordinate
     read -r ex ey dist < <(
-      convert $tmpdir/entropy.miff \
-              \( +clone -threshold -1 xc:black -gravity center -magick composite \
+      magick $tmpdir/entropy.miff \
+              \( +clone -threshold -1 xc:black -gravity center -composite \
                 -virtual-pixel white -morphology Distance Euclidean:2 \
                 -auto-level \
-              \) -compose multiply -magick composite -compose over \
+              \) -compose multiply -composite -compose over \
               -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
       awk 'NR==1 { next; }
@@ -236,12 +236,12 @@ while [ $# -ne 0 ]; do
     # Okay we have the first valid point for a sub-image search.
     # Mark that point in a distribution map, which will be used to find
     # other high entropy points that are well separated from each other.
-    convert $tmpdir/entropy.miff -threshold -1 \
+    magick $tmpdir/entropy.miff -threshold -1 \
             -fill black -draw "point $ex,$ey" \
             $tmpdir/distribute.miff
 
     if [ "$DISTRIBUTE" ]; then
-      convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
+      magick $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
             -auto-level $tmpdir/distance.miff
       magick display -remote ephemeral:$tmpdir/distance.miff 2>/dev/null &
       while [ -f $tmpdir/distance.miff ]; do usleep 200; done
@@ -273,7 +273,7 @@ while [ $# -ne 0 ]; do
       #echo "Point + $cx + $cy   $j"
 
     else
-      # convert high entropy point into a crop area
+      # magick high entropy point into a crop area
       [ "$VERBOSE" ] &&
         echo "  Point #$point centered at $ex,$ey (sep=$dist)..."
       cx=$((ex-radius))
@@ -294,12 +294,12 @@ while [ $# -ne 0 ]; do
       # Returning a offset x,y for the sub-image
       #
         read -r ox oy match < <( $TIME \
-            convert "$img1" "$img2" \
+            magick "$img1" "$img2" \
                     -background grey -alpha remove -alpha off \
                     \( +clone -crop "$crop" +repage \) \
                     +swap +delete miff:- |\
             magick compare -subimage-search - miff:- | \
-            convert - +swap +delete +depth txt:- | \
+            magick - +swap +delete +depth txt:- | \
             tr -cs '0-9\n' ' ' |
             awk 'NR==1 { min=1e8; next; }
                 $3 < min { x=$1; y=$2; min=$3; }
@@ -373,7 +373,7 @@ while [ $# -ne 0 ]; do
           echo "--> \"$output_image\""
 
           # Output a merged image
-          convert "$img1" -page $offset "$img2" \
+          magick "$img1" -page $offset "$img2" \
                   -background none -layers merge +repage "$output_image"
           magick display "$output_image" & # magick display it when found
 
@@ -396,8 +396,8 @@ while [ $# -ne 0 ]; do
     # we have so far found. and saved in the 'distribute map'.
 
     read -r ex ey dist < <(
-      convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
-              $tmpdir/entropy.miff -compose multiply -magick composite \
+      magick $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
+              $tmpdir/entropy.miff -compose multiply -composite \
               -depth 16 txt:- |
       tr -sc '0-9\012' ' ' |
         awk 'NR==1 { next; }
@@ -411,17 +411,17 @@ while [ $# -ne 0 ]; do
       break
     fi
 
-    # convert distance to a fixed point human readable value
+    # magick distance to a fixed point human readable value
     dist=$( echo $dist | sed 's/..$/\.&/' )
     point=$((point+1))
 
     # Add this new point to the distribution map (for next selection)
-    convert $tmpdir/distribute.miff \
+    magick $tmpdir/distribute.miff \
             -fill black -draw "point $ex,$ey" \
             $tmpdir/distribute.miff
 
     if [ "$DISTRIBUTE" ]; then
-      convert $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
+      magick $tmpdir/distribute.miff -morphology Distance Euclidean:2 \
             -auto-level $tmpdir/distance.miff
       magick display -remote ephemeral:$tmpdir/distance.miff &
       while [ -f $tmpdir/distance.miff ]; do usleep 200; done

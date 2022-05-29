@@ -40,7 +40,7 @@ fi
 
 # Read input image, once only as it may be pipelines, and save a MPC copy of
 # each individual row of pixels as temporary files.
-convert "$1" -crop 0x1 +repage "$tmp/rows_%06d.mpc"
+magick "$1" -crop 0x1 +repage "$tmp/rows_%06d.mpc"
 
 # remove duplicate rows (by removing its .mpc index file)
 last=""
@@ -56,7 +56,7 @@ for pic in $tmp/rows_*.mpc; do
 done
 
 # Rejoin and re-split image into columns
-convert $tmp/rows_*.mpc -append -crop 1x0 +repage $tmp/cols_%06d.mpc
+magick $tmp/rows_*.mpc -append -crop 1x0 +repage $tmp/cols_%06d.mpc
 
 # lets save some disk space as we are finished with the row images
 rm -f $tmp/rows_*.mpc $tmp/rows_*.cache
@@ -75,7 +75,7 @@ for pic in $tmp/cols_*.mpc; do
 done
 
 # Rejoin the columns and return the de-pixelated image...
-convert $tmp/cols_*.mpc +append "$2"
+magick $tmp/cols_*.mpc +append "$2"
 
 # not realy needed, but lets clean up anyway
 rm -f $tmp/cols_*.mpc $tmp/cols_*.cache

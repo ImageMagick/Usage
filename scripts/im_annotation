@@ -19,7 +19,7 @@ do
 
   rot_text="rotate $angle text 0,0"
 
-  convert -size ${o6}x${o6} xc:white \
+  magick -size ${o6}x${o6} xc:white \
     -stroke '#600' -fill none \
       -draw "line $o3,$o $o3,$o5" \
       -draw "line $o,$o3 $o5,$o3" \
@@ -40,7 +40,7 @@ do
 done
 
 echo "Creating animation"
-convert -delay 20 -loop 0 annotate_angle_*.gif im_annotate_sh.gif
+magick -delay 20 -loop 0 annotate_angle_*.gif im_annotate_sh.gif
 rm annotate_angle_*.gif
 
 echo "Animating"

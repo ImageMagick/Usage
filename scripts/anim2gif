@@ -2,14 +2,14 @@
 #
 # anim2gif [-b BASENAME] file.anim...
 #
-# This is a simple script to convert my own animation sequence file
+# This is a simple script to magick my own animation sequence file
 # which basically is a list of IM command line options, with added
 # comments back into a GIF Animations.      file.anim --> file_anim.gif
 #
 # The animation sequence file can be extracted from an existing GIF animation
 # using the "gif2anim" script. It can also be generated using some other
 # porgram, or by hand.  It does not actually even need to generate a GIF
-# animation but could actually be any sequence of "convert" command line
+# animation but could actually be any sequence of "magick" command line
 # options.  However it is designed for generating GIF aniamtions.
 #
 # OPTIONS
@@ -44,7 +44,7 @@ Usage() {                              # output the script comments as docs
 }
 
 #VERBOSE=       # report the animation images being processed
-#debug=true     # debug the convert line executed
+#debug=true     # debug the magick line executed
 
 basename=      # use this name for the individual frame images
 sfx=_anim.gif  # the suffix to and to created GIF animation
@@ -66,7 +66,7 @@ while [ $# -gt 0 ]; do
   shift   # next option
 done
 
-[ $# -gt 1 ] && VERBOSE=true  # report each file as it is converted
+[ $# -gt 1 ] && VERBOSE=true  # report each file as it is magicked
 
 for i in "$@" ; do
   if [ ! -r "$i" ]; then
@@ -74,7 +74,7 @@ for i in "$@" ; do
     continue
   fi
 
-  [ "$VERBOSE" ] && echo "converting \"$i\""
+  [ "$VERBOSE" ] && echo "magicking \"$i\""
 
   path=`expr "$i" : '\(.*\)/'`                 # get file path (if any)
   name=`expr "//$i" : '.*/\([^/]*\)'`           # remove path to file
@@ -97,14 +97,14 @@ for i in "$@" ; do
   #
   cd $path
   [ "$debug" ] && set -x
-  #convert -adjoin -colors 256 \
+  #magick -adjoin -colors 256 \
   sed 's/#[^0-9a-fA-F].*//; s/#$//;
        s/[ >:::]*$//;
        '"$COALESCED"';
        s/BASENAME/'"$bname"'/;
        /^$/d;
        ' $name.$suffix |\
-  convert `cat` $ORIGDIR/$bname$sfx 2>&1
+  magick `cat` $ORIGDIR/$bname$sfx 2>&1
       #|| echo "anim2gif: Convert returned failed error status $?"
       #|| rm -f $ORIGDIR/$bname$sfx
   [ "$debug" ] && set -
@@ -117,7 +117,7 @@ for i in "$@" ; do
   #    gifsicle -O2 --batch $bname$sfx
 
   if [ ! -f "$bname$sfx" ]; then
-    echo >&2 "anim2gif: Failed to convert \"$i\" into \"$bname$sfx\""
+    echo >&2 "anim2gif: Failed to magick \"$i\" into \"$bname$sfx\""
   fi
 
 done

@@ -104,12 +104,12 @@ while [ $# -ne 0 ]; do
     # Basically ensure the crop areas has a high entropy.
     #
     coords=`
-      convert "$img1" "$img2" \
+      magick "$img1" "$img2" \
               -background grey -alpha remove -alpha off \
               \( +clone -crop "$size$offset" +repage \) \
               +swap +delete miff:- |\
       magick compare -subimage-search - miff:- | \
-      convert - +swap +delete +depth txt:- | \
+      magick - +swap +delete +depth txt:- | \
       tail -n+2 | tr -cs '0-9\n' ' ' | sort -rn -t\  -k3 | tail -n-1 `
 
     read -r x y match junk <<< "$coords"
@@ -129,7 +129,7 @@ while [ $# -ne 0 ]; do
       echo "   $img1 -page +$x+$y $img2 -> \"$output_image\""
 
       # Output a merged img
-      convert "$img1" -page "+$x+$y" "$img2" \
+      magick "$img1" -page "+$x+$y" "$img2" \
               -background none -layers merge +repage "$output_image"
       magick display "$output_image" & # magick display it when found
 

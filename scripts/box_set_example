@@ -6,25 +6,25 @@
 #
 
 # Generate a Spine Image
-convert -size 200x40 xc:lightblue \
+magick -size 200x40 xc:lightblue \
   -pointsize 20 -gravity north -annotate +5+0 'IM Examples' \
   -pointsize 10 -gravity south -annotate +0+0 'ImageMagick' \
   -stroke blue -strokewidth 2 -draw 'line 30,0 30,40' \
   -rotate -90 /tmp/spine.png
 
 # Generate the front cover (using a web downloaded logo)
-convert -size 150x200 xc:lightblue \
+magick -size 150x200 xc:lightblue \
   -fill black -pointsize 20 -gravity north -annotate +0+5 'IM Examples' \
   -fill blue -pointsize 15 -gravity northeast -annotate +5+28 'Box Set' \
   -fill black -pointsize 15 -gravity south -annotate +0+5 'ImageMagick' \
   -stroke blue -strokewidth 2 -draw 'line 0,169 150,169' \
   \( http://imagemagick.org/Usage/images/logo.gif -resize 100x100 \) \
-  -gravity center -compose multiply -magick composite /tmp/front.png
+  -gravity center -compose multiply -composite /tmp/front.png
 
 # Distort both images and merge together to produce the final image.
 # The images are aligned along two common 'control points' at 0,0 and 0,199
 # Note that the spine is placed at a 'negative' x offset!
-convert \
+magick \
   \( /tmp/spine.png -virtual-pixel transparent \
     \( box_spine.jpg -alpha Set -virtual-pixel transparent \
        +distort Perspective \

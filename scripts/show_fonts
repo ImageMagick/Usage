@@ -176,11 +176,11 @@ tile=1x
 #set -x
 
 case "$style" in
-1)  eval "convert -pointsize $pt_font $fontlist miff:- |\
+1)  eval "magick -pointsize $pt_font $fontlist miff:- |\
             magick montage miff:- -tile 1x1 -geometry +2+2 \
                     -font Arial -pointsize 12 $output"
     ;;
-*)  eval "convert -pointsize $pt_font $fontlist \
+*)  eval "magick -pointsize $pt_font $fontlist \
                   $autolevel -trim +repage miff:- |\
             magick montage miff:- -tile $tile -geometry +2+2 \
                     -font Arial -pointsize 12 $output"

@@ -117,37 +117,37 @@ fi
 
 # Scale and label
 if [ "X$montage_label" != "X" ]; then
-  convert "$image_input" -set label "$montage_label" +repage \
+  magick "$image_input" -set label "$montage_label" +repage \
           -scale "${scale}00%" miff:-
 else
-  convert "$image_input" +repage -scale "${scale}00%" miff:-
-fi | #convert - show:; exit 0   # for debugging
+  magick "$image_input" +repage -scale "${scale}00%" miff:-
+fi | #magick - show:; exit 0   # for debugging
 
 # mark pixel  and insert inter-pixel gaps
 if [ "$scale" -gt 3 ]; then
 
   if [ "X$center" != 'X' ]; then
     # add the origin marker
-    center_x=`convert xc: -format "%[fx: ($center_x+.5)*$scale-.5 ]" info:`
-    center_y=`convert xc: -format "%[fx: ($center_y+.5)*$scale-.5 ]" info:`
+    center_x=`magick xc: -format "%[fx: ($center_x+.5)*$scale-.5 ]" info:`
+    center_y=`magick xc: -format "%[fx: ($center_y+.5)*$scale-.5 ]" info:`
     echo >&2 "center = $center_x $center_y"
 
-    radius1=`convert xc: -format "%[fx: int($scale*.29-.5) ]" info:`
-    radius2=`convert xc:  -format "%[fx: $radius1+1 ]" info:`
+    radius1=`magick xc: -format "%[fx: int($scale*.29-.5) ]" info:`
+    radius2=`magick xc:  -format "%[fx: $radius1+1 ]" info:`
     echo >&2 "radius = $radius1 $radius2"
 
-    convert miff:- -fill none -strokewidth 0.5 \
+    magick miff:- -fill none -strokewidth 0.5 \
             -draw "translate $center_x,$center_y \
                   stroke $circle_color2  circle 0,0 $radius1,$radius1 \
                   stroke $circle_color1  circle 0,0 $radius1,$radius2 " \
             miff:-
   else
     cat
-  fi | #convert - show:; exit 0   # for debugging
+  fi | #magick - show:; exit 0   # for debugging
 
   # Add inter-pixel gaps and colors
   if [ "$gap" ]; then
-    convert - -alpha set -background ${gap_color} \
+    magick - -alpha set -background ${gap_color} \
             -crop 0x$((scale*clump)) -splice 0x${gap} -append -chop 0x${gap} \
             -crop $((scale*clump))x0 -splice ${gap}x0 +append -chop ${gap}x0 \
             -bordercolor ${gap_color} -compose Copy -border ${gap} \
@@ -158,7 +158,7 @@ if [ "$scale" -gt 3 ]; then
 
 else
   cat
-fi | #convert - show:; exit 0   # for debugging
+fi | #magick - show:; exit 0   # for debugging
 
 # ----------  output all kernel images as requested -----------
 if [ "$montage" ]; then
@@ -166,7 +166,7 @@ if [ "$montage" ]; then
           -tile "$montage_tile" -background "$page_bg_color" \
           "$output_image"
 else
-  convert miff:- "$output_image"
+  magick miff:- "$output_image"
 fi
 
 exit 0

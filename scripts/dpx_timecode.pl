@@ -55,11 +55,11 @@ for (my $file=$start; $file<=$end;  $frame++){
             $tc_hour, $tc_minute, $tc_second, $tc_frame;
    $timecode=sprintf "%02d%02d%02d%02d",
             $tc_hour, $tc_minute, $tc_second, $tc_frame;
-   my $code = system 'convert', '-regard-warnings',  $current_file,
+   my $code = system 'magick', '-regard-warnings',  $current_file,
                 -define => "dpx:television.time.code=$timecode",
                 $current_file;
    if ( $? != 0 ) {
-     printf STDERR "$PROGNAME: IM 'convert' returned bad exit code %d\n",
+     printf STDERR "$PROGNAME: IM 'magick' returned bad exit code %d\n",
              $? >> 8;
      exit 1;
    }

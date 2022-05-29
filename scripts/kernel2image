@@ -174,7 +174,7 @@ output_image="$2";
 #---------------------------------------------------------
 # Quick test - mutilple kernels?
 
-kernel_output=`convert xc: -define showkernel=1 \
+kernel_output=`magick xc: -define showkernel=1 \
                -define convolve:scale="$kernel_scale" \
                -morphology Convolve:0 "$kernel_string" \
                null: 2>&1 `
@@ -272,9 +272,9 @@ while true; do
     #echo >&2 "min,max = $min_value,$max_value"
   fi
 
-  # ------ Read and convert Kernle values into an image ------
+  # ------ Read and magick Kernle values into an image ------
 
-  # Now convert the kernel values into a PPM image.
+  # Now magick the kernel values into a PPM image.
   # As NetPBM images can not handle transparency, any 'Nan' values are used to
   # create a transparency mask in the Green Channel, while the actual kernel
   # values are stored in the red channel.  This will be fixed up later, once
@@ -303,8 +303,8 @@ while true; do
   # Adjust red channel (kernel values) into a greyscale image
   # and use the green channel as a alpha transparency Mask.
   # Also set the special purpose meta-data strings for magick montage labeling.
-  convert ppm:- -channel RG -separate +channel \
-          -compose CopyOpacity -magick composite -compose Over \
+  magick ppm:- -channel RG -separate +channel \
+          -compose CopyOpacity -composite -compose Over \
           -gamma "$gamma_adjust" \
           +level-colors "$kernel_colors" \
           -bordercolor  "$nan_color" -border 0 \
@@ -317,15 +317,15 @@ while true; do
   if [ "$scale" -gt 3 ]; then
 
     # add the origin marker
-    center_x=`convert xc: -format "%[fx: ($origin_x+.5)*$scale-.5 ]" info:`
-    center_y=`convert xc: -format "%[fx: ($origin_y+.5)*$scale-.5 ]" info:`
+    center_x=`magick xc: -format "%[fx: ($origin_x+.5)*$scale-.5 ]" info:`
+    center_y=`magick xc: -format "%[fx: ($origin_y+.5)*$scale-.5 ]" info:`
     #echo >&2 "center = $center_x $center_y"
 
-    radius1=`convert xc: -format "%[fx: int($scale*.29-.5) ]" info:`
-    radius2=`convert xc:  -format "%[fx: $radius1+1 ]" info:`
+    radius1=`magick xc: -format "%[fx: int($scale*.29-.5) ]" info:`
+    radius2=`magick xc:  -format "%[fx: $radius1+1 ]" info:`
     #echo >&2 "radius = $radius1 $radius2"
 
-    convert - -fill none -strokewidth 0.5 \
+    magick - -fill none -strokewidth 0.5 \
             -draw "translate $center_x,$center_y \
                   stroke $circle_color2  circle 0,0 $radius1,$radius1 \
                   stroke $circle_color1  circle 0,0 $radius1,$radius2 " \
@@ -333,7 +333,7 @@ while true; do
 
     # Add inter-pixel gaps and colors   (crop-splice-append technique)
     if [ "$gap" ]; then
-      convert - -background ${gap_color} \
+      magick - -background ${gap_color} \
               -crop 0x${scale} -splice 0x${gap} -append -chop 0x${gap} \
               -crop ${scale}x0 -splice ${gap}x0 +append -chop ${gap}x0 \
               -bordercolor ${gap_color} -compose Copy -border ${gap} \
@@ -355,7 +355,7 @@ if [ "$montage" ]; then
           -tile "$montage_tile" -background "$page_bg_color" \
           "$output_image"
 else
-  convert - "$output_image"
+  magick - "$output_image"
 fi
 exit 0
 

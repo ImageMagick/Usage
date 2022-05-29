@@ -14,7 +14,7 @@
 #    -b      Draw the profile in blue instead of red
 #
 #  Example
-#    convert -size 1x300 gradient: -rotate 90 -function ArcSin 1 miff:- |\
+#    magick -size 1x300 gradient: -rotate 90 -function ArcSin 1 miff:- |\
 #       im_profile -
 #
 # See Also
@@ -76,7 +76,7 @@ trap "exit 2" 1 2 3 15
 # As such we need to turn it off before saving.
 #
 [ "$VERTICAL" ] && VERTICAL="-transpose"
-convert -regard-warnings "$1" +repage $VERTICAL \
+magick -regard-warnings "$1" +repage $VERTICAL \
         -gravity center -crop 0x1+0+0 +repage \
         +gravity $input  2>/dev/null
 [ "$?" -eq 0 ] || Error "Invalid Input Image \"$1\""
@@ -133,23 +133,23 @@ grange="`expr $gsize_w - 1`"    # 0 to $grange values input
   # Using Binary Output
   #echo -n 'plot "-" binary format="%ushort" endian=big'
   #echo    '  array='"${gsize_w}"' using ($1/65536) with lines'
-  #convert "$input" -depth 16 -resize ${gsize_w}x1\! -endian MSB gray:-
+  #magick "$input" -depth 16 -resize ${gsize_w}x1\! -endian MSB gray:-
 
   # Using TXT format (failing as txt: is outputting percentages!)
   #echo 'plot "-"  using 0:($3/65536) with lines ls '"$style"
-  #convert "$input" -depth 16 -resize ${gsize_w}x1\! txt:- |\
+  #magick "$input" -depth 16 -resize ${gsize_w}x1\! txt:- |\
   #  tail -n+2 | tr -sc '0-9\n' ' '
 
   # Using PGM format
   echo 'plot "-"  using 0:($1/65536) with lines ls '"$style"
-  convert "$input" -depth 16 -resize ${gsize_w}x1\! \
+  magick "$input" -depth 16 -resize ${gsize_w}x1\! \
           -compress none PGM:- |\
     tail -n+4 | tr -s ' ' '\012'
 } |
   #cat; exit;  # DEBUGGING
   gnuplot |
-  convert - -write info:fd:2 miff:- | magick display -; exit  # DEBUGGING
-  convert "$input"  -resize ${gsize_w}x1\! -scale ${gsize_w}x${rsize_h}\! \
+  magick - -write info:fd:2 miff:- | magick display -; exit  # DEBUGGING
+  magick "$input"  -resize ${gsize_w}x1\! -scale ${gsize_w}x${rsize_h}\! \
     \( - -trim +repage \) +swap -size ${gsize_w}x1 xc:black +size +swap \
     -append  -bordercolor black -border 1x1 \
     "$output"

@@ -85,23 +85,23 @@ trap "exit 2" 1 2 3 15
 # ------------------------------
 
 # Read input image, once only as it may be pipeline
-convert "$in" -alpha on +repage "$tmp/in.mpc"
+magick "$in" -alpha on +repage "$tmp/in.mpc"
 
 # FUTURE: search for multiple holes and deal with each one hole at a time.
 
 # Extract the edge pixels around any transparent hole and trim smaller
 #
 # also get image page geometry and actual image size
-offset=`convert "$tmp/in.mpc" \
+offset=`magick "$tmp/in.mpc" \
           -channel A -morphology EdgeIn Disk:"$thickness.4" \
           $trim -print '%X%Y' +repage "$tmp/edges.mpc"`
 
-size=`convert "$tmp/edges.mpc" -format '%wx%h' info:`
+size=`magick "$tmp/edges.mpc" -format '%wx%h' info:`
 
 #magick display "$tmp/edges.mpc"
 
 # Fast shepards Method to diffuse colors (good for image up to 256 pixels)
-convert "$tmp/edges.mpc" \
+magick "$tmp/edges.mpc" \
         \( +clone -resize 50% \) \
         \( +clone -resize 50% \) \
         \( +clone -resize 50% \) \
@@ -116,7 +116,7 @@ convert "$tmp/edges.mpc" \
 #magick display "$tmp/diffuse.mpc"
 
 # Compose the fill colors under the hole and output the result
-convert "$tmp/in.mpc" "$tmp/diffuse.mpc" \
-        -compose DstOver -geometry "$offset" -magick composite \
+magick "$tmp/in.mpc" "$tmp/diffuse.mpc" \
+        -compose DstOver -geometry "$offset" -composite \
         -alpha off "$out"
 

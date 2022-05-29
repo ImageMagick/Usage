@@ -2,8 +2,8 @@
 #
 # gif2anim [options] image_anim.gif...
 #
-# This script uses the ImageMagick 'convert' program to take a gif animation
-# (normally ending in '_anim.gif' and NOT just '.gif') and converts it into a
+# This script uses the ImageMagick 'magick' program to take a gif animation
+# (normally ending in '_anim.gif' and NOT just '.gif') and magicks it into a
 # collection of X Pixmap files (or GIFs) as well as a "animation sequence
 # file" which lists all settings needed to re-build the original GIF
 # animation.
@@ -31,7 +31,7 @@
 #      -b framename   basename for the individual frames
 #      -o file.anim   output to this .anim file (- for stdout)
 #
-# NOTE: This script reqires both the ImageMagick 'convert' program and
+# NOTE: This script reqires both the ImageMagick 'magick' program and
 # 'identify' programs to extract the images and information needed.
 #
 ####
@@ -60,7 +60,7 @@ fmt="%03d"          # The format for frame count
 frames=true         # output frame images by defult
 basename=           # use this name for the individual frame images
 animfile=           # no default animfile to output to.
-all_gifs=           # forcefully convert any ".gif" file
+all_gifs=           # forcefully magick any ".gif" file
 coalesce=           # coalesce flag (off)
 VERBOSE=            # be verbose (off)
 time_sync=0         # add time sync comments (off)
@@ -102,7 +102,7 @@ fi
 cmd_found() {
   case "`type $1 2>&1`" in *'not found'*) return 1 ;; esac; return 0
 }
-cmd_found convert  || Usage "No IM convert command found -- ABORTING"
+cmd_found magick  || Usage "No IM magick command found -- ABORTING"
 cmd_found magick identify || Usage "No IM magick identify command found -- ABORTING"
 
 # output animation details to stdout
@@ -118,7 +118,7 @@ fi
 # -----------------------------------------------------
 
 for i in "$@" ; do
-  [ "$VERBOSE" ] && echo_n "converting \"$i\" "
+  [ "$VERBOSE" ] && echo_n "magicking \"$i\" "
   if [ ! -f "$i" ]; then
     echo >&2 "Unable find file \"$i\""
     continue
@@ -142,8 +142,8 @@ for i in "$@" ; do
 
   # Generate Animation file...
   date=`date +'%Y-%m-%d %R:%S'`
-  convert "$i" $coalesce -verbose info:- |
-    $awk ' #  Parse IM "identify" output, for almost direct use by "convert"
+  magick "$i" $coalesce -verbose info:- |
+    $awk ' #  Parse IM "identify" output, for almost direct use by "magick"
       BEGIN { print "#";
               print "# Animation Sequence File \"'"$i"'\"";
               print "# using a BASENAME of     \"'"$name"'\"";
@@ -197,7 +197,7 @@ for i in "$@" ; do
 
   # split up GIF animation (reseting animation meta-data)
   if [ "$frames" ]; then
-    convert "$i" $coalesce \
+    magick "$i" $coalesce \
             +repage -set delay 0 -set dispose none -loop 0 \
             -scene $init +adjoin  "${name}_${fmt}.${sfx}"
 

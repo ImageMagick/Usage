@@ -18,22 +18,22 @@
 #
 # Expand the row spacing of some text by 4 pixels (must be a multiple of two)
 #
-#  convert -size 50x caption:'This is a word wrapped line of text' miff:- |\
+#  magick -size 50x caption:'This is a word wrapped line of text' miff:- |\
 #    divide_vert_bg - miff:- |\
-#      convert - -splice 0x2 -append  gap_expansion.png
+#      magick - -splice 0x2 -append  gap_expansion.png
 #
 # This will remove all gaps between lines of text...
 #
-#  convert -size 50x caption:'This is a word wrapped line of text' miff:- |\
+#  magick -size 50x caption:'This is a word wrapped line of text' miff:- |\
 #    divide_vert_bg -i - miff:- |\
-#       convert - -append  gaps-removed.png
+#       magick - -append  gaps-removed.png
 #
 # Replace all gaps by a fixed amount (5 pixels),
 # though this is not a good idea for normal text images.
 #
-#  convert -size 50x caption:'This is a word wrapped line of text' miff:- |\
+#  magick -size 50x caption:'This is a word wrapped line of text' miff:- |\
 #    divide_vert_bg -i - miff:- |\
-#      convert - -splice 0x5 -append \
+#      magick - -splice 0x5 -append \
 #              -gravity south -splice 0x5  gaps_replaced.png
 #
 ###
@@ -88,14 +88,14 @@ fuzz=`echo "$fuzz" | tr -cd '0-9'`  # $remove any '%' leaving just numbers
 # If it wasn't for this we would not need any temporary files at all.
 
 # Read input image, once only as it may be pipelines, and save a MPC copy of it.
-height=`convert "$input" -format '%h' -magick identify $tmpdir/original.mpc`
+height=`magick "$input" -format '%h' -magick identify $tmpdir/original.mpc`
 
 if [ "X$bg_color" = 'X' ]; then
-  bgcolor=`convert $tmpdir/original.mpc -format "%[pixel:u.p{$coords}]" info:`
+  bgcolor=`magick $tmpdir/original.mpc -format "%[pixel:u.p{$coords}]" info:`
 fi
 
 # Replace given background color with none, and scale down to a single column
-convert $tmpdir/original.mpc \
+magick $tmpdir/original.mpc \
         -fuzz ${fuzz}% -fill none -draw "matte $coords replace" \
         -scale 1x$height\! \
         -alpha extract -depth 16 txt:- |
@@ -112,11 +112,11 @@ uniq -c |
 # Divide the image basied on the number of colors (or change in gap color)
 while   read height gap;   do
   if [ "$gap" = "nogap" -o ! "$IGNORE_GAPS" ]; then
-    convert $tmpdir/original.mpc -crop 0x$height+0+$top +repage miff:-
+    magick $tmpdir/original.mpc -crop 0x$height+0+$top +repage miff:-
   fi
   top=`expr $top + $height`
 done |
 
 # Now ouput the pipeline of image segments the way the user wants it saved
-convert miff:- "$output"
+magick miff:- "$output"
 

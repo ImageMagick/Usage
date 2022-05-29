@@ -5,7 +5,7 @@
 # Generate the photo index thumbnail map "INDEX.html", for the
 # "photo_store" sub-directory of IM Examples.
 #
-# A 'polariod' style image thumbnail is used, and the index image is converted
+# A 'polariod' style image thumbnail is used, and the index image is magicked
 # to JPEG format.  The HTML file is also edited using the perl in-place
 # editing script to substite various strings, adding the more user friendly
 # text to the resulting index file.
@@ -22,7 +22,7 @@ magick montage -size 500x500  "*_orig.*" \
         -set label ''  -background "$page_bg_color" \
         -geometry '-10-10'  -tile 5x  INDEX.html
 
-convert INDEX.png  INDEX.jpg
+magick INDEX.png  INDEX.jpg
 rm -f INDEX.png INDEX_map.shtml
 
 perl -i -ple '# inline editing of the HTML file

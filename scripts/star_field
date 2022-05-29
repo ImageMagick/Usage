@@ -71,7 +71,7 @@ bright=`( echo 'scale=2'; echo "$bright" / 100; ) | bc`
 
 # Do the task (slow)...
 
-convert -size "$size" xc: -fx 'rand()' -virtual-pixel tile \
+magick -size "$size" xc: -fx 'rand()' -virtual-pixel tile \
             -colorspace Gray -sigmoidal-contrast 120x0% -negate -blur 0x.3 \
             \( -clone 0  -motion-blur 0x10+$a1  -motion-blur 0x10+$b1 \) \
             \( -clone 0  -motion-blur 0x10+$a2  -motion-blur 0x10+$b2 \) \
