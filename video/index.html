@@ -143,7 +143,7 @@ Table</A> for all the frames of the video.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -quiet -delay 1 plane.avi  +map   plane_cgc.gif
+  magick -quiet -delay 1 plane.avi  +remap   plane_cgc.gif
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     giftrans -L plane_cgc.gif 2>&1 |\
@@ -210,7 +210,7 @@ video formats.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -quiet -delay 1 plane.avi -map colormap_332.png plane_ugc.gif
+  magick -quiet -delay 1 plane.avi -remap colormap_332.png plane_ugc.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="plane_ugc.gif"
       ><IMG SRC="plane_ugc.gif"      WIDTH=160  HEIGHT=120
@@ -250,7 +250,7 @@ We could just turn off the color dithering to remove the 'dither noise'...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -quiet -delay 1 plane.avi \
-          +dither -map colormap_332.png plane_ugc_nd.gif
+          +dither -remap colormap_332.png plane_ugc_nd.gif
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     giftrans -L plane_ugc_nd.gif 2>&1 |\
@@ -295,7 +295,7 @@ HREF="../quantize/#332_colormap" >'332' colormap</A>.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -quiet -delay 1 plane.avi \
-          -ordered-dither o8x8,8,8,4 +map plane_od.gif
+          -ordered-dither o8x8,8,8,4 +remap plane_od.gif
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     giftrans -L plane_od.gif 2>&1 |\
@@ -318,11 +318,11 @@ bytes in size.
             ALIGN=absmiddle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-The above also used the "<CODE><A HREF="../option_link.cgi?map" >+map</A></CODE>"
+The above also used the "<CODE><A HREF="../option_link.cgi?remap" >+remap</A></CODE>"
 operator, to ensure that all the images use the exact same global color map
 (which the ordered dither already reduced to a maximum of 256 colors). As the
-number of colors is already optimal, the "<CODE><A HREF="../option_link.cgi?map"
->+map</A></CODE>" operator does no dithering, or color reduction. </P>
+number of colors is already optimal, the "<CODE><A HREF="../option_link.cgi?remap"
+>+remap</A></CODE>" operator does no dithering, or color reduction. </P>
 
 The resulting dither pattern is not random, and does not change greatly from
 one frame to the next.  Thus the 'dither noise' has been remove from the
@@ -382,7 +382,7 @@ I can then apply the discovered 'color level' choice to the plane animation.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -quiet -delay 1 plane.avi \
-          -ordered-dither o8x8,23 +map plane_od2.gif
+          -ordered-dither o8x8,23 +remap plane_od2.gif
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     giftrans -L plane_od2.gif 2>&1 |\
@@ -447,7 +447,7 @@ animation.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick plane_od2.gif  -layers OptimizeTransparency +map plane_opt.gif
+  magick plane_od2.gif  -layers OptimizeTransparency +remap plane_opt.gif
 </samp></pre></TD></TR></TABLE>
 <!-- <CODE EXECUTE>
     ls -l plane_opt.gif | awk '{printf "%d", $5}' > plane_opt_size.txt

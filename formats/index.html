@@ -173,7 +173,7 @@ as well as their general advantages and disadvantages...
 
 <DT><A HREF="#jpg" ><B>JPEG</B></A>
 <DD>Does not handle transparency at all.  The image is equivalent to using
-    "<CODE><A HREF="../option_link.cgi?matte" >-alpha off</A></CODE>" operation to
+    "<CODE><A HREF="../option_link.cgi?alpha" >-alpha off</A></CODE>" operation to
     remove the alpha channel, so any background transparency commonly becomes
     black depending on the image processing used to generate the image.  </P>
 
@@ -1758,13 +1758,13 @@ documentation</A>. </P>
 <DT><A HREF="../option_link.cgi?type"
     >-type</A> TrueColorMatte
 <DD>As JPEG does not save any form of transparency, when it is read in it will
-    always be fully-opaque, and have not 'alpha' or 'matte' channel in memory.
+    always be fully-opaque, and have not 'alpha' hannel in memory.
     This setting will force any JPEG image read in after the option to have a
-    fully-opaque 'matte' channel to be added to the image in memory.  </P>
+    fully-opaque 'alpha' channel to be added to the image in memory.  </P>
 
     The better way to do this however is to use a "<CODE><A
-    HREF="../option_link.cgi?matte" >-alpha set</A></CODE>" or "<CODE><A
-    HREF="../option_link.cgi?matte" >-alpha</A> set</CODE>", after reading the
+    HREF="../option_link.cgi?alpha" >-alpha set</A></CODE>" or "<CODE><A
+    HREF="../option_link.cgi?alpha" >-alpha</A> set</CODE>", after reading the
     image, as it will have less impact on the reading and writing of other
     image formats. </P>
 
@@ -4266,7 +4266,7 @@ See <A HREF="../masking/#clip-mask" >Write or Clip Masks</A> for more details.
   whatever that means.  In other words 'Windows' compatible.
 
   However, if a PNG input file was used and it contains a gAMA and cHRM chunk
-  (gamma and chromaticity information) either of which forces "convert" to
+  (gamma and chromaticity information) either of which forces "magick" to
   write a BMP4. To get a BMP3 you need to get rid of that information. One way
   may be to pipeline the image though a minimal 'image data only' image file
   format like PPM and then re-save as BMP3.  Messy, but it should work.

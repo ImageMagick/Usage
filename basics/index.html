@@ -1285,7 +1285,7 @@ Some of these commands however can not be demonstrated properly on a web page.
 However I will try to give you hints and tips involving those commands here,
 even if I can't actually show their output directly, here.  </P>
 
-<A NAME="convert"></A>
+<A NAME="magick"></A>
 <H3>Convert -- Convert and Modify Images</H3>
 
 The "<code>magick</code>" command is the main workhorse of ImageMagick, and
@@ -1344,7 +1344,7 @@ For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify.txt >
-  identify  tree.gif
+  magick identify  tree.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1381,7 +1381,7 @@ image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_colors.txt >
-  identify -format '%k\n' tree.gif
+  magick identify -format '%k\n' tree.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1407,7 +1407,7 @@ image.
 <A NAME="identify_ping"></A>
 <H4>Identify, to Ping or not to Ping</H4>
 
-IM "<CODE><A HREF="#identify" >identify</A></CODE>" by default only reads
+IM "<CODE><A HREF="#identify" >magick identify</A></CODE>" by default only reads
 minimal basic information about an image, using a technique know as "<CODE><A
 HREF="../option_link.cgi?ping" >-ping</A></CODE>". This means identify only
 reads enough of the image file to determine simple image information, such as
@@ -1417,8 +1417,8 @@ See <A HREF="#ping"
 </P>
 
 This is a big advantage of "<CODE><A HREF="#identify"
->identify</A></CODE>" has over "<CODE><A HREF="#convert"
->convert</A></CODE>". </P>
+>magick identify</A></CODE>" has over "<CODE><A HREF="#magick"
+>magick</A></CODE>". </P>
 
 However, most image meta-data will not be available. For example, image labels
 from a PNG image file.  For example, here I create an image with a 'label', and
@@ -1430,7 +1430,7 @@ attempt to use a simple format setting to print out that label.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE IMAGE=rose.png OUT=identify_ping.txt >
   magick rose: -set label "rose with a label" rose.png
-  identify -format '"%l"\n' rose.png
+  magick identify -format '"%l"\n' rose.png
 </samp></pre></TD></TR></TABLE></TD><TD>
  <A HREF="rose.png"
     ><IMG SRC="rose.png"
@@ -1451,7 +1451,7 @@ escapes will automatically disable the use of a minimal 'ping' read.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_no_ping.txt >
-  identify -format '"%[label]"\n' rose.png
+  magick identify -format '"%[label]"\n' rose.png
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1467,7 +1467,7 @@ to read in the image 'in total' so it gets the desired information.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_ping_off.txt >
-  identify +ping -format '"%l"\n' rose.png
+  magick identify +ping -format '"%l"\n' rose.png
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1490,7 +1490,7 @@ HREF="../transform/#fx_escapes" >FX Escape Expressions</A>...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=identify_maths.txt >
-  identify -ping -format 'double_width=%[fx:w*2] PI=%[fx:atan(1)*4]\n' tree.gif
+  magick identify -ping -format 'double_width=%[fx:w*2] PI=%[fx:atan(1)*4]\n' tree.gif
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1546,7 +1546,7 @@ on the outcome in this case, but can speed up the command enormously. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  error=`identify -regard-warnings image 2>&1 >/dev/null;`
+  error=`magick identify -regard-warnings image 2>&1 >/dev/null;`
   if [ $? -eq 0 ]; then
     echo "The image is good"
   else
@@ -3839,7 +3839,7 @@ and replace the comment with a 'Good' one...
           -write mpr:rose +delete \
           -comment Good   mpr:rose  rose.jpg
 
-<n>  identify -format "image comment = %c" rose.jpg
+<n>  magick identify -format "image comment = %c" rose.jpg
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -4474,20 +4474,20 @@ expected.  </P>
 For example "<CODE><A HREF="../option_link.cgi?type" >-type</A></CODE>" has a
 special '<CODE>bilevel</CODE>' setting that can be used magick and save
 images as a two color monochrome image for some image formats.  Similarly
-'<CODE>TrueColor</CODE>' and '<CODE>TrueColorMatte</CODE>' can be used force a
+'<CODE>TrueColor</CODE>' and '<CODE>TrueColorAlpha</CODE>' can be used force a
 <A HREF="../formats/#tiff" >TIFF</A> image to be saved as a full color RGB
 image even if the image is actually purely gray-scale. </P>
 
 Other settings include '<CODE>GrayScale</CODE>' and
-'<CODE>GrayScaleMatte</CODE>' which will ensure the written image is
+'<CODE>GrayScaleAlpha</CODE>' which will ensure the written image is
 gray-scale only (without or with transparency, respectively). Or
 '<CODE>Palette</CODE>' to force the use of an indexed color map in formats that
 support this option. </P>
 
 During reading of image file formats, a "<CODE><A
 HREF="../option_link.cgi?type" >-type</A></CODE>" setting of
-'<CODE>TrueColorMatte</CODE>' will force a <A HREF="../formats/#jpeg"
->JPEG</A> image being read, to have a 'Matte' or 'Alpha' channel added to its
+'<CODE>TrueColorAlpha</CODE>' will force a <A HREF="../formats/#jpeg"
+>JPEG</A> image being read, to have a 'Alpha' channel added to its
 in memory storage, even though the <A HREF="../formats/#jpeg" >JPEG</A> format
 itself can not handle transparency. </P>
 
