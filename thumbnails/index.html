@@ -172,13 +172,13 @@ Schemes include...
 
 </UL>
 
-The first scheme can use "<CODE>mogrify</CODE>" to generate all your
+The first scheme can use "<CODE>magick mogrify</CODE>" to generate all your
 thumbnails, without destroying the original image, by using a "<CODE><A
 HREF="../option_link.cgi?format" >-format</A></CODE>" setting to specify the
 output image format. </P>
 
 As of IM v3.2.0, the second scheme is now also possible to do with
-"<CODE>mogrify</CODE>" thanks to the addition of a special "<CODE><A
+"<CODE>magick mogrify</CODE>" thanks to the addition of a special "<CODE><A
 HREF="../option_link.cgi?path" >-path</A></CODE>" setting that specifies a
 different directory in which to save the modified images. </P>
 
@@ -189,16 +189,16 @@ For example, this converts JPG images into GIF thumbnails in a
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   mkdir thumbs
-  mogrify  -format gif -path thumbs -thumbnail 100x100 *.jpg
+  magick mogrify  -format gif -path thumbs -thumbnail 100x100 *.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
 The other methods will require you to either, first make a copy of the
-original image, before running "<CODE>mogrify</CODE>", create a special script
+original image, before running "<CODE>magick mogrify</CODE>", create a special script
 to process the images, or some other DIY method.  A number of the simpler
 non-IM techniques are detailed at the end of the example section for <A
 HREF="../basics/#mogrify_not" >Batch Processing - Without using
-"<CODE>mogrify</CODE>"</A>. </P>
+"<CODE>magick mogrify</CODE>"</A>. </P>
 
 Whatever method you choose the important thing is to choose a scheme for
 thumbnail storage, and then stick with it.  By using the same scheme for all
@@ -322,7 +322,7 @@ You can also remove the profiles from your images with the IM commands...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick input.jpg  -strip output.jpg
 
-  mogrify -strip  *.jpg
+  magick mogrify -strip  *.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -346,7 +346,7 @@ For example...
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=240x180 image.jpg -thumbnail 120x90 thumbs/image.gif
 
-  mogrify -path thumbs -format gif -define jpeg:size=240x180 -thumbnail 120x90 '*.jpg'
+  magick mogrify -path thumbs -format gif -define jpeg:size=240x180 -thumbnail 120x90 '*.jpg'
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -363,7 +363,7 @@ For example...
 </I></FONT></TD></TR></TABLE></P>
 
 
-The "<CODE><A HREF="../basics/#mogrify" >mogrify</A></CODE>" will of course
+The "<CODE><A HREF="../basics/#mogrify" >magick mogrify</A></CODE>" will of course
 generate thumbnails for a whole directory of JPEG images, but be careful it
 does not overwrite any thumbnails you want to keep.   For a number of other
 non-IM methods for looping over a large number of images see the example
@@ -493,7 +493,7 @@ comes down to a matter of personal taste. </P>
 
 <BR>
 
-The "<CODE>mogrify</CODE>" version is the same as the "<code>magick</code>"
+The "<CODE>magick mogrify</CODE>" version is the same as the "<code>magick</code>"
 command (with no initial input images), but will but will generate automatic
 thumbnails of <I>every</I> JPEG image in the current directory.  The image
 argument is quoted so that IM itself will scan the directory, and not the
@@ -503,7 +503,7 @@ containing a huge number of images.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  mogrify  -format gif -define jpeg:size=500x180 -auto-orient \
+  magick mogrify  -format gif -define jpeg:size=500x180 -auto-orient \
                 -thumbnail 250x90 -unsharp 0x.5  '*.jpg'
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -513,7 +513,7 @@ containing a huge number of images.
 <TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Note that "<CODE>mogrify</CODE>" will blindly create thumbnails, replacing
+  Note that "<CODE>magick mogrify</CODE>" will blindly create thumbnails, replacing
   any existing images of the same name. GIF images in this case.  Extreme
   caution is always advised when using this command. </P>
 
@@ -527,13 +527,13 @@ containing a huge number of images.
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   Instead of specifying a different format (using "<CODE><A
   HREF="../option_link.cgi?format" >-format</A></CODE>") so as to prevent
-  "<CODE>mogrify</CODE>" from overwriting the original source images, you can
+  "<CODE>magick mogrify</CODE>" from overwriting the original source images, you can
   use a "<CODE><A HREF="../option_link.cgi?path" >-path</A></CODE>" setting to
   define a separate thumbnail directory. You can use both output
   options.
 </I></FONT></TD></TR></TABLE></P>
 
-While "<CODE>mogrify</CODE>" can output the new images with a different suffix
+While "<CODE>magick mogrify</CODE>" can output the new images with a different suffix
 ("<CODE><A HREF="../option_link.cgi?format" >-format</A></CODE>") or directory
 ("<CODE><A HREF="../option_link.cgi?path" >-path</A></CODE>"), they are your
 only options using this command. </P>
@@ -898,12 +898,12 @@ mix of automatic and manual scripts. The final setup of my images are..
 </UL></P>
 
 I first generate the web viewable JPEG images (medium size) using
-"<CODE>mogrify</CODE>" from the original scanned image. This is reduces the
+"<CODE>magick mogrify</CODE>" from the original scanned image. This is reduces the
 download time and viewing size of the image to something that is practical for
 the typical web user (who could be logged in via modem). </P>
 
 From these images I generate an initial set of thumbnails, again using
-"<CODE>mogrify</CODE>".  However I often find in typical photos that the
+"<CODE>magick mogrify</CODE>".  However I often find in typical photos that the
 subject of the thumbnails becomes too small to make an effective thumbnail,
 when viewed. </P>
 
@@ -947,11 +947,11 @@ This is of course more manually intensive, but only needs to be done once per
 image, and only on images that have a lot of space such as in the above
 example.  Also I only do this for images I am putting the web. </P>
 
-Of course as "<CODE>mogrify</CODE>" will overwrite any existing, possibly hand
+Of course as "<CODE>magick mogrify</CODE>" will overwrite any existing, possibly hand
 generated thumbnails, you cannot use it again after you perform any manual
-thumbnail generation. The "<CODE>mogrify</CODE>" command is useful, but also
+thumbnail generation. The "<CODE>magick mogrify</CODE>" command is useful, but also
 very dangerous as it overwrites lots of images.  Always think before you run
-"<CODE>mogrify</CODE>" globally across all your images. </P>
+"<CODE>magick mogrify</CODE>" globally across all your images. </P>
 
 
 <A NAME="html"></A>
@@ -1081,7 +1081,7 @@ images for further processing...
 <PRE>
    xv -vsmap &               # generate thumbs with the "Update" button
    rm .xvpics/*.gif          # delete XV thumbs of existing "gif" thumbnails
-   mogrify -format gif .xvpics/*.jpg
+   magick mogrify -format gif .xvpics/*.jpg
    mv .xvpics/*.gif .        # move the new "gif" thumbnails to original dir
 </PRE>
 
@@ -2909,7 +2909,7 @@ HREF="../compose/#outside-overlay" >Outside-Overlay Setting</A> for a full
 description. </P>
 
 If you like to apply this to a lot of images you can use the
-"<CODE>mogrify</CODE>", using a special technique involving using "<CODE><A
+"<CODE>magick mogrify</CODE>", using a special technique involving using "<CODE><A
 HREF="../option_link.cgi?draw" >-draw</A></CODE>" to do the <A
 HREF="../basics/#mogrify_compose" >Mogrify Alpha Composition</A>.  However
 this method of composition does not understand the special define setting,
@@ -2920,7 +2920,7 @@ size.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   pagecurl -e 0.5 -i /tmp/pagecurl  {<I>one image</I>} null:
-  mogrify {<I>mogrify -format and -path options</I>} -alpha set \
+  magick mogrify {<I>magick mogrify -format and -path options</I>} -alpha set \
           -draw 'image Over 0,0 0,0 "/tmp/pagecurl_overlay.png"' \
           -draw 'image DstIn 0,0 0,0 "/tmp/pagecurl_mask.png"' \
           {<I>all images to be pagecurled</I>}...
