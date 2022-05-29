@@ -358,10 +358,10 @@ many different backgrounds colors and patterns. </P>
 
 <!-- <CODE EXECUTE ASSERT>
   [ `magick -size 1x256 gradient: gif:- |\
-       identify -format %k - ` -eq 256 ] || echo >&2 \
+       magick identify -format %k - ` -eq 256 ] || echo >&2 \
     "ASSERTION FAILURE: GIF did not save a 256 color gradient"
   [ `magick -size 1x256 gradient: -transparent Gray30 gif:- |\
-       identify -format %k - ` -eq 256 ] || echo >&2 \
+       magick identify -format %k - ` -eq 256 ] || echo >&2 \
     "ASSERTION FAILURE: GIF did not save a 256 color gradient (with trans)"
 </CODE> -->
 
@@ -378,7 +378,7 @@ multi-line).
                <TD width="90%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=hand_point.txt>
-  identify -verbose hand_point.gif |\
+  magick identify -verbose hand_point.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -419,7 +419,7 @@ reads, processes and writes a GIF image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE  OUT=hand_white.txt>
   magick hand_point.gif    -fill white -opaque wheat   hand_white.gif
-  identify -verbose hand_white.gif |\
+  magick identify -verbose hand_white.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -447,7 +447,7 @@ However if the final image has no transparency, the transparency color entry
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE  OUT=hand_flatten.txt>
   magick hand_point.gif   -background white -flatten    hand_flatten.gif
-  identify -verbose hand_flatten.gif |\
+  magick identify -verbose hand_flatten.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -473,7 +473,7 @@ example...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=hand_wheat.txt>
   magick hand_point.gif -transparent-color wheat  hand_wheat.gif
-  identify -verbose hand_wheat.gif |\
+  magick identify -verbose hand_wheat.gif |\
       perl -0777 -ne 's/^  //gm; \
             print $& while /^(Colors|Alpha|Colormap):.*?(?=^\S)/gms'
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
@@ -740,7 +740,7 @@ control the Boolean transparency, you will be sorely disappointed.
       sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*none.*/\1/p;'`; \
   [ "$a50" -lt 2750 -o "$a50" -gt 2800 ] && echo >&2 \
     "ASSERTION FAILURE: 50% threshold not in expected range"; \
-  a=`identify -verbose a.gif | \
+  a=`magick identify -verbose a.gif | \
       sed -n '/Histogram:/,/Colormap:/s/^ *\([^ :]*\):.*none.*/\1/p;'`; \
   [ "$a" != "$a50" ] && echo >&2 \
     "ASSERTION FAILURE: GIF did not threshold alpha at 50%!"
@@ -1198,14 +1198,14 @@ of this web page.
     color table ordering, or merging color indexes holding the same color (not
     a recommended situation). </P>
 
-    The IM "<CODE>identify</CODE>" command I have found to do a better job
+    The IM "<CODE>magick identify</CODE>" command I have found to do a better job
     of listing image attributes, including the 'loop repeat limit' in the
     "Mosaic Application Extension" used in image animations. </P>
 
     See also the "<CODE>gif2anim</CODE>" script (below), which previously
     used this program to extract the GIF image meta-data needed to re-create
     the GIF from the individual 'frames' extracted.  It now only uses
-    "<CODE>identify</CODE>", to extract this meta-data. </P>
+    "<CODE>magick identify</CODE>", to extract this meta-data. </P>
 
 <TR valign="top"><TD>
     <A HREF="http://www.lcdf.org/gifsicle/"
@@ -1537,7 +1537,7 @@ use.  For example let us look at how many colors are in the IM built-in
 <TR valign="top"><TD WIDTH=10%></TD><TD WIDTH=70% VALIGN=middle>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_none.txt>
-  identify -format "Colors: %k" netscape:
+  magick identify -format "Colors: %k" netscape:
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 width="100%" HEIGHT=100% bgcolor="#f8f8f8"><TR><TD>
     <A HREF="jpg_colors_none.txt"
@@ -1557,7 +1557,7 @@ produces...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_def.txt>
   magick netscape: JPG:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 width="100%" HEIGHT=100% bgcolor="#f8f8f8"><TR><TD>
     <A HREF="jpg_colors_def.txt"
@@ -1578,7 +1578,7 @@ any color distortion...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_100.txt>
   magick netscape: -quality 100 JPG:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 width="100%" HEIGHT=100% bgcolor="#f8f8f8"><TR><TD>
     <A HREF="jpg_colors_100.txt"
@@ -1599,7 +1599,7 @@ Now let us try "Lossless"...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jpg_colors_lless.txt>
   magick netscape: -quality 100 -compress Lossless JPG:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 width="100%" HEIGHT=100% bgcolor="#f8f8f8"><TR><TD>
     <A HREF="jpg_colors_lless.txt"
@@ -1620,7 +1620,7 @@ newer JP2 image file format.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jp2_colors_lless.txt>
   magick netscape: JP2:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 width="100%" HEIGHT=100% bgcolor="#f8f8f8"><TR><TD>
     <A HREF="jp2_colors_lless.txt"
@@ -1642,7 +1642,7 @@ JPEG image file format...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=jp2_colors_50.txt>
   magick netscape: -quality 50% JP2:- |\
-     identify -format "Colors: %k\nFile Size: %b" -
+     magick identify -format "Colors: %k\nFile Size: %b" -
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=20% HEIGHT=100%>
   <TABLE BORDER=0 width="100%" HEIGHT=100% bgcolor="#f8f8f8"><TR><TD>
     <A HREF="jp2_colors_50.txt"
@@ -2795,7 +2795,7 @@ Global Setting</A></CODE>" controls, for IM v6.5.2. These include...
 
     Note that as IM overwrites these properities with the
     times of the PNG file it just read, you can't see the actual values
-    of these properities recorded in the PNG using "<CODE>identify</CODE>".
+    of these properities recorded in the PNG using "<CODE>magick identify</CODE>".
     </P>
 
     The solution is to save PNG images without any 'time stamps'.
@@ -2902,7 +2902,7 @@ To list what profiles are present in an image use...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  identify -verbose image.tif | grep 'Profile-.*bytes'
+  magick identify -verbose image.tif | grep 'Profile-.*bytes'
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -4211,7 +4211,7 @@ both be installed and used for serious image work. </P>
 
     To get the EXIF attributes try this.
 
-      identify -verbose -define tiff:exif=true image.tif
+      magick identify -verbose -define tiff:exif=true image.tif
 
 </PRE>
 
