@@ -236,14 +236,14 @@ shell to do this, or problems with command line length limits.  For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  montage  '*.jpg' -geometry 50x50+2+2  image_index.gif
+  magick montage  '*.jpg' -geometry 50x50+2+2  image_index.gif
 </samp></pre></TD></TR></TABLE>
 </DIV>
 
 This will produce a single montage index image of all the JPEG files in the
 current directory.  Note however that I needed to quote the argument to
 prevent my UNIX shell from expanding the file names rather than ImageMagick.
-See below for a more complete "<CODE>montage</CODE>" specification. </P>
+See below for a more complete "<CODE>magick montage</CODE>" specification. </P>
 
 Of course the linux shells can also expand '<CODE>*</CODE>' and
 '<CODE>?</CODE>' characters passed to them unquoted.  However in some cases
@@ -504,7 +504,7 @@ effects.  A '<CODE>#</CODE>' represent some number.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  montage '*.tiff'  -geometry 100x100+5+5 -frame 4  index.jpg
+  magick montage '*.tiff'  -geometry 100x100+5+5 -frame 4  index.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV>
 
@@ -514,7 +514,7 @@ effects.  A '<CODE>#</CODE>' represent some number.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  montage '*.tiff[100x100]'  -geometry 100x100+5+5 -frame 4  index.jpg
+  magick montage '*.tiff[100x100]'  -geometry 100x100+5+5 -frame 4  index.jpg
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
@@ -530,7 +530,7 @@ effects.  A '<CODE>#</CODE>' represent some number.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  montage -define jpeg:size=200x200 '*.jpg[100x100]' -strip \
+  magick montage -define jpeg:size=200x200 '*.jpg[100x100]' -strip \
           -geometry 100x100+5+5 -frame 4  index.png
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
@@ -647,7 +647,7 @@ is expanded by the shell BEFORE passing the filenames to IM, while
 will have the shell pass "*.jpg" to ImageMagick, which then expands into
 an internal list of filenames!  This was provided for Windows Dos support, and
 as a method to preventing command line limit overflows in command such as
-"mogrify" and "montage", which typically process long lists of images.
+"magick mogrify" and "magick montage", which typically process long lists of images.
 
 As such to actually get IM to read a file names literially named on disk as
 '*.jpg'  you need to use any of the following forms...
@@ -719,8 +719,8 @@ See  <A HREF="#save_gzip" >Saving Compressed Images</A> below.
 Processing images is well and good but it can be just as important to save the
 results in the right way. </P>
 
-The last argument of the "<code>magick</code>", "<CODE>montage</CODE>" and
-"<CODE>composite</CODE>" defines a filename, and image format for a final
+The last argument of the "<code>magick</code>", "<CODE>magick montage</CODE>" and
+"<CODE>magick composite</CODE>" defines a filename, and image format for a final
 write of the image (defailt image output).  Though you can also save an image
 in the middle of an image sequence using "<CODE><A
 HREF="../option_link.cgi?write" >-write</A></CODE>" (see below). </P>
@@ -1489,7 +1489,7 @@ special handling of images. </P>
     For example the following generates a list of colors starting with the
     letter 'b', then uses a loop of "<code>magick</code>" commands to
     generate a labeled color patch, one color at a time.  These are then
-    'piped' into a "<CODE>montage</CODE>" to generate a simple color table.
+    'piped' into a "<CODE>magick montage</CODE>" to generate a simple color table.
 
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -1498,7 +1498,7 @@ special handling of images. </P>
     while read color junk; do \
        magick -label $color -size 70x20 xc:$color +depth miff:-; \
     done |\
-      montage - -frame 5 -tile 6x -geometry +2+2 \
+      magick montage - -frame 5 -tile 6x -geometry +2+2 \
               -background none color_table.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="color_table.png"
@@ -1705,7 +1705,7 @@ special handling of images. </P>
     <B><CODE>null:</CODE></B>
 <DD>As an output format, this will just 'junk' the image results.  As such if
     used as the final argument in a "<code>magick</code>",
-    "<CODE>montage</CODE>", or "<CODE>composite</CODE>" command the final
+    "<CODE>magick montage</CODE>", or "<CODE>magick composite</CODE>" command the final
     result will not be saved! </P>
 
     Why?  Well it may be that you are more interested in specific images,
@@ -2761,7 +2761,7 @@ special handling of images. </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NO_EXECUTE>
-  montage *.jpg show:
+  magick montage *.jpg show:
 </samp></pre></TD></TR></TABLE>
 </DIV></P>
 
