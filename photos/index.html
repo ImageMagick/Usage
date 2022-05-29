@@ -94,7 +94,7 @@ When a digital camera takes a photo, it also includes a lot of extra
 information in the JPEG save file.  This meta-data is known as the EXIF
 profile, and is provided specifically for photographic labs and development.
 
-The ImageMagick "<CODE>identify</CODE>" with a "<CODE><A
+The ImageMagick "<CODE>magick identify</CODE>" with a "<CODE><A
 HREF="../option_link.cgi?verbose" >-verbose</A></CODE>" setting will display
 this Exif information. </P>
 
@@ -104,7 +104,7 @@ Here is the EXIF data of a photo I took of a <A HREF="../img_photos/pagoda_sm.jp
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=pagoda_sm_exif.txt >
-  identify -format "%[EXIF:*]" pagoda_sm.jpg |\
+  magick identify -format "%[EXIF:*]" pagoda_sm.jpg |\
       sed 's/\(.\{46\}\).*/\1/' | column -c 110
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -131,7 +131,7 @@ limit output to EXIF fields involving Time...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=pagoda_sm_time.txt >
-  identify -format "%[exif:*time*]" pagoda_sm.jpg
+  magick identify -format "%[exif:*time*]" pagoda_sm.jpg
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -237,7 +237,7 @@ Escape</A>...
                   <TD width="90%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=orient_show.txt>
-  identify -format '%[exif:orientation]' pagoda_sm.jpg
+  magick identify -format '%[exif:orientation]' pagoda_sm.jpg
 </samp></pre></TD></TR></TABLE></TD><TD WIDTH=10%>
   <A HREF="orient_show.txt"
       ><IMG SRC="orient_show.txt.gif"
