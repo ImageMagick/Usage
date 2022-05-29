@@ -1290,7 +1290,7 @@ In a similar way the "<CODE><A HREF="../option_link.cgi?frame"
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick thumbnail.gif   -alpha setcolor peru  -frame 9x9+3+3  framed.gif
+  magick thumbnail.gif   -mattecolor peru  -frame 9x9+3+3  framed.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="framed.gif"
      ><IMG SRC="framed.gif"
@@ -1338,7 +1338,7 @@ thumbnail generation.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   montage -define jpeg:size=400x180  -label '%c' hatching_orig.jpg \
-          -thumbnail '200x90>' -geometry '130x100>'  -alpha setcolor peru \
+          -thumbnail '200x90>' -geometry '130x100>'  -mattecolor peru \
           -frame 6  -bordercolor skyblue  -font LokiCola  -pointsize 18 \
           montage_fancy.gif
 </samp></pre></TD></TR></TABLE>
@@ -2050,7 +2050,7 @@ the generated frame.
   magick thumbnail.gif \
           \( -clone 0 -resize 140x110\! \) \
           \( -clone 0 -bordercolor black -border 1x1 \
-                      -alpha setcolor '#8884' -frame 9x9+0+9 \) \
+                      -mattecolor '#8884' -frame 9x9+0+9 \) \
           -delete 0 -composite  self_framed.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="self_framed.gif"
@@ -2197,7 +2197,7 @@ using transparent frame, before overlaying that over the original image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \( +clone -shave 10x10 \
-            -alpha set -alpha setcolor '#AAA6' -frame 10x10+3+4 \
+            -alpha set -mattecolor '#AAA6' -frame 10x10+3+4 \
           \) -composite  inside_frame_trans.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="inside_frame_trans.gif"
@@ -2223,7 +2223,7 @@ preserve primary colors.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( +clone -shave 10x10 -fill gray50 -colorize 100% \
-            -alpha setcolor gray50 -frame 10x10+3+4 \
+            -mattecolor gray50 -frame 10x10+3+4 \
           \) -compose VividLight -composite  inside_frame_light.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="inside_frame_light.gif"
@@ -2242,7 +2242,7 @@ enhance primary colors, with a blurred frame lighting mask.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( +clone -shave 10x10 -fill gray50 -colorize 100% \
-            -alpha setcolor gray50 -frame 10x10+3+4 -blur 0x2 \
+            -mattecolor gray50 -frame 10x10+3+4 -blur 0x2 \
           \) -compose HardLight -composite  inside_frame_blur.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="inside_frame_blur.gif"

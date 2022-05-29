@@ -2223,7 +2223,7 @@ The "<CODE><A HREF="../option_link.cgi?frame" >-frame</A></CODE>" operator is
 very similar to "<CODE><A HREF="../option_link.cgi?border"
 >-border</A></CODE>", and if you look at the first example image generated
 below, you will find that it will produce exactly the same result, except it
-used the "<CODE><A HREF="../option_link.cgi?mattecolor" >-alpha setcolor</A></CODE>"
+used the "<CODE><A HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>"
 rather than "<CODE><A HREF="../option_link.cgi?bordercolor"
 >-bordercolor</A></CODE>".  Note "<CODE><A
 HREF="../option_link.cgi?bordercolor" >-bordercolor</A></CODE>" is still used
@@ -2242,8 +2242,8 @@ Here are some examples of using the "<CODE><A HREF="../option_link.cgi?frame"
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rose:                    -frame 10x10      frame.gif
   magick rose:                    -frame 15x6+2+2   frame_wierd.gif
-  magick rose: -alpha setcolor SkyBlue -frame 6x6+2+2    frame_blue.gif
-  magick rose: -alpha setcolor Tomato  -frame 10x10+5+5  frame_red.gif
+  magick rose: -mattecolor SkyBlue -frame 6x6+2+2    frame_blue.gif
+  magick rose: -mattecolor Tomato  -frame 10x10+5+5  frame_red.gif
 
   magick rose:   -frame 10x10+10+0    frame_rasied.gif
   magick rose:   -frame 10x10+6+0     frame_rasied_part.gif
@@ -2307,7 +2307,7 @@ Using multiple frame operations can also produce weirder framing styles.
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The default "<CODE><A HREF="../option_link.cgi?mattecolor"
-  >-alpha setcolor</A></CODE>" is a slightly darker gray than that of the default
+  >-mattecolor</A></CODE>" is a slightly darker gray than that of the default
   setting of "<CODE><A HREF="../option_link.cgi?bordercolor"
   >-bordercolor</A></CODE>".  This also allows it to match the default gray
   color of web pages on the WWW (used by early browsers such as
@@ -2321,7 +2321,7 @@ Using multiple frame operations can also produce weirder framing styles.
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   While "<CODE><A HREF="../option_link.cgi?frame" >-frame</A></CODE>" may
   actually use the "<CODE><A HREF="../option_link.cgi?mattecolor"
-  >-alpha setcolor</A></CODE>"  color, it also generates four more extra colors
+  >-mattecolor</A></CODE>"  color, it also generates four more extra colors
   from this base for use in drawing the frame.  That is five related colors
   will likely be added to an image, not just one.
 </I></FONT></TD></TR></TABLE></P>
@@ -2336,7 +2336,7 @@ framed image complete with text label.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick rose:  -alpha setcolor grey  -background grey  -frame 3x3+0+3 \
+  magick rose:  -mattecolor grey  -background grey  -frame 3x3+0+3 \
           -gravity South -splice 0x15 -annotate 0x0 'A Red Rose' \
           -frame 6x6+3+0    frame_montage.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2348,7 +2348,7 @@ framed image complete with text label.
 <A NAME="frame_plasma"></A>
 
 You can even use a semi-transparent "<CODE><A
-HREF="../option_link.cgi?mattecolor" >-alpha setcolor</A></CODE>" for the frame
+HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>" for the frame
 "<CODE><A HREF="../option_link.cgi?frame" >-frame</A></CODE>" and then
 'underlay' an interesting pattern (such as a <A
 HREF="../canvas/#plasma_fractal" >Fractal Plasma Canvas</A>), to produce a
@@ -2358,7 +2358,7 @@ more colorful frame.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-<r>  magick rose: -alpha set -alpha setcolor '#CCC6' -frame 10x10+3+4 \
+<r>  magick rose: -alpha set -mattecolor '#CCC6' -frame 10x10+3+4 \
           \( -size 100x100 plasma:fractal -normalize -blur 0x1 \) \
           -compose DstOver -composite   frame_plasma.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -2381,7 +2381,7 @@ HREF="../thumbnails/#frame" >Framing Techniques</A>. </P>
 
 Frame is closely related to the "<CODE><A HREF="../option_link.cgi?border"
 >-border</A></CODE>" operator.  Not only is a frame drawn using the "<CODE><A
-HREF="../option_link.cgi?mattecolor" >-alpha setcolor</A></CODE>", but this
+HREF="../option_link.cgi?mattecolor" >-mattecolor</A></CODE>", but this
 operator will also make use of the "<CODE><A
 HREF="../option_link.cgi?bordercolor" >-bordercolor</A></CODE>" setting to
 define the background on which the frame is initially drawn. </P>
