@@ -3070,6 +3070,7 @@ together to generate the edge detection result.
 This is best done using a <A HREF="../basics/#hdri" >HDRI</A> version of
 ImageMagick.
 
+<pre class="bg-light text-dark mx-4"><samp>
    magick image.png \
            \( -clone 0 -morphology Convolve FreiChen:11 \) \
            \( -clone 0 -morphology Convolve FreiChen:12 \) \
@@ -3082,14 +3083,17 @@ ImageMagick.
            \( -clone 0 -morphology Convolve FreiChen:19 \) \
            -delete 0 -background Black -compose Plus -flatten \
            result.pfm
+</samp></pre>
 
 If a type of 10 is given then a multi-kernel list of all the 9 weighted kernels
 shown above is generated. This lets you use multi-kernel composition to do the
 above, much more simply...
 
+<pre class="bg-light text-dark mx-4"><samp>
     magick image.png  -define morphology:compose=Plus \
           -morphology Convolve FreiChen:10 \
           result.pfm
+</samp></pre>
 
 I have not however found out what the supposed meaning of the results are.  If
 anyone has any experience or knowledge about how this is actually used, please
