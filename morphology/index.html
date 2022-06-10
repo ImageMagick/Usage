@@ -309,7 +309,7 @@ small.  </P>
 
 All of the kernels shown, excluding the last one, are actually shaped.  The
 parts that are transparent are <I>not</I> part of the defined 'neighbourhood'
-of the kernel.  That is they will do not have any valid value, and will not
+of the kernel.  That is, they will do not have any valid value, and will not
 take part in any of the morphology calculations.  </P>
 
 Note how the second last kernel '<CODE>Corner #0</CODE>' not only has 'on'
@@ -406,7 +406,7 @@ The most common <I>k_argument</I> used for built-in kernels, and
 generally the first argument given is a '<I>radius</I>'.  This defines how big
 the typical odd-sized square neighbourhood of the kernel will be.  The final
 kernel size will generally be twice the radius plus one (for the center
-pixel).  That is a '<I>radius</I>' of '<CODE>2</CODE>' will create a kernel
+pixel).  That is, a '<I>radius</I>' of '<CODE>2</CODE>' will create a kernel
 that is 5&times;5 pixels square. </P>
 
 While a '<I>radius</I>' typically defines the size of the final kernel, and
@@ -1336,7 +1336,7 @@ command line. See <A HREF="#showkernel" >Verbose Output Display</A>, below for
 another use of a zero iteration count. </P>
 
 Using a special value of '<CODE>-1</CODE>', will repeat the operation until no
-more changes are seen in the image. That is the image reaches a point of
+more changes are seen in the image. That is, the image reaches a point of
 'convergence'.  This is however dangerous, as in some situations could lead
 to very long running operations.  For an operation such as for
 '<CODE>Dilate</CODE>' for example it would simply repeat the dilation until
@@ -1344,7 +1344,7 @@ the whole image was completely filled with white. Basically producing a sort
 of runaway 'flood fill' (see the next example below). </P>
 
 Iterating a '<CODE>Disk</CODE>' kernel to produce a larger neighbourhood
-effect, is also generally not recommended.  That is because the
+effect, is also generally not recommended.  That is, because the
 '<CODE>Disk</CODE>' kernel becomes a more accurate disk shape as the radius
 gets larger, where an iterated disk, will enlarge not just the shape but the
 errors (non-disk shape) of the kernel.  As such you may be better off using
@@ -1928,7 +1928,7 @@ get the following.
 </DIV></P>
 
 As you can see both kernels were applied to the image one after the other, so
-that each kernel works with the result of the previous kernel.  That is it
+that each kernel works with the result of the previous kernel.  That is, it
 '<I>re-iterates</I>' the result of one kernel with the next kernel, in
 sequence. </P>
 
@@ -2126,7 +2126,7 @@ and white shapes.  By convention white in a binary image represents
 foreground, while black represents background.  The method names are thus
 described according to this convention. </P>
 
-That is not to say the operators will not work with gray-scale image, or in
+That is, not to say the operators will not work with gray-scale image, or in
 some cases color images, but their original purpose was to handle binary
 shapes. </P>
 
@@ -2210,7 +2210,7 @@ image. </P>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR VALIGN=bottom><TD width="100%" ALIGN=justify>
 
-The '<CODE>Dilate</CODE>' and '<CODE>Erode</CODE>' are dual. That is (at least
+The '<CODE>Dilate</CODE>' and '<CODE>Erode</CODE>' are dual. That is, (at least
 with a symmetrical kernel) by negating the image before and after the applying
 the morphological method, you will actually perform the other form of the
 operator.   For example here I perform an erosion by using '<CODE>Dilate</CODE>'
@@ -2308,7 +2308,7 @@ For example...
            ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-That is repeating a '<CODE>Open</CODE>' operation, with the same kernel, has
+That is, repeating a '<CODE>Open</CODE>' operation, with the same kernel, has
 no effect on the result. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
@@ -2319,7 +2319,7 @@ individual dilate and erode sub-methods, and not to the method as a whole,
 so that the iteration can be used to 'expand' the effective kernel, rather
 than uselessly repeating the compound operation.  </P>
 
-That is a '<I>Open:2</I>' iteration will actually be applied as
+That is, a '<I>Open:2</I>' iteration will actually be applied as
 a '<CODE>Erode:2</CODE>, followed by an '<CODE>Dilate:2</CODE>' to the image.
 This has the general effect of making the effective 'neighbourhood' defined by
 the kernel larger.
@@ -2502,7 +2502,7 @@ field' of a 3-dimensional morphology object and the gray-scale shape of the
 kernel the smoothing shape to adjust that height field.  </P>
 
 While the implementation details of true gray-scale morphology is well
-documented, is usage in practical situations is not.  That is I have not found
+documented, is usage in practical situations is not.  That is, I have not found
 any useful example of using true grey-scale morphology beyond 'flat shaped
 kernels', other than a comment about its use in 'photometric' processing.
 Because of this I have not implemented true 3-dimensional grey-scale
@@ -2536,7 +2536,7 @@ With this in mind I have created 'Intensity' versions of these methods.
 '<CODE>OpenIntensity</CODE>', '<CODE>CloseIntensity</CODE>'. </P>
 
 These compare the pixels within the defined 'neighbourhood', and replaces the
-current pixel color according to the pixels intensity.  That is the whole
+current pixel color according to the pixels intensity.  That is, the whole
 color pixel is copied, and not just the individual channel values. As
 a result... </P>
 
@@ -2691,7 +2691,7 @@ See and Download Fred's Weinhaus "Morphology" Script from
 <H2>Difference Morphology Methods</H2>
 
 The next level of morphological methods is something I term difference
-morphology.  That is the results of these morphology methods is the difference
+morphology.  That is, the results of these morphology methods is the difference
 between one of the previous basic morphology methods, and the original image,
 or some other morphological method. </P>
 
@@ -2876,7 +2876,7 @@ This operator is more commonly used with greyscale images. </P>
 
 The '<CODE><B>BottomHat</B></CODE>' method, also known as '<I>Black
 TopHat</I>' is the pixels that a <A HREF="#close" >Closing</A> of the shape
-adds to the image.  That is the the pixels that were used to fill in the
+adds to the image.  That is, the the pixels that were used to fill in the
 'holes', 'gaps', and 'bridges'.
 
 <DIV ALIGN=center>
@@ -3005,7 +3005,7 @@ This usage was in fact the original driving force behind the original creation
 of morphology methods, at a Paris mining company, in the 1960's.  It allowed
 the creators to create an automated system to analyze the grain structure of
 microscopic photos of mineral samples to determine their suitability for
-mining. That is locate and count the size and amount of mineral in samples.
+mining. That is, locate and count the size and amount of mineral in samples.
 </P>
 
 For example: Two mineral ores may have the same amount of desired mineral
@@ -3066,7 +3066,7 @@ CLEAR=all></P>
 
 Note also that the boundary between positive and negative halves of the test
 image does move as consequence of applying the above basic morphological
-methods.  That is to be expected.  </P>
+methods.  That is, to be expected.  </P>
 
 This brings up a specific point about these two methods.  To convert
 a '<CODE><A HREF="#erode" >Erode</A></CODE>' methods into a '<CODE><A
@@ -3151,7 +3151,7 @@ pixel immediately to its right.
 </DIV></P>
 
 As you can see the small 2 element kernel only matched the pixels, that were
-on the right side of the image.  That is the method only returned a specific
+on the right side of the image.  That is, the method only returned a specific
 pixel which matched the given pattern. </P>
 
 The 'Kernel' or 'Structuring Element' used can contain a pattern of 3 types of
@@ -3522,7 +3522,7 @@ For example...
 
 The actual '<CODE><A HREF="#convexhull" >ConvexHull</A></CODE>' kernel is
 really designed to work with image shapes, and will expand a shape into
-a '<I>Octagonal Convex Hull</I>'.  That is it will try to fill in all the gaps
+a '<I>Octagonal Convex Hull</I>'.  That is, it will try to fill in all the gaps
 between the extremes until it produces a 'octagonal shaped' object. </P>
 
 <DIV ALIGN=center>
@@ -3815,8 +3815,8 @@ Here is a close up of loop around the eroded hole.
 
 Note that it did not produce an exact center-line between the hole and the
 edge.  Also as the shape was eroded, the lines do not go right the edge of the
-original the shape but stop one pixel short. That is the end of lines have
-been 'pruned' slightly.  That is the disadvantage of the 'erode' soltion. </P>
+original the shape but stop one pixel short. That is, the end of lines have
+been 'pruned' slightly.  That is, the disadvantage of the 'erode' soltion. </P>
 
 The skeleton is also limited to octagonal lines, which means it is missing
 a lot of detail, though in this case that simplification can be a good thing.
@@ -3833,7 +3833,7 @@ produce other variations in the resulting '<I>Thinned Skeleton</I>'.  </P>
 
 This 'traditional' skeleton as mentioned has thick diagonals. But often this
 is not 'thin' enough.  In some situations what you want is a slightly thinner
-skeleton. That is you want an '8-connected' skeleton rather than '4-connected'
+skeleton. That is, you want an '8-connected' skeleton rather than '4-connected'
 skeleton.  </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
@@ -4057,7 +4057,7 @@ A <A HREF="#verbose" >Verbose</A> report on this would have shown that this
 took 75 iterations with 4 kernels, resulting in 300 primitive integrations to
 '<I>Prune</I>' all the lines with free ends from the image. </P>
 
-That is about twice as many operations as was used to find the skeleton, which
+That is, about twice as many operations as was used to find the skeleton, which
 shows how much more intensive this operation can be.  Using a full set of
 '<CODE><A HREF="#lineends" >LineEnds</A></CODE>' kernels (8 kernels), would
 also have taken 75 iterations, but with twice as many kernels, making this 600
@@ -4205,9 +4205,9 @@ For example (resulting image enlarged) is is a default line ends thining
   magick line_seqential.gif -scale 800% line_seqential_mag.gif
 -->
 
-That is because by default each of the '<CODE><A HREF="#thinning"
+That is, because by default each of the '<CODE><A HREF="#thinning"
 >Thinning</A></CODE>' kernels is applied against the results of previous
-kernel, in <I>sequence</I>.  That is it removes all the pixels selected by one
+kernel, in <I>sequence</I>.  That is, it removes all the pixels selected by one
 kernel, before appling the next kernel to that result, which may (and does)
 select more pixels from the same end of line. In other words it will, by
 default, thin the end of the lines multiple times for one complete 'iteration'
@@ -4222,7 +4222,7 @@ works, so that it removes only the set of pixels a single '<CODE><A
 HREF="#hitmiss" >Hit-And-Miss</A></CODE>' iteration through all the kernel
 would find.  In other words apply all the kernels to the same image at the
 start of the interation, merge them, then remove just those pixels, once only
-for all kernels.  That is remove all the HMT selected pixels
+for all kernels.  That is, remove all the HMT selected pixels
 <I>simultaniously</I>.  </P>
 
 Basically you set the <A HREF="#kernel_compose" >Multi-Kernel Composition
@@ -4248,7 +4248,7 @@ selected pixels for a single removal of selected pixels.  For example... </P>
 
 What happened here is that each kernel of the <A HREF="#pattern_kernels"
 >Pattern Matching Kernels</A> will applied only to the original image.  Any
-pixels that matched the original, will then be collected together.  That is we
+pixels that matched the original, will then be collected together.  That is, we
 will only remove a 'intersection' of the results of all kernels against the
 original, by using a 'darken' composition. But the removal is done all in one
 step for any one iteration through all the kernels. </P>
@@ -4316,7 +4316,7 @@ The default 'Sequential Thinning' on the other hand produced... </P>
 -->
 
 As you can see it preserved one of the pixels (on the right) to be a skeleton
-center line. That is because one set of kernels first thinned down one side of
+center line. That is, because one set of kernels first thinned down one side of
 a 'thick' center-line, but the later kernels did not match this 'thinner'
 line, so it was not removed.  </P>
 
@@ -4840,7 +4840,7 @@ consists both 1 and 2 pixel thick lines. </P>
 <H4>ConvexHull</H4>
 
 The '<CODE>ConvexHull</CODE>' kernel set, is designed to thicken shapes
-so as to produce a 'Octagonal Convex Hull' of the shape. That is the smallest
+so as to produce a 'Octagonal Convex Hull' of the shape. That is, the smallest
 octagonal shape that can contain the whole of the shape. </P>
 
 <DIV ALIGN=center>
@@ -5291,7 +5291,7 @@ What happened is that, at least for this small image, all the pixels are
     ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   A PNG image is recommended for any use of the '<CODE>Distance</CODE>'
-  method. That is because it provides can provide greater output value 'depth'
+  method. That is, because it provides can provide greater output value 'depth'
   than for example GIF, without any color loss like JPEG. </P>
 
   It is also the reason why the <A HREF="../basics/#depth" >Depth Setting</A>
@@ -5336,7 +5336,7 @@ So lets look at the largest color value that was set in the above image.
 </TD></TR></TABLE>
 </DIV></P>
 
-That is the largest color value in the resulting image was '<CODE>1616</CODE>'
+That is, the largest color value in the resulting image was '<CODE>1616</CODE>'
 making the 'brightest' pixel in the image a very dark 2.5% grey, and its
 distance from the nearest edge, 16.16 pixels away. </P>
 
@@ -5571,7 +5571,7 @@ quite well. </P>
 
 The second argument '<I>scale</I>' sets the distance scale used to represent
 the distance of one pixel length.  As shown in the example above it defaults
-to a value of '<CODE>100</CODE>'.  That is a pixel which is given a final
+to a value of '<CODE>100</CODE>'.  That is, a pixel which is given a final
 pixel or grey-scale value of say '<CODE>300</CODE>' should be exactly '3
 pixels' away from the edge. </P>
 
@@ -5607,7 +5607,7 @@ will be able to get a distance metric of about 8 pixels before the distance
 overflows the color range limits of the IM version you are using.  </P>
 
 Alternatively you can instead use a '<CODE>!</CODE>' which means the scale is
-a divisor of the color range.  That is if you specify a scale of
+a divisor of the color range.  That is, if you specify a scale of
 '<CODE>20!</CODE>' the distance scaling will be set so that the color range
 limit will be reached 20 pixels from the edge of the image. </P>
 
@@ -5634,7 +5634,7 @@ and basically define what is to be considered the 'nearest edge'. </P>
 
 The '<CODE><B>Chebyshev</B></CODE>' distance kernel is the simplest, and
 specifies that all pixel around the 'origin' is simply 1 distance unit from
-its neighbours.  That is all 8 neighbours are 'next' to each other. As such
+its neighbours.  That is, all 8 neighbours are 'next' to each other. As such
 only are the immediate four neighbours a distance of 1 unit, but the diagonal
 neighbours are also exactly 1 unit away. </P>
 
@@ -5806,7 +5806,7 @@ Here is the actual kernel it generates...
 </DIV></P>
 
 Note that the diagonals now have a value of '200' or 2 units from the center.
-That is to reach a diagonal pixel you would have to travel through two pixels
+That is, to reach a diagonal pixel you would have to travel through two pixels
 in the gird-like movements mentioned.  As a result of this, diagonals tend to
 be larger than expected, as such the final distance measurements also tends to
 be larger. </P>
@@ -6071,7 +6071,7 @@ better, thus the larger maximal distance result. </P>
 
 
 Another fractional distance 'interger' kernel that can be used is this one,
-though the distance is in terms of 3 units instead of 2. That is the results
+though the distance is in terms of 3 units instead of 2. That is, the results
 need to be divided by 3 to get the distance in terms of pixel size, which is
 not really a great divisor to use.  It is however another octagonal type
 distance metric.
@@ -6204,7 +6204,7 @@ Here is the default kernel it generates...
 Now by using the default <I>radius</I> of 1, while a big improvement on the
 previous kernels in terms of accuracy, still has some limitations.  Basically,
 it provides a distance in terms of just 45 degree diagonals and orthogonal (X
-and Y) moves. That is the distances are somewhat like a '<I>Knight's Move</I>'
+and Y) moves. That is, the distances are somewhat like a '<I>Knight's Move</I>'
 in the game of chess. </P>
 
 Here is the maximum distance and the 'distance gradient' image that was
@@ -6242,7 +6242,7 @@ a simple multiple of '<CODE>100</CODE>' and that it also happened to be the
 same as the '<CODE><A HREF="#manhattan" >Manhattan</A></CODE>' distance. </P>
 
 The actual distance to a pixel is actually the sum of the diagonal distance,
-plus the orthogonal (axis) distance.  That is not quite a perfect Euclidean
+plus the orthogonal (axis) distance.  That is, not quite a perfect Euclidean
 distance, but it is the closest to it you can get while using the smallest
 distance kernel posible (of radius 1). </P>
 
@@ -7047,7 +7047,7 @@ represented an island, you would get quite wet if you wanted to take the
 <A NAME="iterative_distance"></A>
 
 What you really want is the distance that is limited to paths '<I>with-in the
-object</I>'.  That is you want the distance to be 'constrained' by the
+object</I>'.  That is, you want the distance to be 'constrained' by the
 object itself, and follows the smallest path possible, inside the object.</P>
 
 To do this we can set up a <A HREF="../maskng/#write_mask" >Write Protect
@@ -7091,7 +7091,7 @@ distance method that is applied to the image as a whole.  Because of this the
 write mask will not restrict its actions along a 'row' of pixels, and as such
 the write mask will have little effect.  The result is that
 '<CODE>Distance</CODE>' will have a tendency to 'jump' over horizontal gaps,
-regardless of the write mask.  That is the normal <A HREF="#distance"
+regardless of the write mask.  That is, the normal <A HREF="#distance"
 >Distance Method</A> is not properly 'constrained'. </P>
 
 The '<CODE>Iterative_Distance</CODE>' method however works more like a simpler
@@ -7198,7 +7198,7 @@ a mask for the distance transform. The distance transform method is more
 suited to this, and it is probably faster to calculate than by thinning.
 
 SKIZ (Skeleton by Influence Zones) is a skeleton of the background, the
-negative of the operation.  That is dividing the regions closest to each
+negative of the operation.  That is, dividing the regions closest to each
 foreground object.  (generated by thickening)
 
 Generally a SKIZ is pruned down to simple areas, or basins, by also eroding

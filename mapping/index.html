@@ -134,7 +134,7 @@ calculation needed to be performed by ImageMagick, as such 'image mapping' is
 in general <I>very fast</I>. </P>
 
 It is also <I>repeatable</I>, as you can apply the same very complex map, to
-any number of images, to get the exact same modification.  That is to say you
+any number of images, to get the exact same modification.  That is, to say you
 can apply it to a whole directory of images very quickly. </P>
 
 In essence what <I>Image Mapping</I> does is move the slow, and complex
@@ -147,7 +147,7 @@ actual images very quickly. </P>
 
 Mapping images are basically "Look Up Tables" or LUTs that define how
 a particular effect sould be applied to an image on an individual pixel by
-pixel bases.  That is wether an effect is applied and to what degree is
+pixel bases.  That is, wether an effect is applied and to what degree is
 completely controled by the image map. </P>
 
 Essentually an image is an array of values, and what those values mean depends
@@ -200,8 +200,8 @@ over and over. </P>
 The solution is to pre-calculate your distortion, and save it as special
 look-up table (LUT) in the form of a grayscale image. </P>
 
-That is for each output pixel, we look-up the LUT, then use that value to
-look-up the color from the source image.  That is three steps are needed.
+That is, for each output pixel, we look-up the LUT, then use that value to
+look-up the color from the source image.  That is, three steps are needed.
 
 <OL>
 <LI>Look-up up each destination pixel in the LUT
@@ -216,7 +216,7 @@ some really fancy and complex distortions. </P>
 
 You must remember however that just like all other distortion methods we have
 seen, the lookup is  pplied as a <A HREF="#mapping" >Reverse Pixel
-Mapping</A>.  That is for each pixel in the destination image, we look-up the
+Mapping</A>.  That is, for each pixel in the destination image, we look-up the
 color of the pixel from the source image, using the distortion method being
 applied.  In this case the method is to look-up the source coordinate from the
 provided Look-up Table Image. </P>
@@ -256,13 +256,13 @@ However, as you will see, it has a very serious drawbacks making them less
 practical than a <A HREF="#displace" >Relative Displacement Map</A>. </P>
 
 It is the color at any particular point in the 'Distortion Map' directly
-refers to a location in the source image.  That is the greyscale gradient
+refers to a location in the source image.  That is, the greyscale gradient
 across the 'map' defined the 'texture' that is to be placed at that location.
 </P>
 
 Now consider that the Map image is acually an image of a complex opject such as
 a tee-shirt, with complex folds and ripples.  If that shirt has a gradient
-across it, you can map any flat image onto that shirt.  That is the power of
+across it, you can map any flat image onto that shirt.  That is, the power of
 an absolute distortion map. </P>
 
 Any 'black' pixel in the LUT image (color value 0) will be thought of as the
@@ -299,12 +299,12 @@ LUT.
 </DIV></P>
 
 Note that this did not make any real changes in mapping the source image to
-the destination image.  That is because the X coordinate that we looked up from
+the destination image.  That is, because the X coordinate that we looked up from
 the distortion map, was the same position we were looking up the color for.
 </P>
 
 By simply flipping the gradient over the look-up of the pixels is also
-flipped, creating a mirror image. That is white is on the left and 'black' is
+flipped, creating a mirror image. That is, white is on the left and 'black' is
 on the right, and a horizontal gradient across the image.
 
 <!-- <CODE EXECUTE>
@@ -386,7 +386,7 @@ only by compressing the images along the X and Y axis (simultaneously), rather
 than radially as the <A HREF="#implode" >Implode</A> operator does. </P>
 
 The key here is whatever you do to the absolute distortion map, you will do to
-the final image of whatever image you are applying it to.  That is the power
+the final image of whatever image you are applying it to.  That is, the power
 of distoprtion maps. </P>
 
 
@@ -489,8 +489,8 @@ image slightly, as the formula as I have outlined is actually not exactly
 correct.  Getting the 'no-op' copy of the original is a good test that you
 have the mathematics of your distortion correct. <P>
 
-That is when given a perfect gradient, you can map each pixel from the source
-image to the destination image.  That is the LUT 'white' (or 1.0) value will
+That is, when given a perfect gradient, you can map each pixel from the source
+image to the destination image.  That is, the LUT 'white' (or 1.0) value will
 map exact to right-most (or bottom-most) pixel in the destination. </P>
 
 For testing no-op distortions we use a 'pixel checks image' (EG:
@@ -544,7 +544,7 @@ Coordinates</A>. </P>
 <TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
   The FX distortion is centered on the upper right corner (pixel location
   0,0), and generates duplicate virtual pixels along the bottom and right
-  edges.  That is because it makes no attempt to change center of the scaling,
+  edges.  That is, because it makes no attempt to change center of the scaling,
   from lookup color, to image coordinates used for the actual lookup. As such
   black pixels remain centered at pixel 0,0, even though the scaling is wrong.
   </P>
@@ -1102,7 +1102,7 @@ Basically instead of calculating the coordinate mappings for each and every
 pixel in each and every image being distorted, we save those calculated
 coordinates into the two X and Y coordinate gray-scale LUT maps. </P>
 
-That is we pre-calculate the whole distortion into a simpler look-up table
+That is, we pre-calculate the whole distortion into a simpler look-up table
 image, allowing it to be applied over, and over, and over, without needing
 further square roots or trigonometric functions. </P>
 
@@ -1249,7 +1249,7 @@ text. </P>
   The problem with this distortion map is that there is a very sharp
   disjunction of colors in the 'X map' (caused by an asymptote in the
   mathematics).  This line must remain sharp when you do any color look-up,
-  or resizing of the map, to produce a larger image.  That is you will need
+  or resizing of the map, to produce a larger image.  That is, you will need
   to ensure that any resize or interpolated look-up of this map does not
   produce a grey look-up color along that asymptotic line. </P>
 
@@ -1512,7 +1512,7 @@ lens-like effects, or frosted or bubbles glass effects. </P>
 
 On the other hand highly mathematical distortions such as 'polar', rotational,
 and 'perspective' distortions, or other real-world 3-d type mappings, are not
-easily achieved.  That is not to say it is impossible, as later we will show
+easily achieved.  That is, not to say it is impossible, as later we will show
 that you can in fact magick between the two styles of maps, just more
 difficult. </P>
 
@@ -1551,7 +1551,7 @@ displacement' that will be used for 'white' and 'black' colors in the given
 displacement map. You can define either one, or both values, so as to allow
 you to displace in any particular direction. </P>
 
-That is normally displacement maps provide a linear displacement in some
+That is, normally displacement maps provide a linear displacement in some
 random direction with a maximum intensity controlled by the '<I>X</I>' and
 '<I>Y</I>' values.  The 'map image' then sets how much of that maximum is
 applied from a negatative maximum (black) to a positive maximum (white), with
@@ -1694,7 +1694,7 @@ add both a compression wave as well as an amplitude wave.
 
 Note that the image is still displaced in a single linear direction, resulting
 in the above image being stretched on the downward slope, and squeezed
-together on the upward slope.  That is the distortion is being performed at
+together on the upward slope.  That is, the distortion is being performed at
 an angle or 'vector', with both horizontal and vertical components. </P>
 
 You can see that this effect is remarkably like it is underwater, with the
@@ -2047,7 +2047,7 @@ image to this change, to give a much smoother effect. </P>
 To do this you will want the maximum displacement of black (a positive image
 displacement) at '<CODE>37,37</CODE>' and displacing by a value of
 <CODE>+5,+15</CODE>.  but you also want the make sure the rest of the image
-remains intact by 'pinning' the corners at 50% gray.  That is perfect for a <A
+remains intact by 'pinning' the corners at 50% gray.  That is, perfect for a <A
 HREF="../canvas/#shepards" >Shepard's Interpolated Sparse Gradient</A>.
 
 <DIV ALIGN=center>
@@ -2175,7 +2175,7 @@ intensity. </P>
 The following uses some fancy <A HREF="../transform/#gradient_math" >Gradient
 Mathematics</A> to 'attenuate' the wave gradient we were using above. </P>
 
-That is we made the wave pattern linearly smaller as it goes from top to the
+That is, we made the wave pattern linearly smaller as it goes from top to the
 bottom. This trickiness ensures that the waves finishes at the pure-gray or
 'no displacement' color at the bottom of the image (which is later flipped).
 
@@ -2423,7 +2423,7 @@ way, just as each shard of a fractured mirror would.  </P>
 
 To finish off the mirror, <A HREF="../transform/#edge" >Edge Detection</A> is
 used to outline the edges of the regions and thus the fractured nature of the
-resulting image. That is the cracks are also made visible. </P>
+resulting image. That is, the cracks are also made visible. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
 <TR valign="top">
@@ -2433,7 +2433,7 @@ resulting image. That is the cracks are also made visible. </P>
   Technically I did not have to separate the 'red' and 'green' channels in
   colored random displacement map that was generated.  I could have used them
   directly as X displacement is looked up from the 'red' channel, and
-  Y displacement is looked up from the 'green' channel.  That is I could have
+  Y displacement is looked up from the 'green' channel.  That is, I could have
   used the "mirror_areas.gif" image directly as a "unified displacement map".
 </I></FONT></TD></TR></TABLE></P>
 
@@ -2556,7 +2556,7 @@ been achieved in many other ways, but that does not explain where the power of
 blur mapping is. </P>
 
 What makes this blur mapping versitile is that it is variable across the image.
-That is if the blur mapping color is gray in color, than you will get a
+That is, if the blur mapping color is gray in color, than you will get a
 corresponding smaller blurred result, using a smaller 'neighbourhood', for that
 pixel. Black however is not blurred, while white is maximumally blurred, by the
 values given. </P>
@@ -2625,7 +2625,7 @@ generate the 'blurred color' for that pixel.  That means that even though you
 may specify some part of an image to not be blurred, colors from that
 unblurred area may be used as part of the blur of surrounding pixels. </P>
 
-That is just because an area is not blurred does not mean that colors from
+That is, just because an area is not blurred does not mean that colors from
 that area is not used as part of result of other blurred pixels. That is
 colors from the unblurred area can 'leak' into the surrounding blurred areas.
 </P>
@@ -2881,7 +2881,7 @@ You can of course still set a fixed angle to the ellipse.
 <H3>Blur with Variable Angle</H3>
 
 So far the angle of the ellipse used for bluring the image has been a constant
-angle over the whole image.  That is the ellipse used for the blur has always
+angle over the whole image.  That is, the ellipse used for the blur has always
 been at the same angle, even though the aspect ratio of the ellipse can be
 varied by modifying the red and green channels of the blur map. </P>
 

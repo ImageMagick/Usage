@@ -309,7 +309,7 @@ The second problem is that the result is full of holes where no pixel landed.
 
 Which brings up the third problem. You many not see it but for every hole in
 the resulting image, you would also find another location where two pixels
-were placed. That is you have multiple pixels at the same location. What pixel
+were placed. That is, you have multiple pixels at the same location. What pixel
 value should you use? In the above IM just used the last pixel defined for
 a location. </P>
 
@@ -319,7 +319,7 @@ or no pixel at all.  These are serious problems, and one that cannot be
 easily solved when forward mapping pixels from the source image directly to
 the destination image. </P>
 
-That is not to say that it cannot work, and many research papers talk about
+That is, not to say that it cannot work, and many research papers talk about
 using a technique known as '<B>splatting</B>'. Basically they take each input
 pixel, transform its location, and then draw it with appropriate spreading and
 mixing of pixel colors in the new location. This technique is especially
@@ -400,7 +400,7 @@ for each and every pixel in the destination.  It still does not look very
 good, but that is a matter of adjusting exactly what color should be placed
 into each pixel. </P>
 
-That is Reverse Pixel Mapping does not generate either holes, or overlapping
+That is, Reverse Pixel Mapping does not generate either holes, or overlapping
 pixels.  Each pixel has a properly defined color producing a complete
 image. </P>
 
@@ -524,7 +524,7 @@ Source</I>.  What term should be used... Take your pick.  </P>
 There are still a few problems with the above <A HREF="#mapping" >Reverse
 Pixel Mapping</A> technique.  First of all is that when mapping a pixel from a
 fixed integer position in the destination, you can end up with a non-integer
-position in the source image.  That is a location that falls somewhere between
+position in the source image.  That is, a location that falls somewhere between
 the individual pixels on the source image.  To determine what color should be
 returned a process called <A HREF="../misc/#interpolation" >Interpolation</A>
 is used to determine the final color for that real position by mixing the
@@ -716,7 +716,7 @@ distance between the lookups in the source image, or on how close the colors
 returned from a low level sampling, to see it should make more samples for
 that specific pixel.  </P>
 
-That is the amount of super-sampling could be made responsive to needs of the
+That is, the amount of super-sampling could be made responsive to needs of the
 distortion, without knowing anything about the specifics of the distortion
 itself. This is known as <I>Adaptive Super-Sampling</I>. </P>
 
@@ -753,7 +753,7 @@ Rather than distorting a larger image and averaging the results by resizing,
 which is just taking and averaging more samples from the image, we actually
 determine exactly how many pixels from the source image should be merged
 together (based on the 'scale' of the distortion at that point) to generate
-each specific output pixel.  That is figure out a rough 'area' within the
+each specific output pixel.  That is, figure out a rough 'area' within the
 source image, each output pixel represents, and merge (filter) all the pixels
 in that area according to a resampling filter. </P>
 
@@ -889,7 +889,7 @@ seconds), but as you can see produces a horible result as 'minification'
 
 The middle image is as the first image but with the distorted output image
 being enlarged by a factor of 10, before being scaled back (grid resampling)
-to match the other images.  That is more than 100 pixels were looked up and
+to match the other images.  That is, more than 100 pixels were looked up and
 averaged together for each destination pixel, so as to <A HREF="#super_sample"
 >Super Sample</A> the result.  It is quite fast to generate (1.2 seconds), and
 while it improves the quality of the image in general, that improvement is
@@ -1059,7 +1059,7 @@ and these pixels are vital to correct 'edge joining' and overlaying of the
 distorted image. </P>
 
 Technically the number of pixels added should depend on the output scaling of
-<A HREF="../filter/#support" >Resampling Filter Support</A>.  That is how much
+<A HREF="../filter/#support" >Resampling Filter Support</A>.  That is, how much
 a pixel's area could 'spread' due to the resampling filter.  However as the
 scaling of each pixel can be variable, calculation of the absolutely correct
 number of additional pixels needed is a very tricky matter, and usually not
@@ -1314,7 +1314,7 @@ HREF="../filter/#cyl_interpolated" >Cylindrical Filters</A>. </P>
 point</CODE>", to turn off filtering, and hence EWA resampling.</B></P>
 
 When this is done Imagemagick will switch color lookups to use fast and
-simplier <A HREF="../misc/#interpolate" >Pixel Interpolation</A>.  That is it
+simplier <A HREF="../misc/#interpolate" >Pixel Interpolation</A>.  That is, it
 will look up a color using only a 'single point' referance to the source image
 without any 'resampling area'.  The color of the resulting pixels will use
 an interpolated color based only on nearest neighbours to point.</P>
@@ -1422,7 +1422,7 @@ HREF="#control_coordinates" >Image vs Pixel Coordinates</A> below. </P>
 <A NAME="distort_noop"></A>
 <H4>No-Op Distortions</H4>
 
-The above example shows the results of doing a no-op distort. That is running
+The above example shows the results of doing a no-op distort. That is, running
 an image through distort (for some secondary effect) but without any actual
 distort involved (just a 1 to 1 mapping of pixels). </P>
 
@@ -1471,7 +1471,7 @@ enlarging an images area, or tiling images (using <A HREF="../misc/#virtual"
 data.  See <A HREF="../canvas/#tile_distort" >Tiling using Virtual Pixels via
 Distort</A> for examples of this.</P>
 
-That is using the <A HREF="#distort" >Distort Operator</A> for its secondary
+That is, using the <A HREF="#distort" >Distort Operator</A> for its secondary
 effects, such as multi-image virtual pixel tiling, image size enlarging or
 cropping, adding borders, or even translation (by integer or even sub-pixel
 amounts). None of which actually requires the image to be 'distorted' just
@@ -1821,7 +1821,7 @@ Here is a repeat the results of the above 'no-op' distort...
   distortion, and is needed for normal use. </P>
 
   If you want perfect 'no-op' distort for special purposes, then turn off EWA
-  resampling.  That is specify the 'no-op' filter "<CODE>-filter
+  resampling.  That is, specify the 'no-op' filter "<CODE>-filter
   Point</CODE>" to the above before the distort operator. </P>
 
 </I></FONT></TD></TR></TABLE></P>
@@ -1871,7 +1871,7 @@ The argument order shown above reflects the order of operations that are
 actually applied to the image.  <B>X,Y</B> to translate the 'center' of the
 transformations to the origin, <B>ScaleX,ScaleY</B> the image,  <B>Angle</B>
 rotate the image, then <B>NewX,NewY</B> translate the 'center' to these
-coordinates.  That is the operator really represents 4 internal distortion
+coordinates.  That is, the operator really represents 4 internal distortion
 operations all applied simultaneously as a single distortion. Though to us
 humans only 3 distinct distortions are involved. </P>
 
@@ -2275,12 +2275,12 @@ a '<I>Pixel Positions</I>' (for example when <A HREF="../crop/#crop"
 with coordinates in mathematical '<I>Image Coordinates</I>'. </P>
 
 What you need to remember is that pixels in an image are not a 'point' but
-actually an 'area', 1 pixel unit in size.   That is a pixel located at
+actually an 'area', 1 pixel unit in size.   That is, a pixel located at
 <CODE>10,10</CODE> defines a square area of color, going from <CODE>10</CODE>
 units down/across to <CODE>11</CODE> units down and across.
 
 In terms of <I>image coordinates</I> the 'pixel' center is actually located at
-<CODE>10.5,10.5</CODE> .  That is 0.5 needs to be added when you are
+<CODE>10.5,10.5</CODE> .  That is, 0.5 needs to be added when you are
 distorting an image to move the center of a 'pixel' to a specific location. </P>
 
 So to re-position the corner 'pixels' of an image you would thus need
@@ -2522,7 +2522,7 @@ more radical changes to the image, including rotations, and translations. </P>
 Of course the <A HREF="../text/#annotate" >Annotate Text</A> operator can also
 skew actual text in this same way, though only with changes to the angle.
 That operator will not scale or enlarge the text in some particular direction.
-That is to say it can rotate a 'vector' but it can not stretch it longer or
+That is, to say it can rotate a 'vector' but it can not stretch it longer or
 shorter.  See <A HREF="../misc/#annotate" >Annotate Argument Usage</A> for
 a table of examples. </P>
 
@@ -2572,7 +2572,7 @@ Projection</CODE>'. </P>
 
 These numbers in an Affine Projection is the coefficients used for the
 <A HREF="#forward_mapping" >Forward Mapping</A> of points in the source image
-to the destination image. That is they are the mathematical values used to map
+to the destination image. That is, they are the mathematical values used to map
 a source image <CODE>x,y</CODE> to a destination image <CODE>i,j</CODE>. </P>
 
 The 6 floating point arguments are (in the order to be given)...
@@ -2837,7 +2837,7 @@ Here is the command to generate the 3-D shadow from this 'standing shape'
 The above does quite a few steps to achieve the result shown. The trickiest
 however is that first line.  This flips the image then does a 'distort flip'
 back again.  The result of this is that the bottom row is now located so that
-it has a value of Y=0 on the virtual canvas.  That is the whole image was
+it has a value of Y=0 on the virtual canvas.  That is, the whole image was
 given a negative offset to position it so that the bottom row passes through
 the origin of the virtual canvas. </P>
 
@@ -2857,7 +2857,7 @@ negative virtual canvas offsets, so caution is advised if you plan to view or
 save the intermediate processing images. </P>
 
 The only problem with this shadowing effect is that it is a 'universal blur'.
-That is the shadow is not realistic.   In reality the shadow should be sharp
+That is, the shadow is not realistic.   In reality the shadow should be sharp
 where it joins the 'standing shape' and getting more blurry as the shadow gets
 further way.  This however can be done using a <A HREF="../mapping/#blur"
 >Variable Blur Mapping</A>, such as used in <A HREF="../fonts/#var_blur"
@@ -2928,7 +2928,7 @@ controls, for color determination, though they do so in a very different way.
 The <A HREF="../resize/" >Resize</A> is a simplified (and much more common)
 image distortion operation, allowing you to make many optimizations.  It is
 orthogonally aligned, allowing you to use a 2 pass orthogonal image filtering
-method in resize.  That is to say it first sizes in one dimension, then in the
+method in resize.  That is, to say it first sizes in one dimension, then in the
 other, using an intermediate temporary image. </P>
 
 Also as the scaling factor is constant over the whole destination image, with
@@ -2979,7 +2979,7 @@ two dimensions, making this a direct resize alternative.
   will only accept two numbers as arguments, which are treated as the final
   integer size for the resulting image.  At this time they will not accept an
   actual geometry argument with its various resize control flags, that modify
-  the final image size.  That is flags such as percentage, only resize
+  the final image size.  That is, flags such as percentage, only resize
   larger/smaller, or even aspect ratio preservation is not available. </P>
 
   It is left to maintainers of those API's to add such support for this
@@ -3533,7 +3533,7 @@ HREF="#perspective" >Perspective</A></CODE>' can also be handled by
 
 As before, these numbers represent the coefficents used for the <A
 HREF="#forward_mapping" >Forward Mapping</A> of points in the source image to
-the destination image.  That is they are the mathematical values used to map
+the destination image.  That is, they are the mathematical values used to map
 a source image <CODE>x,y</CODE> to a destination image <CODE>i,j</CODE>. </P>
 
 
@@ -3789,7 +3789,7 @@ away', nor does it try to keep lines straight.  What it tries to do is keep
 all the spacings between the lines constant, but this results in the diagonal
 line becomming curved. </P>
 
-That is it preserves the distance ratios along any given line. That is the
+That is, it preserves the distance ratios along any given line. That is, the
 relative lengths each line segment remains the same along the whole length of
 the line, even though the line itself may be bent, curved, or shortened as
 a whole.  That means the grid spacing in the above example remains constant
@@ -3798,13 +3798,13 @@ still about the same size as the distorted square at the bottom-left.  The
 image remains 'flat looking', just distorted into a different shape. </P>
 
 Note that (forward) bilinear does ensure that any horizontal or vertical lines
-in the original image will remain straight in the final image.  That is it
+in the original image will remain straight in the final image.  That is, it
 will take an orthogonally aligned rectangle and transform it into the specified
 quadrilateral, so that each of the sides of the original rectangle remains
 straight with constant scaling over the whole line. </P>
 
 It is this aspect of the distort that makes a '<CODE>BilinearForward</CODE>'
-distortion useful in much more complex 'grid' distortions. That is because two
+distortion useful in much more complex 'grid' distortions. That is, because two
 neighbouring 'quadrilaterals' even though they may be distorted very
 differently will still correctly line up correctly edge-to-edge. </P>
 
@@ -3852,7 +3852,7 @@ spaced between the left and right edges.  All in did was to simply vertically
 compress the height of the image linearly along its length. </P>
 
 This aspect of a '<CODE>BilinearForward</CODE>' distortion makes it also known
-as a 'Trapezoidal' distortion. That is simply compress the image linearly in
+as a 'Trapezoidal' distortion. That is, simply compress the image linearly in
 one direction, when only one direction being scaled.  that compression
 direction can even be angled, rather than aligned along one axis. </P>
 
@@ -4269,7 +4269,7 @@ HREF="#bilinear_reverse" >BilinearReverse</A></CODE>' distortion, it needs
 a minimum of 4 coordinates. For example...
 
 Basically this is exactly the same as the order '<CODE>1</CODE>' equations but
-with 1 extra term added to the polynomial equations.  That is as each equation
+with 1 extra term added to the polynomial equations.  That is, as each equation
 now has 4 terms per axis, with 4 constants, so you now need at least
 4 coordinate pairs, to allow IM to determine those constants.  </P>
 
@@ -5021,7 +5021,7 @@ examples of use).  </P>
 </I></FONT></TD></TR></TABLE></P>
 
 The '<I>CenterX,Y</I>' arguments are most useful is positioning the center of
-the resulting image at a sub-pixel offset.  That is whether the center is at
+the resulting image at a sub-pixel offset.  That is, whether the center is at
 the boundary of a pixel (whole number) or the center of a pixel (with 0.5
 offsets). Of course it also determines the location of the virtual canvas
 'layer'. </P>
@@ -5649,7 +5649,7 @@ the other.  Very versatile.</P>
 The above coefficients (<I>A</I>, <I>B</I>, <I>C</I>, and <I>D</I>) are
 designed to work with a 'normalized' radius that is half the minimum width or
 height of the image (like the '0' radius setting for <A HREF="#polar" >Polar
-Distort</A>.  That is they are image size independent.  As such you can use
+Distort</A>.  That is, they are image size independent.  As such you can use
 the same set of values for any image that a specific camera generates,
 regardless of its quality size (camera setting), or if you resized the image
 smaller. </P>
@@ -6053,7 +6053,7 @@ What may not be so noticable is that the parts on the far-side of the control
 points are also compressed, so that as you get further away, the control
 points have less influence on the result. </P>
 
-That is this distortion generates a 'localized' distortion. </P>
+That is, this distortion generates a 'localized' distortion. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR VALIGN=bottom><TD width="100%" ALIGN=justify>
