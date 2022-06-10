@@ -87,7 +87,7 @@ For details see <A HREF="../IMv7_Scripting.txt" >IMv7_Scripting.txt</A>. </P>
 What is really needed is for the command line API to be re-written in such as
 way as to allow...
 <UL>
-<LI>argument processing, using pure argument order (IMv6 mixes this up a bit)
+<LI>argument processing, using pure argument order (IMv7 mixes this up a bit)
 <LI>the ability to read all arguments from a file (magick scripts!).  This
     could allow you to call IM, such as from PHP, without needing to do so
     though a shell wrapper.  That is, start IM as a piped open, and feed the
@@ -636,7 +636,7 @@ when applied to, or compared against, some specific image. That is, colors must
 be saved, not only with the 'values' but also the 'colorspace' of those values
 (unless undefined) </P>
 
-This is also related to the fact that IM currently (IMv6 that is) stores image
+This is also related to the fact that IM currently (IMv7 that is) stores image
 by default as RGB colorspace when it is in fact really SRGB colorspace. Most
 image formats should actually read/save images by default to SRGB, unless
 specifically declared otherwise. GIF images especially should only save and
@@ -646,7 +646,7 @@ sometimes RGB (mathematical images and gradients). </P>
 Continuing this problem... is that -colorspace SRGB of an image (currently
 marked as RGB) actually converts from SRGB to linear RGB for processing
 (marked as SRGB internally). EG: the colorspace definations of RGB and SRGB in
-IMv6 is reversed! This should not be changed in IMv6, as it it too throughly
+IMv7 is reversed! This should not be changed in IMv7, as it it too throughly
 embedded, but it should only be fixed in IMv7. </P>
 
 The problem with this is that 'draw' functions is designed to do its
@@ -663,7 +663,7 @@ colorspace, a image converted to linear RGB colorspace and drawn to will have
 the applied named colors become out 'wrong', when the drawn image gets
 converted back to SRGB (using -colorspace RGB) for saving! </P>
 
-In IMv6 direct drawing with named colors works, but only because draw is
+In IMv7 direct drawing with named colors works, but only because draw is
 drawing directly to a SRGB colorspace image, and thus getting incorrect
 anit-aliased results. Drawing correctly in linear RGB gets the anti-alising
 right but the colors wrong. A loose-loose situation at present. </P>
