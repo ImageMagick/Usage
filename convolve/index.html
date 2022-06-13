@@ -1420,7 +1420,7 @@ original image.  Especially when applying a very strong blur.  For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick face.png -morphology Convolve Gaussian:0x3  face_strong_blur.png
+  magick face.png -morphology Convolve Gaussian:0x3 face_strong_blur.png
   magick face.png face_strong_blur.png \
          -compose Blend -define compose:args=60,40% -composite \
          face_soft_blur.png
@@ -1680,7 +1680,7 @@ To get the 'negative' slopes you will need to negate the kernel, by using the
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shapes.gif -define convolve:scale='-1!' \
-         -morphology Convolve Sobel  shapes_sobel_neg.gif
+         -morphology Convolve Sobel shapes_sobel_neg.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shapes_sobel_neg.gif"
      ><IMG SRC="shapes_sobel_neg.gif"         WIDTH=80 HEIGHT=80
@@ -1702,7 +1702,7 @@ results remain 'unclipped' by the 'black' and 'white' limits of the image.
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shapes.gif -define convolve:scale='50%!' -bias 50% \
-         -morphology Convolve Sobel  shapes_sobel_bias.gif
+         -morphology Convolve Sobel shapes_sobel_bias.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shapes_sobel_bias.gif"
      ><IMG SRC="shapes_sobel_bias.gif"         WIDTH=80 HEIGHT=80
@@ -1717,7 +1717,7 @@ value of the results with a little trickiness..
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick shapes.gif -define convolve:scale='50%!' -bias 50% \
-         -morphology Convolve Sobel  -solarize 50% -level 50,0% \
+         -morphology Convolve Sobel -solarize 50% -level 50,0% \
          shapes_sobel_abs.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="shapes_sobel_abs.gif"
@@ -1780,7 +1780,7 @@ And here is its effect.. showing how it highlights the edges of the image.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick face.png -bias 50% -morphology Convolve LoG:0x2  face_log.png
+  magick face.png -bias 50% -morphology Convolve LoG:0x2 face_log.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/face.png"
      ><IMG SRC="../images/face.png"               WIDTH=80 HEIGHT=80
@@ -1877,7 +1877,7 @@ The applied results are also the very similar.
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR VALIGN=bottom><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick face.png -bias 50% -morphology Convolve DoG:0,1.8,2.4  face_dog.png
+  magick face.png -bias 50% -morphology Convolve DoG:0,1.8,2.4 face_dog.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_dog.png"
      ><IMG SRC="face_dog.png"         WIDTH=80 HEIGHT=80
@@ -1905,7 +1905,7 @@ filter value of sigma2=2 </P>
 
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR VALIGN=bottom><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick face.png -bias 50% -morphology Convolve DoG:0,0,2  face_dog_unity.png
+  magick face.png -bias 50% -morphology Convolve DoG:0,0,2 face_dog_unity.png
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="face_dog_unity.png"
      ><IMG SRC="face_dog_unity.png"         WIDTH=80 HEIGHT=80
@@ -1931,7 +1931,7 @@ For example radius=1 (for a 3x3 kernel) and a sigma of 1 will generate...
 <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=kernel_laplacian_isotropic.txt>
   magick face.png -define morphology:showKernel=1 -bias 50% \
-          -morphology Convolve DoG:1,0,1  face_laplacian_isotropic.png
+          -morphology Convolve DoG:1,0,1 face_laplacian_isotropic.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_isotropic.png"
      ><IMG SRC="face_laplacian_isotropic.png"
@@ -2047,7 +2047,7 @@ normalized kernel with a <A HREF="#kernel_bias" >Output Bias</A>.
   magick xc: -define morphology:showKernel=1 -precision 2 \
          -morphology Convolve:0 Laplacian:0 null:
   magick face.png -define convolve:scale='!' -bias 50% \
-         -morphology Convolve Laplacian:0   face_laplacian_0.png
+         -morphology Convolve Laplacian:0 face_laplacian_0.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_0.png"
      ><IMG SRC="face_laplacian_0.png"         WIDTH=80 HEIGHT=80
@@ -2145,7 +2145,7 @@ The 4 neighbour Laplacian. Also very commonly used.
   magick xc: -define morphology:showKernel=1 -precision 2 \
          -morphology Convolve:0 Laplacian:1 null:
   magick face.png -define convolve:scale='!' -bias 50% \
-         -morphology Convolve Laplacian:1   face_laplacian_1.png
+         -morphology Convolve Laplacian:1 face_laplacian_1.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_1.png"
      ><IMG SRC="face_laplacian_1.png"         WIDTH=80 HEIGHT=80
@@ -2175,7 +2175,7 @@ laplacian. </P>
   magick xc: -define morphology:showKernel=1 -precision 2 \
         -morphology Convolve:0 Laplacian:2 null:
   magick face.png -define convolve:scale='!' -bias 50% \
-         -morphology Convolve Laplacian:2   face_laplacian_2.png
+         -morphology Convolve Laplacian:2 face_laplacian_2.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_2.png"
      ><IMG SRC="face_laplacian_2.png"         WIDTH=80 HEIGHT=80
@@ -2202,7 +2202,7 @@ laplacian. </P>
   magick xc: -define morphology:showKernel=1 -precision 2 \
               -morphology Convolve:0 Laplacian:3 null:
   magick face.png -define convolve:scale='400%!' -bias 50% \
-         -morphology Convolve Laplacian:3    face_laplacian_3.png
+         -morphology Convolve Laplacian:3  face_laplacian_3.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_3.png"
      ><IMG SRC="face_laplacian_3.png"         WIDTH=80 HEIGHT=80
@@ -2232,7 +2232,7 @@ above) to see make any result visible. </P>
   magick xc: -define morphology:showKernel=1 -precision 2 \
          -morphology Convolve:0 Laplacian:5 null:
   magick face.png -define convolve:scale='!' -bias 50% \
-         -morphology Convolve Laplacian:5   face_laplacian_5.png
+         -morphology Convolve Laplacian:5 face_laplacian_5.png
 </samp></pre></TD></TR></TABLE></TD><TD ALIGN=center ROWSPAN=2>
   <A HREF="face_laplacian_5.png"
      ><IMG SRC="face_laplacian_5.png"         WIDTH=80 HEIGHT=80
