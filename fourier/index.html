@@ -191,7 +191,7 @@ HREF="../scripts/im_profile" >im_profile</A></CODE>"), you will find that it
 looks rather like a wave.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick holocaust_tn.gif -colorspace gray miff:- |\
     im_profile -s - image_profile.gif
@@ -209,7 +209,7 @@ If the fluctuations were more regular in spacing and amplitude, you would get
 something more like a wave pattern, such as...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 20x150 gradient: -rotate 90 \
           -function sinusoid 3.5,0,.4   wave.gif
@@ -231,7 +231,7 @@ However if you were to add more waves together you can make a pattern that is
 even closer to the one from the image.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 1x150 gradient: -rotate 90 \
           -function sinusoid 3.5,0,.25,.25     wave_1.png
@@ -429,7 +429,7 @@ transform to get back the original image. Then we will compare the results to
 see the level of quality produced. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR2OUT OUT=lena_roundtrip_cmp.txt>
   time magick lena.png -fft -ift lena_roundtrip.png
 
@@ -466,7 +466,7 @@ Lets take a closer look at the FFT images that were generated in the above
 round trip.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena.png -fft    +depth +adjoin lena_fft_%d.png
 </samp></pre></TD></TR></TABLE>
@@ -547,7 +547,7 @@ The best way of saving intermediate images into a single file is to use the
 "<CODE><A HREF=../files/#miff" >MIFF</A></CODE>", file format...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena.png -fft  +depth lena_fft.miff
 </samp></pre></TD></TR></TABLE>
@@ -558,7 +558,7 @@ HREF="../option_link.cgi#write" >-write</A></CODE>"  (See <A
 HREF="../files/#write" >Writing Images</A>)...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena.png -fft  +depth \
           \( -clone 0 -write lena_magnitude.png +delete \) \
@@ -580,7 +580,7 @@ And finally we again read in the two images again, so as to magick it back
 into a normal 'spatial' image...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena_magnitude.png lena_phase.png -ift lena_restored.png
 </samp></pre></TD></TR></TABLE>
@@ -621,7 +621,7 @@ Finally, lets try reconstructing an image from just its magnitude component or
 just its phase component. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena_fft_0.png  -size 128x128 xc:'gray(50%)' \
                                                   -ift lena_magitude_only.png
@@ -672,7 +672,7 @@ This is done by applying a strong <A HREF="../transform/#evaluate_log"
 >Normalized</A> 'magnitude' image.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena_fft_0.png -auto-level -evaluate log 10000 \
           lena_spectrum.png
@@ -704,7 +704,7 @@ the pattern of the images frequency spectrum. </P>
 Alternatively you can use the following small shell script, to calculate
 a <I>log scaling factor</I> to use for the specific magnitude image.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT IMAGE=lena_spectrum_auto.png>
   scale=`magick lena_fft_0.png -auto-level \
           -format "%[fx:exp(log(mean)/log(0.5))]" info:`
@@ -724,7 +724,7 @@ However remember that you can not use a spectrum image, for the inverse
 "<CODE><A HREF="../option_link.php#ift" >-ift</A></CODE>" transform as it will
 produce an overly bright image.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena_spectrum.png lena_fft_1.png -ift lena_roundtrip_fail.png
 </samp></pre></TD></TR></TABLE></P>
@@ -772,7 +772,7 @@ ImageMagick</A> to generate another 'round trip' conversion of an image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE HDRI ERR2OUT OUT=lena_roundtrip_hdri_cmp.txt>
   # HDRI version of IM used
   time magick lena.png -fft -ift lena_roundtrip_hdri.png
@@ -851,7 +851,7 @@ Real/Imaginary images.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE HDRI ERR2OUT OUT=lena_roundtrip_ri_cmp.txt>
   # HDRI version of IM used
   time magick lena.png   +fft +ift   lena_roundtrip_ri.png
@@ -881,7 +881,7 @@ You must use a HDRI version when you use the plus forms to generate
 Real/Imaginary FFT images.  If you don't, about 1/2 the values will be zero,
 resulting in an image that looks 'dirty'.  For example...
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   # non-HDRI Q16 version of IM used  -- THIS IS BAD
   magick lena.png   +fft +ift   lena_roundtrip_ri_bad.png
@@ -901,7 +901,7 @@ restore the final image.  For example, here is what happens if we substitute a
 'black' image for one of the components.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE HDRI>
   # HDRI version of IM used
   magick lena.png +fft -delete 1 \
@@ -948,7 +948,7 @@ Lets demonstrate some of these properties. </P>
 First lets simply take a constant color image and get its magnitude.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x128 xc:gold constant.png
   magick constant.png -fft +delete constant_magnitude.png
@@ -975,7 +975,7 @@ a sine wave.  In other words this value is just the FFT constant component!
 To see this single pixel more clearly lets also magnify that area of the
 image...
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick constant_magnitude.png -gravity center -extent 5x5 \
            -scale 2000% constant_dc_zoom.gif
@@ -1019,7 +1019,7 @@ averaged, or resized the image down to a single pixel or color. </P>
 For example lets extract the DC pixel from the FFT of the "Lena" image.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
 <c>  magick lena.png -fft +delete lena_magnitude.png
   magick lena_magnitude.png -gravity center -extent 1x1 \
@@ -1051,7 +1051,7 @@ colors.  </P>
 For example lets replace that 'dark pink' DC pixel with some other color
 such as the more orange color 'tomato'...
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena.png -fft \
           \( -clone 0  -draw "fill tomato  color 64,64 point" \) \
@@ -1082,7 +1082,7 @@ Next, lets take a look at the spectrum from a single sine (or cosine) wave
 image with 4 cycles across the image </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x129 gradient: -chop 0x1 -rotate 90 -evaluate sine 4 \
           sine4.png
@@ -1137,7 +1137,7 @@ has 3 dots, but the dots are further apart.  In this case the side dots are
 spaced 16 pixels to the left and right sides of the center dot.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x129 gradient: -chop 0x1 -rotate 90 -evaluate sine 16 \
           -write sine16.png -fft -delete 1 \
@@ -1185,7 +1185,7 @@ while preserving the overall larger aspects of the image. </P>
 Lets take a closer look at these three 'frequencies' by plotting their original
 magnitudes (not the logarithmic spectrum).
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick sine16.png -fft -delete 1  miff:- |\
      im_profile - sine16_magnitude_pf.png
@@ -1253,7 +1253,7 @@ add 'dots' with the appropriate magnitude, and phase. </P>
 
 For example...
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x128  xc:black \
           -draw 'fill gray(50%)  color 64,64 point' \
@@ -1339,7 +1339,7 @@ Next, lets look at the spectrum of white rectangle of width 8 and height 16
 inside a black background.  </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 WIDTH="80%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 WIDTH="80%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 8x16 xc:white -gravity center \
           -gravity center -background black -extent 128x128 rectangle.png
@@ -1368,7 +1368,7 @@ Now, lets rotate the rectangle by 45 degrees. We find that the spectrum is
 also rotated in the same direction by 45 degrees. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rectangle.png -rotate 45 -gravity center -extent 128x128 \
           -write rect_rot45.png -fft -delete 1 \
@@ -1389,7 +1389,7 @@ of some rotated object will also be rotated in its Fourier Transform.  </P>
 However if we now move the rectangle...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick rectangle.png -rotate 45  -geometry +30+20 -extent 128x128 \
           -write rect_rot45off.png -fft -delete 1 \
@@ -1422,7 +1422,7 @@ pattern, in one case with diameters of 12 (radius 6) and in another case
 with diameter of 24 (radius 12). </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x128 xc:black -fill white  \
           -draw "circle 64,64 64,70" -write circle6.png -fft -delete 1 \
@@ -1475,7 +1475,7 @@ Next, lets look at the spectrum from two images, each with a white Gaussian
 circular pattern having sigmas of 8 and 16, respectively </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x128 xc:black -fill white \
           -draw "point 64,64" -gaussian-blur 0x8 -auto-level \
@@ -1510,7 +1510,7 @@ circular pattern having sigmas of 8 and 16, respectively </P>
 </DIV></P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x128 xc:black -fill white \
           -draw "point 64,64" -gaussian-blur 0x16 -auto-level \
@@ -1568,7 +1568,7 @@ Next, lets transform an image containing just a set of grid lines spaced 16x8
 pixels apart.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 16x8 xc:white -fill black \
           -draw "line 0,0 15,0" -draw "line 0,0 0,7" \
@@ -1641,7 +1641,7 @@ Lena image using an exponent of 0.9 and then decrease the contrast using an
 exponent of 1.1. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena.png -fft \
           \( -clone 0 -evaluate pow 0.9 \) -delete 0 \
@@ -1706,7 +1706,7 @@ So lets try doing this with two sizes of circular filters, one of diameter 40
 (radius 20) and the other of diameter 28 (radius 14). </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 128x128 xc:black -fill white \
           -draw "circle 64,64 44,64" circle_r20.png
@@ -1776,7 +1776,7 @@ So lets do the latter and use two Gaussian blurred circles to remove
 most of the sever 'ringing' effects.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick circle_r20.png -blur 0x4 -auto-level gaussian_r20.png
   magick lena.png -fft \
@@ -1863,7 +1863,7 @@ So lets apply high pass filters to the Lena image  using a circle image.
 And then again using a purely gaussian curve. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick circle_r14.png -negate circle_r14i.png
   magick lena.png -fft \
@@ -1927,7 +1927,7 @@ The simplest way to sharpen an image is to high pass filter it (without
 the normalization stretch) and then blend it with the original image.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick lena.png -fft \
        \( -size 128x128 xc: -draw "point 64,64" -blur 0x14 -auto-level \
@@ -1971,7 +1971,7 @@ dither-like pattern. First we transform the clown image to create its
 magnitude and phase images. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_orig.jpg -fft \
           \( +clone  -write clown_phase.png +delete \) +delete \
@@ -2016,7 +2016,7 @@ When finished editing I can extract the areas I colored, by extracting
 a difference image against the unedited version. Like this...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_spectrum_edited.png clown_spectrum.png \
           -compose difference -composite \
@@ -2041,7 +2041,7 @@ original phase image to transform back to the spatial domain. We display the
 original image next to it for comparison </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_magnitude.png clown_spectrum_mask.png \
           -compose multiply -composite \
@@ -2064,7 +2064,7 @@ A very good result.  But we can do even better. </P>
 As you saw in the previous examples, simple 'circles' are not particularly
 friendly to a FFT image, so lets blur the mask slightly...
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_spectrum_mask.png \
           -blur 0x5 -level 50x100%  clown_mask_blurred.png
@@ -2079,7 +2079,7 @@ friendly to a FFT image, so lets blur the mask slightly...
 
 And filter the clown, this time re-generating the FFT images in memory.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_orig.jpg -fft \
           \( -clone 0 clown_mask_blurred.png -compose multiply -composite \) \
@@ -2099,7 +2099,7 @@ adjusting that mask to fit the 'star' shapes better. </P>
 We can even take the difference between the original and the result to create
 an image of the areas where noise was removed.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick clown_orig.jpg clown_filtered_2.png -compose difference \
           -composite -normalize clown_noise.png
@@ -2117,7 +2117,7 @@ contains an irregular pattern of horizontal and vertical stripes. </P>
 Again we extract a grey-scale spectrum image, just as we did before.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick twigs.jpg -fft +delete -colorspace gray \
           -auto-level -evaluate log 100000 twigs_spectrum.png
@@ -2139,7 +2139,7 @@ Again we mask out the parts using an image editor, this time using a 'blue'
 color (it really doesn't matter which color is used)...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick twigs_spectrum_edited.png twigs_spectrum.png \
           -compose difference -composite \
@@ -2163,7 +2163,7 @@ Now we again multiply the mask with the FFT magnitude image, and reconstruct
 the image.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick twigs.jpg -fft \
           \( -clone 0 twigs_spectrum_mask.png -compose multiply -composite \) \
@@ -2182,7 +2182,7 @@ And we can take the difference between the original and the result to create
 an image of the areas where noise was removed. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick twigs.jpg twigs_filtered.png -compose difference -composite \
           -normalize twigs_noise.png

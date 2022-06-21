@@ -186,7 +186,7 @@ For example, this converts JPG images into GIF thumbnails in a
 "<CODE>thumbs</CODE>" sub-directory that was just created.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   mkdir thumbs
   magick mogrify  -format gif -path thumbs -thumbnail 100x100 *.jpg
@@ -268,7 +268,7 @@ Specifically you should note... <DL>
     not involve transparency.
 
     <DIV ALIGN=center>
-    <table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+    <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
     <TR><TD><pre class="bg-light text-dark mx-4"><samp>
         -strip  -quality 95  PNG8:thumbnail.png
     </samp></pre></TD></TR></TABLE>
@@ -318,7 +318,7 @@ it.  </P>
 You can also remove the profiles from your images with the IM commands...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick input.jpg  -strip output.jpg
 
@@ -342,7 +342,7 @@ is called "<CODE><A HREF="../option_link.cgi?thumbnail"
 
 For example...
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=240x180 image.jpg -thumbnail 120x90 thumbs/image.gif
 
@@ -412,7 +412,7 @@ JPEG images. </P>
 As such the recommended way of resizing ANY input image format is now... </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=240x180 input.img'[120x90]' \
           -strip  output_thumbnail.gif
@@ -435,7 +435,7 @@ the 250 pixel width limit) to preserve the aspect ratio of the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=500x180  hatching_orig.jpg  -auto-orient \
           -thumbnail 250x90   -unsharp 0x.5  thumbnail.gif
@@ -501,7 +501,7 @@ command line shell.  This prevents 'line limit overflow errors' on directories
 containing a huge number of images.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick mogrify  -format gif -define jpeg:size=500x180 -auto-orient \
                 -thumbnail 250x90 -unsharp 0x.5  '*.jpg'
@@ -560,7 +560,7 @@ Well that is the default meaning for a resize geometry setting. </P>
 However I prefer not to enlarge images which already fit such a box.  For that
 you need to add a "<CODE>&gt;</CODE>" to the geometry string.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=200x200 hatching_orig.jpg \
           -thumbnail '100x100>' rectangle.gif
@@ -593,7 +593,7 @@ be sure) to make the final thumbnail image always 100x100 pixels in size. </P>
 There are a number of ways to do this, and as of IM v6.3.2 the best way is
 using the <A HREF="../crop/#extent" >Extent Operator</A>.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
           -background skyblue -gravity center -extent 100x100 pad_extent.gif
@@ -609,7 +609,7 @@ using the <A HREF="../crop/#extent" >Extent Operator</A>.
 As of IM version 6.2.5, you can also use a <A HREF="../crop/#crop_viewport"
 >Viewport Crop</A>, and flatten the result onto a background color.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
           -gravity center  -crop 120x120+0+0\! \
@@ -632,7 +632,7 @@ Another method to pad out an image is to overlay the thumbnail onto a
 background image (actual image, solid color or tiled canvas) that is the right
 size, in this case the 128x128 "<CODE>granite:</CODE>" built-in image. </P>
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=200x200 hatching_orig.jpg -thumbnail '100x100>' \
           granite: +swap -gravity center -composite pad_compose.gif
@@ -670,7 +670,7 @@ the image that overflows the desired size.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=200x200 hatching_orig.jpg  -thumbnail 100x100^ \
           -gravity center -extent 100x100  cut_to_fit.gif
@@ -715,7 +715,7 @@ much.  </P>
 For example...
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=200x200 hatching_orig.jpg  -thumbnail 10000@ \
           -gravity center -background skyblue -extent 100x100  area_fit.gif
@@ -774,7 +774,7 @@ From the IM Discussion Forums on <A HREF="../forum_link.cgi?f=1&t=20601"
 External Squaring can be done using <A HREF="../layers/#mosaic" >Mosaic</A> to
 create a larger background canvas using a rotated copy of the image.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( +clone -rotate 90 +clone -mosaic +level-colors white \) \
@@ -791,7 +791,7 @@ a smaller canvas.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( +clone +level-colors white \
@@ -815,7 +815,7 @@ External (padding) square...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif  -virtual-pixel white -set option:distort:viewport \
      "%[fx:max(w,h)]x%[fx:max(w,h)]-%[fx:max((h-w)/2,0)]-%[fx:max((w-h)/2,0)]" \
@@ -832,7 +832,7 @@ Internal (cropped) square...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif   -set option:distort:viewport \
      "%[fx:min(w,h)]x%[fx:min(w,h)]+%[fx:max((w-h)/2,0)]+%[fx:max((h-w)/2,0)]" \
@@ -852,7 +852,7 @@ strings or profiles) the image may have.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -set option:size '%[fx:min(w,h)]x%[fx:min(w,h)]' \
           xc:none +swap -gravity center -composite square_internal_2.gif
@@ -989,7 +989,7 @@ level web page of a web site, for that whole site.  That image is a special
 multi-resolution image format and can be created as follows. </P>
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick image.png -alpha off -resize 256x256 \
           -define icon:auto-resize="256,128,96,64,48,32,16" \
@@ -1013,7 +1013,7 @@ images as small and as well defined as posible. </P>
 Here is an example of manually resizing images for an ICO file format.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick image.png  -background white \
           \( -clone 0 -resize 16x16 -extent 16x16 \) \
@@ -1032,7 +1032,7 @@ location of the link thumbnail image by adding the following HTML tag to the
 headers of your pages...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   &lt;LINK REL="icon" HREF="/path/to/favicon.ico" type="image/x-icon"&gt;
   &lt;LINK REL="shortcut" HREF="/path/to/favicon.ico" type="image/x-icon"&gt;
@@ -1127,7 +1127,7 @@ For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           -background Lavender -fill navy -font Candice -pointsize 24 \
@@ -1148,7 +1148,7 @@ around the text to ensure it always remains readable.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -define jpeg:size=400x400  hatching_orig.jpg  -resize '120x200>' \
       \( +clone -sample 1x1\! -alpha transparent -sample 1000x200\! \
@@ -1193,7 +1193,7 @@ basically created with the one purpose of highlighting the edges of
 rectangular images to form a raised button.  It is a simple, fast, and
 effective thumbnail transformation.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif  -raise 8   raised_button.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -1209,7 +1209,7 @@ effective thumbnail transformation.
 The same operator has a 'plus' form that can be used to make a sunken
 highlighting effect.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif  +raise 8   sunken_button.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -1226,7 +1226,7 @@ With some trickiness the "<CODE><A HREF="../option_link.cgi?raise"
 raised button.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -fill gray50 -colorize 100% \
           -raise 8 -normalize -blur 0x8  bubble_overlay.png
@@ -1262,7 +1262,7 @@ around an images.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           -bordercolor black -border 3   -bordercolor white -border 2 \
@@ -1288,7 +1288,7 @@ around an images.
 In a similar way the "<CODE><A HREF="../option_link.cgi?frame"
 >-frame</A></CODE>" operator makes it easy to add a frame around the image
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif   -mattecolor peru  -frame 9x9+3+3  framed.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
@@ -1313,7 +1313,7 @@ filenames, disk size, and dimensions, or an user specified string.  </P>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
 Here is a simple use of "<CODE>magick montage</CODE>" to generate a framed thumbnail.
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick montage -define jpeg:size=240x200  -label '%c'  hatching_orig.jpg \
           -frame 6  -geometry '120x100>'  montage_simple.gif
@@ -1335,7 +1335,7 @@ HREF="../formats/#jpg_non-im" >Non-IM JPEG Processing</A> for more details.
 Even with just "<CODE>magick montage</CODE>" you can get really fancy with your
 thumbnail generation.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick montage -define jpeg:size=400x180  -label '%c' hatching_orig.jpg \
           -thumbnail '200x90>' -geometry '130x100>'  -mattecolor peru \
@@ -1365,7 +1365,7 @@ provides a simple means to add a blurry edge around an image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set \
           -background none  -vignette 0x4  vignette.png
@@ -1383,7 +1383,7 @@ a true transparent 'Feathering' of an image's edges.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -virtual-pixel transparent -channel A \
           -morphology Distance Euclidean:1,10\! +channel feathered.png
@@ -1415,7 +1415,7 @@ corners of the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -virtual-pixel transparent \
           -channel A -blur 0x8  -level 50%,100% +channel  soft_edge.png
@@ -1448,7 +1448,7 @@ image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -virtual-pixel transparent -channel A \
           -blur 0x8  -threshold 50% +channel rounded_corner_blur.gif
@@ -1476,7 +1476,7 @@ HREF="../blur/#radial-blur" >Radial Blur</A> on just the alpha channel.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -virtual-pixel transparent \
           -channel A -radial-blur 0x45 +channel  radial_blur_edge.png
@@ -1493,7 +1493,7 @@ a circular like Vignette edge.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -virtual-pixel transparent \
           -channel A -radial-blur 0x100 +channel  radial_blur_vignette.png
@@ -1525,7 +1525,7 @@ that multiplys a full image mask to generate the appropriate result.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
      \( +clone  -alpha extract \
@@ -1554,7 +1554,7 @@ shape from each corner.  This will work with much larger images.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set  -compose DstOut \
       \( -size 20x15 xc:none -draw "polygon 0,0  0,14 19,0" \
@@ -1582,7 +1582,7 @@ making them transparent.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
     \( +clone -crop 16x16+0+0  -fill white -colorize 100% \
@@ -1619,7 +1619,7 @@ to get the best result.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set \
     \( +clone -distort DePolar 0 \
@@ -1645,7 +1645,7 @@ newspaper)...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick thumbnail.gif \
           \( +clone -alpha extract -virtual-pixel black \
@@ -1662,7 +1662,7 @@ corner.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick thumbnail.gif -bordercolor linen -border 8x8 \
           -background Linen  -gravity SouthEast -splice 10x10+0+0 \
@@ -1695,7 +1695,7 @@ For example, here an I add a semi-transparent colored shadow, to the thumbnail.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set \
           \( +clone -background navy -shadow 60x0+4+4 \) +swap \
@@ -1711,7 +1711,7 @@ For example, here an I add a semi-transparent colored shadow, to the thumbnail.
 
 But you can just as easily create soft fuzzy shadows, too.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -page +4+4 thumbnail.gif -alpha set \
           \( +clone -background navy -shadow 60x4+4+4 \) +swap \
@@ -1754,7 +1754,7 @@ thickness. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set \
           \( +clone -fill DarkSlateGrey -colorize 100% -repage +0+1 \) \
@@ -1791,7 +1791,7 @@ table. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           -bordercolor white  -border 6 \
@@ -1814,7 +1814,7 @@ A more complex version of the above was added to IM v6.3.1-6 as a "<CODE><A
 HREF="../option_link.cgi?polaroid" >-polaroid</A></CODE>" transformation
 operator.   For example...
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick thumbnail.gif -bordercolor snow -background black +polaroid \
           poloroid_operator.png
@@ -1838,7 +1838,7 @@ You can even add a "<CODE><A HREF="../option_link.cgi?caption"
 >-caption</A></CODE>", set your own shadow color, specify your own rotation
 (or none at all).
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -caption '%c' hatching_orig.jpg -thumbnail '120x120>' \
           -font Ravie -gravity center -bordercolor Lavender \
@@ -1863,7 +1863,7 @@ them up to produce a nice looking pile of photos.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick thumbnail.gif \
      -bordercolor white  -border 6 \
@@ -1913,7 +1913,7 @@ background color on which the image will be displayed.  The
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           -bordercolor white  -border 6 \
@@ -1942,7 +1942,7 @@ overlaying images onto a rotating canvas to create a photo spread.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 150x150 xc:none -background none \
           -fill white -stroke grey60 \
@@ -2011,7 +2011,7 @@ original image on top, we get a very nice looking frame.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR valign="top"><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( -clone 0 -resize 130% +level 20%x100% \) \
@@ -2045,7 +2045,7 @@ the generated frame.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( -clone 0 -resize 140x110\! \) \
@@ -2065,7 +2065,7 @@ blurred image to generate the extenal frame. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \( +clone \
              -set option:distort:viewport 150x120-15-15 \
@@ -2096,7 +2096,7 @@ use the dither to produce a cloth-like effect. </P>
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \( +clone  -blur 0x3 \
              -set option:distort:viewport '%[fx:w+30]x%[fx:h+30]-15-15' \
@@ -2120,7 +2120,7 @@ which turned out to work very well for this specific image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif  \( +clone \
              -set option:distort:viewport '%[fx:w+30]x%[fx:h+30]-15-15' \
@@ -2167,7 +2167,7 @@ part of the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \( +clone -blur 0x3 +level 20%,100% \) \
           \( +clone -gamma 0 -shave 10x10 \
@@ -2194,7 +2194,7 @@ using transparent frame, before overlaying that over the original image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \( +clone -shave 10x10 \
             -alpha set -mattecolor '#AAA6' -frame 10x10+3+4 \
@@ -2219,7 +2219,7 @@ preserve primary colors.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( +clone -shave 10x10 -fill gray50 -colorize 100% \
@@ -2238,7 +2238,7 @@ enhance primary colors, with a blurred frame lighting mask.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( +clone -shave 10x10 -fill gray50 -colorize 100% \
@@ -2277,7 +2277,7 @@ of possible sources for fancy shapes that could be used for picture framing.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 120x140 -gravity center -font WebDings label:Y \
           -negate -channel A -combine +channel -fill LightCoral -colorize 100% \
@@ -2298,7 +2298,7 @@ For other ways of generating an edge on an existing shaped image see the
 You can also optionally give the frame a little depth by using a <A
 HREF="../blur/#shadow" >Shadow Effect</A>.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick border_heart.png  \( +clone -background black -shadow 60x3+3+3 \) \
           -background none -compose DstOver -flatten   border_overlay.png
@@ -2315,7 +2315,7 @@ Now that we have a simple overlay frame, we can underlay the image in the
 center, underneath the frame by using a '<CODE><A HREF="../compose/dstover"
 >DstOver</A></CODE>' composition.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick border_overlay.png  thumbnail.gif \
           -gravity center -compose DstOver -composite   border_overlaid.jpg
@@ -2329,7 +2329,7 @@ Now you can generate a library of pre-prepared frames to use with your images,
 such as this <A HREF="../images/autumn_leaves.png" >Autumn Leaves Image</A>.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
     magick thumbnail.gif  autumn_leaves.png +swap \
             -gravity center -compose DstOver -composite \
@@ -2370,7 +2370,7 @@ Discussion <A HREF="../forum_link.cgi?f=1&t=19116" >Composite Overlay and
 Masking</A>.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
     magick thumbnail.gif  -gravity center -extent 90x90 \
             badge_overlay.png -composite     badge.png
@@ -2425,7 +2425,7 @@ about setting the background.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick -size 120x100 xc:none -fill none -stroke black -strokewidth 3 \
           -draw 'ellipse 60,50 30,45 0,360  ellipse 60,50 55,30 0,360' \
@@ -2449,7 +2449,7 @@ these semi-transparent pixels, so as to preserve and set them correctly. </P>
 To make it more interesting give this 'fuzzy' border a random bit of
 coloring.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick border_ellipse.png \
           \( -size 120x100 plasma:Tomato-FireBrick -alpha set -blur 0x1 \) \
@@ -2467,7 +2467,7 @@ Okay we have a border, but we still need some way of defining what should
 represent the outside and inside of the border.  Basically we need a mask to
 define these two areas.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 120x100  xc:none -fill black \
           -draw 'ellipse 60,50 30,45 0,360  ellipse 60,50 55,30 0,360' \
@@ -2491,7 +2491,7 @@ border colors (which also has a transparency mask involved). </P>
 For example...
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set  -gravity center -extent 120x100 \
           border_ellipse_mask.png  -compose DstIn -composite \
@@ -2530,7 +2530,7 @@ For example pre-define the outside as a DodgerBlue color...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick border_ellipse_mask.png -alpha extract -negate \
           -background DodgerBlue -alpha shape \
@@ -2547,7 +2547,7 @@ background image under the previously generated double masked image...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE RANDOM>
   magick border_double_masked.png \
           \( -size 120x100 plasma:Green-Green -blur 0x1 \) \
@@ -2607,7 +2607,7 @@ escapes</A>.  This is saved as a <A HREF="../draw/#mvg_file" >Magick Vector
 Graphics File</A> that can be directly used by draw in later commands.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE TXT2GIF>
   magick thumbnail.gif \
           -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] 15,15'\
@@ -2640,7 +2640,7 @@ original image (which is first enlarged by the stroke-width), to get the size
 right.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -border 3 -alpha transparent \
           -background none -fill white -stroke none -strokewidth 0 \
@@ -2666,7 +2666,7 @@ is a 1 pixel gap all around it.</P>
 So lets apply it using the <A HREF="#double" >Double Masking</A> technique...
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -bordercolor none -border 3  \
           rounded_corner_mask.png -compose DstIn -composite \
@@ -2688,7 +2688,7 @@ size given.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
       -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] 15,15' \
@@ -2725,7 +2725,7 @@ discussed IM forums <A HREF="../forum_link.cgi?f=1&t=19116" >Composite Overlay
 and Masking</A>. Idealy the two images would have been developed together.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -gravity center -extent 90x90 \
           badge_mask.png -compose DstIn -composite \
@@ -2780,7 +2780,7 @@ a little harder to use. However it can be simpler to implement. </P>
 
 For example...
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 120x90 xc:none -fill black -stroke black -strokewidth 0 \
           -draw 'ellipse 45,45 55,37 0,360' \
@@ -2832,7 +2832,7 @@ complex mathematics (in shell).  For example...
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   pagecurl thumbnail.gif  pagecurl.png
 </samp></pre></TD></TR></TABLE>
@@ -2860,7 +2860,7 @@ extract those two images for a smaller 64x64 pixel images (using a special
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE IMAGE="curl_overlay.png">
   magick -size 64x64 xc: miff:- | pagecurl -e 0.3 -i "pagecurl" - null:
 </samp></pre></TD></TR></TABLE>
@@ -2882,7 +2882,7 @@ just junked using the special "<CODE><A HREF="../files/#null"
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE IMAGE="curl_overlay.png">
   magick thumbnail.gif -alpha set -gravity SouthEast \
           -define compose:outside-overlay=false \
@@ -2917,7 +2917,7 @@ so it will only work with images, overlays, and masks that are all the same
 size.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   pagecurl -e 0.5 -i /tmp/pagecurl  {<I>one image</I>} null:
   magick mogrify {<I>magick mogrify -format and -path options</I>} -alpha set \
@@ -2968,7 +2968,7 @@ masks, must be composted onto each of the corners of the expanded image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif   -alpha set  -compose Copy \
           -bordercolor Black  -border 2 \
@@ -3063,7 +3063,7 @@ The same badge image processing seen previously in
 Here we first paint all the colors an shades onto the then mask out
 the final transparency of the image.
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -gravity center -extent 90x90 \
           badge_paint.png -composite badge_shape.png -compose DstIn -composite \
@@ -3142,7 +3142,7 @@ gray color.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   magick thumbnail.gif -alpha off -fill white -colorize 100% \
      -draw 'fill black polygon 0,0 0,15 15,0 fill white circle 15,15 15,0' \
@@ -3162,7 +3162,7 @@ a lighting overlay, for this shape.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   magick thumbnail_mask.png -bordercolor None -border 1x1 \
           -alpha Extract -blur 0x10  -shade 130x30 -alpha On \
@@ -3184,7 +3184,7 @@ it to any thumbnail image of the right size.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT>
   magick thumbnail.gif -alpha Set thumbnail_lighting.png \
           \( -clone 0,1 -alpha Opaque -compose Hardlight -composite \) \
@@ -3243,7 +3243,7 @@ I then apply the single masking image to the thumbnail reproducing the
 desired result.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   # merge "mask 'n' paint" images with a gray image,
   # to create a "lighting mask"
@@ -3464,7 +3464,7 @@ to tile an image that is being read in.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( -size 90x14  tile:bamboo.gif -transpose \) \
@@ -3494,7 +3494,7 @@ HREF="../canvas/#tile-offset" >Tile Offset</A> for each edge of the image.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif \
           \( -size 90x14  -tile-offset +50+0 tile:bamboo.gif -transpose \) \
@@ -3537,7 +3537,7 @@ To do this you will need to first enlarge the original image with lots of
 extra space into which the longer frame pieces are overlaid.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -bordercolor none -border 34 \
           \( -size 144x14 -tile-offset +30+0 tile:bamboo.gif -transpose \) \
@@ -3582,7 +3582,7 @@ The solution then was simple.  Read in the image, and "<CODE><A
 HREF="../option_link.cgi?frame" >-frame</A></CODE>" it, to create a template
 which of the areas to be framed.
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif -alpha set -bordercolor none \
           -compose Dst_Out -frame 15x15+15  frame_template.gif
@@ -3614,7 +3614,7 @@ easily. </P>
 
 For example...
 
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick frame_template.gif \
           -tile blackthin_top.gif -draw 'color 1,0 floodfill' \
@@ -3631,7 +3631,7 @@ ensure that the highlights and shaodws of the internal detail remain correct.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick frame_template.gif \
           -tile blackthin_top.gif   -draw 'color 1,0 floodfill' \
@@ -3656,7 +3656,7 @@ was found. Here is the full example using the <A HREF="../files/#mpr" >In Memory
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick thumbnail.gif                -write mpr:image    +delete \
           goldthin_top.png             -write mpr:edge_top +delete \
@@ -3717,7 +3717,7 @@ HREF="../canvas/#tile_memory" >In-Memory Tile Image</A> technique and the
 frame template (generated) is used to mask those images, as we did above.
 
 <DIV ALIGN=center>
-<table class="table table-sm table-hover" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
+<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT RANDOM IMAGE=framed_script.png>
   image=thumbnail.gif
      image_w=`magick $image -format %w info:`
