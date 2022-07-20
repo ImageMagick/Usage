@@ -4179,7 +4179,7 @@ image set.
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick gradient.png   dpat_hlines2x2.gif \
-          -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1]' dgrad_hlines2x2.gif
+          -virtual-pixel tile  -fx 'u[(floor((n-1)*u)+1) % n]' dgrad_hlines2x2.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="dgrad_hlines2x2.gif"
      ><IMG SRC="dgrad_hlines2x2.gif"      WIDTH=640 HEIGHT=20
@@ -4354,7 +4354,7 @@ This was the result.
   montage dpat_hlines.gif   -filter box   -geometry 60x20+2+0 \
           -tile x1 -background none  -frame 2   dpat_hlines_images.gif
   magick gradient.png  dpat_hlines.gif  \
-          -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1]' \
+          -virtual-pixel tile  -fx 'u[(floor((n-1)*u)+1) % n]' \
           dgrad_dpat_hlines.gif
   magick shadow.png dpat_hlines.gif  -channel A \
           -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1].g' \
@@ -4390,7 +4390,7 @@ Here is another example of using this dither pattern...
   magick -size 120x55 xc:white  -draw 'fill #777 ellipse 50,43 30,5 0,360' \
           -motion-blur 0x15+180   -blur 0x2      sphere_shadow.png
   magick sphere_shadow.png dpat_hlines.gif \
-          -virtual-pixel tile  -fx 'u[floor((n-1)*u)+1]' \
+          -virtual-pixel tile  -fx 'u[(floor((n-1)*u)+1) % n]' \
           sphere_shadow_dither.gif
   magick sphere_shadow_dither.gif   -fill red  -stroke firebrick \
           -draw 'circle 35,25 35,5'     sphere_shadow_hlines.gif
