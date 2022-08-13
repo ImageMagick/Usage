@@ -1532,7 +1532,6 @@ kernel that was generated, you can define a special setting...
 <TR><TD><PRE><CODE NOT_AN_EXECUTABLE>
     -define morphology:showkernel=1   &nbsp;
     -define convolve:showkernel=1   &nbsp;
-    -define showkernel=1   &nbsp;
 </samp></pre></TD></TR></TABLE>
 </BLOCKQUOTE></P>
 
@@ -1547,7 +1546,7 @@ For example, here is the actual values of the built-in '<CODE><A HREF="#disk"
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_disk.txt>
-  magick xc: -define showkernel=1 -morphology Dilate:0 Disk null:
+  magick xc: -define morphology:showkernel=1 -morphology Dilate:0 Disk null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1573,7 +1572,7 @@ Here is another example. This time of a '<CODE><A HREF="../convolve/#comet"
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_comet.txt>
-  magick xc:  -define showkernel=1 -morphology Dilate:0 Comet:0x2  null:
+  magick xc:  -define morphology:showkernel=1 -morphology Dilate:0 Comet:0x2  null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1600,7 +1599,7 @@ number of significant digits from the default of 6 to 3.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_precision.txt>
-  magick xc:  -define showkernel=1 -precision 3 \
+  magick xc:  -define morphology:showkernel=1 -precision 3 \
           -morphology Dilate:0 Comet:0x2  null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -1743,7 +1742,7 @@ Here is a <A HREF="#showkernel" >Show Kernel Output</A> of this definition.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE SCRIPT ERR=k_multi.txt>
-  magick xc: -define showkernel=1 -morphology Dilate:0 \
+  magick xc: -define morphology:showkernel=1 -morphology Dilate:0 \
              ' 3: 0,0,- 0,1,1 -,1,-  ;
                3: -,1,- 1,1,0 -,0,0  ;
                3: -,0,0 1,1,1 -,1,-  ;
@@ -5530,7 +5529,7 @@ Kernels'.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_chebyshev_3.txt>
-  magick xc: -define showkernel=1 -precision 3 \
+  magick xc: -define morphology:showkernel=1 -precision 3 \
           -morphology Distance:0 Chebyshev:3     null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -5653,7 +5652,7 @@ Here is the actual kernel it generates...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_chebyshev.txt>
-  magick xc: -define showkernel=1  -precision 4 \
+  magick xc: -define morphology:showkernel=1  -precision 4 \
           -morphology Distance:0 Chebyshev       null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -5794,7 +5793,7 @@ Here is the actual kernel it generates...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_manhattan.txt>
-  magick xc: -define showkernel=1  -precision 4 \
+  magick xc: -define morphology:showkernel=1  -precision 4 \
           -morphology Distance:0 Manhattan     null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -5894,7 +5893,7 @@ Here is the actual kernel it generates...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_octagonal.txt>
-  magick xc: -define showkernel=1  -precision 4 \
+  magick xc: -define morphology:showkernel=1  -precision 4 \
           -morphology Distance:0 Octagonal     null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -6190,7 +6189,7 @@ Here is the default kernel it generates...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_knight.txt>
-  magick xc: -define showkernel=1  -precision 4 \
+  magick xc: -define morphology:showkernel=1  -precision 4 \
           -morphology Distance:0 Euclidean    null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -6299,7 +6298,7 @@ Here is a true '<CODE>Euclidean</CODE>' kernel using the recommended radius of
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE NOIMAGE ERR=k_euclidean.txt>
-  magick xc: -define showkernel=1  -precision 4 \
+  magick xc: -define morphology:showkernel=1  -precision 4 \
           -morphology Distance:0 Euclidean:4     null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
