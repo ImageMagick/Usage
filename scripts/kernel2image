@@ -307,7 +307,7 @@ while true; do
   magick ppm:- -channel RG -separate +channel \
           -compose CopyOpacity -composite -compose Over \
           -gamma "$gamma_adjust" \
-          +level-colors "$kernel_colors" \
+          -channel RGB +level-colors "$kernel_colors" -channel RGBA \
           -bordercolor  "$nan_color" -border 0 \
           -set input    "$kernel_string" \
           -set number   "$kernel_number" \
