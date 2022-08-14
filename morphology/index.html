@@ -6867,10 +6867,10 @@ To do this we create a <A HREF="../masking/#write_mask" >Write Protect Mask</A>
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick disks.gif disks.gif -morphology Erode:7 Diamond disks_big_center.gif
 
-  magick disks.gif -negate  disks_mask.gif
+  magick disks.gif -negate disks_mask.gif
 
-  magick disks_big_center.gif  -mask disks_mask.gif \
-          -morphology Dilate:15 Diamond    +mask disks_big_found.gif
+  magick disks_big_center.gif -write-mask disks_mask.gif \
+          -morphology Dilate:15 Diamond +write-mask disks_big_found.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
      ><IMG SRC="../images/disks.gif"    WIDTH=80 HEIGHT=80
@@ -6949,8 +6949,8 @@ hit by a diagonal line across the image.
   magick disks_line.gif disks.gif \
           -compose Multiply  -composite    disks_line_find.gif
 
-  magick disks_line_find.gif  -mask disks_mask.gif \
-          -morphology Dilate:15 Diamond    +mask disks_line_found.gif
+  magick disks_line_find.gif -write-mask disks_mask.gif \
+          -morphology Dilate:15 Diamond +write-mask disks_line_found.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="../images/disks.gif"
      ><IMG SRC="../images/disks.gif"    WIDTH=80 HEIGHT=80
@@ -7056,9 +7056,9 @@ Mask</A> so that as the distance gradient is calculated it does not cross
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick distance_start.png  -mask distance_bounds.png \
+  magick distance_start.png -write-mask distance_bounds.png \
           -morphology IterativeDistance:150 Euclidean \
-          +mask -fill black -opaque white -auto-level \
+          +write-mask -fill black -opaque white -auto-level \
           distance_constrained.png
 </samp></pre></TD></TR></TABLE>
   <A HREF="distance_start.png"
