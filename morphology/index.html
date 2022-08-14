@@ -1572,7 +1572,7 @@ Here is another example. This time of a '<CODE><A HREF="../convolve/#comet"
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_comet.txt>
-  magick xc:  -define morphology:showkernel=1 -morphology Dilate:0 Comet:0x2  null:
+  magick xc: -define morphology:showkernel=1 -morphology Dilate:0 Comet:0x2  null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -1599,7 +1599,7 @@ number of significant digits from the default of 6 to 3.
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE ERR=k_precision.txt>
-  magick xc:  -define morphology:showkernel=1 -precision 3 \
+  magick xc: -define morphology:showkernel=1 -precision 3 \
           -morphology Dilate:0 Comet:0x2  null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
@@ -1982,7 +1982,7 @@ get..
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE NO_EXECUTE>
-  magick pixel.gif  -define morphology:compose=Lighten \
+  magick pixel.gif -define morphology:compose=Lighten \
                      -morphology Convolve "Blur:0x1&gt;" \
           -auto-level blur_union.gif
 </samp></pre></TD></TR></TABLE>
@@ -2063,8 +2063,8 @@ For example, here the verbose output of re-iterating with each kernel...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_re-iterate.txt>
-  magick pixel.gif  -define morphology:compose=None \
-          -define debug=true -morphology Convolve "Blur:0x1&gt;" null:
+  magick pixel.gif -define morphology:compose=None \
+         -define debug=true -morphology Convolve "Blur:0x1&gt;" null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -2081,8 +2081,8 @@ kernel result....
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_union.txt>
-  magick pixel.gif  -define morphology:compose=Lighten \
-          -define debug=true -morphology Convolve "Blur:0x1&gt;" null:
+  magick pixel.gif -define morphology:compose=Lighten \
+         -define debug=true -morphology Convolve "Blur:0x1&gt;" null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -4233,7 +4233,7 @@ selected pixels for a single removal of selected pixels.  For example... </P>
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick line.gif -channel GB  -define morphology:compose=darken \
+  magick line.gif -channel GB -define morphology:compose=darken \
           -morphology Thinning LineEnds  line_simultaneous.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="line_simultaneous_mag.gif"
@@ -4275,7 +4275,7 @@ by thinning both the left and right edges simultaneously. </P>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 10x10 xc:black -fill white -draw 'rectangle 4,1 5,7' rect.gif
-  magick rect.gif -channel GB  -define morphology:compose=darken \
+  magick rect.gif -channel GB -define morphology:compose=darken \
           -morphology Thinning Edges  rect_simultaneous.gif
 </samp></pre></TD></TR></TABLE>
   <A HREF="rect_mag.gif"
@@ -7300,8 +7300,8 @@ For example...
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick man.gif -negate man_at_prep.png
-  autotrace -centerline -output-format svg man_at_prep.png |\
+  magick man.gif -negate man_at_prep.pgm
+  autotrace -centerline -output-format svg man_at_prep.pgm |\
       magick SVG:-  man_centerline.gif
   magick man.gif man_centerline.gif \
           -compose multiply -composite man_at_skeleton.gif
