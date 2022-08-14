@@ -1362,8 +1362,8 @@ situation may be needed. </P>
 <H3>Verbose Output of Changes</H3>
 
 If you want to see the results of iterating (repeating) a morphological
-operation, you can set the "<CODE><A HREF="../option_link.cgi?verbose"
->-verbose</A></CODE>" option, which turns on the <A HREF="../basics/#verbose"
+operation, you can set the "<CODE><A HREF="../option_link.cgi?define"
+>-define debug=True</A></CODE>" option, which turns on the <A HREF="../basics/#verbose"
 >Verbose Operational Control</A>.  As the morphology operator iterates, it
 will report an incrementing count of the iteration, and how many pixels in the
 image were changed by each iterated step. The output is to standard error, so
@@ -1746,7 +1746,7 @@ Here is a <A HREF="#showkernel" >Show Kernel Output</A> of this definition.
              ' 3: 0,0,- 0,1,1 -,1,-  ;
                3: -,1,- 1,1,0 -,0,0  ;
                3: -,0,0 1,1,1 -,1,-  ;
-               3: -,1,- 0,1,1 0,0,-  ; '   null:
+               3: -,1,- 0,1,1 0,0,-  ; ' null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -2064,7 +2064,7 @@ For example, here the verbose output of re-iterating with each kernel...
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_re-iterate.txt>
   magick pixel.gif  -define morphology:compose=None \
-          -verbose -morphology Convolve "Blur:0x1&gt;" +verbose  null:
+          -define debug=true -morphology Convolve "Blur:0x1&gt;" null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
