@@ -2082,7 +2082,7 @@ kernel result....
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><PRE><CODE EXECUTE  ERR=blur_union.txt>
   magick pixel.gif  -define morphology:compose=Lighten \
-          -verbose -morphology Convolve "Blur:0x1&gt;" +verbose  null:
+          -define debug=true -morphology Convolve "Blur:0x1&gt;" null:
 </samp></pre></TD></TR></TABLE>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD>
@@ -5685,7 +5685,7 @@ Distance</CODE>' morphology method using an infinite iteration count.
 <TR><TD><PRE><CODE EXECUTE OUT=chebyshev_distance.txt
                            ERR=chebyshev_gradient.txt>
   magick man.gif -threshold 50% +depth \
-          -verbose  -morphology IterativeDistance:-1 Chebyshev  +verbose \
+          -define debug=true -morphology IterativeDistance:-1 Chebyshev \
           chebyshev_gradient.png
 
 <n>  magick identify -format 'Maximum Distance = %[max]' chebyshev_gradient.png
