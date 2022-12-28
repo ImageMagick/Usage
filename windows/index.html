@@ -298,17 +298,18 @@ a location where the pathnames are shorter. </P>
 
 IM's Windows installation routine adds IM's program directory to the search
 path, such that you can call IM's command line tools directly from the command
-prompt, without providing a path name. However, the names of IM's command line
-tools are rather unspecific (e.g. Convert, Identify, Compare ...) which
-provokes name conflicts with other programs. </P>
+prompt, without providing a path name. By default you will use `magick` as your
+command-line tool.  However, if you select the legacy program names,
+the names of IM's command line tools are rather unspecific (e.g. convert,
+identify, compare ...) which provokes name conflicts with other programs. </P>
 
-Especially, Convert is a Windows system tool, located in the Windows system
+Especially, convert is a Windows system tool, located in the Windows system
 directory (<CODE>c:\Windows\system32\convert.exe</CODE>), which converts the
 FAT32 file system into the now common NTFS. But there are also other programs
 named "convert.exe", for example the Delphi report converter utility.</P>
 
 The FAT &rarr; NTFS magick tool was first shipped with Windows XP and
-generated a name conflict with IM's command line tool "<code>magick</code>"
+generated a name conflict with IM's command line tool "<code>convert</code>"
 as IM's program directory was <B>appended</B> to the DOS search path (i.e. the
 PATH environment variable), the system tool was found first and simple calls
 to "<code>magick</code>" in older scripts weren't resolved correctly. Current
