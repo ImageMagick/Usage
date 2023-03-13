@@ -727,8 +727,8 @@ I want to overlay onto that canvas.
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x100 xc:skyblue \
           -fill dodgerblue -draw 'circle 50,50 15,25' \
-          -page +5+10  balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50 present.gif   -page +10+55 shading.gif  \
+          \( -page +5+10  balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( -page +62+50 present.gif \)   \( -page +10+55 shading.gif \)  \
           -layers flatten  flatten_canvas.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flatten_canvas.gif"
@@ -763,8 +763,8 @@ Canvas</A> size.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page 100x100+5+10  balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50        present.gif   -page +10+55 shading.gif  \
+  magick \( -page 100x100+5+10  balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( --page +62+50        present.gif \)   \( -page +10+55 shading.gif \)  \
           -background dodgerblue  -layers flatten  flatten_page.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flatten_page.gif"
@@ -802,8 +802,8 @@ canvas size, causing the later images not to appear completely on that canvas.
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page 75x75+5+10  balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50 present.gif   -page +10+55 shading.gif  \
+  magick \( -page 75x75+5+10  balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( -page +62+50 present.gif \)   \( -page +10+55 shading.gif \)  \
           -background dodgerblue  -flatten  flatten_bounds.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flatten_bounds.gif"
@@ -934,8 +934,8 @@ to hold all the image layers.
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page +5+10  balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50 present.gif   -page +10+55 shading.gif  \
+  magick \( -page +5+10  balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( -page +62+50 present.gif \)   \( -page +10+55 shading.gif \)  \
           -background dodgerblue  -layers mosaic  mosaic.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="mosaic.gif"
@@ -977,8 +977,8 @@ will still clip images with negative offsets...
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page -5-10  balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50 present.gif   -page +10+55 shading.gif  \
+  magick \( -page -5-10  balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( -page +62+50 present.gif \)   \( -page +10+55 shading.gif \)  \
           -background dodgerblue  -mosaic  mosaic_clip.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="mosaic_clip.gif"
@@ -1017,8 +1017,8 @@ For example, here is the same set of layer image we have used previously...
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page +5+10  balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50 present.gif   -page +10+55 shading.gif  \
+  magick \( -page +5+10  balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( -page +62+50 present.gif \)   \( -page +10+55 shading.gif \)  \
           -background dodgerblue  -layers merge  +repage layers_merge.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="layers_merge.gif"
@@ -1039,8 +1039,8 @@ Lets try this again by giving one image a negative offset...
 <TR valign="top"><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page -5-10  balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50 present.gif   -page +10+55 shading.gif  \
+  magick \( -page -5-10  balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( -page +62+50 present.gif \)   \( -page +10+55 shading.gif \)  \
           -background dodgerblue  -layers merge  +repage layers_merge_2.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="layers_merge_2.gif"
@@ -1133,7 +1133,7 @@ out' the canvas of the image with transparent pixels.
 
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page 100x100+5+10 balloon.gif -layers coalesce  coalesce_canvas.gif
+  magick \( -page 100x100+5+10 balloon.gif \) -layers coalesce  coalesce_canvas.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="coalesce_canvas.gif"
      ><IMG SRC="coalesce_canvas.gif"
@@ -1148,8 +1148,8 @@ animation' handling by the operator.  </P>
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-   magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
-           -page +62+50       present.gif   -page +10+55 shading.gif  \
+   magick \( -page 100x100+5+10 balloon.gif \)   \( -page +35+30 medical.gif \)  \
+           \( --page +62+50       present.gif \)   \( -page +10+55 shading.gif \)  \
            -set dispose None  -coalesce  miff:- |\
      montage - -frame 4 -tile x1 -geometry +2+2 \
              -background none -bordercolor none  coalesce_none.gif
@@ -1184,8 +1184,8 @@ images!
 <DIV ALIGN=center>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50       present.gif   -page +10+55 shading.gif  \
+  magick \( -page 100x100+5+10 balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( --page +62+50       present.gif \)   \( -page +10+55 shading.gif \)  \
           -set dispose Background  -coalesce  miff:- |\
     montage - -frame 4 -tile x1 -geometry +2+2 \
             -background none -bordercolor none  coalesce_bgnd.gif
@@ -1236,8 +1236,8 @@ using a '<CODE><A HREF="../compose/#dstover" >DstOver</A></CODE>'...
 <TR><TD width="100%" ALIGN=justify>
 <table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
 <TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -page 100x100+5+10 balloon.gif   -page +35+30 medical.gif  \
-          -page +62+50       present.gif   -page +10+55 shading.gif  \
+  magick \( -page 100x100+5+10 balloon.gif \)   \( -page +35+30 medical.gif \)  \
+          \( --page +62+50       present.gif \)   \( -page +10+55 shading.gif \)  \
           -background none  -compose DstOver  -flatten  flatten_dstover.gif
 </samp></pre></TD></TR></TABLE></TD><TD>
   <A HREF="flatten_dstover.gif"
