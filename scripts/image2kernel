@@ -85,7 +85,7 @@ chomp;
 die("$PROGNAME: Invalid TXT image header\n")
   unless /^# ImageMagick pixel enumeration: /;
 
-my ($width, $height, $depth, $type) = split(',', $');
+my ($width, $height, $sans, $depth, $type) = split(',', $');
 
 print STDERR "IMAGE: width=$width, height=$height, depth=$depth, type=$type\n"
   unless $QUIET;
@@ -108,7 +108,7 @@ if ( $type =~ /^gray/i  ) {
 else {
   @channels = grep(/[RGBA]/, split(//, uc($type)));
   # The channel types to generate...
-  #print STDERR "\@channels = ('", join("','", @channels), "' )\n";
+  # print STDERR "\@channels = ('", join("','", @channels), "' )\n";
 
   # Open all the kernel files
   for my $c (@channels) {
@@ -131,8 +131,9 @@ while(<IMAGE>) {
   (@values{@channels}, undef) = split;
   for my $c (@channels) {
     my $v = $values{$c}/($depth+1);
-    $v = $v < $depth/2 ? '-' : '1'   if $MORPH;
+    $v = $values{$c} < $depth/2 ? '-' : '1'   if $MORPH;
     $kernel{$c}->print( "$v\n" );
+    print '.'
   }
 }
 

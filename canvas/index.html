@@ -5846,54 +5846,11 @@ HREF="../../option_link.cgi?fill" >-fill</A></CODE>" setting.  For example...
            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-However there is one major problem with offset tiling. </P>
 
-The problem is that due to the use of <A HREF="../basics/#legacy" >Legacy
-Command Line Style</A>, the above will fail when using built-in
-"<CODE>pattern:</CODE>" tiles.  For example, here I tried the same thing as the
-above using a '<CODE>checkerboard</CODE>' tile pattern.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR valign="top"><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick -tile-offset +20+20 -tile pattern:checkerboard \
-          -size 80x80  xc: -draw 'color 30,20 reset'  offset_pattern_fail.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="offset_pattern_fail.gif"
-     ><IMG SRC="offset_pattern_fail.gif"     WIDTH=80 HEIGHT=80
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-What is happening is that the first real 'operator' in the above is
-'<CODE>xc:</CODE>', all the other options given before this are simply
-'settings' that is used by that and later operators. Because of the <A
-HREF="../basics/#legacy" >Legacy Command Line Style</A> reads in all the
-'settings' and applies them before actually processing the command line in the
-correct order. </P>
-
-Because of this 'legacy problem' the "<CODE><A
-HREF="../../option_link.cgi?size" >-size</A></CODE>" setting gets set BEFORE
-the "<CODE><A HREF="../../option_link.cgi?tile" >-tile</A></CODE>" setting
-applies the "<CODE>pattern:</CODE>" operator.  As a consequence a 80 by 80
-pixel 'tile' was generated.  This pre-sized tile is then rolled by the
-"<CODE><A HREF="../../option_link.cgi?tile-offset" >-tile-offset</A></CODE>"
-option, when it is applied by the '<CODE>xc:</CODE>' operator.  </P>
-
-In other words the "<CODE><A HREF="../../option_link.cgi?tile"
->-tile</A></CODE>" setting will create a 80x80 pixel tile, AFTER the -size
-setting has been defined, and as such the 'tile' is no longer tilable, when
-used by the draw command.  </P>
-
-This is probably one of the few examples where this legacy handling is
-detrimental to normal IM 'do it as you see it' option handling by IM commands.
-</P>
-
-The solution to all this is to ensure that the "<CODE><A
+Make sure that the "<CODE><A
 HREF="../../option_link.cgi?size" >-size</A></CODE>" setting is reset before
 defining the "<CODE><A HREF="../../option_link.cgi?tile" >-tile</A></CODE>"
-image, but after any other image has been read in, and thus satisfying IM
-legacy option handling.
+image, but after any other image has been read in.
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
 <TR><TD width="100%" ALIGN=justify>
