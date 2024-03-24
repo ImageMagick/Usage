@@ -1,150 +1,125 @@
-<html lang="en"><HEAD>
-<link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Backgrounds -- ImageMagick Examples</TITLE>
-<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://imagemagick.org/Usage/backgrounds/">
-<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <link rel="stylesheet" href="../assets/usage.css">
+  <title>Backgrounds -- ImageMagick Examples</title>
+  <link rel="icon" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="shortcut" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://imagemagick.org/Usage/backgrounds/"><!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="../w_images/pngfix.js"></script>
 <![endif]><![endif]-->
-</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
-
-<H1>ImageMagick Examples -- <BR>
-    <IMG SRC="../../w_images/space.gif" width=50 height=1>
-    Background Examples</H1>
-
-<div>
-
-<DL>
-<DT><A HREF="../"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > ImageMagick Examples Preface and Index</A>
-</DL>
-
-This is a table of applying various transforms against some 'random' canvases,
-showing methods of producing interesting random backgrounds at whatever size
-you desire, whether it is a single large image, or a background tile for a web
-page.  </P>
-
-The table starts with the method used to generate the initial 'random' image
-used to generate all the other images shown. Just insert the various image
-'transform' into the command, to magick the raw image into something similar
-to that shown.  From there you can adjust the various setting yourself to
-produce exactly the type of background image you want. </P>
-
-Be sure to read the notes at the end, before attempting to create your own
-examples. and please mail any interesting variations you may come across. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TH>
-     Input Images :-  Generator, Transform and Post-processing
-</TH><TD ROWSPAN=100>&nbsp;</TD></TR>
-
-<TR><TD ALIGN=center><FONT SIZE=-1><I>
-Images results shown here were generated with a "<CODE>-noop</CODE>" null
-transform operator </I></FONT></TD></TR>
-
-<TR><TD>
-Plasma Fractal <FONT SIZE=-1><I>(non-tiling canvas image)</I></FONT>
-</TD></TR><TR><TD>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE>
+</head>
+<body>
+  <main class="container">
+    <div class="magick-template">
+      <div class="magick-header">
+        <h1>ImageMagick Examples --<br>
+        <img src="../../w_images/space.gif" width="50" height="1"> Background Examples</h1>
+        <div>
+          <dl>
+            <dt>
+              <a href="../"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> ImageMagick Examples Preface and Index</a>
+            </dt>
+          </dl>This is a table of applying various transforms against some 'random' canvases, showing methods of producing interesting random backgrounds at whatever size you desire, whether it is a single large image, or a background tile for a web page. The table starts with the method used to generate the initial 'random' image used to generate all the other images shown. Just insert the various image 'transform' into the command, to magick the raw image into something similar to that shown. From there you can adjust the various setting yourself to produce exactly the type of background image you want. Be sure to read the notes at the end, before attempting to create your own examples. and please mail any interesting variations you may come across.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <th>Input Images :- Generator, Transform and Post-processing</th>
+              <td rowspan="100">&nbsp;</td>
+            </tr>
+            <tr>
+              <td align="center"><font size="-1"><i>Images results shown here were generated with a "<code>-noop</code>" null transform operator</i></font></td>
+            </tr>
+            <tr>
+              <td>Plasma Fractal <font size="-1"><i>(non-tiling canvas image)</i></font></td>
+            </tr>
+            <tr>
+              <td>
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre><code>
   magick -size 120x120  plasma:fractal fractal.png
-  magick fractal.png   <I>{..transform..}</I> \
-           -shave 20x20 +repage  -auto_level  <I>{result}</I>
-</CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
-<TD>
-   <A HREF="fractal_noop.png"
-      ><IMG SRC="fractal_noop.png"       WIDTH=80 HEIGHT=80
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR>
-
-<TR><TD>
-Random Noise <FONT SIZE=-1><I>(tilable background image)</I></FONT>
-</TD></TR><TR><TD>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE>
+  magick fractal.png   <i>{..transform..}</i> \
+           -shave 20x20 +repage  -auto_level  <i>{result}</i>
+</code> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="fractal_noop.png"><img src="fractal_noop.png" width="80" height="80" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+            <tr>
+              <td>Random Noise <font size="-1"><i>(tilable background image)</i></font></td>
+            </tr>
+            <tr>
+              <td>
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre><code>
   magick -size 80x80 xc: +noise Random noise.png
-  magick noise.png -virtual-pixel tile  <I>{..transform..}</I> \
-          -auto_level  <I>{result}</I>
-</CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
-<TD></TD><TD>
-   <A HREF="noise_noop.png"
-      ><IMG SRC="noise_noop.png"       WIDTH=80 HEIGHT=80
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR>
-
-<TR><TD>
-Random Hex Tile <FONT SIZE=-1><I>(hex tile background image)</I></FONT>
-</TD></TR><TR><TD>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE>
+  magick noise.png -virtual-pixel tile  <i>{..transform..}</i> \
+          -auto_level  <i>{result}</i>
+</code> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td></td>
+              <td>
+                <a href="noise_noop.png"><img src="noise_noop.png" width="80" height="80" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+            <tr>
+              <td>Random Hex Tile <font size="-1"><i>(hex tile background image)</i></font></td>
+            </tr>
+            <tr>
+              <td>
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre><code>
   magick -size 50x80 xc: +noise Random -write mpr:rand \
            -extent 100x80   -page +50-40 mpr:rand \
            -page +50+40 mpr:rand -flatten  hextile.png
-  magick hextile.png -virtual-pixel tile  <I>{..transform..}</I> \
-          -auto_level    <I>{result}</I>
-</CODE>&nbsp;</PRE></TD></TR></TABLE></TD>
-<TD></TD><TD></TD><TD>
-   <A HREF="hextile_noop.png"
-      ><IMG SRC="hextile_noop.png"     WIDTH=100 HEIGHT=80
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR>
-<TR><TD>&nbsp;<TD></TR>
-
-<!-- START -->
-<!-- END -->
-
-</TABLE><P>
-
-If you have or come up with a nice background generator or image transform,
-please let me know so it can be added here to share with others. </P>
-
-
-<H3>Final Important Notes</H3>
-
-The two <A HREF="../canvas/#random" >Random Noise Images</A>, being so
-'random' are tilable, and we use "<CODE><A
-HREF="../option_link.cgi?virtual-pixels" >-virtual-pixels</A></CODE>" to
-ensure that they remain tilable during the transformation. However the <A
-HREF="../canvas/#plasma" >Plasma Image</A> is not tilable to start with, so a
-enlarged version with the edges "<CODE><A HREF="../option_link.cgi?shave"
->-shave</A></CODE>" off afterward is used to remove the unwanted edge effect
-of many operations.  These technique is discussed further in <A
-HREF="../canvas/#tile_mod" >Modifying Tile Images</A>.  </P>
-
-Note that the final "<CODE><A HREF="../option_link.cgi?normalize"
->-auto_level</A></CODE>" is applied to most images to enhance the contrast of
-the results, unless the transform is marked as not requiring it so as to
-preserve and coloring or shadings that resulted from the transformation.  </P>
-
-Because many image transformations such as, "<CODE><A
-HREF="../option_link.cgi?blur" >-blur</A></CODE>", "<CODE><A
-HREF="../option_link.cgi?emboss" >-emboss</A></CODE>", and "<CODE><A
-HREF="../option_link.cgi?edge" >-edge</A></CODE>"  are grey-scale
-transformations, they work on the three color channels, completely
-independently of each other. As a result, in many of the images, the result
-looks like three separate images have been overlaid, then shaded. </P>
-
-The final example "<CODE>layered_levels</CODE>" was designed to works on each
-of the three levels simultaneously, while keeping them separate, until the
-final step where they are added together and color tinted.  </P>
-
-This triple effect can be removed by either applying an initial gray-scaling
-operation, or extracting just one of the channels when finished.  Typically I
-extract the '<CODE>green</CODE>' or '<CODE>G</CODE>' channel as it is normally
-the strongest channel in a grey scale image anyway, though any of the three
-channels can be used. </P>
-
-</DIV></P>
-<HR><!-- ---------------------------------------------------------------- -->
-</div></main><footer class="magick-footer"><div class="container-fluid">
-Created: 15 December 2004 <BR>
-Updated: 20 December 2006 <BR>
-Author: <A HREF="http://www.ict.griffith.edu.au/anthony/anthony.html"
-        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
-Examples Generated with:
-        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://imagemagick.org/Usage/backgrounds/</CODE>
-</div></footer></body></HTML>
-
+  magick hextile.png -virtual-pixel tile  <i>{..transform..}</i> \
+          -auto_level    <i>{result}</i>
+</code> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <a href="hextile_noop.png"><img src="hextile_noop.png" width="100" height="80" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td></td>
+            </tr><!-- START -->
+            <!-- END -->
+          </table>
+          <p>If you have or come up with a nice background generator or image transform, please let me know so it can be added here to share with others.</p>
+          <h3>Final Important Notes</h3>The two <a href="../canvas/#random">Random Noise Images</a>, being so 'random' are tilable, and we use "<code><a href="../option_link.cgi?virtual-pixels">-virtual-pixels</a></code>" to ensure that they remain tilable during the transformation. However the <a href="../canvas/#plasma">Plasma Image</a> is not tilable to start with, so a enlarged version with the edges "<code><a href="../option_link.cgi?shave">-shave</a></code>" off afterward is used to remove the unwanted edge effect of many operations. These technique is discussed further in <a href="../canvas/#tile_mod">Modifying Tile Images</a>. Note that the final "<code><a href="../option_link.cgi?normalize">-auto_level</a></code>" is applied to most images to enhance the contrast of the results, unless the transform is marked as not requiring it so as to preserve and coloring or shadings that resulted from the transformation. Because many image transformations such as, "<code><a href="../option_link.cgi?blur">-blur</a></code>", "<code><a href="../option_link.cgi?emboss">-emboss</a></code>", and "<code><a href="../option_link.cgi?edge">-edge</a></code>" are grey-scale transformations, they work on the three color channels, completely independently of each other. As a result, in many of the images, the result looks like three separate images have been overlaid, then shaded. The final example "<code>layered_levels</code>" was designed to works on each of the three levels simultaneously, while keeping them separate, until the final step where they are added together and color tinted. This triple effect can be removed by either applying an initial gray-scaling operation, or extracting just one of the channels when finished. Typically I extract the '<code>green</code>' or '<code>G</code>' channel as it is normally the strongest channel in a grey scale image anyway, though any of the three channels can be used.
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------- -->
+      </div>
+    </div>
+  </main>
+  <footer class="magick-footer">
+    <div class="container-fluid">
+      Created: 15 December 2004<br>
+      Updated: 20 December 2006<br>
+      Author: <a href="http://www.ict.griffith.edu.au/anthony/anthony.html">Anthony Thyssen</a>, &lt;Anthony.Thyssen@gmail.com&gt;<br>
+      Examples Generated with: <img src="version.gif" align="absmiddle" alt="[version image]"><br>
+      URL: <code>https://imagemagick.org/Usage/backgrounds/</code>
+    </div>
+  </footer>
+</body>
+</html>

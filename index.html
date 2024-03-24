@@ -1,865 +1,656 @@
-<html lang="en"><HEAD>
-<meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1" > 
-<link rel="stylesheet" href="assets/usage.css">
-<TITLE>Examples of ImageMagick Usage</TITLE>
-<LINK REL="icon" HREF="img_www/favicon.ico" type="image/x-icon">
-<LINK REL="shortcut" HREF="img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://imagemagick.org/Usage/">
-<meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more.">
-<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/usage.css">
+  <title>Examples of ImageMagick Usage</title>
+  <link rel="icon" href="img_www/favicon.ico" type="image/x-icon">
+  <link rel="shortcut" href="img_www/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://imagemagick.org/Usage/">
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more."><!--[if gte IE 5.5000]><![if lt IE 7.0000]>
 <script type="text/javascript" src="img_www/pngfix.js"></script>
 <![endif]><![endif]-->
-</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
-
-
-<TABLE width="100%">
-<TR valign="top">
-
-<!-- Title and Blurb -->
-<TD COLSPAN=2>
-<H1 ALIGN=center>Examples of ImageMagick Usage
-<BR><FONT SIZE=5>ImageMagick Version 7</FONT></H1>
-
-<p>These web pages presents a set of examples using <A
-							 HREF="https://imagemagick.org/" >ImageMagick</A> (&quot;IM,&quot; for short), version 7, from the command line.  However, they often have direct analogs in the legacy release of ImageMagick, <a href="https://imagemagick.org">version 6</a>.  They also illustrate what can be done using
-the ImageMagick Application Programming Interface (API).  As such, these pages
-should be the first stop for IM users after reading the terse <A
-HREF="https://imagemagick.org/script/command-line-options.php">Command
-Line (CLI) Option manuals</A>. </P>
-
-<p>Often, the same questions of "<I>How do I...</I>" gets asked, over and over
-again on the network.  The examples in these web pages, I hope, will answer
-most of the common "how-to" questions that arise. </P>
-
-</TD>
-
-<TD ROWSPAN=9>
-  &nbsp;
-</TD>
-
-<!-- Logo and Links -->
-<TD ROWSPAN=9>
-  <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-  <TR><TD COLSPAN=2 ALIGN=center>
-    <A HREF="https://imagemagick.org/Usage/"
-       ><IMG SRC="images/logo.gif"   WIDTH=180  HEIGHT=180
-             ALT="[IM Logo]" BORDER=1></A>
-  </TD></TR><TR><TD COLSPAN=2 ALIGN=right>
-    <A HREF="https://imagemagick.org/"
-       ><IMG SRC="version.gif" ALT="[IM Version]" BORDER=0></A>
-  </TD></TR><TR><TD COLSPAN=2 ALIGN=center><FONT SIZE=-2>
-     <A HREF="https://imagemagick.org/script/download.php" target="_blank"
-        >Download Page</A>,&nbsp;
-     <A HREF="https://imagemagick.org/download/linux/CentOS/x86_64/" target="_blank"
-        >CentOS RPM</A>,
-  <BR>
-     <A HREF="https://imagemagick.org/download/linux/SRPMS/" target="_blank"
-        >Linux SRPM</A>,&nbsp;
-     <A HREF="https://imagemagick.org/download/beta/"target="_blank">Beta Release</A>
-  <BR>
-     <A HREF="https://github.com/ImageMagick/ImageMagick/discussions" target="_blank">Discussion Server</A>
-  </FONT></TD></TR><TR><TD COLSPAN=2><FONT SIZE=-1>
-     Other related sites...
-  </FONT></TD></TR><TR><TD>&nbsp;</TD><TD>
-    <TABLE CELLSPACING=0 CELLPADDING=0>
-    <TR><TD><FONT SIZE=-2>
-      <A HREF="http://www.fmwconcepts.com/imagemagick/" target="blank"
-         >Fred's ImageMagick Scripts</A><BR>
-      <A HREF="http://www.rubblewebs.co.uk/imagemagick/imagemagick.php" target="_blank"
-         >RubbleWebs, PHP using IM CLI</A><BR>
-      <A HREF="https://im.snibgo.com/" target="_blank">Snibgo's ImageMagick pages</A>
-    </FONT></TD></TR></TABLE>
-  </TD></TR><TR><TD COLSPAN=2><FONT SIZE=-1>&nbsp;</FONT>
-  </TD></TR></TABLE>
-
-</TD></TR>
-
-<TR><TD ALIGN=center>
-   <A HREF="https://imagemagick.org/"
-      ><IMG SRC="img_www/granitesm_up.gif" BORDER=0 WIDTH=15 HEIGHT=15
-      > Main ImageMagick Web Site</A>
-   <!--
+</head>
+<body>
+  <main class="container">
+    <div class="magick-template">
+      <div class="magick-header">
+        <table width="100%">
+          <tr valign="top">
+            <!-- Title and Blurb -->
+            <td colspan="2">
+              <h1 align="center">Examples of ImageMagick Usage<br>
+              <font size="5">ImageMagick Version 7</font></h1>
+              <p>These web pages presents a set of examples using <a href="https://imagemagick.org/">ImageMagick</a> ("IM," for short), version 7, from the command line. However, they often have direct analogs in the legacy release of ImageMagick, <a href="https://imagemagick.org">version 6</a>. They also illustrate what can be done using the ImageMagick Application Programming Interface (API). As such, these pages should be the first stop for IM users after reading the terse <a href="https://imagemagick.org/script/command-line-options.php">Command Line (CLI) Option manuals</a>.</p>
+              <p>Often, the same questions of "<i>How do I...</i>" gets asked, over and over again on the network. The examples in these web pages, I hope, will answer most of the common "how-to" questions that arise.</p>
+            </td>
+            <td rowspan="9">&nbsp;</td><!-- Logo and Links -->
+            <td rowspan="9">
+              <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                  <td colspan="2" align="center">
+                    <a href="https://imagemagick.org/Usage/"><img src="images/logo.gif" width="180" height="180" alt="[IM Logo]" border="1"></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="right">
+                    <a href="https://imagemagick.org/"><img src="version.gif" alt="[IM Version]" border="0"></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="center"><font size="-2"><a href="https://imagemagick.org/script/download.php" target="_blank">Download Page</a>,&nbsp; <a href="https://imagemagick.org/download/linux/CentOS/x86_64/" target="_blank">CentOS RPM</a>,<br>
+                  <a href="https://imagemagick.org/download/linux/SRPMS/" target="_blank">Linux SRPM</a>,&nbsp; <a href="https://imagemagick.org/download/beta/" target="_blank">Beta Release</a><br>
+                  <a href="https://github.com/ImageMagick/ImageMagick/discussions" target="_blank">Discussion Server</a></font></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><font size="-1">Other related sites...</font></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>
+                    <table cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><font size="-2"><a href="http://www.fmwconcepts.com/imagemagick/" target="blank">Fred's ImageMagick Scripts</a><br>
+                        <a href="http://www.rubblewebs.co.uk/imagemagick/imagemagick.php" target="_blank">RubbleWebs, PHP using IM CLI</a><br>
+                        <a href="https://im.snibgo.com/" target="_blank">Snibgo's ImageMagick pages</a></font></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2"><font size="-1">&nbsp;</font></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <a href="https://imagemagick.org/"><img src="img_www/granitesm_up.gif" border="0" width="15" height="15"> Main ImageMagick Web Site</a> <!--
    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
    <A HREF="http://www.ict.griffith.edu.au/anthony/graphics/"
       ><IMG SRC="img_www/granitesm_up.gif" BORDER=0 WIDTH=15 HEIGHT=15
       > Anthony's Graphics Lab</A>
    -->
-   
-</TD></TR>
-</TABLE>
-
-<!-- -------------------------------------------------------------------- -->
-<!--  Example Pages Index -->
-<TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><!-- Column 1 -->
-
-<TABLE CELLSPACING=0 CELLPADDING=0>
-<TR><TD></TD><TD>
-    <IMG SRC="img_www/speech_start.gif"  WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    &nbsp; <B>Practical Examples</B> &nbsp;
-    <IMG SRC="img_www/speech_start.gif"  WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    <IMG SRC="img_www/space.gif"         WIDTH=100 HEIGHT=1 ALT=" ">
-    </TD></TR>
-
-<TR><TD><A HREF="basics/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="basics/"
-    >Basic Usage</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Basic command and image handling
-    </FONT></TD></TR>
-<TR><TD><A HREF="files/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="files/"
-    >Image File Handling</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Reading and writing images
-    </FONT></TD></TR>
-<TR><TD><A HREF="formats/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="formats/"
-    >Common Image Formats</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Handling GIF, JPEG, and PNG images
-    </FONT></TD></TR>
-<TR><TD><A HREF="text/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="text/"
-    >Text to Image Handling</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Converting text into images
-    </FONT></TD></TR>
-<TR><TD><A HREF="fonts/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="fonts/"
-    >Compound Font Effects</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Font drawing styles and techniques
-    </FONT></TD></TR>
-<TR><TD><A HREF="annotating/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="annotating/"
-    >Annotating Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Labeling and overlaying images
-    </FONT></TD></TR>
-<TR><TD><A HREF="thumbnails/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="thumbnails/"
-    >Thumbnails and Framing</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Small reference images of large photos
-    </FONT></TD></TR>
-<TR><TD><A HREF="photos/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="photos/"
-    >Photo Handling</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Modifying photographs
-    </FONT></TD></TR>
-<TR><TD><A HREF="lens/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="lens/"
-    >Lens Correction</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Correcting photo distortions
-    </FONT></TD></TR>
-<TR><TD><A HREF="montage/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="montage/"
-    >Montage, Arrays of Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Image indexes and arrays
-    </FONT></TD></TR>
-<TR><TD><A HREF="layers/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="layers/"
-    >Layers of Multiple Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Combining multiple images together
-    </FONT></TD></TR>
-<TR><TD><A HREF="anim_basics/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="anim_basics/"
-    >Animation Basics</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Creation and study of animations
-    </FONT></TD></TR>
-<TR><TD><A HREF="anim_opt/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="anim_opt/"
-    >Animation Optimization</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Making GIF animations smaller
-    </FONT></TD></TR>
-<TR><TD><A HREF="anim_mods/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="anim_mods/"
-    >Animation Modifications</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Changing and merging animations
-    </FONT></TD></TR>
-<TR><TD><A HREF="video/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="video/"
-    >Video Handling</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Handling real life video images
-    </FONT></TD></TR>
-<TR><TD><A HREF="compare/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="compare/"
-    >Image Comparing</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Comparing two or more images
-    </FONT></TD></TR>
-<TR><TD><A HREF="advanced/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="advanced/"
-    >Advanced Techniques</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Complex manipulations of images
-    </FONT></TD></TR>
-<TR><TD><A HREF="backgrounds/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="backgrounds/"
-    >Background Examples</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Examples of creating random backgrounds
-    </FONT></TD></TR>
-<TR><TD>&nbsp;</TD></TR>
-<TR><TD><A HREF="repositories.html"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="repositories.html"
-    ><B>Repositories Links</B></A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Links to other IM scripts and info
-    </FONT></TD></TR>
-<TR><TD><A HREF="reference.html"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="reference.html"
-    ><B>Reference Index</B></A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Quick index for specific options
-    </FONT></TD></TR>
-<TR><TD><A HREF="scripts/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="scripts/"
-    ><B>Support Scripts</B></A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Shell scripts used by examples
-    </FONT></TD></TR>
-</TABLE>
-
-</TD><TD><!-- Column 2 -->
-
-<TABLE CELLSPACING=0 CELLPADDING=0>
-<TR><TD></TD><TD>
-    <IMG SRC="img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    &nbsp; <B>Basic Techniques</B> &nbsp;
-    <IMG SRC="img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    <IMG SRC="img_www/space.gif"        WIDTH=100 HEIGHT=1 ALT=" ">
-    </TD></TR>
-
-<TR><TD><A HREF="canvas/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="canvas/"
-    >Canvas Creation</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Creating canvas and background images
-    </FONT></TD></TR>
-<TR><TD><A HREF="color_basics/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="color_basics/"
-    >Color Basics and Channels</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Low level color handling
-    </FONT></TD></TR>
-<TR><TD><A HREF="color_mods/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="color_mods/"
-    >Color Modifications</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    General color changes
-    </FONT></TD></TR>
-<TR><TD><A HREF="masking/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="masking/"
-    >Masking and Background Removal</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Alpha channel, and transparency handling
-    </FONT></TD></TR>
-<TR><TD><A HREF="quantize/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="quantize/"
-    >Color Quantization and Dithering</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Reducing the number of colors
-    </FONT></TD></TR>
-<TR><TD><A HREF="crop/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="crop/"
-    >Cutting and Bordering</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Slicing, dicing, framing, trimming
-    </FONT></TD></TR>
-<TR><TD><A HREF="resize/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="resize/"
-    >Resizing or Scaling</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Enlarging and shrinking images
-    </FONT></TD></TR>
-<TR><TD><A HREF="filter/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="filter/"
-    >Resampling Filters</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Controlling image resizing
-    </FONT></TD></TR>
-<TR><TD><A HREF="compose/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="compose/"
-    >Compositing Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Overlaying and merging two images
-    </FONT></TD></TR>
-<TR><TD><A HREF="draw/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="draw/"
-    >Drawing on Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Vector graphics, MVG and SVG images
-    </FONT></TD></TR>
-<TR><TD><A HREF="warping/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="warping/"
-    >Simple Image Warping</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Flipping, rotating, twisting
-    </FONT></TD></TR>
-<TR><TD><A HREF="distorts/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="distorts/"
-    >Distorting Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Carnival house of mirrors
-    </FONT></TD></TR>
-<TR><TD><A HREF="transform/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="transform/"
-    >Image Transformations</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Drastic changes to the look of an image
-    </FONT></TD></TR>
-<TR><TD><A HREF="mapping/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="mapping/"
-    >Image Mapping Effects</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Lens, glass and ripple effects
-    </FONT></TD></TR>
-<TR><TD><A HREF="blur/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="blur/"
-    >Blurring and Sharpening Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Blurring, sharpening and shadows
-    </FONT></TD></TR>
-<TR><TD><A HREF="morphology/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="morphology/"
-    >Morphology of Shapes</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Using pixel neighbourhoods
-    </FONT></TD></TR>
-<TR><TD><A HREF="convolve/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="convolve/"
-    >Convolution of Images</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Weighted averaged neighbourhoods
-    </FONT></TD></TR>
-<TR><TD><A HREF="fourier/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="fourier/"
-    >Fourier Transforms</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Modifying images in the frequency domain
-    </FONT></TD></TR>
-<TR><TD><A HREF="antialiasing/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="antialiasing/"
-    >Anti-Aliasing</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Anti-aliasing effects and problems
-    </FONT></TD></TR>
-<TR><TD><A HREF="misc/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="misc/"
-    >Miscellaneous</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Bits and pieces
-    </FONT></TD></TR>
-<TR><TD><A HREF="api/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="api/"
-    >APIs, Scripting, Building</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Usage in other environments
-    </FONT></TD></TR>
-<TR><TD><A HREF="windows/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="windows/"
-    >Usage under Windows</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    IM on Windows PC
-    </FONT></TD></TR>
-<TR><TD><A HREF="bugs/"
-    ><IMG SRC="img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    ></A></TD><TD>&nbsp;<A HREF="bugs/"
-    >Development and Bugs</A>
-    <FONT SIZE=-1><BR><IMG SRC="img_www/space.gif" WIDTH=10 HEIGHT=1>
-    Development proposals and bugs, new and old
-    </FONT></TD></TR>
-</TABLE>
-
-</TD></TR></TABLE><!-- columning -->
-
-<B>Legend for symbols used within example pages...</B>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR>
-<TD><IMG SRC="img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="img_www/space.gif"   WIDTH=10 HEIGHT=16></TD>
-<TD>Hint, tips or extra info</TD>
-<TD></TD>
-<TD><IMG SRC="img_www/expert.gif"   WIDTH=23 HEIGHT=26
-    ><IMG SRC="img_www/space.gif"   WIDTH=07 HEIGHT=16></TD>
-<TD>For more advanced users</TD>
-<TD></TD>
-<TD><IMG SRC="img_www/warning.gif"  WIDTH=28 HEIGHT=28
-    ><IMG SRC="img_www/space.gif"   WIDTH=02 HEIGHT=16></TD>
-<TD>Older version warnings</TD>
-</TR></TABLE>
-
-<B>Test Image Storage Directories...</B> &nbsp;
-<A HREF="images/" >Small Images</A>
-(<A HREF="images/INDEX.html" >image display</A>), &nbsp;&nbsp;&nbsp;
-<A HREF="img_photos/" >Photographs</A>
-(<A HREF="img_photos/INDEX.html" >fancy index</A>).
-
-<div>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<H2>ImageMagick Examples - Introductory Notes</H2>
-
-<H3>What is ImageMagick?  A No-Holds-Barred Summary</H3>
-
-<p><A HREF="https://imagemagick.org/script/index.php" >ImageMagick</A> is
-designed for batch processing of images.  That is, it allows you to combine
-image processing operations in a script (shell, DOS, Perl, PHP, etc.) so
-the operations can be applied to many images, or as
-a sub-system of some other tool, such as a Web application, video
-processing tool, panorama generator, etc.  <I>It is not a GUI image
-editor</i>. </P>
-
-<p>ImageMagick is, first of all, an image-to-image converter. That is what it was
-originally designed to do.  That is, it will convert an image in just about
-any image format (tell us if it can't) to any other image format.  </P>
-
-<p>But it is also a library of <I>image processing algorithms</I>.  These can be
-access via the command line and shell/DOS scripts (which these example pages
-demonstrate), or via a large number of programming languages, such as C, C++,
-Perl, Ruby, PHP, etc.  See: <A
-HREF="https://imagemagick.org/script/develop.php" >ImageMagick APIs</A>. </P>
-
-<p>Speed was never a major feature of IM, which places more emphasis on the
-quality of the images it generates.  That is not to say that it can't
-transform images in a reasonable amount of time. It's just not blindingly
-fast.  Because of this, IM can be slow to perform certain processing
-operations, especially when attempting to compress images into image formats
-that have limited capabilities. </P>
-
-<p>ImageMagick concerns itself mainly with images in the form of a <I>rectangular
-array of pixels</I>, commonly called a "raster."  It will handle "vector"
-image formats like Postscript or PDF, but at the cost of converting those
-images into a raster when loading them, and generating a vector image wrapper
-around the raster when saving it.  As a result, vector images are often
-processed badly when using the default settings.  However, specific options
-can be used to improve this situation.  See: <A
-HREF="formats/#vector" >A word about vector image formats</A>.  </P>
-
-
-<H3>About These Examples of ImageMagick Usage</H3>
-
-<p>These pages were developed from, and are a continuation of, my <A
-HREF="https://antofthy.gitlab.io/info/graphics/imagemagick.txt"
->Collection of ImageMagick Hints and Tips</A> page I first started in 1993,
-and placed on the new fangled world-wide-web making its appearance around the
-same time.  Information on many aspects of IM, and notes not included in these
-pages, are still present in that document.  However, while the present pages
-were designed for you to look at, the hints and tips document was only for my
-own edification.  So, it may be vague or chaotic in places.  You are welcome
-to look at it, learn, and make comments on it.  </P>
-
-<p>Other examples were grabbed or developed from answers to users' questions on
-he <A HREF="https://imagemagick.org/Usage/forum_link.cgi?f=1" >IM
-Forums</A>, or contributed to me as solutions to various problems. </P>
-
-<p>I look forward to suggestions and e-mail from other IM users.  Such e-mail
-generally results in improvements and expansions to these example pages.
-</P>
-
-<H3>Command Line Environments</H3>
-
-<p>All examples are written for use on UNIX, and specifically GNU/Linux systems,
-using BASH scripting.  As a consequence, some examples use shell 'for-do'
-loops. Most examples use a backslash '<CODE>\</CODE>' at the end of a line to
-continue that command on the next line.  The longer commands are broken into
-separate lines to try to further highlight the steps being applied. </P>
-
-<p>However, you can still use these examples from <B>PC Windows batch
-scripts</B>, with some changes to the handling of certain characters.  With
-some slight adaptation, the examples can also be run directly from
-'<CODE>system</CODE>' calls in <B>PHP scripts</B>.  </P>
-
-<p>See <A HREF="windows/" >Windows Usage</A> and <A HREF="api/index.html" >APIs
-and Scripting</A> for more information on using the ImageMagick commands in
-these alternative environments. Contributions and test examples are welcome.
-</P>
-
-
-<H3>PerlMagick, and Other APIs</H3>
-
-<p>It should also be possible to adapt any of these examples to use the IM API
-from languages such as Perl, C, C++, Ruby, PHP, and so on.  I recommend trying
-things out on the command line first, until you get them right, and then
-converting the operations to the specific API you are using. </P>
-
-<p>Although the situation has improved enormously with IM version 6, the command
-line really only deals with a single image sequence at any one time. However,
-APIs do not have this limitation, and allow you to manipulate multiple image
-sequences, separately or together, to perform more complex operations.  This
-ability makes it simpler to implement these examples using the IM API, and
-removes the need to save images as temporary files, as many of the command
-line examples require. When using an API, only permanent and semi-permanent
-images need be saved to disk. </P>
-
-<p>Basically, let the example pages give you a start, to let you see what
-is possible with ImageMagick.  Then, formulate what you want to do on
-the command line, before coding the operations in scripts and API
-code, where it is harder to make extensive changes. </P>
-
-<p>I also recommend that you comment your API code, <B>heavily</B>, adding the
-command line equivalents to what you are trying to do, if possible. That way,
-you can check and compare the results against those using the command line.
-This lets you debug problems that you may come across later, especially as
-improvements are made to image processing in the Core ImageMagick Library.
-</P>
-
-<H3>Downloading Input Images and Results</H3>
-
-<p>As much as possible, I try to use images built-into IM (such as
-"<CODE>logo:</CODE>" or "<CODE>rose:</CODE>") as input images for IM example
-commands, or to generate input images using IM commands.  I also often re-use
-the output of previous commands in later examples.  Because of this, you
-usually don't need to download any 'test' images in order to try out the
-examples yourself. </P>
-
-<p>However, such generated or built-in images are not always convenient.  So,
-when I do use an external image, I tend to re-use that input image, or the
-results of previous examples, for later examples in that section. </P>
-
-<p>Sometimes the original source image will be displayed or for larger images
-a link to the source image is provided. More commonly only the final resulting
-image will be shown, as the input is well known or obvious. </P>
-
-<p>Almost all the IM example commands shown are executed in the same web
-directory in which they appear.  That is, the command you see is the command
-that was actually used to generate the image. Because of this you can modify
-the page's URL to download or view the input image(s) used by an example.
-Extra copies of the external source images have also been placed in the "<A
-HREF="images/" >images</A>" and "<A HREF="img_photos/" >img_photos</A>"
-sub-directories.  See also the example of a <A HREF="img_photos/INDEX.html"
->Fancy Photo Index</A> of those images. </P>
-
-
-<p>If text output or image information is produced by an example, it is saved to
-a text file, and an image of it is generated for display on the Web page.
-Selecting the text output image will link you to a copy of the actual text
-output by the command.  </P>
-
-<p>In all these examples, selecting the output image should let you download the
-image which was actually created by the example command. But be warned, not
-all browsers understand all image formats used. </P>
-
-<H3>External Image Sources</H3>
-
-<p>By the way, most of the source images used in these examples come from <A
-HREF="https://antofthy.gitlab.io/icons/" >Anthony's Icon
-Library</A>, particularly the  <A
-HREF="https://antofthy.gitlab.io/icons/desc/cl-bgnd/Icons.html"
->background tiles</A>, <A
-HREF="https://antofthy.gitlab.io/icons/large/Icons.html" >large
-clip-art</A>, and <A
-HREF="https://antofthy.gitlab.io/icons/dragons/Icons.html"
->dragons</A> sections of the library. (I like dragons!).  ASIDE: these pages
-may be offline as the web site slowly moves to a new server.  </P>
-
-<p>This library actually predates the WWW. I created it in 1991, due to the lack
-of good, clean iconic images for use on the X Window System.  The advent of
-the WWW has of course changed this, but my original library still exists and
-remains available as a source of images, even though it is not actively
-growing.  </P>
-
-<p>Some specific images, and larger images, are contributed by the authors of
-specific examples.  The authors of such examples are listed in the contributed
-section, or at the bottom of the page. </P>
-
-<p>If you are looking for a specific image, I recommend using <A
-HREF="http://images.google.com/imghp" >Google Image Search</A> (or similar) to
-find something appropriate. You can, of course, convert or resize such images
-using IM for your own purposes.  However, you should be careful about
-copyright if you plan to use such images commercially. </P>
-
-
-<A NAME="PNG"></A>
-<H3>PNG Images on Web Pages</H3>
-
-<A HREF="images/test.png"
-  ><IMG SRC="images/test.png"       WIDTH=150 HEIGHT=100
-        ALIGN=right VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-
-<p>In many examples, I use an image in PNG format, such as that shown to the
-right of this text.  The PNG image format supports images with
-semi-transparent pixels, a feature few other image formats provide.  It is
-also a very well-understood image format and, as such, is usable by most of
-today's image programs and Web browsers.  </P>
-
-<p>Some Web browsers, however, do NOT handle transparent PNG images correctly
-(most notably Microsoft Internet Explorer v6).  Because of this, I generally
-use the JPEG and GIF formats for images on the Web, and only use the PNG
-format when generating images with semi-transparent pixels, or when exact
-colors are needed for later examples. </P>
-
-<p>To allow IE v6 browsers to display PNG images, I use a special 'style sheet'
-using complex JavaScript.  For information on this, see <A
-HREF="http://www.ict.griffith.edu.au/anthony/wwwlab/pngtest/" >PNG with
-transparency for IE</A>. Technically, this is only problem with IE, not
-ImageMagick. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
-
-<A NAME="display"></A>
-<H3>Displaying Images on Your Screen</H3>
-
-<p>Display problems can also occur when displaying images on-screen.  Because of
-this, I recommend using a command like the following to tile
-a '<CODE>checkerboard</CODE>' pattern underneath the image, to highlight any
-transparent or semi-transparent pixels in it.</p>
-
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>   magick composite -compose Dst_Over -tile pattern:checkerboard image.png x:</samp></pre></TD></TR></TABLE>
-</TD><TD>
-   <A HREF="test_undertile.jpg"
-      ><IMG SRC="test_undertile.jpg"       WIDTH=150 HEIGHT=100
-            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE>
-
-<p>The image displayed in the above example is a special PNG-format <A
-HREF="images/test.png" >test image</A>, which was generated using the shell
-script "<CODE><A HREF="scripts/generate_test" >generate_test</A></CODE>".
-Normally, the command would output the results to your display, not onto a Web
-page like this.  </P>
-
-<p>If you look carefully, you can see the checkerboard pattern though the
-semi-transparent colors. However, the image, as a whole, is fully opaque.  So,
-this technique should work on all displays, Web browsers, and image viewers.
-</P>
-
-<p>As of IM v6.0.2, the "<code>magick display</code>" program performs something like
-this automatically.  However, it does not seem to handle images using color
-tables (i.e., GIF) in this way. Using the "<CODE>x:</CODE>" output image format
-(as above) causes an image to be displayed directly to the screen, without
-having to save it.  See <A HREF="files/#show" >Show Output Display</A> for more
-information.  </P>
-
-
-<A NAME="font"></A>
-<H3>Font Usage</H3>
-
-<p>The fonts I use in these examples are from a small collection of TrueType fonts
-I have found over the years, and saved for my own use. Some of these are under
-copyright, so I cannot publish them online. </P>
-
-<p>You are, however, welcome to substitute other fonts that you have available.
-The examples should work (perhaps with some changes to image size) with any
-appropriate font you have available on your system.  Microsoft "Arial" font, or
-even "Times-BoldItalic", should work on most systems.  </P>
-
-<p>To see what fonts are currently available to your version of IM, run the
-following command...</p>
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>   magick -list font</samp></pre></TD></TR></TABLE>
-</DIV>
-
-<p>WARNING: If the font requested is not found, ImageMagick used to silently
-substitute a default font, typically Arial or Times.  It still does this, but a
-warning is now given.  So, test the font beforehand, to make sure that it is
-the one you want, and not the default font. </P>
-
-<p>On my Linux system, I use a special Perl script, "<CODE><A
-HREF="scripts/imagick_type_gen" ><B>imagick_type_gen</B></A></CODE>", to
-generate a file, "<CODE>type.xml</CODE>", saved in the "<CODE>.magick</CODE>"
-sub-directory of my home directory.  ImageMagick uses that file, which contains
-a font list in XML format, to find fonts. The script "<CODE>locate</CODE>"s
-(run "<CODE>updatedb</CODE>" first, if you have just added new fonts), and
-describes all the fonts available on my system.  With this setup, I only need
-to specify the name of the font I want to use, and not the full path to a
-specific font file. </P>
-
-For example...
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE >   # Instead of using the command...
+            </td>
+          </tr>
+        </table><!-- -------------------------------------------------------------------- -->
+        <!--  Example Pages Index -->
+        <table cellspacing="0" cellpadding="0" width="90%" align="center">
+          <tr valign="top">
+            <td>
+              <!-- Column 1 -->
+              <table cellspacing="0" cellpadding="0">
+                <tr>
+                  <td></td>
+                  <td><img src="img_www/speech_start.gif" width="50" height="8" alt=" ----- "> &nbsp; <b>Practical Examples</b> &nbsp; <img src="img_www/speech_start.gif" width="50" height="8" alt=" ----- "> <img src="img_www/space.gif" width="100" height="1" alt=" "></td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="basics/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="basics/">Basic Usage</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Basic command and image handling</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="files/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="files/">Image File Handling</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Reading and writing images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="formats/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="formats/">Common Image Formats</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Handling GIF, JPEG, and PNG images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="text/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="text/">Text to Image Handling</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Converting text into images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="fonts/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="fonts/">Compound Font Effects</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Font drawing styles and techniques</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="annotating/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="annotating/">Annotating Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Labeling and overlaying images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="thumbnails/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="thumbnails/">Thumbnails and Framing</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Small reference images of large photos</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="photos/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="photos/">Photo Handling</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Modifying photographs</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="lens/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="lens/">Lens Correction</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Correcting photo distortions</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="montage/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="montage/">Montage, Arrays of Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Image indexes and arrays</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="layers/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="layers/">Layers of Multiple Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Combining multiple images together</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="anim_basics/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="anim_basics/">Animation Basics</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Creation and study of animations</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="anim_opt/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="anim_opt/">Animation Optimization</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Making GIF animations smaller</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="anim_mods/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="anim_mods/">Animation Modifications</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Changing and merging animations</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="video/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="video/">Video Handling</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Handling real life video images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="compare/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="compare/">Image Comparing</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Comparing two or more images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="advanced/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="advanced/">Advanced Techniques</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Complex manipulations of images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="backgrounds/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="backgrounds/">Background Examples</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Examples of creating random backgrounds</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="repositories.html"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="repositories.html"><b>Repositories Links</b></a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Links to other IM scripts and info</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="reference.html"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="reference.html"><b>Reference Index</b></a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Quick index for specific options</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="scripts/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="scripts/"><b>Support Scripts</b></a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Shell scripts used by examples</font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <!-- Column 2 -->
+              <table cellspacing="0" cellpadding="0">
+                <tr>
+                  <td></td>
+                  <td><img src="img_www/speech_start.gif" width="50" height="8" alt=" ----- "> &nbsp; <b>Basic Techniques</b> &nbsp; <img src="img_www/speech_start.gif" width="50" height="8" alt=" ----- "> <img src="img_www/space.gif" width="100" height="1" alt=" "></td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="canvas/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="canvas/">Canvas Creation</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Creating canvas and background images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="color_basics/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="color_basics/">Color Basics and Channels</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Low level color handling</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="color_mods/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="color_mods/">Color Modifications</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> General color changes</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="masking/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="masking/">Masking and Background Removal</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Alpha channel, and transparency handling</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="quantize/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="quantize/">Color Quantization and Dithering</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Reducing the number of colors</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="crop/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="crop/">Cutting and Bordering</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Slicing, dicing, framing, trimming</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="resize/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="resize/">Resizing or Scaling</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Enlarging and shrinking images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="filter/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="filter/">Resampling Filters</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Controlling image resizing</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="compose/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="compose/">Compositing Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Overlaying and merging two images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="draw/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="draw/">Drawing on Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Vector graphics, MVG and SVG images</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="warping/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="warping/">Simple Image Warping</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Flipping, rotating, twisting</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="distorts/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="distorts/">Distorting Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Carnival house of mirrors</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="transform/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="transform/">Image Transformations</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Drastic changes to the look of an image</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="mapping/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="mapping/">Image Mapping Effects</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Lens, glass and ripple effects</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="blur/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="blur/">Blurring and Sharpening Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Blurring, sharpening and shadows</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="morphology/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="morphology/">Morphology of Shapes</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Using pixel neighbourhoods</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="convolve/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="convolve/">Convolution of Images</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Weighted averaged neighbourhoods</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="fourier/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="fourier/">Fourier Transforms</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Modifying images in the frequency domain</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="antialiasing/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="antialiasing/">Anti-Aliasing</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Anti-aliasing effects and problems</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="misc/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="misc/">Miscellaneous</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Bits and pieces</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="api/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="api/">APIs, Scripting, Building</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Usage in other environments</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="windows/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="windows/">Usage under Windows</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> IM on Windows PC</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="bugs/"><img src="img_www/granitesm_right.gif" border="0" width="15" height="15"></a>
+                  </td>
+                  <td>
+                    &nbsp;<a href="bugs/">Development and Bugs</a> <font size="-1"><br>
+                    <img src="img_www/space.gif" width="10" height="1"> Development proposals and bugs, new and old</font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table><!-- columning -->
+        <b>Legend for symbols used within example pages...</b>
+        <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+          <tr>
+            <td><img src="img_www/reminder.gif" width="20" height="16"><img src="img_www/space.gif" width="10" height="16"></td>
+            <td>Hint, tips or extra info</td>
+            <td></td>
+            <td><img src="img_www/expert.gif" width="23" height="26"><img src="img_www/space.gif" width="07" height="16"></td>
+            <td>For more advanced users</td>
+            <td></td>
+            <td><img src="img_www/warning.gif" width="28" height="28"><img src="img_www/space.gif" width="02" height="16"></td>
+            <td>Older version warnings</td>
+          </tr>
+        </table><b>Test Image Storage Directories...</b> &nbsp; <a href="images/">Small Images</a> (<a href="images/INDEX.html">image display</a>), &nbsp;&nbsp;&nbsp; <a href="img_photos/">Photographs</a> (<a href="img_photos/INDEX.html">fancy index</a>).
+        <div>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <h2>ImageMagick Examples - Introductory Notes</h2>
+          <h3>What is ImageMagick? A No-Holds-Barred Summary</h3>
+          <p><a href="https://imagemagick.org/script/index.php">ImageMagick</a> is designed for batch processing of images. That is, it allows you to combine image processing operations in a script (shell, DOS, Perl, PHP, etc.) so the operations can be applied to many images, or as a sub-system of some other tool, such as a Web application, video processing tool, panorama generator, etc. <i>It is not a GUI image editor</i>.</p>
+          <p>ImageMagick is, first of all, an image-to-image converter. That is what it was originally designed to do. That is, it will convert an image in just about any image format (tell us if it can't) to any other image format.</p>
+          <p>But it is also a library of <i>image processing algorithms</i>. These can be access via the command line and shell/DOS scripts (which these example pages demonstrate), or via a large number of programming languages, such as C, C++, Perl, Ruby, PHP, etc. See: <a href="https://imagemagick.org/script/develop.php">ImageMagick APIs</a>.</p>
+          <p>Speed was never a major feature of IM, which places more emphasis on the quality of the images it generates. That is not to say that it can't transform images in a reasonable amount of time. It's just not blindingly fast. Because of this, IM can be slow to perform certain processing operations, especially when attempting to compress images into image formats that have limited capabilities.</p>
+          <p>ImageMagick concerns itself mainly with images in the form of a <i>rectangular array of pixels</i>, commonly called a "raster." It will handle "vector" image formats like Postscript or PDF, but at the cost of converting those images into a raster when loading them, and generating a vector image wrapper around the raster when saving it. As a result, vector images are often processed badly when using the default settings. However, specific options can be used to improve this situation. See: <a href="formats/#vector">A word about vector image formats</a>.</p>
+          <h3>About These Examples of ImageMagick Usage</h3>
+          <p>These pages were developed from, and are a continuation of, my <a href="https://antofthy.gitlab.io/info/graphics/imagemagick.txt">Collection of ImageMagick Hints and Tips</a> page I first started in 1993, and placed on the new fangled world-wide-web making its appearance around the same time. Information on many aspects of IM, and notes not included in these pages, are still present in that document. However, while the present pages were designed for you to look at, the hints and tips document was only for my own edification. So, it may be vague or chaotic in places. You are welcome to look at it, learn, and make comments on it.</p>
+          <p>Other examples were grabbed or developed from answers to users' questions on he <a href="https://imagemagick.org/Usage/forum_link.cgi?f=1">IM Forums</a>, or contributed to me as solutions to various problems.</p>
+          <p>I look forward to suggestions and e-mail from other IM users. Such e-mail generally results in improvements and expansions to these example pages.</p>
+          <h3>Command Line Environments</h3>
+          <p>All examples are written for use on UNIX, and specifically GNU/Linux systems, using BASH scripting. As a consequence, some examples use shell 'for-do' loops. Most examples use a backslash '<code>\</code>' at the end of a line to continue that command on the next line. The longer commands are broken into separate lines to try to further highlight the steps being applied.</p>
+          <p>However, you can still use these examples from <b>PC Windows batch scripts</b>, with some changes to the handling of certain characters. With some slight adaptation, the examples can also be run directly from '<code>system</code>' calls in <b>PHP scripts</b>.</p>
+          <p>See <a href="windows/">Windows Usage</a> and <a href="api/index.html">APIs and Scripting</a> for more information on using the ImageMagick commands in these alternative environments. Contributions and test examples are welcome.</p>
+          <h3>PerlMagick, and Other APIs</h3>
+          <p>It should also be possible to adapt any of these examples to use the IM API from languages such as Perl, C, C++, Ruby, PHP, and so on. I recommend trying things out on the command line first, until you get them right, and then converting the operations to the specific API you are using.</p>
+          <p>Although the situation has improved enormously with IM version 6, the command line really only deals with a single image sequence at any one time. However, APIs do not have this limitation, and allow you to manipulate multiple image sequences, separately or together, to perform more complex operations. This ability makes it simpler to implement these examples using the IM API, and removes the need to save images as temporary files, as many of the command line examples require. When using an API, only permanent and semi-permanent images need be saved to disk.</p>
+          <p>Basically, let the example pages give you a start, to let you see what is possible with ImageMagick. Then, formulate what you want to do on the command line, before coding the operations in scripts and API code, where it is harder to make extensive changes.</p>
+          <p>I also recommend that you comment your API code, <b>heavily</b>, adding the command line equivalents to what you are trying to do, if possible. That way, you can check and compare the results against those using the command line. This lets you debug problems that you may come across later, especially as improvements are made to image processing in the Core ImageMagick Library.</p>
+          <h3>Downloading Input Images and Results</h3>
+          <p>As much as possible, I try to use images built-into IM (such as "<code>logo:</code>" or "<code>rose:</code>") as input images for IM example commands, or to generate input images using IM commands. I also often re-use the output of previous commands in later examples. Because of this, you usually don't need to download any 'test' images in order to try out the examples yourself.</p>
+          <p>However, such generated or built-in images are not always convenient. So, when I do use an external image, I tend to re-use that input image, or the results of previous examples, for later examples in that section.</p>
+          <p>Sometimes the original source image will be displayed or for larger images a link to the source image is provided. More commonly only the final resulting image will be shown, as the input is well known or obvious.</p>
+          <p>Almost all the IM example commands shown are executed in the same web directory in which they appear. That is, the command you see is the command that was actually used to generate the image. Because of this you can modify the page's URL to download or view the input image(s) used by an example. Extra copies of the external source images have also been placed in the "<a href="images/">images</a>" and "<a href="img_photos/">img_photos</a>" sub-directories. See also the example of a <a href="img_photos/INDEX.html">Fancy Photo Index</a> of those images.</p>
+          <p>If text output or image information is produced by an example, it is saved to a text file, and an image of it is generated for display on the Web page. Selecting the text output image will link you to a copy of the actual text output by the command.</p>
+          <p>In all these examples, selecting the output image should let you download the image which was actually created by the example command. But be warned, not all browsers understand all image formats used.</p>
+          <h3>External Image Sources</h3>
+          <p>By the way, most of the source images used in these examples come from <a href="https://antofthy.gitlab.io/icons/">Anthony's Icon Library</a>, particularly the <a href="https://antofthy.gitlab.io/icons/desc/cl-bgnd/Icons.html">background tiles</a>, <a href="https://antofthy.gitlab.io/icons/large/Icons.html">large clip-art</a>, and <a href="https://antofthy.gitlab.io/icons/dragons/Icons.html">dragons</a> sections of the library. (I like dragons!). ASIDE: these pages may be offline as the web site slowly moves to a new server.</p>
+          <p>This library actually predates the WWW. I created it in 1991, due to the lack of good, clean iconic images for use on the X Window System. The advent of the WWW has of course changed this, but my original library still exists and remains available as a source of images, even though it is not actively growing.</p>
+          <p>Some specific images, and larger images, are contributed by the authors of specific examples. The authors of such examples are listed in the contributed section, or at the bottom of the page.</p>
+          <p>If you are looking for a specific image, I recommend using <a href="http://images.google.com/imghp">Google Image Search</a> (or similar) to find something appropriate. You can, of course, convert or resize such images using IM for your own purposes. However, you should be careful about copyright if you plan to use such images commercially.</p><a name="PNG" id="PNG"></a>
+          <h3>PNG Images on Web Pages</h3><a href="images/test.png"><img src="images/test.png" width="150" height="100" align="right" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+          <p>In many examples, I use an image in PNG format, such as that shown to the right of this text. The PNG image format supports images with semi-transparent pixels, a feature few other image formats provide. It is also a very well-understood image format and, as such, is usable by most of today's image programs and Web browsers.</p>
+          <p>Some Web browsers, however, do NOT handle transparent PNG images correctly (most notably Microsoft Internet Explorer v6). Because of this, I generally use the JPEG and GIF formats for images on the Web, and only use the PNG format when generating images with semi-transparent pixels, or when exact colors are needed for later examples.</p>
+          <p>To allow IE v6 browsers to display PNG images, I use a special 'style sheet' using complex JavaScript. For information on this, see <a href="http://www.ict.griffith.edu.au/anthony/wwwlab/pngtest/">PNG with transparency for IE</a>. Technically, this is only problem with IE, not ImageMagick.</p>
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr valign="bottom">
+              <td width="100%" align="justify">
+                <a name="display" id="display"></a>
+                <h3>Displaying Images on Your Screen</h3>
+                <p>Display problems can also occur when displaying images on-screen. Because of this, I recommend using a command like the following to tile a '<code>checkerboard</code>' pattern underneath the image, to highlight any transparent or semi-transparent pixels in it.</p>
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>   magick composite -compose Dst_Over -tile pattern:checkerboard image.png x:</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="test_undertile.jpg"><img src="test_undertile.jpg" width="150" height="100" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>
+          <p>The image displayed in the above example is a special PNG-format <a href="images/test.png">test image</a>, which was generated using the shell script "<code><a href="scripts/generate_test">generate_test</a></code>". Normally, the command would output the results to your display, not onto a Web page like this.</p>
+          <p>If you look carefully, you can see the checkerboard pattern though the semi-transparent colors. However, the image, as a whole, is fully opaque. So, this technique should work on all displays, Web browsers, and image viewers.</p>
+          <p>As of IM v6.0.2, the "<code>magick display</code>" program performs something like this automatically. However, it does not seem to handle images using color tables (i.e., GIF) in this way. Using the "<code>x:</code>" output image format (as above) causes an image to be displayed directly to the screen, without having to save it. See <a href="files/#show">Show Output Display</a> for more information.</p><a name="font" id="font"></a>
+          <h3>Font Usage</h3>
+          <p>The fonts I use in these examples are from a small collection of TrueType fonts I have found over the years, and saved for my own use. Some of these are under copyright, so I cannot publish them online.</p>
+          <p>You are, however, welcome to substitute other fonts that you have available. The examples should work (perhaps with some changes to image size) with any appropriate font you have available on your system. Microsoft "Arial" font, or even "Times-BoldItalic", should work on most systems.</p>
+          <p>To see what fonts are currently available to your version of IM, run the following command...</p>
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>   magick -list font</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <p>WARNING: If the font requested is not found, ImageMagick used to silently substitute a default font, typically Arial or Times. It still does this, but a warning is now given. So, test the font beforehand, to make sure that it is the one you want, and not the default font.</p>
+          <p>On my Linux system, I use a special Perl script, "<code><a href="scripts/imagick_type_gen"><b>imagick_type_gen</b></a></code>", to generate a file, "<code>type.xml</code>", saved in the "<code>.magick</code>" sub-directory of my home directory. ImageMagick uses that file, which contains a font list in XML format, to find fonts. The script "<code>locate</code>"s (run "<code>updatedb</code>" first, if you have just added new fonts), and describes all the fonts available on my system. With this setup, I only need to specify the name of the font I want to use, and not the full path to a specific font file.</p>For example...
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre><code do_not_execute="">   # Instead of using the command...
    magick -font $HOME/lib/font/truetype/favorite/candice.ttf \
            -pointsize 72 label:Anthony  anthony.gif
 
    # I can use the simpler font label...
    magick -font Candice -pointsize 72 label:Anthony  anthony.gif
-</samp></pre></TD></TR></TABLE>
-</DIV>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="img_www/warning.gif"  WIDTH=28 HEIGHT=28
-    ><IMG SRC="img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-    Before IM v6.1.2-3, the "<CODE>type.xml</CODE>" file was named
-    "<CODE>type.mgk</CODE>".  If you are using an earlier version of IM.
-</I></FONT></TD></TR></TABLE>
-
-<p>The fonts used in these IM examples are listed in a <A
-HREF="montage/#fonts">Montage of Example Fonts Example</A>.  My
-personal favorite is Candice, so it gets used quite a bit. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-   If you also like the '<CODE>Candice</CODE>' font, or any of the other fonts
-   I use, grab them from <A
-   HREF="http://www.webpagepublicity.com/free-fonts.html" >Free Fonts</A> or
-   <A HREF="http://www.1001fonts.com/" >1001 Fonts .com</A>.
-</I></FONT></TD></TR></TABLE>
-
-
-
-<H3>Example Page Updates</H3>
-
-<p>These example pages are in an on-going cycle of improvement. Generally, I find
-I stop adding to these pages for long periods of time, when my interests become
-focused on other things. </P>
-
-<p>Often these examples are re-built using the latest beta release of IM, allowing
-me to see changes and bugs that may appear in each version of IM, before it is
-generally released. However, the example images shown are what the given IM
-command produces on <B>my</B> system.  If you get something different, your IM
-is probably a much older version (with old bugs), or is not correctly
-installed. </P>
-
-<p>Note that e-mailing me, or discussing some aspect of ImageMagick on the <A
-HREF="https://github.com/ImageMagick/ImageMagick/discussions" >discussions forum</A> will generally result in new
-examples, or whole new sections, being added to these examples.  The more
-discussion there is, the better the examples become. </P>
-
-<p>If you are doing anything interesting with IM, please share, and allow me to
-provide examples of your technique to the rest of the IM community. Some of the
-biggest advances in IM usage have come from users just like you. </P>
-
-
-<H3>Special Thanks</H3>
-
-<p>A special thank you goes to Cristy, who has tirelessly spent months, upgrading,
-bug-fixing, and putting up with my off-the-wall suggestions... especially with
-regards to my major suggestions for the command line processing, parenthesis,
-image sequence operators, and GIF animation processing.  </P>
-
-<p>He has done a marvelous job making Version 7 the best and most advanced command
-line image processing program available.  While most users will not show
-appreciation for that, I certainly do appreciate the effort he has put into IM.
-</P>
-
-<p>I also want to thank Gabe Schaffer, who has been most helpful in discussions
-involving the JPEG format and library, affine matrix operators, and <A
-HREF="https://imagemagick.org/script/magick-vector-graphics.php" >Magick
-Vector Graphics</A> in general. </P>
-
-<p>And to Glenn Randers-Pehrson, who wrote the PNG coder module and had an
-interest in Color Quantization and Dithering. He was the first to add
-'halftone' dithering to IM, which I later revised and extended further, to
-added new dithers to the ordered dither configuration file.  </P>
-
-<!-- who is the Ruby on Rails person?
+</code></pre>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="img_www/warning.gif" width="28" height="28"><img src="img_www/space.gif" width="12" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>Before IM v6.1.2-3, the "<code>type.xml</code>" file was named "<code>type.mgk</code>". If you are using an earlier version of IM.</i></font></td>
+            </tr>
+          </table>
+          <p>The fonts used in these IM examples are listed in a <a href="montage/#fonts">Montage of Example Fonts Example</a>. My personal favorite is Candice, so it gets used quite a bit.</p>
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="img_www/reminder.gif" width="20" height="16"><img src="img_www/space.gif" width="20" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>If you also like the '<code>Candice</code>' font, or any of the other fonts I use, grab them from <a href="http://www.webpagepublicity.com/free-fonts.html">Free Fonts</a> or <a href="http://www.1001fonts.com/">1001 Fonts .com</a>.</i></font></td>
+            </tr>
+          </table>
+          <h3>Example Page Updates</h3>
+          <p>These example pages are in an on-going cycle of improvement. Generally, I find I stop adding to these pages for long periods of time, when my interests become focused on other things.</p>
+          <p>Often these examples are re-built using the latest beta release of IM, allowing me to see changes and bugs that may appear in each version of IM, before it is generally released. However, the example images shown are what the given IM command produces on <b>my</b> system. If you get something different, your IM is probably a much older version (with old bugs), or is not correctly installed.</p>
+          <p>Note that e-mailing me, or discussing some aspect of ImageMagick on the <a href="https://github.com/ImageMagick/ImageMagick/discussions">discussions forum</a> will generally result in new examples, or whole new sections, being added to these examples. The more discussion there is, the better the examples become.</p>
+          <p>If you are doing anything interesting with IM, please share, and allow me to provide examples of your technique to the rest of the IM community. Some of the biggest advances in IM usage have come from users just like you.</p>
+          <h3>Special Thanks</h3>
+          <p>A special thank you goes to Cristy, who has tirelessly spent months, upgrading, bug-fixing, and putting up with my off-the-wall suggestions... especially with regards to my major suggestions for the command line processing, parenthesis, image sequence operators, and GIF animation processing.</p>
+          <p>He has done a marvelous job making Version 7 the best and most advanced command line image processing program available. While most users will not show appreciation for that, I certainly do appreciate the effort he has put into IM.</p>
+          <p>I also want to thank Gabe Schaffer, who has been most helpful in discussions involving the JPEG format and library, affine matrix operators, and <a href="https://imagemagick.org/script/magick-vector-graphics.php">Magick Vector Graphics</a> in general.</p>
+          <p>And to Glenn Randers-Pehrson, who wrote the PNG coder module and had an interest in Color Quantization and Dithering. He was the first to add 'halftone' dithering to IM, which I later revised and extended further, to added new dithers to the ordered dither configuration file.</p><!-- who is the Ruby on Rails person?
 I also like to thank Rick Mabry, of the RMagick (Ruby API) who developed the
 polariod picture techniques, and is a source of ideas and additions to IM
 Examples. </P>
 -->
-
-<p>And finally, I want to thank the huge number of people with problems,
-suggestions, and solutions, who generally lurk on the <A
-HREF="forum_link.cgi?f=1" >IM User Forum</A>.  Many now have their names as
-contributors of ideas and suggestions throughout IM Examples.  </P>
-
-<p>I also want to thank the people who regularly answer questions on the forums,
-such as '<A HREF="forum_link.cgi?u=6256" >Bonzo</A>', and his web site <A
-HREF="http://www.rubblewebs.co.uk/imagemagick/imagemagick.php"
->RubbleWebs</A>, detailing use of IM commands from PHP scripts.  Also '<A
-HREF="forum_link.cgi?u=143" >scri8e</A>' and his Web site, <A
-HREF="http://www.scri8e.com/stars/" >Moons Stars</A>, for glitter and star
-handling.  Also a thank you goes to Pete '<A HREF="forum_link.cgi?u=3499"
->el_supremo</A>' </P>
-
-<p>A special thanks goes to <A HREF="http://www.fmwconcepts.com/fmw/fmw.html"
->Fred Weinhaus</A>, a researcher from the early days of image processing, who
-was a major help in the initial implementation of the <A
-HREF="distorts/#distort" >General Image Distortion Operator</A>.  You can see
-Fred's ImageMagick scripts on <A HREF="http://www.fmwconcepts.com/imagemagick/"
->Fred's ImageMagick Site</A>, often as a proof of concept for future IM
-additions.  </P>
-
-<p>Also to Nicolas Robidoux, an expert in digital image processing, for reworking
-the <A HREF="distorts/#area_resample" >Elliptical Weighted Average
-Resampling</A>, which vastly improves the output of <A
-HREF="distorts/#distort" >General Image Distortion</A>. </P>
-
-<p>And finally to the many users of ImageMagick who, had allowed others to see
-the IM commands they use as part of some project, either on the forums, or on
-the web. You are all to be commended on your willingness and openness to share
-your findings. </P>
-
-<BR><BR>
-<p>Well enough "Yadda, yadda, yadda." &nbsp;  Go look at some of the examples.
- </P>
-
-</DIV>
-<HR><!-- ---------------------------------------------------------------- -->
-</div></main><footer class="magick-footer"><div class="container-fluid">
-Created: 7 November 2003 <BR>
-Updated: 30 November 2012 <BR>
-Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
-        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
-Examples Generated with:
-        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-License: IM Examples follows the same
-         <A HREF="https://imagemagick.org/script/license.php"
-         >License as ImageMagick</A><br/>
-URL: <CODE>https://imagemagick.org/Usage/</CODE>
-</div></footer></body></HTML>
+          <p>And finally, I want to thank the huge number of people with problems, suggestions, and solutions, who generally lurk on the <a href="forum_link.cgi?f=1">IM User Forum</a>. Many now have their names as contributors of ideas and suggestions throughout IM Examples.</p>
+          <p>I also want to thank the people who regularly answer questions on the forums, such as '<a href="forum_link.cgi?u=6256">Bonzo</a>', and his web site <a href="http://www.rubblewebs.co.uk/imagemagick/imagemagick.php">RubbleWebs</a>, detailing use of IM commands from PHP scripts. Also '<a href="forum_link.cgi?u=143">scri8e</a>' and his Web site, <a href="http://www.scri8e.com/stars/">Moons Stars</a>, for glitter and star handling. Also a thank you goes to Pete '<a href="forum_link.cgi?u=3499">el_supremo</a>'</p>
+          <p>A special thanks goes to <a href="http://www.fmwconcepts.com/fmw/fmw.html">Fred Weinhaus</a>, a researcher from the early days of image processing, who was a major help in the initial implementation of the <a href="distorts/#distort">General Image Distortion Operator</a>. You can see Fred's ImageMagick scripts on <a href="http://www.fmwconcepts.com/imagemagick/">Fred's ImageMagick Site</a>, often as a proof of concept for future IM additions.</p>
+          <p>Also to Nicolas Robidoux, an expert in digital image processing, for reworking the <a href="distorts/#area_resample">Elliptical Weighted Average Resampling</a>, which vastly improves the output of <a href="distorts/#distort">General Image Distortion</a>.</p>
+          <p>And finally to the many users of ImageMagick who, had allowed others to see the IM commands they use as part of some project, either on the forums, or on the web. You are all to be commended on your willingness and openness to share your findings.</p><br>
+          <br>
+          <p>Well enough "Yadda, yadda, yadda." &nbsp; Go look at some of the examples.</p>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------- -->
+      </div>
+    </div>
+  </main>
+  <footer class="magick-footer">
+    <div class="container-fluid">
+      Created: 7 November 2003<br>
+      Updated: 30 November 2012<br>
+      Author: <a href="https://antofthy.gitlab.io/anthony.html">Anthony Thyssen</a>, &lt;Anthony.Thyssen@gmail.com&gt;<br>
+      Examples Generated with: <img src="version.gif" align="absmiddle" alt="[version image]"><br>
+      License: IM Examples follows the same <a href="https://imagemagick.org/script/license.php">License as ImageMagick</a><br>
+      URL: <code>https://imagemagick.org/Usage/</code>
+    </div>
+  </footer>
+</body>
+</html>

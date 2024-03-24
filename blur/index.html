@@ -1,638 +1,371 @@
-<html lang="en"><HEAD>
-<meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1" >
-<link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Bluring and Sharpening -- ImageMagick Examples</TITLE>
-<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://imagemagick.org/Usage/blur/">
-</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
-
-<H1>ImageMagick Examples -- <BR>
-    <IMG SRC="../img_www/space.gif" width=50 height=1>
-    Blurring and Sharpening Images</H1>
-
-<div>
-
-<DL>
-<DT><B>Index</B>
-<DT><A HREF="../"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > ImageMagick Examples Preface and Index</A>
-<DD><A HREF="#blur"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Blurring Images</A>
-    <UL>
-    <LI><A HREF="#blur_args"
-        > Blur/Gaussian Arguments</A>
-    <LI><A HREF="#blur_channel"
-        > Blur uses the Channel Setting</A>
-    <LI><A HREF="#blur_internals"
-        > Blur Internals</A>
-    <LI><A HREF="#blur_gaussian"
-        > Blur vs Gaussian Blur Operators</A>
-    <LI><A HREF="#blur_resize"
-        > Large Blurs using resize</A>
-    </UL>
-<DD><A HREF="#sharpen"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Sharpening Images</A> (Under Construction)
-<DD><A HREF="#shadow"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Generating Shadows</A>
-    <UL>
-    <LI><A HREF="#shadow_shape"
-        > Shaped Shadows</A>
-    <LI><A HREF="#shadow_offset"
-        > Shadow Offset Problem</A>
-    <LI><A HREF="#shadow_composite"
-        > Shadow and Composite</A>
-    <LI><A HREF="#shadow_outline"
-        > Shadow Outlines</A>
-    <LI><A HREF="#shadow_montage"
-        > Shadow in the Montage Command</A>
-    <LI><A HREF="#shadow_internals"
-        > Shadow Internals</A>
-    </UL>
-<DD><A HREF="#special_blurs"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Specialised Blurs</A>
-    <UL>
-    <LI><A HREF="#radial-blur"
-        > Radial Blur</A>
-    <LI><A HREF="#motion-blur"
-        > Motion Blur</A>
-    </UL>
-<DD><A HREF="#feathering"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Feathering Shapes using Blur</A>  (under construction)
-<DD><A HREF="#related"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Related Operators</A>  (under construction)
-</DL></P>
-
-Blurring, and its opposite, sharpening of images is a very important aspect of
-image processing. In this section we will look at both. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="blur"></A>
-<H2>Blurring Images</H2>
-
-Blurring images so they become fuzzy may not seem like an useful operation, but
-actually is very useful for generating background effects and shadows. It is
-also very useful for smoothing the effects of the 'jaggies' to <A
-HREF="../antialiasing/" >anti-alias</A> the edges of images, and to round out
-features to produce highlighting effects. </P>
-
-Blurring is so important it is an integral part of <A HREF="../resize/"
->Image Resizing</A>, though a different method of blurring, which is restricted
-to within the boundaries of a single pixel of the original image. </P>
-
-Their are two general image blurring operators in ImageMagick.  The "<CODE><A
-HREF="../option_link.cgi?gaussian-blur" >-gaussian-blur</A></CODE>" spread and
-"<CODE><A HREF="../option_link.cgi?blur" >-blur</A></CODE>".  The results of
-the two as very close, but as "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" is a faster algorithm, it is generally preferred to the
-former even though the former is more mathematically correct. (See <A
-HREF="#blur_gaussian" >Blur vs the Gaussian Blur Operator</A>.) </P>
-
-<A NAME="blur_args"></A>
-<H3>Blur/Gaussian Arguments</H3>
-
-The arguments for "<CODE><A HREF="../option_link.cgi?blur" >-blur</A></CODE>"
-and "<CODE><A HREF="../option_link.cgi?gaussian-blur"
->-gaussian-blur</A></CODE>" are the same, but to someone new to image
-processing, the argument values can be confusing. </P>
-
-<PRE><B>     -blur  {<I>radius</I>}x{<I>sigma</I>} </B></PRE>
-
-The important setting in the above is the second <I>sigma</I> value.  It can
-be thought of as an approximation of just how much your want the image to
-'spread' or blur, in pixels.  Think of it as the size of the brush used to
-blur the image. The numbers are floating point values, so you can use a very
-small value like '<CODE>0.5</CODE>'.  </P>
-
-The first value <I>radius</I>, is also important as it controls how big an
-area the operator should look at when spreading pixels.  This value should
-typically be either '<CODE>0</CODE>' or at a minimum double that of the
-<I>sigma</I>. </P>
-
-To show you the effects of the options lets take this simple image, with a lot
-of surrounding space (blur operators need lots of room to work), and create a
-table of the results for various operator settings.   I also purposely used a
-font that contains both thick and thin lines see the fuzzing of small line
-details and large areas of color. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE EXECUTE NO_PNG2JPG>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/usage.css">
+  <title>Bluring and Sharpening -- ImageMagick Examples</title>
+  <link rel="icon" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="shortcut" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://imagemagick.org/Usage/blur/">
+</head>
+<body>
+  <main class="container">
+    <div class="magick-template">
+      <div class="magick-header">
+        <h1>ImageMagick Examples --<br>
+        <img src="../img_www/space.gif" width="50" height="1"> Blurring and Sharpening Images</h1>
+        <div>
+          <dl>
+            <dt><b>Index</b></dt>
+            <dt>
+              <a href="../"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> ImageMagick Examples Preface and Index</a>
+            </dt>
+            <dd>
+              <a href="#blur"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Blurring Images</a>
+              <ul>
+                <li>
+                  <a href="#blur_args">Blur/Gaussian Arguments</a>
+                </li>
+                <li>
+                  <a href="#blur_channel">Blur uses the Channel Setting</a>
+                </li>
+                <li>
+                  <a href="#blur_internals">Blur Internals</a>
+                </li>
+                <li>
+                  <a href="#blur_gaussian">Blur vs Gaussian Blur Operators</a>
+                </li>
+                <li>
+                  <a href="#blur_resize">Large Blurs using resize</a>
+                </li>
+              </ul>
+            </dd>
+            <dd>
+              <a href="#sharpen"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Sharpening Images</a> (Under Construction)
+            </dd>
+            <dd>
+              <a href="#shadow"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Generating Shadows</a>
+              <ul>
+                <li>
+                  <a href="#shadow_shape">Shaped Shadows</a>
+                </li>
+                <li>
+                  <a href="#shadow_offset">Shadow Offset Problem</a>
+                </li>
+                <li>
+                  <a href="#shadow_composite">Shadow and Composite</a>
+                </li>
+                <li>
+                  <a href="#shadow_outline">Shadow Outlines</a>
+                </li>
+                <li>
+                  <a href="#shadow_montage">Shadow in the Montage Command</a>
+                </li>
+                <li>
+                  <a href="#shadow_internals">Shadow Internals</a>
+                </li>
+              </ul>
+            </dd>
+            <dd>
+              <a href="#special_blurs"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Specialised Blurs</a>
+              <ul>
+                <li>
+                  <a href="#radial-blur">Radial Blur</a>
+                </li>
+                <li>
+                  <a href="#motion-blur">Motion Blur</a>
+                </li>
+              </ul>
+            </dd>
+            <dd>
+              <a href="#feathering"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Feathering Shapes using Blur</a> (under construction)
+            </dd>
+            <dd>
+              <a href="#related"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Related Operators</a> (under construction)
+            </dd>
+          </dl>Blurring, and its opposite, sharpening of images is a very important aspect of image processing. In this section we will look at both.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="blur" id="blur"></a>
+          <h2>Blurring Images</h2>Blurring images so they become fuzzy may not seem like an useful operation, but actually is very useful for generating background effects and shadows. It is also very useful for smoothing the effects of the 'jaggies' to <a href="../antialiasing/">anti-alias</a> the edges of images, and to round out features to produce highlighting effects. Blurring is so important it is an integral part of <a href="../resize/">Image Resizing</a>, though a different method of blurring, which is restricted to within the boundaries of a single pixel of the original image. Their are two general image blurring operators in ImageMagick. The "<code><a href="../option_link.cgi?gaussian-blur">-gaussian-blur</a></code>" spread and "<code><a href="../option_link.cgi?blur">-blur</a></code>". The results of the two as very close, but as "<code><a href="../option_link.cgi?blur">-blur</a></code>" is a faster algorithm, it is generally preferred to the former even though the former is more mathematically correct. (See <a href="#blur_gaussian">Blur vs the Gaussian Blur Operator</a>.) <a name="blur_args" id="blur_args"></a>
+          <h3>Blur/Gaussian Arguments</h3>The arguments for "<code><a href="../option_link.cgi?blur">-blur</a></code>" and "<code><a href="../option_link.cgi?gaussian-blur">-gaussian-blur</a></code>" are the same, but to someone new to image processing, the argument values can be confusing.
+          <pre><b>     -blur  {<i>radius</i>}x{<i>sigma</i>} </b></pre>The important setting in the above is the second <i>sigma</i> value. It can be thought of as an approximation of just how much your want the image to 'spread' or blur, in pixels. Think of it as the size of the brush used to blur the image. The numbers are floating point values, so you can use a very small value like '<code>0.5</code>'. The first value <i>radius</i>, is also important as it controls how big an area the operator should look at when spreading pixels. This value should typically be either '<code>0</code>' or at a minimum double that of the <i>sigma</i>. To show you the effects of the options lets take this simple image, with a lot of surrounding space (blur operators need lots of room to work), and create a table of the results for various operator settings. I also purposely used a font that contains both thick and thin lines see the fuzzing of small line details and large areas of color.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre><code execute="" no_png2jpg="">
   magick -font Gecko -pointsize 48  label:A \
           -bordercolor white -border 20x10  blur_source.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="blur_source.png"
-     ><IMG SRC="blur_source.png"
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=0><TR><TD>
-  <A HREF="blur_montage.jpg"
-     ><IMG SRC="blur_montage.jpg"
-           ALIGN=middle VSPACE=2 HSPACE=2 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE>
-</DIV></P>
-
-A small <I>radius</I> limits any effect of the blur to pixels that are within
-that many pixels of the one being blurred (a square radius).  As such using a
-very small <I>radius</I> such as '<CODE>1</CODE>' effectively limited the
-blurring to within the immediate neighbours of each pixel. </P>
-
-Note that while <I>sigma</I> is a floating point, <I>radius</I> is not. If a
-floating point value is given (or internally calculated) it is rounded up to
-the nearest integer, to determine the 'neighbourhood' of the blur. </P>
-
-How much each neighbour contributes to the final result is still controlled by
-the <I>sigma</I>.  A very small <I>sigma</I> (less than '<CODE>1</CODE>' )
-limits their contribution to a small amount, while a larger <I>sigma</I>
-contributes more equal amounts from all the neighbours.  The largest
-<I>sigma</I> of '<CODE>65355</CODE>' will produce a simple averaging of all
-the pixels in the square neighbourhood.  </P>
-
-Also notice that for smallish <I>radius</I> but a large <I>sigma</I> you see
-artifacts appear in the blurred result. This is especially visible in the
-output for "<CODE>-blur&nbsp;5x8</CODE>". This is caused by the small square
-neighbourhood 'cutting off' the area blurred, producing sudden stops in the
-smooth Gaussian curve of the blur, and thus producing <A
-HREF="../filter/#ringing" >Ringing Artefacts</A> along sharp edges.  So... </P>
-
-<DIV ALIGN=center><B>
-    Never use a <I>radius</I> smaller than the <I>sigma</I> for blurs
-</B></DIV> </P>
-
-The ideal solution is to simply set <I>radius</I> to '<CODE>0x</CODE>' as
-shown by the last line of the above table.  In that case the operator will try
-to automatically determine the best <I>radius</I> for the <I>sigma</I> given.
-The smallest radius IM would use is 3, and is typically 3 * <I>sigma</I> for a
-Q16 version of IM (a smaller radius is used for IM Q8, as it has less
-precision).  The only time I would use a non-zero <I>radius</I> was for a very
-small <I>sigma</I> or for specialized blurs.  So.. </P>
-
-<DIV ALIGN=center><B>
-     When possible use a <I>radius</I> of zero for blurring operations
-</B></DIV> </P>
-
-Small values for the <I>sigma</I> are typically only used to fuzz lines and
-smooth edges on images for which no anti-aliasing was used (see <A
-HREF="../antialiasing/" >Anti-Aliasing</A> for more info).  In that situation
-I find a blur of '<CODE>1x0.3</CODE>' an useful value to remove most of the
-'jaggies' from images.  </P>
-
-Large values however are useful for producing fuzzy images, for backgrounds or
-shadow effects (see <A HREF="../fonts/" >Compound Fonts</A>), or even image
-highlighting effects (as shown thought the <A HREF="../advanced/" >Advanced
-Examples</A> page). </P>
-
-Due to the way IM handles '<CODE>x</CODE>' style of arguments, the
-<I>sigma</I> in the above is optional.  However it is the more important
-value, so it should be <I>radius</I> that is optional, as <I>radius</I> can be
-automatically determined.  As such a single value argument to these type
-of convolution operators is useless. This is unlikely to change as it has been
-this way for a very long time, and would break too many things. </P>
-
-
-<A NAME="blur_channel">
-<H3>Blur uses the Channel Setting</H3>
-</A>
-
-To demonstrate blur, lets start simply by generating a fuzzy black circle on a
-light blue background...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</code></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="blur_source.png"><img src="blur_source.png" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                  <a href="blur_montage.jpg"><img src="blur_montage.jpg" align="middle" vspace="2" hspace="2" border="0" alt="[IM Output]"></a>
+                </td>
+              </tr>
+            </table>
+          </div>A small <i>radius</i> limits any effect of the blur to pixels that are within that many pixels of the one being blurred (a square radius). As such using a very small <i>radius</i> such as '<code>1</code>' effectively limited the blurring to within the immediate neighbours of each pixel. Note that while <i>sigma</i> is a floating point, <i>radius</i> is not. If a floating point value is given (or internally calculated) it is rounded up to the nearest integer, to determine the 'neighbourhood' of the blur. How much each neighbour contributes to the final result is still controlled by the <i>sigma</i>. A very small <i>sigma</i> (less than '<code>1</code>' ) limits their contribution to a small amount, while a larger <i>sigma</i> contributes more equal amounts from all the neighbours. The largest <i>sigma</i> of '<code>65355</code>' will produce a simple averaging of all the pixels in the square neighbourhood. Also notice that for smallish <i>radius</i> but a large <i>sigma</i> you see artifacts appear in the blurred result. This is especially visible in the output for "<code>-blur&nbsp;5x8</code>". This is caused by the small square neighbourhood 'cutting off' the area blurred, producing sudden stops in the smooth Gaussian curve of the blur, and thus producing <a href="../filter/#ringing">Ringing Artefacts</a> along sharp edges. So...
+          <div align="center">
+            <b>Never use a <i>radius</i> smaller than the <i>sigma</i> for blurs</b>
+          </div>The ideal solution is to simply set <i>radius</i> to '<code>0x</code>' as shown by the last line of the above table. In that case the operator will try to automatically determine the best <i>radius</i> for the <i>sigma</i> given. The smallest radius IM would use is 3, and is typically 3 * <i>sigma</i> for a Q16 version of IM (a smaller radius is used for IM Q8, as it has less precision). The only time I would use a non-zero <i>radius</i> was for a very small <i>sigma</i> or for specialized blurs. So..
+          <div align="center">
+            <b>When possible use a <i>radius</i> of zero for blurring operations</b>
+          </div>Small values for the <i>sigma</i> are typically only used to fuzz lines and smooth edges on images for which no anti-aliasing was used (see <a href="../antialiasing/">Anti-Aliasing</a> for more info). In that situation I find a blur of '<code>1x0.3</code>' an useful value to remove most of the 'jaggies' from images. Large values however are useful for producing fuzzy images, for backgrounds or shadow effects (see <a href="../fonts/">Compound Fonts</a>), or even image highlighting effects (as shown thought the <a href="../advanced/">Advanced Examples</a> page). Due to the way IM handles '<code>x</code>' style of arguments, the <i>sigma</i> in the above is optional. However it is the more important value, so it should be <i>radius</i> that is optional, as <i>radius</i> can be automatically determined. As such a single value argument to these type of convolution operators is useless. This is unlikely to change as it has been this way for a very long time, and would break too many things. <a name="blur_channel" id="blur_channel">
+          <h3>Blur uses the Channel Setting</h3></a> To demonstrate blur, lets start simply by generating a fuzzy black circle on a light blue background...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:lightblue \
           -fill black -draw 'circle 35,35 20,25'  circle_on_blue.png
   magick circle_on_blue.png    -blur 0x8         circle_on_blue_blur.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-
-  <A HREF="circle_on_blue.png"
-     ><IMG SRC="circle_on_blue.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <A HREF="circle_on_blue_blur.png"
-     ><IMG SRC="circle_on_blue_blur.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=2 BORDER=1 ALT="[IM Output]"></A>
-
-</TD></TR></TABLE></P>
-
-As you can see a blurring a plain image like this has no problems.  It just
-works, as you would expect. </P>
-
-But if we try this again with an image containing a transparent background...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="circle_on_blue.png"><img src="circle_on_blue.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a> <a href="circle_on_blue_blur.png"><img src="circle_on_blue_blur.png" width="70" height="70" align="middle" vspace="0" hspace="2" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>As you can see a blurring a plain image like this has no problems. It just works, as you would expect. But if we try this again with an image containing a transparent background...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none \
           -fill black -draw 'circle 35,35 20,25'  black_circle.png
   magick black_circle.png       -blur 0x8        black_blurred.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-
-  <A HREF="black_circle.png"
-     ><IMG SRC="black_circle.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-  <A HREF="black_blurred.png"
-     ><IMG SRC="black_blurred.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-
-</TD></TR></TABLE></P>
-
-Hang on, what happened!  The image didn't change!  </P>
-
-Well in actual fact the operator did work.  But "<CODE><A
-HREF="../option_link.cgi?blur" >-blur</A></CODE>" as a grey-scale channel
-operator, is limited by the "<CODE><A HREF="../option_link.cgi?channel"
->-channel</A></CODE>" setting, to just the three colour channels. </P>
-
-That means only the three color channels of the image were blurred, leaving
-the transparency or alpha channel of the image as is.
-
-In the above however, the image is a fully opaque circle on a background
-canvas of the color '<CODE>none</CODE>', which IM defines as fully-transparent
-black!  That which means we have a black circle, on a transparent black
-background.  In other words an image in which all the colors are black, with
-some parts opaque, and other parts
-transparent. </P>
-
-Consequently when we blurred the image we only blurred black with black, which
-as you can probably guess, produced, black!  Thus the result had no change in
-color. </P>
-
-Also we never touched the alpha or transparency channel of the image, so we
-just ended up with the transparency of the image being unchanged. That is, a
-black circle! </P>
-
-What we really wanted to do, is blur all four image channels, particularly the
-alpha channel.  To do this we set the "<CODE><A
-HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting to all four
-channels of the image (EG: using a value of '<CODE>RGBA</CODE>').
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR valign="top"><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="black_circle.png"><img src="black_circle.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a> <a href="black_blurred.png"><img src="black_blurred.png" width="70" height="70" align="middle" vspace="0" hspace="0" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Hang on, what happened! The image didn't change! Well in actual fact the operator did work. But "<code><a href="../option_link.cgi?blur">-blur</a></code>" as a grey-scale channel operator, is limited by the "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting, to just the three colour channels. That means only the three color channels of the image were blurred, leaving the transparency or alpha channel of the image as is. In the above however, the image is a fully opaque circle on a background canvas of the color '<code>none</code>', which IM defines as fully-transparent black! That which means we have a black circle, on a transparent black background. In other words an image in which all the colors are black, with some parts opaque, and other parts transparent. Consequently when we blurred the image we only blurred black with black, which as you can probably guess, produced, black! Thus the result had no change in color. Also we never touched the alpha or transparency channel of the image, so we just ended up with the transparency of the image being unchanged. That is, a black circle! What we really wanted to do, is blur all four image channels, particularly the alpha channel. To do this we set the "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting to all four channels of the image (EG: using a value of '<code>RGBA</code>').
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr valign="top">
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick black_circle.png  -channel RGBA  -blur 0x8  black_blurred_RGBA.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="black_blurred_RGBA.png"
-     ><IMG SRC="black_blurred_RGBA.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Just to summarize...
-<DIV ALIGN=center><B>
-     Always use a "<CODE>-channel RGBA</CODE>" setting
-          when blurring images with transparency.
-</B></DIV> </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
-    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  IM version 5.5.7 would have blurred all four color channels automatically
-  but the operator has other, buggy effects for images with transparency.
-  See <A HREF="../bugs/blur_trans/" >Blur with Transparency Bug</A> for
-  more details.
-</I></FONT></TD></TR></TABLE></P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Some image formats such as GIF and JPEG do not handle semi-transparent
-  pixels.  As such I suggest you use PNG format for any images with some
-  form of semi-transparent colors, if possible.
-</I></FONT></TD></TR></TABLE></P>
-
-
-As you can see from the above, the "<CODE><A HREF="../option_link.cgi?channel"
->-channel</A></CODE>" setting is very important for a grey-scale operator such
-as "<CODE><A HREF="../option_link.cgi?blur" >-blur</A></CODE>".  But is not
-the only thing that can be important when using such an operator.   </P>
-
-For example lets try that last 'forgot the "<CODE><A
-HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting' example
-again, but this time with a yellow circle. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="black_blurred_RGBA.png"><img src="black_blurred_RGBA.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Just to summarize...
+          <div align="center">
+            <b>Always use a "<code>-channel RGBA</code>" setting when blurring images with transparency.</b>
+          </div>
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/warning.gif" width="28" height="28"><img src="../img_www/space.gif" width="12" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>IM version 5.5.7 would have blurred all four color channels automatically but the operator has other, buggy effects for images with transparency. See <a href="../bugs/blur_trans/">Blur with Transparency Bug</a> for more details.</i></font></td>
+            </tr>
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>Some image formats such as GIF and JPEG do not handle semi-transparent pixels. As such I suggest you use PNG format for any images with some form of semi-transparent colors, if possible.</i></font></td>
+            </tr>
+          </table>As you can see from the above, the "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting is very important for a grey-scale operator such as "<code><a href="../option_link.cgi?blur">-blur</a></code>". But is not the only thing that can be important when using such an operator. For example lets try that last 'forgot the "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting' example again, but this time with a yellow circle.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none \
           -fill yellow   -draw 'circle 35,35 20,25'   yellow_circle.png
   magick yellow_circle.png       -blur 0x8           yellow_blurred.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-
-  <A HREF="yellow_circle.png"
-     ><IMG SRC="yellow_circle.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-  <A HREF="yellow_blurred.png"
-     ><IMG SRC="yellow_blurred.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-
-</TD></TR></TABLE></P>
-
-Notice that instead of getting unchanged image as we did with a black circle,
-we instead produces a horrible looking yellow circle with black creeping in
-around the edges.  Yuck! </P>
-
-This problem is caused by a fact that few new IM users realise.
-<DIV ALIGN=center><B>
-      Transparent pixels has Color, even if you can't see it.
-</B></DIV> </P>
-
-In the above case that transparent color was black, which leaked into the
-yellow circle.  </P>
-
-Of course we can fix this by setting the "<CODE><A
-HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting correctly for
-a transparent image, things do work as expected.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="yellow_circle.png"><img src="yellow_circle.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a> <a href="yellow_blurred.png"><img src="yellow_blurred.png" width="70" height="70" align="middle" vspace="0" hspace="0" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Notice that instead of getting unchanged image as we did with a black circle, we instead produces a horrible looking yellow circle with black creeping in around the edges. Yuck! This problem is caused by a fact that few new IM users realise.
+          <div align="center">
+            <b>Transparent pixels has Color, even if you can't see it.</b>
+          </div>In the above case that transparent color was black, which leaked into the yellow circle. Of course we can fix this by setting the "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting correctly for a transparent image, things do work as expected.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick yellow_circle.png  -channel RGBA  -blur 0x8  yellow_blurred_RGBA.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="yellow_blurred_RGBA.png"
-     ><IMG SRC="yellow_blurred_RGBA.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-
-<A NAME="blur_internals"></A>
-<H3>Blur Internals</H3>
-
-Lets take this step further with a more complicated example, which will let
-use explore exactly what "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" is doing internally. </P>
-
-Here we create a very special image of a yellow circle, which has been drawn
-on a fully-transparent red background.  This will let us see the effect of a
-transparent color has when blurring images.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="yellow_blurred_RGBA.png"><img src="yellow_blurred_RGBA.png" width="70" height="70" align="middle" vspace="0" hspace="0" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table><a name="blur_internals" id="blur_internals"></a>
+          <h3>Blur Internals</h3>Lets take this step further with a more complicated example, which will let use explore exactly what "<code><a href="../option_link.cgi?blur">-blur</a></code>" is doing internally. Here we create a very special image of a yellow circle, which has been drawn on a fully-transparent red background. This will let us see the effect of a transparent color has when blurring images.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:'#F000' \
           -fill yellow   -draw 'circle 35,35 20,25'   yellow_on_red.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="yellow_on_red.png"
-     ><IMG SRC="yellow_on_red.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=3 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Note the color "#F000" is a fully-transparent red.  It that is the background
-areas of the image is actually an invisible red in color, instead of the more
-typical fully-transpaent black.  This is important for later tests. </P>
-
-We can see the color of the transparent parts of the image by effectively
-deleting the alpha channel of the image using the "<CODE><A
-HREF="../option_link.cgi?alpha" >-alpha off</A></CODE>" operator.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="yellow_on_red.png"><img src="yellow_on_red.png" width="70" height="70" align="middle" vspace="0" hspace="3" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Note the color "#F000" is a fully-transparent red. It that is the background areas of the image is actually an invisible red in color, instead of the more typical fully-transpaent black. This is important for later tests. We can see the color of the transparent parts of the image by effectively deleting the alpha channel of the image using the "<code><a href="../option_link.cgi?alpha">-alpha off</a></code>" operator.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick yellow_on_red.png   -alpha off  yellow_on_red_matte.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="yellow_on_red_matte.png"
-     ><IMG SRC="yellow_on_red_matte.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Now lets try blurring just the colors of the image again, using the default
-'<CODE>RGB</CODE>', "<CODE><A HREF="../option_link.cgi?channel"
->-channel</A></CODE>" setting.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="yellow_on_red_matte.png"><img src="yellow_on_red_matte.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Now lets try blurring just the colors of the image again, using the default '<code>RGB</code>', "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick yellow_on_red.png   -blur 0x8   yellow_on_red_RGB.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="yellow_on_red_RGB.png"
-     ><IMG SRC="yellow_on_red_RGB.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-As you can see the fully-transparent red background of the image has now crept
-into the visible yellow circle, giving it an interesting orange edge, as as it
-did previously.  You may like this effect, but their are better ways of
-generating it, than to rely on invisible fully-transparent colors.  </P>
-
-Just prove you can blur this image correctly, lets do it properly...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="yellow_on_red_RGB.png"><img src="yellow_on_red_RGB.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>As you can see the fully-transparent red background of the image has now crept into the visible yellow circle, giving it an interesting orange edge, as as it did previously. You may like this effect, but their are better ways of generating it, than to rely on invisible fully-transparent colors. Just prove you can blur this image correctly, lets do it properly...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick yellow_on_red.png  -channel RGBA  -blur 0x8  yellow_on_red_RGBA.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="yellow_on_red_RGBA.png"
-     ><IMG SRC="yellow_on_red_RGBA.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-The reason that blurring with the alpha channel produces no orange colors as
-it did previously, is that when the "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" operator sees that the alpha channel is involved (according
-to the current "<CODE><A HREF="../option_link.cgi?channel"
->-channel</A></CODE>" setting), it will only blur using the pixels which are
-<I>visible</I> according to that alpha channel.  If the alpha channel is not
-involved, it will completely ignore it, and the fully-transparent red will
-blur with the yellow to produce various shades of orange.</P>
-
-Basically the blur algorithm has been modified to ignore all the
-fully-transparent pixels in the image, no matter what color they may have.
-Any semi-transparent pixels are still involved, but their effect on the result
-is also moderated by just how visible they are.  The result is that the circle
-has become a fuzzy semi-transparent yellow spot.  Just what the user probably
-was trying to achieve. </P>
-
-If you really like you can blur both the colors and the alpha channel
-separately, thus effectually disconnecting the algorithms 'visibility
-adjustment' on the color channels.  The result is more like a sun
-shining through a dirty brown haze.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="yellow_on_red_RGBA.png"><img src="yellow_on_red_RGBA.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>The reason that blurring with the alpha channel produces no orange colors as it did previously, is that when the "<code><a href="../option_link.cgi?blur">-blur</a></code>" operator sees that the alpha channel is involved (according to the current "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting), it will only blur using the pixels which are <i>visible</i> according to that alpha channel. If the alpha channel is not involved, it will completely ignore it, and the fully-transparent red will blur with the yellow to produce various shades of orange.Basically the blur algorithm has been modified to ignore all the fully-transparent pixels in the image, no matter what color they may have. Any semi-transparent pixels are still involved, but their effect on the result is also moderated by just how visible they are. The result is that the circle has become a fuzzy semi-transparent yellow spot. Just what the user probably was trying to achieve. If you really like you can blur both the colors and the alpha channel separately, thus effectually disconnecting the algorithms 'visibility adjustment' on the color channels. The result is more like a sun shining through a dirty brown haze.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick yellow_on_red.png  -channel  A  -blur 0x8 \
                              -channel RGB -blur 0x8  yellow_on_red_GS.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="yellow_on_red_GS.png"
-     ><IMG SRC="yellow_on_red_GS.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This last example produced what a pure grey-scale operator would have produced
-if there was absolutely no interaction between the alpha channel and the
-colors within the image (transparent or otherwise). That is, each of the red,
-green, blue, and alpha channels are blurred completely separately to each
-other as if they were each a separate grey-scale image. </P>
-
-Just remember, as the default "<CODE><A HREF="../option_link.cgi?channel"
->-channel</A></CODE>" setting is '<CODE>RGB</CODE>', the default action is not
-to blur the alpha channel, <I>and</I> to blur invisible colors with the
-visible color within the image. </P>
-
-Aren't you glad that "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" is no longer always a pure grey-scale operator. Though you
-can use it in that way if you really want. You didn't always have this choice
-however... </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
-    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Before IM version 6.2.4-4, the "<CODE><A HREF="../option_link.cgi?blur"
-  >-blur</A></CODE>", and "<CODE><A HREF="../option_link.cgi?gaussian-blur"
-  >-gaussian-blur</A></CODE>" operators were applied as pure grey-scale
-  operation, and as such did not adjust color weighting according to their
-  alpha channel 'visibility'.  The result was that any form of blurring with
-  transparency, almost always produced horrible 'black halo' effects, such as
-  purposefully generated in the previous example. </P>
-
-  This was classed as a major long term bug within the IM distribution, and
-  one that was very hard to workaround.  For more details of this problem,
-  see the <A HREF="../bugs/blur_trans/" >Blur with Transparency Bug</A> page.
-
-</I></FONT></TD></TR></TABLE></P>
-
-<PRE>FUTURE: Blur and Trimming Images. </PRE>
-
-<A NAME="blur_gaussian"></A>
-<H3>Blur vs Gaussian Blur Operators</H3>
-
-There has been some confusion as to which operator, "<CODE><A
-HREF="../option_link.cgi?blur" >-blur</A></CODE>" or the "<CODE><A
-HREF="../option_link.cgi?gaussian-blur" >-gaussian-blur</A></CODE>" is better
-for blurring images.  First of all "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" is faster, but it does this using two stage technique.
-First in one axis, then in the other. The "<CODE><A
-HREF="../option_link.cgi?gaussian-blur" >-gaussian-blur</A></CODE>" operator
-on the other hand is more mathematically correct as it blurs in all directions
-simultaneously. The speed cost between the two can be enormous, by a factor of
-10 or more, depending on the amount of bluring involved. </P>
-
-In a more technical context, "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" is a 2 pass, 1 dimensional orthogonal convolution filter,
-while "<CODE><A HREF="../option_link.cgi?gaussian-blur"
->-gaussian-blur</A></CODE>" is a 2 dimensional cylindrical convolution filter.
-See <A HREF="../morphology/#convolve" >Convolution</A> for more details.
-The results of the two method should be the same, unlike the use of other
-'filtered' convolution operations.  However the two pass system means that
-there is an intermediate stage in which rounding, or quantum effects, can
-occur. </P>
-
-Cristy also bears this out when he reported... You should always use "<CODE><A
-HREF="../option_link.cgi?blur" >-blur</A></CODE>" instead of "<CODE><A
-HREF="../option_link.cgi?gaussian-blur" >-gaussian-blur</A></CODE>" because
-its faster.  Some pixels will be different on the interior due to rounding,
-and the edge pixels may be different because of loss of <A
-HREF="../misc/#virtual" >Virtual Pixel</A> edge effects, again in the
-intermediate stage. </P>
-
-In summary, the two operators are slightly different, but only minimally.  As
-"<CODE><A HREF="../option_link.cgi?blur" >-blur</A></CODE>" is much faster,
-use it.  I do in just about all the examples involving blurring. </P>
-
-<A NAME="blur_resize"></A>
-<H3>Large Blur using Resize</H3>
-
-Using large sigma values for image bluring is very slow. But onw technique
-can be used to speed up this process.  This however is only a rough method
-and could use some mathematicaly rigor to improve results. </P>
-
-Essentually the reason large blurs are slow is because you need a large
-window or 'kernel' to merge lots of pixels together, for each and every pixel
-in the image. However resize (making image smaller) does the same thing but
-generates fewer pixels in the process. </P>
-
-The technique is basically shrink the image, then enlarge it again to generate
-the heavilly blured result. The <A HREF="../filters/#gaussian" >Gaussian
-Filter</A> is especially useful for this as you can directly specify a <A
-HREF="../filters/#sigma" >Gaussian Sigma</A> define.</P>
-
-For example, here I blue the small rose image by a sigma value of 5 using the
-two methods.
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="yellow_on_red_GS.png"><img src="yellow_on_red_GS.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This last example produced what a pure grey-scale operator would have produced if there was absolutely no interaction between the alpha channel and the colors within the image (transparent or otherwise). That is, each of the red, green, blue, and alpha channels are blurred completely separately to each other as if they were each a separate grey-scale image. Just remember, as the default "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting is '<code>RGB</code>', the default action is not to blur the alpha channel, <i>and</i> to blur invisible colors with the visible color within the image. Aren't you glad that "<code><a href="../option_link.cgi?blur">-blur</a></code>" is no longer always a pure grey-scale operator. Though you can use it in that way if you really want. You didn't always have this choice however...
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/warning.gif" width="28" height="28"><img src="../img_www/space.gif" width="12" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>Before IM version 6.2.4-4, the "<code><a href="../option_link.cgi?blur">-blur</a></code>", and "<code><a href="../option_link.cgi?gaussian-blur">-gaussian-blur</a></code>" operators were applied as pure grey-scale operation, and as such did not adjust color weighting according to their alpha channel 'visibility'. The result was that any form of blurring with transparency, almost always produced horrible 'black halo' effects, such as purposefully generated in the previous example.<br>
+              <br>
+              This was classed as a major long term bug within the IM distribution, and one that was very hard to workaround. For more details of this problem, see the <a href="../bugs/blur_trans/">Blur with Transparency Bug</a> page.</i></font></td>
+            </tr>
+          </table>
+          <pre>FUTURE: Blur and Trimming Images. </pre><a name="blur_gaussian" id="blur_gaussian"></a>
+          <h3>Blur vs Gaussian Blur Operators</h3>There has been some confusion as to which operator, "<code><a href="../option_link.cgi?blur">-blur</a></code>" or the "<code><a href="../option_link.cgi?gaussian-blur">-gaussian-blur</a></code>" is better for blurring images. First of all "<code><a href="../option_link.cgi?blur">-blur</a></code>" is faster, but it does this using two stage technique. First in one axis, then in the other. The "<code><a href="../option_link.cgi?gaussian-blur">-gaussian-blur</a></code>" operator on the other hand is more mathematically correct as it blurs in all directions simultaneously. The speed cost between the two can be enormous, by a factor of 10 or more, depending on the amount of bluring involved. In a more technical context, "<code><a href="../option_link.cgi?blur">-blur</a></code>" is a 2 pass, 1 dimensional orthogonal convolution filter, while "<code><a href="../option_link.cgi?gaussian-blur">-gaussian-blur</a></code>" is a 2 dimensional cylindrical convolution filter. See <a href="../morphology/#convolve">Convolution</a> for more details. The results of the two method should be the same, unlike the use of other 'filtered' convolution operations. However the two pass system means that there is an intermediate stage in which rounding, or quantum effects, can occur. Cristy also bears this out when he reported... You should always use "<code><a href="../option_link.cgi?blur">-blur</a></code>" instead of "<code><a href="../option_link.cgi?gaussian-blur">-gaussian-blur</a></code>" because its faster. Some pixels will be different on the interior due to rounding, and the edge pixels may be different because of loss of <a href="../misc/#virtual">Virtual Pixel</a> edge effects, again in the intermediate stage. In summary, the two operators are slightly different, but only minimally. As "<code><a href="../option_link.cgi?blur">-blur</a></code>" is much faster, use it. I do in just about all the examples involving blurring. <a name="blur_resize" id="blur_resize"></a>
+          <h3>Large Blur using Resize</h3>Using large sigma values for image bluring is very slow. But onw technique can be used to speed up this process. This however is only a rough method and could use some mathematicaly rigor to improve results. Essentually the reason large blurs are slow is because you need a large window or 'kernel' to merge lots of pixels together, for each and every pixel in the image. However resize (making image smaller) does the same thing but generates fewer pixels in the process. The technique is basically shrink the image, then enlarge it again to generate the heavilly blured result. The <a href="../filters/#gaussian">Gaussian Filter</a> is especially useful for this as you can directly specify a <a href="../filters/#sigma">Gaussian Sigma</a> define.For example, here I blue the small rose image by a sigma value of 5 using the two methods.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick rose: -blur 0x5   rose_blur_5.png
   magick rose: -filter Gaussian -resize 50% \
           -define filter:sigma=2.5 -resize 200%  rose_resize_5.png
-</samp></pre></TD></TR></TABLE>
-  <A HREF="../images/rose.png"
-     ><IMG SRC="../images/rose.png"           WIDTH=70  HEIGHT=46
-           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-  <A HREF="rose_blur_5.png"
-     ><IMG SRC="rose_blur_5.png"           WIDTH=70  HEIGHT=46
-           ALIGN=middle VSPACE=5 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-  <A HREF="rose_resize_5.png"
-     ><IMG SRC="rose_resize_5.png"           WIDTH=70  HEIGHT=46
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-Note the sigma setting (used only on the enlargement step) is only half that
-actually desired as you are also doubling the image size.  You can make
-overall resulting blur larger by adjusting both the downsize ratio and the
-given sigma value. The downsizing step is the one that produces the speedup
-but you should have at least soem bluring in upsize step as a quality control.
-</P>
-
-This is just an example of the technique.  It is really meant to be used for
-very very large sigma values on very very large images. For example in blurs
-using a sigma of 10 or more on modern digital photos. </P>
-
-This technique is also used to generate multi-level blur of a single image in
-a <A HREF="../canvas/#sparse_blur" >Sparse Color Shepards, Alternative</A>.
-</P>
-
-<BR>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="sharpen"></A>
-<H2>Sharpening Images</H2>
-
-<DIV ALIGN=center><FONT SIZE=+2><B>
-<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35>
-Under Construction
-<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50>
-</B></FONT></DIV></P>
-
-Sharpening is a the computer graphics algorithm that is most often see on TV
-shows and movies.  Picture the police force 'cleaning up' a 'zoomed in' photo
-of a licence plate of a bank robbers car, or the face of a man on a fuzzy shop
-camera video, and you see what I mean. </P>
-
-Basically what they are doing is attempting to recover the fine detail of an
-image which was lost due to an image natural blurring from camera lens or low
-scale resolution images. </P>
-
-Sharpen Arguments? (expand) </P>
-<PRE>
+</samp></pre>
+                </td>
+              </tr>
+            </table><a href="../images/rose.png"><img src="../images/rose.png" width="70" height="46" align="middle" vspace="5" hspace="15" border="1" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="rose_blur_5.png"><img src="rose_blur_5.png" width="70" height="46" align="middle" vspace="5" hspace="15" border="1" alt="[IM Output]"></a> <a href="rose_resize_5.png"><img src="rose_resize_5.png" width="70" height="46" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+          </div>Note the sigma setting (used only on the enlargement step) is only half that actually desired as you are also doubling the image size. You can make overall resulting blur larger by adjusting both the downsize ratio and the given sigma value. The downsizing step is the one that produces the speedup but you should have at least soem bluring in upsize step as a quality control. This is just an example of the technique. It is really meant to be used for very very large sigma values on very very large images. For example in blurs using a sigma of 10 or more on modern digital photos. This technique is also used to generate multi-level blur of a single image in a <a href="../canvas/#sparse_blur">Sparse Color Shepards, Alternative</a>.<br>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="sharpen" id="sharpen"></a>
+          <h2>Sharpening Images</h2>
+          <div align="center">
+            <font size="+2"><b><img src="../img_www/const_barrier.gif" width="39" height="35"> Under Construction <img src="../img_www/const_hole.gif" width="144" height="50"></b></font>
+          </div>Sharpening is a the computer graphics algorithm that is most often see on TV shows and movies. Picture the police force 'cleaning up' a 'zoomed in' photo of a licence plate of a bank robbers car, or the face of a man on a fuzzy shop camera video, and you see what I mean. Basically what they are doing is attempting to recover the fine detail of an image which was lost due to an image natural blurring from camera lens or low scale resolution images. Sharpen Arguments? (expand)
+          <pre>
 The most important factor is the sigma. As it is the real control of the
 sharpening operation.  It is only due to historical accident it is the second
 term in the above.
@@ -644,114 +377,63 @@ Radius is just a limit of the effect as is the threshold.
 Radius is only in integer units as that is the way the algorithm works, the
 larger it is the slower it is.  But it should be at a minimum 1 or better
 still 2 times the sigma.
-</PRE>
-
-First forget the first number, just use 0 which will then use the best number
-for the 'sigma' factor you give.  The larger the sigma the more it sharpens.
-</P>
-
-<TABLE CELLPADDING=0 CELLSPACING=0 WIDTH=60% ALIGN=center>
-<TR><TD>-sharpen 0x.4   <TD>very small
-<TR><TD>-sharpen 0x1.0  <TD>about one pixel size sharpen
-<TR><TD>-sharpen 0x3.0  <TD>probably getting too large
-</TABLE></P>
-
-The "<CODE><A HREF="../option_link.cgi?sharpen" >-sharpen</A></CODE>" operator
-is sort of an inverted blur. In fact it works in just about the same way. For
-examples which show how this is related to blur see, <A
-HREF="http://netpbm.sourceforge.net/doc/extendedopacity.html" >Image
-Processing By Interpolation and Extrapolation</A>. </P>
-
-For example lets blur a simple image then attempt to sharpen it again
-to remove the blur. </P>
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</pre>First forget the first number, just use 0 which will then use the best number for the 'sigma' factor you give. The larger the sigma the more it sharpens.
+          <table cellpadding="0" cellspacing="0" width="60%" align="center">
+            <tr>
+              <td>-sharpen 0x.4</td>
+              <td>very small</td>
+            </tr>
+            <tr>
+              <td>-sharpen 0x1.0</td>
+              <td>about one pixel size sharpen</td>
+            </tr>
+            <tr>
+              <td>-sharpen 0x3.0</td>
+              <td>probably getting too large</td>
+            </tr>
+          </table>The "<code><a href="../option_link.cgi?sharpen">-sharpen</a></code>" operator is sort of an inverted blur. In fact it works in just about the same way. For examples which show how this is related to blur see, <a href="http://netpbm.sourceforge.net/doc/extendedopacity.html">Image Processing By Interpolation and Extrapolation</a>. For example lets blur a simple image then attempt to sharpen it again to remove the blur.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick -font Gecko -pointsize 72 label:A  A_original.jpg
   magick A_original.jpg     -blur    0x3    A_blur.jpg
   magick A_blur.jpg         -sharpen 0x3    A_blur_sharp.jpg
   magick A_blur_sharp.jpg   -sharpen 0x3    A_blur_sharp_x2.jpg
-</samp></pre></TD></TR></TABLE>
-  <A HREF="A_original.jpg"
-     ><IMG SRC="A_original.jpg"
-           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-  <A HREF="A_blur.jpg"
-     ><IMG SRC="A_blur.jpg"
-           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-  <A HREF="A_blur_sharp.jpg"
-     ><IMG SRC="A_blur_sharp.jpg"
-           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-  <A HREF="A_blur_sharp_x2.jpg"
-     ><IMG SRC="A_blur_sharp_x2.jpg"
-           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-As you can see the result is not perfect, as spreading the pixels out will
-make the sharp corners of the image less distinct. Particularly notice the
-extra thickening that resulted at the corner of the two lines at the very top
-of the image, as well and the near disappearance of the thin lines. </P>
-
-Even repeating the operation or increasing the size of the area of the sharpen
-will not help return the image back to the exact original as you have
-basically lost the finer detail from the image blurring.  However the macro
-detail can be recovered quite well. </P>
-
-It is sharpening algorithms which can recover of finer detail in a blurred, or
-heavily zoomed image, that makes big money in software packages used by
-police forces, astronomers, and government spy agencies. </P>
-
-<A NAME="unsharp"></A>
-<H3>Unsharp Images</H3>
-
-<DIV ALIGN=center><FONT SIZE=+2><B>
-<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35>
-Under Construction
-<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50>
-</B></FONT></DIV></P>
-
-Both the "<CODE><A HREF="../option_link.cgi?sharpen" >-sharpen</A></CODE>",
-and "<CODE><A HREF="../option_link.cgi?unsharp" >-unsharp</A></CODE>"
-operators, work using the exact same technique of subtracting a blur from
-the original image. </P>
-
-For the internal details of how both "<CODE><A
-HREF="../option_link.cgi?sharpen" >-sharpen</A></CODE>", and "<CODE><A
-HREF="../option_link.cgi?sharpen" >-unsharp</A></CODE>" actually work see <A
-HREF="../convolve/#unsharpen" >Unsharpen Convolution</A>. </P>
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                </td>
+              </tr>
+            </table><a href="A_original.jpg"><img src="A_original.jpg" align="middle" vspace="1" hspace="15" border="1" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="A_blur.jpg"><img src="A_blur.jpg" align="middle" vspace="1" hspace="15" border="1" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="A_blur_sharp.jpg"><img src="A_blur_sharp.jpg" align="middle" vspace="1" hspace="15" border="1" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="A_blur_sharp_x2.jpg"><img src="A_blur_sharp_x2.jpg" align="middle" vspace="1" hspace="15" border="1" alt="[IM Output]"></a>
+          </div>As you can see the result is not perfect, as spreading the pixels out will make the sharp corners of the image less distinct. Particularly notice the extra thickening that resulted at the corner of the two lines at the very top of the image, as well and the near disappearance of the thin lines. Even repeating the operation or increasing the size of the area of the sharpen will not help return the image back to the exact original as you have basically lost the finer detail from the image blurring. However the macro detail can be recovered quite well. It is sharpening algorithms which can recover of finer detail in a blurred, or heavily zoomed image, that makes big money in software packages used by police forces, astronomers, and government spy agencies. <a name="unsharp" id="unsharp"></a>
+          <h3>Unsharp Images</h3>
+          <div align="center">
+            <font size="+2"><b><img src="../img_www/const_barrier.gif" width="39" height="35"> Under Construction <img src="../img_www/const_hole.gif" width="144" height="50"></b></font>
+          </div>Both the "<code><a href="../option_link.cgi?sharpen">-sharpen</a></code>", and "<code><a href="../option_link.cgi?unsharp">-unsharp</a></code>" operators, work using the exact same technique of subtracting a blur from the original image. For the internal details of how both "<code><a href="../option_link.cgi?sharpen">-sharpen</a></code>", and "<code><a href="../option_link.cgi?sharpen">-unsharp</a></code>" actually work see <a href="../convolve/#unsharpen">Unsharpen Convolution</a>.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick A_blur.jpg       -unsharp 0x5        A_blur_unsharp.jpg
-</samp></pre></TD></TR></TABLE>
-  <A HREF="A_blur.jpg"
-     ><IMG SRC="A_blur.jpg"
-           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-  <A HREF="A_blur_unsharp.jpg"
-     ><IMG SRC="A_blur_unsharp.jpg"
-           ALIGN=middle VSPACE=1 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-<PRE>
-From comments on  <A
-HREF="http://redskiesatnight.com/2005/04/06/sharpening-using-image-magick/"
->Sharpening with ImageMagick</A> from Alex Beels
+</samp></pre>
+                </td>
+              </tr>
+            </table><a href="A_blur.jpg"><img src="A_blur.jpg" align="middle" vspace="1" hspace="15" border="1" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="A_blur_unsharp.jpg"><img src="A_blur_unsharp.jpg" align="middle" vspace="1" hspace="15" border="1" alt="[IM Output]"></a>
+          </div>
+          <pre>
+From comments on  <a href="http://redskiesatnight.com/2005/04/06/sharpening-using-image-magick/">Sharpening with ImageMagick</a> from Alex Beels
 
   Matching GIMP unsharp
-    Take gimp radius and add 1 => IM sigma
-    Threshold divide by 255    => IM Threshold
+    Take gimp radius and add 1 =&gt; IM sigma
+    Threshold divide by 255    =&gt; IM Threshold
 
   So  GIMP  radius=2  amount=1.5  threshold=5  results in
     -unsharp 0×3+1.5+0.0196
 
   Another suggested that   im_sigma = sqrt(gimp_radius)
 
-<B>Raw notes from Fred Weinhaus</B>
+<b>Raw notes from Fred Weinhaus</b>
 
 Blur Image for test.
 
@@ -801,7 +483,7 @@ blending concept (between the high pass filtered result and the original
 image) and a description is there with the scripts. The thresholding in my
 scripts is done differently and for a different purpose.
 
-<B>Sharpen using de-convolution</B>
+<b>Sharpen using de-convolution</b>
 
 There is a technique of using de-convolution (division in a Fast-Fourier
 generated frequency form of images),  This works best when the exact 'blur'
@@ -809,369 +491,288 @@ that was applied to the original image is known, or calculated in some way.
 
 At the moment only raw 'DIY' methods are as yet available in IM
 and a number of such methods are demonstrated (trialed) in the sub-section
-<A HREF="../fourier/fft_math/" >Fourier Multiply/Divide</A>.
+<a href="../fourier/fft_math/">Fourier Multiply/Divide</a>.
 
-</PRE>
-
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="shadow"></A>
-<H2>Generating Shadows</H2>
-
-The "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" operator
-is an advanced operator that was developed with the IM example pages.
-Basically it represents a very complex blur and re-coloring of transparency
-shape of the given image.  This is an operation that IM users performed all
-the time, but required a good deal of knowledge to figure how to achieve
-correctly. </P>
-
-The operator will take an image (usually a clone, and may already have some
-transparency) and magick it into a shadow image that can then be positioned
-under the original image at given offset, (generally by using the special <A
-HREF="../layers/#merge" >Layer Merge</A> operator. </P>
-
-Here for example is a standard method of shadowing an existing image, using a
-navy shadow color to match this web page.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</pre>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="shadow" id="shadow"></a>
+          <h2>Generating Shadows</h2>The "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" operator is an advanced operator that was developed with the IM example pages. Basically it represents a very complex blur and re-coloring of transparency shape of the given image. This is an operation that IM users performed all the time, but required a good deal of knowledge to figure how to achieve correctly. The operator will take an image (usually a clone, and may already have some transparency) and magick it into a shadow image that can then be positioned under the original image at given offset, (generally by using the special <a href="../layers/#merge">Layer Merge</a> operator. Here for example is a standard method of shadowing an existing image, using a navy shadow color to match this web page.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone  -background navy  -shadow 80x3+5+5 \) +swap \
           -background none   -layers merge  +repage   shadow.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow.png"
-     ><IMG SRC="shadow.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Note how the shadow image is correctly offset from the image. </P>
-
-You can even zero the blur '<I>sigma</I>' value and create a hard shadow, but
-semi-transparent shadow.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow.png"><img src="shadow.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Note how the shadow image is correctly offset from the image. You can even zero the blur '<i>sigma</i>' value and create a hard shadow, but semi-transparent shadow.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone  -background navy  -shadow 60x0+4+4 \) +swap \
           -background none   -layers merge +repage  shadow_hard.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_hard.png"
-     ><IMG SRC="shadow_hard.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-The use of "<CODE><A HREF="../option_link.cgi?layers" >-layers</A>
-merge</CODE>" to layer shadow images with the original image makes it easy to
-generate shadows from a light source from any direction, not just the upper
-left side.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_hard.png"><img src="shadow_hard.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>The use of "<code><a href="../option_link.cgi?layers">-layers</a> merge</code>" to layer shadow images with the original image makes it easy to generate shadows from a light source from any direction, not just the upper left side.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone -background navy -shadow 80x3-5+5 \) +swap \
           -background none  -layers merge +repage  shadow_other.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-   <A HREF="shadow_other.png"
-      ><IMG SRC="shadow_other.png"
-            ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-While  it is easiest to just use a <A HREF="../layers/#merge" >Layers
-Merge</A>, it will tend to shift the overall offset of the resulting image.
-The shift however is not caused by the layering method, but due to "<CODE><A
-HREF="../option_link.cgi?repage" >+repage</A></CODE>" removing any negative or
-positive offset that may be present in the resulting 'layer' image. See <A
-HREF="#shadow_offset" >Shadows and the Offset Problem</A> for alternative
-techniques. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/warning.gif"  WIDTH=28 HEIGHT=28
-    ><IMG SRC="../img_www/space.gif"   WIDTH=12 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  The <A HREF="../layers/#merge" >Layers Merge</A> method was added to IM
-  v6.3.6-2. Before this you would need to use the similar layer flattening
-  operator "<CODE><A HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>"
-  instead.  However this operator has problems (see next).
-</I></FONT></TD></TR></TABLE></P>
-
-
-<A NAME="shadow_shape"></A>
-<H3>Shaped Shadows</H3>
-
-Now "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" was designed
-with shaped images in mind, (and this is the reason for its complexity).
-For example, here is a typical shadowed font.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_other.png"><img src="shadow_other.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>While it is easiest to just use a <a href="../layers/#merge">Layers Merge</a>, it will tend to shift the overall offset of the resulting image. The shift however is not caused by the layering method, but due to "<code><a href="../option_link.cgi?repage">+repage</a></code>" removing any negative or positive offset that may be present in the resulting 'layer' image. See <a href="#shadow_offset">Shadows and the Offset Problem</a> for alternative techniques.
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/warning.gif" width="28" height="28"><img src="../img_www/space.gif" width="12" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>The <a href="../layers/#merge">Layers Merge</a> method was added to IM v6.3.6-2. Before this you would need to use the similar layer flattening operator "<code><a href="../option_link.cgi?mosaic">-mosaic</a></code>" instead. However this operator has problems (see next).</i></font></td>
+            </tr>
+          </table><a name="shadow_shape" id="shadow_shape"></a>
+          <h3>Shaped Shadows</h3>Now "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" was designed with shaped images in mind, (and this is the reason for its complexity). For example, here is a typical shadowed font.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -background none -stroke black -fill white \
           -font Candice -pointsize 48 label:A -trim \
           \( +clone   -background navy   -shadow 80x3+3+3 \) +swap \
           -background none   -layers merge +repage  shadow_a.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_a.png"
-     ><IMG SRC="shadow_a.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-If there is enough space for the shadow to be included without clipping, in
-the original image, you can use this command.  It uses a special '<CODE><A
-HREF="../compose/#dst_over" >DstOver</A></CODE>' composition method so as to
-avoid the need to swap the order of the two images.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_a.png"><img src="shadow_a.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>If there is enough space for the shadow to be included without clipping, in the original image, you can use this command. It uses a special '<code><a href="../compose/#dst_over">DstOver</a></code>' composition method so as to avoid the need to swap the order of the two images.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -background none -stroke black -fill white \
           -font Candice -pointsize 48 label:'A ' \
           \( +clone -background navy -shadow 80x3+3+3 \) \
           -background none -compose DstOver -flatten  shadow_a_size.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_a_size.png"
-     ><IMG SRC="shadow_a_size.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-You can probably see a small amount of clipping in this as the original image
-did not have quite enough extra space for the requested shadow. </P>
-
-<A NAME="shadow_offset"></A>
-<H3>Shadows and the Offset Problem</H3>
-
-The problem with shadow is that a blurry shadow extends in all directions.  To
-compensate the "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>"
-operator enlarges the actual original image by adding a border 2 times the
-size of the blur '<I>sigma</I>' value given.  That is, if you blur a shadow
-using '<CODE>x3</CODE>', it will enlarge the image by 12 pixels (2 times 3
-pixels on every side). </P>
-
-To compensate for this enlargement, a shadow image is also given an
-appropriate negative <A HREF="../basics/#page" >Virtual Canvas Offset</A> so
-that it will be positioned correctly relative to the image being shadowed. For
-a normal image that means the shadow image generated will have a negative
-offset.  </P>
-
-This however generates a problem when your IM does not have a the "<CODE><A
-HREF="../option_link.cgi?layers" >-layers</A></CODE>" method
-'<CODE>merge</CODE>' available.  For example, here we try to add a shadow on
-the left side, of the image as if a light shone from the upper right.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_a_size.png"><img src="shadow_a_size.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>You can probably see a small amount of clipping in this as the original image did not have quite enough extra space for the requested shadow. <a name="shadow_offset" id="shadow_offset"></a>
+          <h3>Shadows and the Offset Problem</h3>The problem with shadow is that a blurry shadow extends in all directions. To compensate the "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" operator enlarges the actual original image by adding a border 2 times the size of the blur '<i>sigma</i>' value given. That is, if you blur a shadow using '<code>x3</code>', it will enlarge the image by 12 pixels (2 times 3 pixels on every side). To compensate for this enlargement, a shadow image is also given an appropriate negative <a href="../basics/#page">Virtual Canvas Offset</a> so that it will be positioned correctly relative to the image being shadowed. For a normal image that means the shadow image generated will have a negative offset. This however generates a problem when your IM does not have a the "<code><a href="../option_link.cgi?layers">-layers</a></code>" method '<code>merge</code>' available. For example, here we try to add a shadow on the left side, of the image as if a light shone from the upper right.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone  -background navy  -shadow 60x3-5+5 \) +swap \
           -background none   -mosaic   shadow_left_clipped.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_left_clipped.png"
-     ><IMG SRC="shadow_left_clipped.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-As you can see as the shadow, was clipped by the "<CODE><A
-HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>" operator, because of the
-negative offset.  Not good!  </P>
-
-One solution is to add an initial offset to the original image so the
-resulting shadow images offset will not be negative.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_left_clipped.png"><img src="shadow_left_clipped.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>As you can see as the shadow, was clipped by the "<code><a href="../option_link.cgi?mosaic">-mosaic</a></code>" operator, because of the negative offset. Not good! One solution is to add an initial offset to the original image so the resulting shadow images offset will not be negative.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: -repage +11+0\
           \( +clone   -background navy   -shadow 80x3-5+5 \) +swap \
           -background none   -mosaic   shadow_left.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_left.png"
-     ><IMG SRC="shadow_left.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Another method is offset both images by an appropriate amount after the shadow
-has been generated.  This removes any negative offsets before you  "<CODE><A
-HREF="../option_link.cgi?mosaic" >-mosaic</A></CODE>" them together.  Note the
-use of a '<CODE>!</CODE>' flag with "<CODE><A HREF="../option_link.cgi?repage"
->-repage</A></CODE>" to add the given offset to both images.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_left.png"><img src="shadow_left.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Another method is offset both images by an appropriate amount after the shadow has been generated. This removes any negative offsets before you "<code><a href="../option_link.cgi?mosaic">-mosaic</a></code>" them together. Note the use of a '<code>!</code>' flag with "<code><a href="../option_link.cgi?repage">-repage</a></code>" to add the given offset to both images.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone -background navy -shadow 80x3-5-5 \) +swap \
           -repage +11+11\! -background none  -mosaic  shadow_tl.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_tl.png"
-     ><IMG SRC="shadow_tl.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-The amount of space need should be at least
-2&times;'<I>sigma</I>'-'<I>offset</I>', or in this case 2&times;3--5 &rArr; 11
-pixels, or you risk clipping the shadow.  However space of about
-'<I>sigma</I>'-'<I>offset</I>' usually produces an acceptable level of
-clipping. </P>
-
-Another alternative is to expand the original image so as to make enough room
-for the final shadow.  This is the BEST way of handling shadows, while
-preserving the images original location on the virtual canvas.  </P>
-
-For example, here I pad out the original image with some extra space for the
-shadow, and then underlay the shadow image directly.  I included a border in
-the displayed image result so that you can see that the final image remains
-centered in the 'padded' image.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_tl.png"><img src="shadow_tl.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>The amount of space need should be at least 2×'<i>sigma</i>'-'<i>offset</i>', or in this case 2×3--5 ⇒ 11 pixels, or you risk clipping the shadow. However space of about '<i>sigma</i>'-'<i>offset</i>' usually produces an acceptable level of clipping. Another alternative is to expand the original image so as to make enough room for the final shadow. This is the BEST way of handling shadows, while preserving the images original location on the virtual canvas. For example, here I pad out the original image with some extra space for the shadow, and then underlay the shadow image directly. I included a border in the displayed image result so that you can see that the final image remains centered in the 'padded' image.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: -bordercolor None -border 11x11 \
           \( +clone -background navy -shadow 80x3+5+5 \) \
           -background none -compose DstOver -flatten \
           -compose Over  shadow_space.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_space.png"
-     ><IMG SRC="shadow_space.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-The amount of padding needed should be at least
-'<I>sigma</I>'+abs('<I>offset</I>') or better still
-2&times;'<I>sigma</I>'+abs('<I>offset</I>'), to ensure the shadow is not
-clipped.  Padding can be asymmetrical to reduce space, but typically
-a symmetrical padding (like the above) is used for convenience. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Note that while the "<CODE>-compose Over</CODE>" setting is not actually
-  needed in the above, it is recommended. Otherwise later operations (even in
-  other "<code>magick</code>" commands) could be effected, with unexpected
-  results.  That is, a non-standard compose setting can effect other
-  operations, including: image layering, adding borders, or frames, or simply
-  other compositions.
-</I></FONT></TD></TR></TABLE></P>
-
-
-<A NAME="shadow_composite"></A>
-<H3>Shadows and Composite</H3>
-
-Many people on the forums generate a shadow image and then try to use the
-lower-level "<CODE><A HREF="../option_link.cgi?composite"
->-composite</A></CODE>" to merge the images.  For example directly overlay the
-original image onto a generated (larger) shadow image.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_space.png"><img src="shadow_space.png" align="middle" vspace="1" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>The amount of padding needed should be at least '<i>sigma</i>'+abs('<i>offset</i>') or better still 2×'<i>sigma</i>'+abs('<i>offset</i>'), to ensure the shadow is not clipped. Padding can be asymmetrical to reduce space, but typically a symmetrical padding (like the above) is used for convenience.
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>Note that while the "<code>-compose Over</code>" setting is not actually needed in the above, it is recommended. Otherwise later operations (even in other "<code>magick</code>" commands) could be effected, with unexpected results. That is, a non-standard compose setting can effect other operations, including: image layering, adding borders, or frames, or simply other compositions.</i></font></td>
+            </tr>
+          </table><a name="shadow_composite" id="shadow_composite"></a>
+          <h3>Shadows and Composite</h3>Many people on the forums generate a shadow image and then try to use the lower-level "<code><a href="../option_link.cgi?composite">-composite</a></code>" to merge the images. For example directly overlay the original image onto a generated (larger) shadow image.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone  -background navy  -shadow 60x3 \) \
           +swap -composite  +repage shadow_composite.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_composite.png"
-     ><IMG SRC="shadow_composite.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-The first point to remember is that the <A HREF="../compose/#compose"
->Composition Operators</A> are very low level and do not read any layer or
-virtual canvas offset either original image, or the <A HREF="#shadow" >Shadow
-Operator</A> may have. In fact we still need to remove or adjust the possibly
-negative (bad) offset shadow added using the <A HREF="../basics/#page"
->Repage Setting</A>. </P>
-
-This means that the offset you see on the above example is being generated
-simply because of the way shadow enlarged the input image to give the shadow
-some space. The shadow is where it is solely due to the expansion of the
-shadow image by 2 times sigma.  Further, if you use a 'hard shadow' (zero
-sigma) you would also end up with no offset to the shadow at all, and thus the
-shadow will be hidden by the original image, other than a possible dark halo
-edge effect. </P>
-
-You have essentially give up the built-in offset calculation that the <A
-HREF="#shadow" >Shadow Operator</A> provides. </P>
-
-Of course you can calculate and set the appropriate <A
-HREF="../compose/#geometry" >Composite Geometry/Gravity</A> settings instead,
-and the easiest way is to use a "<CODE><A HREF="../option_link.cgi?gravity"
->-gravity</A> Center</CODE>" setting, as the enlarged shadow image is expanded
-equally on all sides.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_composite.png"><img src="shadow_composite.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>The first point to remember is that the <a href="../compose/#compose">Composition Operators</a> are very low level and do not read any layer or virtual canvas offset either original image, or the <a href="#shadow">Shadow Operator</a> may have. In fact we still need to remove or adjust the possibly negative (bad) offset shadow added using the <a href="../basics/#page">Repage Setting</a>. This means that the offset you see on the above example is being generated simply because of the way shadow enlarged the input image to give the shadow some space. The shadow is where it is solely due to the expansion of the shadow image by 2 times sigma. Further, if you use a 'hard shadow' (zero sigma) you would also end up with no offset to the shadow at all, and thus the shadow will be hidden by the original image, other than a possible dark halo edge effect. You have essentially give up the built-in offset calculation that the <a href="#shadow">Shadow Operator</a> provides. Of course you can calculate and set the appropriate <a href="../compose/#geometry">Composite Geometry/Gravity</a> settings instead, and the easiest way is to use a "<code><a href="../option_link.cgi?gravity">-gravity</a> Center</code>" setting, as the enlarged shadow image is expanded equally on all sides.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick rose: \( +clone  -background navy  -shadow 60x3 \) +repage \
           +swap -gravity center -geometry -3-5 -composite shadow_geometry.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_geometry.png"
-     ><IMG SRC="shadow_geometry.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Note that the centered geometry offset is negative as the image order was
-swapped. </P>
-
-<A NAME="shadow_outline"></A>
-<H3>Shadow Outlines</H3>
-
-You can also use  "<CODE><A HREF="../option_link.cgi?shadow"
->-shadow</A></CODE>" to generate a fuzzy outlines of shapes, such as text.
-By using <A HREF="../layers/#merge" >Layers Merge</A> IM will automatically
-add the extra space needed for the semi-transparent blur.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_geometry.png"><img src="shadow_geometry.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Note that the centered geometry offset is negative as the image order was swapped. <a name="shadow_outline" id="shadow_outline"></a>
+          <h3>Shadow Outlines</h3>You can also use "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" to generate a fuzzy outlines of shapes, such as text. By using <a href="../layers/#merge">Layers Merge</a> IM will automatically add the extra space needed for the semi-transparent blur.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -background none -fill white \
               -font Candice -pointsize 48 label:A -trim \
           \( +clone -background black  -shadow 100x3+0+0 \) +swap \
           -background none   -layers merge +repage  shadow_outline.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_outline.png"
-     ><IMG SRC="shadow_outline.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Here you can see one problem with using a blurred shape for outlining.
-The edge of the shape will always be at least 50% transparent, by the very
-nature of how blurring works. </P>
-
-To compensate you can either enlarge the shape of the image that will be
-shadowed, (for an example see <A HREF="../fonts/#denser_soft_outline" >Denser
-Soft Outline Font</A>). </P>
-
-Better still you can adjust the transparency of the shadow image, using a <A
-HREF="../color_mods/#level" >Level Adjustment</A> so that a 50% transparency
-along the edges of the shape becomes fully opaque.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_outline.png"><img src="shadow_outline.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Here you can see one problem with using a blurred shape for outlining. The edge of the shape will always be at least 50% transparent, by the very nature of how blurring works. To compensate you can either enlarge the shape of the image that will be shadowed, (for an example see <a href="../fonts/#denser_soft_outline">Denser Soft Outline Font</a>). Better still you can adjust the transparency of the shadow image, using a <a href="../color_mods/#level">Level Adjustment</a> so that a 50% transparency along the edges of the shape becomes fully opaque.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -background none -fill white \
           -font Candice -pointsize 48  label:A -trim \
           \( +clone -background black  -shadow 100x3+0+0 \
              -channel A -level 0,50% +channel \) +swap \
           +repage -gravity center -composite   shadow_outline_darker.png
-</code></PRE></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_outline_darker.png"
-     ><IMG SRC="shadow_outline_darker.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-<!--  This does not work yet!
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_outline_darker.png"><img src="shadow_outline_darker.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table><!--  This does not work yet!
 An alternative is to over-do the transparency adjustment (using
 '<CODE>200x</CODE>' instead of '<CODE>100x</CODE>') fix the problem.
 
@@ -1189,145 +790,84 @@ An alternative is to over-do the transparency adjustment (using
            ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 -->
-
-Another method of handling the shadow positioning and offset, is to basically
-junk all the "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>"
-generated offsets (using "<CODE><A HREF="../option_link.cgi?repage"
->+repage</A></CODE>"), and center overlaid the original image on the larger
-shadow image.  </P>
-
-By adding a "<CODE><A HREF="../option_link.cgi?geometry"
->-geometry</A></CODE>" composition offset you can then offset the shadow as
-a separate action.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+          Another method of handling the shadow positioning and offset, is to basically junk all the "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" generated offsets (using "<code><a href="../option_link.cgi?repage">+repage</a></code>"), and center overlaid the original image on the larger shadow image. By adding a "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" composition offset you can then offset the shadow as a separate action.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -background none -fill white -stroke black \
           -font Candice -pointsize 48  label:A -trim \
           \( +clone -background navy  -shadow 80x3 \) +swap \
           +repage -gravity center -geometry -3-3 -composite \
           shadow_geometry_offset.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_geometry_offset.png"
-     ><IMG SRC="shadow_geometry_offset.png"
-           ALIGN=middle VSPACE=1 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-However notice how the offset is a negative to what you would normally use for
-positioning the shadow.  This is because you are really offsetting the text
-shape and not the shadow, so it is in the opposite direction.  </P>
-
-This method will however clip the original source image, rather than the
-shadow image if the offset becomes larger that twice the blur 'sigma'.  As
-such it can not be used for 'hard shadows' (using a '<CODE>x0</CODE>' blur
-'sigma'), unless you include some padding space to the shadow image for the
-original image to be overlaid. With a soft fuzzy shadow however that is rarely
-a problem. </P>
-
-For some practical examples of shadowing see <A HREF="../thumbnails/#shadow"
->Thumbnail shadowing</A> and <A HREF="../advanced/#3d-logos-2" >Better 3-D
-Logo Generation</A>. </P>
-
-
-<A NAME="shadow_montage"></A>
-<H3>Shadow in the Montage Command</H3>
-
-As of IM v6.3.1 the "<code>magick montage</code>" "<CODE><A
-HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" setting, started to make
-use of the soft 'shaped' shadows this operator provides.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_geometry_offset.png"><img src="shadow_geometry_offset.png" align="middle" vspace="1" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>However notice how the offset is a negative to what you would normally use for positioning the shadow. This is because you are really offsetting the text shape and not the shadow, so it is in the opposite direction. This method will however clip the original source image, rather than the shadow image if the offset becomes larger that twice the blur 'sigma'. As such it can not be used for 'hard shadows' (using a '<code>x0</code>' blur 'sigma'), unless you include some padding space to the shadow image for the original image to be overlaid. With a soft fuzzy shadow however that is rarely a problem. For some practical examples of shadowing see <a href="../thumbnails/#shadow">Thumbnail shadowing</a> and <a href="../advanced/#3d-logos-2">Better 3-D Logo Generation</a>. <a name="shadow_montage" id="shadow_montage"></a>
+          <h3>Shadow in the Montage Command</h3>As of IM v6.3.1 the "<code>magick montage</code>" "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" setting, started to make use of the soft 'shaped' shadows this operator provides.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   montage -label Rose  rose: \
           -background none -geometry +5+5 -shadow  shadow_montage.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="shadow_montage.png"
-     ><IMG SRC="shadow_montage.png"
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-However no controls for setting the color, fuzziness and offset of that shadow
-is provided, as "<code>magick montage</code>" never did provide such controls, beyond
-a simple on/off option. </P>
-
-<A NAME="shadow_internals"></A>
-<H3>Shadow Internals</H3>
-
-Internally "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" is
-extremely complex.  Basically not only does it need to enlarge an image to
-accommodate a 'soft blurry shadow', but it also needs to blur the existing
-shape of the image, set its color appropriately, and finally adjust virtual
-page/canvas offsets; all to the users specifications.  </P>
-
-For example given the following "<CODE><A HREF="../option_link.cgi?shadow"
->-shadow</A></CODE>" command...
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="shadow_montage.png"><img src="shadow_montage.png" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>However no controls for setting the color, fuzziness and offset of that shadow is provided, as "<code>magick montage</code>" never did provide such controls, beyond a simple on/off option. <a name="shadow_internals" id="shadow_internals"></a>
+          <h3>Shadow Internals</h3>Internally "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" is extremely complex. Basically not only does it need to enlarge an image to accommodate a 'soft blurry shadow', but it also needs to blur the existing shape of the image, set its color appropriately, and finally adjust virtual page/canvas offsets; all to the users specifications. For example given the following "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" command...
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
     magick image_clone.png -shadow 60x4+5+5   image_shadow.png
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-
-The equivalent IM operation would be...
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>The equivalent IM operation would be...
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick image_clone.png -alpha set \
           -bordercolor none  -border 8  -repage -8-8\!  \
           -channel A -virtual-pixel transparent \
                -blur 8x4 -evaluate multiply .60 +channel
           -fill {background_color} -colorize 100% \
           -repage +5+5\!     image_shadow.png
-</samp></pre></TD></TR></TABLE>
-<FONT SIZE=-1>
-</FONT></DIV></P>
-
-Note that the value 8 in the above is two times the blur sigma, so as to
-provide enough space for the blurred shadow.  However this means the final
-image will be 4 times sigma pixels larger.  To compensate an equal amount of
-negative offset is also added. </P>
-
-Now as a 2 times sigma negative offset will be added to the generated image,
-care should be taken to avoid the shadow being clipped, or incorrectly
-positioned relative to the original image.  That can be done by either giving
-the original image an initial positive offset (such as 8-5 or +3+3 pixels),
-or using  <A HREF="../layers/#merge" >Layers Merge</A> which understands
-negative offsets without clipping the final image. </P>
-
-Basically use the previous techniques to correctly handle posible negative
-offsets involved with shadow images. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  The PNG, and MIFF formats are the only image formats I know that can
-  handle a negative offset, as well as semi-transparent pixels. I
-  recommended PNG be used if saving shadow images, for future use.
-</I></FONT></TD></TR></TABLE></P>
-
-As I said "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" is a
-very complex operation. </P>
-
-Of course while the above example is close to what "<CODE><A
-HREF="../option_link.cgi?shadow" >-shadow</A></CODE>" does internally, it is
-not exactly the same. </P>
-
-The actual "<CODE><A HREF="../option_link.cgi?shadow" >-shadow</A></CODE>"
-operator, does not change any of the global settings, such as
-border/background/fill colors, or the current virtual-pixel setting.  Also it
-will short circuit the use of the "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" operator if the blur sigma is set to 0, to prevent
-the blur function from  giving a warning for a zero sigma or radius. </P>
-
-<PRE>
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>Note that the value 8 in the above is two times the blur sigma, so as to provide enough space for the blurred shadow. However this means the final image will be 4 times sigma pixels larger. To compensate an equal amount of negative offset is also added. Now as a 2 times sigma negative offset will be added to the generated image, care should be taken to avoid the shadow being clipped, or incorrectly positioned relative to the original image. That can be done by either giving the original image an initial positive offset (such as 8-5 or +3+3 pixels), or using <a href="../layers/#merge">Layers Merge</a> which understands negative offsets without clipping the final image. Basically use the previous techniques to correctly handle posible negative offsets involved with shadow images.
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>The PNG, and MIFF formats are the only image formats I know that can handle a negative offset, as well as semi-transparent pixels. I recommended PNG be used if saving shadow images, for future use.</i></font></td>
+            </tr>
+          </table>As I said "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" is a very complex operation. Of course while the above example is close to what "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" does internally, it is not exactly the same. The actual "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" operator, does not change any of the global settings, such as border/background/fill colors, or the current virtual-pixel setting. Also it will short circuit the use of the "<code><a href="../option_link.cgi?blur">-blur</a></code>" operator if the blur sigma is set to 0, to prevent the blur function from giving a warning for a zero sigma or radius.
+          <pre>
 FUTURE: overlaying multiple shadows
 
 Overlaying two images with shadows, produces an unrealistic darkening of the
@@ -1346,227 +886,217 @@ Also the offset and blurring from the shadow of each object should technically
 be separate.  To generate that level of complexity, probably a 3-d ray-tracing
 program should be used instead (sigh).
 
-</PRE>
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="special_blurs"></A>
-<H2>Specialized Blurs</H2>
-
-There are a few other sorts of blurs that have been added to IM version 6,
-which have very special uses.  These operate in specific ways, and not
-in all directions as most other 'convolve'-style operations do. </P>
-
-They also may not work as well as other methods of generating specialized
-blurs, such as distorting images before and after an more normal blur.
-For example see <A HREF="../distorts/#polar_tricks" >Polar Cycle Tricks</A>,
-and <A HREF="../compose/#blur_ellipse" >Elliptical (mapped) Blurring</A>. </P>
-
-<DIV ALIGn=center><FONT SIZE=+1><B>
-WARNING:  All these blurs are experimental, and syntax may change!
-</B></FONT></DIV></P>
-
-
-<A NAME="radial-blur"></A>
-<H3>Radial Blur</H3>
-
-You can blur the image around in a circle using a "<CODE><A
-HREF="../option_link.cgi?radial-blur" >-radial-blur</A></CODE>", as if it was
-spinning around and around.  Though technically this is a rotational or
-angular blur, rather than a radial blur.  </P>
-
-<B>NOTE:</B>You can achieve a much higher quality result (though at a much
-slower speed) using a <A HREF="../distorts/#rotation_blur" >Depolar-Polar
-- Rotational Blur</A> technique.</P>
-
-Note however that like a normal  "<CODE><A HREF="../option_link.cgi?blur"
->-blur</A></CODE>" operator,  "<CODE><A HREF="../option_link.cgi?radial-blur"
->-radial-blur</A></CODE>" is affected by the  "<CODE><A
-HREF="../option_link.cgi?channel" >-channel</A></CODE>" setting.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</pre>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="special_blurs" id="special_blurs"></a>
+          <h2>Specialized Blurs</h2>There are a few other sorts of blurs that have been added to IM version 6, which have very special uses. These operate in specific ways, and not in all directions as most other 'convolve'-style operations do. They also may not work as well as other methods of generating specialized blurs, such as distorting images before and after an more normal blur. For example see <a href="../distorts/#polar_tricks">Polar Cycle Tricks</a>, and <a href="../compose/#blur_ellipse">Elliptical (mapped) Blurring</a>.
+          <div align="center">
+            <font size="+1"><b>WARNING: All these blurs are experimental, and syntax may change!</b></font>
+          </div><a name="radial-blur" id="radial-blur"></a>
+          <h3>Radial Blur</h3>You can blur the image around in a circle using a "<code><a href="../option_link.cgi?radial-blur">-radial-blur</a></code>", as if it was spinning around and around. Though technically this is a rotational or angular blur, rather than a radial blur. <b>NOTE:</b>You can achieve a much higher quality result (though at a much slower speed) using a <a href="../distorts/#rotation_blur">Depolar-Polar - Rotational Blur</a> technique.Note however that like a normal "<code><a href="../option_link.cgi?blur">-blur</a></code>" operator, "<code><a href="../option_link.cgi?radial-blur">-radial-blur</a></code>" is affected by the "<code><a href="../option_link.cgi?channel">-channel</a></code>" setting.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 35,5 35,65' \
           -stroke yellow -strokewidth  9 -draw 'line 35,5 35,65' \
           -channel RGBA  -radial-blur 30   radial_blur.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="radial_blur.png"
-     ><IMG SRC="radial_blur.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-You can place the object off center (by adding some space to an image) for
-more interesting "<CODE><A HREF="../option_link.cgi?radial-blur"
->-radial-blur</A></CODE>" effects.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="radial_blur.png"><img src="radial_blur.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>You can place the object off center (by adding some space to an image) for more interesting "<code><a href="../option_link.cgi?radial-blur">-radial-blur</a></code>" effects.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
           -stroke yellow -strokewidth  9 -draw 'line 5,50 65,50' \
           -channel RGBA  -radial-blur 90   radial_blur_90.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="radial_blur_90.png"
-     ><IMG SRC="radial_blur_90.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-The blur argument is the angle the radial-blur covers. That is, half that angle
-in each direction from the original image. So an angle of 180 is over a half
-circle, while 360 degrees will blur the image in a full circle.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="radial_blur_90.png"><img src="radial_blur_90.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>The blur argument is the angle the radial-blur covers. That is, half that angle in each direction from the original image. So an angle of 180 is over a half circle, while 360 degrees will blur the image in a full circle.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
           -stroke yellow -strokewidth  9 -draw 'line 5,50 65,50' \
           -channel RGBA  -radial-blur 180   radial_blur_180.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="radial_blur_180.png"
-     ><IMG SRC="radial_blur_180.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="radial_blur_180.png"><img src="radial_blur_180.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
           -stroke yellow -strokewidth  9 -draw 'line 5,50 65,50' \
           -channel RGBA  -radial-blur 360   radial_blur_360.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="radial_blur_360.png"
-     ><IMG SRC="radial_blur_360.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-You can even add a little <A HREF="../warping/" >Image Warping</A> to
-make the effect more interesting...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="radial_blur_360.png"><img src="radial_blur_360.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>You can even add a little <a href="../warping/">Image Warping</a> to make the effect more interesting...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none \
           -stroke red    -strokewidth 15 -draw 'line 5,50 65,50' \
           -stroke yellow -strokewidth  9 -draw 'line 5,50 65,50' \
           -channel RGBA  -radial-blur 180 -swirl 180 radial_swirl.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="radial_swirl.png"
-     ><IMG SRC="radial_swirl.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR VALIGN=bottom><TD width="100%" ALIGN=justify>
-
-The full circle radial blur, can be used to generate a rough circular
-gradients.  However formulating the correct shape to generate the correct
-gradient can be extremely difficult, and probably not worth the effort.
-I did try though...
-
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="radial_swirl.png"><img src="radial_swirl.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr valign="bottom">
+              <td width="100%" align="justify">
+                The full circle radial blur, can be used to generate a rough circular gradients. However formulating the correct shape to generate the correct gradient can be extremely difficult, and probably not worth the effort. I did try though...
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 80x80 xc:lightblue -fill red \
           -draw "path 'M 40,40   C 43,43 47,47 50,40 \
                   S 52,23 40,20   S 14,22 10,40   S 15,75 40,79 Z'" \
           radial_gradient_pre.gif
   magick radial_gradient_pre.gif  -radial-blur 360  radial_gradient.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="radial_gradient_pre.gif"
-     ><IMG SRC="radial_gradient_pre.gif"     WIDTH=80  HEIGHT=80
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <A HREF="radial_gradient.gif"
-     ><IMG SRC="radial_gradient.gif"     WIDTH=80  HEIGHT=80
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-
-<A NAME="motion-blur"></A>
-<H3>Motion Blur</H3>
-
-You can add a linearly fading blur in one direction only (giving a radius and
-sigma, plus an the angle in which the blur should occur), by using a "<CODE><A
-HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>". </P>
-
-This gives your image a look as if it (or the camera) was moving very very
-fast.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="radial_gradient_pre.gif"><img src="radial_gradient_pre.gif" width="80" height="80" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a> <a href="radial_gradient.gif"><img src="radial_gradient.gif" width="80" height="80" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table><a name="motion-blur" id="motion-blur"></a>
+          <h3>Motion Blur</h3>You can add a linearly fading blur in one direction only (giving a radius and sigma, plus an the angle in which the blur should occur), by using a "<code><a href="../option_link.cgi?motion-blur">-motion-blur</a></code>". This gives your image a look as if it (or the camera) was moving very very fast.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none  -channel RGBA \
           -fill yellow  -stroke red  -strokewidth 3 \
           -draw 'circle 45,45 35,35'  -motion-blur 0x12+45  motion_blur.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="motion_blur.png"
-     ><IMG SRC="motion_blur.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Note that not only does the object get a trail, but the edges in the direction
-of motion also has the background blurred into it. </P>
-
-
-This leading edge blurring can be improved by re-drawing or overlaying the
-original image and re-applying a smaller "<CODE><A
-HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>" multiple times.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="motion_blur.png"><img src="motion_blur.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Note that not only does the object get a trail, but the edges in the direction of motion also has the background blurred into it. This leading edge blurring can be improved by re-drawing or overlaying the original image and re-applying a smaller "<code><a href="../option_link.cgi?motion-blur">-motion-blur</a></code>" multiple times.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none -channel RGBA \
           -fill yellow  -stroke red -strokewidth 3 \
           -draw 'circle 45,45 35,35'  -motion-blur 0x8+45 \
           -draw 'circle 45,45 35,35'  -motion-blur 0x6+45 \
           -draw 'circle 45,45 35,35'  -motion-blur 0x2+45 \
           motion_blur_redraw.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="motion_blur_redraw.png"
-     ><IMG SRC="motion_blur_redraw.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Multiple motion blurs can be made to effect some spread of the trailing
-tail of the moving object. Sort of like dissipating smoke or flames.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="motion_blur_redraw.png"><img src="motion_blur_redraw.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Multiple motion blurs can be made to effect some spread of the trailing tail of the moving object. Sort of like dissipating smoke or flames.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x70 xc:none -channel RGBA \
           -fill yellow  -stroke red -strokewidth 3 \
           -draw 'circle 45,45 35,35'  -motion-blur 0x12+25 \
           -draw 'circle 45,45 35,35'  -motion-blur 0x12+55 \
           -draw 'circle 45,45 35,35'  -motion-blur 0x12+40 \
           motion_blur_spread.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="motion_blur_spread.png"
-     ><IMG SRC="motion_blur_spread.png"     WIDTH=70  HEIGHT=70
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This technique can be used to generate a spreading shadow on the ground.
-Alternatively you could generate a motion blur, then radial blur it a little
-though that requires some image shifting to get the center right.
-
-You can also add some extra <A HREF="../warping/" >Image Warping</A>
-to make things even more interesting...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="motion_blur_spread.png"><img src="motion_blur_spread.png" width="70" height="70" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This technique can be used to generate a spreading shadow on the ground. Alternatively you could generate a motion blur, then radial blur it a little though that requires some image shifting to get the center right. You can also add some extra <a href="../warping/">Image Warping</a> to make things even more interesting...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 70x100 xc:none -channel RGBA \
           -fill yellow  -stroke red -strokewidth 3 \
           -draw 'circle 35,80 45,70'  -motion-blur 0x20+90 \
@@ -1574,185 +1104,125 @@ to make things even more interesting...
           -gravity center   -crop 70x100+0+0  +repage \
           -draw 'circle 35,80 45,70'  -blur 0x2 \
           motion_wave.png
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="motion_wave.png"
-     ><IMG SRC="motion_wave.png"     WIDTH=70  HEIGHT=100
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-
-<BR>
-
-Note that while "<CODE><A HREF="../option_link.cgi?radial-blur"
->-radial-blur</A></CODE>" blurs in both directions, "<CODE><A
-HREF="../option_link.cgi?motion-blur" >-motion-blur</A></CODE>" only
-blurs in one direction. </P>
-
-In both cases I recommend you pad your image with extra space around the edge
-(generally using "<CODE><A HREF="../option_link.cgi?border"
->-border</A></CODE>") as both of these specialized blurs have strong edge
-effects that is best to avoid. </P>
-
-If you find a more practical or interesting example or use of the above please
-email me a copy (address in footer of page).  </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="feathering"></A>
-<H2>Feathering Shapes using Blur</H2>
-
-<DIV ALIGN=center><FONT SIZE=+2><B>
-<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35>
-Under Construction
-<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50>
-</B></FONT></DIV></P>
-
-<B>WARNING:</B> <I>This section is now out of date, and users whating to
-correctly feather image should look at <A
-HREF="../morphology/#distance_feather" >Feathering Shapes using Distance</A>.
-What is shown here is known as 'Blur Feathering' which as is shown in the
-later part is a 'False Feathering Technique'.  Even so it is still an useful
-method but only with 'convex' image shapes. </I> </P>
-
-When you are cutting out a shape from an image, you often want to feather or
-blur the edges of the shape a little to give it a smoother look, and to
-de-emphasize any parts outside the shape that may have accidentally been
-included, or to allow the image to fit into the background without making it
-of obvious it is a copy-n-paste. </P>
-
-Basically insteand of having a 'hard' edge to some shape, soften it to 'fake'
-anti-aliasing, or lens blurring, so that the paste is more seemless. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-
-For example, here I have a GIF image which I overlay a light colored baground
-
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="motion_wave.png"><img src="motion_wave.png" width="70" height="100" align="middle" vspace="0" hspace="5" border="0" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table><br>
+          Note that while "<code><a href="../option_link.cgi?radial-blur">-radial-blur</a></code>" blurs in both directions, "<code><a href="../option_link.cgi?motion-blur">-motion-blur</a></code>" only blurs in one direction. In both cases I recommend you pad your image with extra space around the edge (generally using "<code><a href="../option_link.cgi?border">-border</a></code>") as both of these specialized blurs have strong edge effects that is best to avoid. If you find a more practical or interesting example or use of the above please email me a copy (address in footer of page).
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="feathering" id="feathering"></a>
+          <h2>Feathering Shapes using Blur</h2>
+          <div align="center">
+            <font size="+2"><b><img src="../img_www/const_barrier.gif" width="39" height="35"> Under Construction <img src="../img_www/const_hole.gif" width="144" height="50"></b></font>
+          </div><b>WARNING:</b> <i>This section is now out of date, and users whating to correctly feather image should look at <a href="../morphology/#distance_feather">Feathering Shapes using Distance</a>. What is shown here is known as 'Blur Feathering' which as is shown in the later part is a 'False Feathering Technique'. Even so it is still an useful method but only with 'convex' image shapes.</i> When you are cutting out a shape from an image, you often want to feather or blur the edges of the shape a little to give it a smoother look, and to de-emphasize any parts outside the shape that may have accidentally been included, or to allow the image to fit into the background without making it of obvious it is a copy-n-paste. Basically insteand of having a 'hard' edge to some shape, soften it to 'fake' anti-aliasing, or lens blurring, so that the paste is more seemless.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                For example, here I have a GIF image which I overlay a light colored baground
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick shape.gif -background wheat -flatten  overlaid.png
-</samp></pre></TD></TR></TABLE></TD><TD>
- <A HREF="overlaid.png"
-    ><IMG SRC="overlaid.png"  WIDTH=100  HEIGHT=125
-          ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-However as I am overlaying a GIF image with boolean transparency, and as a
-result has highly aliases, or staircase-like edges, the image looks very much
-out of place on the background.  If you were dealing with real life images,
-the above result would look very artifical. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-
-But by bluring the image transparency a little, I can make the overlay
-fit onto the background more smoothly.
-
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="overlaid.png"><img src="overlaid.png" width="100" height="125" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>However as I am overlaying a GIF image with boolean transparency, and as a result has highly aliases, or staircase-like edges, the image looks very much out of place on the background. If you were dealing with real life images, the above result would look very artifical.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                But by bluring the image transparency a little, I can make the overlay fit onto the background more smoothly.
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick figure.gif -alpha set -virtual-pixel transparent \
           -channel A -blur 0x0.7  -level 50,100% +channel \
           -background wheat -flatten  edge_blured.png
-</samp></pre></TD></TR></TABLE></TD><TD>
- <A HREF="edge_blured.png"
-    ><IMG SRC="edge_blured.png"  WIDTH=100  HEIGHT=125
-          ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This by the way is the exact same technique used from generating <A
-HREF="../thumbnails/#soft_edges" >Soft Edges</A> on thumbnails. </P>
-
-For more examples of this look at the results of Fred Weinhaus's "<A
-HREF="http://www.fmwconcepts.com/imagemagick/feather/" >feather</A>" masking
-script. </P>
-
-As you can see this works very well for simple cases, when there is a high
-contrast between the overlaid image and the background.  However there are
-serious problems when you want to use either a much larger feathering blur
-factor, or the two images are both very light colors. </P>
-
-<BR>
-
-Note that as blur extends both into and out of the shaped area, the alpha
-channel has to be adjusted so that the edge of the shape is zero
-(fully-transparent). but quickly becomes fully-opaque as to get further from
-the edge.  An example of just such an alpha channel adjustment is provided by
-<A HREF="../color_mods/#clut_alpha" >CLUT with Transparency Handling</A> </P>
-
-This adjustment is critical, otherwise instead of de-emphasizing the area
-outside the shape, you add a semi-transparent shadow or halo of the area
-outside the shape. Basically some semi-tranparent 'undefined color' that was
-previously hidden by the image transparency.  </P>
-
-However blur has a particularly nasty problem in also smoothing the outline of
-the shape.  For example...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="edge_blured.png"><img src="edge_blured.png" width="100" height="125" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This by the way is the exact same technique used from generating <a href="../thumbnails/#soft_edges">Soft Edges</a> on thumbnails. For more examples of this look at the results of Fred Weinhaus's "<a href="http://www.fmwconcepts.com/imagemagick/feather/">feather</a>" masking script. As you can see this works very well for simple cases, when there is a high contrast between the overlaid image and the background. However there are serious problems when you want to use either a much larger feathering blur factor, or the two images are both very light colors.<br>
+          Note that as blur extends both into and out of the shaped area, the alpha channel has to be adjusted so that the edge of the shape is zero (fully-transparent). but quickly becomes fully-opaque as to get further from the edge. An example of just such an alpha channel adjustment is provided by <a href="../color_mods/#clut_alpha">CLUT with Transparency Handling</a> This adjustment is critical, otherwise instead of de-emphasizing the area outside the shape, you add a semi-transparent shadow or halo of the area outside the shape. Basically some semi-tranparent 'undefined color' that was previously hidden by the image transparency. However blur has a particularly nasty problem in also smoothing the outline of the shape. For example...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 100x60 xc: -draw 'polygon 5,5 50,30 5,55 95,30' \
           sharp_angles.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="sharp_angles.gif"
-     ><IMG SRC="sharp_angles.gif"
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-If you blur this particular shape you get...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="sharp_angles.gif"><img src="sharp_angles.gif" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>If you blur this particular shape you get...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick sharp_angles.gif -blur 0x5  feather_blurred.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="feather_blurred.gif"
-     ><IMG SRC="feather_blurred.gif"
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Notice how the points of the mask was de-emphesized more than the the edges.
-Also how the internal angle seemed to be 'filled in', whic with transparency
-can result in full-transparent pixels becomming semi-transparent. That is
-pixels with an undefined color may actually become visible! </P>
-
-You can see this more clearly if we threshold the image.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%">
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="feather_blurred.gif"><img src="feather_blurred.gif" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Notice how the points of the mask was de-emphesized more than the the edges. Also how the internal angle seemed to be 'filled in', whic with transparency can result in full-transparent pixels becomming semi-transparent. That is pixels with an undefined color may actually become visible! You can see this more clearly if we threshold the image.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick feather_blurred.gif  -threshold 50%  feather_blur_thres.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="feather_blur_thres.gif"
-     ><IMG SRC="feather_blur_thres.gif"
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This is the problem of using 'blur' as a method of fethering images.  And is
-especially of concern when dealing with things like fingers, and ears as well
-as the areas between the legs. That is, the effect on the shape of appendages
-themselves and the spaces in between. </P>
-
-If the image has a cartoon like border outline, then this is not as big a
-problem for a '1 pixel' feather. But for real life images (with no definitive
-borders), it is a real problem. </P>
-
-A proper solution would be to find some sort of measure about how distant
-a point if from an edge of the shape, but such that two close edges do not add
-there effects together.  This distance measuring operation, has now been added
-to IM, and is known as <A HREF="../morphology/#distance" >Distance
-Morphology</A>. For details of using this for feathering see <A
-HREF="../morphology/#distance_feather" >Feathering Shapes using Distance</A>. </P>
-
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="related"></A>
-<H2>Related Operators</H2>
-
-<PRE>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="feather_blur_thres.gif"><img src="feather_blur_thres.gif" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This is the problem of using 'blur' as a method of fethering images. And is especially of concern when dealing with things like fingers, and ears as well as the areas between the legs. That is, the effect on the shape of appendages themselves and the spaces in between. If the image has a cartoon like border outline, then this is not as big a problem for a '1 pixel' feather. But for real life images (with no definitive borders), it is a real problem. A proper solution would be to find some sort of measure about how distant a point if from an edge of the shape, but such that two close edges do not add there effects together. This distance measuring operation, has now been added to IM, and is known as <a href="../morphology/#distance">Distance Morphology</a>. For details of using this for feathering see <a href="../morphology/#distance_feather">Feathering Shapes using Distance</a>.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="related" id="related"></a>
+          <h2>Related Operators</h2>
+          <pre>
 Basic image modifications
   -despeckle -enhance
   -noise  -spread -displace
@@ -1764,7 +1234,7 @@ Basic image modifications
     image  (such a dust in a scan).  But could distort edges, cause some color
     channel aburation, and remove thin lines.
 
-    This filter is the best technique to use for removing Salt &amp; Pepper
+    This filter is the best technique to use for removing Salt & Pepper
     noise, especially on gray scale images.
 
     It is suggested that a trim for a scan use a median filtered image for
@@ -1775,7 +1245,7 @@ Basic image modifications
     as defined by edge detection.
 
     See forum discussion
-      https://imagemagick.org/discourse-server/viewtopic.php?f=1&t=10266
+      https://imagemagick.org/discourse-server/viewtopic.php?f=1&amp;t=10266
 
   -adaptive-blur   radius x sigma
     Blur images, except close to the edges as defined by an edge detection
@@ -1784,15 +1254,21 @@ Basic image modifications
 
   -adaptive-resize
     Resize but attempt not to blur across sharp color changes
-</PRE>
-
-<HR><!-- ---------------------------------------------------------------- -->
-</div></main><footer class="magick-footer"><div class="container-fluid">
-Created: 19 April 2004 <BR>
-Updated: 6 October 2007 <BR>
-Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
-        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
-Examples Generated with:
-        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://imagemagick.org/Usage/blur/</CODE>
-</div></footer></body></HTML>
+</pre>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="magick-footer">
+    <div class="container-fluid">
+      Created: 19 April 2004<br>
+      Updated: 6 October 2007<br>
+      Author: <a href="https://antofthy.gitlab.io/anthony.html">Anthony Thyssen</a>, &lt;Anthony.Thyssen@gmail.com&gt;<br>
+      Examples Generated with: <img src="version.gif" align="absmiddle" alt="[version image]"><br>
+      URL: <code>https://imagemagick.org/Usage/blur/</code>
+    </div>
+  </footer>
+</body>
+</html>

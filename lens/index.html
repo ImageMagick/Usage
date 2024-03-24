@@ -1,193 +1,90 @@
-<html lang="en"><HEAD>
-<meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1" >
-<link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Lens Correction -- ImageMagick Examples</TITLE>
-<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="shortcut icon" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://imagemagick.org/Usage/lens/">
-</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
-
-<H1>ImageMagick Examples -- <BR>
-    <IMG SRC="../img_www/space.gif" width=50 height=1>
-    Lens Correction</H1>
-
-<div>
-
-<DL>
-<DT><B>Index</B>
-<DT><A HREF="../"
-    ><IMG SRC="../img_www/granitesm_left.gif"  BORDER=0 WIDTH=15 HEIGHT=15
-    > ImageMagick Examples Preface and Index</A>
-<DD><A HREF="#lens_correction"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Introduction to Lens Correction</A>
-<DD><A HREF="#non-scaling"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Non-scaling Restraint</A>
-<DD><A HREF="#ready_made"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Ready-made Parameter Sets</A>
-<DD><A HREF="#scratch"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Calibrating From Scratch</A>
-    <UL>
-    <LI><A HREF="#basic"
-        >Basic Appoach</A>
-    <LI><A HREF="#practice"
-        >Determining lens parameter sets with Hugin</A>
-        <LI><A HREF="#pointsets"
-        >Defining point sets</A>
-    <LI><A HREF="#re-engineered"
-        >Re-engineering parameters from camera created thumbnail</H3>
-    </UL>
-<DD><A HREF="#examples"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Example</A>
-<DD><A HREF="#keyboard"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Keyboard Example</A> (by El-Supremo)
-<DD>&nbsp;
-<DD><A HREF="correcting_lens_distortions.pdf"
-    ><IMG SRC="../img_www/scroll.gif" BORDER=0 WIDTH=12 HEIGHT=13 HSPACE=1
-    > Correcting Lens Distortion (PDF)</A>
-</DL>
-
-When taking photographs, the images generated are actually distorted by both
-lens effects and spherical perspective effects. If you plane to use photos
-you will generally need to correct for these effects, and that is what will be
-looked at in this section.  </P>
-
-The majority of this page was contributed by Wolfgang Hugemann.  </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="lens_correction"></A>
-<H2>Introduction to Lens Correction</H2>
-
-Fisheye lenses and low-cost wide-angle lenses (or rather zoom lenses when set
-to short focal length) typically produce a pronounced barrel distortion. This
-distortion can however be mostly corrected by applying suitable algorithmic
-transformations to the digital photograph. One of the most-used lens
-correction algorithms, introduced by Panorama Tools and used by <A
-HREF="http://epaperpress.com/ptlens" >PTlens</A>, is also offered by
-ImageMagick, as <A HREF="../distorts/#barrel" >Barrel Correction Distortion
-Method</A>. </P>
-
-In this approach to the problem, the distortion is controlled by four
-transformation parameters <CODE>a, b, c, d</CODE>, which have to be chosen
-sensibly in order to correct the distortion produced by a specific lens (or
-rather a zoom camera when set to a certain focal length). Suitable values for
-these parameters can hardly be found by trial and error. In the following, we
-describe how to determine the lens correction parameters of this model
-effectively by the use of <A HREF="http://hugin.sourceforge.net" >Hugin</A>,
-a free graphical user interface for <A HREF="http://panotools.sourceforge.net"
->Panorama Tools</A>, which is available for various operating systems. </P>
-
-If you don't want to deal with the details of lens correction, you may skip
-the rest of this page and just buy <A HREF="http://epaperpress.com/ptlens"
->PTlens</A>, which offers sophisticated lens correction for a vast number of
-digital cameras and lenses at a reasonable price (by use of its large lens
-database). Nowadays, some digital cameras (such as the Nikon P7000) even
-incorporate lens correction in their internal image processing steps. For
-photographs taken with cameras that don't offer this possibility, ImageMagick
-enables you to integrate lens correction as one step of a larger image
-processing script. </P>
-
-The following text is an abridged version of paper <A
-HREF="correcting_lens_distortions.pdf" >Correcting Lens Distortion (PDF)</A>
-(dealing with applications in accident reconstruction). The explanations given
-here are a more hands-on approach, concentrating on the ways to get in hold of
-the adequate lens correction parameters.  </P>
-
-<A NAME="non-scaling"></A>
-<H2>Non-scaling Restraint</H2>
-
-As described in the <A HREF="../distorts/#barrel" >Barrel Distortions</A> The
-barrel distortion is defined by the mathematical formula </P>
-
-<PRE>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/usage.css">
+  <title>Lens Correction -- ImageMagick Examples</title>
+  <link rel="icon" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://imagemagick.org/Usage/lens/">
+</head>
+<body>
+  <main class="container">
+    <div class="magick-template">
+      <div class="magick-header">
+        <h1>ImageMagick Examples --<br>
+        <img src="../img_www/space.gif" width="50" height="1"> Lens Correction</h1>
+        <div>
+          <dl>
+            <dt><b>Index</b></dt>
+            <dt>
+              <a href="../"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> ImageMagick Examples Preface and Index</a>
+            </dt>
+            <dd>
+              <a href="#lens_correction"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Introduction to Lens Correction</a>
+            </dd>
+            <dd>
+              <a href="#non-scaling"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Non-scaling Restraint</a>
+            </dd>
+            <dd>
+              <a href="#ready_made"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Ready-made Parameter Sets</a>
+            </dd>
+            <dd>
+              <a href="#scratch"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Calibrating From Scratch</a>
+              <ul>
+                <li>
+                  <a href="#basic">Basic Appoach</a>
+                </li>
+                <li>
+                  <a href="#practice">Determining lens parameter sets with Hugin</a>
+                </li>
+                <li>
+                  <a href="#pointsets">Defining point sets</a>
+                </li>
+                <li>
+                  <a href="#re-engineered">Re-engineering parameters from camera created thumbnail</a>
+                </li>
+              </ul>
+            </dd>
+            <dd>
+              <a href="#examples"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Example</a>
+            </dd>
+            <dd>
+              <a href="#keyboard"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Keyboard Example</a> (by El-Supremo)
+            </dd>
+            <dd>&nbsp;</dd>
+            <dd>
+              <a href="correcting_lens_distortions.pdf"><img src="../img_www/scroll.gif" border="0" width="12" height="13" hspace="1"> Correcting Lens Distortion (PDF)</a>
+            </dd>
+          </dl>When taking photographs, the images generated are actually distorted by both lens effects and spherical perspective effects. If you plane to use photos you will generally need to correct for these effects, and that is what will be looked at in this section. The majority of this page was contributed by Wolfgang Hugemann.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="lens_correction" id="lens_correction"></a>
+          <h2>Introduction to Lens Correction</h2>Fisheye lenses and low-cost wide-angle lenses (or rather zoom lenses when set to short focal length) typically produce a pronounced barrel distortion. This distortion can however be mostly corrected by applying suitable algorithmic transformations to the digital photograph. One of the most-used lens correction algorithms, introduced by Panorama Tools and used by <a href="http://epaperpress.com/ptlens">PTlens</a>, is also offered by ImageMagick, as <a href="../distorts/#barrel">Barrel Correction Distortion Method</a>. In this approach to the problem, the distortion is controlled by four transformation parameters <code>a, b, c, d</code>, which have to be chosen sensibly in order to correct the distortion produced by a specific lens (or rather a zoom camera when set to a certain focal length). Suitable values for these parameters can hardly be found by trial and error. In the following, we describe how to determine the lens correction parameters of this model effectively by the use of <a href="http://hugin.sourceforge.net">Hugin</a>, a free graphical user interface for <a href="http://panotools.sourceforge.net">Panorama Tools</a>, which is available for various operating systems. If you don't want to deal with the details of lens correction, you may skip the rest of this page and just buy <a href="http://epaperpress.com/ptlens">PTlens</a>, which offers sophisticated lens correction for a vast number of digital cameras and lenses at a reasonable price (by use of its large lens database). Nowadays, some digital cameras (such as the Nikon P7000) even incorporate lens correction in their internal image processing steps. For photographs taken with cameras that don't offer this possibility, ImageMagick enables you to integrate lens correction as one step of a larger image processing script. The following text is an abridged version of paper <a href="correcting_lens_distortions.pdf">Correcting Lens Distortion (PDF)</a> (dealing with applications in accident reconstruction). The explanations given here are a more hands-on approach, concentrating on the ways to get in hold of the adequate lens correction parameters. <a name="non-scaling" id="non-scaling"></a>
+          <h2>Non-scaling Restraint</h2>As described in the <a href="../distorts/#barrel">Barrel Distortions</a> The barrel distortion is defined by the mathematical formula
+          <pre>
   R = ( a * r^3  +  b * r^2  +  c * r  +  d ) * r
-</PRE></P>
-
-with <CODE>r</CODE> as the distance to the geometrical image center of the
-digital photograph and <CODE>R</CODE> as the equivalent radius in the original
-image. As always with such mappings, the equation above defines a kind of
-"color look-up function", i.e. where to look for the color of the pixel at
-radius <code>r</code>. The radii <CODE>r</CODE> and <CODE>R</CODE> are
-normalised by half of the smaller image dimension (i.e. usually the height of
-the image), such that <CODE>r = R = 1</CODE> for the midpoints of the upper
-and lower edge of the image. When correcting digital photographs, we should
-pay attention to the non-scaling restraint </P>
-
-<PRE>
+</pre>with <code>r</code> as the distance to the geometrical image center of the digital photograph and <code>R</code> as the equivalent radius in the original image. As always with such mappings, the equation above defines a kind of "color look-up function", i.e. where to look for the color of the pixel at radius <code>r</code>. The radii <code>r</code> and <code>R</code> are normalised by half of the smaller image dimension (i.e. usually the height of the image), such that <code>r = R = 1</code> for the midpoints of the upper and lower edge of the image. When correcting digital photographs, we should pay attention to the non-scaling restraint
+          <pre>
   a + b + c + d = 1
-</PRE></P>
-
-which obviously gives <CODE>R</CODE> = 1 for <CODE>r</CODE> = 1. Panorama
-Tools calculates the parameter <CODE>d</CODE> by the other parameters via </P>
-
-<PRE>
+</pre>which obviously gives <code>R</code> = 1 for <code>r</code> = 1. Panorama Tools calculates the parameter <code>d</code> by the other parameters via
+          <pre>
   d = 1 - a - b - c
-</PRE></P>
-
-leaving us with three free model parameters, so the parameter <CODE>d</CODE>
-is typically omitted. ImageMagick will automatically calculate <CODE>d</CODE>
-by the non-scaling restraint, if it is omitted. So a typical ImageMagick
-command line for lens correction would look something like</P>
-
-<PRE>
+</pre>leaving us with three free model parameters, so the parameter <code>d</code> is typically omitted. ImageMagick will automatically calculate <code>d</code> by the non-scaling restraint, if it is omitted. So a typical ImageMagick command line for lens correction would look something like
+          <pre>
   magick input.jpg -distort barrel '0.06335 -0.18432 -0.13008' output.jpg
-</PRE></P>
-
-leaving the calculation of <CODE>d</CODE> to ImageMagick. The lens correction
-method of Panorama Tools that we are speaking of here assumes the optical axis
-of the lens and the centre of the image to be identical, which is not strictly
-the case in practice (due to manufacturing tolerances). Furthermore, it leaves
-effects like <A
-HREF="http://en.wikipedia.org/wiki/Distortion_%28optics%29#Radial_distortion">
-mustache distortion</A> aside. Nevertheless, it seems to work astonishingly
-precisely in practice.
-
-<A HREF="curve.gif"
-   ><IMG SRC="curve.gif"        WIDTH=133 HEIGHT=100
-         ALIGN=right VSPACE=2 HSPACE=5 BORDER=1 ALT="[Graph]"></A></P>
-</P>
-
-As demonstrated by the curve (<CODE>a = 0.05, b = -0.25,
-c = 0.05</CODE>), the relationship is typically used in the range 0 to 1.5
-(aspect ratio 3:2), passes through the points (0,0) and (1,1) and must be
-degressive for <code>r &gt; 1</CODE>. </P>
-
-<BR CLEAR=ALL>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="ready_made"></A>
-<H2>Ready-made Parameter Sets</H2>
-
-PTlens's current lens database, being the "marrow" of the program, is
-encrypted and can only be read by PTlens itself. Until February 2006, however,
-PTlens's database was coded in XML format, i.e. an easily editable text
-format. This 2006 version of PTlens's XML database is still (legally)
-available at <A
-HREF="http://sourceforge.net/projects/hugin/files/PTLens%20Database/" >Hugin's
-SourceForge Website</A> and provides data for a lot of older camera models.
-</P>
-
-When PTlens's database became encrypted, the authors of Hugin tried to
-establish a free XML coded lens database as an alternative. This database is
-called <A HREF="http://sourceforge.net/projects/lensfun/">LensFun</A> and can
-be downloaded.  It comes with a complete programming interface, but all you
-basically need is the information for your camera in the XML file. As an
-example, the lens correction parameters for the once popular Nikon Coolpix 995
-are found in the file <CODE>compact-nikon.xml</CODE>, which resides in the
-directory <CODE>\data\db</CODE>. The file can be examined by the use of a text
-editor or an XML viewer: </P>
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+</pre>leaving the calculation of <code>d</code> to ImageMagick. The lens correction method of Panorama Tools that we are speaking of here assumes the optical axis of the lens and the centre of the image to be identical, which is not strictly the case in practice (due to manufacturing tolerances). Furthermore, it leaves effects like <a href="http://en.wikipedia.org/wiki/Distortion_%28optics%29#Radial_distortion">mustache distortion</a> aside. Nevertheless, it seems to work astonishingly precisely in practice. <a href="curve.gif"><img src="curve.gif" width="133" height="100" align="right" vspace="2" hspace="5" border="1" alt="[Graph]"></a>As demonstrated by the curve (<code>a = 0.05, b = -0.25, c = 0.05</code>), the relationship is typically used in the range 0 to 1.5 (aspect ratio 3:2), passes through the points (0,0) and (1,1) and must be degressive for <code>r &gt; 1</code>.<br clear="all">
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="ready_made" id="ready_made"></a>
+          <h2>Ready-made Parameter Sets</h2>PTlens's current lens database, being the "marrow" of the program, is encrypted and can only be read by PTlens itself. Until February 2006, however, PTlens's database was coded in XML format, i.e. an easily editable text format. This 2006 version of PTlens's XML database is still (legally) available at <a href="http://sourceforge.net/projects/hugin/files/PTLens%20Database/">Hugin's SourceForge Website</a> and provides data for a lot of older camera models. When PTlens's database became encrypted, the authors of Hugin tried to establish a free XML coded lens database as an alternative. This database is called <a href="http://sourceforge.net/projects/lensfun/">LensFun</a> and can be downloaded. It comes with a complete programming interface, but all you basically need is the information for your camera in the XML file. As an example, the lens correction parameters for the once popular Nikon Coolpix 995 are found in the file <code>compact-nikon.xml</code>, which resides in the directory <code>\data\db</code>. The file can be examined by the use of a text editor or an XML viewer:
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre><code do_not_execute="">
   &lt;lens&gt;
     &lt;maker&gt;Nikon&lt;/maker&gt;
     &lt;model&gt;Standard&lt;/model&gt;
@@ -203,515 +100,194 @@ editor or an XML viewer: </P>
       &lt;distortion model="ptlens" focal="31" a="0" b="0.009298" c="0" /&gt;
     &lt;/calibration&gt;
   &lt;/lens&gt;
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-
-As can be taken from the camera's technical data sheet, the zoom range of the
-Nikon Coolpix 995 is 8.2 &ndash; 31.0&nbsp;mm, corresponding to 38 &ndash;
-152&nbsp;mm for 35&nbsp;mm film cameras. This gives a crop factor of 152 / 31
-= 4.90, which roughly corresponds to the 4.843 given the XML file. The
-coefficients of the correction by barrel distortion are supplied for six focal
-lengths, namely 8.2&nbsp;mm, 10.1&nbsp;mm, 13.6&nbsp;mm, 18.4&nbsp;mm,
-23.4&nbsp;mm, 28.3&nbsp;mm and 31.0&nbsp;mm. The coefficients <CODE>a</CODE>
-and <CODE>c</CODE> are, for this lens, set to zero, i.e. the distortion is
-described only by the second-order term <CODE>b</CODE>. </P>
-
-Note that many lens's will also have values for <CODE>a</CODE> and <CODE>c</CODE> parameters as
-well, and these should also be interpolated in a similar way. </P>
-
-If we have a photograph <CODE>DSCN0001.jpg</CODE> taken with a Nikon Coolpix
-995 set to the shortest focal length, this photograph could be corrected by
-ImageMagick via </P>
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE DO_NOT_EXECUTE >
+</code></pre>
+                </td>
+              </tr>
+            </table>
+          </div>As can be taken from the camera's technical data sheet, the zoom range of the Nikon Coolpix 995 is 8.2 – 31.0&nbsp;mm, corresponding to 38 – 152&nbsp;mm for 35&nbsp;mm film cameras. This gives a crop factor of 152 / 31 = 4.90, which roughly corresponds to the 4.843 given the XML file. The coefficients of the correction by barrel distortion are supplied for six focal lengths, namely 8.2&nbsp;mm, 10.1&nbsp;mm, 13.6&nbsp;mm, 18.4&nbsp;mm, 23.4&nbsp;mm, 28.3&nbsp;mm and 31.0&nbsp;mm. The coefficients <code>a</code> and <code>c</code> are, for this lens, set to zero, i.e. the distortion is described only by the second-order term <code>b</code>. Note that many lens's will also have values for <code>a</code> and <code>c</code> parameters as well, and these should also be interpolated in a similar way. If we have a photograph <code>DSCN0001.jpg</code> taken with a Nikon Coolpix 995 set to the shortest focal length, this photograph could be corrected by ImageMagick via
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre><code do_not_execute="">
    magick DSCN0001.jpg -distort barrel '0.0 -0.019966 0.0' DSCN0001_pt.jpg
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-
-(The file name extension <CODE>_pt</CODE> is used by PTlens to mark corrected
-images.) </P>
-
-For the six focal lengths provided, the correction coefficient <CODE>b</CODE>
-can be read from the XML file. For other focal lengths, the suitable value can
-be determined by interpolation between the two neighbouring focal lengths. As
-an alternative, the dependency of <CODE>b</CODE> on the focal length
-<CODE>f</CODE> can be approximated by the polynomial </P>
-
-<PRE>
+</code></pre>
+                </td>
+              </tr>
+            </table>
+          </div>(The file name extension <code>_pt</code> is used by PTlens to mark corrected images.) For the six focal lengths provided, the correction coefficient <code>b</code> can be read from the XML file. For other focal lengths, the suitable value can be determined by interpolation between the two neighbouring focal lengths. As an alternative, the dependency of <code>b</code> on the focal length <code>f</code> can be approximated by the polynomial
+          <pre>
   b = 0.000005142 * f^3 - 0.000380839 * f^2 + 0.009606325 * f - 0.075316854
-</PRE>
-
-So the focal length (as read from the EXIF information) is used to calculate
-the lens correction parameter <CODE>b</CODE> in the first step, and then, in
-a second step, the lens correction (i.e. barrel distortion) is performed using
-this value as the <CODE>b</CODE> parameter. </P>
-
-The Windows section shows a <A HREF="../windows/#vb_example">VBScript
-Example</A> in which the above equations are used, with the focal length being
-extracted from a Nikon Coolpix 995 photograph via <code>magick identify</code>. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="scratch"></A>
-<H2>Calibrating from scratch</H2>
-
-<A NAME="basic"></A>
-<H3>Basic Approach</H3>
-
-When determining the lens parameters, all programs rely on the same paradigm:
-the ideal perspective mapping should map real world straight lines to straight
-lines in the image. So if a set of real-world points P<SUB>0</SUB>,
-P<SUB>1</SUB>, ..., P<SUB>n</SUB> is known to lie on a straight line, their
-images p<SUB>0</SUB>, p<SUB>1</SUB>, ..., p<SUB>n</SUB> must also fall onto
-a straight line. Any deviation from this rule has to be attributed to lens
-distortion. </P>
-
-We need two points to determine the two parameters defining a straight line
-(e.g. slope and intersection on the y-axis). Each additional point supplied
-will provide another equation to determine the lens correction parameters. So
-if our functional approach has only one free parameter <CODE>b</CODE> (as for
-the Nikon Coolpix 995 above), we would have to provide at least three points
-on a real-world straight line and its image in order to determine the sought
-lens correction parameter <CODE>b</CODE>. </P>
-
-Putting it more concrete: The distortions model only uses the parameter
-<CODE>b</CODE>, i.e. the coordinates of the corrected image <CODE>X1,
-Y1</CODE> can be calculated from the coordinates of the digital photograph
-by </P>
-
-<PRE>
+</pre>So the focal length (as read from the EXIF information) is used to calculate the lens correction parameter <code>b</code> in the first step, and then, in a second step, the lens correction (i.e. barrel distortion) is performed using this value as the <code>b</code> parameter. The Windows section shows a <a href="../windows/#vb_example">VBScript Example</a> in which the above equations are used, with the focal length being extracted from a Nikon Coolpix 995 photograph via <code>magick identify</code>.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="scratch" id="scratch"></a>
+          <h2>Calibrating from scratch</h2><a name="basic" id="basic"></a>
+          <h3>Basic Approach</h3>When determining the lens parameters, all programs rely on the same paradigm: the ideal perspective mapping should map real world straight lines to straight lines in the image. So if a set of real-world points P<sub>0</sub>, P<sub>1</sub>, ..., P<sub>n</sub> is known to lie on a straight line, their images p<sub>0</sub>, p<sub>1</sub>, ..., p<sub>n</sub> must also fall onto a straight line. Any deviation from this rule has to be attributed to lens distortion. We need two points to determine the two parameters defining a straight line (e.g. slope and intersection on the y-axis). Each additional point supplied will provide another equation to determine the lens correction parameters. So if our functional approach has only one free parameter <code>b</code> (as for the Nikon Coolpix 995 above), we would have to provide at least three points on a real-world straight line and its image in order to determine the sought lens correction parameter <code>b</code>. Putting it more concrete: The distortions model only uses the parameter <code>b</code>, i.e. the coordinates of the corrected image <code>X1, Y1</code> can be calculated from the coordinates of the digital photograph by
+          <pre>
 r = s * sqrt(x1^2 + y1^2)
 X1 = [(1-b) + b r^2] * x1
 Y1 = [(1-b) + b r^2] * y1
 Y1 = k1 * X1 + k2
-</PRE>
-
-This results in one equation for each point supplied on the same straight
-line </P>
-
-<PRE>
+</pre>This results in one equation for each point supplied on the same straight line
+          <pre>
 [(1-b) + b r^2] * y1 = k1 * [(1-b) + b r^2] * x1 + k2
 
 with: r = s * sqrt(x1^2 + y1^2)
-</PRE>
-
-Thus three real-world points and their corresponding image points would
-suffice to determine the parameters describing the straight line and the lens
-distortion <CODE>k1, k2, b</CODE>. </P>
-
-In practice, the coordinates of the real-world points are rarely known, such
-that one needs more than just three points to determine the sought parameters.
-Most calibration software uses a rectangular grid of straight lines (often
-a chequerboard) to generate a set of equations and then calculate the mapping
-parameters by a nonlinear least-squares fit. Some programs generate the set of
-control points on their own, often using pre-defined templates; other programs
-require the user to select the control points from the calibration image. </P>
-
-<A NAME="practice"></A>
-<H3>Determining lens parameter sets with Hugin</H3>
-
-In the following, we will demonstrate how to determine a set of lens
-correction parameters by the use of Hugin.  There is also a ready-made "Simple
-Lens Calibration Tutorial" on Hugin's Website, but at the time of this writing
-(2014), it seems to be too simple to provide reliable parameters that can
-later be used for a multitude of corrections. </P>
-
-First of all, you have to get hold of a suitable test pattern. Basically,
-a checkerboard pattern with about 10 &times; 7 squares, printed on <A
-HREF="http://en.wikipedia.org/wiki/Paper_size#A_series">ISO 216 A3</A> or
-alike would do and is often used.  Low-cost zoom lenses (so-called <A
-HREF="http://en.wikipedia.org/wiki/Varifocal_lens">varifocal lenses</A>)
-should however be set to infinite focus during calibration, as their true
-focal length might largely differ from that embedded in the EXIF for near
-focus.</P>
-
-For fixed focus lenses you may as well use a checkerboard test pattern, which
-is especially recommendable when calibrating a fisheye lens, as it may be
-difficult to find a real-word object large enough to cover its field of
-view.</P>
-
-So especially when calibrating zoom lenses / zoom cameras, you should rather
-take a photograph of a modern building, as proposed on <A
-HREF="http://epaperpress.com/ptlens/calTargets.html">PTlens' website</A>.
-Follow the instructions given there. The photographs may show perspective
-distortion:
-
-<DIV ALIGN=center>
-<TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
-<TR VALIGN=middle><TD ALIGN=middle>
-  <A HREF="../img_photos/building_1.jpg"
-     ><IMG SRC="../img_photos/building_1.gif"        WIDTH=133 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <BR>perspective
-</TD><TD ALIGN=middle>
-  <A HREF="../img_photos/building_2.jpg"
-     ><IMG SRC="../img_photos/building_2.gif"        WIDTH=125 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <BR>non-perspective
-</TD></TR></TABLE>
-</DIV></P>
-
-Start Hugin, and click the 'Add images ...' button on the first tab and open
-the calibration image. (See <A
-HREF="http://hugin.sourceforge.net/">hugin.sourceforge.net</A>  for
-a screenshot of Hugin's interface.) At the button of the tab set 'Optimise' to
-'Custom parameters' (which will add a new tab named 'Optimiser', you would
-otherwise not come to see).  On the 'Stitcher' tab, set the 'Projection' to
-'Rectilinear'.  On the 'Control Points' tab, you see your test photograph
-twice and you can define sets of points that lie on the same straight line by
-picking these point groups in both versions of the photograph.<p>
-
-But do not pick the exact same points in both versions, such that the points
-are identical in both images, as this would mislead the optimiser to take the
-easy way and determine the parameters of an one-to-one correspondence.
-Instead, you should rather choose different points on the same line in both
-versions of the image.  For test purposes, you can define a few of such point
-sets, at best near the edges of the image, where the straight lines are more
-distorted. You will find that definining such point sets in Hugin is a rather
-tedious business (which may be one of the reasons for the lensfun database
-being so small).</P>
-
-Then switch to the 'Optimiser' tab and chose the parameters to optimise by
-left-clicking them with the ctrl-key pressed. (See hint at the top of the
-tab.) I would recommend to optimise 'Yaw(y)', 'Pitch (p)' and the lens
-parameters 'a', 'b' and 'c'.  The horizontal field of view 'Hfov (f)' is
-calculated from the EXIF data in the test image, by use of the
-FocalLengthIn35mmFilm entry <code>f</code>:
-
-<pre> Hfov = 2 &times; arctan (18&nbsp;mm / f) </pre>
-
-with 18&nbsp;mm being half of the width of a 35&nbsp;mm negative (which
-measures 36 &times; 24&nbsp;mm).</P>
-
-Then press the button 'Optimize now!'. The resulting parameters 'a', 'b' and
-'c' should fall below 0.01 for wide angle lenses and below 0.1 for fisheye
-lenses.  If the values are larger, the optimisation has probably failed.  If
-so, check the point sets on the 'Control Points' tab: the control points are
-probably out of order or not correctly associated with their corresponding
-lines. </P>
-
-The optimiser also seems to be sensitive to the start set (mathematically
-speaking: the start vector) provided, i.e. setting all parameters to zero
-might be the wrong choice. You can edit the start vector by either
-double-clicking the values on the 'Optimiser' tab or by activating the check
-box 'Edit script before optimising' at the right buttom of tab page. This will
-bring up a text box prior to the optimisation, which will allow you to edit
-the corresponding section of the Hugin project file. Set the start vector a,
-b, c back to <CODE>a0.0 b0.0 c0.0</CODE> (or some other suitable values)
-before re-starting the optimiser. Experience shows that it might help to set
-'a' to some positive value, especially for fisheye lenses.</P>
-
-For a camera equipped with a fixed lens, one does this calibration once and
-for all. For a camera with a zoom lens, one has to cover the entire range of
-focal lengths by calibrating at about five different focal lengths. </P>
-
-When having determined such a parameter set, give it a test in ImageMagick
-via
-
-<PRE>
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
-  magick calibration_image.jpg -distort barrel '<I>a b c</I>' flat.jpg
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-</PRE>
-
-replacing the values <CODE><I>a b c</I></CODE> with the ones just determined.
-The lines in the output image should be exactly straight, otherwise the
-optimisation has failed and needs to be performed with a deviating start
-vector or a corrected control point set.</P>
-
-<A NAME="pointsets"></A>
-<H3>Defining point sets</H3>
-
-For a serious calibration, it is recommendable to manually edit the Hugin
-project file and define the point coordinates and point sets by other means.
-The project file  is a plain text file with the extension PTO, you can open it
-with a simple text editor and supply a point list. A single line in its
-section <CODE># control points</CODE> looks like this: </P>
-
-<PRE>
+</pre>Thus three real-world points and their corresponding image points would suffice to determine the parameters describing the straight line and the lens distortion <code>k1, k2, b</code>. In practice, the coordinates of the real-world points are rarely known, such that one needs more than just three points to determine the sought parameters. Most calibration software uses a rectangular grid of straight lines (often a chequerboard) to generate a set of equations and then calculate the mapping parameters by a nonlinear least-squares fit. Some programs generate the set of control points on their own, often using pre-defined templates; other programs require the user to select the control points from the calibration image. <a name="practice" id="practice"></a>
+          <h3>Determining lens parameter sets with Hugin</h3>In the following, we will demonstrate how to determine a set of lens correction parameters by the use of Hugin. There is also a ready-made "Simple Lens Calibration Tutorial" on Hugin's Website, but at the time of this writing (2014), it seems to be too simple to provide reliable parameters that can later be used for a multitude of corrections. First of all, you have to get hold of a suitable test pattern. Basically, a checkerboard pattern with about 10 × 7 squares, printed on <a href="http://en.wikipedia.org/wiki/Paper_size#A_series">ISO 216 A3</a> or alike would do and is often used. Low-cost zoom lenses (so-called <a href="http://en.wikipedia.org/wiki/Varifocal_lens">varifocal lenses</a>) should however be set to infinite focus during calibration, as their true focal length might largely differ from that embedded in the EXIF for near focus.For fixed focus lenses you may as well use a checkerboard test pattern, which is especially recommendable when calibrating a fisheye lens, as it may be difficult to find a real-word object large enough to cover its field of view.So especially when calibrating zoom lenses / zoom cameras, you should rather take a photograph of a modern building, as proposed on <a href="http://epaperpress.com/ptlens/calTargets.html">PTlens' website</a>. Follow the instructions given there. The photographs may show perspective distortion:
+          <div align="center">
+            <table cellspacing="0" cellpadding="0" width="90%">
+              <tr valign="middle">
+                <td align="middle">
+                  <a href="../img_photos/building_1.jpg"><img src="../img_photos/building_1.gif" width="133" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a><br>
+                  perspective
+                </td>
+                <td align="middle">
+                  <a href="../img_photos/building_2.jpg"><img src="../img_photos/building_2.gif" width="125" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a><br>
+                  non-perspective
+                </td>
+              </tr>
+            </table>
+          </div>Start Hugin, and click the 'Add images ...' button on the first tab and open the calibration image. (See <a href="http://hugin.sourceforge.net/">hugin.sourceforge.net</a> for a screenshot of Hugin's interface.) At the button of the tab set 'Optimise' to 'Custom parameters' (which will add a new tab named 'Optimiser', you would otherwise not come to see). On the 'Stitcher' tab, set the 'Projection' to 'Rectilinear'. On the 'Control Points' tab, you see your test photograph twice and you can define sets of points that lie on the same straight line by picking these point groups in both versions of the photograph.
+          <p>But do not pick the exact same points in both versions, such that the points are identical in both images, as this would mislead the optimiser to take the easy way and determine the parameters of an one-to-one correspondence. Instead, you should rather choose different points on the same line in both versions of the image. For test purposes, you can define a few of such point sets, at best near the edges of the image, where the straight lines are more distorted. You will find that definining such point sets in Hugin is a rather tedious business (which may be one of the reasons for the lensfun database being so small).</p>Then switch to the 'Optimiser' tab and chose the parameters to optimise by left-clicking them with the ctrl-key pressed. (See hint at the top of the tab.) I would recommend to optimise 'Yaw(y)', 'Pitch (p)' and the lens parameters 'a', 'b' and 'c'. The horizontal field of view 'Hfov (f)' is calculated from the EXIF data in the test image, by use of the FocalLengthIn35mmFilm entry <code>f</code>:
+          <pre> Hfov = 2 × arctan (18 mm / f) </pre>with 18&nbsp;mm being half of the width of a 35&nbsp;mm negative (which measures 36 × 24&nbsp;mm).Then press the button 'Optimize now!'. The resulting parameters 'a', 'b' and 'c' should fall below 0.01 for wide angle lenses and below 0.1 for fisheye lenses. If the values are larger, the optimisation has probably failed. If so, check the point sets on the 'Control Points' tab: the control points are probably out of order or not correctly associated with their corresponding lines. The optimiser also seems to be sensitive to the start set (mathematically speaking: the start vector) provided, i.e. setting all parameters to zero might be the wrong choice. You can edit the start vector by either double-clicking the values on the 'Optimiser' tab or by activating the check box 'Edit script before optimising' at the right buttom of tab page. This will bring up a text box prior to the optimisation, which will allow you to edit the corresponding section of the Hugin project file. Set the start vector a, b, c back to <code>a0.0 b0.0 c0.0</code> (or some other suitable values) before re-starting the optimiser. Experience shows that it might help to set 'a' to some positive value, especially for fisheye lenses.For a camera equipped with a fixed lens, one does this calibration once and for all. For a camera with a zoom lens, one has to cover the entire range of focal lengths by calibrating at about five different focal lengths. When having determined such a parameter set, give it a test in ImageMagick via
+          <pre>
+</pre>
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
+  magick calibration_image.jpg -distort barrel '<i>a b c</i>' flat.jpg
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <pre>
+</pre>replacing the values <code><i>a b c</i></code> with the ones just determined. The lines in the output image should be exactly straight, otherwise the optimisation has failed and needs to be performed with a deviating start vector or a corrected control point set.<a name="pointsets" id="pointsets"></a>
+          <h3>Defining point sets</h3>For a serious calibration, it is recommendable to manually edit the Hugin project file and define the point coordinates and point sets by other means. The project file is a plain text file with the extension PTO, you can open it with a simple text editor and supply a point list. A single line in its section <code># control points</code> looks like this:
+          <pre>
   c n0 N0 x175.0 y87.8 X1533.3 Y62.6 t3
-</PRE>
-
-where <CODE>x, y</CODE> are the pixel coordinates in the source image (left
-image on the tab) and <CODE>X, Y</CODE> are the pixel coordinates in the
-target image (right image on the tab) &ndash; which are actually two versions
-of the same image in this special case. (Usually these would be two different
-images lying next to each other in a panorama.) The intro <CODE>c n0 N0</CODE>
-is standard code and the trailer <CODE>t3</CODE> is the numbering of the
-associated straight line, starting with the index 3. As you can take from the
-above example, the pixel coordinates may have fractional parts. </P>
-
-Of course, <CODE>x, y</CODE> and <CODE>X, Y</CODE> have to lie on the same
-straight line. They must however not be identical, as the optimiser would
-refuse to work in this case (see above). The easiest approach to garantuee
-this, is to use the same points in both images but with reverse ordering for
-the target coordinates,e.g. use p<sub>1</sub>, p<sub>2</sub>, p<sub>3</sub>,
-p<sub>4</sub> in the left image and P<sub>4</sub>, P<sub>3</sub>,
-P<sub>2</sub>, P<sub>1</sub> in the right one.</p>
-
-Determine the pixel coordinates in the source image by a point-picking tool.
-You can use any image viewer to do this, namely one that can store such data.
-A platform-independent tool for this would be <A
-HREF="http://fiji.sc/Fiji">Fiji</A>.  I (working under Windows) used polylines
-in <A HREF="http://www.debugmode.com/winmorph" >WinMorph</A> to do so. </P>
-
-You should follow a pre-defined strategy when picking the points, e.g. pick
-the same count of points on each (more or less) horizontal line, going from
-left to right (i.e. follow a zig-zag line in the entire image, like the
-cathode ray beem in a tv tube).  Such a strategy will simplify the ordering
-the target point coordinates.  The text file lines defining source and target
-point coordinates can then be established either manually or by means of
-a software tool. (I use an Excel VBA subroutine to perform this task.) When
-ready, copy the point list to the corresponding section of the PTO file, save
-it and re-open it with Hugin. The result should look like this: </P>
-
-<DIV ALIGN=center>
-<TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
-<TR VALIGN=middle><TD ALIGN=middle>
-  <A HREF="../img_photos/hugin.jpg"
-     ><IMG SRC="../img_photos/hugin.jpg"      WIDTH=258 HEIGHT=200
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <BR>Control point grid in Hugin
-</TD></TR></TABLE>
-</DIV></P>
-
-A ready-made example, both with a calibration image and the corresponding
-Hugin project is provided in the ZIP file <A
-HREF="olympus_c2500l.zip">olympus_c2500l.zip</A>. </P>
-
-<A NAME="re-engineered">
-<H3>Re-engineering from camera created thumbnail</H3>
-
-There are several cases where we already have an image pair, one being barrel
-distorted, the other one being already corrected. This correction may have
-been performed with some other lens-correction software, which doesn't tell us
-about the correction parameters.</P>
-
-Furthermore, a lot of contemporary cameras (2019) offer to perform the lens
-correction internally for JPEG images. However, this functionality is usually
-not applied to RAW images. (Well, it's raw.) Nevertheless, the RAW image
-contains a JPEG preview to which the correction has already been applied by
-the camera.  ImageMagick can read RAW images by the use of dcraw. Thus one may
-magick the raw image to JPEG without lens correction and compare the result
-to the internally corrected JPEG thumbnail.</P>
-
-In case of such an image pair, the correction parameters can be calculated
-straightforward.  By picking corresponding point pairs in both images, we can
-directly establish the relationship between <code>r</code> and
-<code>R</code>.</P>
-
-<DIV ALIGN=center>
-<TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
-<TR VALIGN=middle><TD ALIGN=middle>
-  <A HREF="raw_marks.jpg"
-     ><IMG SRC="raw_marks.jpg"        WIDTH=150 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[RAW Image]"></A>
-  <BR>Raw Image (barrel distorted)
-</TD><TD ALIGN=middle>
-  <A HREF="thumb_marks.jpg"
-     ><IMG SRC="thumb_marks.jpg"        WIDTH=150 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[Corrected Image]"></A>
-  <BR>Corrected Thumbnail (to re-engineer)
-</TD></TR></TABLE>
-</DIV></P>
-
-As shown in the above example, we are free of choice which point pairs to
-choose; these neither have to follow straight lines nor even have to lie on
-geometrical patterns. We just have to fill a table with corresponding values
-of <code>r</code> and <code>R</code> and then calculate a regression curve,
-for example by means of a <A HREF="sorting_for_pto.xls" >spreadsheet</A>
-diagram.</P>
-
-<DIV ALIGN=center>
-<TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
-<TR VALIGN=middle><TD ALIGN=middle>
-  <A HREF="calibration_points.gif"
-     ><IMG SRC="calibration_points.gif"        WIDTH=150 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[Calabration]"></A>
-  <BR>Calibration Points
-</TD><TD ALIGN=middle>
-  <A HREF="regression_curve.gif"
-     ><IMG SRC="regression_curve.gif"        WIDTH=150 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[Regression]"></A>
-  <BR>Regression (scaled)
-</TD></TR></TABLE>
-</DIV></P>
-
-Hence the ImageMagick command line is
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</pre>where <code>x, y</code> are the pixel coordinates in the source image (left image on the tab) and <code>X, Y</code> are the pixel coordinates in the target image (right image on the tab) – which are actually two versions of the same image in this special case. (Usually these would be two different images lying next to each other in a panorama.) The intro <code>c n0 N0</code> is standard code and the trailer <code>t3</code> is the numbering of the associated straight line, starting with the index 3. As you can take from the above example, the pixel coordinates may have fractional parts. Of course, <code>x, y</code> and <code>X, Y</code> have to lie on the same straight line. They must however not be identical, as the optimiser would refuse to work in this case (see above). The easiest approach to garantuee this, is to use the same points in both images but with reverse ordering for the target coordinates,e.g. use p<sub>1</sub>, p<sub>2</sub>, p<sub>3</sub>, p<sub>4</sub> in the left image and P<sub>4</sub>, P<sub>3</sub>, P<sub>2</sub>, P<sub>1</sub> in the right one.Determine the pixel coordinates in the source image by a point-picking tool. You can use any image viewer to do this, namely one that can store such data. A platform-independent tool for this would be <a href="http://fiji.sc/Fiji">Fiji</a>. I (working under Windows) used polylines in <a href="http://www.debugmode.com/winmorph">WinMorph</a> to do so. You should follow a pre-defined strategy when picking the points, e.g. pick the same count of points on each (more or less) horizontal line, going from left to right (i.e. follow a zig-zag line in the entire image, like the cathode ray beem in a tv tube). Such a strategy will simplify the ordering the target point coordinates. The text file lines defining source and target point coordinates can then be established either manually or by means of a software tool. (I use an Excel VBA subroutine to perform this task.) When ready, copy the point list to the corresponding section of the PTO file, save it and re-open it with Hugin. The result should look like this:
+          <div align="center">
+            <table cellspacing="0" cellpadding="0" width="90%">
+              <tr valign="middle">
+                <td align="middle">
+                  <a href="../img_photos/hugin.jpg"><img src="../img_photos/hugin.jpg" width="258" height="200" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a><br>
+                  Control point grid in Hugin
+                </td>
+              </tr>
+            </table>
+          </div>A ready-made example, both with a calibration image and the corresponding Hugin project is provided in the ZIP file <a href="olympus_c2500l.zip">olympus_c2500l.zip</a>. <a name="re-engineered" id="re-engineered">
+          <h3>Re-engineering from camera created thumbnail</h3>There are several cases where we already have an image pair, one being barrel distorted, the other one being already corrected. This correction may have been performed with some other lens-correction software, which doesn't tell us about the correction parameters.Furthermore, a lot of contemporary cameras (2019) offer to perform the lens correction internally for JPEG images. However, this functionality is usually not applied to RAW images. (Well, it's raw.) Nevertheless, the RAW image contains a JPEG preview to which the correction has already been applied by the camera. ImageMagick can read RAW images by the use of dcraw. Thus one may magick the raw image to JPEG without lens correction and compare the result to the internally corrected JPEG thumbnail.In case of such an image pair, the correction parameters can be calculated straightforward. By picking corresponding point pairs in both images, we can directly establish the relationship between <code>r</code> and <code>R</code>.
+          <div align="center">
+            <img src="raw_marks.jpg" width="150" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[RAW Image]"><br>
+            Raw Image (barrel distorted) <img src="thumb_marks.jpg" width="150" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[Corrected Image]"><br>
+            Corrected Thumbnail (to re-engineer)
+            <table cellspacing="0" cellpadding="0" width="90%">
+              <tr valign="middle">
+                <td align="middle"></td>
+                <td align="middle"></td>
+              </tr>
+            </table>
+          </div>As shown in the above example, we are free of choice which point pairs to choose; these neither have to follow straight lines nor even have to lie on geometrical patterns. We just have to fill a table with corresponding values of <code>r</code> and <code>R</code> and then calculate a regression curve, for example by means of a</a> <a href="sorting_for_pto.xls">spreadsheet</a> diagram.
+          <div align="center">
+            <table cellspacing="0" cellpadding="0" width="90%">
+              <tr valign="middle">
+                <td align="middle">
+                  <a href="calibration_points.gif"><img src="calibration_points.gif" width="150" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[Calabration]"></a><br>
+                  Calibration Points
+                </td>
+                <td align="middle">
+                  <a href="regression_curve.gif"><img src="regression_curve.gif" width="150" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[Regression]"></a><br>
+                  Regression (scaled)
+                </td>
+              </tr>
+            </table>
+          </div>Hence the ImageMagick command line is
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick barrel.jpg -distort barrel '0.0099 -0.0678 0.0014 1.0511' flat.jpg
-</samp></pre></TD></TR></TABLE>
-</DIV>
-You can also apply the same command directly to the DNG camera format image
-"<CODE>barrel.dng</CODE>" directly too. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="examples"></A>
-<H2>Examples of Lens Correction</H2>
-
-<H3>Camp Mobile</H3>
-
-<DIV ALIGN=center>
-<TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
-<TR VALIGN=middle><TD ALIGN=middle>
-  <A HREF="../img_photos/campmobile.jpg"
-     ><IMG SRC="../img_photos/campmobile.jpg"      WIDTH=133 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <BR>Original
-</TD><TD ALIGN=middle>
-  <A HREF="../img_photos/campmobile_pt.jpg"
-     ><IMG SRC="../img_photos/campmobile_pt.jpg"      WIDTH=133 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <BR>Corrected
-</TD><TD ALIGN=middle>
-  <A HREF="../img_photos/campmobile_comp.jpg"
-     ><IMG SRC="../img_photos/campmobile_comp.jpg"      WIDTH=133 HEIGHT=100
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-  <BR>Difference
-</TD></TR></TABLE>
-</DIV></P>
-
-The original photograph of the campmobile to the left had to be taken from
-a rather short distance during dusk, as space was limited due to a steep
-declivity at the back of the photographer. (The poor lighting conditions
-explain the blue tint which stems from severe lightening in the
-post-processing.) The original photograph shows pronounced barrel distortion,
-visible especially in the horizontal stripe near the top of the image and for
-the back corner of the build-up. The Nikon Coolpix 995 used for this shot is
-found in PTlens's database, so the distortion could readily be corrected, as
-seen in the middle. </P>
-
-The image to the right shows the difference between greyscale versions the two
-photographs, calculated by subtraction of the two, followed by negation and
-extreme clipping and Gamma correction. Again, the effects of the correction
-are best illustrated by the horizontal stripe at the top. The white circle
-(indicating zero difference) results from the non-scaling restriction: the
-points on a circle with a diameter equal to the smaller dimension of the image
-remain unaltered. </P>
-
-<A NAME="gopro"></A>
-<H3>GoPro flattening</H3>
-
-The GoPro camera lens produces a pronounced barrel distortion, which seems to
-be part of its branding. For instance, the GoPro Hero 3+ silver edition has
-a fisheye lens with a fixed focal length of 2.77&nbsp;mm, corresponding to
-a focal length of 16&nbsp;mm in 35&nbsp;mm film, if the entire photosensitive
-area is used. The GoPro Hero 3+ has three photo modes:</P>
-
-<UL>
-<LI>10 megapixel = 3680 &times; 2760 pixel wide angle (16&nbsp;mm in 35&nbsp;mm film)
-<LI> 7 megapixel = 3072 &times; 2304 pixel wide angle (16&nbsp;mm in 35&nbsp;mm film)
-<LI> 5 megapixel = 2624 &times; 1968 pixel medium angle (23&nbsp;mm in 35&nbsp;mm film)
-</UL>
-
-The GoPro Hero 3+ is equipped with a 1/2.3" sensor, which has a crop factor of
-<A HREF="http://en.wikipedia.org/wiki/Image_sensor_format">5.64</A>. (Which
-gives a focal length of only 15.62&nbsp;mm in 35&nbsp;mm film, the 16&nbsp;mm
-provided by the EXIF information probably being due to rounding.) The first
-two modes seem to use the entire photosensitive area; the reduced resolution
-obviously being achieved by sub-sampling. The distortion parameters are
-therefore the same, as can be proven in practice.  The 5-megapixel mode
-obviously uses only part of the photosensitive area, as 3680 / 2624 &times; 16
-&approx; 23. The lens parameters can be determined to</P>
-
-<ul>
-<li>wide angle:
-    <ul>
-    <li> a =  0.06335
-    <li> b = -0.18432
-    <li> c = -0.13009
-    </ul>
-<li>medium angle:
-    <ul>
-    <li> a =  0.01359
-    <li> b = -0.06034
-    <li> c = -0.10618
-    </ul>
-</ul></P>
-
-In theory, the parameters of the second mode can be derived from the first, as
-the radii <code>r<sub>i</sub></code> and <code>R<sub>i</sub></code> are
-coupled by the scale factor &kappa; = 3680 / 2624 = 1.402, which leads to:</P>
-
-<ul>
-<li> a<sub>2</sub> =  a<sub>1</sub> / &kappa;&sup3;
-<li> b<sub>2</sub> =  b<sub>1</sub> / &kappa;&sup2;
-<li> c<sub>2</sub> =  c<sub>1</sub> / &kappa;
-</ul></P>
-
-The above parameters, resulting from an independent optimisation, differ not
-much from these theoretical values.</P>
-
-Correspondingly, the parameters for the various video modes can be derived
-either by optimisation or from the part of the sensor area that is used by
-this mode. For video, the horizontal field of view cannot be derived from the
-EXIF data. It can be calculated from the photosensitive area used, determined
-from the video itself (by taking footage under controlled conditions) or just
-estimated together with the other parameters, i.e. left as a free parameter in
-the optimisation. </P>
-
-The parameters for HD video (1920 &times; 1080) are:</P>
-
-<UL>
-<LI> a =  0.030530
-<LI> b = -0.124312
-<LI> c = -0.038543
-</UL></P>
-
-These parameters can be used for a frame-wise correction with ImageMagick. As
-an alternative, they can be used to "flatten" the entire video by the <A
-HREF="www.avisynth.org">AVIsynth</A> plugin <A
-HREF="http://www.avisynth.nl/users/vcmohan/DeBarrel/DeBarrel.html">DeBarrel</A>,
-which also uses the Panorama Tools lens correction model.
-
-<BR>
-
-<A NAME="keyboard"></A>
-<H3>Two Keyboards
-<FONT SIZE=-1>by el_supremo</FONT></H3>
-
-The photo that I took of my two keyboards has a very obvious barrel distortion
-in it, because it was taken at a focal length of 17&nbsp;mm. </P>
-
-<DIV ALIGN=center>
-<TABLE  CELLSPACING=0 CELLPADDING=0 width="90%">
-<TR VALIGN=middle><TD ALIGN=middle>
-  <A HREF="../img_photos/keyboards.jpg"
-     ><IMG SRC="../img_photos/keyboards.jpg"      WIDTH=640 HEIGHT=427
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE>
-</DIV></P>
-
-This kind of distortion can be corrected with, for example, Canon's Digital
-Photo Professional (I have a Canon 50D camera). Other manufacturers of SLR
-cameras usually provide software to do this kind of correction for their
-lenses but I wanted to see how well the above examples would work on this
-photo. </P>
-
-The first step is to go to the <A
-HREF="http://developer.berlios.de/project/showfiles.php?group_id=9034"
->LensFun WebSite</A> and download the latest version of their camera database.
-</P>
-
-Unzip the package (winzip can unzip a .tar.gz file in Windows) and then in the
-"<CODE>lensfun/data/db</CODE>" directory look for the file which corresponds
-to your camera manufacturer. In my case I looked at
-"<CODE>slr-canon.xml</CODE>" which can be edited with any text editor. </P>
-
-Now I find the information for the specific lens I am using which in this case
-is an "<CODE>EF-S 17-85mm</CODE>". The information for that lens looks like
-this:
-
-<TABLE CELLSPACING=5 bgcolor="#f8f8f8" ALIGN=center><TR><TD>
-<PRE>
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>You can also apply the same command directly to the DNG camera format image "<code>barrel.dng</code>" directly too.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="examples" id="examples"></a>
+          <h2>Examples of Lens Correction</h2>
+          <h3>Camp Mobile</h3>
+          <div align="center">
+            <table cellspacing="0" cellpadding="0" width="90%">
+              <tr valign="middle">
+                <td align="middle">
+                  <a href="../img_photos/campmobile.jpg"><img src="../img_photos/campmobile.jpg" width="133" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a><br>
+                  Original
+                </td>
+                <td align="middle">
+                  <a href="../img_photos/campmobile_pt.jpg"><img src="../img_photos/campmobile_pt.jpg" width="133" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a><br>
+                  Corrected
+                </td>
+                <td align="middle">
+                  <a href="../img_photos/campmobile_comp.jpg"><img src="../img_photos/campmobile_comp.jpg" width="133" height="100" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a><br>
+                  Difference
+                </td>
+              </tr>
+            </table>
+          </div>The original photograph of the campmobile to the left had to be taken from a rather short distance during dusk, as space was limited due to a steep declivity at the back of the photographer. (The poor lighting conditions explain the blue tint which stems from severe lightening in the post-processing.) The original photograph shows pronounced barrel distortion, visible especially in the horizontal stripe near the top of the image and for the back corner of the build-up. The Nikon Coolpix 995 used for this shot is found in PTlens's database, so the distortion could readily be corrected, as seen in the middle. The image to the right shows the difference between greyscale versions the two photographs, calculated by subtraction of the two, followed by negation and extreme clipping and Gamma correction. Again, the effects of the correction are best illustrated by the horizontal stripe at the top. The white circle (indicating zero difference) results from the non-scaling restriction: the points on a circle with a diameter equal to the smaller dimension of the image remain unaltered. <a name="gopro" id="gopro"></a>
+          <h3>GoPro flattening</h3>The GoPro camera lens produces a pronounced barrel distortion, which seems to be part of its branding. For instance, the GoPro Hero 3+ silver edition has a fisheye lens with a fixed focal length of 2.77&nbsp;mm, corresponding to a focal length of 16&nbsp;mm in 35&nbsp;mm film, if the entire photosensitive area is used. The GoPro Hero 3+ has three photo modes:
+          <ul>
+            <li>10 megapixel = 3680 × 2760 pixel wide angle (16&nbsp;mm in 35&nbsp;mm film)</li>
+            <li>7 megapixel = 3072 × 2304 pixel wide angle (16&nbsp;mm in 35&nbsp;mm film)</li>
+            <li>5 megapixel = 2624 × 1968 pixel medium angle (23&nbsp;mm in 35&nbsp;mm film)</li>
+          </ul>The GoPro Hero 3+ is equipped with a 1/2.3" sensor, which has a crop factor of <a href="http://en.wikipedia.org/wiki/Image_sensor_format">5.64</a>. (Which gives a focal length of only 15.62&nbsp;mm in 35&nbsp;mm film, the 16&nbsp;mm provided by the EXIF information probably being due to rounding.) The first two modes seem to use the entire photosensitive area; the reduced resolution obviously being achieved by sub-sampling. The distortion parameters are therefore the same, as can be proven in practice. The 5-megapixel mode obviously uses only part of the photosensitive area, as 3680 / 2624 × 16 ≈ 23. The lens parameters can be determined to
+          <ul>
+            <li>wide angle:
+              <ul>
+                <li>a = 0.06335</li>
+                <li>b = -0.18432</li>
+                <li>c = -0.13009</li>
+              </ul>
+            </li>
+            <li>medium angle:
+              <ul>
+                <li>a = 0.01359</li>
+                <li>b = -0.06034</li>
+                <li>c = -0.10618</li>
+              </ul>
+            </li>
+          </ul>In theory, the parameters of the second mode can be derived from the first, as the radii <code>r<sub>i</sub></code> and <code>R<sub>i</sub></code> are coupled by the scale factor κ = 3680 / 2624 = 1.402, which leads to:
+          <ul>
+            <li>a<sub>2</sub> = a<sub>1</sub> / κ³</li>
+            <li>b<sub>2</sub> = b<sub>1</sub> / κ²</li>
+            <li>c<sub>2</sub> = c<sub>1</sub> / κ</li>
+          </ul>The above parameters, resulting from an independent optimisation, differ not much from these theoretical values.Correspondingly, the parameters for the various video modes can be derived either by optimisation or from the part of the sensor area that is used by this mode. For video, the horizontal field of view cannot be derived from the EXIF data. It can be calculated from the photosensitive area used, determined from the video itself (by taking footage under controlled conditions) or just estimated together with the other parameters, i.e. left as a free parameter in the optimisation. The parameters for HD video (1920 × 1080) are:
+          <ul>
+            <li>a = 0.030530</li>
+            <li>b = -0.124312</li>
+            <li>c = -0.038543</li>
+          </ul>These parameters can be used for a frame-wise correction with ImageMagick. As an alternative, they can be used to "flatten" the entire video by the <a href="www.avisynth.org">AVIsynth</a> plugin <a href="http://www.avisynth.nl/users/vcmohan/DeBarrel/DeBarrel.html">DeBarrel</a>, which also uses the Panorama Tools lens correction model.<br>
+          <a name="keyboard" id="keyboard"></a>
+          <h3>Two Keyboards <font size="-1">by el_supremo</font></h3>The photo that I took of my two keyboards has a very obvious barrel distortion in it, because it was taken at a focal length of 17&nbsp;mm.
+          <div align="center">
+            <table cellspacing="0" cellpadding="0" width="90%">
+              <tr valign="middle">
+                <td align="middle">
+                  <a href="../img_photos/keyboards.jpg"><img src="../img_photos/keyboards.jpg" width="640" height="427" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
+                </td>
+              </tr>
+            </table>
+          </div>This kind of distortion can be corrected with, for example, Canon's Digital Photo Professional (I have a Canon 50D camera). Other manufacturers of SLR cameras usually provide software to do this kind of correction for their lenses but I wanted to see how well the above examples would work on this photo. The first step is to go to the <a href="http://developer.berlios.de/project/showfiles.php?group_id=9034">LensFun WebSite</a> and download the latest version of their camera database. Unzip the package (winzip can unzip a .tar.gz file in Windows) and then in the "<code>lensfun/data/db</code>" directory look for the file which corresponds to your camera manufacturer. In my case I looked at "<code>slr-canon.xml</code>" which can be edited with any text editor. Now I find the information for the specific lens I am using which in this case is an "<code>EF-S 17-85mm</code>". The information for that lens looks like this:
+          <table cellspacing="5" bgcolor="#F8F8F8" align="center">
+            <tr>
+              <td>
+                <pre>
 &lt;lens&gt;
   &lt;maker&gt;Canon&lt;/maker&gt;
   &lt;model&gt;Canon EF-S 17-85mm f/4-5.6 IS USM&lt;/model&gt;
@@ -732,75 +308,50 @@ this:
     &lt;distortion model="ptlens" focal="85" a="0" b="0.007288" c="0" /&gt;
   &lt;/calibration&gt;
 &lt;/lens&gt;
-</PRE></TD></TR></TABLE></P>
-
-The calibration entries give distortion values for a range of focal lengths
-from 17mm up to 85mm. If the focal length I needed was between two of those
-values, I could either choose whichever was closest or I could interpolate the
-values. Since the photo I'm correcting was taken at 17mm I need the
-information from the first line of the calibration information. That gives me
-the values:&nbsp; <CODE>a="0.021181"&nbsp;  b="-0.055581"&nbsp;  c="0"</CODE>
-</P>
-
-
-These are the three parameters which are used to correct the lens distortion.
-</P>
-
-However for some older versions of IM, The barrel distortion correction
-requires a fourth parameter d.  Fortunately, it is easy to calculate the value
-of d from the other three using this simple formula:&nbsp;  <CODE>d
-= 1-a-b-c</CODE>&nbsp;  That means:&nbsp; <CODE>d="1.0344"</CODE>. </P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  IM will work out the value of 'd' automatically, of it is not provided as
-  a distortion argument, but some older versions of IM did not do this.
-</I></FONT></TD></TR></TABLE></P>
-
-That makes the actual <A HREF="../distorts/#barrel" >Barrel Distortion</A>, to
-correct the lens distortion...
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</pre>
+              </td>
+            </tr>
+          </table>The calibration entries give distortion values for a range of focal lengths from 17mm up to 85mm. If the focal length I needed was between two of those values, I could either choose whichever was closest or I could interpolate the values. Since the photo I'm correcting was taken at 17mm I need the information from the first line of the calibration information. That gives me the values:&nbsp; <code>a="0.021181"&nbsp; b="-0.055581"&nbsp; c="0"</code> These are the three parameters which are used to correct the lens distortion. However for some older versions of IM, The barrel distortion correction requires a fourth parameter d. Fortunately, it is easy to calculate the value of d from the other three using this simple formula:&nbsp; <code>d = 1-a-b-c</code>&nbsp; That means:&nbsp; <code>d="1.0344"</code>.
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>IM will work out the value of 'd' automatically, of it is not provided as a distortion argument, but some older versions of IM did not do this.</i></font></td>
+            </tr>
+          </table>That makes the actual <a href="../distorts/#barrel">Barrel Distortion</a>, to correct the lens distortion...
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
     magick keyboards.jpg \
           -distort barrel "0.021181 -0.055581 0" \
           keyboards_ptlens.jpg
-</samp></pre></TD></TR></TABLE>
-  <A HREF="keyboards_ptlens.jpg"
-     ><IMG SRC="keyboards_ptlens.jpg"  WIDTH=640 HEIGHT=427
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Of course you should not save to JPEG until you have finished processing
-  your image completely, due to the JPEG lossy compression.
-</I></FONT></TD></TR></TABLE></P>
-
-In the original photo the distortion is particularly obvious along the bottom
-of the music stand and along the upper keyboard. These distortions are almost
-completely gone in the output photo. A visual comparison of this result with
-that obtained from Canon's software shows essentially the same result.  </P>
-
-<I>El-Supremo</I></P>
-
-</DIV></P>
-<HR><!-- ---------------------------------------------------------------- -->
-</div></main><footer class="magick-footer"><div class="container-fluid">
-Created: 10 January 2011 <BR>
-Updated: 01 July 2014 <BR>
-Author: Wolfgang Hugemann, &lt;ImageMagick_AT_Hugemann.de&gt; and others<BR>
-HTML Updates by:
-        <A HREF="https://antofthy.gitlab.io/anthony.html"
-        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
-Examples Generated with:
-        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://imagemagick.org/Usage/lens/</CODE>
-</div></footer></body></HTML>
+</samp></pre>
+                </td>
+              </tr>
+            </table><a href="keyboards_ptlens.jpg"><img src="keyboards_ptlens.jpg" width="640" height="427" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
+          </div>
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>Of course you should not save to JPEG until you have finished processing your image completely, due to the JPEG lossy compression.</i></font></td>
+            </tr>
+          </table>In the original photo the distortion is particularly obvious along the bottom of the music stand and along the upper keyboard. These distortions are almost completely gone in the output photo. A visual comparison of this result with that obtained from Canon's software shows essentially the same result. <i>El-Supremo</i>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------- -->
+      </div>
+    </div>
+  </main>
+  <footer class="magick-footer">
+    <div class="container-fluid">
+      Created: 10 January 2011<br>
+      Updated: 01 July 2014<br>
+      Author: Wolfgang Hugemann, &lt;ImageMagick_AT_Hugemann.de&gt; and others<br>
+      HTML Updates by: <a href="https://antofthy.gitlab.io/anthony.html">Anthony Thyssen</a>, &lt;Anthony.Thyssen@gmail.com&gt;<br>
+      Examples Generated with: <img src="version.gif" align="absmiddle" alt="[version image]"><br>
+      URL: <code>https://imagemagick.org/Usage/lens/</code>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,533 +1,432 @@
-<html lang="en"><HEAD>
-<meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1" >
-<link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Comparing -- ImageMagick Examples</TITLE>
-<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://imagemagick.org/Usage/compare/">
-</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
-
-<H1>ImageMagick Examples -- <BR>
-    <IMG SRC="../img_www/space.gif" width=50 height=1>
-    Image Comparing</H1>
-
-<div>
-
-<DL>
-<DT><B>Index</B>
-<DT><A HREF="../"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > ImageMagick Examples Preface and Index</A>
-<DD><A HREF="#methods"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Methods of Comparing Images</A> -- what is different?
-    <UL>
-    <LI><A HREF="#compare"    >Compare Program</A>
-    <LI><A HREF="#difference" >Difference Images</A>
-    <LI><A HREF="#flicker"    >Flicker Compare</A>
-    <LI><A HREF="#animation"  >Comparing Animations</A>
-    </UL>
-<DD><A HREF="#statistics"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Comparison Statistics</A>  -- how different?
-<DD><A HREF="#sub-image"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Sub-Image Matching and Locating</A> Finding smaller images in larger.
-<DD><A HREF="#doubles"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Finding Duplicate Images</A>  -- finding two images that are the same
-<DD><A HREF="#type_general"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Sorting Images by Type</A>    -- image classifications for comparing
-    <UL>
-    <LI><A HREF="#type_greyscale"   >Gray-scale Images</A>
-    <LI><A HREF="#type_linear"      >Linear Color</A>
-    <LI><A HREF="#type_bw"          >Pure Black and White</A>
-    <LI><A HREF="#type_spot_color"  >Color Images</A>
-    <LI><A HREF="#type_midtone"     >Midtone Colored</A>
-    <LI><A HREF="#type_lines"       >Text vs Line Drawing</A>
-    <LI><A HREF="#type_reallife"    >Real Life vs Cartoon</A>
-    </UL>
-<DD><A HREF="#type_specific"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Handling Specific Image Types</A>
-<DD><A HREF="#metrics"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Image Metrics</A>    -- finger-printing images for comparision</A>
-<DD><A HREF="#camera"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Web Cameras</A>      -- Finding what has changed in fixed cameras
-</DL>
-
-The ability to compare two or more images, or finding duplicate images in a
-large collection, is a very tricky matter.  In these examples we look at
-comparing images to determine how they similar they are, and where they
-differ. </P>
-
-This may involve classifying or grouping images into various types for better
-handling.  Discovering some <A
-HREF="http://en.wikipedia.org/wiki/Metric_%28mathematics%29" >metric</A> to
-simplify and group similar images.  And <A
-HREF="http://en.wikipedia.org/wiki/Data_clustering" >clustering</A> similar
-images together based on such metrics. </P>
-
-However such comparisons, and or studies while difficult can be rewarding,
-with the ability to find image duplicates, copies, and even removal of 'spam'
-or other text or notices from images. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="methods"></A>
-<H2>Methods of Comparing Images</H2>
-
-<A NAME="compare"></A>
-<H3>Compare Program</H3>
-
-The "<code>magick compare</code>" program is provided to give you an easy way to
-compare two similar images, to determine just how 'different' the images are.
-</P>
-
-For example, here I have two frames of an animated 'bag', which I then gave to
-"<code>magick compare</code>' to highlight the areas where it changed.
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/usage.css">
+  <title>Comparing -- ImageMagick Examples</title>
+  <link rel="icon" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="shortcut" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://imagemagick.org/Usage/compare/">
+</head>
+<body>
+  <main class="container">
+    <div class="magick-template">
+      <div class="magick-header">
+        <h1>ImageMagick Examples --<br>
+        <img src="../img_www/space.gif" width="50" height="1"> Image Comparing</h1>
+        <div>
+          <dl>
+            <dt><b>Index</b></dt>
+            <dt>
+              <a href="../"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> ImageMagick Examples Preface and Index</a>
+            </dt>
+            <dd>
+              <a href="#methods"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15">Methods of Comparing Images</a> -- what is different?
+              <ul>
+                <li>
+                  <a href="#compare">Compare Program</a>
+                </li>
+                <li>
+                  <a href="#difference">Difference Images</a>
+                </li>
+                <li>
+                  <a href="#flicker">Flicker Compare</a>
+                </li>
+                <li>
+                  <a href="#animation">Comparing Animations</a>
+                </li>
+              </ul>
+            </dd>
+            <dd>
+              <a href="#statistics"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> Comparison Statistics</a> -- how different?
+            </dd>
+            <dd>
+              <a href="#sub-image"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> Sub-Image Matching and Locating</a> Finding smaller images in larger.
+            </dd>
+            <dd>
+              <a href="#doubles"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Finding Duplicate Images</a> -- finding two images that are the same
+            </dd>
+            <dd>
+              <a href="#type_general"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Sorting Images by Type</a> -- image classifications for comparing
+              <ul>
+                <li>
+                  <a href="#type_greyscale">Gray-scale Images</a>
+                </li>
+                <li>
+                  <a href="#type_linear">Linear Color</a>
+                </li>
+                <li>
+                  <a href="#type_bw">Pure Black and White</a>
+                </li>
+                <li>
+                  <a href="#type_spot_color">Color Images</a>
+                </li>
+                <li>
+                  <a href="#type_midtone">Midtone Colored</a>
+                </li>
+                <li>
+                  <a href="#type_lines">Text vs Line Drawing</a>
+                </li>
+                <li>
+                  <a href="#type_reallife">Real Life vs Cartoon</a>
+                </li>
+              </ul>
+            </dd>
+            <dd>
+              <a href="#type_specific"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Handling Specific Image Types</a>
+            </dd>
+            <dd>
+              <a href="#metrics"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Image Metrics</a> -- finger-printing images for comparision
+            </dd>
+            <dd>
+              <a href="#camera"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Web Cameras</a> -- Finding what has changed in fixed cameras
+            </dd>
+          </dl>The ability to compare two or more images, or finding duplicate images in a large collection, is a very tricky matter. In these examples we look at comparing images to determine how they similar they are, and where they differ. This may involve classifying or grouping images into various types for better handling. Discovering some <a href="http://en.wikipedia.org/wiki/Metric_%28mathematics%29">metric</a> to simplify and group similar images. And <a href="http://en.wikipedia.org/wiki/Data_clustering">clustering</a> similar images together based on such metrics. However such comparisons, and or studies while difficult can be rewarding, with the ability to find image duplicates, copies, and even removal of 'spam' or other text or notices from images.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="methods" id="methods"></a>
+          <h2>Methods of Comparing Images</h2><a name="compare" id="compare"></a>
+          <h3>Compare Program</h3>The "<code>magick compare</code>" program is provided to give you an easy way to compare two similar images, to determine just how 'different' the images are. For example, here I have two frames of an animated 'bag', which I then gave to "<code>magick compare</code>' to highlight the areas where it changed.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick compare bag_frame1.gif bag_frame2.gif  magick compare.gif
-</samp></pre></TD></TR></TABLE>
-  <A HREF="../images/bag_frame1.gif"
-     ><IMG SRC="../images/bag_frame1.gif"      WIDTH=97  HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-  <A HREF="../images/bag_frame2.gif"
-     ><IMG SRC="../images/bag_frame2.gif"      WIDTH=97  HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-  <A HREF="compare.gif"
-     ><IMG SRC="compare.gif"         WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-As you can see you get a white and red image, which has a 'shadow' of the
-second image in it. It clearly shows that three areas that changed between the
-two images.  </P>
-
-Rather than saving the 'compare' image, you can of course view it directly,
-which I find more convenient, by output to the special "<CODE><A
-HREF="../files/#x" >x:</A></CODE>" output format, or using the "<CODE><A
-HREF="../basics/#display" >display</A></CODE>" program.  For example..
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                </td>
+              </tr>
+            </table><a href="../images/bag_frame1.gif"><img src="../images/bag_frame1.gif" width="97" height="92" align="middle" vspace="2" hspace="15" border="1" alt="[IM Output]"></a> <a href="../images/bag_frame2.gif"><img src="../images/bag_frame2.gif" width="97" height="92" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="compare.gif"><img src="compare.gif" width="97" height="92" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
+          </div>As you can see you get a white and red image, which has a 'shadow' of the second image in it. It clearly shows that three areas that changed between the two images. Rather than saving the 'compare' image, you can of course view it directly, which I find more convenient, by output to the special "<code><a href="../files/#x">x:</a></code>" output format, or using the "<code><a href="../basics/#display">display</a></code>" program. For example..
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick compare bag_frame1.gif bag_frame2.gif  x:
   magick compare bag_frame1.gif bag_frame2.gif  miff:- | display
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-
-As of IM v6.4 you can change the color of the differences from red
-to some other more interesting color...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>As of IM v6.4 you can change the color of the differences from red to some other more interesting color...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick compare bag_frame1.gif bag_frame2.gif \
           -highlight-color  SeaGreen  magick compare_color.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="compare_color.gif"
-     ><IMG SRC="compare_color.gif"         WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-As of IM v6.4.2-8 you can specify the other color as well.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="compare_color.gif"><img src="compare_color.gif" width="97" height="92" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>As of IM v6.4.2-8 you can specify the other color as well.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick compare bag_frame1.gif bag_frame2.gif \
           -highlight-color  SeaGreen  -lowlight-color PaleGreen \
           magick compare_colors.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="compare_colors.gif"
-     ><IMG SRC="compare_colors.gif"         WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-If you don't want that 'shadow' of the second image, from IM v6.4.2-8 you can
-add a "<CODE>-compose src</CODE>" to the options to remove it.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="compare_colors.gif"><img src="compare_colors.gif" width="97" height="92" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>If you don't want that 'shadow' of the second image, from IM v6.4.2-8 you can add a "<code>-compose src</code>" to the options to remove it.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick compare bag_frame1.gif bag_frame2.gif \
           -compose Src compare_src.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="compare_src.gif"
-     ><IMG SRC="compare_src.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-By using all three extra settings we can generate a gray-scale mask of the
-changed pixels...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="compare_src.gif"><img src="compare_src.gif" width="97" height="92" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>By using all three extra settings we can generate a gray-scale mask of the changed pixels...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick compare bag_frame1.gif bag_frame2.gif \
           -compose Src -highlight-color White -lowlight-color Black \
           magick compare_mask.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="compare_mask.gif"
-     ><IMG SRC="compare_mask.gif"         WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Note however that this mask is of ANY difference, even the smallest
-difference.  For example you can see all the minor differences that saving an
-image to the <A HREF="../formats/#jpg" >Lossy JPEG Format</A> produces...
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="compare_mask.gif"><img src="compare_mask.gif" width="97" height="92" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Note however that this mask is of ANY difference, even the smallest difference. For example you can see all the minor differences that saving an image to the <a href="../formats/#jpg">Lossy JPEG Format</a> produces...
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick bag_frame1.gif  bag_frame1.jpg
   magick compare bag_frame1.gif bag_frame1.jpg   magick compare_lossy_jpeg.gif
-</samp></pre></TD></TR></TABLE>
-  <A HREF="../images/bag_frame1.gif"
-     ><IMG SRC="../images/bag_frame1.gif"      WIDTH=97  HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=15 BORDER=1 ALT="[IM Output]"></A>
-  <A HREF="bag_frame1.jpg"
-     ><IMG SRC="bag_frame1.jpg"      WIDTH=97  HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-  <A HREF="compare_lossy_jpeg.gif"
-     ><IMG SRC="compare_lossy_jpeg.gif"         WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=2 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-As you can see even though you can't really see any difference between GIF and
-the JPEG versions of the image, "<code>magick compare</code>" reports a lot of
-differences. </P>
-
-By using a small <A HREF="../color_basics/#fuzz" >Fuzz Factor</A> you can ask
-IM to ignore these minor differences between the two images.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR valign="top"><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE EXECUTE ERR=compare_fuzz.txt>
+</samp></pre>
+                </td>
+              </tr>
+            </table><a href="../images/bag_frame1.gif"><img src="../images/bag_frame1.gif" width="97" height="92" align="middle" vspace="2" hspace="15" border="1" alt="[IM Output]"></a> <a href="bag_frame1.jpg"><img src="bag_frame1.jpg" width="97" height="92" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="compare_lossy_jpeg.gif"><img src="compare_lossy_jpeg.gif" width="97" height="92" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
+          </div>As you can see even though you can't really see any difference between GIF and the JPEG versions of the image, "<code>magick compare</code>" reports a lot of differences. By using a small <a href="../color_basics/#fuzz">Fuzz Factor</a> you can ask IM to ignore these minor differences between the two images.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr valign="top">
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre><code execute="" err="compare_fuzz.txt">
   magick compare -metric AE -fuzz 5% \
           bag_frame1.gif bag_frame1.jpg   magick compare_fuzz.gif
-</samp></pre></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD>
-  <A HREF="compare_fuzz.txt"
-     ><IMG SRC="compare_fuzz.txt.gif"
-           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
-</TD></TR></TABLE></TD><TD>
-  <A HREF="compare_fuzz.gif"
-     ><IMG SRC="compare_fuzz.gif"         WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Which shows that most of the actual differences
-are only minor. </P>
-
-The special "<CODE><A HREF="../option_link.cgi?metric" >-metric</A></CODE>"
-setting of '<CODE>AE</CODE>' (short for "Absolute Error" count), will report
-(to standard error), a count of the actual number of pixels that were masked,
-at the current fuzz factor. </P>
-
-
-<A NAME="difference"></A>
-<H3>Difference Images</H3>
-
-To get a better idea of exactly how different the images are, you are probably
-better of getting a more exact '<CODE><A HREF="../compose/#difference"
->difference</A></CODE>' composition image....
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</code></pre>
+                    </td>
+                  </tr>
+                </table>
+                <table border="0" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <a href="compare_fuzz.txt"><img src="compare_fuzz.txt.gif" align="middle" vspace="0" hspace="0" border="0" alt="[IM Text]"></a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="compare_fuzz.gif"><img src="compare_fuzz.gif" width="97" height="92" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Which shows that most of the actual differences are only minor. The special "<code><a href="../option_link.cgi?metric">-metric</a></code>" setting of '<code>AE</code>' (short for "Absolute Error" count), will report (to standard error), a count of the actual number of pixels that were masked, at the current fuzz factor. <a name="difference" id="difference"></a>
+          <h3>Difference Images</h3>To get a better idea of exactly how different the images are, you are probably better of getting a more exact '<code><a href="../compose/#difference">difference</a></code>' composition image....
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick composite bag_frame1.gif bag_frame1.jpg \
             -compose difference  difference_jpeg.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_jpeg.gif"
-     ><IMG SRC="difference_jpeg.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-As you can see while "<code>magick compare</code>" showed that JPEG created a lot of
-differences between the images, a '<CODE><A HREF="../compose/#difference"
->difference</A></CODE>' composition was quite dark, indicating that all the
-differences were relatively minor. </P>
-
-If the resulting image looks too black to see the differences, you may like to
-<A HREF="../color_mods/#normalize" >Normalize</A> the image (using the more
-mathematically correct "<CODE><A HREF="../option_link.cgi?auto-level"
->-auto-level</A></CODE>", so as to enhance the results.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_jpeg.gif"><img src="difference_jpeg.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>As you can see while "<code>magick compare</code>" showed that JPEG created a lot of differences between the images, a '<code><a href="../compose/#difference">difference</a></code>' composition was quite dark, indicating that all the differences were relatively minor. If the resulting image looks too black to see the differences, you may like to <a href="../color_mods/#normalize">Normalize</a> the image (using the more mathematically correct "<code><a href="../option_link.cgi?auto-level">-auto-level</a></code>", so as to enhance the results.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick difference_jpeg.gif  -auto-level  difference_norm.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_norm.gif"
-     ><IMG SRC="difference_norm.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This still shows that most of the differences are still very minor, with the
-largest difference occurring along the sharp edges of the image, which the
-JPEG image file format does not handle very well. </P>
-
-On the other hand getting a difference image between the two original frames
-of the animation shows a very marked differences between the two images, even
-without any enhancement.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_norm.gif"><img src="difference_norm.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This still shows that most of the differences are still very minor, with the largest difference occurring along the sharp edges of the image, which the JPEG image file format does not handle very well. On the other hand getting a difference image between the two original frames of the animation shows a very marked differences between the two images, even without any enhancement.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick composite bag_frame1.gif bag_frame2.gif \
             -compose difference  difference_frames.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_frames.gif"
-     ><IMG SRC="difference_frames.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Note that as the '<CODE><A HREF="../compose/#difference"
->difference</A></CODE>' compose method is associative, the order of the two
-images in the above examples does not matter, although unlike
-"<code>magick compare</code>", you can compare different sized images, with the
-destination image determining the final size of the difference image. </P>
-
-The different method is even more useful when used with the
-"<code>magick</code>" program, as you can process the resulting image further
-before saving or displaying the results.
-
-For example you can threshold and merge each of the color channels to to
-generate a mask of any pixel that changed color between the two images.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_frames.gif"><img src="difference_frames.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Note that as the '<code><a href="../compose/#difference">difference</a></code>' compose method is associative, the order of the two images in the above examples does not matter, although unlike "<code>magick compare</code>", you can compare different sized images, with the destination image determining the final size of the difference image. The different method is even more useful when used with the "<code>magick</code>" program, as you can process the resulting image further before saving or displaying the results. For example you can threshold and merge each of the color channels to to generate a mask of any pixel that changed color between the two images.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick bag_frame1.gif bag_frame2.gif -compose difference -composite \
           -threhold 0 -separate -evaluate-sequence Add \
           difference_mask.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_mask.gif"
-     ><IMG SRC="difference_mask.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This is basically what the "<code>magick compare</code>" program does, but with
-more controls as to the color and output style. </P>
-
-However as you can see it tends to find even the smallest minor change between
-two images.  If the images are from a lossy image file format, such as JPEG,
-or a GIF image that required color reduction and dithering (color
-quantization), then that would probably match everything in the image.  As
-such it it typically not very useful. </P>
-
-For better results you can try to figure out just how different the pixel
-colors are.  For example we can gray-scale the result, so as to get a better
-comparison image, than a colorful one.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_mask.gif"><img src="difference_mask.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This is basically what the "<code>magick compare</code>" program does, but with more controls as to the color and output style. However as you can see it tends to find even the smallest minor change between two images. If the images are from a lossy image file format, such as JPEG, or a GIF image that required color reduction and dithering (color quantization), then that would probably match everything in the image. As such it it typically not very useful. For better results you can try to figure out just how different the pixel colors are. For example we can gray-scale the result, so as to get a better comparison image, than a colorful one.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick bag_frame1.gif bag_frame2.gif -compose difference -composite \
           -colorspace Gray   difference_gray.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_gray.gif"
-     ><IMG SRC="difference_gray.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Now unlike "<code>magick compare</code>", the difference image shows a mixture of
-both images combined in the final result. For example look at the weird
-'talisman' seems to appear in the forehead of the cat. This was originally the
-handle of the bag from the first image.  This merger can make it confusing as
-to exactly what differences you are seeing, and you see a megere of both the
-additions and removals from the image.  </P>
-
-Because of this confusion of details, the "<code>magick compare</code>" is usually the
-better way for us humans to view, while the 'difference' image is the better
-method for further processing the image. </P>
-
-However grayscaling a difference image will simply average (actually
-a weighted average) the RGB distances together.  As a result a single bit
-color difference could be lost though <A HREF="../basics/#quantum_effects"
->Quantum Rounding Effects</A>. </P>
-
-If even the smallest difference between images is important, a better method
-is to add the separate color channels of the difference image, to ensure you
-capture ALL the differences, including the most minor difference.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_gray.gif"><img src="difference_gray.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Now unlike "<code>magick compare</code>", the difference image shows a mixture of both images combined in the final result. For example look at the weird 'talisman' seems to appear in the forehead of the cat. This was originally the handle of the bag from the first image. This merger can make it confusing as to exactly what differences you are seeing, and you see a megere of both the additions and removals from the image. Because of this confusion of details, the "<code>magick compare</code>" is usually the better way for us humans to view, while the 'difference' image is the better method for further processing the image. However grayscaling a difference image will simply average (actually a weighted average) the RGB distances together. As a result a single bit color difference could be lost though <a href="../basics/#quantum_effects">Quantum Rounding Effects</a>. If even the smallest difference between images is important, a better method is to add the separate color channels of the difference image, to ensure you capture ALL the differences, including the most minor difference.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick bag_frame1.gif bag_frame2.gif -compose difference -composite \
           -separate -evaluate-sequence add   difference_add.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_add.gif"
-     ><IMG SRC="difference_add.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-The difference values produced in the above is known as a 'manhattan distance'
-metric. That is, the distance between the two colors of each image when you are
-restricted to orthogonal (or axial) movement.  Be warned however that large
-differences may become clipped (or burned) as it can exceed the pixel data
-'Quantium Range', or integer limits, unless using a HDRI version of IM. </P>
-
-To take this further you can get the color vector distance, by using some
-squares and square roots to implement a Pythagorean or Euclidean distance.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_add.gif"><img src="difference_add.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>The difference values produced in the above is known as a 'manhattan distance' metric. That is, the distance between the two colors of each image when you are restricted to orthogonal (or axial) movement. Be warned however that large differences may become clipped (or burned) as it can exceed the pixel data 'Quantium Range', or integer limits, unless using a HDRI version of IM. To take this further you can get the color vector distance, by using some squares and square roots to implement a Pythagorean or Euclidean distance.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick bag_frame1.gif bag_frame2.gif -compose difference -composite \
            -evaluate Pow 2 -separate -evaluate-sequence Add -evaluate Pow 0.5 \
            difference_vector.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_vector.gif"
-     ><IMG SRC="difference_vector.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-
-This is in fact similar what a 'fuzz' factor actually measures as part of its
-thresholding (when no transparency is involved). However 'fuzz' also divides
-the squared values by 3, before adding, to ensure the results do not exceed
-the image color range limits.  Doing this means you would only get a pure
-'white' pixel in the result for difference between opposite primary and
-secondary colors, such between a blue and yellow pixel. </P>
-
-So lets do that scaling too...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_vector.gif"><img src="difference_vector.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This is in fact similar what a 'fuzz' factor actually measures as part of its thresholding (when no transparency is involved). However 'fuzz' also divides the squared values by 3, before adding, to ensure the results do not exceed the image color range limits. Doing this means you would only get a pure 'white' pixel in the result for difference between opposite primary and secondary colors, such between a blue and yellow pixel. So lets do that scaling too...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick bag_frame1.gif bag_frame2.gif -compose difference -composite \
           -evaluate Pow 2 -evaluate divide 3 -separate \
           -evaluate-sequence Add -evaluate Pow 0.5 \
           difference_vector_scaled.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="difference_vector_scaled.gif"
-     ><IMG SRC="difference_vector_scaled.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This is actually very similar to what you would get for
-a "<CODE>-colorspace&nbsp;Gray</CODE>' difference image (as above), but it is
-much more accuriate representation of color difference. </P>
-
-You could leave of the second '<CODE>Pow 0.5</CODE>' modification in which
-case you will get a Squared difference Image. </P>
-
-
-There are other color distance metrics, which you can read about on the <A
-HREF="http://en.wikipedia.org/wiki/Color_difference" >Color Difference,
-Wikipedia</A> page. Most of these involve generating vector differences (see
-last) but using a different colorspace, such as LAB or LUV. This would however
-be more important in comparing real world color differences (EG: human vision
-difference measures). </P>
-
-Also see <A HREF="../masking/#bg_remove" >Background Removal</A>, where
-difference images like the above are used to perform background removal.
-You may also like to look at this external page on <A
-HREF="http://ecocam.evsc.virginia.edu/change_detection_description/change_detection_description.htm"
->Change Detection</A> as a practical example of its use. </P>
-
-
-
-<A NAME="flicker"></A>
-<H3>Flicker Compare</H3>
-
-An alternative to the "<code>magick compare</code>" program to see differences
-between images is to do a flicker comparison between the similar images at a
-reasonably fast rate.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="difference_vector_scaled.gif"><img src="difference_vector_scaled.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This is actually very similar to what you would get for a "<code>-colorspace&nbsp;Gray</code>' difference image (as above), but it is much more accuriate representation of color difference. You could leave of the second '<code>Pow 0.5</code>' modification in which case you will get a Squared difference Image. There are other color distance metrics, which you can read about on the <a href="http://en.wikipedia.org/wiki/Color_difference">Color Difference, Wikipedia</a> page. Most of these involve generating vector differences (see last) but using a different colorspace, such as LAB or LUV. This would however be more important in comparing real world color differences (EG: human vision difference measures). Also see <a href="../masking/#bg_remove">Background Removal</a>, where difference images like the above are used to perform background removal. You may also like to look at this external page on <a href="http://ecocam.evsc.virginia.edu/change_detection_description/change_detection_description.htm">Change Detection</a> as a practical example of its use. <a name="flicker" id="flicker"></a>
+          <h3>Flicker Compare</h3>An alternative to the "<code>magick compare</code>" program to see differences between images is to do a flicker comparison between the similar images at a reasonably fast rate.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -delay 50 bag_frame1.gif bag_frame2.gif -loop 0 flicker_cmp.gif
-</samp></pre></TD></TR></TABLE></TD><TD>
-  <A HREF="flicker_cmp.gif"
-     ><IMG SRC="flicker_cmp.gif"    WIDTH=97 HEIGHT=92
-           ALIGN=middle VSPACE=4 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-To make this easier I wrote a script to display an animation of two given
-images called  "<CODE><B><A HREF="../scripts/flicker_cmp"
->flicker_cmp</A></B></CODE>" which flips between the two images, just like
-the above example.  It also adds a label at the bottom of the displayed image
-so as to detail which image you are seeing at any particular moment. </P>
-
-
-<A NAME="animation"></A>
-<H3>Comparing Animations</H3>
-
-You can also compare the differences in two coalesced animations using a
-special 'film strip' technique. See a similar 'append' technique in <A
-HREF="../anim_mods/#append" >Side by Side Appending</A>. </P>
-
-Basically we append all the animation frames together to form one large, and
-long image.  The two images are then compared and a new animation is created
-by splitting up the animation into separate frames again.   For example...
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="flicker_cmp.gif"><img src="flicker_cmp.gif" width="97" height="92" align="middle" vspace="4" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>To make this easier I wrote a script to display an animation of two given images called "<code><b><a href="../scripts/flicker_cmp">flicker_cmp</a></b></code>" which flips between the two images, just like the above example. It also adds a label at the bottom of the displayed image so as to detail which image you are seeing at any particular moment. <a name="animation" id="animation"></a>
+          <h3>Comparing Animations</h3>You can also compare the differences in two coalesced animations using a special 'film strip' technique. See a similar 'append' technique in <a href="../anim_mods/#append">Side by Side Appending</a>. Basically we append all the animation frames together to form one large, and long image. The two images are then compared and a new animation is created by splitting up the animation into separate frames again. For example...
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
     magick \( anim1.gif -coalesce -append \) \
             \( anim2.gif -coalesce -append \) miff:- | \
       magick compare - miff:- |\
         magick - -crop 160x120 +repage anim_compare.gif
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-
-The result is an animation of the 'compare' images, producing a 'dimmed'
-version of the second animation, overlaid with a highlight showing the parts
-which are different.  </P>
-
-Note that for this to work the "<CODE><A HREF="../option_link.cgi?crop"
->-crop</A></CODE>" size much match the original size of the animation.  Also
-the animation will lose any variable time delays that it may have had, using a
-constant time delay based on the first frame of the original animation. </P>
-
-Another image comparison technique useful for animations is used to locate all
-the areas in which an animation changes, so as to divide the animation's
-unconnected parts.  This way you can separate a large animations into a number
-of smaller animations. See
-<A HREF="../anim_mods/#split" >Splitting up an Animation</A>. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="statistics"></A>
-<H2>Comparison Statistics <BR>
-<FONT SIZE=-1>Just how different are two images?</FONT></H2>
-
-<DIV ALIGN=center><FONT SIZE=+2><B>
-<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35>
-Under Construction
-<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50>
-</B></FONT></DIV></P>
-
-<PRE>
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>The result is an animation of the 'compare' images, producing a 'dimmed' version of the second animation, overlaid with a highlight showing the parts which are different. Note that for this to work the "<code><a href="../option_link.cgi?crop">-crop</a></code>" size much match the original size of the animation. Also the animation will lose any variable time delays that it may have had, using a constant time delay based on the first frame of the original animation. Another image comparison technique useful for animations is used to locate all the areas in which an animation changes, so as to divide the animation's unconnected parts. This way you can separate a large animations into a number of smaller animations. See <a href="../anim_mods/#split">Splitting up an Animation</a>.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="statistics" id="statistics"></a>
+          <h2>Comparison Statistics<br>
+          <font size="-1">Just how different are two images?</font></h2>
+          <div align="center">
+            <font size="+2"><b><img src="../img_www/const_barrier.gif" width="39" height="35"> Under Construction <img src="../img_www/const_hole.gif" width="144" height="50"></b></font>
+          </div>
+          <pre>
 
 Statistics from difference image...
 
@@ -558,12 +457,12 @@ Compare  Program  Statistics...
 
    You can get an actual average difference value using the -metric
 
-     magick compare -metric MAE image1 image2 null: 2>&1
+     magick compare -metric MAE image1 image2 null: 2&gt;&amp;1
 
    Adding -verbose will provide more specific information about each separate
    channel.
 
-      magick compare -verbose -metric MAE rose.jpg reconstruct.jpg null: 2>&1
+      magick compare -verbose -metric MAE rose.jpg reconstruct.jpg null: 2&gt;&amp;1
 
       Image: rose.jpg
       Channel distortion: MAE
@@ -642,7 +541,7 @@ Compare  Program  Statistics...
    a maximum difference value.
 
    The e+06 is scientific notation, on how many places to shift the
-   decimal point.  EG:   4.65489e+06  -->  4,654,890.0
+   decimal point.  EG:   4.65489e+06  --&gt;  4,654,890.0
    Thus is equal to about 4 million, and is the square of 2157.52
 
    WARNING: numbers are dependant on the IM Quality (Q) levels set at compile
@@ -678,25 +577,15 @@ Dissimilarity-threshold
 
   But what is this threshold?
 
-</PRE>
-
-For more info, see my very old raw text notes...
-<A HREF="http://www.ict.griffith.edu.au/anthony/info/graphics/image_comparing">
-Image Comparing, Tower of Computational Sorcery</A></P>
-
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="sub-image"></A>
-<H2>Matching Sub-Images and Shapes</H2>
-
-<DIV ALIGN=center><FONT SIZE=+2><B>
-<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35>
-Under Construction
-<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50>
-</B></FONT></DIV></P>
-
-<PRE>
+</pre>For more info, see my very old raw text notes... <a href="http://www.ict.griffith.edu.au/anthony/info/graphics/image_comparing">Image Comparing, Tower of Computational Sorcery</a>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="sub-image" id="sub-image"></a>
+          <h2>Matching Sub-Images and Shapes</h2>
+          <div align="center">
+            <font size="+2"><b><img src="../img_www/const_barrier.gif" width="39" height="35"> Under Construction <img src="../img_www/const_hole.gif" width="144" height="50"></b></font>
+          </div>
+          <pre>
 Using "compare -subimage-search" option...
 
   magick compare -subimage-search  large_image.png  sub-image.png  results-%d.png
@@ -715,7 +604,7 @@ Using "compare -subimage-search" option...
   a very accurate color comparison.
 
   The search basically does a compare of the small image at EVERY possible
-  location in the larger image.  As such it is is slow! <B>very very slow.</B>.
+  location in the larger image.  As such it is is slow! <b>very very slow.</b>.
 
   The best idea is to compare a very very SMALL sub-image to find possible
   locations, than use that to then do a difference compare at each possible
@@ -724,14 +613,14 @@ Using "compare -subimage-search" option...
   Have a look at the script
     https://imagemagick.org/Usage/scripts/overlap
   and associated discussion
-    <A HREF="../forum_link.cgi?f=1&t=22526&p=95286" >Overlapped Images</A>
+    <a href="../forum_link.cgi?f=1&amp;t=22526&amp;p=95286">Overlapped Images</a>
   Which looks at locating 'high entropy' sub-images of one image to search
   for posible matches in a second image so the overlap offset between the
   two images can be discovered, and the images merged into a larger image.
 
   Another discussion uses sub-image searches to find tiling patterns in
   larger images, with the goal of generating tilable images
-    <A HREF="../forum_link.cgi?f=1&t=22860" >Stitching image over a canvas</A>
+    <a href="../forum_link.cgi?f=1&amp;t=22860">Stitching image over a canvas</a>
 
 
   Example using RMSE and the new -grayscale function to merge the
@@ -769,7 +658,7 @@ Some Basic Sub-Image Search Examples....
   Don't bother outputing the incomplete image results.
 
      magick compare -subimage-search -metric AE -similarity-threshold 1.0 \
-                   screen.png letter.png null: 2>&1
+                   screen.png letter.png null: 2&gt;&amp;1
 
   NOTE speed will be highly dependant on where in the image that first
   match is found.
@@ -778,20 +667,20 @@ Some Basic Sub-Image Search Examples....
   as an image (white dots on matches, black elsewhere)
 
      magick compare -subimage-search -metric AE \
-                   screen.png letter.png miff:- 2>/dev/null |
+                   screen.png letter.png miff:- 2&gt;/dev/null |
        magick - -delete 0 show:
 
   Extract a list of the coordinates of all matching letters (white dots)
   (as an enumerated pixel list, ignoring anything black)
 
      magick compare -subimage-search -metric AE \
-                   screen.png letter.png miff:-  2>/dev/null |
+                   screen.png letter.png miff:-  2&gt;/dev/null |
        magick - -delete 0 txt:- | grep -v '#000000'
 
   Just the coordinate list
 
      magick compare -subimage-search -metric AE \
-                   screen.png letter.png miff:-  2>/dev/null |
+                   screen.png letter.png miff:-  2&gt;/dev/null |
        magick - -delete 0 txt:- | sed -n '/#FFFFFF/s/:.*//p'
 
 
@@ -834,8 +723,7 @@ Correlate (a Convolve variant)
   for forground and negative values for background, and zero for don't care.
   It is however limited to grayscale images.
 
-  See <A HREF="../convolve/#correlate_search"
-  >Correlation and Shape Searching</A>.
+  See <a href="../convolve/#correlate_search">Correlation and Shape Searching</a>.
 
   Both of these are basically just as slow as the previous sub-image compare,
   but less accurate with regards to colors.  However it's ability to specify
@@ -855,7 +743,7 @@ FFT Convolve (NCC)
 
   The 'Convolve' method, can be converted into a 'Correlate', simply by
   rotating the sub-image being searched for by 180 degrees.
-  See <A HREF="../convolve/#correlate" >Correlate</A>.
+  See <a href="../convolve/#correlate">Correlate</a>.
 
   Basically by converting images into the 'frequency' domain, you can do
   a sub-image search, very very quickly, compared to the previous, especially
@@ -864,7 +752,7 @@ FFT Convolve (NCC)
   This I believe has been added as a NCC compare metric.
 
 
-<A NAME="peak_finding"></A>
+<a name="peak_finding" id="peak_finding"></a>
 Peak Finding and extracting (for near partial matches)...
 
   Once you have compared the image you will typically have a 'probably map'
@@ -923,8 +811,7 @@ Peak Finding and extracting (for near partial matches)...
     threshold) is reached.
 
     See a shell script implementation of this in  Fred Weinhaus's script
-    "<CODE><A HREF="http://www.fmwconcepts.com/imagemagick/maxima/"
-    >maxima</A></CODE>"
+    "<code><a href="http://www.fmwconcepts.com/imagemagick/maxima/">maxima</a></code>"
 
     This does not look at finding the center of large 'cluster' of near equal
     valued pixels, though this would be very rare in real images.
@@ -1017,744 +904,231 @@ Matching Faces
 
 
 
-</PRE>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="doubles"></A>
-<H2>Finding Duplicate Images</H2>
-
-<H4>Identical files</H4>
-
-Are the files binary identical that is they are exactly the same file and
-probably just exact copies of each other.    No ImageMagick required. </P>
-
-Don't discount this.  You can compare lots of files very very quickly
-in this way.  The best method I've found is by using MD5 check sums.
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</pre>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="doubles" id="doubles"></a>
+          <h2>Finding Duplicate Images</h2>
+          <h4>Identical files</h4>Are the files binary identical that is they are exactly the same file and probably just exact copies of each other. No ImageMagick required. Don't discount this. You can compare lots of files very very quickly in this way. The best method I've found is by using MD5 check sums.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   md5sum * | sort | awk {'print $2 " " $1'}  | uniq -Df 1
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-
-And that will list the md5's of images that are identical. </P>
-
-Using this technique I created scripts that can generate and compare md5sum
-lists of files returning the files that are md5 identical. </P>
-
-Note however that any change to an image file other than a direct copy, will be
-classed by this as being different, even if the image data itself is the same.
-It only takes a date change or other minor meta-data difference in the file
-to make the image different. </P>
-
-<H4>IM Image Signatures</H4>
-
-You can have IM generate a 'signature' for each image...
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>And that will list the md5's of images that are identical. Using this technique I created scripts that can generate and compare md5sum lists of files returning the files that are md5 identical. Note however that any change to an image file other than a direct copy, will be classed by this as being different, even if the image data itself is the same. It only takes a date change or other minor meta-data difference in the file to make the image different.
+          <h4>IM Image Signatures</h4>You can have IM generate a 'signature' for each image...
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
   magick identify -quiet -format "%#" images...
-</samp></pre></TD></TR></TABLE>
-</DIV></P>
-
-The generates a hash string much like MD5 and SHA256 do. However unlike the
-latter, it uses the actual image data to generate the signiture, not the
-images metadata. </P>
-
-Thus, if you have two copies of the same picture but with different
-creation/modification timestamps, you should get same signature for both
-files, whereas MD5 and SHA256 will produce two signatures even though the
-image itself is the same. </P>
-
-WARNING: reading and writing a JPEG image will generate different image data
-and thus a different signature. This is simply due to the lossy compression
-JPEG image format uses. </P>
-
-<H4>Direct Comparison</H4>
-
-You can directly compare two images (using the "<code>magick compare</code>" program)
-if they are the same size, to see how well they match. (See above) </P>
-
-This is very slow, and in my experience not very useful when used against
-a full sized image, because it is so slow.  However it is probably the best
-way to get an idea of just how similar two images are.  </P>
-
-
-<H4>Image Classification</H4>
-
-In my attempts to compare images I have found that Color, Cartoon-like, and
-Sketches all compare very differently to each other. </P>
-
-Line drawings and gray-scale images especially tends to have smaller
-differences that color images, with just about every comparison method.
-Basically as the colors are all in a line any color metric tends to place such
-images 3 times closer together (1 dimentional colorspace verses
-a 3 dimentional colorspace) </P>
-
-Basically this means that separating your images into at least these two
-groups can be a very important first step in any serious attempt at finding
-duplicate or very similar images. </P>
-
-Other major classifications or image types can also make comparing images
-easier, just by reducing the number of images your are comparing against. </P>
-
-See Image classification below. </P>
-
-<H4>Thumbnail Compares</H4>
-
-You have a program create (in memory) lots of small thumbnails (say 64x64
-pixels) of images to compare looking for duplicates, which you proceed to do
-by direct comparison. </P>
-
-It is typically the first thing that people (myself included) attempt to do,
-and in fact this is the technique most image comparing programs (such as photo
-handling software) does. </P>
-
-In fact this works well and does find images that exactly match. Also with a
-little blur, and loosing of the difference threshold, it can even find images
-that have had been been slightly cropped, and resized </P>
-
-However attempting to store in memory 10,000 such thumbnails will often cause
-a normal computer to start thrashing, becoming very slow. Alternatively
-storing all those thumbnails (unless the program does this for user viewing
-reasons) uses a lot of disk space. </P>
-
-One method of improving the disk thrashing problem, is to only have a smaller
-number of images in memory.  That is, by comparing images in groups, rather
-than one image to all other images.   A natural grouping is by directory, and
-comparing each directory of images with other directories of images. </P>
-
-In fact this is rather good, as images tend to be grouped together, and this
-group of images will often match a similar group.  Outputting matching images
-by directory pairs, is thus a bonus. </P>
-
-Also how acceptably similar two images are depends on their image type.
-Comparing two line drawings needs to have very small 'threshold' to discount
-images that different, while comparing images with large areas of color often
-needs a much larger threshold to catch similar images that were cropped. </P>
-
-Real world images have a bigger problem in that a texture can produce a very
-serious additive difference between images that has a very slight offset.
-Because of this you may need to simply such images, into general areas of
-color, either by using median filters, blurring, color reduction, or color
-segmentation.  After such a process a real world image, generally can be
-compares in a similar way to cartoons. </P>
-
-
-<H4>Image Metrics</H4>
-
-Create a small metric for each image is a  linear ordered  (O) operation.
-While comparing all images with all other images is a squared ordered (O^2)
-operation. </P>
-
-A metric is not ment to actually find matching images, but group similar
-(likely matching) images in such a way that you can do a more intensive
-comparison on smaller groups. As such any metric comparison should be lenient,
-and accept images that have a low probably (but still a probably) of a match.
-But it should not so lenient as to include too many miss-matches. </P>
-
-Also you may like to consider multiple metrics, as some metrics may match up
-images that another metric may 'just miss' as they fall in different
-neighbouring regions (threshold miss-match). </P>
-
-<!--
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+          </div>The generates a hash string much like MD5 and SHA256 do. However unlike the latter, it uses the actual image data to generate the signiture, not the images metadata. Thus, if you have two copies of the same picture but with different creation/modification timestamps, you should get same signature for both files, whereas MD5 and SHA256 will produce two signatures even though the image itself is the same. WARNING: reading and writing a JPEG image will generate different image data and thus a different signature. This is simply due to the lossy compression JPEG image format uses.
+          <h4>Direct Comparison</h4>You can directly compare two images (using the "<code>magick compare</code>" program) if they are the same size, to see how well they match. (See above) This is very slow, and in my experience not very useful when used against a full sized image, because it is so slow. However it is probably the best way to get an idea of just how similar two images are.
+          <h4>Image Classification</h4>In my attempts to compare images I have found that Color, Cartoon-like, and Sketches all compare very differently to each other. Line drawings and gray-scale images especially tends to have smaller differences that color images, with just about every comparison method. Basically as the colors are all in a line any color metric tends to place such images 3 times closer together (1 dimentional colorspace verses a 3 dimentional colorspace) Basically this means that separating your images into at least these two groups can be a very important first step in any serious attempt at finding duplicate or very similar images. Other major classifications or image types can also make comparing images easier, just by reducing the number of images your are comparing against. See Image classification below.
+          <h4>Thumbnail Compares</h4>You have a program create (in memory) lots of small thumbnails (say 64x64 pixels) of images to compare looking for duplicates, which you proceed to do by direct comparison. It is typically the first thing that people (myself included) attempt to do, and in fact this is the technique most image comparing programs (such as photo handling software) does. In fact this works well and does find images that exactly match. Also with a little blur, and loosing of the difference threshold, it can even find images that have had been been slightly cropped, and resized However attempting to store in memory 10,000 such thumbnails will often cause a normal computer to start thrashing, becoming very slow. Alternatively storing all those thumbnails (unless the program does this for user viewing reasons) uses a lot of disk space. One method of improving the disk thrashing problem, is to only have a smaller number of images in memory. That is, by comparing images in groups, rather than one image to all other images. A natural grouping is by directory, and comparing each directory of images with other directories of images. In fact this is rather good, as images tend to be grouped together, and this group of images will often match a similar group. Outputting matching images by directory pairs, is thus a bonus. Also how acceptably similar two images are depends on their image type. Comparing two line drawings needs to have very small 'threshold' to discount images that different, while comparing images with large areas of color often needs a much larger threshold to catch similar images that were cropped. Real world images have a bigger problem in that a texture can produce a very serious additive difference between images that has a very slight offset. Because of this you may need to simply such images, into general areas of color, either by using median filters, blurring, color reduction, or color segmentation. After such a process a real world image, generally can be compares in a similar way to cartoons.
+          <h4>Image Metrics</h4>Create a small metric for each image is a linear ordered (O) operation. While comparing all images with all other images is a squared ordered (O^2) operation. A metric is not ment to actually find matching images, but group similar (likely matching) images in such a way that you can do a more intensive comparison on smaller groups. As such any metric comparison should be lenient, and accept images that have a low probably (but still a probably) of a match. But it should not so lenient as to include too many miss-matches. Also you may like to consider multiple metrics, as some metrics may match up images that another metric may 'just miss' as they fall in different neighbouring regions (threshold miss-match). <!--
 Also see Poly-Representation in Image Processing for a
 more holistic view of using multiple image metrics simultaneously.
 -->
-
-In the next section (<A HREF="#metrics" >Metrics</A>) is a number of different
-IM generated metrics I have experimented with, or theorized about, including:
-average color, predominant color, foreground background, edge colors, matrix
-of colors, etc.</P>
-
-Günter Bachelier, has also reported the possibilities of using more exotic
-metrics for image comparison, such as: Fourier descriptors, fractal
-dimensions, convex areas, major/minor axis length and angles, roundness,
-convexity, curl, solidity, shape variances, direction, Euler numbers, boundary
-descriptors, curvature, bending energy, total absolute curvature, areas,
-geometric centrum, center of mass, compactness, eccentricity, moments about
-center, etc, etc. </P>
-
-My current effort is in generating and using a simple 3x3 matrix of color
-averages to represent the image (See <A HREF="#metric_color_matrix" >Color
-Matrix Metric</A> below).  As these are generated (or requested) the metric is
-cached (with other file info) into special files in each directory.  This way
-I only need to re-generate a particular metric when and if no cached metric is
-available, or the image changed. </P>
-
-
-<H4>Similarity or Distance</H4>
-
-The metrics of two images (or the actual images) can be compared using
-a number of different methods, generally producing a single distance measure
-or 'similarity metric' that can be used to cluster 'similar' images together.
-</P>
-
-<UL>
-<LI>Direct Threshold, or Maximum Difference, (Chebyshev Distance) <BR>
-    Just compare images by the largest difference in any one metric. <BR>
-    The threshold will produce a hyper-cube of similar images in the
-    multi-dimensional metric space.  Of course the image difference is only
-    based on one metric and not over all metrics.  </P>
-
-<LI>Average Difference (Mean Distance, Averaged Manhattan Distance) <BR>
-    Sum all the differences and optionally divided by the number of metrics.
-    <BR> This is also known as the Manhattan Distance between two metrics, as
-    is is equivalent to the distance you need to cover to travel in a city
-    grid.  All metrics contribute equally, resulting in things appearing
-    'closer' than you expect.  In space a threshold of this metric will
-    produce a diamond like shape. </P>
-
-<LI>Euclidean (Pythagorean) Difference <BR>
-    Or the direct vector distance between the metrics in metric space. <BR>
-    The value tends to be larger when more metrics are involved. However,
-    one metric producing a big difference, tends to contribute more than the
-    other metrics.  A threshold produces a spherical volume in metric space.
-    </P>
-
-<LI>Mathematical Error/Data Fit  or (Moment of Inertia???) <BR>
-    Sum all squares of all differences, then get the square root <BR>
-    This is more typically used to calculate how close a mathematically curve
-    fits a specific set of data, but can be used to compare image metrics too.
-    <BR>This is seems to provide the best non-vector distance measure. </P>
-
-<LI>Vector Angle <BR>
-    Find the angle between the two lines from the center of the vector space
-    created by the images metric.   This should remove any effect of contrast
-    or image enhancements that may have been applied to the two images. <BR>
-    <I>Yet to be tested</I></P>
-
-<LI>Vector Distance <BR>
-    For images that are line drawing or greyscale images, where all the
-    individual color vectors in a metric are in the same direction, the
-    relative distances of the metrics from the average color of the image is
-    probably more important.  Normalizing the distances relative to the
-    largest distance may reduce the effect of contrast. <BR> That is, this is
-    a line drawing image, comparison method. <BR> <I>Yet to be tested</I></P>
-
-<LI>Cluster Analysis <BR>
-    All the metrics are plotted and grouped into similar clusters within the
-    multi-dimensional space. A good clustering package may even be able to
-    discover and discount metrics that produce no clustering. <BR>
-    <I>Yet to be tested</I></P>
-</UL>
-
-At the moment I am finding that the "Mathematical Error" technique seems to
-work well for both gray-scale and color metrics, using a simple 3x3 averaged
-"<A HREF="#metric_color_matrix" >Color Matrix Metric</A>" (see below). </P>
-
-
-<A NAME="human_verify" ></A>
-<H4>Human Verification</H4>
-
-After the computer has finished with its attempts to find matching images,
-it is then up to the user to actually verify that the images match. </P>
-
-Presenting matches to the user can also be a difficult task, as they will
-probably want the ability to... <UL>
-<LI> See the images side-by-side
-<LI> Flick very very quickly between two images, at their original size,
-     and optionally a common 'scaled' size.
-<LI> Flick between, or overlay, differently scaled and translated images.
-     to try to match up the images.
-<LI> See other images in the same directory (source) or prehaps the same
-     cluster (other near matches) as the matching image, so as to deal with
-     a whole group rather than each image individually.
-<LI> Rename, Move, Replace, Delete, Copy the Images between the two (or more)
-     directories, to sort out the images, and reject others.
-<LI> and so on...
-</UL>.
-
-Currently I group matches into sets and use a combination of programs to
-handle them under the users control.  These programs include IM's
-"<code>magick display</code>" and "<code>magick montage</code>", as well as image viewers
-"<CODE>XV</CODE>" and "<CODE>GQview</CODE>". </P>
-
-However I am open to other suggestions of programs that can open two or more
-directories simultaneously, and display collections or image groups from
-multiple directories. Remote or control by other programs or scripts can be
-vital, as it allows the image groups to be setup and presented in the best way
-for the user to look at and handle. </P>
-
-No program has yet met my needs. </P>
-
-For example "<CODE>gqview</CODE>" has collections, and a single directory
-view, but does not allow multiple directory views, or remote / command line
-control of the presentation.  However the collections do not show what
-directory each image is from, or flip the single directory view to some other
-directory. It also has no remote program control. </P>
-
-On the other hand the very old "<CODE>xv</CODE>" does allow multiple directory
-views (its using multiple 'visual schnauzer' windows), and a collection list
-in its control window, but only one image can be viewed at a time, and only
-one directory can be opened and positioned from its command line.  Of course
-it also has no remote control.  </P>
-
-These are the best human verification programs I have found, which I use a
-script to setup and launch for each image group, matching pairs, or all group
-matched images.  But none are very satisfactory. </P>
-
-A light table and associated software seems to me to be the better method of
-sorting out images, but for that you need larger touch sensitive screeens, and
-there in lies great expense. </P>
-
-
-<H4>Cross-type Image Comparison</H4>
-
-One of the harder things I would like to do is find images that were created
-from another image.   For example, I would like to match up a line drawing
-that someone else has colored in, or painted, to produce cartoon or even ultra
-realistic images. A background may also have been added. </P>
-
-These things are very difficult and my experiments with edge detection
-techniques have so far been inconclusive. </P>
-
-Finding the right metric in this is the key, as humans can make the
-'similarity' connection much better, but you still have to find possible
-matches to present to the user. </P>
-
-
-<H4>Summary of Finding Duplicate Images</H4>
-
-In summary, my current procedure of finding and handling duplicate images is
-a pipeline of programs to find and sort out 'similar' images.
-<PRE>
+          In the next section (<a href="#metrics">Metrics</a>) is a number of different IM generated metrics I have experimented with, or theorized about, including: average color, predominant color, foreground background, edge colors, matrix of colors, etc.Günter Bachelier, has also reported the possibilities of using more exotic metrics for image comparison, such as: Fourier descriptors, fractal dimensions, convex areas, major/minor axis length and angles, roundness, convexity, curl, solidity, shape variances, direction, Euler numbers, boundary descriptors, curvature, bending energy, total absolute curvature, areas, geometric centrum, center of mass, compactness, eccentricity, moments about center, etc, etc. My current effort is in generating and using a simple 3x3 matrix of color averages to represent the image (See <a href="#metric_color_matrix">Color Matrix Metric</a> below). As these are generated (or requested) the metric is cached (with other file info) into special files in each directory. This way I only need to re-generate a particular metric when and if no cached metric is available, or the image changed.
+          <h4>Similarity or Distance</h4>The metrics of two images (or the actual images) can be compared using a number of different methods, generally producing a single distance measure or 'similarity metric' that can be used to cluster 'similar' images together.
+          <ul>
+            <li>Direct Threshold, or Maximum Difference, (Chebyshev Distance)<br>
+            Just compare images by the largest difference in any one metric.<br>
+            The threshold will produce a hyper-cube of similar images in the multi-dimensional metric space. Of course the image difference is only based on one metric and not over all metrics.</li>
+            <li>Average Difference (Mean Distance, Averaged Manhattan Distance)<br>
+            Sum all the differences and optionally divided by the number of metrics.<br>
+            This is also known as the Manhattan Distance between two metrics, as is is equivalent to the distance you need to cover to travel in a city grid. All metrics contribute equally, resulting in things appearing 'closer' than you expect. In space a threshold of this metric will produce a diamond like shape.</li>
+            <li>Euclidean (Pythagorean) Difference<br>
+            Or the direct vector distance between the metrics in metric space.<br>
+            The value tends to be larger when more metrics are involved. However, one metric producing a big difference, tends to contribute more than the other metrics. A threshold produces a spherical volume in metric space.</li>
+            <li>Mathematical Error/Data Fit or (Moment of Inertia???)<br>
+            Sum all squares of all differences, then get the square root<br>
+            This is more typically used to calculate how close a mathematically curve fits a specific set of data, but can be used to compare image metrics too.<br>
+            This is seems to provide the best non-vector distance measure.</li>
+            <li>Vector Angle<br>
+            Find the angle between the two lines from the center of the vector space created by the images metric. This should remove any effect of contrast or image enhancements that may have been applied to the two images.<br>
+            <i>Yet to be tested</i></li>
+            <li>Vector Distance<br>
+            For images that are line drawing or greyscale images, where all the individual color vectors in a metric are in the same direction, the relative distances of the metrics from the average color of the image is probably more important. Normalizing the distances relative to the largest distance may reduce the effect of contrast.<br>
+            That is, this is a line drawing image, comparison method.<br>
+            <i>Yet to be tested</i></li>
+            <li>Cluster Analysis<br>
+            All the metrics are plotted and grouped into similar clusters within the multi-dimensional space. A good clustering package may even be able to discover and discount metrics that produce no clustering.<br>
+            <i>Yet to be tested</i></li>
+          </ul>At the moment I am finding that the "Mathematical Error" technique seems to work well for both gray-scale and color metrics, using a simple 3x3 averaged "<a href="#metric_color_matrix">Color Matrix Metric</a>" (see below). <a name="human_verify" id="human_verify"></a>
+          <h4>Human Verification</h4>After the computer has finished with its attempts to find matching images, it is then up to the user to actually verify that the images match. Presenting matches to the user can also be a difficult task, as they will probably want the ability to...
+          <ul>
+            <li>See the images side-by-side</li>
+            <li>Flick very very quickly between two images, at their original size, and optionally a common 'scaled' size.</li>
+            <li>Flick between, or overlay, differently scaled and translated images. to try to match up the images.</li>
+            <li>See other images in the same directory (source) or prehaps the same cluster (other near matches) as the matching image, so as to deal with a whole group rather than each image individually.</li>
+            <li>Rename, Move, Replace, Delete, Copy the Images between the two (or more) directories, to sort out the images, and reject others.</li>
+            <li>and so on...</li>
+          </ul>. Currently I group matches into sets and use a combination of programs to handle them under the users control. These programs include IM's "<code>magick display</code>" and "<code>magick montage</code>", as well as image viewers "<code>XV</code>" and "<code>GQview</code>". However I am open to other suggestions of programs that can open two or more directories simultaneously, and display collections or image groups from multiple directories. Remote or control by other programs or scripts can be vital, as it allows the image groups to be setup and presented in the best way for the user to look at and handle. No program has yet met my needs. For example "<code>gqview</code>" has collections, and a single directory view, but does not allow multiple directory views, or remote / command line control of the presentation. However the collections do not show what directory each image is from, or flip the single directory view to some other directory. It also has no remote program control. On the other hand the very old "<code>xv</code>" does allow multiple directory views (its using multiple 'visual schnauzer' windows), and a collection list in its control window, but only one image can be viewed at a time, and only one directory can be opened and positioned from its command line. Of course it also has no remote control. These are the best human verification programs I have found, which I use a script to setup and launch for each image group, matching pairs, or all group matched images. But none are very satisfactory. A light table and associated software seems to me to be the better method of sorting out images, but for that you need larger touch sensitive screeens, and there in lies great expense.
+          <h4>Cross-type Image Comparison</h4>One of the harder things I would like to do is find images that were created from another image. For example, I would like to match up a line drawing that someone else has colored in, or painted, to produce cartoon or even ultra realistic images. A background may also have been added. These things are very difficult and my experiments with edge detection techniques have so far been inconclusive. Finding the right metric in this is the key, as humans can make the 'similarity' connection much better, but you still have to find possible matches to present to the user.
+          <h4>Summary of Finding Duplicate Images</h4>In summary, my current procedure of finding and handling duplicate images is a pipeline of programs to find and sort out 'similar' images.
+          <pre>
    Generate/Cache  Image Types and Metrics
-     -> Compare metrics and cluster images.
-       -> compare images in cluster for matches
-         -> group into sets of matching images (by source directory)
-           -> human verification
-</PRE>
-
-As you can see I am looking a highly staged approach. </P>
-
-Mail me your ideas!!! </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="type_general"></A>
-<H2>Sorting Images by Type</H2>
-
-Determining what type of image is important as most methods of comparing
-images only work for a specific type of image.  It is no good comparing
-an image of text against an artists sketch, for example.  Nor is it useful to
-use a color image comparison method on image which is almost pure white
-(sketch). </P>
-
-Usually the first thing to do when comparing images is to determine what type
-of image, or 'colorspace' the image uses.  Basic classifications of images
-can include... <UL>
-<LI> Black and white line drawing or text image (almost all one color)
-<LI> Images consisting of two basic colors - equally (pattern images?).
-<LI> Gray-scale artists drawings (lots of shades)
-<LI> Linear Color images (colors form a gradient but not from black and white)
-<LI> Cartoon like color image with large areas of solid colors.
-<LI> A real life image with areas of shaded colors
-<LI> Image contains some annotated text or logo overlay. (a single spike of
-     color)
-</UL></P>
-
-After you have basic categories you can also attempt to sort images, using
-various image metrics, such as... <UL>
-<LI> Average color of the whole image
-<LI> predominant color in image
-<LI> Foreground/Background color of image.
-</UL></P>
-
-What is worse, is that JPEG, or resized images are often also color distorted,
-making such classifications much more difficult as colors will not be quite as
-they should be. Greys will not be pure greys, and lines may not sharp and
-clear. </P>
-
-An ongoing long term discussion on sorting images by type is on the IM Users
-Forum...  <A HREF="../forum_link.cgi?f=1&t=19580" >How to check image color or
-black and white</A>. </P>
-
-
-<A NAME="type_greyscale"></A>
-<H3>Gray-scale Images</H3>
-
-The simplest way to check if an image is greyscale is to look at the
-color saturation levels of the image. That is, easilly done by converting the
-image into a 'Hue' image colorspace and getting the average and maximum values
-of the color (typically green) channel.  For example..
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><PRE><CODE EXECUTE NOIMAGE OUT=greyscale_test.txt>
+     -&gt; Compare metrics and cluster images.
+       -&gt; compare images in cluster for matches
+         -&gt; group into sets of matching images (by source directory)
+           -&gt; human verification
+</pre>As you can see I am looking a highly staged approach. Mail me your ideas!!!
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="type_general" id="type_general"></a>
+          <h2>Sorting Images by Type</h2>Determining what type of image is important as most methods of comparing images only work for a specific type of image. It is no good comparing an image of text against an artists sketch, for example. Nor is it useful to use a color image comparison method on image which is almost pure white (sketch). Usually the first thing to do when comparing images is to determine what type of image, or 'colorspace' the image uses. Basic classifications of images can include...
+          <ul>
+            <li>Black and white line drawing or text image (almost all one color)</li>
+            <li>Images consisting of two basic colors - equally (pattern images?).</li>
+            <li>Gray-scale artists drawings (lots of shades)</li>
+            <li>Linear Color images (colors form a gradient but not from black and white)</li>
+            <li>Cartoon like color image with large areas of solid colors.</li>
+            <li>A real life image with areas of shaded colors</li>
+            <li>Image contains some annotated text or logo overlay. (a single spike of color)</li>
+          </ul>After you have basic categories you can also attempt to sort images, using various image metrics, such as...
+          <ul>
+            <li>Average color of the whole image</li>
+            <li>predominant color in image</li>
+            <li>Foreground/Background color of image.</li>
+          </ul>What is worse, is that JPEG, or resized images are often also color distorted, making such classifications much more difficult as colors will not be quite as they should be. Greys will not be pure greys, and lines may not sharp and clear. An ongoing long term discussion on sorting images by type is on the IM Users Forum... <a href="../forum_link.cgi?f=1&amp;t=19580">How to check image color or black and white</a>. <a name="type_greyscale" id="type_greyscale"></a>
+          <h3>Gray-scale Images</h3>The simplest way to check if an image is greyscale is to look at the color saturation levels of the image. That is, easilly done by converting the image into a 'Hue' image colorspace and getting the average and maximum values of the color (typically green) channel. For example..
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre><code execute="" noimage="" out="greyscale_test.txt">
   magick rose: granite: -colorspace HCL \
           -format '%M  avg=%[fx:mean.g] peak=%[fx:maxima.g]\n' info:
-</samp></pre></TD></TR></TABLE>
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD>
-  <A HREF="greyscale_test.txt"
-     ><IMG SRC="greyscale_test.txt.gif"
-           ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
-</TD></TR></TABLE>
-</DIV></P>
-
-The numbers are normalized to a 0 to 1 range.  As you can see the "rose" is
-very colorful (30% average), with a strong peak (approaching 1) The
-"granite" image however has a very low saturation (2% or so) and low peak
-value. Though it is not pure greyscale it is very close to it.
-</P>
-
-A low average and high peak will indicate small patches of strong color.
-Thresholding the same channel can generate a mask of the colorful areas of the
-image.  </P>
-
-PROBLEM:  The above does not find images that are linear in color.  That is
-images which only contain colors that form a linear color gradient, such as
-a yellowed (sepiatone) photos, or blue prints.  These are essentially
-colorful greyscale images.  See next image type. </P>
-
-
-<A NAME="type_linear"></A>
-<H3>Is Image Linear Color</H3>
-
-Another technique is to do a direct 'best fit' of a 3 dimensional line to all
-the colors (or a simplified Color Matrix of metrics) in the image.  The error
-of the fit (generally average of the squares of the errors) gives you a very
-good indication about how well the image fits to that line.  </P>
-
-The fitting of a line to the 3 dimensional image generally involves some
-vector mathematics.  The result will not only tell you if the image uses
-a near 'linear' set of colors, but works for ANY scale of colors, not just
-light to dark, but also off-grey lines on yellow paper.  </P>
-
-The result can also be used to magick the image into a simpler 'grey scale'
-image, (or just magick a set of color metrics to grey-scale metrics) for
-simpler comparisons, and better match finding.  </P>
-
-My trial test program does not even use the full image to do this
-determination, but works using a simple <A HREF="#metric_cmatrix" >Color
-Matrix Metric</A> below of 9 colors (27 values) to represent the image).  </P>
-
-However be warned that this test generally does not differentiate an unshaded
-line drawings very well.  Such images are almost entirely a single background
-color (typically white) and as such my not show any form of linear gradient of
-colors. They should be separated out first using a different test (see next,
-it is actually much easier). </P>
-
-Mail me if interested, and let me know what you have tried.  </P>
-
-
-<A NAME="type_bw"></A>
-<H3>Pure Black and White images</H3>
-
-To see if an image is near pure black and white image, with little in the way
-any color or even greys (due to anti-aliasing), we can make a novel use of the
-"<CODE><A HREF="../option_link.cgi?solarize" >-solarize</A></CODE>" option (See
-the IM example on <A HREF="../color_mods/#solarize" >Solarize</A>). </P>
-
-Applying this operation on any image results in any bright colors becoming
-dark color (being negated).  As such any near white colors will become near
-black colors.  From such an image a simple statistical analysis of the image
-will determine if the image is purely (or almost purely) black and white. </P>
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</code></pre>
+                </td>
+              </tr>
+            </table>
+            <table border="0" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <a href="greyscale_test.txt"><img src="greyscale_test.txt.gif" align="middle" vspace="0" hspace="0" border="0" alt="[IM Text]"></a>
+                </td>
+              </tr>
+            </table>
+          </div>The numbers are normalized to a 0 to 1 range. As you can see the "rose" is very colorful (30% average), with a strong peak (approaching 1) The "granite" image however has a very low saturation (2% or so) and low peak value. Though it is not pure greyscale it is very close to it. A low average and high peak will indicate small patches of strong color. Thresholding the same channel can generate a mask of the colorful areas of the image. PROBLEM: The above does not find images that are linear in color. That is images which only contain colors that form a linear color gradient, such as a yellowed (sepiatone) photos, or blue prints. These are essentially colorful greyscale images. See next image type. <a name="type_linear" id="type_linear"></a>
+          <h3>Is Image Linear Color</h3>Another technique is to do a direct 'best fit' of a 3 dimensional line to all the colors (or a simplified Color Matrix of metrics) in the image. The error of the fit (generally average of the squares of the errors) gives you a very good indication about how well the image fits to that line. The fitting of a line to the 3 dimensional image generally involves some vector mathematics. The result will not only tell you if the image uses a near 'linear' set of colors, but works for ANY scale of colors, not just light to dark, but also off-grey lines on yellow paper. The result can also be used to magick the image into a simpler 'grey scale' image, (or just magick a set of color metrics to grey-scale metrics) for simpler comparisons, and better match finding. My trial test program does not even use the full image to do this determination, but works using a simple <a href="#metric_cmatrix">Color Matrix Metric</a> below of 9 colors (27 values) to represent the image). However be warned that this test generally does not differentiate an unshaded line drawings very well. Such images are almost entirely a single background color (typically white) and as such my not show any form of linear gradient of colors. They should be separated out first using a different test (see next, it is actually much easier). Mail me if interested, and let me know what you have tried. <a name="type_bw" id="type_bw"></a>
+          <h3>Pure Black and White images</h3>To see if an image is near pure black and white image, with little in the way any color or even greys (due to anti-aliasing), we can make a novel use of the "<code><a href="../option_link.cgi?solarize">-solarize</a></code>" option (See the IM example on <a href="../color_mods/#solarize">Solarize</a>). Applying this operation on any image results in any bright colors becoming dark color (being negated). As such any near white colors will become near black colors. From such an image a simple statistical analysis of the image will determine if the image is purely (or almost purely) black and white.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
    magick wmark_dragon.jpg  -solarize 50% -colorspace Gray  wmark_bw_test.png
    magick identify -verbose -alpha off wmark_bw_test.png | \
-       sed -n '/Histogram/q; /Colormap/q; /statistics:/,$ p'  > wmark_stats.txt
-</samp></pre></TD></TR></TABLE>
-<TABLE><TR><TD>
-   <A HREF="wmark_dragon.jpg"
-      ><IMG SRC="wmark_dragon.jpg"   WIDTH=122 HEIGHT=94
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-   <A HREF="wmark_bw_test.png"
-      ><IMG SRC="wmark_bw_test.png"   WIDTH=122 HEIGHT=94
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-</TD><TD>
-  <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
-    <TR><TD>
-      <A HREF="wmark_stats.txt"
-         ><IMG SRC="wmark_stats.txt.gif"
-               ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
-  </TD></TR></TABLE>
-</TD></TD></TABLE>
-</DIV></P>
-
-If you look at the statistics above you will see that the color 'mean' is very
-close to pure black ('<CODE>0</CODE>'), while the 'standard deviation' is also
-very small, but larger than the 'mean'. Thus this image must be mostly pure
-black and white, with very few colors or mid-tone greys. </P>
-
-For general gray-scale and color images, the 'mean' will be much larger, and
-generally the 'standard deviation' smaller than the mean. When that happens it
-means the solarized image has very little near pure black in it.  That is, very
-few pure black or white colors are present. </P>
-
-Lets repeat this test using the built in granite image.
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+       sed -n '/Histogram/q; /Colormap/q; /statistics:/,$ p'  &gt; wmark_stats.txt
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td>
+                  <a href="wmark_dragon.jpg"><img src="wmark_dragon.jpg" width="122" height="94" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="wmark_bw_test.png"><img src="wmark_bw_test.png" width="122" height="94" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;">
+                </td>
+                <td>
+                  <table border="0" cellspacing="0" cellpadding="5" bgcolor="#F8F8F8">
+                    <tr>
+                      <td>
+                        <a href="wmark_stats.txt"><img src="wmark_stats.txt.gif" align="middle" vspace="0" hspace="0" border="0" alt="[IM Text]"></a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>If you look at the statistics above you will see that the color 'mean' is very close to pure black ('<code>0</code>'), while the 'standard deviation' is also very small, but larger than the 'mean'. Thus this image must be mostly pure black and white, with very few colors or mid-tone greys. For general gray-scale and color images, the 'mean' will be much larger, and generally the 'standard deviation' smaller than the mean. When that happens it means the solarized image has very little near pure black in it. That is, very few pure black or white colors are present. Lets repeat this test using the built in granite image.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
    magick granite: granite.jpg
    magick granite.jpg -solarize 50% -colorspace Gray  granite_bw_test.png
    magick identify -verbose -alpha off granite_bw_test.png | \
-     sed -n '/Histogram/q; /Colormap/q; /statistics:/,$ p' > granite_stats.txt
-</samp></pre></TD></TR></TABLE>
-<TABLE><TR><TD>
-   <A HREF="granite.jpg"
-      ><IMG SRC="granite.jpg"   WIDTH=128 HEIGHT=128
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-   <A HREF="granite_bw_test.png"
-      ><IMG SRC="granite_bw_test.png"   WIDTH=128 HEIGHT=128
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-  <IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-</TD><TD>
-  <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5 bgcolor="#f8f8f8">
-    <TR><TD>
-      <A HREF="granite_stats.txt"
-         ><IMG SRC="granite_stats.txt.gif"
-               ALIGN=middle VSPACE=0 HSPACE=0 BORDER=0 ALT="[IM Text]"></A>
-  </TD></TR></TABLE>
-</TD></TD></TABLE>
-</DIV></P>
-
-Note how the 'mean' is now much larger, toward the middle of the color range,
-with a 'standard deviation' that is much smaller than the size of the 'mean'.
-</P>
-
-As of IM v6.4.8-3 you will also see two other statistic values that can be
-helpful in determining the type of image.  Both '<A
-HREF="http://en.wikipedia.org/wiki/Kurtosis" >Kurtosis</A>' and '<A
-HREF="http://en.wikipedia.org/wiki/Skewness" >Skewness</A>', are is
-relatively large (and positive) in the first Black and White image also
-reflects the fact that very few grays are involved when compared to a Gray
-image.  However 'mean' vs 'standard divination' is still probably the better
-indicator for comparison purposes.  </P>
-
-Note that this comparison does not differentiate between 'black on white', or
-'white on black' but once you know it is not really a gray-scale image
-a simple check of the images normal mean will tell you what the background
-color really is.  </P>
-
-<A NAME="type_spot_color"></A>
-<H3>Spot Colored Images</H3>
-
-These images fail the greyscale test above, but are still, black and white but
-with a small area or patch of color in it. </P>
-
-Small patches of color could easily be swamped by the overall average of
-a large image, can could be mis-typed as being greyscale.  We are not
-interested in an images with just say a single pixel of color, which is likely
-to be a bit error, or a speckling of such pixels across the image. But say
-an image with a color arrow or a small colored object.  In other words
-a concentrated spot of color. </P>
-
-In a discussion on the IM Forum <A HREF="../forum_link.cgi?f=1&t=29781" >False
-positive for greyscale images using the "saturation test"</A> It was thought
-to break up images into smaller sections, and then look for a high saturation
-in any one of those areas. This lead to the following method. </P>
-
-<UL>
-<LI>magick image into a colorspace with a Saturation or Chroma channel
-<LI>Resize Image smaller by a 1:50 (2%) ratio (EG a 'spot size' for color)
-<LI>Threshold on the get the maximum saturation/chroma value
-</UL></P>
-
-Individual or very small spots will be removed, but a larger color spot will
-have at least one colorful pixel in the resized image. </P>
-
-
-<A NAME="type_midtone"></A>
-<H3>Midtone Colored Images</H3>
-
-<A HREF="../images/midtone_image.jpg"
-  ><IMG SRC="../images/midtone_image.jpg"       WIDTH=160 HEIGHT=233
-          ALIGN=right VSPACE=0 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-
-Images which are sepia-toned, or with midtone grays colored to some highlight
-color (for example the image to the right) can prove to be much more difficult
-to distinguish.  Generating such images is easy, as shown in <A
-HREF="../color_mods/#tint" >Midtone Color Tinting</A>, though are not very
-common. </P>
-
-The colors still form a gradient (line) of colors in the color space, but that
-gradient falls along a curved path, typically a parabola of some kind, in a
-plane.  But distinguishing such images can be very difficult. </P>
-
-One technique is to get a standard deviation of any hues, that does not have
-an extremely small saturation.  All hues in a midtoned color image should be
-very similar even if there are not many of them.  This technique was
-presented in the specific post in <A
-HREF="../forum_link.cgi?f=1&t=19580&p=135373" >How to check image color or
-back and white</A>. </P>
-
-Just a reminder that the Hue is a cyclic value, and wraps around the the
-color 'red'.  To test properly you may have to do it twice, with the hues
-shifted by 180 degrees.  Also Hue has no real meaning for any color with
-a very low saturation (grey), so any such color should be ignored in
-testing the standard deviation of hues. </P>
-
-
-<A NAME="type_lines"></A>
-<H3>Text vs Line Drawing</H3>
-
-If you have an image that is almost purely a single color (typically white)
-then you can try to see if the image contents could be classified as either
-text, or a line drawing.  </P>
-
-Text will have lots of small disconnected objects, generally grouped into
-horizontal lines.  On the other hand, line drawings should have everything
-mostly connected together as a whole, and involving many different angles.
-</P>
-
-Note that cartoon-like color images could also be turned into a line drawing
-for simpler image comparing, so a line drawing comparison method would be a
-useful thing to have.  Anyone? </P>
-
-To find out more about the text, a number of techniques has been
-discussed in the IM forums, <A HREF="../forum_link.cgi?f=1&t=21263"
->Check if image contains text</A>. </P>
-
-
-<A NAME="type_reallife"></A>
-<H3>Real Life vs Cartoon Like</H3>
-
-Basically cartoons have very specific blocks of color with sharp bordered
-regions, often made sharper by using a separating black line. They also
-usually have a minimal gradient or shading effects.  Real life images however
-have lots of soft edging effects, color gradients, and textures, and use lots
-of different colors. </P>
-
-This is of course not always true. A real life image could have a very cartoon
-like quality about it, especially a very high contrast is used, and some
-modern cartoons are so life-like that it can be difficult to classify them as
-cartoons. </P>
-
-Generally the major difference between a real life image and a cartoon is
-textures and gradients.  As such to determine what type of image it is
-requires you to compare the image, to the same image with the fine scale
-texture removed.  A large difference means the image is more 'realistic' and
-'real world' like, rather than than 'cartoonish' or 'flat'. </P>
-
-Also remember a line drawing, artist sketch, and text can also be very cartoon
-like in style, but have such a fine texture and detail to it that the above
-could think of the image as real world.  As such line drawings and sketches
-should be separated out before hand. </P>
-
-<BR>
-
-Jim Van Zandt offers this solution...<UL>
-<LI>write out the color of every pixel
-<LI>sort by color
-<LI>write out the pixel count for every color
-<LI>sort by pixel count
-<LI>Work your way through the list until you have accounted for half the
-    pixels in the image.
-<LI>If #pixels >>> #colors then it's cartoon like.
-</UL></P>
-
-The initial section can be classed as histogram. See the "<CODE><A
-HREF="../files/#histogram" >histogram:</A></CODE>" examples. </P>
-
-<BR>
-
-<I>If you have created some sort of image classification scheme..  Even if
-only roughly, please let us know your results, so others (including myself)
-can benefit. </I> </P>
-
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="type_specific"></A>
-<H2>Handling Specific Image Types</H2>
-
-Here are notes and information on more specific image determination
-techniques. </P>
-
-<H3>Bad Scan or Printouts</H3>
-
-In the real world, things never work quit as perfectly as you would like.
-Scanners have broken sensors and printer drums have scratches.  Both of these
-problems generally result in scans and printouts containing long vertical
-lines. Determining if an image has these vertical lines is however fairly
-easy. </P>
-
-The idea is to average the pixels of all the rows in an image together.  Any
-'fault' will appear as a sharp blip in the final pixel row the number of which
-you can count using a 'threshold histogram' of the pixel row.
-
-<PRE>FUTURE -- image example needed for testing
+     sed -n '/Histogram/q; /Colormap/q; /statistics:/,$ p' &gt; granite_stats.txt
+</samp></pre>
+                </td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td>
+                  <a href="granite.jpg"><img src="granite.jpg" width="128" height="128" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="granite_bw_test.png"><img src="granite_bw_test.png" width="128" height="128" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;">
+                </td>
+                <td>
+                  <table border="0" cellspacing="0" cellpadding="5" bgcolor="#F8F8F8">
+                    <tr>
+                      <td>
+                        <a href="granite_stats.txt"><img src="granite_stats.txt.gif" align="middle" vspace="0" hspace="0" border="0" alt="[IM Text]"></a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>Note how the 'mean' is now much larger, toward the middle of the color range, with a 'standard deviation' that is much smaller than the size of the 'mean'. As of IM v6.4.8-3 you will also see two other statistic values that can be helpful in determining the type of image. Both '<a href="http://en.wikipedia.org/wiki/Kurtosis">Kurtosis</a>' and '<a href="http://en.wikipedia.org/wiki/Skewness">Skewness</a>', are is relatively large (and positive) in the first Black and White image also reflects the fact that very few grays are involved when compared to a Gray image. However 'mean' vs 'standard divination' is still probably the better indicator for comparison purposes. Note that this comparison does not differentiate between 'black on white', or 'white on black' but once you know it is not really a gray-scale image a simple check of the images normal mean will tell you what the background color really is. <a name="type_spot_color" id="type_spot_color"></a>
+          <h3>Spot Colored Images</h3>These images fail the greyscale test above, but are still, black and white but with a small area or patch of color in it. Small patches of color could easily be swamped by the overall average of a large image, can could be mis-typed as being greyscale. We are not interested in an images with just say a single pixel of color, which is likely to be a bit error, or a speckling of such pixels across the image. But say an image with a color arrow or a small colored object. In other words a concentrated spot of color. In a discussion on the IM Forum <a href="../forum_link.cgi?f=1&amp;t=29781">False positive for greyscale images using the "saturation test"</a> It was thought to break up images into smaller sections, and then look for a high saturation in any one of those areas. This lead to the following method.
+          <ul>
+            <li>magick image into a colorspace with a Saturation or Chroma channel</li>
+            <li>Resize Image smaller by a 1:50 (2%) ratio (EG a 'spot size' for color)</li>
+            <li>Threshold on the get the maximum saturation/chroma value</li>
+          </ul>Individual or very small spots will be removed, but a larger color spot will have at least one colorful pixel in the resized image. <a name="type_midtone" id="type_midtone"></a>
+          <h3>Midtone Colored Images</h3><a href="../images/midtone_image.jpg"><img src="../images/midtone_image.jpg" width="160" height="233" align="right" vspace="0" hspace="5" border="0" alt="[IM Output]"></a> Images which are sepia-toned, or with midtone grays colored to some highlight color (for example the image to the right) can prove to be much more difficult to distinguish. Generating such images is easy, as shown in <a href="../color_mods/#tint">Midtone Color Tinting</a>, though are not very common. The colors still form a gradient (line) of colors in the color space, but that gradient falls along a curved path, typically a parabola of some kind, in a plane. But distinguishing such images can be very difficult. One technique is to get a standard deviation of any hues, that does not have an extremely small saturation. All hues in a midtoned color image should be very similar even if there are not many of them. This technique was presented in the specific post in <a href="../forum_link.cgi?f=1&amp;t=19580&amp;p=135373">How to check image color or back and white</a>. Just a reminder that the Hue is a cyclic value, and wraps around the the color 'red'. To test properly you may have to do it twice, with the hues shifted by 180 degrees. Also Hue has no real meaning for any color with a very low saturation (grey), so any such color should be ignored in testing the standard deviation of hues. <a name="type_lines" id="type_lines"></a>
+          <h3>Text vs Line Drawing</h3>If you have an image that is almost purely a single color (typically white) then you can try to see if the image contents could be classified as either text, or a line drawing. Text will have lots of small disconnected objects, generally grouped into horizontal lines. On the other hand, line drawings should have everything mostly connected together as a whole, and involving many different angles. Note that cartoon-like color images could also be turned into a line drawing for simpler image comparing, so a line drawing comparison method would be a useful thing to have. Anyone? To find out more about the text, a number of techniques has been discussed in the IM forums, <a href="../forum_link.cgi?f=1&amp;t=21263">Check if image contains text</a>. <a name="type_reallife" id="type_reallife"></a>
+          <h3>Real Life vs Cartoon Like</h3>Basically cartoons have very specific blocks of color with sharp bordered regions, often made sharper by using a separating black line. They also usually have a minimal gradient or shading effects. Real life images however have lots of soft edging effects, color gradients, and textures, and use lots of different colors. This is of course not always true. A real life image could have a very cartoon like quality about it, especially a very high contrast is used, and some modern cartoons are so life-like that it can be difficult to classify them as cartoons. Generally the major difference between a real life image and a cartoon is textures and gradients. As such to determine what type of image it is requires you to compare the image, to the same image with the fine scale texture removed. A large difference means the image is more 'realistic' and 'real world' like, rather than than 'cartoonish' or 'flat'. Also remember a line drawing, artist sketch, and text can also be very cartoon like in style, but have such a fine texture and detail to it that the above could think of the image as real world. As such line drawings and sketches should be separated out before hand.<br>
+          Jim Van Zandt offers this solution...
+          <ul>
+            <li>write out the color of every pixel</li>
+            <li>sort by color</li>
+            <li>write out the pixel count for every color</li>
+            <li>sort by pixel count</li>
+            <li>Work your way through the list until you have accounted for half the pixels in the image.</li>
+            <li>If #pixels &gt;&gt;&gt; #colors then it's cartoon like.</li>
+          </ul>The initial section can be classed as histogram. See the "<code><a href="../files/#histogram">histogram:</a></code>" examples.<br>
+          <i>If you have created some sort of image classification scheme.. Even if only roughly, please let us know your results, so others (including myself) can benefit.</i>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="type_specific" id="type_specific"></a>
+          <h2>Handling Specific Image Types</h2>Here are notes and information on more specific image determination techniques.
+          <h3>Bad Scan or Printouts</h3>In the real world, things never work quit as perfectly as you would like. Scanners have broken sensors and printer drums have scratches. Both of these problems generally result in scans and printouts containing long vertical lines. Determining if an image has these vertical lines is however fairly easy. The idea is to average the pixels of all the rows in an image together. Any 'fault' will appear as a sharp blip in the final pixel row the number of which you can count using a 'threshold histogram' of the pixel row.
+          <pre>FUTURE -- image example needed for testing
     magick bad_printout.png -crop 0x1+0+0 -evaluate-sequence mean \
             -threshold 50% -format %c histogram:info:-
 
 faster method but needs image height (assumed to be 1024)
     magick bad_printout.png -scale 1024x1 \
             -threshold 50% -format %c histogram:info:-
-</PRE>
-
-When you have determined and removed such 'bad lines' from a fax, printout, or
-scan, you can then continue with your other tests without needing to worry
-about this sort of real world fault. </P>
-
-
-<H3>Blank Fax</H3>
-
-First you will need to "<CODE><A HREF="../option_link.cgi?shave"
->-shave</A></CODE>" off any headers and footers that a fax may have added to a
-page.  You can then either to a 'threshold histogram' (see previous)
-to see how many individual black pixels there are. </P>
-
-<PRE>FUTURE -- image example needed for testing
+</pre>When you have determined and removed such 'bad lines' from a fax, printout, or scan, you can then continue with your other tests without needing to worry about this sort of real world fault.
+          <h3>Blank Fax</h3>First you will need to "<code><a href="../option_link.cgi?shave">-shave</a></code>" off any headers and footers that a fax may have added to a page. You can then either to a 'threshold histogram' (see previous) to see how many individual black pixels there are.
+          <pre>FUTURE -- image example needed for testing
     magick blank_fax.png -threshold 50% -format %c histogram:info:-
-</PRE>
-
-Or you can do a <A HREF="../crop/#trim_blur" >Noisy Trim</A> to see if the
-image actually contains any more solid area or objects worthy of your
-attention.
-
-<PRE>FUTURE -- image example needed for testing</PRE>
-
-
-<H3>Spammed Images</H3>
-
-A spammed image will generally show a predominant pure color spike in the
-images color histogram.  A check on the color in the image will usually show
-it to be in one of the corners of the image. </P>
-
-However this will not work with cartoon like images. </P>
-
-
-<H3>EMail Spam Images</H3>
-
-These are images designed to get past the various spam filters.  Basically the
-text of the ad is hidden in an image using various colors and extra 'dirt' and
-other noise added to make it harder to detect.  And while these are difficult
-to distinguish from say a logo of a company email header, they are usually
-also much larger than the typical email logo.  </P>
-
-One discovery technique is to use a large median filter on the image. EMail
-spam text will generally disappear, while a logo or image will still remain
-very colorful. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="metrics"></A>
-<H2>Image Metrics, quickly finding images to compare</H2>
-
-A metric represents a type of 'finger print' to represent an image, in a very
-small amount of memory.  Similar images should result in a similar metric.
-</P>
-
-Note however that a metric is not designed to actually find matching images,
-but to try to discount images that are definitely not a match.  That is, a
-good metric will let you disregard most images from further comparisons, thus
-reduce the amount of time needed to search all the images. </P>
-
-
-<H3>Average Color of an image</H3>
-
-<PRE>
+</pre>Or you can do a <a href="../crop/#trim_blur">Noisy Trim</a> to see if the image actually contains any more solid area or objects worthy of your attention.
+          <pre>FUTURE -- image example needed for testing</pre>
+          <h3>Spammed Images</h3>A spammed image will generally show a predominant pure color spike in the images color histogram. A check on the color in the image will usually show it to be in one of the corners of the image. However this will not work with cartoon like images.
+          <h3>EMail Spam Images</h3>These are images designed to get past the various spam filters. Basically the text of the ad is hidden in an image using various colors and extra 'dirt' and other noise added to make it harder to detect. And while these are difficult to distinguish from say a logo of a company email header, they are usually also much larger than the typical email logo. One discovery technique is to use a large median filter on the image. EMail spam text will generally disappear, while a logo or image will still remain very colorful.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="metrics" id="metrics"></a>
+          <h2>Image Metrics, quickly finding images to compare</h2>A metric represents a type of 'finger print' to represent an image, in a very small amount of memory. Similar images should result in a similar metric. Note however that a metric is not designed to actually find matching images, but to try to discount images that are definitely not a match. That is, a good metric will let you disregard most images from further comparisons, thus reduce the amount of time needed to search all the images.
+          <h3>Average Color of an image</h3>
+          <pre>
 You can use -scale to get an average color of an image, however I also suggest
 you remove the outside borders of the image  to reduce the effect of
 any 'fluff' that may have been added around the image.
@@ -1767,478 +1141,102 @@ rather than an average, you can use -colors
 
     magick rose: -colors 1 -crop 1x1+0+0 -depth 8 -format '%[pixel:s]' info:-
     rgb(146,89,80)
-</PRE>
-
-This will generally match images that have been resized, lightly cropped,
-rotated, or translated.  But it will also match a lot of images that are
-not closely related. </P>
-
-The biggest problem is that this metric will generally disregard images that
-have been brightened, dimmed or changed the overall hue of the image. </P>
-
-Also while it is a great metric for color and real-world images, it is
-completely useless for images that are greyscale.  All such images generally
-get lumped together without any further clustering within the type. </P>
-
-This in turn shows why some initial classification of image types can be vital
-to good image sorting and matching. </P>
-
-
-<H3>Predominant Color of an image</H3>
-
-The predominant color of an image is a little different, instead of the
-average which merges the background colors with the foreground, you want to
-find the most common foreground color, and perhaps a percentage of how much of
-the image consists of that predominant color. </P>
-
-As such you cannot just take a histogram of an image, as the image may use a
-lot of individual shades of color rather than a specific color. </P>
-
-This can be done using the low level quantization function -segment, then
-taking a histogram.  This has an advantage over direct use of -colors as it
-does not attempt to merge distant (color-wise) clusters of colors, though the
-results may be harder to determine. </P>
-
-<PRE> FUTURE example </PRE>
-
-After which a histogram will given you the amount of each of the predominant
-colors. </P>
-
-However, usually the predominant color of a cartoon or line drawing is the
-background color of the image. So it is only really useful for real-life
-images. </P>
-
-On the other hand, you may be able to use to discover if an image has a true
-background, by comparing this to the images average border color. </P>
-
-Please note that a pictures predominant color is more likely to be more
-strongly influenced by the background color of the image, rather than the
-object of interest.  That is, usually in or near the center of the image. </P>
-
-
-<H3>Border Colors</H3>
-
-By repeatedly cropping off each of the four edges (2 to 3 pixels at most) of
-an image, and calculating the borders average color, you can determine if an
-image is framed, and to how deep.  Whether there is a definite background to
-the image. Or if there is some type of sky/land or close-up/distant color
-separation to the overall image. </P>
-
-By comparing the averaged side colors to the average central color of the
-image you can discover if the image is uniform without a central theme or
-subject, such as a photo of an empty landscape. </P>
-
-
-<A HREF="metric_histogram"></A>
-<H3>Histogram - General Color Matching</H3>
-
-For a metric concerning the types of colors to be found in an image, a
-histogram of one sort or another is used.  This is done by creating an array
-of 'color bins' and incrementing the count of each 'bin' as the colors are
-found. </P>
-
-Now I can't see you storing a large histogram for every image!  So you will
-either only store the most predominant colors in the histogram or you would
-use a much smaller number of bin's (with more pixels in each bin). </P>
-
-An ordinary histogram of 'color bins' does not really work very well. The
-reason is that each color will always fall into one bin.  That is, each pixel
-is added to each bin on an all or nothing bases without any regard to how near
-that color is an edge of a bin. This in turn does not make for a good metric.
-</P>
-
-One solution is to create a histogram that has overlapping bins.  That is
-every color (except maybe black or white) will fall into two color bins.
-Then later when you compare images a near color will match at least one of
-those bins. </P>
-
-Another alternative is to create the histogram by having each color contribute
-to each 'bin' according to how close it is to the center of the bin.  That is
-a color on the edge of one bin will actually share itself across two bins.
-This will generate a sort of fuzzy, or interpolated histogram, but one that
-would more accurately represent an image, especially when only a very small
-number of color 'bins' are used. </P>
-
-Also histograms are traditionally either just the gray scale component
-of an image or three separate RGB component. But this is not a very
-good representation. </P>
-
-You could try instead Hue, Saturation and Luminance Histograms to better
-represent the image. </P>
-
-Alternatively why limit yourself to a 1 dimensional histogram.  How about
-mapping the colors to a set a set of real colors across the whole color
-space!   That is, rather than binning just the 'red' value, why not count it in
-a 3-dimensional color bin (is what ever colorspace works best).   That would
-generate a histogram that would truly represent the colors found within an
-image.  </P>
-
-Such a 3-d histogram metric could be a simple array of say 8x8x8 or 2048 bins.
-That is, a 2Kbyte metric.   A color search would then locate the correct number
-of near by bins, and get an interpolated count of the nearby bins.  Which would
-represent the number of colors 'close' to that color within the image! </P>
-
-
-
-<H3>Foreground/background Color Separation</H3>
-
-Using -colors you can attempt to separate the image into foreground and
-background parts, by reducing the image to just two colors. </P>
-
-Using a -median filter first will remove the effect of minor details, and line
-edges and noise that may be in the image.  Of course that is not very good for
-mostly white sketch-like images.
-
-<PRE>  magick rose: -median 5 +dither -colors 2 \
-          -depth 8 -format %c histogram:info:- </PRE>
-
-This shows a red and a grey color as the predominant colors in the image. </P>
-
-A trim/crop into the center of the image should then determine what is
-foreground and what is background.
-
-<PRE>  magick rose: -median 5 +dither -colors 2 \
+</pre>This will generally match images that have been resized, lightly cropped, rotated, or translated. But it will also match a lot of images that are not closely related. The biggest problem is that this metric will generally disregard images that have been brightened, dimmed or changed the overall hue of the image. Also while it is a great metric for color and real-world images, it is completely useless for images that are greyscale. All such images generally get lumped together without any further clustering within the type. This in turn shows why some initial classification of image types can be vital to good image sorting and matching.
+          <h3>Predominant Color of an image</h3>The predominant color of an image is a little different, instead of the average which merges the background colors with the foreground, you want to find the most common foreground color, and perhaps a percentage of how much of the image consists of that predominant color. As such you cannot just take a histogram of an image, as the image may use a lot of individual shades of color rather than a specific color. This can be done using the low level quantization function -segment, then taking a histogram. This has an advantage over direct use of -colors as it does not attempt to merge distant (color-wise) clusters of colors, though the results may be harder to determine.
+          <pre> FUTURE example </pre>After which a histogram will given you the amount of each of the predominant colors. However, usually the predominant color of a cartoon or line drawing is the background color of the image. So it is only really useful for real-life images. On the other hand, you may be able to use to discover if an image has a true background, by comparing this to the images average border color. Please note that a pictures predominant color is more likely to be more strongly influenced by the background color of the image, rather than the object of interest. That is, usually in or near the center of the image.
+          <h3>Border Colors</h3>By repeatedly cropping off each of the four edges (2 to 3 pixels at most) of an image, and calculating the borders average color, you can determine if an image is framed, and to how deep. Whether there is a definite background to the image. Or if there is some type of sky/land or close-up/distant color separation to the overall image. By comparing the averaged side colors to the average central color of the image you can discover if the image is uniform without a central theme or subject, such as a photo of an empty landscape. <a href="metric_histogram"></a>
+          <h3>Histogram - General Color Matching</h3>For a metric concerning the types of colors to be found in an image, a histogram of one sort or another is used. This is done by creating an array of 'color bins' and incrementing the count of each 'bin' as the colors are found. Now I can't see you storing a large histogram for every image! So you will either only store the most predominant colors in the histogram or you would use a much smaller number of bin's (with more pixels in each bin). An ordinary histogram of 'color bins' does not really work very well. The reason is that each color will always fall into one bin. That is, each pixel is added to each bin on an all or nothing bases without any regard to how near that color is an edge of a bin. This in turn does not make for a good metric. One solution is to create a histogram that has overlapping bins. That is every color (except maybe black or white) will fall into two color bins. Then later when you compare images a near color will match at least one of those bins. Another alternative is to create the histogram by having each color contribute to each 'bin' according to how close it is to the center of the bin. That is a color on the edge of one bin will actually share itself across two bins. This will generate a sort of fuzzy, or interpolated histogram, but one that would more accurately represent an image, especially when only a very small number of color 'bins' are used. Also histograms are traditionally either just the gray scale component of an image or three separate RGB component. But this is not a very good representation. You could try instead Hue, Saturation and Luminance Histograms to better represent the image. Alternatively why limit yourself to a 1 dimensional histogram. How about mapping the colors to a set a set of real colors across the whole color space! That is, rather than binning just the 'red' value, why not count it in a 3-dimensional color bin (is what ever colorspace works best). That would generate a histogram that would truly represent the colors found within an image. Such a 3-d histogram metric could be a simple array of say 8x8x8 or 2048 bins. That is, a 2Kbyte metric. A color search would then locate the correct number of near by bins, and get an interpolated count of the nearby bins. Which would represent the number of colors 'close' to that color within the image!
+          <h3>Foreground/background Color Separation</h3>Using -colors you can attempt to separate the image into foreground and background parts, by reducing the image to just two colors. Using a -median filter first will remove the effect of minor details, and line edges and noise that may be in the image. Of course that is not very good for mostly white sketch-like images.
+          <pre>  magick rose: -median 5 +dither -colors 2 \
+          -depth 8 -format %c histogram:info:- </pre>This shows a red and a grey color as the predominant colors in the image. A trim/crop into the center of the image should then determine what is foreground and what is background.
+          <pre>  magick rose: -median 5 +dither -colors 2 \
           -trim +repage  -gravity center -crop 50% \
-          -depth 8 -format %c histogram:info:- </PRE>
-
-Which shows the red 'rose' color is the predominant foreground color. </P>
-
-Note that a landscape image may separate differently in that you get a lower
-ground color and an upper sky color.  As such a rough look at how the colors
-were separated could be very useful for image type determination. </P>
-
-Also a picture with some text 'spam' will often show a blob of color in one
-corner that is far more prominent that the rest of the image. If found redo
-with 3 colors, then erase that area with the most common 'background' color
-found before doing your final test. </P>
-
-This technique is probably a good way of separating images into classes like
-'skin tone'  'greenery'  'landscape'  etc. </P>
-
-
-
-<A NAME="metric_cmatrix"></A>
-<A NAME="metric_color_matrix"></A>
-<H3>Average Color Matrix</H3>
-
-A three by three matrix color scheme ("<CODE>-scale 3x3\!</CODE>") is a
-reasonable color classification scheme.  It will separate, and group similar
-images together very well. For example sketches (all near white),  gray-scale,
-landscapes, seascapes, rooms, faces, etc, will all be separated into basic and
-similar groups (in theory). </P>
-
-This is also a reasonable metric to use for indexing images for generating <A
-HREF="http://libcaca.zoy.org/study/part7.html" >Photo Mosaics</A>. </P>
-
-The output of the NetPBM image format is particularly suited to generating
-such a metric, as it can output just the pixel values as text numbers. </P>
-
-Remember this would produce a 27 dimensional result, (3x3 colors of 3 value),
-so a multi-dimensional clustering algorithm may be needed.
-<I>Do you know of a good 3d clustering program/algorithm?</I> </P>
-
-For example, here is the 3 x 3 RGB colors (at depth 8) for the IM logo.
-
-<PRE>
+          -depth 8 -format %c histogram:info:- </pre>Which shows the red 'rose' color is the predominant foreground color. Note that a landscape image may separate differently in that you get a lower ground color and an upper sky color. As such a rough look at how the colors were separated could be very useful for image type determination. Also a picture with some text 'spam' will often show a blob of color in one corner that is far more prominent that the rest of the image. If found redo with 3 colors, then erase that area with the most common 'background' color found before doing your final test. This technique is probably a good way of separating images into classes like 'skin tone' 'greenery' 'landscape' etc. <a name="metric_cmatrix" id="metric_cmatrix"></a> <a name="metric_color_matrix" id="metric_color_matrix"></a>
+          <h3>Average Color Matrix</h3>A three by three matrix color scheme ("<code>-scale 3x3\!</code>") is a reasonable color classification scheme. It will separate, and group similar images together very well. For example sketches (all near white), gray-scale, landscapes, seascapes, rooms, faces, etc, will all be separated into basic and similar groups (in theory). This is also a reasonable metric to use for indexing images for generating <a href="http://libcaca.zoy.org/study/part7.html">Photo Mosaics</a>. The output of the NetPBM image format is particularly suited to generating such a metric, as it can output just the pixel values as text numbers. Remember this would produce a 27 dimensional result, (3x3 colors of 3 value), so a multi-dimensional clustering algorithm may be needed. <i>Do you know of a good 3d clustering program/algorithm?</i> For example, here is the 3 x 3 RGB colors (at depth 8) for the IM logo.
+          <pre>
   magick logo: -scale 3x3\! -compress none -depth 8 ppm:- |\
     sed '/^#/d' | tail -n +4
 
   251 241 240 245 234 231 229 233 236 254 254 254
   192 196 204 231 231 231 255 255 255 211 221 231
   188 196 210
-</PRE>
-
-The above can be improved by using 16 bit values, and possibly cropping
-10% of the borders to remove logo and framing junk that may have been added...
-
-<PRE>
+</pre>The above can be improved by using 16 bit values, and possibly cropping 10% of the borders to remove logo and framing junk that may have been added...
+          <pre>
   magick logo: -gravity center -crop 80% -scale 3x3\! \
           -compress none -depth 16 ppm:- |   sed '/^#/d' | tail -n +4
 
   63999 59442 58776 62326 58785 58178 51740 54203 54965 65277 65262 65166
   45674 47023 49782 56375 55648 55601 65535 65535 65535 52406 55842 58941
   44635 48423 52881
-</PRE>
-
-Of course like the previous average color metric, this will also have problems
-matching up images that have been color modified, such as hue, or brightness
-changes.  (See next section) </P>
-
-Also this metric can separate line drawings within its grouping, though only
-in a very general way. Such drawing will still be grouped more by the color of
-the background 'paper' rather than by content, and generally need a smaller
-'threshold' of similarity, than color images. </P>
-
-<A HREF="metric_cdiff_matrix"></A>
-<H3>Color Difference Matrix</H3>
-
-The biggest problem with using the colors directly as a metric, is that you
-tie the image to a particular general color.  This means any image that has
-been brightened or darkened, or its hue was changed, will not be grouped
-together. </P>
-
-One solution to this is to somehow subtract the predominant or average color
-of the image from the metric, and using a matrix of colors makes this
-possible.  </P>
-
-Here for example I subtract the middle or center average color from all the
-surrounding colors in the matrix.
-
-<PRE>
+</pre>Of course like the previous average color metric, this will also have problems matching up images that have been color modified, such as hue, or brightness changes. (See next section) Also this metric can separate line drawings within its grouping, though only in a very general way. Such drawing will still be grouped more by the color of the background 'paper' rather than by content, and generally need a smaller 'threshold' of similarity, than color images. <a href="metric_cdiff_matrix"></a>
+          <h3>Color Difference Matrix</h3>The biggest problem with using the colors directly as a metric, is that you tie the image to a particular general color. This means any image that has been brightened or darkened, or its hue was changed, will not be grouped together. One solution to this is to somehow subtract the predominant or average color of the image from the metric, and using a matrix of colors makes this possible. Here for example I subtract the middle or center average color from all the surrounding colors in the matrix.
+          <pre>
   magick logo: -gravity center -crop 80% -scale 3x3\! -fx '.5+u-p{1,1}' \
           -compress none -depth 16 ppm:- | sed '/^#/d' | tail -n +4
 
   51093 45187 41761 49419 44529 41163 38834 39947 37950 52371 51007 48152
   32767 32767 32767 43469 41393 38587 52629 51279 48521 39500 41587 41926
   31729 34168 35867
-</PRE>
-
-Note that I add .5 to the difference as you cannot save a negative color value
-in an image. Also the use of the slow "<CODE><A HREF="../option_link.cgi?fx"
->-fx</A></CODE>" operator is acceptable as it only 9 pixels are processed. </P>
-
-Note that the center pixel ("32767 32767 32767" at the start of the second
-line in the above) will not change much (any change is only due to slight
-rounding errors), and could be removed, from the result, reducing the metric
-to 24 dimensions (values). </P>
-
-Alternatively, you can subtract the average color of the image from all 9
-color values.
-
-<PRE>
+</pre>Note that I add .5 to the difference as you cannot save a negative color value in an image. Also the use of the slow "<code><a href="../option_link.cgi?fx">-fx</a></code>" operator is acceptable as it only 9 pixels are processed. Note that the center pixel ("32767 32767 32767" at the start of the second line in the above) will not change much (any change is only due to slight rounding errors), and could be removed, from the result, reducing the metric to 24 dimensions (values). Alternatively, you can subtract the average color of the image from all 9 color values.
+          <pre>
   magick logo: -scale 3x3\! \( +clone -scale 1x1 \) -fx '.5+u-v.p{0,0}' \
           -compress none ppm:- | sed '/^#/d' | tail -n +4
 
   38604 35917 34642 37011 33949 32441 32839 33841 33649 39447 39259 38369
   23358 24377 25436 33538 33174 32426 39612 39434 38605 28225 30576 32319
   22271 24381 27021
-</PRE>
-
-This also could be done by the metric comparator, rather than the metric
-generator. </P>
-
-The metric still separates and clusters color images very well, placing
-similar images very closely together, regardless of any general color or
-brightness changes. It is still sensitive to contrast changes though. </P>
-
-This metric modification could in fact be done during the comparison process
-so a raw  <A HREF="#metric_color_matrix">Color Matrix Metric</A> can still be
-used as a standard image metric to be collected, cached and compared. This is
-what I myself am now doing for large scale image comparisons. </P>
-
-Unlike a straight color average, you can use this metric to differentiate
-between different line drawing images. However as line drawing use a linear
-color scale (all the colors fall in a line in the metric space, the
-differences between images is roughly 1/3 that of color images.  As such a
-very different threshold is needed when comparing line drawings. Is thus still
-better to separate line drawings and grayscale images from color images. </P>
-
-In other words this is one of the best metrics I have yet found for color
-images. Just be sure to determine what images are line drawings first and
-compare them separately using a much lower threshold.  Lucky for us the
-metric itself can be used to do the separation of images into <A
-HREF="#type_grayscale" >greyscale</A>, or <A HREF="#type_linear" >linear color
-image</A>. </P>
-
-Suggestions welcome. </P>
-
-
-<A HREF="metric_diff_neigh"></A>
-<H3>Difference Of Neighbours</H3>
-
-The above generates a 3x3 matrix, with the center pixel subtracted, and all
-the values offset to a perfect gray. </P>
-
-However a better method is that instead of trying to save the color of the
-individual cells, to instead generate the differences between each cell and
-its neighbours (8 neighbours).  That is, instead of saving the color of the top
-left corner, save the difference between that corner and the top-middle,
-center, and left-middle. </P>
-
-Of course even with a small 3x3 array, you will end up with a signiture
-containing 12 differences, though you don't need to encode the full difference
-just a general difference level. such as equal, or large/small
-positive/negative difference values </P>
-
-This is much more likely to find images that match even between images which
-contain wildly different colors, as the actual color play no part in the
-signature at all. </P>
-
-The '<A HREF="http://libpuzzle.pureftpd.org/project/libpuzzle" >libpuzzle</A>'
-image comparison library does exactly that though it uses a 9x9 matrix, with
-just the center pixels of each cell being averaged together. It also limits
-itself to grayscale versions of the image. </P>
-
-The technique is completely defined in a postscript paper, <A
-HREF="http://www.cs.cmu.edu/~hcwong/Pdfs/icip02.ps" >Image Signature for Any
-Kind of Image</A>.  The paper also goes into methods of storing that signature
-in a database and how to actuall perform a lookup to find of images with
-similar (not nessarially the same) signatures.  It is the first paper I have
-discovered that actually goes into detail on how to do this. :-) </P>
-
-<A HREF="metric_perceptual_hash"></A>
-<H3>Perceptual Hash</H3>
-
-Reduce the image to an 8x8 and calulate an average intensity.  Each bit of the
-64-bit hash is then 1 if the pixel is above the average or 0 if its less than
-average. </P>
-
-To compare the similarity between two images you simply compare the bitwise
-hashes, bit by bit, and returning a hamming distance. The closer the hamming
-distance, the more similar the images are.  Anything above 21 / 64 is
-considered not similar. </P>
-
-The <A HREF="www.phash.org" >pHash</A> eems to use YCbCr encoding.  Some talk
-about working directly with the DCT from JPEG and the most promising works
-with the magnitude / phase and maps it to a log polar coordinate system. </P>
-
-
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="matching" ></A>
-<H2>Matching images better</H2>
-
-Miscellaneous notes and techniques I have either not tried or did not work
-very well for comparing larger images for more exact image matching. </P>
-
-
-<A HREF="segmentation"></A>
-<H3>Segmentation Color</H3>
-
-As you can see many of the above metrics use a blur/median filter followed by
-then color reduction techniques are basic attempts to simplify images to better
-allow them to be classified.  However the <A HREF="../quantize/#colors" >Color
-Quantization Operator</A> is not really designed for this purpose.  It's job
-is to reduce colors so as to highlight the important details of the image.
-</P>
-
-For image comparison however we don't really want to highlight these features,
-but highlight areas of comparative interest.  This is the job of a related
-color technique known segmentation... </P>
-
-ASIDE: from Leptonica: Image segmentation is the division of the image into
-regions that have different properties. </P>
-
-This operator blocks out areas of similar colors removing the detail from
-those areas.  Then, when you compare the two images, you are comparing
-areas rather than low level details in the images. </P>
-
-IM implements a segmentation algorithm, "<CODE><A
-HREF="../option_link.cgi?segment" >-segment</A></CODE>", for its implementation
-details see <A HREF="https://imagemagick.org/www/api/segment.html"
->SegmentImage()</A>. </P>
-
-Example:
-<PRE>
+</pre>This also could be done by the metric comparator, rather than the metric generator. The metric still separates and clusters color images very well, placing similar images very closely together, regardless of any general color or brightness changes. It is still sensitive to contrast changes though. This metric modification could in fact be done during the comparison process so a raw <a href="#metric_color_matrix">Color Matrix Metric</a> can still be used as a standard image metric to be collected, cached and compared. This is what I myself am now doing for large scale image comparisons. Unlike a straight color average, you can use this metric to differentiate between different line drawing images. However as line drawing use a linear color scale (all the colors fall in a line in the metric space, the differences between images is roughly 1/3 that of color images. As such a very different threshold is needed when comparing line drawings. Is thus still better to separate line drawings and grayscale images from color images. In other words this is one of the best metrics I have yet found for color images. Just be sure to determine what images are line drawings first and compare them separately using a much lower threshold. Lucky for us the metric itself can be used to do the separation of images into <a href="#type_grayscale">greyscale</a>, or <a href="#type_linear">linear color image</a>. Suggestions welcome. <a href="metric_diff_neigh"></a>
+          <h3>Difference Of Neighbours</h3>The above generates a 3x3 matrix, with the center pixel subtracted, and all the values offset to a perfect gray. However a better method is that instead of trying to save the color of the individual cells, to instead generate the differences between each cell and its neighbours (8 neighbours). That is, instead of saving the color of the top left corner, save the difference between that corner and the top-middle, center, and left-middle. Of course even with a small 3x3 array, you will end up with a signiture containing 12 differences, though you don't need to encode the full difference just a general difference level. such as equal, or large/small positive/negative difference values This is much more likely to find images that match even between images which contain wildly different colors, as the actual color play no part in the signature at all. The '<a href="http://libpuzzle.pureftpd.org/project/libpuzzle">libpuzzle</a>' image comparison library does exactly that though it uses a 9x9 matrix, with just the center pixels of each cell being averaged together. It also limits itself to grayscale versions of the image. The technique is completely defined in a postscript paper, <a href="http://www.cs.cmu.edu/~hcwong/Pdfs/icip02.ps">Image Signature for Any Kind of Image</a>. The paper also goes into methods of storing that signature in a database and how to actuall perform a lookup to find of images with similar (not nessarially the same) signatures. It is the first paper I have discovered that actually goes into detail on how to do this. :-) <a href="metric_perceptual_hash"></a>
+          <h3>Perceptual Hash</h3>Reduce the image to an 8x8 and calulate an average intensity. Each bit of the 64-bit hash is then 1 if the pixel is above the average or 0 if its less than average. To compare the similarity between two images you simply compare the bitwise hashes, bit by bit, and returning a hamming distance. The closer the hamming distance, the more similar the images are. Anything above 21 / 64 is considered not similar. The <a href="www.phash.org">pHash</a> eems to use YCbCr encoding. Some talk about working directly with the DCT from JPEG and the most promising works with the magnitude / phase and maps it to a log polar coordinate system.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="matching" id="matching"></a>
+          <h2>Matching images better</h2>Miscellaneous notes and techniques I have either not tried or did not work very well for comparing larger images for more exact image matching. <a href="segmentation"></a>
+          <h3>Segmentation Color</h3>As you can see many of the above metrics use a blur/median filter followed by then color reduction techniques are basic attempts to simplify images to better allow them to be classified. However the <a href="../quantize/#colors">Color Quantization Operator</a> is not really designed for this purpose. It's job is to reduce colors so as to highlight the important details of the image. For image comparison however we don't really want to highlight these features, but highlight areas of comparative interest. This is the job of a related color technique known segmentation... ASIDE: from Leptonica: Image segmentation is the division of the image into regions that have different properties. This operator blocks out areas of similar colors removing the detail from those areas. Then, when you compare the two images, you are comparing areas rather than low level details in the images. IM implements a segmentation algorithm, "<code><a href="../option_link.cgi?segment">-segment</a></code>", for its implementation details see <a href="https://imagemagick.org/www/api/segment.html">SegmentImage()</a>. Example:
+          <pre>
   magick logo: -median 10 -segment 1x1 \
           +dither -scale 100x100\! segment_image.gif
-</PRE>
-
-One problem is that -segment is VERY slow, and it only seems to work for
-larger images. Small images (like a rose: or a 100x100 scaled logo:) seems to
-result in just a single color being produced.   This may be a bug. </P>
-
-Of course you can still scale the image after segmenting it, as we did above.
-that way you can store a larger number of images in memory to compare with
-each other.  </P>
-
-Also the resulting segmentation does not seem to work very well, when compared
-to the image segmentation algorithm that Leptonica provides. See <A
-HREF="http://www.leptonica.com/color-segmentation.html" >Leptonica: Color
-Segmentation</A>. </P>
-
-However an alternative to the IM segmentation, is to miss-use the color
-quantization function to find areas of similar color.  Example:
-
-<PRE>
+</pre>One problem is that -segment is VERY slow, and it only seems to work for larger images. Small images (like a rose: or a 100x100 scaled logo:) seems to result in just a single color being produced. This may be a bug. Of course you can still scale the image after segmenting it, as we did above. that way you can store a larger number of images in memory to compare with each other. Also the resulting segmentation does not seem to work very well, when compared to the image segmentation algorithm that Leptonica provides. See <a href="http://www.leptonica.com/color-segmentation.html">Leptonica: Color Segmentation</a>. However an alternative to the IM segmentation, is to miss-use the color quantization function to find areas of similar color. Example:
+          <pre>
   magick logo: -scale 100x100\! -median 3 \
           -quantize YIQ +dither -colors 3 segment_image.gif
-</PRE>
-
-The disadvantage is that -color limits the number of color areas that may be
-present in an image, where segment tries to preserve similar areas, regardless
-of how many areas are really present in the image (or at least that is what it
-should do). </P>
-
-
-<A HREF="edge_compare"></A>
-<H3>Colorless Edge Comparison</H3>
-
-Image color is notoriously unreliable, particularly for cartoon like images.
-Different users could quite easily recolor such images, add different colors
-backgrounds, or even take a sketch and color it in. </P>
-
-One way to match up such images is to some basic color reduction, as per
-method above, but then rather than comparing images based on the resulting
-color you perform an edge detection, and further processing so that only the
-outlines of the most important color changes are used for the metrics and
-comparison of the images. </P>
-
-For example...
-<PRE>
+</pre>The disadvantage is that -color limits the number of color areas that may be present in an image, where segment tries to preserve similar areas, regardless of how many areas are really present in the image (or at least that is what it should do). <a href="edge_compare"></a>
+          <h3>Colorless Edge Comparison</h3>Image color is notoriously unreliable, particularly for cartoon like images. Different users could quite easily recolor such images, add different colors backgrounds, or even take a sketch and color it in. One way to match up such images is to some basic color reduction, as per method above, but then rather than comparing images based on the resulting color you perform an edge detection, and further processing so that only the outlines of the most important color changes are used for the metrics and comparison of the images. For example...
+          <pre>
   magick logo: -scale 100x100\! -median 3 \
           -quantize YIQ +dither -colors 3 -edge 1 \
           -colorspace gray -blur 0x1   outline_image.gif
-</PRE>
-
-An alternative may be to use the -lat (Local Area threshold) for edge
-detection, which may give you some better control...
-<PRE>
+</pre>An alternative may be to use the -lat (Local Area threshold) for edge detection, which may give you some better control...
+          <pre>
   magick logo: -scale 100x100\! -median 3 \
           -quantize YIQ +dither -colors 3 \
           -lat 3x3-5% -negate \
           -colorspace gray -blur 0x1  outline_image.gif
-</PRE>
-
-Of course for comparing you would use a line drawing comparison method. <BR>
-??? how would you compare line drawings in a workable way ??? <BR>
-Multiply images together and see if resulting image added or reduced the
-intensity of the lines.  Mis-Matching lines will become black. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="camera"></A>
-<H2>Web Cameras<BR>
-<FONT SIZE=-1>What has changed in fixed cameras</FONT></H2>
-
-<DIV ALIGN=center><FONT SIZE=+2><B>
-<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35>
-Under Construction
-<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50>
-</B></FONT></DIV></P>
-
-Walter Perry &lt;gatorus13_AT_earthlink.net&gt; reports... </P>
-
-The project I am working involves processing groups of 20 images sent from a
-surveillance camera in response to the camera sensing motion.  These cameras
-are at remote locations and once they detect motion the images are sent to a
-local server.  Once at the local server, I want to be able to "filter" out
-those images that do not contain what caused the event. </P>
-
-I use PerlMagick to compare the first image in the series (which will always
-not contain anything other than the normal background) with the rest of the
-images.  I am getting an "average" difference for all the images and then if
-the individual difference is greater than the average difference I keep the
-image as it has something in it. </P>
-
-This approach works great no matter day or night or what the lighting
-conditions.  I originally was trying to use just a percentage difference above
-the first image, but that was not too reliable and really depended on the
-lighting conditions.  Based on this comparison, I will then determine which
-images have "content" and those images which are empty of any motion. Once I
-obtain the only those images that contain "motion". </P>
-
-
-</DIV></P>
-<HR><!-- ---------------------------------------------------------------- -->
-</div></main><footer class="magick-footer"><div class="container-fluid">
-Created: 7 June 2005 <BR>
-Updated: 17 April 2012 <BR>
-Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
-        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
-Examples Generated with:
-        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://imagemagick.org/Usage/compare/</CODE>
-</div></footer></body></HTML>
-
+</pre>Of course for comparing you would use a line drawing comparison method.<br>
+          ??? how would you compare line drawings in a workable way ???<br>
+          Multiply images together and see if resulting image added or reduced the intensity of the lines. Mis-Matching lines will become black.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="camera" id="camera"></a>
+          <h2>Web Cameras<br>
+          <font size="-1">What has changed in fixed cameras</font></h2>
+          <div align="center">
+            <font size="+2"><b><img src="../img_www/const_barrier.gif" width="39" height="35"> Under Construction <img src="../img_www/const_hole.gif" width="144" height="50"></b></font>
+          </div>Walter Perry &lt;gatorus13_AT_earthlink.net&gt; reports... The project I am working involves processing groups of 20 images sent from a surveillance camera in response to the camera sensing motion.&nbsp; These cameras are at remote locations and once they detect motion the images are sent to a local server.&nbsp; Once at the local server, I want to be able to "filter" out those images that do not contain what caused the event. I use PerlMagick to compare the first image in the series (which will always not contain anything other than the normal background) with the rest of the images.&nbsp; I am getting an "average" difference for all the images and then if the individual difference is greater than the average difference I keep the image as it has something in it. This approach works great no matter day or night or what the lighting conditions.&nbsp; I originally was trying to use just a percentage difference above the first image, but that was not too reliable and really depended on the lighting conditions.&nbsp; Based on this comparison, I will then determine which images have "content" and those images which are empty of any motion. Once I obtain the only those images that contain "motion".
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------- -->
+      </div>
+    </div>
+  </main>
+  <footer class="magick-footer">
+    <div class="container-fluid">
+      Created: 7 June 2005<br>
+      Updated: 17 April 2012<br>
+      Author: <a href="https://antofthy.gitlab.io/anthony.html">Anthony Thyssen</a>, &lt;Anthony.Thyssen@gmail.com&gt;<br>
+      Examples Generated with: <img src="version.gif" align="absmiddle" alt="[version image]"><br>
+      URL: <code>https://imagemagick.org/Usage/compare/</code>
+    </div>
+  </footer>
+</body>
+</html>

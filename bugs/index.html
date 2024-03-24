@@ -1,175 +1,132 @@
-<html lang="en"><HEAD>
-<meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1" >
-<link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Development and Bugs -- ImageMagick Examples</TITLE>
-<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://imagemagick.org/Usage/bugs/">
-</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
-
-<H1>ImageMagick Examples -- <BR>
-    <IMG SRC="../img_www/space.gif" width=50 height=1>
-    Development and Bugs</H1>
-
-<div>
-
-<DL>
-<DT><A HREF="../"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > ImageMagick Examples Preface and Index</A>
-</DL>
-
-These pages demonstrate and provide workarounds for various bugs known to
-exist, <I>or used to exist</I> within IM. </P>
-
-Most of these bug demonstration pages are not updated with the current
-distribution of IM.  So that when a particular bug is fixed, the page can
-still demonstrate the unfixed effects of the bug.  Check the version number at
-the bottom of the page for the last time those examples were generated. </P>
-
-Basically this allows for older IM users to check their implementation, and
-apply workarounds for their scripts.  Especially when they do not have control
-of the versions of IM that is installed on the system (for example on an ISP
-controlled web server), or standard linux distro installations. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<TABLE ALIGN=center>
-<TR valign="top"><TD COLSPAN=5 ALIGN=center>
-    <IMG SRC="../img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    &nbsp; <B>Future Development</B> &nbsp;
-    <IMG SRC="../img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    <IMG SRC="../img_www/space.gif"        WIDTH=100 HEIGHT=1 ALT=" ">
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="IMv7_Recommendations.txt"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >IM Version 7 Recommendations</A>
-    </TD><TD ROWSPAN=20>&nbsp;&nbsp;&nbsp;</TD><TD>
-    Proposed Changes
-    </TD><TD ROWSPAN=20>&nbsp;&nbsp;&nbsp;</TD><TD>
-    <FONT SIZE=-1>- in flux -</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="IMv7_Scripting.txt"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >IM Version 7 CLI Scripting Notes</A>
-    </TD><TD>
-    CLI and Scripting
-    </TD><TD>
-    <FONT SIZE=-1>- in flux -</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="IMv7_FX_and_Percent.html"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >IM Version 7 FX and Percents</A>
-    </TD><TD>
-    Settings and Escapes
-    </TD><TD>
-    <FONT SIZE=-1>- in flux -</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="future/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Future Development Notes</A>
-    </TD><TD>
-    Future Proposals (for comment)
-    </TD><TD>
-    <FONT SIZE=-1>- in flux -</FONT>
-    </TD></TR>
-
-<TR><TD>&nbsp;</TD></TR>
-
-<TR valign="top"><TD COLSPAN=5 ALIGN=center>
-    <IMG SRC="../img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    &nbsp; <B>Bug Demonstrations</B> &nbsp;
-    <IMG SRC="../img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    <IMG SRC="../img_www/space.gif"        WIDTH=100 HEIGHT=1 ALT=" ">
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="testing/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Testing Bugs Examples</A>
-    </TD><TD>
-    Testing of Current Minor Bugs, (to be fixed)
-    </TD><TD>
-    <FONT SIZE=-1>- in flux -</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="trans_bug/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Semi-Transparency Draw</A>
-    </TD><TD>
-    Overlays of Semi-Transparent Colors
-    </TD><TD>
-    <FONT SIZE=-1>Fixed, IM v6.0.0 beta</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="draw_percent/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Draw Percent</A>
-    </TD><TD>
-    Drawing Percent Text Characters
-    </TD><TD>
-    <FONT SIZE=-1>Fixed, IM v6.2.4 </FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="resize_halo/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Resize Halo</A>
-    </TD><TD>
-    Resizing Transparent Images
-    </TD><TD>
-    <FONT SIZE=-1>Fixed, IM v6.2.4</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="blur_trans/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Blur Transparency</A>
-    </TD><TD>
-    Blurs of Transparent Images
-    </TD><TD>
-    <FONT SIZE=-1>Fixed, IM v6.2.4-4</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="animation_bgnd/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Animation Bugs</A>
-    </TD><TD>
-    Background Dispose Handling
-    </TD><TD>
-    <FONT SIZE=-1>Fixed, IM v6.2.5-3</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="displace/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Displacement Bugs</A>
-    </TD><TD>
-    Multiple Displacement Map Bugs
-    </TD><TD>
-    <FONT SIZE=-1>Fixed, IM v6.2.8-1</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="composite_mask/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Composite Mask</A>
-    </TD><TD>
-    Composite Masking with Transparency
-    </TD><TD>
-    <FONT SIZE=-1>Fixed - IM v6.3.4-11</FONT>
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="fuzz_distance/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >Fuzz Distance</A>
-    </TD><TD>
-    Fuzz Distance and Transparent Colors
-    </TD><TD>
-    <FONT SIZE=-1>Fixed - IM v6.6.6-4</FONT>
-    </TD></TR>
-
-<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/usage.css">
+  <title>Development and Bugs -- ImageMagick Examples</title>
+  <link rel="icon" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="shortcut" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://imagemagick.org/Usage/bugs/">
+</head>
+<body>
+  <main class="container">
+    <div class="magick-template">
+      <div class="magick-header">
+        <h1>ImageMagick Examples --<br>
+        <img src="../img_www/space.gif" width="50" height="1"> Development and Bugs</h1>
+        <div>
+          <dl>
+            <dt>
+              <a href="../"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> ImageMagick Examples Preface and Index</a>
+            </dt>
+          </dl>These pages demonstrate and provide workarounds for various bugs known to exist, <i>or used to exist</i> within IM. Most of these bug demonstration pages are not updated with the current distribution of IM. So that when a particular bug is fixed, the page can still demonstrate the unfixed effects of the bug. Check the version number at the bottom of the page for the last time those examples were generated. Basically this allows for older IM users to check their implementation, and apply workarounds for their scripts. Especially when they do not have control of the versions of IM that is installed on the system (for example on an ISP controlled web server), or standard linux distro installations.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <table align="center">
+            <tr valign="top">
+              <td colspan="5" align="center"><img src="../img_www/speech_start.gif" width="50" height="8" alt=" ----- "> &nbsp; <b>Future Development</b> &nbsp; <img src="../img_www/speech_start.gif" width="50" height="8" alt=" ----- "> <img src="../img_www/space.gif" width="100" height="1" alt=" "></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="IMv7_Recommendations.txt"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">IM Version 7 Recommendations</a>
+              </td>
+              <td rowspan="20">&nbsp;&nbsp;&nbsp;</td>
+              <td>Proposed Changes</td>
+              <td rowspan="20">&nbsp;&nbsp;&nbsp;</td>
+              <td><font size="-1">- in flux -</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="IMv7_Scripting.txt"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">IM Version 7 CLI Scripting Notes</a>
+              </td>
+              <td>CLI and Scripting</td>
+              <td><font size="-1">- in flux -</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="IMv7_FX_and_Percent.html"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">IM Version 7 FX and Percents</a>
+              </td>
+              <td>Settings and Escapes</td>
+              <td><font size="-1">- in flux -</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="future/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Future Development Notes</a>
+              </td>
+              <td>Future Proposals (for comment)</td>
+              <td><font size="-1">- in flux -</font></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr valign="top">
+              <td colspan="5" align="center"><img src="../img_www/speech_start.gif" width="50" height="8" alt=" ----- "> &nbsp; <b>Bug Demonstrations</b> &nbsp; <img src="../img_www/speech_start.gif" width="50" height="8" alt=" ----- "> <img src="../img_www/space.gif" width="100" height="1" alt=" "></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="testing/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Testing Bugs Examples</a>
+              </td>
+              <td>Testing of Current Minor Bugs, (to be fixed)</td>
+              <td><font size="-1">- in flux -</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="trans_bug/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Semi-Transparency Draw</a>
+              </td>
+              <td>Overlays of Semi-Transparent Colors</td>
+              <td><font size="-1">Fixed, IM v6.0.0 beta</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="draw_percent/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Draw Percent</a>
+              </td>
+              <td>Drawing Percent Text Characters</td>
+              <td><font size="-1">Fixed, IM v6.2.4</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="resize_halo/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Resize Halo</a>
+              </td>
+              <td>Resizing Transparent Images</td>
+              <td><font size="-1">Fixed, IM v6.2.4</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="blur_trans/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Blur Transparency</a>
+              </td>
+              <td>Blurs of Transparent Images</td>
+              <td><font size="-1">Fixed, IM v6.2.4-4</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="animation_bgnd/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Animation Bugs</a>
+              </td>
+              <td>Background Dispose Handling</td>
+              <td><font size="-1">Fixed, IM v6.2.5-3</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="displace/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Displacement Bugs</a>
+              </td>
+              <td>Multiple Displacement Map Bugs</td>
+              <td><font size="-1">Fixed, IM v6.2.8-1</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="composite_mask/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Composite Mask</a>
+              </td>
+              <td>Composite Masking with Transparency</td>
+              <td><font size="-1">Fixed - IM v6.3.4-11</font></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="fuzz_distance/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">Fuzz Distance</a>
+              </td>
+              <td>Fuzz Distance and Transparent Colors</td>
+              <td><font size="-1">Fixed - IM v6.6.6-4</font></td>
+            </tr><!--
 <TR valign="top"><TD><A HREF="quantization/"
     ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
     >Quantization Bugs</A>
@@ -179,34 +136,33 @@ controlled web server), or standard linux distro installations. </P>
     <FONT SIZE=-1><B>NOT FIXED</B></FONT>
     </TD></TR>
 -->
-
-<TR><TD>&nbsp;</TD></TR>
-
-<TR valign="top"><TD COLSPAN=5 ALIGN=center>
-    <IMG SRC="../img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    &nbsp; <B>IM Improvement Studies</B> &nbsp;
-    <IMG SRC="../img_www/speech_start.gif" WIDTH=50 HEIGHT=8 ALT="  -----  ">
-    <IMG SRC="../img_www/space.gif"        WIDTH=100 HEIGHT=1 ALT=" ">
-    </TD></TR>
-
-<TR valign="top"><TD><A HREF="ordered-dither/"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    >OrderedPosterizeImage()</A>
-    </TD><TD>
-    Ordered Dither Expansion Notes
-    </TD><TD>
-    <FONT SIZE=-1>Added to IM v6.2.9-8</FONT>
-    </TD></TR>
-
-</TABLE></P>
-
-</DIV>
-<HR><!-- ---------------------------------------------------------------- -->
-</div></main><footer class="magick-footer"><div class="container-fluid">
-Created: 15 August 2005 <BR>
-Updated: 10 June 2011 <BR>
-Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
-        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
-URL: <CODE>https://imagemagick.org/Usage/bugs/</CODE>
-</div></footer></body></HTML>
-
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr valign="top">
+              <td colspan="5" align="center"><img src="../img_www/speech_start.gif" width="50" height="8" alt=" ----- "> &nbsp; <b>IM Improvement Studies</b> &nbsp; <img src="../img_www/speech_start.gif" width="50" height="8" alt=" ----- "> <img src="../img_www/space.gif" width="100" height="1" alt=" "></td>
+            </tr>
+            <tr valign="top">
+              <td>
+                <a href="ordered-dither/"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15">OrderedPosterizeImage()</a>
+              </td>
+              <td>Ordered Dither Expansion Notes</td>
+              <td><font size="-1">Added to IM v6.2.9-8</font></td>
+            </tr>
+          </table>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------- -->
+      </div>
+    </div>
+  </main>
+  <footer class="magick-footer">
+    <div class="container-fluid">
+      Created: 15 August 2005<br>
+      Updated: 10 June 2011<br>
+      Author: <a href="https://antofthy.gitlab.io/anthony.html">Anthony Thyssen</a>, &lt;Anthony.Thyssen@gmail.com&gt;<br>
+      URL: <code>https://imagemagick.org/Usage/bugs/</code>
+    </div>
+  </footer>
+</body>
+</html>

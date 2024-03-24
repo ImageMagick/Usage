@@ -1,533 +1,430 @@
-<html lang="en"><HEAD>
-<meta charset="utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1" >
-<link rel="stylesheet" href="../assets/usage.css">
-<TITLE>Anti-Aliasing -- ImageMagick Examples</TITLE>
-<LINK REL="icon" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="shortcut" HREF="../img_www/favicon.ico" type="image/x-icon">
-<LINK REL="canonical" HREF="https://imagemagick.org/Usage/antialiasing/">
-</HEAD><body><main class="container"><div class="magick-template"><div class="magick-header">
-
-<H1>ImageMagick Examples -- <BR>
-    <IMG SRC="../img_www/space.gif" width=50 height=1>
-    Anti-Aliasing</H1>
-
-<div>
-
-<DL>
-<DT><B>Index</B>
-<DT><A HREF="../"
-    ><IMG SRC="../img_www/granitesm_left.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > ImageMagick Examples Preface and Index</A>
-<DD><A HREF="#intro"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Anti-Aliasing Introduction</A>
-<DD><A HREF="#aliasing"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Drawing with only Specific Colors</A>
-<DD><A HREF="#thin_circles"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Drawing Thin Bitmapped Circles</A>
-<DD><A HREF="#floodfill"
-    ><IMG SRC="../img_www/granitesm_right.gif" BORDER=0 WIDTH=15 HEIGHT=15
-    > Anti-Aliasing and Flood Fill Problems</A>
-</DL></P>
-
-Anti-aliasing is a major part of all drawing operations within ImageMagick.
-Unfortunately it can also cause many problems.  This page tries to cover these
-problems and present solutions to them. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="intro">
-<H2>Anti-Aliasing Introduction</H2>
-</A>
-
-ImageMagick when it draws images, does so in a very particular way.  It draws
-them with an operation call "anti-aliasing". </P>
-
-To demonstrate, I'll draw an image on a transparent background, then magnify
-a small part of the image so you can see what is happening.
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/usage.css">
+  <title>Anti-Aliasing -- ImageMagick Examples</title>
+  <link rel="icon" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="shortcut" href="../img_www/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://imagemagick.org/Usage/antialiasing/">
+</head>
+<body>
+  <main class="container">
+    <div class="magick-template">
+      <div class="magick-header">
+        <h1>ImageMagick Examples --<br>
+        <img src="../img_www/space.gif" width="50" height="1"> Anti-Aliasing</h1>
+        <div>
+          <dl>
+            <dt><b>Index</b></dt>
+            <dt>
+              <a href="../"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> ImageMagick Examples Preface and Index</a>
+            </dt>
+            <dd>
+              <a href="#intro"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Anti-Aliasing Introduction</a>
+            </dd>
+            <dd>
+              <a href="#aliasing"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Drawing with only Specific Colors</a>
+            </dd>
+            <dd>
+              <a href="#thin_circles"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Drawing Thin Bitmapped Circles</a>
+            </dd>
+            <dd>
+              <a href="#floodfill"><img src="../img_www/granitesm_right.gif" border="0" width="15" height="15"> Anti-Aliasing and Flood Fill Problems</a>
+            </dd>
+          </dl>Anti-aliasing is a major part of all drawing operations within ImageMagick. Unfortunately it can also cause many problems. This page tries to cover these problems and present solutions to them.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="intro" id="intro">
+          <h2>Anti-Aliasing Introduction</h2></a> ImageMagick when it draws images, does so in a very particular way. It draws them with an operation call "anti-aliasing". To demonstrate, I'll draw an image on a transparent background, then magnify a small part of the image so you can see what is happening.
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
    magick -size 80x80 xc:none \
             -fill white  -draw "circle 40,40 15,20" \
             -fill black  -draw "line 5,30 78,2"    drawn.png
     magick drawn.png -crop 10x10+50+5 +repage -scale 80x80  drawn_mag.png
-</CODE>&nbsp;</PRE></TD></TR></TABLE>
-   <A HREF="drawn.png"
-      ><IMG SRC="drawn.png"  WIDTH=80 HEIGHT=80
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-   <A HREF="drawn_mag.png"
-      ><IMG SRC="drawn_mag.png"  WIDTH=80 HEIGHT=80
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-Now you would think that the above image would have only three colors,
-'white', 'black', and 'transparent', as that is all we asked for IM to use.
-But as you can see when the image is magnified it has a whole range of colors.
-By doing this ImageMagick makes the image look smoother and better looking,
-using a technique called 'anti-aliasing'.  This is a fancy term that means it
-fills in edge pixels of the object with a mix of colors and even
-transparencies, to make the object look smoother. </P>
-
-If no anti-aliasing was done, then the edges of all the draw objects would
-have a staircase like effect called 'aliasing' though more commonly referred to
-as the 'jaggies'.  </P>
-
-Here we draw the image again but this time we asked IM to turn off its
-automatic anti-aliasing operations, using "<CODE><A
-HREF="../option_link.cgi?antialias" >+antialias</A></CODE>".
-
-<DIV ALIGN=center>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="90%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp> </pre>
+                </td>
+              </tr>
+            </table><a href="drawn.png"><img src="drawn.png" width="80" height="80" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="drawn_mag.png"><img src="drawn_mag.png" width="80" height="80" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+          </div>Now you would think that the above image would have only three colors, 'white', 'black', and 'transparent', as that is all we asked for IM to use. But as you can see when the image is magnified it has a whole range of colors. By doing this ImageMagick makes the image look smoother and better looking, using a technique called 'anti-aliasing'. This is a fancy term that means it fills in edge pixels of the object with a mix of colors and even transparencies, to make the object look smoother. If no anti-aliasing was done, then the edges of all the draw objects would have a staircase like effect called 'aliasing' though more commonly referred to as the 'jaggies'. Here we draw the image again but this time we asked IM to turn off its automatic anti-aliasing operations, using "<code><a href="../option_link.cgi?antialias">+antialias</a></code>".
+          <div align="center">
+            <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
+              <tr>
+                <td>
+                  <pre class="bg-light text-dark mx-4"><samp>
    magick -size 80x80 xc:none +antialias \
             -fill white  -draw "circle 40,40 15,20" \
             -fill black  -draw "line 5,30 78,2"    drawn_jaggies.png
     magick drawn_jaggies.png -crop 10x10+50+5 +repage -scale 80x80 \
             drawn_jaggies_mag.png
-</CODE>&nbsp;</PRE></TD></TR></TABLE>
-   <A HREF="drawn_jaggies.png"
-      ><IMG SRC="drawn_jaggies.png"  WIDTH=80 HEIGHT=80
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=0 ALT="[IM Output]"></A>
-<IMG SRC="../img_www/right.gif" WIDTH=20 HEIGHT=20 ALIGN=middle ALT="==>">
-   <A HREF="drawn_jaggies_mag.png"
-      ><IMG SRC="drawn_jaggies_mag.png"  WIDTH=80 HEIGHT=80
-            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</DIV></P>
-
-This time the image really does only have three colors. But the result is not
-very nice at all.  On the latest IM a single line of pixels is drawn, in a
-staircase like manner.  On older IM's the line would have also be quite thick
-in appearence, making it look even worse.  Basically this is not something you
-would normally want to do.  </P>
-
-The straircase of 'aliasing' effects, also commonly called the 'jaggies', is
-what IM was trying to avoid.  But if you want specific colors, then you will
-need to accept this, or use other techniques (such as color quantization) to
-ensure you only use certain colors. </P>
-
-Note that there are actually two forms of anti-aliasing happening. The first
-is a blending of the white and black colors in the image, producing various
-color shades, grey in this case. </P>
-
-The other form is a blending of the color and transparency to generate
-semi-transparent pixels in the image.  The later is something you will need to
-keep in mind, as many image formats, (such as GIF), can not handle
-semi-transparent pixels, and will either make such pixels fully-opaque or or
-fully-transparent.  The examples on <A HREF="../formats/#trans" >GIF Boolean
-Transparency</A> demonstrate methods by which you can control the handling of
-semi-transparent pixels wehn saving to such formats.
-
-
-
-<H3>Summary</H3>
-
-Anti-Aliasing is very important in any sort of image drawing, and something
-you should keep in mind.  Without consideration of the mixed colors and
-semi-transparent pixels generated by IM anti-aliasing, your own image
-creations can come out looking very bad in some formats. </P>
-
-This becomes even more important when you are creating images in an image
-format which does not allow semi-transparent pixels, such as the wide spread
-"GIF" format. See <A HREF="../formats/#trans" >GIF Boolean Transparency</A> for
-ways to handle this problem. </P>
-
-IM is very good at anti-aliasing colors and transparencies, but actually very
-poor at drawing just pure 'aliased' pixels (to match a specific color map for
-example).  I have been told that this will be the focus of a later release of
-IM. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="aliasing">
-<H2>Drawing Using Only Specific Colors</H2>
-</A>
-
-<DIV ALIGN=center><FONT SIZE=+2><B>
-<IMG SRC="../img_www/const_barrier.gif" WIDTH=39 HEIGHT=35 ALIGN=top>
-Under Construction
-<IMG SRC="../img_www/const_hole.gif" WIDTH=144 HEIGHT=50 ALIGN=middle>
-</B></FONT></DIV></P>
-
-Better ways of drawing without anti-aliasing, to generate images with exact
-colors.  That is, for 'Indexed Images'.  </P>
-
-Specifically, draw into a transparent canvas, threshold the alpha channel,
-then overlay, so only fully-opaque pixels are ever drawn. </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="thin_circles"></A>
-<H2>Drawing Thin Bitmapped Circles</H2>
-
-Here we look at trying to draw bitmaped 'thin lined' circles using IM.
-Normally this is done using a bitmap circle drawing algrothm typically known
-as Bresenham's circle algorithm, but more correctly known as <A
-HREF="http://en.wikipedia.org/wiki/Midpoint_circle_algorithm" >Midpoint Circle
-Algorithm</A>. </P>
-
-Unfortunatally this is not available in ImageMagick, and may never be
-as it is not needed in a fully anti-aliased drawing environment. </P>
-
-Another alternative to drawing circles, which well look at in a moment, is to
-use <A HREF="../morphology/#intro" >Morphology</A>, to '<A
-HREF="../morphology/#dilate" >Dilate</A>' a single pixel, using the special <A
-HREF="../morphology/#ring" >Ring Kernel</A>. </P>
-
-<BR>
-
-For example the normal IM way of drawing a circle produces a lot of grey
-anti-aliasing colors to give the circle a smooth appearance.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-</TD></TR><TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp> </pre>
+                </td>
+              </tr>
+            </table><a href="drawn_jaggies.png"><img src="drawn_jaggies.png" width="80" height="80" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="drawn_jaggies_mag.png"><img src="drawn_jaggies_mag.png" width="80" height="80" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+          </div>This time the image really does only have three colors. But the result is not very nice at all. On the latest IM a single line of pixels is drawn, in a staircase like manner. On older IM's the line would have also be quite thick in appearence, making it look even worse. Basically this is not something you would normally want to do. The straircase of 'aliasing' effects, also commonly called the 'jaggies', is what IM was trying to avoid. But if you want specific colors, then you will need to accept this, or use other techniques (such as color quantization) to ensure you only use certain colors. Note that there are actually two forms of anti-aliasing happening. The first is a blending of the white and black colors in the image, producing various color shades, grey in this case. The other form is a blending of the color and transparency to generate semi-transparent pixels in the image. The later is something you will need to keep in mind, as many image formats, (such as GIF), can not handle semi-transparent pixels, and will either make such pixels fully-opaque or or fully-transparent. The examples on <a href="../formats/#trans">GIF Boolean Transparency</a> demonstrate methods by which you can control the handling of semi-transparent pixels wehn saving to such formats.
+          <h3>Summary</h3>Anti-Aliasing is very important in any sort of image drawing, and something you should keep in mind. Without consideration of the mixed colors and semi-transparent pixels generated by IM anti-aliasing, your own image creations can come out looking very bad in some formats. This becomes even more important when you are creating images in an image format which does not allow semi-transparent pixels, such as the wide spread "GIF" format. See <a href="../formats/#trans">GIF Boolean Transparency</a> for ways to handle this problem. IM is very good at anti-aliasing colors and transparencies, but actually very poor at drawing just pure 'aliased' pixels (to match a specific color map for example). I have been told that this will be the focus of a later release of IM.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="aliasing" id="aliasing">
+          <h2>Drawing Using Only Specific Colors</h2></a>
+          <div align="center">
+            <font size="+2"><b><img src="../img_www/const_barrier.gif" width="39" height="35" align="top"> Under Construction <img src="../img_www/const_hole.gif" width="144" height="50" align="middle"></b></font>
+          </div>Better ways of drawing without anti-aliasing, to generate images with exact colors. That is, for 'Indexed Images'. Specifically, draw into a transparent canvas, threshold the alpha channel, then overlay, so only fully-opaque pixels are ever drawn.
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="thin_circles" id="thin_circles"></a>
+          <h2>Drawing Thin Bitmapped Circles</h2>Here we look at trying to draw bitmaped 'thin lined' circles using IM. Normally this is done using a bitmap circle drawing algrothm typically known as Bresenham's circle algorithm, but more correctly known as <a href="http://en.wikipedia.org/wiki/Midpoint_circle_algorithm">Midpoint Circle Algorithm</a>. Unfortunatally this is not available in ImageMagick, and may never be as it is not needed in a fully anti-aliased drawing environment. Another alternative to drawing circles, which well look at in a moment, is to use <a href="../morphology/#intro">Morphology</a>, to '<a href="../morphology/#dilate">Dilate</a>' a single pixel, using the special <a href="../morphology/#ring">Ring Kernel</a>.<br>
+          For example the normal IM way of drawing a circle produces a lot of grey anti-aliasing colors to give the circle a smooth appearance.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 15x15 xc: -fill none -stroke black \
           -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_antialiased.gif
-</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
-  <A HREF="circle_antialiased.gif"
-     ><IMG SRC="circle_antialiased.gif"
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Simply turning of anti-aliasing however produces circles and lines that
-are not a nice thin 'bitmap' line.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-</TD></TR><TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td align="center">
+                <a href="circle_antialiased.gif"><img src="circle_antialiased.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Simply turning of anti-aliasing however produces circles and lines that are not a nice thin 'bitmap' line.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_aliased.gif
-</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
-  <A HREF="circle_aliased.gif"
-     ><IMG SRC="circle_aliased.gif"
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-What you need to to is also adjust the "<CODE><A
-HREF="../option_link.cgi?strokewidth" >-strokewidth</A></CODE>" , which
-defaults to 1 pixel wide, to something smaller, such as 0.5 pixels wide.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-</TD></TR><TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td align="center">
+                <a href="circle_aliased.gif"><img src="circle_aliased.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>What you need to to is also adjust the "<code><a href="../option_link.cgi?strokewidth">-strokewidth</a></code>" , which defaults to 1 pixel wide, to something smaller, such as 0.5 pixels wide.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.5   -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_thin_stroke.gif
-</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
-  <A HREF="circle_thin_stroke.gif"
-     ><IMG SRC="circle_thin_stroke.gif"
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Better not quite right. </P>
-
-But you can also make the stroke width too small, especially with odd sized
-radii.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-</TD></TR><TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td align="center">
+                <a href="circle_thin_stroke.gif"><img src="circle_thin_stroke.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Better not quite right. But you can also make the stroke width too small, especially with odd sized radii.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0  -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_zero_stroke.gif
-</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
-  <A HREF="circle_zero_stroke.gif"
-     ><IMG SRC="circle_zero_stroke.gif"
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-And here is a good solution for a circle of 5 pixels centered on an integer
-actual pixel location.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-</TD></TR><TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td align="center">
+                <a href="circle_zero_stroke.gif"><img src="circle_zero_stroke.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>And here is a good solution for a circle of 5 pixels centered on an integer actual pixel location.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.4  -draw 'translate 7,7 circle 0,0 5,0' \
           -scale 500%  circle_perfect.gif
-</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
-  <A HREF="circle_perfect.gif"
-     ><IMG SRC="circle_perfect.gif"
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-However After many experiments I could find no "<CODE><A
-HREF="../option_link.cgi?strokewidth" >-strokewidth</A></CODE>" that works for
-all radii and centers.  Especally a circle that is slightly off center.  </P>
-
-<DIV ALIGN=center>
-        <B>There is no ideal solution for all situations</B>
-</DIV></P>
-
-For example this circle which is not centered on a pixel, or a pixel boundary,
-not only has gaps at the top, but is also too thick at the bottom! Yuck!
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-</TD></TR><TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td align="center">
+                <a href="circle_perfect.gif"><img src="circle_perfect.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>However After many experiments I could find no "<code><a href="../option_link.cgi?strokewidth">-strokewidth</a></code>" that works for all radii and centers. Especally a circle that is slightly off center.
+          <div align="center">
+            <b>There is no ideal solution for all situations</b>
+          </div>For example this circle which is not centered on a pixel, or a pixel boundary, not only has gaps at the top, but is also too thick at the bottom! Yuck!
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
   magick -size 15x15 xc: -fill none -stroke black +antialias \
           -strokewidth 0.47  -draw 'translate 7,7.3 circle 0,0 5,0' \
           -scale 500%  circle_bad_stroke.gif
-</samp></pre></TD></TR></TABLE></TD><TD ALIGN=center>
-  <A HREF="circle_bad_stroke.gif"
-     ><IMG SRC="circle_bad_stroke.gif"
-           ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-Here is a table of good "<CODE><A HREF="../option_link.cgi?strokewidth"
->-strokewidth</A></CODE>", to generate a thin single pixel wide circle of
-specific radius.   Note that the best value to use varies depending on if the
-circle is centered either on an <I>actual</I> pixel (such as '<CODE> 5 ,
-5 </CODE>'), or on a <I>half</I> pixel boundry (such as '<CODE>
-5.5 , 5.5 </CODE>')
-
-<table class="table table-sm table-hover table-striped" WIDTH=50% CELLSPACING=0 ALIGN=center>
-<TR><TH ALIGN=center> Circle Radius
-              <TH ALIGN=center>    SW Actual
-                                <TH ALIGN=center>     SW half
-<TR><TD ALIGN=center>    1
-              <TD ALIGN=center>       0.3
-                                <TD ALIGN=center>&nbsp; 0.3 &#182;
-<TR><TD ALIGN=center>   1.5
-              <TD ALIGN=center>&nbsp; 0.5 &#182;
-                                <TD ALIGN=center>       0.3
-<TR><TD ALIGN=center>    2
-              <TD ALIGN=center>       0.3
-                                <TD ALIGN=center>&nbsp; 0.3 &#167;
-<TR><TD ALIGN=center>   2.5
-              <TD ALIGN=center>&nbsp; 0.5 &#182;
-                                <TD ALIGN=center>&nbsp; 0.3 &#164;
-<TR><TD ALIGN=center>    3
-              <TD ALIGN=center>&nbsp; 0.3 &#164;
-                                <TD ALIGN=center>       0.3
-<TR><TD ALIGN=center>   3.5
-              <TD ALIGN=center>       0.5
-                                <TD ALIGN=center>&nbsp; 0.3 &#164;
-<TR><TD ALIGN=center>    4
-              <TD ALIGN=center>&nbsp; 0.5 &#167;
-                                <TD ALIGN=center>       0.3
-<TR><TD ALIGN=center>   4.5
-              <TD ALIGN=center>       0.5
-                                <TD ALIGN=center>       0.3
-<TR><TD ALIGN=center>    5
-              <TD ALIGN=center>       0.4
-                                <TD ALIGN=center>       0.3
-<TR><TD ALIGN=center>   5.5
-              <TD ALIGN=center>&nbsp; 0.5 &#182;
-                                <TD ALIGN=center>       0.3
-<TR><TD ALIGN=center>    6
-              <TD ALIGN=center>       0.3
-                                <TD ALIGN=center>&nbsp; 0.5 &#167;
-<TR><TD ALIGN=center>   6.5
-              <TD ALIGN=center>       0.5
-                                <TD ALIGN=center>       0.43
-<TR><TD ALIGN=center>    7
-              <TD ALIGN=center>       0.5
-                                <TD ALIGN=center>       0.434
-<TR><TD ALIGN=center>   7.5
-              <TD ALIGN=center>&nbsp; 0.5 &#167;
-                                <TD ALIGN=center>&nbsp; 0.5 &#167;
-<TR><TD ALIGN=center>    8
-              <TD ALIGN=center>       0.4
-                                <TD ALIGN=center>       0.5
-<TR><TD ALIGN=center COLSPAN=3><FONT SIZE=-1>
-    &#164; Very good small circle </FONT>
-<TR><TD ALIGN=center COLSPAN=3><FONT SIZE=-1>
-    &#167; no ideal width found </FONT>
-<TR><TD ALIGN=center COLSPAN=3><FONT SIZE=-1>
-    &#182; circle is very bad </FONT>
-</TABLE></P>
-
-ASIDE: To center a circle on an image, in drawing coordinates (pixel
-coordinates), is (size-1)/2 </P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<A NAME="floodfill">
-<H2>Anti-Aliasing and Flood Fill Problems</H2>
-</A>
-
-Due to anti-aliasing features of IM, flood-filling ("<CODE><A
-HREF="../option_link.cgi?threshold"
->-draw</A> color floodfill</CODE>") has problems when used on images with
-anti-aliasing effects. It also has similar problems with images read in from
-the "JPG" image format. </P>
-
-Basically as most objects in IM are anti-aliased (or read from a "JPG" format
-image file), colors near the edges of drawn objects are rarely the specific
-color that you are using flood fill to replace. This means the flood fill will
-not fill the very edges of the areas you are trying to fill, unless you are
-avoiding anti-aliasing entirely. </P>
-
-Essentially flood fill, or even color replace, does not understand
-anti-aliasing, nor does it use anti-aliasing techniques itself. </P>
-Consequently flood fill will generally miss the pixels at the very edge of the
-area you are filling. </P>
-
-For example, Here we do a typical flood fill operation.  Draw a circle, then
-try to fill it with a pattern...
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<!-- <CODE EXECUTE>
+</samp></pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td align="center">
+                <a href="circle_bad_stroke.gif"><img src="circle_bad_stroke.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Here is a table of good "<code><a href="../option_link.cgi?strokewidth">-strokewidth</a></code>", to generate a thin single pixel wide circle of specific radius. Note that the best value to use varies depending on if the circle is centered either on an <i>actual</i> pixel (such as ' <code>5 , 5</code> '), or on a <i>half</i> pixel boundry (such as ' <code>5.5 , 5.5</code> ')
+          <table class="table table-sm table-hover table-striped" width="50%" cellspacing="0" align="center">
+            <tr>
+              <th align="center">Circle Radius</th>
+              <th align="center">SW Actual</th>
+              <th align="center">SW half</th>
+            </tr>
+            <tr>
+              <td align="center">1</td>
+              <td align="center">0.3</td>
+              <td align="center">&nbsp; 0.3 ¶</td>
+            </tr>
+            <tr>
+              <td align="center">1.5</td>
+              <td align="center">&nbsp; 0.5 ¶</td>
+              <td align="center">0.3</td>
+            </tr>
+            <tr>
+              <td align="center">2</td>
+              <td align="center">0.3</td>
+              <td align="center">&nbsp; 0.3 §</td>
+            </tr>
+            <tr>
+              <td align="center">2.5</td>
+              <td align="center">&nbsp; 0.5 ¶</td>
+              <td align="center">&nbsp; 0.3 ¤</td>
+            </tr>
+            <tr>
+              <td align="center">3</td>
+              <td align="center">&nbsp; 0.3 ¤</td>
+              <td align="center">0.3</td>
+            </tr>
+            <tr>
+              <td align="center">3.5</td>
+              <td align="center">0.5</td>
+              <td align="center">&nbsp; 0.3 ¤</td>
+            </tr>
+            <tr>
+              <td align="center">4</td>
+              <td align="center">&nbsp; 0.5 §</td>
+              <td align="center">0.3</td>
+            </tr>
+            <tr>
+              <td align="center">4.5</td>
+              <td align="center">0.5</td>
+              <td align="center">0.3</td>
+            </tr>
+            <tr>
+              <td align="center">5</td>
+              <td align="center">0.4</td>
+              <td align="center">0.3</td>
+            </tr>
+            <tr>
+              <td align="center">5.5</td>
+              <td align="center">&nbsp; 0.5 ¶</td>
+              <td align="center">0.3</td>
+            </tr>
+            <tr>
+              <td align="center">6</td>
+              <td align="center">0.3</td>
+              <td align="center">&nbsp; 0.5 §</td>
+            </tr>
+            <tr>
+              <td align="center">6.5</td>
+              <td align="center">0.5</td>
+              <td align="center">0.43</td>
+            </tr>
+            <tr>
+              <td align="center">7</td>
+              <td align="center">0.5</td>
+              <td align="center">0.434</td>
+            </tr>
+            <tr>
+              <td align="center">7.5</td>
+              <td align="center">&nbsp; 0.5 §</td>
+              <td align="center">&nbsp; 0.5 §</td>
+            </tr>
+            <tr>
+              <td align="center">8</td>
+              <td align="center">0.4</td>
+              <td align="center">0.5</td>
+            </tr>
+            <tr>
+              <td align="center" colspan="3"><font size="-1">¤ Very good small circle</font></td>
+            </tr>
+            <tr>
+              <td align="center" colspan="3"><font size="-1">§ no ideal width found</font></td>
+            </tr>
+            <tr>
+              <td align="center" colspan="3"><font size="-1">¶ circle is very bad</font></td>
+            </tr>
+          </table>ASIDE: To center a circle on an image, in drawing coordinates (pixel coordinates), is (size-1)/2
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <a name="floodfill" id="floodfill">
+          <h2>Anti-Aliasing and Flood Fill Problems</h2></a> Due to anti-aliasing features of IM, flood-filling ("<code><a href="../option_link.cgi?threshold">-draw</a> color floodfill</code>") has problems when used on images with anti-aliasing effects. It also has similar problems with images read in from the "JPG" image format. Basically as most objects in IM are anti-aliased (or read from a "JPG" format image file), colors near the edges of drawn objects are rarely the specific color that you are using flood fill to replace. This means the flood fill will not fill the very edges of the areas you are trying to fill, unless you are avoiding anti-aliasing entirely. Essentially flood fill, or even color replace, does not understand anti-aliasing, nor does it use anti-aliasing techniques itself. Consequently flood fill will generally miss the pixels at the very edge of the area you are filling. For example, Here we do a typical flood fill operation. Draw a circle, then try to fill it with a pattern...
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <!-- <CODE EXECUTE>
    magick $HOME/icons/desc/cl-bgnd/display/weave-purple.gif tile_weave.gif
 </CODE> -->
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill none -stroke red -draw "circle 30,30 5,30" \
             -tile tile_weave.gif  -draw "color 30,30 floodfill" \
             tile_fill_1.gif
     magick tile_fill_1.gif -crop 10x10+35+4 +repage -scale 80x80 \
             tile_fill_1_mag.gif
-</CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD>
-   <A HREF="tile_fill_1.gif"
-      ><IMG SRC="tile_fill_1.gif"       WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-   <A HREF="tile_fill_1_mag.gif"
-      ><IMG SRC="tile_fill_1_mag.gif"   WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-As you can see in the magnified portion of the image, a line of 'off-color'
-pixels was completely missed by the flood fill operation, as the color of
-these pixels was not quite the same as the area you were filling. </P>
-
-One way to improve this is to pre-fill the areas you intend to fill with a
-color that matches the pattern you are using. The pattern will still not fill
-the area fully, but at least it will not look quite so bad.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="tile_fill_1.gif"><img src="tile_fill_1.gif" width="60" height="60" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_fill_1_mag.gif"><img src="tile_fill_1_mag.gif" width="60" height="60" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>As you can see in the magnified portion of the image, a line of 'off-color' pixels was completely missed by the flood fill operation, as the color of these pixels was not quite the same as the area you were filling. One way to improve this is to pre-fill the areas you intend to fill with a color that matches the pattern you are using. The pattern will still not fill the area fully, but at least it will not look quite so bad.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill black -stroke red  -draw "circle 30,30 5,30" \
             -tile tile_weave.gif  -draw "color 30,30 floodfill" \
             tile_fill_2.gif
     magick tile_fill_2.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_2_mag.gif
-</CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD>
-   <A HREF="tile_fill_2.gif"
-      ><IMG SRC="tile_fill_2.gif"       WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-   <A HREF="tile_fill_2_mag.gif"
-      ><IMG SRC="tile_fill_2_mag.gif"   WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-
-Another way of doing this is to fill the area with your pattern, with a high
-<A HREF="../color_basics/#fuzz" >Fuzz Factor</A> , to force the pattern to
-fill the area completely, right to the very edge, without missing the edge
-pixels.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="tile_fill_2.gif"><img src="tile_fill_2.gif" width="60" height="60" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_fill_2_mag.gif"><img src="tile_fill_2_mag.gif" width="60" height="60" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>Another way of doing this is to fill the area with your pattern, with a high <a href="../color_basics/#fuzz">Fuzz Factor</a> , to force the pattern to fill the area completely, right to the very edge, without missing the edge pixels.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -fill none -stroke red  -draw "circle 30,30 5,30" \
             -fuzz 35% -tile tile_weave.gif -draw "color 30,30 floodfill" \
             tile_fill_3.gif
     magick tile_fill_3.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_3_mag.gif
-</CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD>
-   <A HREF="tile_fill_3.gif"
-      ><IMG SRC="tile_fill_3.gif"       WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-   <A HREF="tile_fill_3_mag.gif"
-      ><IMG SRC="tile_fill_3_mag.gif"   WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=90% ALIGN=center>
-<TR valign="top">
-<TD><IMG SRC="../img_www/reminder.gif" WIDTH=20 HEIGHT=16
-    ><IMG SRC="../img_www/space.gif"   WIDTH=20 HEIGHT=16></TD>
-<TD ALIGN=justify width="100%"><FONT SIZE=-1><I>
-  Note that a high '<A HREF="../color_basics/#fuzz" >fuzz factor</A>', like
-  this, or the border that is too thin, can result in the fill pattern
-  'leaking' from the defined area. Some care is always needed when using
-  a flood-fill operation.  I don't actually recommend it as a general
-  solution, because of this.
-
-</I></FONT></TD></TR></TABLE></P>
-
-The problem with this is that as flood fill, by its very nature, does NOT use
-anti-aliasing itself, the edges of filled area suffer from the 'jaggies' or
-alias effects. </P>
-
-You can improve that situation by seperating the image drawing into separate
-steps.  Create a colored circle,  fill it, then draw the border.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="tile_fill_3.gif"><img src="tile_fill_3.gif" width="60" height="60" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_fill_3_mag.gif"><img src="tile_fill_3_mag.gif" width="60" height="60" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+            <tr valign="top">
+              <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
+              <td align="justify" width="100%"><font size="-1"><i>Note that a high '<a href="../color_basics/#fuzz">fuzz factor</a>', like this, or the border that is too thin, can result in the fill pattern 'leaking' from the defined area. Some care is always needed when using a flood-fill operation. I don't actually recommend it as a general solution, because of this.</i></font></td>
+            </tr>
+          </table>The problem with this is that as flood fill, by its very nature, does NOT use anti-aliasing itself, the edges of filled area suffer from the 'jaggies' or alias effects. You can improve that situation by seperating the image drawing into separate steps. Create a colored circle, fill it, then draw the border.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
     magick -size 60x60 xc:lightblue -fill black -draw "circle 30,30 5,30" \
             -tile tile_weave.gif -draw "color 30,30 floodfill" +tile \
             -fill none -stroke red  -strokewidth 2 -draw "circle 30,30 5,30" \
             tile_fill_4.gif
     magick tile_fill_4.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_4_mag.gif
-</CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD>
-   <A HREF="tile_fill_4.gif"
-      ><IMG SRC="tile_fill_4.gif"       WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-   <A HREF="tile_fill_4_mag.gif"
-      ><IMG SRC="tile_fill_4_mag.gif"   WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-This is one simple way to improve flood fill. Others is to use a shaped
-overlay, but that can be a tricky method to work out. Later I will look at
-similar modifications to existing images. </P>
-
-Of course if you are drawing the area being flood filled yourself, and not
-using an existing image, the ideal solution would be to avoid flood fill by by
-specifying the fill pattern for the original draw operation.
-
-<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width="100%" ALIGN=center>
-<TR><TD width="100%" ALIGN=justify>
-<table class="table table-sm table-hover table-striped" CELLSPACING=0 CELLPADDING=5 width="100%" bgcolor="#f8f8f8">
-<TR><TD><pre class="bg-light text-dark mx-4"><samp>
+</samp> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="tile_fill_4.gif"><img src="tile_fill_4.gif" width="60" height="60" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_fill_4_mag.gif"><img src="tile_fill_4_mag.gif" width="60" height="60" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>This is one simple way to improve flood fill. Others is to use a shaped overlay, but that can be a tricky method to work out. Later I will look at similar modifications to existing images. Of course if you are drawing the area being flood filled yourself, and not using an existing image, the ideal solution would be to avoid flood fill by by specifying the fill pattern for the original draw operation.
+          <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tr>
+              <td width="100%" align="justify">
+                <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="100%" bgcolor="#F8F8F8">
+                  <tr>
+                    <td>
+                      <pre class="bg-light text-dark mx-4"><samp>
     magick -size 60x60 xc:lightblue -strokewidth 2 \
             -tile tile_weave.gif -stroke red -draw "circle 30,30 5,30" \
             tile_fill_5.gif
     magick tile_fill_5.gif -crop 10x10+35+4 +repage -scale 60x60 \
             tile_fill_5_mag.gif
-</CODE>&nbsp;</PRE></TD></TR></TABLE>
-</TD><TD>
-   <A HREF="tile_fill_5.gif"
-      ><IMG SRC="tile_fill_5.gif"       WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
-   <A HREF="tile_fill_5_mag.gif"
-      ><IMG SRC="tile_fill_5_mag.gif"   WIDTH=60 HEIGHT=60
-            ALIGN=middle VSPACE=0 HSPACE=0 BORDER=1 ALT="[IM Output]"></A>
-</TD></TR></TABLE></P>
-
-<HR><!-- ---------------------------------------------------------------- -->
-
-<PRE>
+</samp> </pre>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <a href="tile_fill_5.gif"><img src="tile_fill_5.gif" width="60" height="60" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_fill_5_mag.gif"><img src="tile_fill_5_mag.gif" width="60" height="60" align="middle" vspace="0" hspace="0" border="1" alt="[IM Output]"></a>
+              </td>
+            </tr>
+          </table>
+          <hr>
+          <!-- ---------------------------------------------------------------- -->
+          <pre>
 FUTURE:  anti-aliasing issues on pre-exsiting images (especially JPG format).
 
 For Example Recoloring and overlaying text or diagram image onto a color
@@ -535,7 +432,7 @@ or background.
 
 Also re-adding transparency to GIF files, and rescaled JPEGs for icon use.
 
-<B>Smoothing or anti-alising images with limited color set</B>
+<b>Smoothing or anti-alising images with limited color set</b>
 Specifically bitmap (pure black and white) images.
 
 First anti-aliasing does not work on bitmap images.
@@ -544,25 +441,29 @@ Anti-aliasing involves using a mix of colors and transparences to try and
 smooth the 'stair case' or 'jaggies' effect of slanted lines and color
 boundaries.  If only two colors are available no anti-aliasing can NOT happen!
 
-The image must be converted from B&W or grey scale at the minimum before
+The image must be converted from B&amp;W or grey scale at the minimum before
 anti-aliasing can be used.
 
 A simple way to smooth edges is to use a small amount of blur after reading in
-a B&W image or an image with a tiny pallette size.
+a B&amp;W image or an image with a tiny pallette size.
 
 EG:   magick image.xbm  -blur 0x.3  smoothed_image.png
 
-</PRE>
-
-</DIV></P>
-<HR><!-- ---------------------------------------------------------------- -->
-</div></main><footer class="magick-footer"><div class="container-fluid">
-Created: 9 December 2003 <BR>
-Updated: 27 February 2006 <BR>
-Author: <A HREF="https://antofthy.gitlab.io/anthony.html"
-        >Anthony Thyssen</A>, &lt;Anthony.Thyssen&#64;gmail.com&gt;<BR>
-Examples Generated with:
-        <IMG SRC="version.gif" ALIGN=absmiddle ALT="[version image]"><BR>
-URL: <CODE>https://imagemagick.org/Usage/antialiasing/</CODE>
-</div></footer></body></HTML>
-
+</pre>
+        </div>
+        <hr>
+        <!-- ---------------------------------------------------------------- -->
+      </div>
+    </div>
+  </main>
+  <footer class="magick-footer">
+    <div class="container-fluid">
+      Created: 9 December 2003<br>
+      Updated: 27 February 2006<br>
+      Author: <a href="https://antofthy.gitlab.io/anthony.html">Anthony Thyssen</a>, &lt;Anthony.Thyssen@gmail.com&gt;<br>
+      Examples Generated with: <img src="version.gif" align="absmiddle" alt="[version image]"><br>
+      URL: <code>https://imagemagick.org/Usage/antialiasing/</code>
+    </div>
+  </footer>
+</body>
+</html>
