@@ -124,7 +124,7 @@
               </tr>
             </table><a href="montage.jpg"><img src="montage.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
           </div><a name="geometry_size" id="geometry_size"></a>
-          <h3>Geometry - Tile Size and Image Resizing</h3>The "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" setting, is the most important control of "<code>magick montage</code>". It defines the size of the individual thumbnail images, and the spacing between them. The size part of the geometry is used as an argument to the <a href="../resize/#resize">Resize Operator</a>, including all its special purpose flags. The position part of the option is interpreted as the amount of border space to leave around the image, so making this smaller, will make the gaps between the images smaller. The default "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" setting is '<code>120x120&gt;+4+3</code>' which means to fit any image given into a box 120x120 pixel in size. If the image is larger shrink it, but don't resize smaller images (as per the <a href="../resize/#larger">Only Shrink Larger ('&gt;') Flag</a>. The 'tile' size is then set to the largest dimentions of all the resized images, and the size actually specified. That means you will never get a tile size that is smaller than the specified "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" size. You can remove huge size of the tiles in the previous example space by modifing the "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" default. For example by removing the 'size' component, none of the images will be resized, and the 'tile' size will be set to the largest dimensions of all the images given. For example, here I ask montage to tile using the largest image given with a small gap between tiles. This is a very typical setting to use when all the input images are small and roughly same size.
+          <h3>Geometry - Tile Size and Image Resizing</h3>The "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" setting, is the most important control of "<code>magick montage</code>". It defines the size of the individual thumbnail images, and the spacing between them. The size part of the geometry is used as an argument to the <a href="../resize/#resize">Resize Operator</a>, including all its special purpose flags. The position part of the option is interpreted as the amount of border space to leave around the image, so making this smaller, will make the gaps between the images smaller. The default "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" setting is '<code>120x120&gt;+4+3</code>' which means to fit any image given into a box 120x120 pixel in size. If the image is larger shrink it, but don't resize smaller images (as per the <a href="../resize/#larger">Only Shrink Larger ('&gt;') Flag</a>. The 'tile' size is then set to the largest dimentions of all the resized images, and the size actually specified. That means you will never get a tile size that is smaller than the specified "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" size. You can remove huge size of the tiles in the previous example space by modifing the "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" default. For example by removing the 'size' component, none of the images will be resized, and the 'tile' size will be set to the largest dimensions of all the images given. For example, here I ask montage to tile using the largest image given with a small gap between tiles. This is a very typical setting to use when all the input images are small and roughly same size.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -161,8 +161,8 @@
               </tr>
             </table><a href="montage_geom_larger.jpg"><img src="montage_geom_larger.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
           </div>As you can see the spacing between images appears to be larger than the requested 2 pixel spacing. But that is not the case. The tiles are still separated by 2 pixels, but the images themselves do not fill the 48x48 tile size requested. The 'logo' image was still resized to fit into the 48x48 pixel tile. If you don't want any resizing, then only define the spacing between the tiles. Alternatively, use a special size such as '<code>1x1&lt;</code>' which tells IM to only resize smaller images to the given size. As no image can be smaller that 1 pixel, no image will be resized. The tile size will thus be again the largest dimention of all the images on the page. See <a href="#zero_geometry">Zero Geometry, caution required</a> for reasons why you may like to do this. <a name="geometry_spacing" id="geometry_spacing"></a>
-          <h3>Geometry - Tile Spacing</h3>The positional part of the "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" setting, will add space between the individual 'tiles', by adding a <a href="../crop/#border">Border</a> of those dimensions around the tiles before <a href="../layers/#append">Appending</a> them together. That means for the default "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" setting, of '<code>+4+3</code>', the tiles will be spaced from the left and right edges of the final image by 4 pixels, and will have a 8 pixel (twice the size given) spacing horizontally between the tiles. The same goes for the vertical spacing. Note how the space bewteen the tiles when all the images were resized (second last example) is twice the size of the space around the edges. <a name="tile" id="tile"></a>
-          <h3>Tile Layout Controls</h3>The next most important option in "<code>magick montage</code>" is the "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting. This tells montage what limits you want on how the tiled images are to be laid out on the final result. In ImageMagick version 6 "<code>magick montage</code>" will make an educated guess as to how best to tile a given number of images, when you provide no "<code><a href="../option_link.cgi?tile">-tile</a></code>" hints. It does however assume that the images being tiled are roughly squarish in nature, as it does not look at the images aspect ratios, when deciding on the tiling to use.
+          <h3>Geometry - Tile Spacing</h3>The positional part of the "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" setting, will add space between the individual 'tiles', by adding a <a href="../crop/#border">Border</a> of those dimensions around the tiles before <a href="../layers/#append">Appending</a> them together. That means for the default "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" setting, of '<code>+4+3</code>', the tiles will be spaced from the left and right edges of the final image by 4 pixels, and will have a 8 pixel (twice the size given) spacing horizontally between the tiles. The same goes for the vertical spacing. Note how the space bewteen the tiles when all the images were resized (second last example) is twice the size of the space around the edges. <a name="tile" id="tile"></a>
+          <h3>Tile Layout Controls</h3>The next most important option in "<code>magick montage</code>" is the "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting. This tells montage what limits you want on how the tiled images are to be laid out on the final result. In ImageMagick version 6 "<code>magick montage</code>" will make an educated guess as to how best to tile a given number of images, when you provide no "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" hints. It does however assume that the images being tiled are roughly squarish in nature, as it does not look at the images aspect ratios, when deciding on the tiling to use.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -188,7 +188,7 @@
               <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
               <td align="justify" width="100%"><font size="-1"><i>The strange "<code>[1-5]</code>" syntax is an UNIX shell shorthand, which is expanded into a list of filenames. The "<code>magick montage</code>" command itself does not see these characters, just the resulting list of files.</i></font></td>
             </tr>
-          </table>ImageMagick is pretty good at figuring out the right "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting to use for a specific number of input images. Here is a table of number of input images and the tile setting IM will used to layout those images.
+          </table>ImageMagick is pretty good at figuring out the right "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting to use for a specific number of input images. Here is a table of number of input images and the tile setting IM will used to layout those images.
           <table align="center">
             <tr>
               <td>
@@ -290,7 +290,7 @@
                 </table>
               </td>
             </tr>
-          </table>Note however that IM will not automatically select a 'perfect fit' 6x3 tile setting for 18 images, nor a 7x4 setting for 28 images. However if you specify a specific "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting, montage will always create an image big enough to hold that many 'tiles'.
+          </table>Note however that IM will not automatically select a 'perfect fit' 6x3 tile setting for 18 images, nor a 7x4 setting for 28 images. However if you specify a specific "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting, montage will always create an image big enough to hold that many 'tiles'.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -316,7 +316,7 @@
                 </center>
               </td>
             </tr>
-          </table>You can avoid the problems of extra space, and multiple images, especially for an unknown number of input images, by removing either a row, or the column number, from the "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting. The missing number will be taken by montage as being variable and montage will only create enough tile space to hold ALL the input images, producing only one image, never multiple images.
+          </table>You can avoid the problems of extra space, and multiple images, especially for an unknown number of input images, by removing either a row, or the column number, from the "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting. The missing number will be taken by montage as being variable and montage will only create enough tile space to hold ALL the input images, producing only one image, never multiple images.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -332,7 +332,7 @@
                 </td>
               </tr>
             </table><a href="tile_x1.gif"><img src="tile_x1.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_x2.gif"><img src="tile_x2.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_x4.gif"><img src="tile_x4.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_4x.gif"><img src="tile_4x.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_5x.gif"><img src="tile_5x.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <a href="tile_9x.gif"><img src="tile_9x.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>This is the more typical use of the "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting, as it ensures the montage is sized correctly, while still allowing it some control in determining the final array size. Note the last image, in the above where we requested 9 columns of images. IM still generated the requested 9 columns, even though less than 9 images were given. On the other hand the first image (one row requested), is exactly the right length to hold all the images. If you have more input images than montage can tile into the space given by a "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting, then multiple images can be generated by montage, either resulting in image sequence numbers being added to the filename, or some sort of GIF animation, being created. See <a href="../files/#write_list">Writing Multiple Images</a> for details. For example, here I have asked montage to save separate images for each page generated, by supplying a '<code>%d</code>' for the frame/scene/page number of each image filename.
+          </div>This is the more typical use of the "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting, as it ensures the montage is sized correctly, while still allowing it some control in determining the final array size. Note the last image, in the above where we requested 9 columns of images. IM still generated the requested 9 columns, even though less than 9 images were given. On the other hand the first image (one row requested), is exactly the right length to hold all the images. If you have more input images than montage can tile into the space given by a "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting, then multiple images can be generated by montage, either resulting in image sequence numbers being added to the filename, or some sort of GIF animation, being created. See <a href="../files/#write_list">Writing Multiple Images</a> for details. For example, here I have asked montage to save separate images for each page generated, by supplying a '<code>%d</code>' for the frame/scene/page number of each image filename.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -344,7 +344,7 @@
               </tr>
             </table><a href="multi_0.gif"><img src="multi_0.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <a href="multi_1.gif"><img src="multi_1.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a> <a href="multi_2.gif"><img src="multi_2.gif" align="middle" vspace="2" hspace="5" border="1" alt="[IM Output]"></a>
           </div><a name="frame" id="frame"></a>
-          <h3>Frame Decoration</h3>The best part of using montage to arrange images is that it provides a lot of extra controls to add extra 'fluff' around each image. For example, you can better define the images being displayed by adding a "<code><a href="../option_link.cgi?frame">-frame</a></code>" around each image.
+          <h3>Frame Decoration</h3>The best part of using montage to arrange images is that it provides a lot of extra controls to add extra 'fluff' around each image. For example, you can better define the images being displayed by adding a "<code><a href="https://imagemagick.org/script/command-line-options.php?#frame">-frame</a></code>" around each image.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -357,7 +357,7 @@
               </tr>
             </table><a href="frame.jpg"><img src="frame.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
           </div>This is not like the same option in "<code>magick</code>" (See <a href="../crop/#frame">Adding a 3D frame</a> example). The montage frame option will automatically figure out default values for the internal and external bevel of the frame. As such only a single argument number is needed. <a name="border" id="border"></a>
-          <h3>Border Decoration</h3>Sometime around IM v6.1.0, "<a href="../option_link.cgi?border"><code>-border</code></a>" became a new decorative option of montage. It now adds extra 'padding' around each image, after it has been resized according ot the "<a href="../option_link.cgi?geometry"><code>-geometry</code></a>" setting.
+          <h3>Border Decoration</h3>Sometime around IM v6.1.0, "<a href="https://imagemagick.org/script/command-line-options.php?#border"><code>-border</code></a>" became a new decorative option of montage. It now adds extra 'padding' around each image, after it has been resized according ot the "<a href="https://imagemagick.org/script/command-line-options.php?#geometry"><code>-geometry</code></a>" setting.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -373,15 +373,15 @@
           <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
             <tr valign="top">
               <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
-              <td align="justify" width="100%"><font size="-1"><i>The "<a href="../option_link.cgi?border"><code>-border</code></a>" decoration does not currently work when the <a href="#frame">Frame Decoration</a> is also applied.</i></font></td>
+              <td align="justify" width="100%"><font size="-1"><i>The "<a href="https://imagemagick.org/script/command-line-options.php?#border"><code>-border</code></a>" decoration does not currently work when the <a href="#frame">Frame Decoration</a> is also applied.</i></font></td>
             </tr>
           </table>
           <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
             <tr valign="top">
               <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
-              <td align="justify" width="100%"><font size="-1"><i>Before IM v6.1.0 (approx) <a href="../option_link.cgi?border"><b>-border</b></a></i> would been applied to images at the point in which it appeared in the "<code>magick montage</code>" command line, just like it would have with "<code>magick</code>".<br>
+              <td align="justify" width="100%"><font size="-1"><i>Before IM v6.1.0 (approx) <a href="https://imagemagick.org/script/command-line-options.php?#border"><b>-border</b></a></i> would been applied to images at the point in which it appeared in the "<code>magick montage</code>" command line, just like it would have with "<code>magick</code>".<br>
               <br>
-              That is, border would have been thus added to the image long before the images get resized (according to "<a href="../option_link.cgi?geometry"><code>-geometry</code></a>"), which resulted in different border widths around each image depending on the size of the image at that point. It was to remove this inconsistancy that <a href="../option_link.cgi?border"><b>-border</b></a></font> became a special montage setting.</td>
+              That is, border would have been thus added to the image long before the images get resized (according to "<a href="https://imagemagick.org/script/command-line-options.php?#geometry"><code>-geometry</code></a>"), which resulted in different border widths around each image depending on the size of the image at that point. It was to remove this inconsistancy that <a href="https://imagemagick.org/script/command-line-options.php?#border"><b>-border</b></a></font> became a special montage setting.</td>
             </tr>
           </table><a name="shadow" id="shadow"></a>
           <h3>Shadow Decoration</h3>Adding a shadow with the frame is also quite good.
@@ -429,7 +429,7 @@
                 <a href="shadow_shaped.png"><img src="shadow_shaped.png" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a>
               </td>
             </tr>
-          </table>As you can see the shadow used by montage is actually a semi-transparent color, allowing the background to affect its final color. This means if you create a montage with textured background, or use a transparent background and overlay it, the shadow will do the right thing. Of course you need to use an image format that can handle semi-transparent colors, like PNG. Remember because of <a href="../formats/#boolean_trans">GIF Boolean Transparency</a> you can not use GIF image file format for this purpose. Note that shadows do not care about the "<a href="../option_link.cgi?geometry"><code>-geometry</code></a>" spacing between the images. As such if the images are too close together, the shadow of previous images can be obscured by later images. For example...
+          </table>As you can see the shadow used by montage is actually a semi-transparent color, allowing the background to affect its final color. This means if you create a montage with textured background, or use a transparent background and overlay it, the shadow will do the right thing. Of course you need to use an image format that can handle semi-transparent colors, like PNG. Remember because of <a href="../formats/#boolean_trans">GIF Boolean Transparency</a> you can not use GIF image file format for this purpose. Note that shadows do not care about the "<a href="https://imagemagick.org/script/command-line-options.php?#geometry"><code>-geometry</code></a>" spacing between the images. As such if the images are too close together, the shadow of previous images can be obscured by later images. For example...
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -442,7 +442,7 @@
                 </td>
               </tr>
             </table><a href="shadow_spacing.png"><img src="shadow_spacing.png" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a>
-          </div>It is thus recommended at a reasonable amount of "<a href="../option_link.cgi?geometry"><code>-geometry</code></a>" spacing be provided when using shadow. To avoid 'edge clipping' shadows to much, the "<a href="../option_link.cgi?shadow"><code>-shadow</code></a>" option will add 4 extra edge spacing pixels the right and bottom edges of the final image. This is on top of the normal "<a href="../option_link.cgi?geometry"><code>-geometry</code></a>" spacing provided. However as you can see above, this is not always enough space. Montage currently also provides no controls for the offset, color or the 'softness' of the generated shadow (at least not yet), but then, you didn't have such control with hard rectangular shadow that was provided by older versions of montage. <a name="label" id="label"></a>
+          </div>It is thus recommended at a reasonable amount of "<a href="https://imagemagick.org/script/command-line-options.php?#geometry"><code>-geometry</code></a>" spacing be provided when using shadow. To avoid 'edge clipping' shadows to much, the "<a href="https://imagemagick.org/script/command-line-options.php?#shadow"><code>-shadow</code></a>" option will add 4 extra edge spacing pixels the right and bottom edges of the final image. This is on top of the normal "<a href="https://imagemagick.org/script/command-line-options.php?#geometry"><code>-geometry</code></a>" spacing provided. However as you can see above, this is not always enough space. Montage currently also provides no controls for the offset, color or the 'softness' of the generated shadow (at least not yet), but then, you didn't have such control with hard rectangular shadow that was provided by older versions of montage. <a name="label" id="label"></a>
           <h3>Labeling Montage Images</h3>You can also tell montage to label the image with their source filenames, though you probably need to resize the image frames, or the labels may not fit, truncating the text label. In this case we added a "<code>60x60&gt;</code>" to the geometry string, which tells IM to shrink larger images to fit into this space, but <i>not</i> to enlarge images if they are smaller. This is probably the most typical use of montage.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
@@ -455,7 +455,7 @@
                 </td>
               </tr>
             </table><a href="label_fname.jpg"><img src="label_fname.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>The '<code>%f</code>' is a special format character, which can pull out various details about the images in memory. See <a href="https://imagemagick.org/script/escape.php">Image Property Escapes</a> for details of other information you can extract from images. You don't have to use a "<code><a href="../option_link.cgi?frame">-frame</a></code>" when labeling thumbnails. The labels are not shadowed, so that they remain clearly readable.
+          </div>The '<code>%f</code>' is a special format character, which can pull out various details about the images in memory. See <a href="https://imagemagick.org/script/escape.php">Image Property Escapes</a> for details of other information you can extract from images. You don't have to use a "<code><a href="https://imagemagick.org/script/command-line-options.php?#frame">-frame</a></code>" when labeling thumbnails. The labels are not shadowed, so that they remain clearly readable.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -467,7 +467,7 @@
                 </td>
               </tr>
             </table><a href="label_shadow.jpg"><img src="label_shadow.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>And as of IM v 6.2.1 you can now re-label images after they have been read in using the "<code><a href="../option_link.cgi?set">-set</a></code>" image attribute operator. Lets use the "<code><a href="../option_link.cgi?set">-set</a></code>" operator to add more information about the images. And also few more montage settings...
+          </div>And as of IM v 6.2.1 you can now re-label images after they have been read in using the "<code><a href="https://imagemagick.org/script/command-line-options.php?#set">-set</a></code>" image attribute operator. Lets use the "<code><a href="https://imagemagick.org/script/command-line-options.php?#set">-set</a></code>" operator to add more information about the images. And also few more montage settings...
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -480,13 +480,13 @@
                 </td>
               </tr>
             </table><a href="label_fname3.jpg"><img src="label_fname3.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>As we showed in the examples above you can use the "<code><a href="../option_link.cgi?label">-label</a></code>" setting to define the default label for an image, as they are read in, or you can re-label the image afterward using the "<code><a href="../option_link.cgi?set">-set</a></code>" operator.
+          </div>As we showed in the examples above you can use the "<code><a href="https://imagemagick.org/script/command-line-options.php?#label">-label</a></code>" setting to define the default label for an image, as they are read in, or you can re-label the image afterward using the "<code><a href="https://imagemagick.org/script/command-line-options.php?#set">-set</a></code>" operator.
           <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
             <tr valign="top">
               <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
               <td align="justify" width="100%"><font size="-1"><i>Note that '<code>%wx%h</code> gives the current pixel width and height of the image as it is in memory. If the image size was modified, such as during input this may be different to the images in disk (or creation) size. Use '<code>%[width]x%[height]</code>' instead if you want its in memory pixel size.</i></font></td>
             </tr>
-          </table>You can also label images differently by setting label of individual images. Either option can be used, though you will need to use of parenthesis to limit what images the "<code><a href="../option_link.cgi?set">-set</a></code>" operator will be applied to. Here for example we use both forms of labeling. But lets also add a title to the montage, just because we can...
+          </table>You can also label images differently by setting label of individual images. Either option can be used, though you will need to use of parenthesis to limit what images the "<code><a href="https://imagemagick.org/script/command-line-options.php?#set">-set</a></code>" operator will be applied to. Here for example we use both forms of labeling. But lets also add a title to the montage, just because we can...
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -502,7 +502,7 @@
                 </td>
               </tr>
             </table><a href="titled.jpg"><img src="titled.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>You can turn off image labeling for the next image(s) by using a "<code>-label ''</code> " or "<code>+label</code>". However as you will see later these two settings are not quite the same. The same applies for a post reading, label "<code><a href="../option_link.cgi?set">-set</a></code>" operation.
+          </div>You can turn off image labeling for the next image(s) by using a "<code>-label ''</code> " or "<code>+label</code>". However as you will see later these two settings are not quite the same. The same applies for a post reading, label "<code><a href="https://imagemagick.org/script/command-line-options.php?#set">-set</a></code>" operation.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -520,7 +520,7 @@
           </div>The last image shows how using a space for an image label, you can create a image label space, but leave it blank. This presents a good rule of thumb when using montage...
           <div align="center">
             <b>Either label all your images, or none of them!</b>
-          </div>You don't have to label your images during the montage operation itself. Both the MIFF and PNG formats, can store a label as part of their image format. Montage will automatically label any image read in that already contains a label. This is automatic and does not need to be specified, and I have used this technique to generate some very complex image montages. For example the montage array in <a href="../misc/#annotate">Annotate Angle Examples</a> was created using this technique. If you do not want this automatic labeling, you must specifically tell montage to reset all the labels being read in or created to the empty string, using "<code>-label ''</code>" before reading the image. Or you can just delete the label meta-data using "<code>+set label</code>" after reading the images. This is where "<code><a href="../option_link.cgi?label">+label</a></code>" differs from using an empty label ("<code>-label&nbsp;''</code>"). The former will reset the default behavior back to automatically using any label meta-data that the image being read-in may have , while the later replaces the label with an empty string, which effectiavvly removes the label. You can also preserve the original label of the image using "<code>-label&nbsp;'%l'</code>", which can be usful as a NO-OP labeling option in image processing scripts. Note that "<code><a href="../option_link.cgi?set">-set</a></code>" cannot restore the original label of an image, once it has been modified or removed, either by using "<code><a href="../option_link.cgi?label">-label</a></code>" or "<code><a href="../option_link.cgi?set">-set</a></code>" <a name="image_labels" id="image_labels"></a>
+          </div>You don't have to label your images during the montage operation itself. Both the MIFF and PNG formats, can store a label as part of their image format. Montage will automatically label any image read in that already contains a label. This is automatic and does not need to be specified, and I have used this technique to generate some very complex image montages. For example the montage array in <a href="../misc/#annotate">Annotate Angle Examples</a> was created using this technique. If you do not want this automatic labeling, you must specifically tell montage to reset all the labels being read in or created to the empty string, using "<code>-label ''</code>" before reading the image. Or you can just delete the label meta-data using "<code>+set label</code>" after reading the images. This is where "<code><a href="https://imagemagick.org/script/command-line-options.php?#label">+label</a></code>" differs from using an empty label ("<code>-label&nbsp;''</code>"). The former will reset the default behavior back to automatically using any label meta-data that the image being read-in may have , while the later replaces the label with an empty string, which effectiavvly removes the label. You can also preserve the original label of the image using "<code>-label&nbsp;'%l'</code>", which can be usful as a NO-OP labeling option in image processing scripts. Note that "<code><a href="https://imagemagick.org/script/command-line-options.php?#set">-set</a></code>" cannot restore the original label of an image, once it has been modified or removed, either by using "<code><a href="https://imagemagick.org/script/command-line-options.php?#label">-label</a></code>" or "<code><a href="https://imagemagick.org/script/command-line-options.php?#set">-set</a></code>" <a name="image_labels" id="image_labels"></a>
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -538,7 +538,7 @@
                 </td>
               </tr>
             </table><a href="label_control.jpg"><img src="label_control.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>In the above you can see that the first image was labeled using the label supplied with the image itself. The second had the incoming label removed by a "<code>-label ''</code> " setting, while the third also used the images label because we turned-off the label setting with "<code><a href="../option_link.cgi?label">+label</a></code>". <a name="metadata" id="metadata"></a>
+          </div>In the above you can see that the first image was labeled using the label supplied with the image itself. The second had the incoming label removed by a "<code>-label ''</code> " setting, while the third also used the images label because we turned-off the label setting with "<code><a href="https://imagemagick.org/script/command-line-options.php?#label">+label</a></code>". <a name="metadata" id="metadata"></a>
           <h3>Using Saved Image MetaData</h3>When generating images for later use by montage it is important to know what sort of image metadata a specific image file format can save. For example only PNG, and MIFF image file format can actually store '<code>label</code>' meta-data in their saved image file format...
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
@@ -557,7 +557,7 @@
                 </td>
               </tr>
             </table><a href="label_files.jpg"><img src="label_files.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>However all the common file cormats allow you to use '<code>comment</code>' meta-data, which you can use by specifying a '<code>%c</code>' argument to "<code><a href="../option_link.cgi?label">-label</a></code>".
+          </div>However all the common file cormats allow you to use '<code>comment</code>' meta-data, which you can use by specifying a '<code>%c</code>' argument to "<code><a href="https://imagemagick.org/script/command-line-options.php?#label">-label</a></code>".
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -612,7 +612,7 @@
               </tr>
             </table><a href="my_data_files.jpg"><img src="my_data_files.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
           </div><a name="null" id="null"></a>
-          <h3>Leaving Gaps in a Montage</h3>While you can leave extra space in a montage at the bottom by judicious use of the "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting and controlling the number of images given, leaving an empty tile space in the middle of a montage requires the use of a special image. The "<code>null:</code>" generated image was defined specifically for this purpose. The position in which it appears will not receive any label (even if one is defined), nor will it have any frame or shadow 'fluff' added. The tile is just left completely empty except for the background color (or texture) of the montage drawing canvas itself.
+          <h3>Leaving Gaps in a Montage</h3>While you can leave extra space in a montage at the bottom by judicious use of the "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting and controlling the number of images given, leaving an empty tile space in the middle of a montage requires the use of a special image. The "<code>null:</code>" generated image was defined specifically for this purpose. The position in which it appears will not receive any label (even if one is defined), nor will it have any frame or shadow 'fluff' added. The tile is just left completely empty except for the background color (or texture) of the montage drawing canvas itself.
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -624,7 +624,7 @@
                 </td>
               </tr>
             </table><a href="montage_null.jpg"><img src="montage_null.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>Note that to other IM commands the "<code>null:</code>" image is represented a single pixel transparent image. It is also used as a 'error image' for options like "<code><a href="../option_link.cgi?crop">-crop</a></code>" or "<code><a href="../option_link.cgi?trim">-trim</a></code>" which could produce a 'zero' or empty image as a result of the operation. This special image cannot be saved and then later used to leave gaps, currently it is only 'special' if given on the command line of "<code>magick montage</code>".
+          </div>Note that to other IM commands the "<code>null:</code>" image is represented a single pixel transparent image. It is also used as a 'error image' for options like "<code><a href="https://imagemagick.org/script/command-line-options.php?#crop">-crop</a></code>" or "<code><a href="https://imagemagick.org/script/command-line-options.php?#trim">-trim</a></code>" which could produce a 'zero' or empty image as a result of the operation. This special image cannot be saved and then later used to leave gaps, currently it is only 'special' if given on the command line of "<code>magick montage</code>".
           <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
             <tr valign="top">
               <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
@@ -643,63 +643,63 @@
           <h3>Montage Color Settings</h3></a>
           <table align="center" width="90%">
             <tr valign="top">
-              <td><code><a href="../option_link.cgi?background"><b>-background</b></a></code></td>
+              <td><code><a href="https://imagemagick.org/script/command-line-options.php?#background"><b>-background</b></a></code></td>
               <td>
-                The color outside the drawn frame. Often this is set to the '<code>none</code>' or '<code>transparent</code>', for use on web pages. The <a href="../option_link.cgi?texture">-texture</a> setting will be used instead if given.
+                The color outside the drawn frame. Often this is set to the '<code>none</code>' or '<code>transparent</code>', for use on web pages. The <a href="https://imagemagick.org/script/command-line-options.php?#texture">-texture</a> setting will be used instead if given.
               </td>
             </tr>
             <tr valign="top">
-              <td><code><a href="../option_link.cgi?bordercolor"><b>-bordercolor</b></a></code> &nbsp;</td>
+              <td><code><a href="https://imagemagick.org/script/command-line-options.php?#bordercolor"><b>-bordercolor</b></a></code> &nbsp;</td>
               <td>The fill color inside the frame for images, or any border padding. Any transparent areas in an image will become this color, unless no such decoration is added.</td>
             </tr>
             <tr valign="top">
-              <td><code><a href="../option_link.cgi?mattecolor"><b>-mattecolor</b></a></code></td>
+              <td><code><a href="https://imagemagick.org/script/command-line-options.php?#mattecolor"><b>-mattecolor</b></a></code></td>
               <td>
                 The color used as the frame color. Note that the color is also made lighter and darker to give the frame a beveled 3D look. So this setting really defines 5 colors. (See also <a href="../crop/#frame_border">Framing Images</a>)
               </td>
             </tr>
             <tr valign="top">
-              <td><code><a href="../option_link.cgi?fill"><b>-fill</b></a></code></td>
+              <td><code><a href="https://imagemagick.org/script/command-line-options.php?#fill"><b>-fill</b></a></code></td>
               <td>The fill color for text labels and titles.</td>
             </tr>
             <tr valign="top">
-              <td><code><a href="../option_link.cgi?stroke"><b>-stroke</b></a></code></td>
+              <td><code><a href="https://imagemagick.org/script/command-line-options.php?#stroke"><b>-stroke</b></a></code></td>
               <td>The stroke color for text labels and titles.</td>
             </tr>
           </table><a name="controls" id="controls">
           <h3>Montage Control Settings</h3></a>
           <blockquote>
             <dl>
-              <dt><code><a href="../option_link.cgi?tile"><b>-tile</b></a> {<i>cols</i>}x{<i>rows</i>}</code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#tile"><b>-tile</b></a> {<i>cols</i>}x{<i>rows</i>}</code></dt>
               <dd>
                 The number of images across and down used to fill a single montage image. If more images were read in or created than fits in a single montage image, then multiple images will be created. (See <a href="#tile">Tile Controls</a> above)
               </dd>
-              <dt><code><a href="../option_link.cgi?title"><b>-title</b></a> {<i>string</i>}</code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#title"><b>-title</b></a> {<i>string</i>}</code></dt>
               <dd>Set a title over the whole montage, using the same font (but larger) as that used to label the individual images.</dd>
-              <dt><code><a href="../option_link.cgi?frame"><b>-frame</b></a> {<i>width</i>}</code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#frame"><b>-frame</b></a> {<i>width</i>}</code></dt>
               <dd>Create a frame around the box containing the image, using the <i>width</i> provided (must be at least 2, but 5 or 6 is a good value). If used any transparency in images will also become the border color.</dd>
-              <dt><code><a href="../option_link.cgi?frame"><b>-border</b></a> {<i>width</i>}</code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#frame"><b>-border</b></a> {<i>width</i>}</code></dt>
               <dd>Create a border around the image, using the <i>width</i> provided. If used any transparency in images will also become the border color.</dd>
-              <dt><code><a href="../option_link.cgi?shadow"><b>-shadow</b></a></code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#shadow"><b>-shadow</b></a></code></dt>
               <dd>Generate a shadow of the frame. Note that no argument is required or expected.</dd>
-              <dt><code><a href="../option_link.cgi?texture"><b>-texture</b></a> {<i>filename</i>}</code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#texture"><b>-texture</b></a> {<i>filename</i>}</code></dt>
               <dd>
                 Use the given texture (tiled image) for the background instead of a specific color. See the section on <a href="#bg">Background and Transparency</a> below for more information.
               </dd>
-              <dt><code><a href="../option_link.cgi?geometry"><b>-geometry</b></a> {<i>W</i>}x{<i>H</i>}+{<i>X</i>}+{<i>Y</i>}</code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#geometry"><b>-geometry</b></a> {<i>W</i>}x{<i>H</i>}+{<i>X</i>}+{<i>Y</i>}</code></dt>
               <dd>Resize images after they have all been read in before montage overlays them onto its canvas. It also defines the size and the spacing between the tiles into which the images are drawn. If no size is specified the images will not be resized. <!--  This appears to be obsolete - again!
-<DT><CODE><A HREF="../option_link.cgi?compose"
+<DT><CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#compose"
     ><B>-compose</B></A></CODE>
-<DD>The alpha composition setting "<CODE><A HREF="../option_link.cgi?compose"
+<DD>The alpha composition setting "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#compose"
     >-compose</A></CODE>" defines how images are to be overlaid onto frame
     tile and shadows.  It does not however effect how that result is then
     overlaid onto the background canvas of the montage.  For more detail see
     <A HREF="#bg" >Background and Transparency</A> montage examples below
 --></dd>
-              <dt><code><a href="../option_link.cgi?gravity"><b>-gravity</b></a> {<i>direction</i>}</code></dt>
+              <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#gravity"><b>-gravity</b></a> {<i>direction</i>}</code></dt>
               <dd>if the image is smaller than the frame, where in the frame is the image to be placed. By default it is centered.</dd>
             </dl>
-          </blockquote>Added to the above are all the font settings that the "<code>label:</code>" image creation operator understands (See <a href="../text/#label">Label Image Generator</a>). These settings are used for the creation of labels added underneath the displayed image. These include settings such as "<code><a href="../option_link.cgi?font">-font</a></code>", "<code><a href="../option_link.cgi?pointsize">-pointsize</a></code>" (ignored for "<code><a href="../option_link.cgi?title">-title</a></code>"), "<code><a href="../option_link.cgi?density">-density</a></code>", "<code><a href="../option_link.cgi?fill">-fill</a></code>", "<code><a href="../option_link.cgi?stroke">-stroke</a></code>", and "<code><a href="../option_link.cgi?strokewidth">-strokewidth</a></code>". As long as any or all of the above setting are defined or reset, before the final 'output filename' argument, montage will use them as you have requested. <a name="reuse" id="reuse">
+          </blockquote>Added to the above are all the font settings that the "<code>label:</code>" image creation operator understands (See <a href="../text/#label">Label Image Generator</a>). These settings are used for the creation of labels added underneath the displayed image. These include settings such as "<code><a href="https://imagemagick.org/script/command-line-options.php?#font">-font</a></code>", "<code><a href="https://imagemagick.org/script/command-line-options.php?#pointsize">-pointsize</a></code>" (ignored for "<code><a href="https://imagemagick.org/script/command-line-options.php?#title">-title</a></code>"), "<code><a href="https://imagemagick.org/script/command-line-options.php?#density">-density</a></code>", "<code><a href="https://imagemagick.org/script/command-line-options.php?#fill">-fill</a></code>", "<code><a href="https://imagemagick.org/script/command-line-options.php?#stroke">-stroke</a></code>", and "<code><a href="https://imagemagick.org/script/command-line-options.php?#strokewidth">-strokewidth</a></code>". As long as any or all of the above setting are defined or reset, before the final 'output filename' argument, montage will use them as you have requested. <a name="reuse" id="reuse">
           <h3>Re-Using Settings for Image Read/Creation</h3></a> Note however that many of these options are also used for other purposes, in either the generation of images or during image processing. But thanks to the 'do things as you see them' command line handling on IM v6, this presents no problem to the "<code>magick montage</code>" command. That means you are free to use any of these option settings to read, create, or modify the images being read in, then reset those settings after all the images have been read in or created. The final setting value will be what montage will use for its final processing. This was not the case in versions of IM before version 6, in which it was generally impossible to separate image creation settings, from montage settings, without generating intermediate images (such as in the <a href="#image_labels">Image Labels</a> example above). Here is a practical example of setting reuse. I wanted to make a table of some of the fonts I have been using in these example pages, then reset the settings to other values for the final processing of the images by montage. <a name="fonts" id="fonts">
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
@@ -732,29 +732,29 @@
               </tr>
             </table>
           </div><img src="montage_fonts.gif" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a>
-        </div>Note the two stages to the "<code>magick montage</code>" command. Which I clearly marked using an extra almost empty line. The first part is essentially exactly as you would define multiple images using the normal IM "<code>magick</code>" command, and is processed in the same, 'do it as you see it' order. The second part, defines <i>all</i> the settings I wanted the "<code>magick montage</code>" command itself to use. That is, the framing, image resizing, fonts and colors I wanted to use in the final montage image. I especially take care to reset the "<code><a href="../option_link.cgi?font">-font</a></code>" and "<code><a href="../option_link.cgi?pointsize">-pointsize</a></code>" settings for the labeling underneath the montaged images. While you can separate the options of "<code>magick montage</code>" like this, you can actually define the montage settings at any time on the command line. As long as those settings do not interfere with your image creating and processing options, and are still defined correctly when the end of the command line is reached, "<code>magick montage</code>" will use them. ASIDE: You may like to look at the shell script I wrote to do something similar to the above (and which works with earlier versions of montage) to display a directory of truetype (.ttf) fonts, called "<code><a href="../scripts/show_fonts"><b>show_fonts</b></a></code>". Another shell script example is "<code><a href="../scripts/show_colors"><b>show_colors</b></a></code>". <a name="diff" id="diff"></a>
+        </div>Note the two stages to the "<code>magick montage</code>" command. Which I clearly marked using an extra almost empty line. The first part is essentially exactly as you would define multiple images using the normal IM "<code>magick</code>" command, and is processed in the same, 'do it as you see it' order. The second part, defines <i>all</i> the settings I wanted the "<code>magick montage</code>" command itself to use. That is, the framing, image resizing, fonts and colors I wanted to use in the final montage image. I especially take care to reset the "<code><a href="https://imagemagick.org/script/command-line-options.php?#font">-font</a></code>" and "<code><a href="https://imagemagick.org/script/command-line-options.php?#pointsize">-pointsize</a></code>" settings for the labeling underneath the montaged images. While you can separate the options of "<code>magick montage</code>" like this, you can actually define the montage settings at any time on the command line. As long as those settings do not interfere with your image creating and processing options, and are still defined correctly when the end of the command line is reached, "<code>magick montage</code>" will use them. ASIDE: You may like to look at the shell script I wrote to do something similar to the above (and which works with earlier versions of montage) to display a directory of truetype (.ttf) fonts, called "<code><a href="../scripts/show_fonts"><b>show_fonts</b></a></code>". Another shell script example is "<code><a href="../scripts/show_colors"><b>show_colors</b></a></code>". <a name="diff" id="diff"></a>
         <h3>Montage vs Magick Option Differences</h3>Now while "<code>magick montage</code>" generally allow you to use any "<code>magick</code>" settings and operators in reading and processing its input images, their are a few differences which need to be highlighted. These "<code>magick</code>" operators and settings are different when used within "<code>magick montage</code>".
         <blockquote>
           <dl>
-            <dt><code><a href="../option_link.cgi?tile"><b>-tile</b></a></code></dt>
+            <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#tile"><b>-tile</b></a></code></dt>
             <dd>
-              In "<code>magick</code>" the "<code><a href="../option_link.cgi?tile">-tile</a></code>" setting defines an image to use as a texture instead of using the "<code><a href="../option_link.cgi?fill">-fill</a></code>" color. In "<code>magick montage</code>" it defines how to layout the individual image cell 'tiles'. See <a href="#tile">Tile Layout Controls</a> above for more detail.
+              In "<code>magick</code>" the "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" setting defines an image to use as a texture instead of using the "<code><a href="https://imagemagick.org/script/command-line-options.php?#fill">-fill</a></code>" color. In "<code>magick montage</code>" it defines how to layout the individual image cell 'tiles'. See <a href="#tile">Tile Layout Controls</a> above for more detail.
             </dd>
-            <dt><code><a href="../option_link.cgi?frame"><b>-frame</b></a></code></dt>
+            <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#frame"><b>-frame</b></a></code></dt>
             <dd>
               In "<code>magick</code>" this is an operator used to add a 3D frame border around images, and requires 4 arguments to work correctly (See <a href="../crop/#frame">Convert Frame</a> examples). See <a href="#frame">Frame Decoration</a> for more detail.
             </dd>
-            <dt><code><a href="../option_link.cgi?border"><b>-border</b></a></code></dt>
+            <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#border"><b>-border</b></a></code></dt>
             <dd>
               Sometime around IM v6.1.0 this operator became a special montage option. As such, like the previous frame option it only takes one number as an argument, rather than two arguments as per the <a href="../crop/#border">Convert Border</a>. See <a href="#border">Border Decoration</a> for more detail.
             </dd>
-            <dt><code><a href="../option_link.cgi?shadow"><b>-shadow</b></a></code></dt>
+            <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#shadow"><b>-shadow</b></a></code></dt>
             <dd>
-              The "<code><a href="../option_link.cgi?shadow">-shadow</a></code>" option in "<code>magick</code>" takes an argument which is used to create a soft blurry shadow to which can be place under a second copy of the original image. However in "<code>magick montage</code>" this is only a Boolean setting that just turns the rectangular shadowing abilities, on and off. See <a href="#shadow">Shadow Decoration</a> for more detail.
+              The "<code><a href="https://imagemagick.org/script/command-line-options.php?#shadow">-shadow</a></code>" option in "<code>magick</code>" takes an argument which is used to create a soft blurry shadow to which can be place under a second copy of the original image. However in "<code>magick montage</code>" this is only a Boolean setting that just turns the rectangular shadowing abilities, on and off. See <a href="#shadow">Shadow Decoration</a> for more detail.
             </dd>
-            <dt><code><a href="../option_link.cgi?geometry"><b>-geometry</b></a></code></dt>
+            <dt><code><a href="https://imagemagick.org/script/command-line-options.php?#geometry"><b>-geometry</b></a></code></dt>
             <dd>
-              The "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" option in "<code>magick montage</code>" is simply saved to provide the size of the images within each cell of the final montage, and the spacing between the cells. In "<code>magick</code>" it resizes just the last image, and sets the off set for <a href="../compose/#compose">Image Composition</a>.
+              The "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" option in "<code>magick montage</code>" is simply saved to provide the size of the images within each cell of the final montage, and the spacing between the cells. In "<code>magick</code>" it resizes just the last image, and sets the off set for <a href="../compose/#compose">Image Composition</a>.
             </dd>
           </dl>
         </blockquote>If you really need to use the "<code>magick</code>" form of these options, then you will need to pre-process your images using "<code>magick</code>" before passing them to "<code>magick montage</code>". One method using intermediate files was demonstrated in the <a href="#image_labels">Image Labels</a> example above. Another is to just do your processing in "<code>magick</code>" and just pipe the resulting multiple images into "<code>magick montage</code>". This separation is easy to do if you always do your image input handling first, then set the "<code>magick montage</code>" specific settings afterward, such as I have done in all these examples. This is especially shown in the last font example above. For example lets frame our images using the "<code>magick</code>" frame, and then frame them again using the "<code>magick montage</code>" labeled frames.
@@ -770,7 +770,7 @@
               </td>
             </tr>
           </table><a href="double_frame.jpg"><img src="double_frame.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-        </div>You can also see the extra arguments required by the "<code>magick</code>" form of the "<code><a href="../option_link.cgi?frame">-frame</a></code>" operator.
+        </div>You can also see the extra arguments required by the "<code>magick</code>" form of the "<code><a href="https://imagemagick.org/script/command-line-options.php?#frame">-frame</a></code>" operator.
         <hr>
         <!-- ---------------------------------------------------------------- -->
         <a name="index" id="index"></a>
@@ -818,7 +818,7 @@
               This also includes a copy of the previous image map.</td>
             </tr>
           </table>
-        </blockquote>Of course you don't have to generate an HTML index file if you only want an index image. In that case just replace "<code>INDEX.html</code>" in the command above with the image you want to generate. Note the use of the <a href="https://imagemagick.org/script/escape.php">Image Property Escape</a> '<code>%t</code>' for the image "<code><a href="../option_link.cgi?label">-label</a></code>". This is the filename of the image without any 'path' components. Though the HTML link will still contain the appropriate 'path' components allowing you to build the index image in a different directory to the images themselves. The source images "<code>'*_orig.*'</code>" in the above examples is quoted, so the "<code>magick montage</code>" command does the expansion of '*' itself, and not the command line shell. This avoids any command line length limits that you may have problems with. Also I do some initial resizing of images '<code>[120x190]</code>' as I read them (see <a href="../files/#read_mod">Read Image Modifiers</a>). For JPEG images I also specified a smaller "<code><a href="../option_link.cgi?size">-size</a></code>" setting so the JPEG library can do some very rough initial scaling, and not read the whole image into memory. If this is not done, then very large JPEG images could use up an enormous amount of memory and CPU cycles when there is no real need. I also "<code><a href="../option_link.cgi?strip">-strip</a></code>" any profiles that the images may have. For more info see <a href="../thumbnails/#profiles">Profiles, Stripping, and JPEG Handling</a> and <a href="../formats/#jpg_read">Reading JPEG Images</a>. Remember the montage "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" option can also specify a final resize setting, though in this case it is isn't needed as I did it during the read process, so I don't set any 'size' in that setting. Finally the "<code><a href="../option_link.cgi?tile">-tile</a></code>" option of '<code>5x</code>' is used to ensure all images appear in a single image, otherwise "<code>magick montage</code> could generate a multi-page HTML files, which are not correctly linked together. This will hopefully change, though HTML generation is not a primary goal of ImageMagick. For other ways of generating thumbnails and HTML index pages, read the <a href="../thumbnails/">Thumbnail Examples Page</a>. <a name="html_jpeg" id="html_jpeg"></a>
+        </blockquote>Of course you don't have to generate an HTML index file if you only want an index image. In that case just replace "<code>INDEX.html</code>" in the command above with the image you want to generate. Note the use of the <a href="https://imagemagick.org/script/escape.php">Image Property Escape</a> '<code>%t</code>' for the image "<code><a href="https://imagemagick.org/script/command-line-options.php?#label">-label</a></code>". This is the filename of the image without any 'path' components. Though the HTML link will still contain the appropriate 'path' components allowing you to build the index image in a different directory to the images themselves. The source images "<code>'*_orig.*'</code>" in the above examples is quoted, so the "<code>magick montage</code>" command does the expansion of '*' itself, and not the command line shell. This avoids any command line length limits that you may have problems with. Also I do some initial resizing of images '<code>[120x190]</code>' as I read them (see <a href="../files/#read_mod">Read Image Modifiers</a>). For JPEG images I also specified a smaller "<code><a href="https://imagemagick.org/script/command-line-options.php?#size">-size</a></code>" setting so the JPEG library can do some very rough initial scaling, and not read the whole image into memory. If this is not done, then very large JPEG images could use up an enormous amount of memory and CPU cycles when there is no real need. I also "<code><a href="https://imagemagick.org/script/command-line-options.php?#strip">-strip</a></code>" any profiles that the images may have. For more info see <a href="../thumbnails/#profiles">Profiles, Stripping, and JPEG Handling</a> and <a href="../formats/#jpg_read">Reading JPEG Images</a>. Remember the montage "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" option can also specify a final resize setting, though in this case it is isn't needed as I did it during the read process, so I don't set any 'size' in that setting. Finally the "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" option of '<code>5x</code>' is used to ensure all images appear in a single image, otherwise "<code>magick montage</code> could generate a multi-page HTML files, which are not correctly linked together. This will hopefully change, though HTML generation is not a primary goal of ImageMagick. For other ways of generating thumbnails and HTML index pages, read the <a href="../thumbnails/">Thumbnail Examples Page</a>. <a name="html_jpeg" id="html_jpeg"></a>
         <h3>Smaller HTML Index Maps, using JPEG images</h3>The above index image generated a PNG format index image. This was used because it is a non-lossy format, which can be important when the images being indexed are of wildly different colors. It also enables the use of the new 'soft shadows' features of montage if the background color is set to '<code>transparent</code>' or '<code>none</code>'. Very very old IM's will have generated a GIF image for the above. However, this has some heavy color reduction on the results as part of the formats limitations. It also did not allow the use of semi-transparent 'soft shadows' as PNG allows. JPEG also does not allow semi-transparency, but that is not a problem if you do not use a transparent background for the image. It is however a lot smaller than PNG, which provides a way to drastically reduce the size of the index image, especially for web use, and still handle a large range of colors. However, HTML output above only generates PNG format images, so you will need to not only magick the PNG to JPEG, but also some extra processing to fix the HTML file.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
@@ -861,7 +861,7 @@
               </td>
             </tr>
           </table>
-        </div>That is, the image used for the index is only about 15% of the size of the original PNG image. A big saving for a downloadable web page of thumbnails! You can make the JPEG image even smaller by using a smaller "<code><a href="../option_link.cgi?quality">-quality</a></code>" setting, though the default setting produces a very reasonable result. Other possible options include using "<code><a href="../option_link.cgi?sampling-factor">-sampling-factor</a> 2x1</code>" to make it even smaller. <a name="vid" id="vid"></a>
+        </div>That is, the image used for the index is only about 15% of the size of the original PNG image. A big saving for a downloadable web page of thumbnails! You can make the JPEG image even smaller by using a smaller "<code><a href="https://imagemagick.org/script/command-line-options.php?#quality">-quality</a></code>" setting, though the default setting produces a very reasonable result. Other possible options include using "<code><a href="https://imagemagick.org/script/command-line-options.php?#sampling-factor">-sampling-factor</a> 2x1</code>" to make it even smaller. <a name="vid" id="vid"></a>
         <h3>Visual Index Images <font size="-1">(a non-montage solution)</font></h3>An alternative to using montage, is to use a special "visual index" input format...
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
@@ -925,7 +925,7 @@
             Polaroid<br>
             Montage</a></font></td>
           </tr>
-        </table>Note that as I used "<code><a href="../option_link.cgi?polaroid">+polaroid</a></code>" to frame and label the images, I needed to resize the image (using "<code><a href="../option_link.cgi?thumbnail">-thumbnail</a></code>") myself, and make sure the "<code><a href="../option_link.cgi?background">-background</a></code>" and image "<code><a href="../option_link.cgi?label">-label</a></code>" has been reset before actually creating the "<code>magick montage</code>" index array. The <a href="../transform/#polaroid">Polaroid Transform</a> however tends to blur the text during the addition of the 'curl' to the thumbnail image. However you can improve the overall by generating the polaroid images at a larger size then shrinking the result by 50%. The only drawback is the reduced 'shadow' effect.
+        </table>Note that as I used "<code><a href="https://imagemagick.org/script/command-line-options.php?#polaroid">+polaroid</a></code>" to frame and label the images, I needed to resize the image (using "<code><a href="https://imagemagick.org/script/command-line-options.php?#thumbnail">-thumbnail</a></code>") myself, and make sure the "<code><a href="https://imagemagick.org/script/command-line-options.php?#background">-background</a></code>" and image "<code><a href="https://imagemagick.org/script/command-line-options.php?#label">-label</a></code>" has been reset before actually creating the "<code>magick montage</code>" index array. The <a href="../transform/#polaroid">Polaroid Transform</a> however tends to blur the text during the addition of the 'curl' to the thumbnail image. However you can improve the overall by generating the polaroid images at a larger size then shrinking the result by 50%. The only drawback is the reduced 'shadow' effect.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
             <td width="100%" align="justify">
@@ -993,7 +993,7 @@
             </td>
           </tr>
         </table><a name="overlap" id="overlap"></a>
-        <h3>Overlapped Montage Tiles</h3>In the <a href="https://magick.imagemagick.org/viewforum.php?f=1">IM User Forum</a>, during a discussion between, <a href="http://www.fmwconcepts.com/fmw/fmw.html">Fred Weinhaus</a> , aka <i><a href="https://magick.imagemagick.org/memberlist.php?mode=viewprofile&u=9098">fmw42</a></i> and another user <i><a href="https://magick.imagemagick.org/memberlist.php?mode=viewprofile&u=10889">pooco</a></i>, it was discovered that if you set the inter-tile space (set in the "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" setting) to a negative number you can actually overlap the tiled areas into which the images are drawn. For example, here we use a negative horizontal inter-tile spacing, for a single row of images.
+        <h3>Overlapped Montage Tiles</h3>In the <a href="https://magick.imagemagick.org/viewforum.php?f=1">IM User Forum</a>, during a discussion between, <a href="http://www.fmwconcepts.com/fmw/fmw.html">Fred Weinhaus</a> , aka <i><a href="https://magick.imagemagick.org/memberlist.php?mode=viewprofile&u=9098">fmw42</a></i> and another user <i><a href="https://magick.imagemagick.org/memberlist.php?mode=viewprofile&u=10889">pooco</a></i>, it was discovered that if you set the inter-tile space (set in the "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" setting) to a negative number you can actually overlap the tiled areas into which the images are drawn. For example, here we use a negative horizontal inter-tile spacing, for a single row of images.
         <div align="center">
           <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
             <tr>
@@ -1032,8 +1032,8 @@
               </td>
             </tr>
           </table><a href="polaroid_overlap.jpg"><img src="polaroid_overlap.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-        </div>The use of <a href="../crop/#extent">extent</a> in the above is used to remove the randomness of image size that "<code><a href="../option_link.cgi?+polaroid">+polaroid</a></code>" can produce on different 'runs', giving more control of the final spacing and overlap between images. This is a very interesting result, though it should actually be classed as a BUG, as this is not the intended purpose of "<code>magick montage</code>". I also would not expect any HTML image mapping to work correctly, without some fixing by the user. However a more complex, and user controllable solution for overlapping images is demonstrated using a scripted form of <a href="../layers/#merge">Layer Merging</a>, which is the recommended and more logical solution. See examples in <a href="../layers/#example">Programmed Positioning of Layered Images</a>. <a name="concatenate" id="concatenate"></a>
-        <h3>Montage Concatenation Mode</h3>As you saw, montage has a special concatenation mode, which can be used to join images together without any extra spaces just like the "<code><a href="../option_link.cgi?append">-append</a></code>" option. I do however recommend you set the "<code><a href="../option_link.cgi?tile">-tile</a></code>" option appropriately, so as to direct the appending either horizontally, vertically or in an array. For example, here we use a "<code>-tile x1</code>" to append images horizontally.
+        </div>The use of <a href="../crop/#extent">extent</a> in the above is used to remove the randomness of image size that "<code><a href="https://imagemagick.org/script/command-line-options.php?#+polaroid">+polaroid</a></code>" can produce on different 'runs', giving more control of the final spacing and overlap between images. This is a very interesting result, though it should actually be classed as a BUG, as this is not the intended purpose of "<code>magick montage</code>". I also would not expect any HTML image mapping to work correctly, without some fixing by the user. However a more complex, and user controllable solution for overlapping images is demonstrated using a scripted form of <a href="../layers/#merge">Layer Merging</a>, which is the recommended and more logical solution. See examples in <a href="../layers/#example">Programmed Positioning of Layered Images</a>. <a name="concatenate" id="concatenate"></a>
+        <h3>Montage Concatenation Mode</h3>As you saw, montage has a special concatenation mode, which can be used to join images together without any extra spaces just like the "<code><a href="https://imagemagick.org/script/command-line-options.php?#append">-append</a></code>" option. I do however recommend you set the "<code><a href="https://imagemagick.org/script/command-line-options.php?#tile">-tile</a></code>" option appropriately, so as to direct the appending either horizontally, vertically or in an array. For example, here we use a "<code>-tile x1</code>" to append images horizontally.
         <div align="center">
           <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
             <tr>
@@ -1083,14 +1083,14 @@
               </td>
             </tr>
           </table><a href="montage_cat3.jpg"><img src="montage_cat3.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-        </div>Of course, framing is not really part concatenate mode, so if "<code><a href="../option_link.cgi?frame">-frame</a></code>" is set before the "<code><a href="../option_link.cgi?mode">-mode</a></code>" setting, it will be turned off. As such this quirk is not likely to be seen, except by mistake when you accidentally use a 'zero geometry' (see below).
+        </div>Of course, framing is not really part concatenate mode, so if "<code><a href="https://imagemagick.org/script/command-line-options.php?#frame">-frame</a></code>" is set before the "<code><a href="https://imagemagick.org/script/command-line-options.php?#mode">-mode</a></code>" setting, it will be turned off. As such this quirk is not likely to be seen, except by mistake when you accidentally use a 'zero geometry' (see below).
         <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
           <tr valign="top">
             <td><img src="../img_www/warning.gif" width="28" height="28"><img src="../img_www/space.gif" width="12" height="16"></td>
             <td align="justify" width="100%"><font size="-1"><i>Montage Concatenation to the 'HTML' image indexing format, produces incorrect image maps. Basically the resulting image map will be as if the generated montage was a true equally divided 'array' of images, rather than a concatenation of the images in line. In other words it is wrong for lines of 'short' images.</i></font></td>
           </tr>
         </table><a name="zero_geometry" id="zero_geometry"></a>
-        <h3>Zero Geometry, <font size="-1">caution required</font></h3>With only "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" spacing values (no image resizing specified), all montages image frames are set to the same size, so that both the widest and tallest image will fit, without being resized. This is itself an useful behaviour...
+        <h3>Zero Geometry, <font size="-1">caution required</font></h3>With only "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" spacing values (no image resizing specified), all montages image frames are set to the same size, so that both the widest and tallest image will fit, without being resized. This is itself an useful behaviour...
         <div align="center">
           <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
             <tr>
@@ -1114,7 +1114,7 @@
               </td>
             </tr>
           </table><a href="montage_geom_0.jpg"><img src="montage_geom_0.jpg" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-        </div>The 'zero geometry' you specified (that is "<code>-geometry 0x0+0+0</code>" ), has the extra effect of putting montage in a 'concatenation' mode (see above), which is NOT what we were after in the above. For single images it also does not matter if we use a zero "<code><a href="../option_link.cgi?append">-append</a></code>" (and thus concatenation mode). The desired result is what we want, no extra borders. As such a "<code>-geometry +0+0</code>" is fine if you are only using "<code>magick montage</code>" to <a href="../annotating/#labeling">add a label to an image</a>. The concatenation mode will however not be invoked if you specify a non-zero geometry 'size' for your images, even though you used a zero offset. This in turn gives us a tricky solution to our original problem. What we do a set a geometry image size of "<code>1x1</code>" but also tell IM, never to shrink images (using a "<code>&lt;</code>" character) to this size! In other words, never resize an image ever, just use a zero offset, in a non-zero geometry argument.
+        </div>The 'zero geometry' you specified (that is "<code>-geometry 0x0+0+0</code>" ), has the extra effect of putting montage in a 'concatenation' mode (see above), which is NOT what we were after in the above. For single images it also does not matter if we use a zero "<code><a href="https://imagemagick.org/script/command-line-options.php?#append">-append</a></code>" (and thus concatenation mode). The desired result is what we want, no extra borders. As such a "<code>-geometry +0+0</code>" is fine if you are only using "<code>magick montage</code>" to <a href="../annotating/#labeling">add a label to an image</a>. The concatenation mode will however not be invoked if you specify a non-zero geometry 'size' for your images, even though you used a zero offset. This in turn gives us a tricky solution to our original problem. What we do a set a geometry image size of "<code>1x1</code>" but also tell IM, never to shrink images (using a "<code>&lt;</code>" character) to this size! In other words, never resize an image ever, just use a zero offset, in a non-zero geometry argument.
         <div align="center">
           <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
             <tr>
@@ -1130,7 +1130,7 @@
         <div align="center">
           <b>Always set a non-zero geometry when using montage</b>
         </div>Even if it is only the 'fake' geometry such as I used above. <a name="bg" id="bg"></a>
-        <h3>Background and Transparency Handling</h3>By default images are overlaid onto the montage canvas, which is created using the "<code><a href="../option_link.cgi?background">-background</a></code>" color setting, as you can see here.
+        <h3>Background and Transparency Handling</h3>By default images are overlaid onto the montage canvas, which is created using the "<code><a href="https://imagemagick.org/script/command-line-options.php?#background">-background</a></code>" color setting, as you can see here.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
             <td width="100%" align="justify">
@@ -1149,7 +1149,7 @@
               <a href="bg_lightblue.gif"><img src="bg_lightblue.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
             </td>
           </tr>
-        </table>Instead of a solid color, you can instead use "<code><a href="../option_link.cgi?texture">-texture</a></code>" to define a tile image to use instead of the "<code><a href="../option_link.cgi?background">-background</a></code>" color.
+        </table>Instead of a solid color, you can instead use "<code><a href="https://imagemagick.org/script/command-line-options.php?#texture">-texture</a></code>" to define a tile image to use instead of the "<code><a href="https://imagemagick.org/script/command-line-options.php?#background">-background</a></code>" color.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
             <td width="100%" align="justify">
@@ -1188,14 +1188,14 @@
               <a href="bg_frame.gif"><img src="bg_frame.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
             </td>
           </tr>
-        </table>Note that when framed, the "<code><a href="../option_link.cgi?bordercolor">-bordercolor</a></code>" setting will be used to fill in the inside the frame, effectively becoming the background color of the image. Also notice that any transparent areas of the image are also set to this color.
+        </table>Note that when framed, the "<code><a href="https://imagemagick.org/script/command-line-options.php?#bordercolor">-bordercolor</a></code>" setting will be used to fill in the inside the frame, effectively becoming the background color of the image. Also notice that any transparent areas of the image are also set to this color.
         <table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
           <tr valign="top">
             <td><img src="../img_www/reminder.gif" width="20" height="16"><img src="../img_www/space.gif" width="20" height="16"></td>
             <td align="justify" width="100%"><font size="-1"><i>Before version 6.1.4 of IM, what was seen in the transparent areas of images was undefined. In some versions you would see through the framed image to the background color or texture. On others you might get black, or white. In still other versions you would be able to see though all the layers and the final image would be transparent where the original image was transparent. Upgrade NOW if this is a problem for you.<br>
             <br></i></font></td>
           </tr>
-        </table>Also new to IM version 6.1.4 is the ability to use a special 1 pixel wide frame. This will basically remove the frame around the image cells completely, but retaining the internal "<code><a href="../option_link.cgi?bordercolor">-bordercolor</a></code>" padding around (and underneath) the image. For example compare a frame of '<code>1</code>' with the minimal frame width of '<code>2</code>'.
+        </table>Also new to IM version 6.1.4 is the ability to use a special 1 pixel wide frame. This will basically remove the frame around the image cells completely, but retaining the internal "<code><a href="https://imagemagick.org/script/command-line-options.php?#bordercolor">-bordercolor</a></code>" padding around (and underneath) the image. For example compare a frame of '<code>1</code>' with the minimal frame width of '<code>2</code>'.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
             <td width="100%" align="justify">
@@ -1238,8 +1238,8 @@
 Also resolved at this time was the ability to use the various <A
 HREF="../compose/#compose" >Alpha Composition</A> methods to determine just
 how an image, (with or without transparent areas) is handled by montage, and a
-"<CODE><A HREF="../option_link.cgi?frame" >-frame</A></CODE>" is used with the
-image. As usual the last "<CODE><A HREF="../option_link.cgi?compose"
+"<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#frame" >-frame</A></CODE>" is used with the
+image. As usual the last "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#compose"
 >-compose</A></CODE>" setting defined in "<code>magick montage</code>", specifies how
 the image is overlaid onto the framing background of the image cell. </P>
 
@@ -1291,13 +1291,13 @@ Or its inverse '<CODE><A HREF="../compose/#dstout" >DstIn</A><CODE>'...
            ALIGN=middle VSPACE=5 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </TD></TR></TABLE></P>
 
-For more examples of using the "<CODE><A HREF="../option_link.cgi?compose"
->-compose</A></CODE>" setting with "<CODE><A HREF="../option_link.cgi?frame"
+For more examples of using the "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#compose"
+>-compose</A></CODE>" setting with "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#frame"
 >-frame</A></CODE>", see the <A HREF="../crop/#frame_compose" >Frame
 Compose</A> examples. </P>
 
 -->
-        But what if you want your montage to have a transparent background? Particularly, if you plan to use it on a web page containing a texture mapping. Simple, just use a "<code><a href="../option_link.cgi?background">-background</a></code>" color of '<code>None</code>' or '<code>Transparent</code>', without any "<code><a href="../option_link.cgi?texture">-texture</a></code>" image to override that setting. For example, here we generated a transparent montage. Note that "<code><a href="../option_link.cgi?geometry">-geometry</a></code>" is still used to add space around and between the images.
+        But what if you want your montage to have a transparent background? Particularly, if you plan to use it on a web page containing a texture mapping. Simple, just use a "<code><a href="https://imagemagick.org/script/command-line-options.php?#background">-background</a></code>" color of '<code>None</code>' or '<code>Transparent</code>', without any "<code><a href="https://imagemagick.org/script/command-line-options.php?#texture">-texture</a></code>" image to override that setting. For example, here we generated a transparent montage. Note that "<code><a href="https://imagemagick.org/script/command-line-options.php?#geometry">-geometry</a></code>" is still used to add space around and between the images.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
             <td width="100%" align="justify">
@@ -1316,7 +1316,7 @@ Compose</A> examples. </P>
               <a href="bg_none.gif"><img src="bg_none.gif" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a>
             </td>
           </tr>
-        </table>Of course if you also use "<code><a href="../option_link.cgi?frame">-frame</a></code>", you need to make the "<code><a href="../option_link.cgi?bordercolor">-bordercolor</a></code>" transparent too.
+        </table>Of course if you also use "<code><a href="https://imagemagick.org/script/command-line-options.php?#frame">-frame</a></code>", you need to make the "<code><a href="https://imagemagick.org/script/command-line-options.php?#bordercolor">-bordercolor</a></code>" transparent too.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
             <td width="100%" align="justify">
@@ -1336,7 +1336,7 @@ Compose</A> examples. </P>
               <a href="bg_framed_trans.gif"><img src="bg_framed_trans.gif" align="middle" vspace="2" hspace="2" border="0" alt="[IM Output]"></a>
             </td>
           </tr>
-        </table>Note that the montage "<a href="../option_link.cgi?shadow"><code>-shadow</code></a>" option is completely unaffected by all the above. it is applied according to the final transparent shape of the cells, before it is overlaid onto the background color or texture.
+        </table>Note that the montage "<a href="https://imagemagick.org/script/command-line-options.php?#shadow"><code>-shadow</code></a>" option is completely unaffected by all the above. it is applied according to the final transparent shape of the cells, before it is overlaid onto the background color or texture.
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
           <tr>
             <td width="100%" align="justify">

@@ -52,7 +52,7 @@
                 </td>
               </tr>
             </table><a href="drawn.png"><img src="drawn.png" width="80" height="80" align="middle" vspace="5" hspace="5" border="0" alt="[IM Output]"></a> <img src="../img_www/right.gif" width="20" height="20" align="middle" alt="==&gt;"> <a href="drawn_mag.png"><img src="drawn_mag.png" width="80" height="80" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
-          </div>Now you would think that the above image would have only three colors, 'white', 'black', and 'transparent', as that is all we asked for IM to use. But as you can see when the image is magnified it has a whole range of colors. By doing this ImageMagick makes the image look smoother and better looking, using a technique called 'anti-aliasing'. This is a fancy term that means it fills in edge pixels of the object with a mix of colors and even transparencies, to make the object look smoother. If no anti-aliasing was done, then the edges of all the draw objects would have a staircase like effect called 'aliasing' though more commonly referred to as the 'jaggies'. Here we draw the image again but this time we asked IM to turn off its automatic anti-aliasing operations, using "<code><a href="../option_link.cgi?antialias">+antialias</a></code>".
+          </div>Now you would think that the above image would have only three colors, 'white', 'black', and 'transparent', as that is all we asked for IM to use. But as you can see when the image is magnified it has a whole range of colors. By doing this ImageMagick makes the image look smoother and better looking, using a technique called 'anti-aliasing'. This is a fancy term that means it fills in edge pixels of the object with a mix of colors and even transparencies, to make the object look smoother. If no anti-aliasing was done, then the edges of all the draw objects would have a staircase like effect called 'aliasing' though more commonly referred to as the 'jaggies'. Here we draw the image again but this time we asked IM to turn off its automatic anti-aliasing operations, using "<code><a href="https://imagemagick.org/script/command-line-options.php?#antialias">+antialias</a></code>".
           <div align="center">
             <table class="table table-sm table-hover table-striped" cellspacing="0" cellpadding="5" width="90%" bgcolor="#F8F8F8">
               <tr>
@@ -120,7 +120,7 @@
                 <a href="circle_aliased.gif"><img src="circle_aliased.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
               </td>
             </tr>
-          </table>What you need to to is also adjust the "<code><a href="../option_link.cgi?strokewidth">-strokewidth</a></code>" , which defaults to 1 pixel wide, to something smaller, such as 0.5 pixels wide.
+          </table>What you need to to is also adjust the "<code><a href="https://imagemagick.org/script/command-line-options.php?#strokewidth">-strokewidth</a></code>" , which defaults to 1 pixel wide, to something smaller, such as 0.5 pixels wide.
           <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
             <tr>
               <td width="100%" align="justify">
@@ -180,7 +180,7 @@
                 <a href="circle_perfect.gif"><img src="circle_perfect.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
               </td>
             </tr>
-          </table>However After many experiments I could find no "<code><a href="../option_link.cgi?strokewidth">-strokewidth</a></code>" that works for all radii and centers. Especally a circle that is slightly off center.
+          </table>However After many experiments I could find no "<code><a href="https://imagemagick.org/script/command-line-options.php?#strokewidth">-strokewidth</a></code>" that works for all radii and centers. Especally a circle that is slightly off center.
           <div align="center">
             <b>There is no ideal solution for all situations</b>
           </div>For example this circle which is not centered on a pixel, or a pixel boundary, not only has gaps at the top, but is also too thick at the bottom! Yuck!
@@ -203,7 +203,7 @@
                 <a href="circle_bad_stroke.gif"><img src="circle_bad_stroke.gif" align="middle" vspace="5" hspace="5" border="1" alt="[IM Output]"></a>
               </td>
             </tr>
-          </table>Here is a table of good "<code><a href="../option_link.cgi?strokewidth">-strokewidth</a></code>", to generate a thin single pixel wide circle of specific radius. Note that the best value to use varies depending on if the circle is centered either on an <i>actual</i> pixel (such as ' <code>5 , 5</code> '), or on a <i>half</i> pixel boundry (such as ' <code>5.5 , 5.5</code> ')
+          </table>Here is a table of good "<code><a href="https://imagemagick.org/script/command-line-options.php?#strokewidth">-strokewidth</a></code>", to generate a thin single pixel wide circle of specific radius. Note that the best value to use varies depending on if the circle is centered either on an <i>actual</i> pixel (such as ' <code>5 , 5</code> '), or on a <i>half</i> pixel boundry (such as ' <code>5.5 , 5.5</code> ')
           <table class="table table-sm table-hover table-striped" width="50%" cellspacing="0" align="center">
             <tr>
               <th align="center">Circle Radius</th>
@@ -298,7 +298,7 @@
           <hr>
           <!-- ---------------------------------------------------------------- -->
           <a name="floodfill" id="floodfill">
-          <h2>Anti-Aliasing and Flood Fill Problems</h2></a> Due to anti-aliasing features of IM, flood-filling ("<code><a href="../option_link.cgi?threshold">-draw</a> color floodfill</code>") has problems when used on images with anti-aliasing effects. It also has similar problems with images read in from the "JPG" image format. Basically as most objects in IM are anti-aliased (or read from a "JPG" format image file), colors near the edges of drawn objects are rarely the specific color that you are using flood fill to replace. This means the flood fill will not fill the very edges of the areas you are trying to fill, unless you are avoiding anti-aliasing entirely. Essentially flood fill, or even color replace, does not understand anti-aliasing, nor does it use anti-aliasing techniques itself. Consequently flood fill will generally miss the pixels at the very edge of the area you are filling. For example, Here we do a typical flood fill operation. Draw a circle, then try to fill it with a pattern...
+          <h2>Anti-Aliasing and Flood Fill Problems</h2></a> Due to anti-aliasing features of IM, flood-filling ("<code><a href="https://imagemagick.org/script/command-line-options.php?#threshold">-draw</a> color floodfill</code>") has problems when used on images with anti-aliasing effects. It also has similar problems with images read in from the "JPG" image format. Basically as most objects in IM are anti-aliased (or read from a "JPG" format image file), colors near the edges of drawn objects are rarely the specific color that you are using flood fill to replace. This means the flood fill will not fill the very edges of the areas you are trying to fill, unless you are avoiding anti-aliasing entirely. Essentially flood fill, or even color replace, does not understand anti-aliasing, nor does it use anti-aliasing techniques itself. Consequently flood fill will generally miss the pixels at the very edge of the area you are filling. For example, Here we do a typical flood fill operation. Draw a circle, then try to fill it with a pattern...
           <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
             <tr>
               <td width="100%" align="justify">

@@ -38,7 +38,7 @@ also expand it to provide an ordered dithered posterization functionality.
 </P>
 
 That is, allow not only bitmap dithering, but dithering between multiple color
-levels as per the "<CODE><A HREF="../../option_link.cgi?posterize"
+levels as per the "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#posterize"
 >-posterize</A></CODE>" operator.  See <A HREF="../../quantize/#posterize"
 >Posterize, recolor using primary colors</A> for examples. </P>
 
@@ -48,7 +48,7 @@ levels as per the "<CODE><A HREF="../../option_link.cgi?posterize"
 
 <I>This is section is a reference and will not be updated. </I> </P>
 
-This is what the IM "<CODE><A HREF="../../option_link.cgi?ordered-dither"
+This is what the IM "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither"
 >-ordered-dither</A></CODE>" operator provided before the expandion of this
 operators functionality. </P>
 
@@ -109,7 +109,7 @@ Lets look at these patterns using gradients.
 
 The extra '<CODE>8x8</CODE>' ordered dither pattern was an existing ordered
 dither function that was only linked into the "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>"
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>"
 operator with IM v6.2.9-2, under my suggestion. </P>
 
 In version  IM v6.2.8-6 some digital-halftone dither patterns was added
@@ -141,13 +141,13 @@ Note the 'hack'-like nature using a '<CODE>x1</CODE>' number to allow the
 addition of these dithering patterns. </P>
 
 Also note that at this time "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>" and
-"<CODE><A HREF="../../option_link.cgi?random-dither"
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>" and
+"<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#random-dither"
 >-random-dither</A></CODE>" operators were aliases for each other, which is
 why this restriction existed.   But it also created a horrible 'fall-back'
 situation, in that if the arguments for "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>" was
-wrong, IM would do a "<CODE><A HREF="../../option_link.cgi?random-dither"
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>" was
+wrong, IM would do a "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#random-dither"
 >-random-dither</A></CODE>" using a very bad set of argument, rather than give
 the user an error. </P>
 
@@ -158,14 +158,14 @@ the user an error. </P>
 From IM v6.2.9-7, the above changed, to allow the use of more symbolic
 selection of the ordered dither threshold maps, with IM returning an error if
 no map was selected rather than falling back to the disasterious "<CODE><A
-HREF="../../option_link.cgi?random-dither" >-random-dither</A></CODE>"
+HREF="https://imagemagick.org/script/command-line-options.php?#random-dither" >-random-dither</A></CODE>"
 operator.  </P>
 
 First of all, all the threshold maps used for the ordered dither patterns were
 checked and updated to produce a better result for the specified style. </P>
 
 For example compare these new "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>"
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>"
 threshold map results...
 
 <DIV ALIGN=center>
@@ -272,9 +272,9 @@ minimal dither pattern posible, for all ordered dither patterns, one that only
 adds a single dither pattern between any two colors. </P>
 
 The "<CODE>threshold</CODE>" pattern is supplied as an equivelent to using a
-undithered "<CODE><A HREF="../../option_link.cgi?posterize"
+undithered "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#posterize"
 >-posterize</A></CODE>" operator, as well as a test map on the posterization
-aspects of the new "<CODE><A HREF="../../option_link.cgi?ordered-dither"
+aspects of the new "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither"
 >-ordered-dither</A></CODE>" function. (See next section)  </P>
 
 As part of backward compatibility, all the old
@@ -289,14 +289,14 @@ depreciated, but will always remain. </P>
 <H2>Posterized Ordered Dither Expansion</H2>
 
 The above consolidation of "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>" code
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>" code
 and the addition of the extra threshold mappings was not the primary purpose
 of the re-development of the operator.  </P>
 
 With some initial 'proof of concept' work using the "<CODE><A
-HREF="../../option_link.cgi?fx" >-fx</A></CODE>" operator (see below), I
+HREF="https://imagemagick.org/script/command-line-options.php?#fx" >-fx</A></CODE>" operator (see below), I
 wanted to provide a ordered dithering between multiple levels of colors (as
-per the "<CODE><A HREF="../../option_link.cgi?posterize"
+per the "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#posterize"
 >-posterize</A></CODE>"). </P>
 
 WHY? Because then you can generate a more deterministic dithering of images
@@ -305,7 +305,7 @@ important for color reductions involving animations as you will not get
 problems from color differences between frames. </P>
 
 The posterization level is added to "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>"
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>"
 argument using commas, making this addition backward compatible with previous
 usage of the operator. </P>
 
@@ -371,7 +371,7 @@ point where you can be hard pressed to notice just how few colors were used!
 
 Not only can you define the number of posterization levels for all channels,
 but you can specify the levels for each channel (as specified in "<CODE><A
-HREF="../../option_link.cgi?channels" >-channels</A></CODE>". For example, here
+HREF="https://imagemagick.org/script/command-line-options.php?#channels" >-channels</A></CODE>". For example, here
 we dithered the gradient using a special 332 color map (8 levels or red and
 green, 4 of blue) which defines a total of 256 colors.
 
@@ -454,11 +454,11 @@ difference in channel levels producing a slightly better shading of colors for
 this cartoon like image. </P>
 
 Unfortunately this is not currently reproducible using the error correction
-dithered "<CODE><A HREF="../../option_link.cgi?posterize"
+dithered "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#posterize"
 >-posterize</A></CODE>" operator. </P>
 
 It was to produce this color map that the expansion of the "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>"
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>"
 operator, included the ability to specify separate levels for each color
 channel.  </P>
 
@@ -470,9 +470,9 @@ This was a final addition to the Ordered Dither Upgrade, and combined with a
 revisement of all the XML data handling within IM by Cristy. </P>
 
 With this development you can now use a "<CODE><A
-HREF="../../option_link.cgi?list" >-list</A> threshold</CODE>" command to see
+HREF="https://imagemagick.org/script/command-line-options.php?#list" >-list</A> threshold</CODE>" command to see
 exactly what maps are available to the "<CODE><A
-HREF="../../option_link.cgi?ordered-dither" >-ordered-dither</A></CODE>"
+HREF="https://imagemagick.org/script/command-line-options.php?#ordered-dither" >-ordered-dither</A></CODE>"
 operator. as well as use personal "<CODE>threshold.xml</CODE>" data files to
 define your own maps. </P>
 
@@ -488,7 +488,7 @@ posterized form of ordered dither functionality that was shown above. </I>
 As part of using ImageMagick for my own images, I wanted to be able to design
 and use my own ordered dither patterns.  As such I figured out a equivalent
 ordered dither method using the extremely slow "<CODE><A
-HREF="../../option_link.cgi?fx" >-fx</A></CODE>" operator. </P>
+HREF="https://imagemagick.org/script/command-line-options.php?#fx" >-fx</A></CODE>" operator. </P>
 
 For example  (repeat of <A HREF="../../quantize/#diy_horizontal" >DIY
 Horizontal Dither</A>)... </P>
@@ -564,7 +564,7 @@ images.
              ALIGN=middle VSPACE=0 HSPACE=5 BORDER=1 ALT="[IM Output]"></A>
 </DIV></P>
 
-Which can be applied using "<CODE><A HREF="../../option_link.cgi?fx"
+Which can be applied using "<CODE><A HREF="https://imagemagick.org/script/command-line-options.php?#fx"
 >-fx</A></CODE>". </P>
 
 Now we can dither our images using, just a single image, and a much simpler
