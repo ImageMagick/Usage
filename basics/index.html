@@ -148,7 +148,7 @@
                         <a href="#parenthesis">Parenthesis -- processing images 'on-the-side'</a>
                       </li>
                       <li>
-                        <a href="#respect-parenthesis">Parenthesis and Settings</a>
+                        <a href="#respect-parentheses">Parenthesis and Settings</a>
                       </li>
                       <li>
                         <a href="#list_ops">Image List Operators</a>
@@ -1311,7 +1311,7 @@ command  input_image   -operator  output_image
                 <a href="cmd_array2.gif"><img src="cmd_array2.gif" align="middle" vspace="0" hspace="5" border="1" alt="[IM Output]"></a>
               </td>
             </tr>
-          </table>The first set of parenthesis aren't strictly needed, and do add a tiny amount of extra work to IM's internal processing, but it does make it clear what the command is doing by separating the processing steps. It may also be easier for image processing scripts to perform each processing step as a separate parenthesis, as a means of separating the processing steps, it is applying. <a name="respect-parenthesis" id="respect-parenthesis"></a>
+          </table>The first set of parenthesis aren't strictly needed, and do add a tiny amount of extra work to IM's internal processing, but it does make it clear what the command is doing by separating the processing steps. It may also be easier for image processing scripts to perform each processing step as a separate parenthesis, as a means of separating the processing steps, it is applying. <a name="respect-parentheses" id="respect-parentheses"></a>
           <h3>Parenthesis and Settings</h3>Option 'settings' are not affected by parenthesis, and will continue across the parenthesis image operators, until the setting is changed or turned off.
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
             <tr valign="bottom">
@@ -1339,7 +1339,7 @@ command  input_image   -operator  output_image
           <div align="center">
             <b>Parenthesis only create a separate Image Sequence.<br>
             They do not limit settings, only the images being worked on.</b>
-          </div>As of IM v6.4.1-4 the new operational control option "<code><a href="https://imagemagick.org/script/command-line-options.php?#respect_parenthesis">-respect-parenthesis</a></code>" can override this behaviour. When given at the start of an IM command, it will cause parenthesis to also save and retrieve the previous settings that have been given. That means any settings given within parenthesis, will only remain set, until the end of the parenthesis.
+          </div>As of IM v6.4.1-4 the new operational control option "<code><a href="https://imagemagick.org/script/command-line-options.php?#respect_parenthesis">-respect-parentheses</a></code>" can override this behaviour. When given at the start of an IM command, it will cause parenthesis to also save and retrieve the previous settings that have been given. That means any settings given within parenthesis, will only remain set, until the end of the parenthesis.
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
             <tr valign="bottom">
               <td width="100%" align="justify">
@@ -1348,7 +1348,7 @@ command  input_image   -operator  output_image
                   <tr>
                     <td>
                       <pre class="bg-light text-dark mx-4"><samp>
-  magick -respect-parenthesis   -pointsize 24 \
+  magick -respect-parentheses   -pointsize 24 \
           -font Candice label:Outside \
           \(              label:Inside \
              -font Gecko  label:Inside \) \
@@ -1368,7 +1368,7 @@ command  input_image   -operator  output_image
               <tr>
                 <td>
                   <pre class="bg-light text-dark mx-4"><samp>
-  magick -respect-parenthesis \
+  magick -respect-parentheses \
           -font Arial   label:"This is a line of plain text." \
           \( -font Candice -pointsize 16 -fill red -undercolor lightblue \
               label:"A line using a lot of different settings." \) \
@@ -2797,11 +2797,11 @@ Is it any wonder then why settings can be so confusing.
           </tr>
           <tr valign="top">
             <td>
-              <a name="respect-parenthesis2" id="respect-parenthesis2"></a> <b>-respect<br>
+              <a name="respect-parentheses2" id="respect-parentheses2"></a> <b>-respect<br>
               &nbsp;&nbsp;-parenthesis</b>&nbsp;&nbsp;&nbsp;
             </td>
             <td>
-              Causes <a href="#parenthesis">parenthesis</a> to not only to save and restore the current image list but also all the current <a href="#options">operational settings</a> are saved and restored. Than means that when given, any settings set within parenthesis, will be reset when the parenthesis ends. See the examples in <a href="#respect-parenthesis">Parenthesis and Settings</a> above. &nbsp;
+              Causes <a href="#parenthesis">parenthesis</a> to not only to save and restore the current image list but also all the current <a href="#options">operational settings</a> are saved and restored. Than means that when given, any settings set within parenthesis, will be reset when the parenthesis ends. See the examples in <a href="#respect-parentheses">Parenthesis and Settings</a> above. &nbsp;
             </td>
           </tr>
           <tr valign="top">
