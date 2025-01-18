@@ -4787,17 +4787,17 @@ Generating Escher-like tile patterns.
                     <tr>
                       <td>
                         <pre class="bg-light text-dark mx-4"><samp>
-  magick -size 24x24 xc: -draw "rectangle 3,11 20,12"  tile_line.gif
+  magick -size 24x24 xc: -draw "rectangle 3,11 20,12" tile_line.gif
 
-  magick tile_line.gif   -gravity center\
-          \( +clone -rotate    0 -crop 24x18+0+0 -write mpr:r1 +delete \) \
-          \( +clone -rotate  120 -crop 24x18+0+0 -write mpr:r2 +delete \) \
-                    -rotate -120 -crop 24x18+0+0 -write mpr:r3 +repage \
-          -extent 72x36        -page  +0+0  mpr:r3 \
-          -page +24+0  mpr:r1  -page +48+0  mpr:r2 \
-          -page -12+18 mpr:r1  -page +12+18 mpr:r2 \
-          -page +36+18 mpr:r3  -page +60+18 mpr:r1 \
-          -flatten tile_hex_lines.jpg
+  magick tile_line.gif -gravity center \
+    \( +clone -rotate    0 -crop 24x18+0+0 -write mpr:r1 +delete \) \
+    \( +clone -rotate  120 -crop 24x18+0+0 -write mpr:r2 +delete \) \
+              -rotate -120 -crop 24x18+0+0 -write mpr:r3 +repage \
+              -extent 72x36 \( -page  +0+0 mpr:r3 \) \
+    \( -page +24+0  mpr:r1 \) \( -page +48+0  mpr:r2 \) \
+    \( -page -12+18 mpr:r1 \) \( -page +12+18 mpr:r2 \) \
+    \( -page +36+18 mpr:r3 \) \( -page +60+18 mpr:r1 \) \
+    -flatten tile_hex_lines.jpg
 
   magick -size 120x120  tile:tile_hex_lines.jpg  tiled_hex_lines.jpg
 </samp></pre>
