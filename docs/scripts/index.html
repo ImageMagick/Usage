@@ -1,0 +1,27 @@
+---
+layout: default
+title: Scripts
+---
+        <dl>
+          <dt><b>Index</b></dt>
+          <dt>
+            <a href="../"><img src="../img_www/granitesm_left.gif" border="0" width="15" height="15"> ImageMagick Examples Preface and Index</a>
+          </dt>
+        </dl>
+
+        <p>ImageMagick Example Scripts — shell, perl, and other utility scripts
+        used or referenced in the examples.</p>
+
+        <table class="table table-sm table-hover font-monospace">
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% assign script_files = site.static_files | where_exp: "f", "f.path contains '/scripts/'" | sort: "name" %}
+            {% for f in script_files %}
+            <tr><td><a href="{{ f.name }}">{{ f.name }}</a></td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
