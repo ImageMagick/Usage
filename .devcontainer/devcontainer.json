@@ -1,5 +1,17 @@
 {
   "image": "mcr.microsoft.com/devcontainers/jekyll:2-bullseye",
-  "postCreateCommand": "jekyll serve --config .jekyll/_config.yml --port 4955",
-  "forwardPorts": [ 4955 ]
+  "postCreateCommand": "bundle install && bundle exec jekyll serve --source docs --incremental --force_polling --livereload --port 7171",
+  "forwardPorts": [
+    7171
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "editorconfig.editorconfig"
+      ],
+      "settings": {
+        "extensions.ignoreRecommendations": true
+      }
+    }
+  }
 }
